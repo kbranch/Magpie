@@ -1,0 +1,41 @@
+.nowrap {
+    white-space: nowrap;
+}
+
+.itemWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.secondary {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-weight: bold;
+    text-shadow:
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
+}
+
+.full {
+    color: green;
+}
+
+.small {
+    padding-left: 0;
+    padding-right: 0;
+    display: inline-block;
+}
+
+.center {
+    width: 50%;
+    margin: 0 auto;
+}

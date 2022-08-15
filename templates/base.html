@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LADXR Tracker</title>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap-night.min.css') }}" />
+        <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" /> -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}" />
+    </head>
+
+    <body>
+
+        <div class="container body-content">
+            {% for message in get_flashed_messages() %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+            {% block content %}{% endblock %}
+            <hr />
+            <footer>
+                <p align="right">LADXR Tracker</p>
+            </footer>
+        </div>
+
+        <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    </body>
+</html>
