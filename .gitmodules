@@ -1,0 +1,3 @@
+[submodule "LADXR"]
+	path = LADXR
+	url = https://github.com/kbranch/LADXR.git
