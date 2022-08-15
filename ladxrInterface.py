@@ -23,6 +23,7 @@ class Flag():
         self.value = self.default
         self.name = ladxrArg.dest
         self.choices = ladxrArg.choices
+        self.group = ladxrArg.container.title
     
     def __repr__(self) -> str:
         return f'{self.name}={self.value}'#, {self.type}, {self.default}, {self.choices}'

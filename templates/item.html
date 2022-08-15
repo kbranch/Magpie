@@ -1,51 +1,39 @@
-{% if secondary is defined %}
-    {% set secondary_tag = 'data-secondary=' + secondary %}
-    {% set oncontextmenu = "addItem('" + secondary + "', 1);return false;" %}
-{% else %}
-    {% set secondary_tag= "" %}
-    {% set oncontextmenu = "addItem('" + primary + "', -1);return false;" %}
-{% endif %}
+{% macro item(primary, secondary='', classes='"', max='', src='', max_image='', width='32px', overlay_count='') %}
+    {% if secondary != '' %}
+        {% set secondary_tag = 'data-secondary=' + secondary %}
+        {% set oncontextmenu = "addItem('" + secondary + "', 1);return false;" %}
+    {% else %}
+        {% set secondary_tag= "" %}
+        {% set oncontextmenu = "addItem('" + primary + "', -1);return false;" %}
+    {% endif %}
 
-{% if classes is not defined %}
-    {% set classes = "pt-2 col" %}
-{% endif %}
+    {% if classes == '"' %}
+        {% set classes = "pt-2 px-1 col text-center" %}
+    {% endif %}
 
-{% if max is defined %}
-    {% set max = 'data-max=' + max %}
-{% else %}
-    {% set max = "" %}
-{% endif %}
+    {% if max != '' %}
+        {% set max = 'data-max=' + max %}
+    {% endif %}
 
-{% if src is defined %}
-    {% set src_tag = 'data-src=' + src %}
-{% else %}
-    {% set src_tag = "" %}
-{% endif %}
+    {% if src != '' %}
+        {% set src_tag = 'data-src=' + src %}
+    {% endif %}
 
-{% if max_image is defined %}
-    {% set max_image = 'data-max_image=' + max_image %}
-{% else %}
-    {% set max_image = "" %}
-{% endif %}
+    {% if max_image != '' %}
+        {% set max_image = 'data-max_image=' + max_image %}
+    {% endif %}
 
-{% if width is defined %}
     {% set width = 'style="width: ' + width + ';"' %}
-{% else %}
-    {% set width = "" %}
-{% endif %}
 
-{% if default_src is not defined %}
-    {% set default_src = "static/images/" + primary + "_0.png" %}
-{% endif %}
-
-<div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{max_image}} class="{{classes}}">
-    <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}">
-        <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} class="itemImage" src="{{default_src}}">
-    {% if secondary is defined and src is not defined %}
-        <img data-item="{{secondary}}" class="itemImage secondary" src="static/images/{{secondary}}_0.png">
-    {% endif %}
-    {% if overlay_count is defined %}
-        <span data-overlay_count="{{overlay_count}}" class="overlay">0</span>
-    {% endif %}
+    <div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{max_image}} class="{{classes}}">
+        <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}">
+            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} class="itemImage" src="static/images/{{primary}}_0.png" draggable="false">
+        {% if secondary != '' and src == '' %}
+            <img data-item="{{secondary}}" {{width|safe}} class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
+        {% endif %}
+        {% if overlay_count != '' %}
+            <span data-overlay_count="{{overlay_count}}" class="overlay" onmousedown="preventDoubleClick(event)">0</span>
+        {% endif %}
+        </div>
     </div>
-</div>
+{%- endmacro %}

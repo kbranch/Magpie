@@ -1,3 +1,5 @@
+{% from 'item.html' import item %}
+
 {% set knownItems = [
 'SWORD', 'FEATHER', 'HOOKSHOT', 'BOW', 'BOMB', 'MAGIC_POWDER', 'MAGIC_ROD', 'OCARINA', 'PEGASUS_BOOTS', 'POWER_BRACELET', 'BOOMERANG',
 'SHIELD', 'SHOVEL', 'TOADSTOOL', 'TAIL_KEY', 'SLIME_KEY', 'ANGLER_KEY', 'FACE_KEY', 'BIRD_KEY', 'GOLD_LEAF', 'FLIPPERS', 'BOWWOW', 
@@ -15,134 +17,39 @@
 'TRADING_ITEM_NECKLACE', 'TRADING_ITEM_SCALE', 'TRADING_ITEM_MAGNIFIYING_GLASS', 
 ] %}
 
-todo: decide how to deal with items that aren't in the current settings
-
-<div id="items" style="width: 480px;">
+<div id="items" style="width: 270px;">
     <!-- Main items -->
     <div class="row">
-        {% with primary="SHIELD", max="2" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SWORD", max="2" %} {% include "item.html" %} {% endwith %}
-        {% with primary="TOADSTOOL" %} {% include "item.html" %} {% endwith %}
-        {% with primary="MAGIC_POWDER", max="1", secondary="MAX_POWDER_UPGRADE" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SHOVEL", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="BOMB", max="1", secondary="MAX_BOMBS_UPGRADE" %} {% include "item.html" %} {% endwith %}
-        {% with primary="BOW", max="1", secondary="MAX_ARROWS_UPGRADE" %} {% include "item.html" %} {% endwith %}
-        {% with primary="FEATHER", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="POWER_BRACELET", max="2" %} {% include "item.html" %} {% endwith %}
-        {% with primary="PEGASUS_BOOTS", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="FLIPPERS", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="HOOKSHOT", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="MAGIC_ROD", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="BLUE_TUNIC", secondary="RED_TUNIC", src="tunicSrc()", default_src="static/images/GREEN_TUNIC.png" %} {% include "item.html" %} {% endwith %}
-        {% with primary="OCARINA", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SONG1", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SONG2", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SONG3", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="BOWWOW", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="BOOMERANG", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SEASHELL", max_image="1", overlay_count="SEASHELL" %} {% include "item.html" %} {% endwith %}
-        {% with primary="TAIL_KEY", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="ANGLER_KEY", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="FACE_KEY", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="BIRD_KEY", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="SLIME_KEY", max="1" %} {% include "item.html" %} {% endwith %}
-        {% with primary="GOLD_LEAF" %} {% include "item.html" %} {% endwith %}
+        {{ item('SHIELD', max="2") }}
+        {{ item("SWORD", max="2") }}
+        {{ item("TOADSTOOL") }}
+        {{ item("MAGIC_POWDER", max="1", secondary="MAX_POWDER_UPGRADE") }}
+        {{ item("SHOVEL", max="1") }}
+        {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE") }}
+        {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE") }}
+        {{ item("FEATHER", max="1") }}
+        {{ item("POWER_BRACELET", max="2") }}
+        {{ item("PEGASUS_BOOTS", max="1") }}
+        {{ item("FLIPPERS", max="1") }}
+        {{ item("HOOKSHOT", max="1") }}
+        {{ item("MAGIC_ROD", max="1") }}
+        {{ item("BLUE_TUNIC", secondary="RED_TUNIC", src="tunicSrc()") }}
+        {{ item("OCARINA", max="1") }}
+        {{ item("SONG1", max="1") }}
+        {{ item("SONG2", max="1") }}
+        {{ item("SONG3", max="1") }}
+        {{ item("BOWWOW", max="1") }}
+        {{ item("BOOMERANG", max="1") }}
+        {{ item("SEASHELL", max_image="1", overlay_count="SEASHELL") }}
+        {{ item("TAIL_KEY", max="1") }}
+        {{ item("ANGLER_KEY", max="1") }}
+        {{ item("FACE_KEY", max="1") }}
+        {{ item("BIRD_KEY", max="1") }}
+        {{ item("SLIME_KEY", max="1") }}
+        {{ item("GOLD_LEAF") }}
     </div>
 
-    <!-- D8, D1, D0/9 -->
-    <div class="row pt-3">
-        <div class="col col-4"></div>
-        <div class="col col-2 text-center">
-            {% with primary="INSTRUMENT8", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK8", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY8", width="12px", max_image="1", overlay_count="KEY8", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY8", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-        <div class="col col-2 text-center">
-            {% with primary="INSTRUMENT1", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK1", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY1", width="12px", max_image="1", overlay_count="KEY1", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY1", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-        <div class="col col-2"></div>
-        <div class="col col-2 text-center">
-            {% with primary="GREAT_FAIRY", max="1", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK9", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY9", width="12px", max_image="1", overlay_count="KEY9", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY9", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-    </div>
-
-    <!-- D7, D2 -->
-    <div class="row pt-3">
-        <div class="col col-2"></div>
-        <div class="col col-3 text-center">
-            {% with primary="INSTRUMENT7", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK7", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY7", width="12px", max_image="1", overlay_count="KEY7", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY7", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-        <div class="col col-2"></div>
-        <div class="col col-3 text-center">
-            {% with primary="INSTRUMENT2", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK2", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY2", width="12px", max_image="1", overlay_count="KEY2", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY2", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-    </div>
-
-    <!-- D6, D3 -->
-    <div class="row pt-3">
-        <div class="col col-2"></div>
-        <div class="col col-3 text-center">
-            {% with primary="INSTRUMENT6", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK6", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY6", width="12px", max_image="1", overlay_count="KEY6", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY6", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-        <div class="col col-2"></div>
-        <div class="col col-3 text-center">
-            {% with primary="INSTRUMENT3", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK3", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY3", width="12px", max_image="1", overlay_count="KEY3", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY3", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-    </div>
-
-    <!-- D4, D5 -->
-    <div class="row pt-3">
-        <div class="col col-4"></div>
-        <div class="col col-2 text-center">
-            {% with primary="INSTRUMENT5", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK5", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY5", width="12px", max_image="1", overlay_count="KEY5", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY5", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-        <div class="col col-2 text-center">
-            {% with primary="INSTRUMENT4", classes="" %} {% include "item.html" %} {% endwith %}
-            <div class="pt-2">
-                {% with primary="STONE_BEAK4", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="KEY4", width="12px", max_image="1", overlay_count="KEY4", classes="small" %} {% include "item.html" %} {% endwith %}
-                {% with primary="NIGHTMARE_KEY4", width="12px", classes="small" %} {% include "item.html" %} {% endwith %}
-            </div>
-        </div>
-    </div>
+    {% include "dungeonItems.html" %}
 
     <!-- Unknown items -->
     <div class="row">
@@ -158,6 +65,14 @@ todo: decide how to deal with items that aren't in the current settings
                 </div>
             {% endif %}
         {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col text-end">
+            <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-title="Reset Inventory" onclick="resetInventory();refreshImages();">
+                <img src="static/images/arrow-clockwise.svg">
+            </button>
+        </div>
     </div>
 </div>
 

@@ -18,11 +18,15 @@
             {% endfor %}
             {% block content %}{% endblock %}
             <hr />
-            <footer>
+            <!-- <footer>
                 <p align="right">LADXR Tracker</p>
-            </footer>
+            </footer> -->
         </div>
 
         <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script type="application/javascript">
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        </script>
     </body>
 </html>

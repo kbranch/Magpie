@@ -23,6 +23,11 @@
         1px -1px 0 #000,
        -1px  1px 0 #000,
         1px  1px 0 #000;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .full {
@@ -38,4 +43,24 @@
 .center {
     width: 50%;
     margin: 0 auto;
+}
+
+img {
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#items {
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.hidden {
+    display: none;
 }
