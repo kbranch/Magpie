@@ -1,0 +1,112 @@
+<script src="static/lib/jquery/jquery-3.6.0.min.js"></script>
+<script src="static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="static/lib/light-switch-bootstrap-0.1.3/switch.js"></script>
+
+<!-- Activate the bootstrap tooltips -->
+<script type="application/javascript">
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+
+<!-- Main scripts -->
+<script type="application/javascript">
+    function refreshItems() {
+        $.ajax({
+            type: "POST",
+            url: "/items",
+            data: {
+                args: JSON.stringify(args),
+            },
+            success: function(response) {
+                $('#itemContainer').html(response);
+                initKnownItems();
+             }
+        });
+    }
+</script>
+
+<!-- Item panel scripts -->
+<script src="{{ url_for('static', filename='js/items.js') }}"></script>
+<script type="application/javascript">
+    function tunicSrc()
+    {
+        blue = inventory['BLUE_TUNIC'] > 0;
+        red = inventory['RED_TUNIC'] > 0;
+
+        if (!blue && !red)
+        {
+            return 'static/images/GREEN_TUNIC.png';
+        }
+        if (blue && !red)
+        {
+            return 'static/images/BLUE_TUNIC.png';
+        }
+        if (!blue && red)
+        {
+            return 'static/images/RED_TUNIC.png';
+        }
+        
+        return 'static/images/BLUERED_TUNIC.png';
+    }
+
+    initKnownItems();
+</script>
+
+<!-- Flag panel scripts -->
+<script type="application/javascript">
+    const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
+
+    function saveArgs() {
+        var flags = document.querySelectorAll('[data-flag]');
+
+        for (const flag of flags) {
+            name = flag.dataset.flag;
+            if (flag.type == 'checkbox') {
+                value = flag.checked;
+            }
+            else {
+                value = flag.value;
+            }
+
+            args[name] = value;
+        }
+
+        localStorage.setItem('args', JSON.stringify(args));
+        refreshItems();
+    }
+
+    function loadArgs() {
+        try {
+            args = JSON.parse(localStorage.getItem('args'));
+        }
+        catch (err) {
+        }
+
+        try {
+            if (!('logic' in args)) {
+                args = defaultArgs;
+            }
+        }
+        catch (err) {
+            args = defaultArgs;
+        }
+
+        var flags = document.querySelectorAll('[data-flag]');
+        for (const flag of flags) {
+            name = flag.dataset.flag;
+
+            if (name in args) {
+                if (flag.type == 'checkbox') {
+                    flag.checked = args[name];
+                }
+                else {
+                    flag.value = args[name];
+                }
+            }
+        }
+
+        refreshItems();
+    }
+
+    loadArgs();
+</script>

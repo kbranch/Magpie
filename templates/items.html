@@ -46,7 +46,7 @@
         {{ item("FACE_KEY", max="1") }}
         {{ item("BIRD_KEY", max="1") }}
         {{ item("SLIME_KEY", max="1") }}
-        {{ item("GOLD_LEAF") }}
+        {{ item("GOLD_LEAF", max_image="5") }}
     </div>
 
     {% include "dungeonItems.html" %}
@@ -66,40 +66,8 @@
             {% endif %}
         {% endfor %}
     </div>
-
-    <div class="row">
-        <div class="col text-end">
-            <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-title="Reset Inventory" onclick="resetInventory();refreshImages();">
-                <img src="static/images/arrow-clockwise.svg">
-            </button>
-        </div>
-    </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/items.js') }}"></script>
 <script type="application/javascript">
     maxInventory = {{ allItems|safe }};
-
-    function tunicSrc()
-    {
-        blue = inventory['BLUE_TUNIC'] > 0;
-        red = inventory['RED_TUNIC'] > 0;
-
-        if (!blue && !red)
-        {
-            return 'static/images/GREEN_TUNIC.png';
-        }
-        if (blue && !red)
-        {
-            return 'static/images/BLUE_TUNIC.png';
-        }
-        if (!blue && red)
-        {
-            return 'static/images/RED_TUNIC.png';
-        }
-        
-        return 'static/images/BLUERED_TUNIC.png';
-    }
-
-    initKnownItems();
 </script>

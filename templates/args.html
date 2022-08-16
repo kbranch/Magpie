@@ -1,0 +1,67 @@
+<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="argsOffcanvas" aria-labelledby="argsLabel">
+    <div class="offcanvas-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h2 class="offcanvas-title" id="argsLabel">Flags</h5>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas" onclick="saveArgs()">Save</button>
+            </div>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="row">
+            {% set ns = namespace(group='') %}
+            {% set groupWhitelist = ['Main flags', 'Item flags', 'Gameplay flags', 'Special flags'] %}
+            {% set flagBlacklist = ['race', 'goal', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 'miniboss', 'doubletrouble', 'hardMode'] %}
+
+            {% for arg in flags if arg.group in groupWhitelist and arg.name not in flagBlacklist %}
+                {% if arg.group != ns.group %}
+                    {% if ns.group != '' %}
+                        </fieldset>
+                    </div>
+                    {% endif %}
+                    <div class="col-auto">
+                        <fieldset class="form-group">
+                            <legend>{{arg.group}}</legend>
+                {% endif %}
+
+                <div class="row pb-3">
+                    <div class="col">
+                    {% if arg.type != 'bool' %}
+                        <label for="arg-{{arg.name}}" class="form-label">{{arg.name}}</label>
+                        <select id="arg-{{arg.name}}" class="form-select" data-flag="{{arg.name}}" aria-label="{{arg.name}}">
+                            {% for choice in arg.choices %}
+                                {% if choice == arg.value %}
+                                    {% set selected = "selected" %}
+                                {% else %}
+                                    {% set selected = "" %}
+                                {% endif %}
+
+                                <option value="{{choice}}" {{selected}}>{{choice}}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                        {% if arg.value %}
+                            {% set checked = 'checked' %}
+                        {% else %}
+                            {% set checked = '' %}
+                        {% endif %}
+
+                        <input type="checkbox" id="arg-{{arg.name}}" class="form-check-input" data-flag="{{arg.name}}" {{checked}} value="">
+                        <label class="form-check-label" for="arg-{{arg.name}}">
+                            {{arg.name}}
+                        </label>
+                    {% endif %}
+                    </div>
+                </div>
+
+            {% set ns.group = arg.group %}
+
+            {% endfor %}
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

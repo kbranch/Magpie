@@ -64,3 +64,7 @@ img {
 .hidden {
     display: none;
 }
+
+.offcanvas {
+    --bs-offcanvas-width: fit-content;
+}

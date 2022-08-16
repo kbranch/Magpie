@@ -1,9 +1,12 @@
+import traceback
 import jsonpickle
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from ladxrInterface import *
 
 app = Flask(__name__)
+app.jinja_options['trim_blocks'] = True
+app.jinja_options['lstrip_blocks'] = True
 
 @app.route("/")
 def home():
@@ -12,7 +15,40 @@ def home():
     logics = getLogics(args)
     allChecks = loadChecks(logics[0], allItems)
 
-    return render_template("index.html", args=args, allItems=allItems, allChecks=allChecks)
+    flags = args.flags
+    args.flags = []
+
+    return render_template("index.html", flags=flags, jsonArgs=jsonpickle.encode(args), allItems=allItems, allChecks=allChecks)
+
+@app.route("/items", methods=['POST'])
+def renderItems():
+    json = request.form['args']
+    args = jsonpickle.decode(json)
+    allItems = getItems(args)
+    # args = getArgs()
+
+    # flags = args.flags
+    # args.flags = []
+    try:
+        result = render_template("items.html", allItems=allItems)
+    except:
+        error = traceback.format_exc()
+        pass
+
+    return result
+
+@app.route("/args")
+def renderArgs():
+    args = getArgs()
+
+    flags = args.flags
+    args.flags = []
+
+    return render_template("args.html", flags=flags)
+
+@app.route("/map")
+def renderMap():
+    pass
 
 def getAccessibility(allChecks, logics, inventory):
     accessibility = {}

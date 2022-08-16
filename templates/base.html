@@ -3,30 +3,42 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>LADXR Tracker</title>
+        <meta name="color-scheme" content="dark">
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap-night.min.css') }}" />
-        <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" /> -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}" />
+
+        <title>LADXR Tracker</title>
     </head>
 
     <body>
+        <nav class="navbar bg-light">
+            <div class="container">
+                <a class="nav-link" href="/">LADXR Tracker</a>
+                <div class="col text-end">
+                    <button type="button" class="btn btn-secondary" onclick="resetInventory();refreshImages();" data-bs-toggle="tooltip" data-bs-title="Reset Inventory">
+                        <img src="static/images/arrow-clockwise.svg">
+                    </button>
+                    <span data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
+                        <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Change Flags">
+                            <img src="static/images/gear.svg">
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </nav>
 
         <div class="container body-content">
             {% for message in get_flashed_messages() %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}
             {% block content %}{% endblock %}
-            <hr />
-            <!-- <footer>
-                <p align="right">LADXR Tracker</p>
-            </footer> -->
         </div>
 
-        <script src="{{ url_for('static', filename='lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script type="application/javascript">
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-        </script>
+        <div class="form-check form-switch">
+            <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
+        </div>
+
+        {% include 'scripts.html' %}
     </body>
 </html>

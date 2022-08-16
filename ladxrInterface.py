@@ -26,7 +26,7 @@ class Flag():
         self.group = ladxrArg.container.title
     
     def __repr__(self) -> str:
-        return f'{self.name}={self.value}'#, {self.type}, {self.default}, {self.choices}'
+        return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
 
 def getArgs():
     class Args():
