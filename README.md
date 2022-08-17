@@ -1,16 +1,11 @@
 # LADXR-Tracker
 A web based tracker specifically built for LADXR. Logic and available items and checks for a given set of flags are all supplied by an embedded copy of LADXR.
 
+Visit us on the [Zelda 4 Randomizer Discord](https://discord.gg/XTw7X2G) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
+
 Thanks to:
  - [MuffinJets](https://www.twitch.tv/muffinjets) for his EmoTracker pack, which this is heavily based on
  - [Daid](https://github.com/daid) for creating LADXR and keeping it open
-
-## Contributing layouts
-The item layout is defined by the [Jinja template](https://jinja.palletsprojects.com/en/3.1.x/) [templates/items.html](templates/items.html). The circle of dungeon items is currently separated out into [templates/dungeonItems.html](templates/dungeonItems.html). [templates/item.html](templates/item.html) contains a macro that abstracts away some of the details.
-
-The map layout is currently incomplete, but defined in [templates/map.html](templates/map.html).
-
-Simple changes can be done purely in the templates, but more complicated changes may involve Javascript or the item macro.
 
 ## Setup
 Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/LADXR-Tracker.git`.
@@ -25,3 +20,10 @@ If downloading a zip from GitHub, you'll also need to download a [separate zip f
    - Make sure you check the checkbox to `Add Python 3.x to PATH`
  - Run `setup.bat`
  - Run `startLocal.bat`
+
+## Contributing layouts
+The item layout is defined by the [Jinja template](https://jinja.palletsprojects.com/en/3.1.x/) [templates/items.html](templates/items.html). The circle of dungeon items is currently separated out into [templates/dungeonItems.html](templates/dungeonItems.html). [templates/item.html](templates/item.html) contains a macro that abstracts away some of the details.
+
+The map layout is currently incomplete, but defined in [templates/map.html](templates/map.html).
+
+Simple changes can be done purely in the templates, but more complicated changes may involve Javascript or the item macro.
