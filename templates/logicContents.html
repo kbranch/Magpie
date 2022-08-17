@@ -1,0 +1,25 @@
+{% macro logicContents(checks, logic) %}
+
+    {% set ns = namespace(area = '') %}
+    {% for check in checks %}
+        {% if check.area != ns.area %}
+            {% if ns.area != '' %}</ul></div></div></div>{% endif %}
+            <div class="col-auto px-1 py-1" data-area="{{check.area}}">
+                <div class="card text-bg-dark" onclick="preventDoubleClick(event)">
+                    <div class="card-header">
+                        {{check.area}}
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush px-2">
+        {% endif %}
+        <li data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-logic="{{logic}}" onclick="toggleCheck(event, this)">{{check.name}}</li>
+
+        {% set ns.area = check.area %}
+    {% endfor %}
+    {% if checks|length >0 %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endmacro %}

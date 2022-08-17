@@ -1,10 +1,14 @@
+{% from 'logicContents.html' import logicContents %}
+
 <h5>Unknown checks:</h5>
 <div id="mapAccordion" class="accordion">
 
 {% set ns = namespace(expanded='true', show=' show', collapsed='') %}
-{% for logic in accessibility if accessibility[logic]|length > 0 %}
+{% for logic in accessibility %}
     {% set safeLogic = logic | replace(' ', '-') %}
-    <div class="accordion-item">
+    {% if accessibility[logic]|length == 0 %}{% set hidden=' hidden' %}{% else %}{% set hidden='' %}{% endif %}
+
+    <div class="accordion-item {{hidden}}">
         <h2 id="heading-{{safeLogic}}" class="accordion-header">
             <button class="accordion-button{{ns.collapsed}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{safeLogic}}" aria-expanded="{{ns.expanded}}" aria-controls="collapse-{{safeLogic}}">
                 {{logic}}
@@ -13,27 +17,8 @@
 
         <div id="collapse-{{safeLogic}}" class="accordion-collapse collapse{{ns.show}}" aria-labelledby="heading-{{safeLogic}}" data-bs-parent="#mapAccordion">
             <div class="accordion-body">
-                <div class="row">
-                    {% set ns.area = '' %}
-                    {% for check in accessibility[logic] %}
-                        {% if check.area != ns.area %}
-                            {% if ns.area != '' %}</ul></div></div></div>{% endif %}
-                            <div class="col-auto">
-                                <div class="card text-bg-dark">
-                                    <div class="card-header">
-                                        {{check.area}}
-                                    </div>
-                                    <div class="card-body">
-                                        <ul class="list-group list-group-flush">
-                        {% endif %}
-                        <li class="">{{check.name}}</li>
-
-                        {% set ns.area = check.area %}
-                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" data-logic="{{logic}}" onclick="preventDoubleClick(event)">
+                    {{ logicContents(accessibility[logic], logic) }}
                 </div>
             </div>
         </div>
@@ -44,4 +29,18 @@
     {% set ns.collapsed = ' collapsed' %}
 {% endfor %}
 
+    <div class="accordion-item hidden">
+        <h2 id="heading-Checked" class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Checked" aria-expanded="false" aria-controls="collapse-Checked">
+                Checked
+            </button>
+        </h2>
+
+        <div id="collapse-Checked" class="accordion-collapse collapse" aria-labelledby="heading-Checked" data-bs-parent="#mapAccordion">
+            <div class="accordion-body">
+                <div class="row" data-logic="Checked" onclick="preventDoubleClick(event)">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

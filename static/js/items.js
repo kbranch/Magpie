@@ -100,12 +100,6 @@ function addItem(item, qty) {
     refreshMap();
 }
 
-function preventDoubleClick(event) {
-    if (event.detail > 1) {
-        event.preventDefault();
-    }
-}
-
 function resetInventory() {
     inventory = new Object();
     saveInventory();

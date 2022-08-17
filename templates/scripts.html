@@ -35,8 +35,15 @@
             },
             success: function(response) {
                 $('#mapContainer').html(response);
+                refreshChecked();
              }
         });
+    }
+
+    function preventDoubleClick(event) {
+        if (event.detail > 1) {
+            event.preventDefault();
+        }
     }
 </script>
 
@@ -124,4 +131,143 @@
     }
 
     loadArgs();
+</script>
+
+<!-- Map scripts -->
+<script type="application/javascript">
+    var checkedChecks = null;
+
+    function saveChecked() {
+        localStorage.setItem('checkedChecks', JSON.stringify(checkedChecks));
+    }
+
+    function loadChecked() {
+        try {
+            checkedChecks = JSON.parse(localStorage.getItem('checkedChecks'));
+        }
+        catch (err) {
+            checkedChecks = {};
+        }
+
+        if (checkedChecks == null) {
+            checkedChecks = {};
+        }
+
+        refreshChecked();
+    }
+
+    function getCheckedKey(area, name) {
+        return `${area}-${name}`;
+    }
+
+    function toggleCheck(event, element) {
+        var area = element.dataset.checkarea;
+        var name = element.dataset.checkname;
+        var logic = $(element).closest(".row[data-logic]").attr('data-logic');
+        var key = getCheckedKey(area, name);
+
+        if (logic != 'Checked') {
+            check = new Object();
+            check.name = name;
+            check.area = area;
+
+            checkedChecks[key] = check;
+            moveCheckToChecked(element);
+        }
+        else {
+            delete checkedChecks[key];
+            moveCheckFromChecked(element);
+        }
+
+        saveChecked();
+
+        if (event.detail > 1) {
+            event.preventDefault();
+        }
+    }
+
+    function moveCheckToChecked(element) {
+        var logic = element.dataset.logic;
+        var area = element.dataset.checkarea;
+        var destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
+        var sourceArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
+
+        if (destArea.length == 0) {
+            var destLogic = $('.row[data-logic=Checked]');
+            var accordionItem = $(destLogic).closest('.accordion-item');
+            var newCard = $(sourceArea).clone();
+
+            ul = newCard.find('ul');
+            $(ul).html('');
+
+            accordionItem.removeClass('hidden');
+            $(destLogic).append(newCard);
+
+            destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
+        }
+
+        ul = destArea.find('ul');
+        $(ul).append(element);
+
+        if ($(sourceArea).find('ul').children().length == 0) {
+            $(sourceArea).remove();
+        }
+
+        if (logic != 'In logic') {
+            var sourceLogic = $(`.row[data-logic="${logic}"]`).closest('.accordion-item');
+            if ($(sourceLogic).find('[data-area]').length == 0) {
+                $(sourceLogic).addClass('hidden');
+            }
+        }
+    }
+
+    function moveCheckFromChecked(element) {
+        var logic = element.dataset.logic;
+        var area = element.dataset.checkarea;
+        var destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
+        var sourceArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
+
+        if (destArea.length == 0) {
+            var destLogic = $(`.row[data-logic="${logic}"]`);
+            var accordionItem = $(destLogic).closest('.accordion-item');
+            var newCard = $(sourceArea).clone();
+
+            ul = newCard.find('ul');
+            $(ul).html('');
+
+            accordionItem.removeClass('hidden');
+            $(destLogic).append(newCard);
+
+            destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
+        }
+
+        ul = destArea.find('ul');
+        $(ul).append(element);
+
+        if ($(sourceArea).find('ul').children().length == 0) {
+            $(sourceArea).remove();
+        }
+
+        var sourceLogic = $(`.row[data-logic="Checked"]`).closest('.accordion-item');
+        if ($(sourceLogic).find('[data-area]').length == 0) {
+            $(sourceLogic).addClass('hidden');
+        }
+    }
+
+    function refreshChecked() {
+        for (var key in checkedChecks) {
+            var check = checkedChecks[key];
+            element = $(`li[data-checkarea="${check.area}"][data-checkname="${check.name}"]`);
+            if (element.length > 0) {
+                moveCheckToChecked(element[0]);
+            }
+        }
+    }
+
+    function resetChecks() {
+        checkedChecks = {};
+        saveChecked();
+    }
+
+    loadChecked();
 </script>
