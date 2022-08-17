@@ -15,11 +15,11 @@ Simple changes can be done purely in the templates, but more complicated changes
 ## Setup
 Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/LADXR-Tracker.git`. If downloading a zip from GitHub, you'll also need to download a [separate zip for LADXR](https://github.com/kbranch/LADXR-Tracker/archive/refs/heads/master.zip) and extract it to the LADXR folder.
 ### Linux (and Mac?)
- - Run setup.sh to create a python virtual environment and install the required packages
- - Run startLocal.sh to start as a local application - a browser window should open, and the application will exit when the tab is closed
+ - Run `setup.sh` to create a python virtual environment and install the required packages
+ - Run `startLocal.sh` to start as a local application - a browser window should open, and the application will exit when it is closed
  
 ### Windows
  - Install [Python3](https://www.python.org/downloads/)
    - Make sure you check the checkbox to `Add Python 3.x to PATH`
- - Run setup.bat
- - Run startLocal.bat
+ - Run `setup.bat`
+ - Run `startLocal.bat`
