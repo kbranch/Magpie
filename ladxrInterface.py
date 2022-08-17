@@ -13,14 +13,14 @@ from LADXR.main import buildArgParser
 from checkMetadata import checkMetadataTable
 
 class Flag():
-    def __init__(self, ladxrArg):
+    def __init__(self, ladxrArg, value):
         if isinstance(ladxrArg, (argparse._StoreTrueAction, argparse._StoreFalseAction)):
             self.type = 'bool'
         else:
             self.type = 'string'
         
         self.default = ladxrArg.default
-        self.value = self.default
+        self.value = value
         self.name = ladxrArg.dest
         self.choices = ladxrArg.choices
         self.group = ladxrArg.container.title
@@ -28,13 +28,13 @@ class Flag():
     def __repr__(self) -> str:
         return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
 
-def getArgs():
+def getArgs(values=None):
     class Args():
         def __init__(self):
             self.flags = []
 
         def add(self, flag, value):
-            self.flags.append(Flag(flag))
+            self.flags.append(Flag(flag, value))
             setattr(self, flag.dest, value)
 
     parser = buildArgParser()
@@ -44,7 +44,12 @@ def getArgs():
 
     for flag in ladxrFlags:
         if flag.default != None:
-            args.add(flag, flag.default)
+            value = flag.default
+            if values and flag.dest in values.__dict__:
+                value = values.__dict__[flag.dest]
+
+            args.add(flag, value)
+
 
     args.multiworld = None
     args.boomerang = 'gift'
@@ -70,6 +75,7 @@ def getLogics(args):
         if foundTarget:
             args.logic = choice
             log = logic.Logic(args, world_setup=worldSetup)
+            log.name = choice
             logics.append(log)
 
     args.logic = originalLogic

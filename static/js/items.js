@@ -97,6 +97,7 @@ function addItem(item, qty) {
     saveInventory();
     setItemImage(item);
     updateOverlay(item);
+    refreshMap();
 }
 
 function preventDoubleClick(event) {

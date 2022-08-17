@@ -1,3 +1,4 @@
+from os import access
 import traceback
 import jsonpickle
 from flask import Flask, render_template, request
@@ -12,58 +13,75 @@ app.jinja_options['lstrip_blocks'] = True
 def home():
     args = getArgs()
     allItems = getItems(args)
-    logics = getLogics(args)
-    allChecks = loadChecks(logics[0], allItems)
 
     flags = args.flags
     args.flags = []
 
-    return render_template("index.html", flags=flags, jsonArgs=jsonpickle.encode(args), allItems=allItems, allChecks=allChecks)
+    return render_template("index.html", flags=flags, jsonArgs=jsonpickle.encode(args), allItems=allItems)
 
 @app.route("/items", methods=['POST'])
 def renderItems():
-    json = request.form['args']
-    args = jsonpickle.decode(json)
-    allItems = getItems(args)
-    # args = getArgs()
-
-    # flags = args.flags
-    # args.flags = []
     try:
+        json = request.form['args']
+        args = jsonpickle.decode(json)
+        allItems = getItems(args)
+
         result = render_template("items.html", allItems=allItems)
+
+        return result
     except:
-        error = traceback.format_exc()
-        pass
+        return renderTraceback()
 
-    return result
-
-@app.route("/args")
-def renderArgs():
-    args = getArgs()
-
-    flags = args.flags
-    args.flags = []
-
-    return render_template("args.html", flags=flags)
-
-@app.route("/map")
+@app.route("/map", methods=['POST'])
 def renderMap():
-    pass
+    try:
+        argValues = jsonpickle.decode(request.form['args'])
+        inventory = jsonpickle.decode(request.form['inventory'])
+
+        args = getArgs(values=argValues)
+        allItems = getItems(args)
+        logics = getLogics(args)
+        allChecks = loadChecks(logics[0], allItems)
+        accessibility = getAccessibility(allChecks, logics, inventory)
+
+        return render_template("map.html", accessibility=accessibility)
+    except:
+        return renderTraceback()
 
 def getAccessibility(allChecks, logics, inventory):
     accessibility = {}
 
-    for check in allChecks:
-        accessibility[check] = -1
+    outOfLogic = set(allChecks)
 
     for i in range(len(logics)):
         logic = logics[i]
-        checks = loadChecks(logic, inventory)
-        for check in checks:
-            if accessibility[check] == -1:
-                accessibility[check] = i
+        
+        accessibility[logic.name] = set(loadChecks(logic, inventory))
+    
+    for i in range(1, len(logics)):
+        outOfLogic = outOfLogic.difference(accessibility[logics[i].name])
+
+        for j in range(i):
+            accessibility[logics[i].name] = accessibility[logics[i].name].difference(accessibility[logics[j].name])
+    
+    accessibility['In logic'] = sorted(accessibility[logics[0].name], key=lambda x: (x.area, x.name))
+    outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
+
+    for logic in logics:
+        checks = accessibility[logic.name]
+        del accessibility[logic.name]
+
+        if logic == logics[0]:
+            continue
+
+        accessibility[f'In {logic.name} logic'] = sorted(checks, key=lambda x: (x.area, x.name))
+    
+    accessibility['Out of logic'] = outOfLogic
     
     return accessibility
+
+def renderTraceback():
+    return f"<pre>{traceback.format_exc()}</pre>"
 
 # def main():
 #     args = getArgs()

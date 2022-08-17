@@ -20,6 +20,21 @@
             success: function(response) {
                 $('#itemContainer').html(response);
                 initKnownItems();
+                refreshMap();
+             }
+        });
+    }
+
+    function refreshMap() {
+        $.ajax({
+            type: "POST",
+            url: "/map",
+            data: {
+                args: JSON.stringify(args),
+                inventory: JSON.stringify(inventory),
+            },
+            success: function(response) {
+                $('#mapContainer').html(response);
              }
         });
     }

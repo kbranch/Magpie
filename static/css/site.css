@@ -68,3 +68,21 @@ img {
 .offcanvas {
     --bs-offcanvas-width: fit-content;
 }
+
+.accordion-button {
+    color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))!important;
+    background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
+
+.accordion-button:not(.collapsed) {
+    background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
+
+.accordion-button:focus {
+    border-color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))!important;
+    box-shadow: 0px 0px;
+}
+
+.accordion-item {
+    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
