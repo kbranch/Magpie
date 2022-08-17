@@ -1,6 +1,7 @@
-from os import access
+import argparse
 import traceback
 import jsonpickle
+from flaskwebgui import FlaskUI
 from flask import Flask, render_template, request
 
 from ladxrInterface import *
@@ -8,6 +9,10 @@ from ladxrInterface import *
 app = Flask(__name__)
 app.jinja_options['trim_blocks'] = True
 app.jinja_options['lstrip_blocks'] = True
+
+ui = FlaskUI(app, port=5000)
+
+local = False
 
 @app.route("/")
 def home():
@@ -17,7 +22,7 @@ def home():
     flags = args.flags
     args.flags = []
 
-    return render_template("index.html", flags=flags, jsonArgs=jsonpickle.encode(args), allItems=allItems)
+    return render_template("index.html", flags=flags, jsonArgs=jsonpickle.encode(args), allItems=allItems, local=local)
 
 @app.route("/items", methods=['POST'])
 def renderItems():
@@ -82,6 +87,18 @@ def getAccessibility(allChecks, logics, inventory):
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
+    args = parser.parse_args()
+
+    local = args.local
+
+    if args.local:
+        ui.run()
+    else:
+        app.run()
 
 # def main():
 #     args = getArgs()

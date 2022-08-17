@@ -1,6 +1,6 @@
 function initKnownItems() {
     try {
-        inventory = loadInventory();
+        loadInventory();
     }
     catch(err) {
         resetInventory();
@@ -127,7 +127,10 @@ function saveInventory() {
 }
 
 function loadInventory() {
-    return JSON.parse(localStorage.getItem("inventory"));
+    inventory = JSON.parse(localStorage.getItem("inventory"));
+    if (inventory == null) {
+        resetInventory();
+    }
 }
 
 function refreshImages() {
