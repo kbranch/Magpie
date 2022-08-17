@@ -100,6 +100,23 @@ function addItem(item, qty) {
     refreshMap();
 }
 
+function itemValueUpdated(element) {
+    var item = element.dataset.item;
+    var value = null;
+
+    if (element.type == 'checkbox') {
+       value = element.checked ? 1 : 0;
+    }
+    else {
+        value = Number(element.value);
+    }
+
+    inventory[item] = value;
+
+    saveInventory();
+    refreshMap();
+}
+
 function resetInventory() {
     inventory = new Object();
     saveInventory();
@@ -126,5 +143,17 @@ function refreshImages() {
         }
 
         updateOverlay(primary);
+    }
+
+    inputs = $('input[data-item]')
+    for (const input of inputs) {
+        var item = input.dataset.item;
+
+        if (input.type == 'checkbox') {
+            input.checked = inventory[item] >= 1;
+        }
+        else {
+            input.value = inventory[item];
+        }
     }
 }
