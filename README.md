@@ -5,7 +5,7 @@ Visit us on the [Zelda 4 Randomizer Discord](https://discord.gg/XTw7X2G) - track
 
 Thanks to:
  - [MuffinJets](https://www.twitch.tv/muffinjets) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is heavily based on
- - [Daid](https://github.com/daid) for creating LADXR and keeping it open
+ - [Daid](https://github.com/daid) for creating [LADXR](https://github.com/daid/LADXR) and keeping it open
 
 ## Setup
 Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/LADXR-Tracker.git`.
