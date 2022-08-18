@@ -4,7 +4,7 @@ A web based tracker specifically built for LADXR. Logic and available items and 
 Visit us on the [Zelda 4 Randomizer Discord](https://discord.gg/XTw7X2G) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
 
 Thanks to:
- - [MuffinJets](https://www.twitch.tv/muffinjets) for his EmoTracker pack, which this is heavily based on
+ - [MuffinJets](https://www.twitch.tv/muffinjets) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is heavily based on
  - [Daid](https://github.com/daid) for creating LADXR and keeping it open
 
 ## Setup
