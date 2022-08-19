@@ -14,7 +14,7 @@
         <div class="row">
             {% set ns = namespace(group='') %}
             {% set groupWhitelist = ['Main flags', 'Item flags', 'Gameplay flags', 'Special flags'] %}
-            {% set flagBlacklist = ['race', 'goal', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 'miniboss', 'doubletrouble', 'hardMode'] %}
+            {% set flagBlacklist = ['race', 'goal', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool'] %}
 
             {% for arg in flags if arg.group in groupWhitelist and arg.name not in flagBlacklist %}
                 {% if arg.group != ns.group %}
