@@ -1,12 +1,7 @@
 <script src="static/lib/jquery/jquery-3.6.0.min.js"></script>
 <script src="static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="static/lib/light-switch-bootstrap-0.1.3/switch.js"></script>
-
-<!-- Activate the bootstrap tooltips -->
-<script type="application/javascript">
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>
+<script src="static/js/locations.js"></script>
 
 <!-- Main scripts -->
 <script type="application/javascript">
@@ -26,6 +21,12 @@
     }
 
     function refreshMap() {
+        activeTabId = $('ul#mapTabs button.active').attr('id');
+
+        if (activeTabId == undefined) {
+            activeTabId = 'overworldTab';
+        }
+
         $.ajax({
             type: "POST",
             url: "/map",
@@ -36,6 +37,7 @@
             success: function(response) {
                 $('#mapContainer').html(response);
                 refreshChecked();
+                $(`button#${activeTabId}`).click();
              }
         });
     }
@@ -75,6 +77,23 @@
 <!-- Item panel scripts -->
 <script src="{{ url_for('static', filename='js/items.js') }}"></script>
 <script type="application/javascript">
+    function jumpSrc() {
+        feather = inventory['FEATHER'] > 0;
+        rooster = inventory['ROOSTER'] > 0;
+
+        if (!feather && !rooster) {
+            return 'static/images/NO_JUMP.png';
+        }
+        if (!feather && rooster) {
+            return 'static/images/ROOSTER.png';
+        }
+        if (feather && !rooster) {
+            return 'static/images/FEATHER.png';
+        }
+
+        return 'static/images/BOTH_JUMP.png';
+    }
+
     function tunicSrc()
     {
         blue = inventory['BLUE_TUNIC'] > 0;
@@ -185,6 +204,13 @@
         return `${area}-${name}`;
     }
 
+    function toggleCheckImage(check) {
+        $(check).tooltip('hide');
+        var id = $(check).attr('data-id');
+        var textCheck = $(`li[data-id="${id}"`);
+        toggleCheck(null, textCheck[0]);
+    }
+
     function toggleCheck(event, element) {
         var area = element.dataset.checkarea;
         var name = element.dataset.checkname;
@@ -206,9 +232,13 @@
 
         saveChecked();
 
-        if (event.detail > 1) {
-            event.preventDefault();
+        if (event != null) {
+            if (event.detail > 1) {
+                event.preventDefault();
+            }
         }
+
+        drawActiveTab();
     }
 
     function moveCheckToChecked(element) {
@@ -292,6 +322,146 @@
     function resetChecks() {
         checkedChecks = {};
         saveChecked();
+    }
+
+    function clearCheckImages() {
+        $('.checkGraphic').remove();
+    }
+
+    function drawChecks(mapName) {
+        var mapImg = $(`.map[data-mapname="${mapName}"`);
+
+        if ($(mapImg).width() <= 100) {
+            $(mapImg).on('load', function () { drawChecks(mapName); });
+            return;
+        }
+
+        var allMapImgs = $('.map');
+        var allMapNames = new Object();
+
+        for (const mapImg of allMapImgs) {
+            allMapNames[$(mapImg).attr('data-mapname')] = true;
+        }
+
+        clearCheckImages();
+
+        var map = $(mapImg).closest('div.tab-pane');
+
+        var checks = $('li[data-logic]');
+        for (const check of checks) {
+            if ($(check).attr('data-logic') == 'Out of logic'
+                || (mapName != 'overworld' && $(check).attr('data-checkarea') != mapName)
+                || (mapName == 'overworld' && $(check).attr('data-checkarea') in allMapNames)) {
+                continue;
+            }
+
+            var isChecked = false;
+            var parentRow = $(check).closest('.row[data-logic]');
+            if ($(parentRow).attr('data-logic') == 'Checked') {
+                isChecked = true;
+            }
+
+            var id = $(check).attr('data-id');
+            var coords = coordDict[id];
+
+            var xScale = Math.min(1, $(map).width() / $(map).find('.map').prop('naturalWidth'));
+            var yScale = Math.min(1, $(map).height() / $(map).find('.map').prop('naturalHeight'));
+
+            var xOffset = (16 * xScale - 16) / 2;
+            var yOffset = (16 * yScale - 16) / 2;
+
+            var difficulty = isChecked ? 'checked' : $(check).attr('data-difficulty');
+            var name = $(check).attr('data-checkname');
+            var area = $(check).attr('data-checkarea');
+            var parent = $(map).find('div.map-wrapper');
+            for (const coord of coords) {
+                $(parent).append($('<img>', {
+                    src: 'static/images/blank.png',
+                    'data-checkname': name,
+                    'data-checkarea': area,
+                    'data-id': id,
+                    class: `checkGraphic difficulty-${difficulty}`,
+                    css: {
+                        'top': coord.y * yScale + yOffset,
+                        'left': coord.x * xScale + xOffset,
+                        'width': 16,
+                    },
+                    onmouseover: 'addTooltip(this)',
+                    onclick: 'toggleCheckImage(this)',
+                }));
+            }
+        }
+    }
+
+    function addTooltip(check) {
+        if (typeof $(check).attr('data-bs-toggle') !== 'undefined') {
+            return;
+        }
+
+        var checkName = `${$(check).attr('data-checkarea')} - ${$(check).attr('data-checkname')}`
+        $(check).attr('data-bs-toggle', "tooltip");
+        $(check).attr('data-bs-title', checkName);
+        var tooltip = new bootstrap.Tooltip(check);
+
+        $(check).tooltip("show");
+    }
+
+    function drawActiveTab() {
+        activeTabId = $('ul#mapTabs button.active').attr('id');
+        $(`button#${activeTabId}`).click();
+    }
+
+    function drawTab(button) {
+        var target = $(button).attr('data-bs-target');
+        var img = $(`${target} img.map`);
+        var mapName = $(img).attr('data-mapname');
+
+        drawChecks(mapName);
+    }
+
+    function processLocations() {
+        coordDict = new Object();
+
+        for (coord of locationCoords) {
+            if (!(coord.id in coordDict)) {
+                coordDict[coord.id] = [];
+            }
+
+            coordDict[coord.id].push(coord);
+        }
+
+        for (const [id, checks] of Object.entries(coordDict)) {
+            if (checks.length <= 1) { continue; }
+
+            var primary = null;
+            var duplicate = null;
+
+            do {
+                primary = null;
+                duplicate = null;
+
+                for (var i = 0; i < checks.length - 1; i++) {
+                    var check1 = checks[i];
+                    for (var j = i + 1; j < checks.length; j++) {
+                        var check2 = checks[j];
+                        if (Math.abs(check1.x - check2.x) <= 17 && Math.abs(check1.y - check2.y) <= 17) {
+                            check1.x = (check1.x + check2.x) / 2;
+                            check1.y = (check1.y + check2.y) / 2;
+                            primary = i;
+                            duplicate = j;
+                            break;
+                        }
+                    }
+
+                    if (duplicate != null) {
+                        checks.splice(duplicate, 1);
+                        break;
+                    }
+                }
+            } while (duplicate != null);
+        }
+
+        var test = '';
     }
 
     loadChecked();

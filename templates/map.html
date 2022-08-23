@@ -1,6 +1,91 @@
 {% from 'logicContents.html' import logicContents %}
 
-<h5>Other checks:</h5>
+<ul class="nav nav-tabs" id="mapTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="overworldTab" data-bs-toggle="tab" data-bs-target="#overworldTabContent" type="button" role="tab" aria-controls="overworldTabContent" aria-selected="true" onclick="drawTab(this)">Overworld</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d1Tab" data-bs-toggle="tab" data-bs-target="#d1TabContent" type="button" role="tab" aria-controls="d1TabContent" aria-selected="true" onclick="drawTab(this)">D1</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d2Tab" data-bs-toggle="tab" data-bs-target="#d2TabContent" type="button" role="tab" aria-controls="d2TabContent" aria-selected="true" onclick="drawTab(this)">D2</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d3Tab" data-bs-toggle="tab" data-bs-target="#d3TabContent" type="button" role="tab" aria-controls="d3TabContent" aria-selected="true" onclick="drawTab(this)">D3</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d4Tab" data-bs-toggle="tab" data-bs-target="#d4TabContent" type="button" role="tab" aria-controls="d4TabContent" aria-selected="true" onclick="drawTab(this)">D4</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d5Tab" data-bs-toggle="tab" data-bs-target="#d5TabContent" type="button" role="tab" aria-controls="d5TabContent" aria-selected="true" onclick="drawTab(this)">D5</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d6Tab" data-bs-toggle="tab" data-bs-target="#d6TabContent" type="button" role="tab" aria-controls="d6TabContent" aria-selected="true" onclick="drawTab(this)">D6</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d7Tab" data-bs-toggle="tab" data-bs-target="#d7TabContent" type="button" role="tab" aria-controls="d7TabContent" aria-selected="true" onclick="drawTab(this)">D7</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d8Tab" data-bs-toggle="tab" data-bs-target="#d8TabContent" type="button" role="tab" aria-controls="d8TabContent" aria-selected="true" onclick="drawTab(this)">D8</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="d0Tab" data-bs-toggle="tab" data-bs-target="#d0TabContent" type="button" role="tab" aria-controls="d0TabContent" aria-selected="true" onclick="drawTab(this)">D0</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="tabContents">
+    <div class="tab-pane map-container text-center" id="overworldTabContent" role="tabpanel" aria-labelledby="overworldTab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="overworld" src="static/images/overworld.png">
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d1TabContent" role="tabpanel" aria-labelledby="d1Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Tail Cave" src="static/images/d1.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d2TabContent" role="tabpanel" aria-labelledby="d2Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Bottle Grotto" src="static/images/d2.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d3TabContent" role="tabpanel" aria-labelledby="d3Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Key Cavern" src="static/images/d3.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d4TabContent" role="tabpanel" aria-labelledby="d4Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Angler's Tunnel" src="static/images/d4.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d5TabContent" role="tabpanel" aria-labelledby="d5Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Catfish's Maw" src="static/images/d5.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d6TabContent" role="tabpanel" aria-labelledby="d6Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Face Shrine" src="static/images/d6.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d7TabContent" role="tabpanel" aria-labelledby="d7Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Eagle's Tower" src="static/images/d7.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d8TabContent" role="tabpanel" aria-labelledby="d8Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Turtle Rock" src="static/images/d8.png"><br>
+        </div>
+    </div>
+    <div class="tab-pane map-container text-center" id="d0TabContent" role="tabpanel" aria-labelledby="d0Tab">
+        <div class="map-wrapper">
+            <img class="map" data-mapname="Color Dungeon" src="static/images/d0.png"><br>
+        </div>
+    </div>
+</div>
+
 <div id="mapAccordion" class="accordion">
 
 {% set ns = namespace(expanded='true', show=' show', collapsed='') %}
@@ -44,3 +129,27 @@
         </div>
     </div>
 </div>
+
+<script type="application/javascript">
+    var timeoutId;
+    function resizeTimeout() {
+        clearCheckImages();
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(drawActiveTab, 100);
+    }
+
+    window.addEventListener("resize", resizeTimeout);
+    //new ResizeObserver(resizeTimeout).observe(mapContainer);
+    /*$(window).on('load', function () {
+                drawChecks();
+            });*/
+    /*$(function () {
+        $('img[data-mapname="overworld"]').each(function () {
+            $(this).on('load', function () {
+                drawChecks();
+            });
+        });
+    });*/
+
+    //drawChecks();
+</script>

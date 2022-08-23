@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import argparse
+import jsonpickle
 
 sys.path.append(os.path.abspath('LADXR/'))
 
@@ -11,6 +12,8 @@ import logic
 from worldSetup import WorldSetup
 from LADXR.main import buildArgParser
 from checkMetadata import checkMetadataTable
+
+allChecks = {}
 
 class Flag():
     def __init__(self, ladxrArg, value):
@@ -27,6 +30,11 @@ class Flag():
     
     def __repr__(self) -> str:
         return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
+class Check:
+    def __init__(self, id, metadata):
+        self.id = id
+        self.name = metadata.name
+        self.area = metadata.area
 
 def getArgs(values=None):
     class Args():
@@ -99,9 +107,14 @@ def loadChecks(logic, inventory):
     e.visit(logic.start)
 
     for location in [x for x in e.getAccessableLocations() if _locationIsCheck(x)]:
-        name = location.items[0].nameId
-        checks.append(checkMetadataTable[name])
+        for item in location.items:
+            name = item.nameId
+            checks.append(allChecks[name])
     
     checks.sort(key=lambda x: (x.area, x.name))
 
     return checks
+
+def initChecks():
+    for id in checkMetadataTable:
+        allChecks[id] = Check(id, checkMetadataTable[id])

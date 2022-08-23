@@ -7,6 +7,11 @@
     display: inline-block;
 }
 
+.map-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .secondary {
     position: absolute;
     top: 0;
@@ -85,4 +90,78 @@ img {
 
 .accordion-item {
     background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
+
+.map {
+    max-width: 100%;
+}
+
+.map-container {
+    display: inline-block;
+    position: relative;
+}
+
+.checkGraphic {
+    position: absolute;
+    border-style: solid;
+    border-width: 3px;
+    border-color: #000;
+    opacity: 0.85;
+}
+
+.difficulty-checked {
+    background: #000;
+    opacity: 0.6;
+}
+
+.difficulty-0 {
+    background: #0F0;
+}
+
+.difficulty-1 {
+    background: #FF0;
+}
+
+.difficulty-2 {
+    background: #F80;
+}
+
+.difficulty-3 {
+    background: #F40;
+}
+
+.difficulty-4 {
+    background: #F00;
+}
+
+button.nav-link {
+    color: rgba(var(--bs-light-rgb),var(--bs-text-opacity));
+}
+
+button.nav-link.active {
+    color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))!important;
+    background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
+
+.nav-link.active {
+    color: rgba(var(--bs-light-rgb),var(--bs-text-opacity))!important;
+}
+
+.container {
+    max-width: 1500px;
+}
+
+.popover {
+    max-width: 400px;
+    --bs-popover-bg: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));
+}
+
+.popover-header {
+    background: var(--bs-dark-rgb);
+    color: var(--bs-dark-rgb);
+}
+
+.popover-body {
+    background: var(--bs-dark-rgb);
+    color: var(--bs-dark-rgb);
 }

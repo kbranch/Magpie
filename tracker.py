@@ -43,6 +43,11 @@ def renderMap():
         argValues = jsonpickle.decode(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
 
+        inventory['RUPEES_500'] = 10
+        inventory['RAFT'] = 1
+        inventory['ANGLER_KEYHOLE'] = 1
+
+        initChecks()
         args = getArgs(values=argValues)
         allItems = getItems(args)
         logics = getLogics(args)
@@ -52,6 +57,16 @@ def renderMap():
         return render_template("map.html", accessibility=accessibility)
     except:
         return renderTraceback()
+
+@app.route("/mapCoords")
+def mapCoords():
+    # checks = getAllChecks()
+    # for check in checks:
+    #     checks[check].id = check
+    
+    # checkList = list(checks.values())
+
+    return render_template("mapCoords.html")
 
 def getAccessibility(allChecks, logics, inventory):
     accessibility = {}
@@ -68,7 +83,11 @@ def getAccessibility(allChecks, logics, inventory):
 
         for j in range(i):
             accessibility[logics[i].name] = accessibility[logics[i].name].difference(accessibility[logics[j].name])
-    
+        
+    for i in range(len(logics)):
+        for check in accessibility[logics[i].name]:
+            check.difficulty = i
+
     accessibility['In logic'] = sorted(accessibility[logics[0].name], key=lambda x: (x.area, x.name))
     outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
 

@@ -12,11 +12,11 @@
                     <div class="card-body">
                         <ul class="list-group list-group-flush px-2">
         {% endif %}
-        <li data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-logic="{{logic}}" onclick="toggleCheck(event, this)">{{check.name}}</li>
+        <li data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-logic="{{logic}}" data-id="{{check.id}}" data-difficulty="{{check.difficulty}}" onclick="toggleCheck(event, this)">{{check.name}}</li>
 
         {% set ns.area = check.area %}
     {% endfor %}
-    {% if checks|length >0 %}
+    {% if checks|length > 0 %}
                 </ul>
             </div>
         </div>

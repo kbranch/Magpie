@@ -4,15 +4,44 @@
 'SWORD', 'FEATHER', 'HOOKSHOT', 'BOW', 'BOMB', 'MAGIC_POWDER', 'MAGIC_ROD', 'OCARINA', 'PEGASUS_BOOTS', 'POWER_BRACELET', 'BOOMERANG',
 'SHIELD', 'SHOVEL', 'TOADSTOOL', 'TAIL_KEY', 'SLIME_KEY', 'ANGLER_KEY', 'FACE_KEY', 'BIRD_KEY', 'FLIPPERS', 'BOWWOW', 
 'SONG1', 'SONG2', 'SONG3', 'BLUE_TUNIC', 'RED_TUNIC', 'MAX_ARROWS_UPGRADE', 'MAX_BOMBS_UPGRADE', 'MAX_POWDER_UPGRADE', 'SEASHELL',
-'HEART_CONTAINER', 'HEART_PIECE', 'RUPEES_100', 'RUPEES_20', 'RUPEES_200', 'RUPEES_50', 'MEDICINE', 'GEL', 'MESSAGE', 'GOLD_LEAF',
-'MEDICINE2', 'RAFT', 'ANGLER_KEYHOLE', 'SINGLE_ARROW', 'ARROWS_10',
+'HEART_CONTAINER', 'HEART_PIECE', 'RUPEES_100', 'RUPEES_20', 'RUPEES_200', 'RUPEES_50', 'RUPEES_500', 'MEDICINE', 'GEL', 'MESSAGE', 'GOLD_LEAF',
+'MEDICINE2', 'SINGLE_ARROW', 'ARROWS_10', 'ANGLER_KEYHOLE', 'RAFT', 'ROOSTER',
+'MAP1', 'MAP2', 'MAP3', 'MAP4', 'MAP5', 'MAP6', 'MAP7', 'MAP8', 'MAP9',  
 'COMPASS1', 'COMPASS2', 'COMPASS3', 'COMPASS4', 'COMPASS5', 'COMPASS6', 'COMPASS7', 'COMPASS8', 'COMPASS9',
 'KEY1', 'KEY2', 'KEY3', 'KEY4', 'KEY5', 'KEY6', 'KEY7', 'KEY8', 'KEY9',
-'MAP1', 'MAP2', 'MAP3', 'MAP4', 'MAP5', 'MAP6', 'MAP7', 'MAP8', 'MAP9', 
 'NIGHTMARE_KEY1', 'NIGHTMARE_KEY2', 'NIGHTMARE_KEY3', 'NIGHTMARE_KEY4', 'NIGHTMARE_KEY5', 'NIGHTMARE_KEY6', 'NIGHTMARE_KEY7', 'NIGHTMARE_KEY8', 'NIGHTMARE_KEY9', 
 'STONE_BEAK1', 'STONE_BEAK2', 'STONE_BEAK3', 'STONE_BEAK4', 'STONE_BEAK5', 'STONE_BEAK6', 'STONE_BEAK7', 'STONE_BEAK8', 'STONE_BEAK9', 
 'INSTRUMENT1', 'INSTRUMENT2', 'INSTRUMENT3', 'INSTRUMENT4', 'INSTRUMENT5', 'INSTRUMENT6', 'INSTRUMENT7', 'INSTRUMENT8', 'INSTRUMENT9', 
+'TRADING_ITEM_YOSHI_DOLL','TRADING_ITEM_RIBBON', 'TRADING_ITEM_DOG_FOOD', 'TRADING_ITEM_BANANAS', 'TRADING_ITEM_STICK', 'TRADING_ITEM_HONEYCOMB', 'TRADING_ITEM_PINEAPPLE',
+'TRADING_ITEM_HIBISCUS', 'TRADING_ITEM_LETTER', 'TRADING_ITEM_BROOM', 'TRADING_ITEM_FISHING_HOOK', 'TRADING_ITEM_NECKLACE', 'TRADING_ITEM_SCALE', 'TRADING_ITEM_MAGNIFIYING_GLASS', 
 ] %}
+
+{% set aboutContents = "<p>Source on <a href='https://github.com/kbranch/Magpie'>GitHub</a></p>
+<p>Special thanks to:</p>
+<ul>
+    <li><a href='https://www.twitch.tv/muffinjets'>MuffinJets</a> for his <a href='https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000'>EmoTracker pack</a>, which this is heavily based on</li>
+    <li><a href='https://github.com/daid'>Daid</a> for creating <a href='https://github.com/daid/LADXR'>LADXR</a> and keeping it open</li>
+</ul>
+<p>Visit us on <a href='https://discord.gg/yHxuDe3V'>Discord</a>!</p>" %}
+
+<nav class="navbar bg-dark">
+    <div class="container px-0">
+        <a class="nav-link pe-2" href="/">Magpie</a>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-title="About Magpie" data-bs-content="{{aboutContents}}" data-bs-html="true">
+            <img src="static/images/question-circle.svg">
+        </button>
+        <div class="col text-end">
+            <button type="button" class="btn btn-secondary" onclick="resetInventory();resetChecks();refreshImages();refreshMap();" data-bs-toggle="tooltip" data-bs-title="Reset Checks">
+                <img src="static/images/arrow-clockwise.svg">
+            </button>
+            <span data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
+                <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Change Flags">
+                    <img src="static/images/gear.svg">
+                </a>
+            </span>
+        </div>
+    </div>
+</nav>
 
 <div id="items" style="width: 270px;">
     <!-- Main items -->
@@ -24,7 +53,7 @@
         {{ item("SHOVEL", max="1") }}
         {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE") }}
         {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE") }}
-        {{ item("FEATHER", max="1") }}
+        {{ item("FEATHER", max="1", secondary="ROOSTER", src="jumpSrc()") }}
         {{ item("POWER_BRACELET", max="2") }}
         {{ item("PEGASUS_BOOTS", max="1") }}
         {{ item("FLIPPERS", max="1") }}
@@ -46,26 +75,53 @@
         {{ item("GOLD_LEAF", max_image="5") }}
     </div>
 
+    <div class="row py-4">
+        {{ item('TRADING_ITEM_YOSHI_DOLL', max="1") }}
+        {{ item('TRADING_ITEM_RIBBON', max="1") }}
+        {{ item('TRADING_ITEM_DOG_FOOD', max="1") }}
+        {{ item('TRADING_ITEM_BANANAS', max="1") }}
+        {{ item('TRADING_ITEM_STICK', max="1") }}
+        {{ item('TRADING_ITEM_HONEYCOMB', max="1") }}
+        {{ item('TRADING_ITEM_PINEAPPLE', max="1") }}
+        {{ item('TRADING_ITEM_HIBISCUS', max="1") }}
+        {{ item('TRADING_ITEM_LETTER', max="1") }}
+        {{ item('TRADING_ITEM_BROOM', max="1") }}
+        {{ item('TRADING_ITEM_FISHING_HOOK', max="1") }}
+        {{ item('TRADING_ITEM_NECKLACE', max="1") }}
+        {{ item('TRADING_ITEM_SCALE', max="1") }}
+        {{ item('TRADING_ITEM_MAGNIFIYING_GLASS', max="1") }}
+    </div>
+
     {% include "dungeonItems.html" %}
 
     <!-- Unknown items -->
+    {% set unknownItems = allItems.keys() | reject("in", knownItems) | list %}
+
+    {% if unknownItems | length > 0 %}
     <div class="row pt-2">
         <h5>Other items:</h5>
-        {% for item, max in allItems.items() %}
-            {% if item not in knownItems %}
-                <div class="col nowrap">
-                    <label for="{{item}}">{{item}}:</label>
-                    {% if max == 1 %}
-                        <input type="checkbox" id="{{item}}" name="{{item}}" data-item="{{item}}" onchange="itemValueUpdated(this)">
-                    {% else %}
-                        <input type="number" id="{{item}}" name="{{item}}" data-item="{{item}}" min="0" max="{{max}}" value="0" onchange="itemValueUpdated(this)">
-                    {% endif %}
-                </div>
-            {% endif %}
+        {% for item in unknownItems %}
+            {% set max = allItems[item] %}
+            <div class="col nowrap">
+                <label for="{{item}}">{{item}}:</label>
+                {% if max == 1 %}
+                    <input type="checkbox" id="{{item}}" name="{{item}}" data-item="{{item}}" onchange="itemValueUpdated(this)">
+                {% else %}
+                    <input type="number" id="{{item}}" name="{{item}}" data-item="{{item}}" min="0" max="{{max}}" value="0" onchange="itemValueUpdated(this)">
+                {% endif %}
+            </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 
 <script type="application/javascript">
     maxInventory = {{ allItems|safe }};
+
+    //Activate the bootstrap tooltips and popovers
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 </script>

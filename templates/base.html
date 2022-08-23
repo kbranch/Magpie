@@ -14,22 +14,6 @@
     </head>
 
     <body>
-        <nav class="navbar bg-light">
-            <div class="container">
-                <a class="nav-link" href="/">Magpie</a>
-                <div class="col text-end">
-                    <button type="button" class="btn btn-secondary" onclick="resetInventory();resetChecks();refreshImages();refreshMap();" data-bs-toggle="tooltip" data-bs-title="Reset Checks">
-                        <img src="static/images/arrow-clockwise.svg">
-                    </button>
-                    <span data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
-                        <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Change Flags">
-                            <img src="static/images/gear.svg">
-                        </a>
-                    </span>
-                </div>
-            </div>
-        </nav>
-
         <div class="container body-content">
             {% for message in get_flashed_messages() %}
                 <div class="flash">{{ message }}</div>

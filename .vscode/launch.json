@@ -19,7 +19,7 @@
                 "0.0.0.0",
             ],
             "jinja": true
-            // "program": "tracker.py",
+            // "program": "spriteExtractor.py",
             // "console": "integratedTerminal",
             // "justMyCode": true
         }
