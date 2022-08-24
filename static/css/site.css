@@ -109,6 +109,12 @@ img {
     opacity: 0.85;
 }
 
+.tooltip-check-graphic {
+    border-style: solid;
+    border-width: 3px;
+    border-color: #ccc;
+}
+
 .difficulty-checked {
     background: #000;
     opacity: 0.6;
@@ -164,4 +170,12 @@ button.nav-link.active {
 .popover-body {
     background: var(--bs-dark-rgb);
     color: var(--bs-dark-rgb);
+}
+
+.tooltip {
+    max-width: 500px;
+}
+
+.tooltip-inner {
+    max-width: 500px;
 }

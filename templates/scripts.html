@@ -180,6 +180,7 @@
 <!-- Map scripts -->
 <script type="application/javascript">
     var checkedChecks = null;
+    var mapNodes = null;
 
     function saveChecked() {
         localStorage.setItem('checkedChecks', JSON.stringify(checkedChecks));
@@ -204,10 +205,38 @@
         return `${area}-${name}`;
     }
 
-    function toggleCheckImage(check) {
-        $(check).tooltip('hide');
+    function toggleNode(node) {
+        $(node).tooltip('hide');
+        var keys = $(node).attr('data-ids').split(',');
+        var toggleList = [];
+
+        for (const key of keys) {
+            var id = key.split(';')[0];
+            var coord = coordDict[id][0];
+            if (!(`${coord.area}-${coord.name}` in checkedChecks)) {
+                toggleList.push(id);
+            }
+        }
+
+        if (toggleList.length > 0) {
+            for (const id of toggleList) {
+                var textCheck = $(`li[data-id="${id}"`);
+                toggleCheck(null, textCheck[0]);
+            }
+        }
+        else {
+            for (const key of keys) {
+                var id = key.split(';')[0];
+                var textCheck = $(`li[data-id="${id}"`);
+                toggleCheck(null, textCheck[0]);
+            }
+        }
+    }
+
+    function toggleSingleNodeCheck(check) {
         var id = $(check).attr('data-id');
         var textCheck = $(`li[data-id="${id}"`);
+        $(`.checkGraphic`).tooltip('hide');
         toggleCheck(null, textCheck[0]);
     }
 
@@ -346,8 +375,16 @@
         clearCheckImages();
 
         var map = $(mapImg).closest('div.tab-pane');
+        var parent = $(map).find('div.map-wrapper');
+
+        var xScale = Math.min(1, $(map).width() / $(map).find('.map').prop('naturalWidth'));
+        var yScale = Math.min(1, $(map).height() / $(map).find('.map').prop('naturalHeight'));
+
+        var xOffset = (16 * xScale - 16) / 2;
+        var yOffset = (16 * yScale - 16) / 2;
 
         var checks = $('li[data-logic]');
+        var nodes = new Object();
         for (const check of checks) {
             if ($(check).attr('data-logic') == 'Out of logic'
                 || (mapName != 'overworld' && $(check).attr('data-checkarea') != mapName)
@@ -355,42 +392,65 @@
                 continue;
             }
 
-            var isChecked = false;
-            var parentRow = $(check).closest('.row[data-logic]');
-            if ($(parentRow).attr('data-logic') == 'Checked') {
-                isChecked = true;
-            }
-
             var id = $(check).attr('data-id');
-            var coords = coordDict[id];
-
-            var xScale = Math.min(1, $(map).width() / $(map).find('.map').prop('naturalWidth'));
-            var yScale = Math.min(1, $(map).height() / $(map).find('.map').prop('naturalHeight'));
-
-            var xOffset = (16 * xScale - 16) / 2;
-            var yOffset = (16 * yScale - 16) / 2;
-
-            var difficulty = isChecked ? 'checked' : $(check).attr('data-difficulty');
             var name = $(check).attr('data-checkname');
             var area = $(check).attr('data-checkarea');
-            var parent = $(map).find('div.map-wrapper');
+            var isChecked = `${area}-${name}` in checkedChecks;
+            var difficulty = isChecked ? -1 : Number($(check).attr('data-difficulty'));
+            var coords = coordDict[id];
+
             for (const coord of coords) {
-                $(parent).append($('<img>', {
-                    src: 'static/images/blank.png',
-                    'data-checkname': name,
-                    'data-checkarea': area,
-                    'data-id': id,
-                    class: `checkGraphic difficulty-${difficulty}`,
-                    css: {
-                        'top': coord.y * yScale + yOffset,
-                        'left': coord.x * xScale + xOffset,
-                        'width': 16,
-                    },
-                    onmouseover: 'addTooltip(this)',
-                    onclick: 'toggleCheckImage(this)',
-                }));
+                var x = coord.x * xScale + xOffset;
+                var y = coord.y * yScale + yOffset;
+                var key = `${x},${y}`;
+
+                if (!(key in nodes)) {
+                    nodes[key] = [];
+                }
+
+                nodes[key].push({id: id, difficulty: difficulty});
             }
         }
+
+        for (const key in nodes) {
+            var coord = key.split(',');
+            var difficulty = 'checked';
+            var ids = [];
+
+            for (const check of nodes[key]) {
+                ids.push(`${check.id};${check.difficulty}`);
+                
+                var diff = check.difficulty;
+                if (diff >= 0 && (diff < difficulty || difficulty == 'checked')) {
+                    difficulty = diff;
+                }
+            }
+
+            var img = $('<img>', {
+                src: 'static/images/blank.png',
+                'data-ids': ids.join(','),
+                'data-node-id': key,
+                class: `checkGraphic difficulty-${difficulty}`,
+                css: {
+                    'top': Number(coord[1]),
+                    'left': Number(coord[0]),
+                    'width': 16,
+                },
+                onclick: 'closeOtherTooltips(this);',
+                oncontextmenu: 'toggleNode(this); return false;',
+            })
+            $(parent).append(img);
+            addTooltip(img);
+        }
+    }
+
+    function closeOtherTooltips(element) {
+        var id = $(element).attr('data-node-id');
+        $(`.checkGraphic[data-node-id!="${id}"]`).tooltip('hide');
+    }
+
+    function closeAllCheckTooltips() {
+        $(`.checkGraphic`).tooltip('hide');
     }
 
     function addTooltip(check) {
@@ -398,12 +458,42 @@
             return;
         }
 
-        var checkName = `${$(check).attr('data-checkarea')} - ${$(check).attr('data-checkname')}`
+        var ids = $(check).attr('data-ids').split(',');
+        var template = "<p class='text-start mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);'><img class='tooltip-check-graphic difficulty-{0}' src='static/images/blank.png'><span class='ps-2'>{1} - {2}</span></p>"
+        var title = "<div class='map-container'>";
+        var first = true;
+
+        for (const id of ids) {
+            var chunks = id.split(';');
+            var checkId = chunks[0];
+            var difficulty = chunks[1] == -1 ? 'checked' : chunks[1];
+            var coord = coordDict[checkId][0];
+
+            var line = template.replace('{0}', difficulty)
+                               .replace('{1}', coord.area)
+                               .replace('{2}', coord.name)
+                               .replace('{4}', checkId);
+
+            if (!first) {
+                line = line.replace('{3}', 'pt-2')
+            }
+            else {
+                line = line.replace(' {3}', '')
+                first = false;
+            }
+
+            title += line;
+        }
+
+        title += '</div>';
+
         $(check).attr('data-bs-toggle', "tooltip");
-        $(check).attr('data-bs-title', checkName);
+        $(check).attr('data-bs-trigger', "click hover");
+        $(check).attr('data-bs-html', "true");
+        $(check).attr('data-bs-title', title);
         var tooltip = new bootstrap.Tooltip(check);
 
-        $(check).tooltip("show");
+        //$(check).tooltip('show');
     }
 
     function drawActiveTab() {
@@ -463,6 +553,10 @@
 
         var test = '';
     }
+
+    const allowList = bootstrap.Tooltip.Default.allowList
+    allowList.p.push('data-id');
+    allowList.p.push('onclick');
 
     loadChecked();
 </script>
