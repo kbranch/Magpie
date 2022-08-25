@@ -102,7 +102,7 @@ function addItem(item, qty) {
     saveInventory();
     setItemImage(item);
     updateOverlay(item);
-    refreshMap();
+    refreshCheckList();
 }
 
 function itemValueUpdated(element) {
@@ -119,7 +119,7 @@ function itemValueUpdated(element) {
     inventory[item] = value;
 
     saveInventory();
-    refreshMap();
+    refreshCheckList();
 }
 
 function resetInventory() {
