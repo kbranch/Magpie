@@ -30,7 +30,7 @@
             </div>
         </nav>
 
-        <div class="container body-content">
+        <!-- <div class="container body-content">
             <div class="row">
                 <div class="col-9">
                     <ul class="nav nav-tabs" id="mapTabs" role="tablist">
@@ -100,19 +100,19 @@
                     </div>
                 </div>
             </div>
-        </div>
-            <!-- <h1 id="currentCheck" style="position:fixed; top:0; right:0;" id="currentCheck">this is a test</h1>
-            <img id="cursor" style="position:fixed; top:0; left:0; pointer-events:none;" src="static/images/cursor.png"> -->
+        </div> -->
+            <pre id="coords" style="position:fixed; top:0; right:0;">this is a test</pre>
+            <img id="cursor" style="position:fixed; top:0; left:0; pointer-events:none;" src="static/images/cursor.png">
         <!-- <div class="container body-content"> -->
-            <!-- <img class="map" data-mapname="overworld" src="static/images/overworld.png"><br>
-            <img class="map" data-mapname="d0" src="static/images/d0.png"><br>
-            <img class="map" data-mapname="d2" src="static/images/d2.png"><br>
-            <img class="map" data-mapname="d3" src="static/images/d3.png"><br>
-            <img class="map" data-mapname="d4" src="static/images/d4.png"><br>
-            <img class="map" data-mapname="d5" src="static/images/d5.png"><br>
-            <img class="map" data-mapname="d6" src="static/images/d6.png"><br>
-            <img class="map" data-mapname="d7" src="static/images/d7.png"><br>
-            <img class="map" data-mapname="d8" src="static/images/d8.png"> -->
+            <img class="mapImage" data-mapname="overworld" src="static/images/overworld.png"><br>
+            <img class="mapImage" data-mapname="d0" src="static/images/d0.png"><br>
+            <img class="mapImage" data-mapname="d2" src="static/images/d2.png"><br>
+            <img class="mapImage" data-mapname="d3" src="static/images/d3.png"><br>
+            <img class="mapImage" data-mapname="d4" src="static/images/d4.png"><br>
+            <img class="mapImage" data-mapname="d5" src="static/images/d5.png"><br>
+            <img class="mapImage" data-mapname="d6" src="static/images/d6.png"><br>
+            <img class="mapImage" data-mapname="d7" src="static/images/d7.png"><br>
+            <img class="mapImage" data-mapname="d8" src="static/images/d8.png">
         <!-- </div> -->
 
         <div class="form-check form-switch">
@@ -121,11 +121,11 @@
 
         {% include 'scripts.html' %}
 
-        <!-- <script type="application/javascript">
-            checkCoords = [];
+        <script type="application/javascript">
+            /*checkCoords = [];
             //localStorage.setItem("coords", JSON.stringify(checkCoords));
             checkCoords = JSON.parse(localStorage.getItem('coords'));
-            allLocations = JSON.parse(`{checks|safe}`);
+            //allLocations = JSON.parse(`{checks|safe}`);
             currentLocation = allLocations.pop();
             $('#currentCheck').html(`${currentLocation.area}: ${currentLocation.name}`);
 
@@ -136,10 +136,10 @@
 
                     return false;
                 });
-            });
+            });*/
 
             $(document).ready(function() {
-                $(".map").on("mousemove", function(event) {
+                $(".mapImage").on("mousemove", function(event) {
                     bounds=this.getBoundingClientRect();
                     var left=bounds.left;
                     var top=bounds.top;
@@ -152,8 +152,8 @@
                         y -= Math.floor(y / 128) * 2;
                     }
 
-                    var targetX = Math.floor(x/16) * 16;
-                    var targetY = Math.floor(y/16) * 16;
+                    var targetX = Math.floor(x/8) * 8;
+                    var targetY = Math.floor(y/8) * 8;
 
                     if (map == 'overworld') {
                         xOffset = Math.floor(x / 160) * 2;
@@ -169,12 +169,21 @@
 
                     $("#cursor").css('top', targetY);
                     $("#cursor").css('left', targetX);
+                    $('#coords').html(`"map": "${map}",
+"x": ${targetX - left},
+"y": ${targetY - top},`)
                 });
             });
 
+            function copyCoords() {
+                navigator.clipboard.writeText($('#coords').html());
+            }
+
             $(document).ready(function() {
-                $(".map").on("click", function(event) {
-                    bounds=this.getBoundingClientRect();
+                $(".mapImage").on("click", function(event) {
+                    navigator.clipboard.writeText($('#coords').html());
+
+                    /*bounds=this.getBoundingClientRect();
                     var left=bounds.left;
                     var top=bounds.top;
                     var x = event.pageX - left - window.scrollX;
@@ -198,6 +207,8 @@
                         targetY += yOffset;
                     }
 
+
+
                     check = new Object();
                     check.map = this.dataset.mapname;
                     check.x = targetX;
@@ -206,9 +217,9 @@
 
                     checkCoords.push(check);
 
-                    localStorage.setItem("coords", JSON.stringify(checkCoords));
+                    localStorage.setItem("coords", JSON.stringify(checkCoords));*/
                 });
             });
-        </script> -->
+        </script>
     </body>
 </html>

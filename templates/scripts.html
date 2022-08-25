@@ -386,13 +386,14 @@
         var checks = $('li[data-logic]');
         var nodes = new Object();
         for (const check of checks) {
+            var id = $(check).attr('data-id');
+            var checkMaps = coordDict[id].map(function(x) { return x.map; });
+
             if ($(check).attr('data-logic') == 'Out of logic'
-                || (mapName != 'overworld' && $(check).attr('data-checkarea') != mapName)
-                || (mapName == 'overworld' && $(check).attr('data-checkarea') in allMapNames)) {
+                || !(checkMaps.includes(mapName))) {
                 continue;
             }
 
-            var id = $(check).attr('data-id');
             var name = $(check).attr('data-checkname');
             var area = $(check).attr('data-checkarea');
             var isChecked = `${area}-${name}` in checkedChecks;
@@ -400,8 +401,12 @@
             var coords = coordDict[id];
 
             for (const coord of coords) {
-                var x = coord.x * xScale + xOffset;
-                var y = coord.y * yScale + yOffset;
+                if (coord.map != mapName) {
+                    continue;
+                }
+
+                var x = Math.round(coord.x * xScale + xOffset);
+                var y = Math.round(coord.y * yScale + yOffset);
                 var key = `${x},${y}`;
 
                 if (!(key in nodes)) {
@@ -426,15 +431,14 @@
                 }
             }
 
-            var img = $('<img>', {
-                src: 'static/images/blank.png',
+            var img = $('<div>', {
+                //src: 'static/images/blank.png',
                 'data-ids': ids.join(','),
                 'data-node-id': key,
                 class: `checkGraphic difficulty-${difficulty}`,
                 css: {
                     'top': Number(coord[1]),
                     'left': Number(coord[0]),
-                    'width': 16,
                 },
                 onclick: 'closeOtherTooltips(this);',
                 oncontextmenu: 'toggleNode(this); return false;',
@@ -459,7 +463,7 @@
         }
 
         var ids = $(check).attr('data-ids').split(',');
-        var template = "<p class='text-start mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);'><img class='tooltip-check-graphic difficulty-{0}' src='static/images/blank.png'><span class='ps-2'>{1} - {2}</span></p>"
+        var template = "<div class='text-start d-flex p-1 mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);'><div class='tooltip-check-graphic align-self-center difficulty-{0}'></div><div class='tooltip-text align-middle ps-2'>{1} - {2}</div></div>"
         var title = "<div class='map-container'>";
         var first = true;
 
@@ -555,8 +559,8 @@
     }
 
     const allowList = bootstrap.Tooltip.Default.allowList
-    allowList.p.push('data-id');
-    allowList.p.push('onclick');
+    allowList.div.push('data-id');
+    allowList.div.push('onclick');
 
     loadChecked();
 </script>
