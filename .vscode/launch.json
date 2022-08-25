@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "tracker.py",
+                "FLASK_APP": "magpie.py",
                 "FLASK_DEBUG": "1"
             },
             "args": [

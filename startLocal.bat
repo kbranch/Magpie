@@ -1,1 +1,1 @@
-.venv\Scripts\python.exe tracker.py --local
+.venv\Scripts\python.exe magpie.py --local
