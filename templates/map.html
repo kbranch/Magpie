@@ -1,5 +1,3 @@
-{% from 'logicContents.html' import logicContents %}
-
 <ul class="nav nav-tabs" id="mapTabs" role="tablist">
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="overworldTab" data-bs-toggle="tab" data-bs-target="#overworldTabContent" type="button" role="tab" aria-controls="overworldTabContent" aria-selected="true" onclick="drawTab(this)">Overworld</button>
@@ -85,61 +83,3 @@
         </div>
     </div>
 </div>
-
-<div id="mapAccordion" class="accordion">
-
-{% set ns = namespace(expanded='true', show=' show', collapsed='') %}
-{% for logic in accessibility %}
-    {% set safeLogic = logic | replace(' ', '-') %}
-    {% if accessibility[logic]|length == 0 %}{% set hidden=' hidden' %}{% else %}{% set hidden='' %}{% endif %}
-
-    <div class="accordion-item {{hidden}}">
-        <h2 id="heading-{{safeLogic}}" class="accordion-header">
-            <button class="accordion-button{{ns.collapsed}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{safeLogic}}" aria-expanded="{{ns.expanded}}" aria-controls="collapse-{{safeLogic}}">
-                {{logic}}
-            </button>
-        </h2>
-
-        <div id="collapse-{{safeLogic}}" class="accordion-collapse collapse{{ns.show}}" aria-labelledby="heading-{{safeLogic}}" data-bs-parent="#mapAccordion">
-            <div class="accordion-body">
-                <div class="row" data-logic="{{logic}}" onclick="preventDoubleClick(event)">
-                    {{ logicContents(accessibility[logic], logic) }}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% set ns.expanded = 'false' %}
-    {% set ns.show = '' %}
-    {% set ns.collapsed = ' collapsed' %}
-{% endfor %}
-
-    <div class="accordion-item hidden">
-        <h2 id="heading-Checked" class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Checked" aria-expanded="false" aria-controls="collapse-Checked">
-                Checked
-            </button>
-        </h2>
-
-        <div id="collapse-Checked" class="accordion-collapse collapse" aria-labelledby="heading-Checked" data-bs-parent="#mapAccordion">
-            <div class="accordion-body">
-                <div class="row" data-logic="Checked" onclick="preventDoubleClick(event)">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="application/javascript">
-    var timeoutId;
-    function resizeTimeout() {
-        clearCheckImages();
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(drawActiveTab, 100);
-    }
-
-    window.addEventListener("resize", resizeTimeout);
-
-    var mapTooltipTriggerList = document.querySelectorAll('li.nav-item[data-bs-toggle="tooltip"]');
-    var mapTooltipList = [...mapTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-</script>

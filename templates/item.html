@@ -1,4 +1,4 @@
-{% macro item(primary, secondary='', classes='"', max='', src='', max_image='', width='32px', overlay_count='') %}
+{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', overlay_count='') %}
     {% if secondary != '' %}
         {% set secondary_tag = 'data-secondary=' + secondary %}
         {% set oncontextmenu = "addItem('" + secondary + "', 1);return false;" %}
@@ -15,6 +15,10 @@
         {% set max = 'data-max=' + max %}
     {% endif %}
 
+    {% if secondaryMax != '' %}
+        {% set secondaryMax = 'data-secondary_max=' + secondaryMax %}
+    {% endif %}
+
     {% if src != '' %}
         {% set src_tag = 'data-src=' + src %}
     {% endif %}
@@ -25,7 +29,7 @@
 
     {% set width = 'style="width: ' + width + ';"' %}
 
-    <div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{max_image}} class="{{classes}}">
+    <div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{secondaryMax}} {{max_image}} class="{{classes}}">
         <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}">
             <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} class="itemImage" src="static/images/{{primary}}_0.png" draggable="false">
         {% if secondary != '' and src == '' %}

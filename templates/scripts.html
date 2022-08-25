@@ -15,12 +15,12 @@
             success: function(response) {
                 $('#itemContainer').html(response);
                 initKnownItems();
-                refreshMap();
+                refreshCheckList();
              }
         });
     }
 
-    function refreshMap() {
+    function refreshCheckList() {
         activeTabId = $('ul#mapTabs button.active').attr('id');
 
         if (activeTabId == undefined) {
@@ -29,13 +29,13 @@
 
         $.ajax({
             type: "POST",
-            url: "/map",
+            url: "/checkList",
             data: {
                 args: JSON.stringify(args),
                 inventory: JSON.stringify(inventory),
             },
             success: function(response) {
-                $('#mapContainer').html(response);
+                $('#checkList').html(response);
                 refreshChecked();
                 $(`button#${activeTabId}`).click();
              }
@@ -139,6 +139,7 @@
 
         localStorage.setItem('args', JSON.stringify(args));
         refreshItems();
+        refreshCheckList();
     }
 
     function loadArgs() {
@@ -172,6 +173,7 @@
         }
 
         refreshItems();
+        refreshCheckList();
     }
 
     loadArgs();

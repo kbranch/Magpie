@@ -37,8 +37,8 @@ def renderItems():
     except:
         return renderTraceback()
 
-@app.route("/map", methods=['POST'])
-def renderMap():
+@app.route("/checkList", methods=['POST'])
+def renderCheckList():
     try:
         argValues = jsonpickle.decode(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
@@ -54,7 +54,7 @@ def renderMap():
         allChecks = loadChecks(logics[0], allItems)
         accessibility = getAccessibility(allChecks, logics, inventory)
 
-        return render_template("map.html", accessibility=accessibility)
+        return render_template("checklist.html", accessibility=accessibility)
     except:
         return renderTraceback()
 

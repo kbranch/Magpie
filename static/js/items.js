@@ -9,12 +9,17 @@ function initKnownItems() {
     var columns = document.querySelectorAll('div[data-primary]');
 
     for (const col of columns) {
-        var primary = col.dataset.primary;
-
         // Set custom max values
         if ("max" in col.dataset) {
+            var primary = col.dataset.primary;
             var max = Number(col.dataset.max);
             maxInventory[primary] = max;
+        }
+
+        if ("secondary_max" in col.dataset) {
+            var secondary = col.dataset.secondary;
+            var max = Number(col.dataset.secondary_max);
+            maxInventory[secondary] = max;
         }
     }
 
