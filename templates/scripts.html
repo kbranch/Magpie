@@ -374,7 +374,8 @@
             allMapNames[$(mapImg).attr('data-mapname')] = true;
         }
 
-        clearCheckImages();
+        //clearCheckImages();
+        $('.animate__fadeOut').remove();
 
         var map = $(mapImg).closest('div.tab-pane');
         var parent = $(map).find('div.map-wrapper');
@@ -419,6 +420,11 @@
             }
         }
 
+        var oldNodes = new Set();
+        $('.checkGraphic').each(function () {
+            oldNodes.add($(this).attr('data-node-id'));
+        });
+
         for (const key in nodes) {
             var coord = key.split(',');
             var difficulty = 'checked';
@@ -433,20 +439,40 @@
                 }
             }
 
-            var img = $('<div>', {
-                //src: 'static/images/blank.png',
-                'data-ids': ids.join(','),
-                'data-node-id': key,
-                class: `checkGraphic difficulty-${difficulty}`,
-                css: {
-                    'top': Number(coord[1]),
-                    'left': Number(coord[0]),
-                },
-                onclick: 'closeOtherTooltips(this);',
-                oncontextmenu: 'toggleNode(this); return false;',
-            })
-            $(parent).append(img);
+            var ids = ids.join(',');
+            var classes = `checkGraphic animate__animated animate__bounceInDown difficulty-${difficulty}`;
+            var img = $(`[data-node-id="${key}"]`);
+
+            if (img.length > 0) {
+                $(img).attr('class', classes);
+                $(img).attr('data-ids', ids);
+            }
+            else {
+                img = $('<div>', {
+                    //src: 'static/images/blank.png',
+                    'data-ids': ids,
+                    'data-node-id': key,
+                    class: classes,
+                    css: {
+                        'top': Number(coord[1]),
+                        'left': Number(coord[0]),
+                    },
+                    onclick: 'closeOtherTooltips(this);',
+                    oncontextmenu: 'toggleNode(this); return false;',
+                });
+
+                $(parent).append(img);
+            }
+
             addTooltip(img);
+
+            oldNodes.delete(key);
+        }
+
+        for (const staleNode of oldNodes) {
+            var node = $(`[data-node-id="${staleNode}"]`);
+            $(node).removeClass('animate__bounceInDown');
+            $(node).addClass('animate__fadeOut');
         }
     }
 
@@ -460,12 +486,8 @@
     }
 
     function addTooltip(check) {
-        if (typeof $(check).attr('data-bs-toggle') !== 'undefined') {
-            return;
-        }
-
         var ids = $(check).attr('data-ids').split(',');
-        var template = "<div class='text-start d-flex p-1 mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);'><div class='tooltip-check-graphic align-self-center difficulty-{0}'></div><div class='tooltip-text align-middle ps-2'>{1} - {2}</div></div>"
+        var template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);'><div class='tooltip-check-graphic align-self-center difficulty-{0}'></div><div class='tooltip-text align-middle ps-2'>{1} - {2}</div></div>"
         var title = "<div class='map-container'>";
         var first = true;
 

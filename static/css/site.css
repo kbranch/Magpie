@@ -106,6 +106,14 @@ img {
     position: relative;
 }
 
+.animate__animated.animate__fadeOut {
+    --animate-duration: 0.3s;
+}
+
+.animate__animated.animate__bounceInDown {
+    --animate-duration: 0.3s;
+}
+
 .checkGraphic {
     position: absolute;
     border-style: solid;
@@ -138,6 +146,10 @@ img {
 .difficulty-0 {
     background: #0F0;
     border-radius: 50%;
+}
+
+.tooltip-check:hover {
+    background-color: #444;
 }
 
 /* square */
