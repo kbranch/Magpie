@@ -500,7 +500,7 @@
 
     function addTooltip(check) {
         var ids = $(check).attr('data-ids').split(',');
-        var template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);'><div class='tooltip-check-graphic align-self-center difficulty-{0}'></div><div class='tooltip-text align-middle ps-2'>{1} - {2}</div></div>"
+        var template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'><div class='tooltip-check-graphic align-self-center difficulty-{0}'></div><div class='tooltip-text align-middle ps-2'>{1} - {2}</div></div>"
         var title = "<div class='map-container'>";
         var first = true;
 
@@ -535,9 +535,15 @@
         $(check).attr('data-bs-html', "true");
         $(check).attr('data-bs-title', title);
 
-        if (!activated) {
-            var tooltip = new bootstrap.Tooltip(check);
+        if (activated) {
+            var oldTooltip = bootstrap.Tooltip.getInstance(check);
+            oldTooltip.dispose();
         }
+
+        var tooltip = new bootstrap.Tooltip(check);
+        check[0].addEventListener('inserted.bs.tooltip', (x, y) => {
+            $('.tooltip').attr('oncontextmenu', 'return false;');
+        })
 
         //$(check).tooltip('show');
     }
@@ -608,6 +614,7 @@
     const allowList = bootstrap.Tooltip.Default.allowList
     allowList.div.push('data-id');
     allowList.div.push('onclick');
+    //allowList.div.push('oncontextmenu');
 
     loadChecked();
 </script>
