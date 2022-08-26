@@ -65,6 +65,11 @@ img {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    width: 270px;
+}
+
+#item-blank {
+    width: 270px;
 }
 
 .hidden {
@@ -261,4 +266,19 @@ button.nav-link.active {
 
 .check-name {
     float: left;
+}
+
+.left-click {
+    background-image: url('/static/images/left-click.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+.right-click {
+    background-image: url('/static/images/left-click.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transform: scaleX(-1);
 }

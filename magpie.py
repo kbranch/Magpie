@@ -54,7 +54,7 @@ def renderCheckList():
         allChecks = loadChecks(logics[0], allItems)
         accessibility = getAccessibility(allChecks, logics, inventory)
 
-        return render_template("checklist.html", accessibility=accessibility)
+        return render_template("checklist.html", accessibility=accessibility, logics=logics)
     except:
         return renderTraceback()
 
