@@ -21,7 +21,7 @@
     }
 
     function refreshCheckList() {
-        activeTabId = $('ul#mapTabs button.active').attr('id');
+        var activeTabId = $('ul#mapTabs button.active').attr('id');
 
         if (activeTabId == undefined) {
             activeTabId = 'overworldTab';
@@ -37,7 +37,16 @@
             success: function(response) {
                 $('#checkList').html(response);
                 refreshChecked();
-                $(`button#${activeTabId}`).click();
+
+                var button = $(`button#${activeTabId}`);
+                var pane = $($(button).attr('data-bs-target'));
+
+                $(pane).addClass('show');
+                $(pane).addClass('active');
+                $(button).attr('aria-selected', "true");
+                $(button).addClass('active');
+
+                drawActiveTab();
              }
         });
     }
@@ -359,13 +368,15 @@
         $('.checkGraphic').remove();
     }
 
-    function drawChecks(mapName) {
+    function drawChecks(mapName, animate=true) {
         var mapImg = $(`.map[data-mapname="${mapName}"`);
 
         if ($(mapImg).width() <= 100) {
-            $(mapImg).on('load', function () { drawChecks(mapName); });
+            $(mapImg).on('load', function () { drawChecks(mapName, animate); });
             return;
         }
+
+        closeAllCheckTooltips();
 
         var allMapImgs = $('.map');
         var allMapNames = new Object();
@@ -439,20 +450,22 @@
                 }
             }
 
+            var animationClass = animate ? ' animate__bounceInDown' : '';
             var ids = ids.join(',');
-            var classes = `checkGraphic animate__animated animate__bounceInDown difficulty-${difficulty}`;
+            var classes = `checkGraphic animate__animated difficulty-${difficulty}`;
             var img = $(`[data-node-id="${key}"]`);
 
             if (img.length > 0) {
                 $(img).attr('class', classes);
                 $(img).attr('data-ids', ids);
+                $(img).removeClass('animate__bounceInDown');
             }
             else {
                 img = $('<div>', {
                     //src: 'static/images/blank.png',
                     'data-ids': ids,
                     'data-node-id': key,
-                    class: classes,
+                    class: classes + animationClass,
                     css: {
                         'top': Number(coord[1]),
                         'left': Number(coord[0]),
@@ -530,18 +543,21 @@
     }
 
     function drawActiveTab() {
-        activeTabId = $('ul#mapTabs button.active').attr('id');
-        $(`button#${activeTabId}`).click();
+        var activeTabId = $('ul#mapTabs button.active').attr('id');
+        var button = $(`button#${activeTabId}`)[0];
+        drawChecks(getMapNameFromButton(button), true);
     }
 
-    function drawTab(button) {
+    function getMapNameFromButton(button) {
         var target = $(button).attr('data-bs-target');
         var img = $(`${target} img.map`);
         var mapName = $(img).attr('data-mapname');
 
-        closeAllCheckTooltips();
+        return mapName;
+    }
 
-        drawChecks(mapName);
+    function drawTab(button) {
+        drawChecks(getMapNameFromButton(button), false);
     }
 
     function processLocations() {
