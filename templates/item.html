@@ -31,10 +31,10 @@
 
     <div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{secondaryMax}} {{max_image}} class="{{classes}}">
         <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}">
-            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} class="itemImage" src="static/images/{{primary}}_0.png" draggable="false">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" {{width|safe}} class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}
+            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} class="itemImage" src="static/images/{{primary}}_0.png" draggable="false">
         {% if overlay_count != '' %}
             <span data-overlay_count="{{overlay_count}}" class="overlay" onmousedown="preventDoubleClick(event)">0</span>
         {% endif %}
