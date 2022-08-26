@@ -372,7 +372,15 @@
         saveChecked();
     }
 
+    function deleteAllCheckTooltips() {
+        $('.checkGraphic').each((i, e) => {
+            var oldTooltip = bootstrap.Tooltip.getInstance(e);
+            oldTooltip.dispose();
+        });
+    }
+
     function clearCheckImages() {
+        deleteAllCheckTooltips();
         $('.checkGraphic').remove();
     }
 
@@ -532,10 +540,6 @@
                 var chunks = matchingId.split(';');
                 var difficulty = chunks[1] == -1 ? 'checked' : chunks[1];
                 var behindKeys = chunks[2] == 1 ? ' behind-keys' : '';
-
-                /*if (graphic != '') {
-                    graphic += '|';
-                }*/
 
                 graphic += graphicTemplate.replace('{0}', difficulty)
                                           .replace('{1}', behindKeys);
