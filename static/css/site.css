@@ -244,6 +244,7 @@ button.nav-link.active {
 
 .tooltip {
     max-width: 500px;
+    pointer-events: none;
 }
 
 .tooltip-inner {
