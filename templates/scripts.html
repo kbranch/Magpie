@@ -576,7 +576,7 @@
         }
 
         var tooltip = new bootstrap.Tooltip(check);
-        check[0].addEventListener('inserted.bs.tooltip', (x, y) => {
+        check[0].addEventListener('inserted.bs.tooltip', (x) => {
             $('.tooltip').attr('oncontextmenu', 'return false;');
         })
 

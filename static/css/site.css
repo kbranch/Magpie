@@ -122,15 +122,15 @@ img {
 }
 
 .checkGraphic:hover {
-    filter: drop-shadow(0px 0px 5px #fff);
+    filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 
 .itemImage:hover {
-    filter: drop-shadow(0px 0px 5px #fff);
+    filter: drop-shadow(0px 0px 5px #ccc);
 }
 
 .secondary:hover + .itemImage {
-    filter: drop-shadow(0px 0px 5px #fff);
+    filter: drop-shadow(0px 0px 5px #ccc);
 }
 
 .tooltip-check-graphic {
@@ -142,6 +142,10 @@ img {
 
 .tooltip-text {
     display: inline-block;
+    cursor: default;
+}
+
+.text-check {
     cursor: default;
 }
 
@@ -158,6 +162,11 @@ img {
 }
 
 .tooltip-check:hover {
+    background-color: #444;
+    border-radius: 3px;
+}
+
+.text-check:hover {
     background-color: #444;
     border-radius: 3px;
 }
