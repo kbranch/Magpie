@@ -84,10 +84,36 @@ def getAccessibility(allChecks, logics, inventory):
         for j in range(i):
             accessibility[logics[i].name] = accessibility[logics[i].name].difference(accessibility[logics[j].name])
         
+    inventory['KEY1'] = 9
+    inventory['KEY2'] = 9
+    inventory['KEY3'] = 9
+    inventory['KEY4'] = 9
+    inventory['KEY5'] = 9
+    inventory['KEY6'] = 9
+    inventory['KEY7'] = 9
+    inventory['KEY8'] = 9
+    inventory['KEY9'] = 9
+
+    alreadyInKeyLogic = set()
     for i in range(len(logics)):
-        for check in accessibility[logics[i].name]:
+        level = accessibility[logics[i].name]
+        checksBehindKeys = set(loadChecks(logics[i], inventory)).difference(level)
+
+        for j in range(i):
+            checksBehindKeys = checksBehindKeys.difference(accessibility[logics[j].name])
+        
+        for check in checksBehindKeys:
+            if check in alreadyInKeyLogic:
+                continue
+
+            alreadyInKeyLogic.add(check)
+            # outOfLogic.remove(check)
+            level.add(check.cloneBehindKeys())
+
+        for check in level:
             check.difficulty = i
 
+    outOfLogic = outOfLogic.difference(alreadyInKeyLogic)
     accessibility['In logic'] = sorted(accessibility[logics[0].name], key=lambda x: (x.area, x.name))
     outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
 

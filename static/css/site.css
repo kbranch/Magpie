@@ -116,18 +116,19 @@ img {
 
 .checkGraphic {
     position: absolute;
-    border-style: solid;
+    /* border-style: solid;
     border-width: 3px;
-    border-color: #000;
+    border-color: #000; */
     /* opacity: 0.85; */
     width: 16px;
     height: 16px;
 }
 
 .tooltip-check-graphic {
-    border-style: solid;
+    position: relative;
+    /* border-style: solid;
     border-width: 3px;
-    border-color: #ccc;
+    border-color: #ccc; */
     width: 16px;
     height: 16px;
     display: inline-block;
@@ -139,14 +140,16 @@ img {
 }
 
 .difficulty-checked {
-    background: #000;
-    opacity: 0.6;
+    border-style: none;
+    background-image: url('/static/images/checked.svg');
+    background-size: contain;
 }
 
 /* circle */
 .difficulty-0 {
-    background: #0F0;
-    border-radius: 50%;
+    border-style: none;
+    background-image: url('/static/images/circle.svg');
+    background-size: contain;
 }
 
 .tooltip-check:hover {
@@ -154,46 +157,64 @@ img {
     border-radius: 3px;
 }
 
-/* square */
-.difficulty-1 {
-    background: #FF0;
+.behind-keys:not(.difficulty-checked):before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 74%;
+    height: 74%;
+    margin-left: 13%;
+    margin-top: 13%;
+    background-image: url('/static/images/keyLocked.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    /* background-size: */
 }
 
-.checkGraphic.difficulty-2 {
+/* square */
+.difficulty-1 {
+    border-style: none;
+    background-image: url('/static/images/square.svg');
+    background-size: contain;
+}
+
+.difficulty-2 {
     border-style: none;
     background-image: url('/static/images/triangle.svg');
     background-size: contain;
 }
 
-.tooltip-check-graphic.difficulty-2 {
+/* .tooltip-check-graphic.difficulty-2 {
     border-style: none;
     background-image: url('/static/images/tooltip-triangle.svg');
     background-size: contain;
-}
+} */
 
-.checkGraphic.difficulty-3 {
+.difficulty-3 {
     border-style: none;
     background-image: url('/static/images/diamond.svg');
     background-size: contain;
 }
 
-.tooltip-check-graphic.difficulty-3 {
+/* .tooltip-check-graphic.difficulty-3 {
     border-style: none;
     background-image: url('/static/images/tooltip-diamond.svg');
     background-size: contain;
-}
+} */
 
-.checkGraphic.difficulty-4 {
+.difficulty-4 {
     border-style: none;
     background-image: url('/static/images/diamond.svg');
     background-size: contain;
 }
 
-.tooltip-check-graphic.difficulty-4 {
+/* .tooltip-check-graphic.difficulty-4 {
     border-style: none;
     background-image: url('/static/images/tooltip-diamond.svg');
     background-size: contain;
-}
+} */
 
 button.nav-link {
     color: rgba(var(--bs-light-rgb),var(--bs-text-opacity));
@@ -233,4 +254,16 @@ button.nav-link.active {
 
 .tooltip-inner {
     max-width: 500px;
+}
+
+.key-indicator-wrapper {
+    float: left;
+}
+
+.key-indicator {
+    height: 16px;
+}
+
+.check-name {
+    float: left;
 }

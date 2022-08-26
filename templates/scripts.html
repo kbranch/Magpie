@@ -221,6 +221,8 @@
         var keys = $(node).attr('data-ids').split(',');
         var toggleList = [];
 
+        keys = new Set(keys.map(x => x.split(';')[0]));
+
         for (const key of keys) {
             var id = key.split(';')[0];
             var coord = coordDict[id][0];
@@ -232,53 +234,59 @@
         if (toggleList.length > 0) {
             for (const id of toggleList) {
                 var textCheck = $(`li[data-id="${id}"`);
-                toggleCheck(null, textCheck[0]);
+                toggleCheck(null, textCheck, false);
             }
         }
         else {
             for (const key of keys) {
                 var id = key.split(';')[0];
                 var textCheck = $(`li[data-id="${id}"`);
-                toggleCheck(null, textCheck[0]);
+                toggleCheck(null, textCheck, false);
             }
         }
+
+        drawActiveTab();
     }
 
     function toggleSingleNodeCheck(check) {
         var id = $(check).attr('data-id');
         var textCheck = $(`li[data-id="${id}"`);
         $(`.checkGraphic`).tooltip('hide');
-        toggleCheck(null, textCheck[0]);
+        toggleCheck(null, textCheck);
     }
 
-    function toggleCheck(event, element) {
-        var area = element.dataset.checkarea;
-        var name = element.dataset.checkname;
-        var logic = $(element).closest(".row[data-logic]").attr('data-logic');
-        var key = getCheckedKey(area, name);
+    function toggleCheck(event, elements, draw=true) {
+        for (const element of elements) {
+            var area = element.dataset.checkarea;
+            var name = element.dataset.checkname;
+            var logic = $(element).closest(".row[data-logic]").attr('data-logic');
+            var key = getCheckedKey(area, name);
 
-        if (logic != 'Checked') {
-            check = new Object();
-            check.name = name;
-            check.area = area;
+            if (logic != 'Checked') {
+                check = new Object();
+                check.name = name;
+                check.area = area;
 
-            checkedChecks[key] = check;
-            moveCheckToChecked(element);
-        }
-        else {
-            delete checkedChecks[key];
-            moveCheckFromChecked(element);
-        }
+                checkedChecks[key] = check;
+                moveCheckToChecked(element);
+            }
+            else {
+                delete checkedChecks[key];
+                moveCheckFromChecked(element);
+            }
 
-        saveChecked();
+            saveChecked();
 
-        if (event != null) {
-            if (event.detail > 1) {
-                event.preventDefault();
+            if (event != null) {
+                if (event.detail > 1) {
+                    event.preventDefault();
+                }
             }
         }
 
-        drawActiveTab();
+        if (draw) {
+            drawActiveTab();
+        }
     }
 
     function moveCheckToChecked(element) {
@@ -410,6 +418,7 @@
 
             var name = $(check).attr('data-checkname');
             var area = $(check).attr('data-checkarea');
+            var behindKeys = $(check).attr('data-behind_keys') == 'True'
             var isChecked = `${area}-${name}` in checkedChecks;
             var difficulty = isChecked ? -1 : Number($(check).attr('data-difficulty'));
             var coords = coordDict[id];
@@ -427,7 +436,7 @@
                     nodes[key] = [];
                 }
 
-                nodes[key].push({id: id, difficulty: difficulty});
+                nodes[key].push({id: id, difficulty: difficulty, behindKeys: behindKeys});
             }
         }
 
@@ -439,20 +448,29 @@
         for (const key in nodes) {
             var coord = key.split(',');
             var difficulty = 'checked';
+            var allBehindKeys = false;
             var ids = [];
 
             for (const check of nodes[key]) {
-                ids.push(`${check.id};${check.difficulty}`);
+                ids.push(`${check.id};${check.difficulty};${check.behindKeys ? 1 : 0}`);
                 
                 var diff = check.difficulty;
-                if (diff >= 0 && (diff < difficulty || difficulty == 'checked')) {
-                    difficulty = diff;
+                if (diff >= 0) {
+                    if ((diff < difficulty || difficulty == 'checked')) {
+                        difficulty = diff;
+                        allBehindKeys = true;
+                    }
+                
+                    if (!check.behindKeys && diff <= difficulty) {
+                        allBehindKeys = false;
+                    }
                 }
             }
 
+            var keyClass = allBehindKeys ? ' behind-keys' : '';
             var animationClass = animate ? ' animate__bounceInDown' : '';
             var ids = ids.join(',');
-            var classes = `checkGraphic animate__animated difficulty-${difficulty}`;
+            var classes = `checkGraphic animate__animated difficulty-${difficulty}${keyClass}`;
             var img = $(`[data-node-id="${key}"]`);
 
             if (img.length > 0) {
@@ -500,26 +518,43 @@
 
     function addTooltip(check) {
         var ids = $(check).attr('data-ids').split(',');
-        var template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {3}' data-id='{4}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'><div class='tooltip-check-graphic align-self-center difficulty-{0}'></div><div class='tooltip-text align-middle ps-2'>{1} - {2}</div></div>"
+        var uniqueIds = new Set(ids.map(x => x.split(';')[0]));
+        var graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{0}{1}'></div>";
+        var template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {0}' data-id='{1}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>{2}<div class='tooltip-text align-middle ps-2'>{3} - {4}</div></div>"
         var title = "<div class='map-container'>";
         var first = true;
 
-        for (const id of ids) {
-            var chunks = id.split(';');
-            var checkId = chunks[0];
-            var difficulty = chunks[1] == -1 ? 'checked' : chunks[1];
-            var coord = coordDict[checkId][0];
+        for (const id of uniqueIds) {
+            var matchingIds = ids.filter(x => x.split(';')[0] == id);
+            var graphic = '';
 
-            var line = template.replace('{0}', difficulty)
-                               .replace('{1}', coord.area)
-                               .replace('{2}', coord.name)
-                               .replace('{4}', checkId);
+            for (const matchingId of matchingIds) {
+                var chunks = matchingId.split(';');
+                var difficulty = chunks[1] == -1 ? 'checked' : chunks[1];
+                var behindKeys = chunks[2] == 1 ? ' behind-keys' : '';
+
+                /*if (graphic != '') {
+                    graphic += '|';
+                }*/
+
+                graphic += graphicTemplate.replace('{0}', difficulty)
+                                          .replace('{1}', behindKeys);
+
+            }
+
+            var coord = coordDict[id][0];
+
+            
+            var line = template.replace('{1}', id)
+                               .replace('{2}', graphic)
+                               .replace('{3}', coord.area)
+                               .replace('{4}', coord.name);
 
             if (!first) {
-                line = line.replace('{3}', 'pt-2')
+                line = line.replace('{0}', 'pt-2')
             }
             else {
-                line = line.replace(' {3}', '')
+                line = line.replace(' {0}', '')
                 first = false;
             }
 

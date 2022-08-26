@@ -31,10 +31,15 @@ class Flag():
     def __repr__(self) -> str:
         return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
 class Check:
-    def __init__(self, id, metadata):
+    def __init__(self, id, metadata, behindKeys=False):
         self.id = id
         self.name = metadata.name
         self.area = metadata.area
+        self.metadata = metadata
+        self.behindKeys = behindKeys
+    
+    def cloneBehindKeys(self):
+        return Check(self.id, self.metadata, behindKeys=True)
 
 def getArgs(values=None):
     class Args():
