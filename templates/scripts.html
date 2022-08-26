@@ -512,6 +512,8 @@
         var img = $(`${target} img.map`);
         var mapName = $(img).attr('data-mapname');
 
+        closeAllCheckTooltips();
+
         drawChecks(mapName);
     }
 
