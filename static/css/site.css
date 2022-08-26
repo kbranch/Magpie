@@ -135,6 +135,7 @@ img {
 
 .tooltip-text {
     display: inline-block;
+    cursor: default;
 }
 
 .difficulty-checked {
@@ -150,6 +151,7 @@ img {
 
 .tooltip-check:hover {
     background-color: #444;
+    border-radius: 3px;
 }
 
 /* square */

@@ -515,11 +515,16 @@
 
         title += '</div>';
 
+        var activated = $(check).attr('data-bs-toggle') == "tooltip";
+
         $(check).attr('data-bs-toggle', "tooltip");
         $(check).attr('data-bs-trigger', "click hover");
         $(check).attr('data-bs-html', "true");
         $(check).attr('data-bs-title', title);
-        var tooltip = new bootstrap.Tooltip(check);
+
+        if (!activated) {
+            var tooltip = new bootstrap.Tooltip(check);
+        }
 
         //$(check).tooltip('show');
     }
