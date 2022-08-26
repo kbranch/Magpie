@@ -110,6 +110,7 @@ img {
 .map-container {
     display: inline-block;
     position: relative;
+    pointer-events: auto;
 }
 
 .animate__animated.animate__fadeOut {

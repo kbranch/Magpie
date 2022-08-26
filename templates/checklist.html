@@ -2,24 +2,21 @@
 {% from 'logicContents.html' import logicContents %}
 
 <div class="d-flex flex-wrap">
-    <!-- <div class="col"> -->
-        <div id="legend" class="flex-grow-1 d-flex flex-wrap justify-content-center">
-            {% for i in range(logics | length) %}
-            <div class="col-auto px-2">
-                <div class="tooltip-check-graphic difficulty-{{i}} align-middle"></div><div class="tooltip-text align-middle">: {{logics[i].name}}</div>
-            </div>
-            {% endfor %}
-            <div class="col-auto px-2">
-                <div class="tooltip-check-graphic left-click"></div>: Toggle tooltip
-            </div>
-            <div class="col-auto px-2">
-                <div class="tooltip-check-graphic right-click"></div>: Toggle check
-            </div>
+    <div id="legend" class="flex-grow-1 d-flex flex-wrap justify-content-center">
+        {% for i in range(logics | length) %}
+        <div class="col-auto px-2">
+            <div class="tooltip-check-graphic difficulty-{{i}} align-middle"></div>
+            <div class="tooltip-text align-middle">: {{logics[i].name}}</div>
         </div>
-    <!-- </div> -->
-    <!-- <div id="item-blank" class="col-xs-12 col-md-auto"> -->
+        {% endfor %}
+        <div class="col-auto px-2">
+            <div class="tooltip-check-graphic left-click align-middle"></div>: Toggle tooltip
+        </div>
+        <div class="col-auto px-2">
+            <div class="tooltip-check-graphic right-click align-middle"></div>: Toggle checks
+        </div>
+    </div>
     <div id="item-blank"></div>
-    <!-- </div> -->
 </div>
 
 <div id="mapAccordion" class="accordion">
