@@ -27,11 +27,10 @@ def home():
 @app.route("/items", methods=['POST'])
 def renderItems():
     try:
-        json = request.form['args']
-        args = jsonpickle.decode(json)
+        args = parseArgs(request.form['args'])
         allItems = getItems(args)
 
-        result = render_template("items.html", allItems=allItems)
+        result = render_template("items.html", allItems=allItems, args=args)
 
         return result
     except:
@@ -40,7 +39,7 @@ def renderItems():
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():
     try:
-        argValues = jsonpickle.decode(request.form['args'])
+        argValues = parseArgs(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
 
         inventory['RUPEES_500'] = 10
@@ -49,6 +48,9 @@ def renderCheckList():
 
         initChecks()
         args = getArgs(values=argValues)
+
+        addStartingItems(inventory, args)
+
         allItems = getItems(args)
         logics = getLogics(args)
         allChecks = loadChecks(logics[0], allItems)
@@ -67,6 +69,14 @@ def mapCoords():
     # checkList = list(checks.values())
 
     return render_template("mapCoords.html")
+
+def parseArgs(argsString):
+    args = jsonpickle.decode(argsString)
+
+    if args.goal == 'egg':
+        args.goal = '8'
+
+    return args
 
 def getAccessibility(allChecks, logics, inventory):
     accessibility = {}
@@ -129,6 +139,13 @@ def getAccessibility(allChecks, logics, inventory):
     accessibility['Out of logic'] = outOfLogic
     
     return accessibility
+
+def addStartingItems(inventory, args):
+    if args.dungeon_items == 'keysy':
+        for n in range(9):
+            for amount, item_name in ((9, "KEY"), (1, "NIGHTMARE_KEY")):
+                item_name = "%s%d" % (item_name, n + 1)
+                inventory[item_name] = amount
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
