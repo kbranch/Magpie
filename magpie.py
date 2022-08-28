@@ -14,15 +14,20 @@ ui = FlaskUI(app, port=5000)
 
 local = False
 
+class LocalSettings:
+    def __init__(self):
+        self.checkSize = 32
+        self.mapBrightness = 50
+
 @app.route("/")
 def home():
     args = getArgs()
-    allItems = getItems(args)
+    defaultSettings = LocalSettings()
 
     flags = args.flags
     args.flags = []
 
-    return render_template("index.html", flags=flags, jsonArgs=jsonpickle.encode(args), allItems=allItems, local=local)
+    return render_template("index.html", flags=flags, defaultSettings=defaultSettings, jsonArgs=jsonpickle.encode(args), jsonSettings=jsonpickle.encode(defaultSettings), local=local)
 
 @app.route("/items", methods=['POST'])
 def renderItems():

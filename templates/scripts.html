@@ -130,9 +130,24 @@
 <!-- Flag panel scripts -->
 <script type="application/javascript">
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
+    const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
+    var localSettings = null;
 
-    function saveArgs() {
+    function saveSettings() {
         var flags = document.querySelectorAll('[data-flag]');
+        var settingsInputs = document.querySelectorAll('[data-setting]');
+
+        for (const setting of settingsInputs) {
+            name = setting.dataset.setting;
+            if (setting.type == 'checkbox') {
+                value = setting.checked;
+            }
+            else {
+                value = setting.value;
+            }
+
+            localSettings[name] = value;
+        }
 
         for (const flag of flags) {
             name = flag.dataset.flag;
@@ -146,14 +161,26 @@
             args[name] = value;
         }
 
+        fixGoal(args);
+
         localStorage.setItem('args', JSON.stringify(args));
+        localStorage.setItem('settings', JSON.stringify(localSettings));
+
+        clearCheckImages();
+        $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
+
         refreshItems();
-        refreshCheckList();
     }
 
-    function loadArgs() {
+    function loadSettings() {
         try {
             args = JSON.parse(localStorage.getItem('args'));
+        }
+        catch (err) {
+        }
+
+        try {
+            localSettings = JSON.parse(localStorage.getItem('settings'));
         }
         catch (err) {
         }
@@ -166,6 +193,17 @@
         catch (err) {
             args = defaultArgs;
         }
+
+        try {
+            if (!('checkSize' in localSettings)) {
+                localSettings = defaultSettings;
+            }
+        }
+        catch (err) {
+            localSettings = defaultSettings;
+        }
+
+        fixGoal(args);
 
         var flags = document.querySelectorAll('[data-flag]');
         for (const flag of flags) {
@@ -181,11 +219,30 @@
             }
         }
 
+        var settingsInputs = document.querySelectorAll('[data-setting]');
+        for (const setting of settingsInputs) {
+            name = setting.dataset.setting;
+
+            if (name in localSettings) {
+                if (setting.type == 'checkbox') {
+                    setting.checked = localSettings[name];
+                }
+                else {
+                    setting.value = localSettings[name];
+                }
+            }
+        }
+
         refreshItems();
-        refreshCheckList();
     }
 
-    loadArgs();
+    function fixGoal(args) {
+        if (['', 'undefined', 'null', '8'].includes(String(args.goal))) {
+            args.goal = 'egg';
+        }
+    }
+
+    loadSettings();
 </script>
 
 <!-- Map scripts -->
@@ -424,8 +481,8 @@
         var xScale = Math.min(1, $(map).width() / $(map).find('.map').prop('naturalWidth'));
         var yScale = Math.min(1, $(map).height() / $(map).find('.map').prop('naturalHeight'));
 
-        var xOffset = (16 * xScale - 16) / 2;
-        var yOffset = (16 * yScale - 16) / 2;
+        var xOffset = (16 * xScale - localSettings.checkSize) / 2;
+        var yOffset = (16 * yScale - localSettings.checkSize) / 2;
 
         var checks = $('li[data-logic]');
         var nodes = new Object();
@@ -520,6 +577,8 @@
                     css: {
                         'top': Number(coord[1]),
                         'left': Number(coord[0]),
+                        'width': localSettings.checkSize,
+                        'height': localSettings.checkSize,
                     },
                     onclick: 'closeOtherTooltips(this);',
                     oncontextmenu: 'toggleNode(this); return false;',
@@ -534,10 +593,10 @@
         }
 
         for (const staleNode of oldNodes) {
-            /*var node = $(`[data-node-id="${staleNode}"]`);
-            $(node).removeClass('animate__bounceInDown');
+            var node = $(`[data-node-id="${staleNode}"]`);
+            /*$(node).removeClass('animate__bounceInDown');
             $(node).addClass('animate__fadeOut');*/
-            staleNode.remove();
+            node.remove();
         }
     }
 

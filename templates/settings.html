@@ -2,15 +2,20 @@
     <div class="offcanvas-header">
         <div class="row align-items-center">
             <div class="col">
-                <h2 class="offcanvas-title" id="argsLabel">Flags</h5>
+                <h2 class="offcanvas-title" id="argsLabel">Settings</h5>
             </div>
             <div class="col">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas" onclick="saveArgs()">Save</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas" onclick="saveSettings()">Save</button>
             </div>
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+        <div class="row">
+            <div class="col-auto">
+                <h2>Randomizer Flags</h2>
+            </div>
+        </div>
         <div class="row">
             {% set ns = namespace(group='') %}
             {% set groupWhitelist = ['Main flags', 'Item flags', 'Gameplay flags', 'Special flags'] %}
@@ -62,6 +67,19 @@
             {% endfor %}
                 </div>
             </fieldset>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <h2>Personalization</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <label for="checkSize" class="form-label">Check Size</label>
+                <input id="checkSize" data-setting="checkSize" type="range" min="16" max="48" value="{localSettings.iconSize}" class="form-range">
+                <label for="mapBrightness" class="form-label">Map Brightness</label>
+                <input id="mapBrightness" data-setting="mapBrightness" type="range" min="0" max="100" value="{localSettings.mapBrightness}" class="form-range">
+            </div>
         </div>
     </div>
 </div>
