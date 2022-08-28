@@ -12,10 +12,12 @@
   <defs
      id="defs2" />
   <g
-     id="layer1">
+     id="layer1"
+     style="stroke-width:0.553746;stroke-dasharray:none"
+     transform="matrix(0.95555201,0,0,0.95553594,0.09392961,0.09397772)">
     <path
        id="rect234"
-       style="fill:#ff0000;stroke:#000000;stroke-width:0.348004;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#ff0000;stroke:#000000;stroke-width:0.553746;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none"
        d="m 2.1339584,0.17981805 c -0.01,-0.01 -0.0258,-0.0106 -0.0354,-6.5e-4 L 0.17955844,2.0984281 c -0.01,0.01 -0.009,0.0258 6.6e-4,0.0354 l 1.91808996,1.91836 c 0.01,0.01 0.0249,0.01 0.0345,0 l 1.91901,-1.91927 c 0.01,-0.01 0.01,-0.0249 0,-0.0345 z" />
   </g>
 </svg>
