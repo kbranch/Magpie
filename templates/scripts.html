@@ -203,6 +203,12 @@
             localSettings = defaultSettings;
         }
 
+        for (var setting in defaultSettings) {
+            if (!(setting in localSettings)) {
+                localSettings[setting] = defaultSettings[setting];
+            }
+        }
+
         fixGoal(args);
 
         var flags = document.querySelectorAll('[data-flag]');
@@ -490,9 +496,9 @@
             var id = $(check).attr('data-id');
             var checkMaps = coordDict[id].map(function(x) { return x.map; });
 
-            if (!(checkMaps.includes(mapName))) {
-/*$(check).attr('data-logic') == 'Out of logic'
-                || */
+            if (!(checkMaps.includes(mapName))
+                || ($(check).attr('data-logic') == 'Out of logic'
+                    && !localSettings.showOutOfLogic)) {
                 continue;
             }
 

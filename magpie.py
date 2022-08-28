@@ -1,4 +1,5 @@
 import argparse
+from os import access
 import traceback
 import jsonpickle
 from flaskwebgui import FlaskUI
@@ -14,10 +15,14 @@ ui = FlaskUI(app, port=5000)
 
 local = False
 
+class FakeLogic:
+    pass
+
 class LocalSettings:
     def __init__(self):
         self.checkSize = 32
         self.mapBrightness = 50
+        self.showOutOfLogic = False
 
 @app.route("/")
 def home():
@@ -91,13 +96,13 @@ def getAccessibility(allChecks, logics, inventory):
     for i in range(len(logics)):
         logic = logics[i]
         
-        accessibility[logic.name] = set(loadChecks(logic, inventory))
+        accessibility[logic] = set(loadChecks(logic, inventory))
     
     for i in range(1, len(logics)):
-        outOfLogic = outOfLogic.difference(accessibility[logics[i].name])
+        outOfLogic = outOfLogic.difference(accessibility[logics[i]])
 
         for j in range(i):
-            accessibility[logics[i].name] = accessibility[logics[i].name].difference(accessibility[logics[j].name])
+            accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
         
     inventory['KEY1'] = 9
     inventory['KEY2'] = 9
@@ -111,11 +116,11 @@ def getAccessibility(allChecks, logics, inventory):
 
     alreadyInKeyLogic = set()
     for i in range(len(logics)):
-        level = accessibility[logics[i].name]
+        level = accessibility[logics[i]]
         checksBehindKeys = set(loadChecks(logics[i], inventory)).difference(level)
 
         for j in range(i):
-            checksBehindKeys = checksBehindKeys.difference(accessibility[logics[j].name])
+            checksBehindKeys = checksBehindKeys.difference(accessibility[logics[j]])
         
         for check in checksBehindKeys:
             if check in alreadyInKeyLogic:
@@ -125,26 +130,33 @@ def getAccessibility(allChecks, logics, inventory):
             # outOfLogic.remove(check)
             level.add(check.cloneBehindKeys())
 
+        logics[i].difficulty = i
         for check in level:
             check.difficulty = i
 
     outOfLogic = outOfLogic.difference(alreadyInKeyLogic)
-    accessibility['In logic'] = sorted(accessibility[logics[0].name], key=lambda x: (x.area, x.name))
     outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
+
+    accessibility[logics[0]] = sorted(accessibility[logics[0]], key=lambda x: (x.area, x.name))
+    logics[0].friendlyName = 'In logic'
 
     for check in outOfLogic:
         check.difficulty = 9 
 
-    for logic in logics:
-        checks = accessibility[logic.name]
-        del accessibility[logic.name]
+    for i in range(1, len(logics)):
+        # checks = accessibility[logic.name]
+        # del accessibility[logic.name]
 
-        if logic == logics[0]:
-            continue
+        # if logic == logics[0]:
+        #     continue
+        logics[i].friendlyName = f'In {logics[i].name} logic'
 
-        accessibility[f'In {logic.name} logic'] = sorted(checks, key=lambda x: (x.area, x.name))
+        accessibility[logics[i]] = sorted(accessibility[logics[i]], key=lambda x: (x.area, x.name))
     
-    accessibility['Out of logic'] = outOfLogic
+    oolLogic = FakeLogic()
+    oolLogic.friendlyName = 'Out of logic'
+    oolLogic.difficulty = 9
+    accessibility[oolLogic] = outOfLogic
     
     return accessibility
 

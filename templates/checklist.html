@@ -29,20 +29,21 @@
 
 {% set ns = namespace(expanded='true', show=' show', collapsed='') %}
 {% for logic in accessibility %}
-    {% set safeLogic = logic | replace(' ', '-') %}
+    {% set safeLogic = logic.friendlyName | replace(' ', '-') %}
     {% if accessibility[logic]|length == 0 %}{% set hidden=' hidden' %}{% else %}{% set hidden='' %}{% endif %}
 
     <div class="accordion-item {{hidden}}">
         <h2 id="heading-{{safeLogic}}" class="accordion-header">
             <button class="accordion-button{{ns.collapsed}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{safeLogic}}" aria-expanded="{{ns.expanded}}" aria-controls="collapse-{{safeLogic}}">
-                {{logic}}
+                <div class="tooltip-check-graphic difficulty-{{logic.difficulty}} align-middle"></div>
+                <span class="ps-2">{{logic.friendlyName}}</span>
             </button>
         </h2>
 
         <div id="collapse-{{safeLogic}}" class="accordion-collapse collapse{{ns.show}}" aria-labelledby="heading-{{safeLogic}}" data-bs-parent="#mapAccordion">
             <div class="accordion-body">
-                <div class="row" data-logic="{{logic}}" onclick="preventDoubleClick(event)">
-                    {{ logicContents(accessibility[logic], logic) }}
+                <div class="row" data-logic="{{logic.friendlyName}}" onclick="preventDoubleClick(event)">
+                    {{ logicContents(accessibility[logic], logic.friendlyName) }}
                 </div>
             </div>
         </div>
