@@ -51,7 +51,7 @@ def renderCheckList():
 
         addStartingItems(inventory, args)
 
-        allItems = getItems(args)
+        allItems = getAllItems(args)
         logics = getLogics(args)
         allChecks = loadChecks(logics[0], allItems)
         accessibility = getAccessibility(allChecks, logics, inventory)
