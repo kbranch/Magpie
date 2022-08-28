@@ -169,6 +169,11 @@
         clearCheckImages();
         $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
 
+        if (!args.rooster) {
+            inventory['ROOSTER'] = 0;
+            saveInventory();
+        }
+
         refreshItems();
     }
 
@@ -237,6 +242,11 @@
                     setting.value = localSettings[name];
                 }
             }
+        }
+
+        if (!args.rooster) {
+            inventory['ROOSTER'] = 0;
+            saveInventory();
         }
 
         refreshItems();
