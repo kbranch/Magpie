@@ -75,6 +75,11 @@ def getArgs(values=None):
 def getItems(args):
     pool = itempool.ItemPool(args, random.Random()).toDict()
 
+    # No dungeons mode seems to not have bombs sometimes due to the rupee randomization
+    # 
+    if 'BOMB' not in pool:
+        pool['BOMB'] = 1
+
     defaultItemPool = itempool.DEFAULT_ITEM_POOL
     for item in defaultItemPool:
         if item not in pool:

@@ -220,14 +220,20 @@
         $(node).tooltip('hide');
         var keys = $(node).attr('data-ids').split(',');
         var toggleList = [];
-
-        keys = new Set(keys.map(x => x.split(';')[0]));
+        var outOfLogic = [];
 
         for (const key of keys) {
-            var id = key.split(';')[0];
+            var chunks = key.split(';');
+            var id = chunks[0];
+            var difficulty = chunks[1];
             var coord = coordDict[id][0];
-            if (!(`${coord.area}-${coord.name}` in checkedChecks)) {
+            var fullName = `${coord.area}-${coord.name}`
+            if (!(fullName in checkedChecks || difficulty == 9)) {
                 toggleList.push(id);
+            }
+
+            if (difficulty == 9) {
+                outOfLogic.push(id);
             }
         }
 
@@ -238,10 +244,18 @@
             }
         }
         else {
-            for (const key of keys) {
-                var id = key.split(';')[0];
-                var textCheck = $(`li[data-id="${id}"`);
-                toggleCheck(null, textCheck, false);
+            if (outOfLogic.length > 0) {
+                for (const id of outOfLogic) {
+                    var textCheck = $(`li[data-id="${id}"`);
+                    toggleCheck(null, textCheck, false);
+                }
+            }
+            else {
+                for (const key of keys) {
+                    var id = key.split(';')[0];
+                    var textCheck = $(`li[data-id="${id}"`);
+                    toggleCheck(null, textCheck, false);
+                }
             }
         }
 
@@ -402,7 +416,7 @@
         }
 
         //clearCheckImages();
-        $('.animate__fadeOut').remove();
+        //$('.animate__fadeOut').remove();
 
         var map = $(mapImg).closest('div.tab-pane');
         var parent = $(map).find('div.map-wrapper');
@@ -419,8 +433,9 @@
             var id = $(check).attr('data-id');
             var checkMaps = coordDict[id].map(function(x) { return x.map; });
 
-            if ($(check).attr('data-logic') == 'Out of logic'
-                || !(checkMaps.includes(mapName))) {
+            if (!(checkMaps.includes(mapName))) {
+/*$(check).attr('data-logic') == 'Out of logic'
+                || */
                 continue;
             }
 
@@ -482,15 +497,25 @@
             var img = $(`[data-node-id="${key}"]`);
 
             if (img.length > 0) {
+                var currentDiff = $(img).attr('data-difficulty');
+
+                if (currentDiff == "9" && difficulty >= 0 && difficulty < 9) {
+                    classes += animationClass;
+                }
+                else {
+                    $(img).removeClass('animate__bounceInDown');
+                }
+
                 $(img).attr('class', classes);
                 $(img).attr('data-ids', ids);
-                $(img).removeClass('animate__bounceInDown');
+                $(img).attr('data-difficulty', difficulty);
             }
             else {
                 img = $('<div>', {
                     //src: 'static/images/blank.png',
                     'data-ids': ids,
                     'data-node-id': key,
+                    'data-difficulty': difficulty,
                     class: classes + animationClass,
                     css: {
                         'top': Number(coord[1]),
@@ -509,9 +534,10 @@
         }
 
         for (const staleNode of oldNodes) {
-            var node = $(`[data-node-id="${staleNode}"]`);
+            /*var node = $(`[data-node-id="${staleNode}"]`);
             $(node).removeClass('animate__bounceInDown');
-            $(node).addClass('animate__fadeOut');
+            $(node).addClass('animate__fadeOut');*/
+            staleNode.remove();
         }
     }
 

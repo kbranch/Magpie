@@ -216,6 +216,12 @@ img {
     background-size: contain;
 }
 
+.difficulty-9 {
+    border-style: none;
+    background-image: url('/static/images/outoflogic.svg');
+    background-size: contain;
+}
+
 button.nav-link {
     color: rgba(var(--bs-light-rgb),var(--bs-text-opacity));
 }

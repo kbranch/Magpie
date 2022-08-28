@@ -1,5 +1,5 @@
 {% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', overlay_count='', allItems=None, hideIfZero=False, condition=True) %}
-{% if condition and (allItems == None or (hideIfZero and allItems[primary] > 0)) %}
+{% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
 
     {% if secondary != '' %}
         {% set secondary_tag = 'data-secondary=' + secondary %}

@@ -127,6 +127,9 @@ def getAccessibility(allChecks, logics, inventory):
     accessibility['In logic'] = sorted(accessibility[logics[0].name], key=lambda x: (x.area, x.name))
     outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
 
+    for check in outOfLogic:
+        check.difficulty = 9 
+
     for logic in logics:
         checks = accessibility[logic.name]
         del accessibility[logic.name]
