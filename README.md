@@ -5,10 +5,10 @@ The differentiating feature of Magpie compared to something like [EmoTracker](ht
 
 The item, map and even flag layouts also include a text-based section for new items, locations and flags that were not accounted for when the layout was created.
 
-Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/XTw7X2G) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
+Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/yHxuDe3V) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
 
-Thanks to:
- - [MuffinJets](https://www.twitch.tv/muffinjets) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is heavily based on
+Special thanks to:
+ - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is essentially a port of
  - [Daid](https://github.com/daid) for creating [LADXR](https://github.com/daid/LADXR) and keeping it open
 
 ## Setup
@@ -40,7 +40,9 @@ If new items were added to the randomizer since Magpie was last updated, they wi
 Item changes will be communicated to the randomizer and used to update the map.
 
 ### Locations
-Locations are tracked on the left side of the page. Left clicking on a location in logic will mark it as checked, while left clicking on a location in the checked section will move it back to its original spot.
+Locations are tracked on the left side of the page, either on the maps or as text below them. By default, left clicking a node on the map will toggle all checks inside it between checked and unchecked. Right clicking a node will keep the tooltip open and allow interacting with it. Left clicking an individual check inside the tooltip will toggle only that check.
+
+Locations are also listed as text below the map, separated out by logic level. Checks can be toggled by clicking them in the text list.
 
 If new locations were added to the randomizer since Magpie was last updated, they will appear as text below the map.
 
@@ -54,4 +56,4 @@ Most of the layout definition happens in [Jinja templates](https://jinja.pallets
 
 The item layout is defined in [templates/items.html](templates/items.html). The circle of dungeon items is currently separated out into [templates/dungeonItems.html](templates/dungeonItems.html). [templates/item.html](templates/item.html) contains a macro that abstracts away some of the details.
 
-The map layout is currently incomplete, but defined in [templates/map.html](templates/map.html).
+Locations for the map are stored in [static/js/locations.js](static/js/locations.js). There is an interface at the [/mapCoords](https://magpietracker.us/mapCoords) route to help manage locations without manual JSON editing.
