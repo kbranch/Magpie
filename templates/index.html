@@ -16,4 +16,19 @@
     {% include 'settings.html' %}
 </div>
 
+<div class="row justify-content-end pt-4">
+    <div class="col-auto">
+        <button type="button" class="btn btn-secondary" onclick="hardReset();">Hard reset state</button>
+    </div>
+</div>
+
+<script type="application/javascript">
+    function hardReset() {
+        if (confirm("Completely clear all tracker data?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+</script>
+
 {% endblock %}
