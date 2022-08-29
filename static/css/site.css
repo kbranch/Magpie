@@ -295,3 +295,8 @@ button.nav-link.active {
     background-position: center center;
     transform: scaleX(-1);
 }
+
+.import-export {
+    /* position: fixed;
+    bottom: 0; */
+}

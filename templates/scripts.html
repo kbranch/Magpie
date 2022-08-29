@@ -57,6 +57,74 @@
         }
     }
 
+    function exportState() {
+        var state = new Object();
+        state.inventory = inventory;
+        state.settings = localSettings;
+        state.args = args;
+        state.checkedChecks = checkedChecks;
+
+        download(`Magpie-state-${(new Date()).toISOString()}.json`, JSON.stringify(state));
+    }
+
+    async function importState() {
+        var errorMessage = "The selected file does not appear to be a valid Magpie state file";
+
+        try {
+            var data = await getFile();
+            var state = JSON.parse(data);
+
+            if ('BOMB' in state.inventory
+                && 'checkSize' in state.settings
+                && 'logic' in state.args) {
+                    inventory = state.inventory;
+                    checkedChecks = state.checkedChecks;
+                    saveChecked();
+                    saveInventory();
+                    saveSettingsToStorage(state.args, state.settings);
+                    location.reload();
+            }
+            else {
+                alert(errorMessage);
+            }
+        }
+        catch {
+            alert(errorMessage);
+        }
+    }
+
+    async function getFile() {
+        const pickerOpts = {
+            types: [
+                {
+                    description: 'Magpie state',
+                    accept: {
+                        'application/json': ['.json']
+                    }
+                },
+            ],
+            excludeAcceptAllOption: true,
+            multiple: false
+        };
+
+        [handle] = await window.showOpenFilePicker(pickerOpts);
+        var file = await handle.getFile();
+        return await file.text();
+    }
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+    
+        element.style.display = 'none';
+        document.body.appendChild(element);
+    
+        element.click();
+    
+        document.body.removeChild(element);
+    }
+
     {% if local %}
     async function getRequest(url='') {
         const response = await fetch(url, {
@@ -133,21 +201,14 @@
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
     var localSettings = null;
 
+    function saveSettingsToStorage(args, localSettings) {
+        localStorage.setItem('args', JSON.stringify(args));
+        localStorage.setItem('settings', JSON.stringify(localSettings));
+    }
+
     function saveSettings() {
-        var flags = document.querySelectorAll('[data-flag]');
         var settingsInputs = document.querySelectorAll('[data-setting]');
-
-        for (const setting of settingsInputs) {
-            name = setting.dataset.setting;
-            if (setting.type == 'checkbox') {
-                value = setting.checked;
-            }
-            else {
-                value = setting.value;
-            }
-
-            localSettings[name] = value;
-        }
+        var flags = document.querySelectorAll('[data-flag]');
 
         for (const flag of flags) {
             name = flag.dataset.flag;
@@ -161,10 +222,20 @@
             args[name] = value;
         }
 
-        fixGoal(args);
+        for (const setting of settingsInputs) {
+            name = setting.dataset.setting;
+            if (setting.type == 'checkbox') {
+                value = setting.checked;
+            }
+            else {
+                value = setting.value;
+            }
 
-        localStorage.setItem('args', JSON.stringify(args));
-        localStorage.setItem('settings', JSON.stringify(localSettings));
+            localSettings[name] = value;
+        }
+
+        fixGoal(args);
+        saveSettingsToStorage(args, localSettings);
 
         clearCheckImages();
         $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
