@@ -23,6 +23,9 @@ class LocalSettings:
         self.checkSize = 32
         self.mapBrightness = 50
         self.showOutOfLogic = False
+        self.animateChecks = True
+        self.swapMouseButtons = False
+        self.swapItemsAndMap = False
 
 @app.route("/")
 def home():

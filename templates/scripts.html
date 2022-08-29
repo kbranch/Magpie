@@ -174,6 +174,8 @@
             saveInventory();
         }
 
+        applySettings();
+
         refreshItems();
     }
 
@@ -249,7 +251,19 @@
             saveInventory();
         }
 
+        applySettings();
+
         refreshItems();
+    }
+
+    function applySettings() {
+        var children = $('#firstRow').children()
+        var firstElement = $(children)[0].id;
+        
+        if (localSettings.swapItemsAndMap && firstElement == 'mapContainer'
+            || !localSettings.swapItemsAndMap && firstElement != 'mapContainer') {
+                $(children[1]).insertBefore($(children[0]));
+        }
     }
 
     function fixGoal(args) {
@@ -489,7 +503,7 @@
         }
 
         //clearCheckImages();
-        //$('.animate__fadeOut').remove();
+        $('.animate__fadeOut').remove();
 
         var map = $(mapImg).closest('div.tab-pane');
         var parent = $(map).find('div.map-wrapper');
@@ -589,6 +603,7 @@
                     'data-ids': ids,
                     'data-node-id': key,
                     'data-difficulty': difficulty,
+                    'draggable': false,
                     class: classes + animationClass,
                     css: {
                         'top': Number(coord[1]),
@@ -596,8 +611,10 @@
                         'width': localSettings.checkSize,
                         'height': localSettings.checkSize,
                     },
-                    onclick: 'closeOtherTooltips(this);',
-                    oncontextmenu: 'toggleNode(this); return false;',
+                    onclick: 'checkGraphicLeftClick(this);',
+                    oncontextmenu: 'checkGraphicRightClick(this); return false;',
+                    onmouseenter: 'checkGraphicMouseEnter(this)',
+                    onmouseleave: 'checkGraphicMouseLeave(this)',
                 });
 
                 $(parent).append(img);
@@ -610,19 +627,76 @@
 
         for (const staleNode of oldNodes) {
             var node = $(`[data-node-id="${staleNode}"]`);
-            /*$(node).removeClass('animate__bounceInDown');
-            $(node).addClass('animate__fadeOut');*/
-            node.remove();
+            $(node).removeClass('animate__bounceInDown');
+            $(node).addClass('animate__fadeOut');
+            //node.remove();
         }
+    }
+
+    function checkGraphicMouseEnter(element) {
+        if (!hasAttr(element, 'data-pinned')) {
+            var tooltip = bootstrap.Tooltip.getInstance(element);
+            tooltip.show();
+        }
+    }
+
+    function checkGraphicMouseLeave(element) {
+        if (!hasAttr(element, 'data-pinned')) {
+            var tooltip = bootstrap.Tooltip.getInstance(element);
+            tooltip.hide();
+        }
+    }
+
+    function nodePrimary(element) { 
+        toggleNode(element);
+    }
+
+    function nodeSecondary(element) {
+        closeOtherTooltips(element);
+
+        if (hasAttr(element, 'data-pinned')) {
+            $(element).removeAttr('data-pinned');
+        }
+        else {
+            $(element).attr('data-pinned', true);
+        }
+    }
+
+    function checkGraphicLeftClick(element) {
+        if (localSettings.swapMouseButtons) {
+            nodeSecondary(element);
+        }
+        else {
+            nodePrimary(element);
+        }
+    }
+
+    function checkGraphicRightClick(element) {
+        if (localSettings.swapMouseButtons) {
+            nodePrimary(element);
+        }
+        else {
+            nodeSecondary(element);
+        }
+    }
+
+    function hasAttr(element, attrName) {
+        var attr = $(element).attr(attrName);
+
+        return typeof attr !== 'undefined' && attr !== false;
     }
 
     function closeOtherTooltips(element) {
         var id = $(element).attr('data-node-id');
-        $(`.checkGraphic[data-node-id!="${id}"]`).tooltip('hide');
+        var nodes = $(`.checkGraphic[data-node-id!="${id}"]`);
+        $(nodes).tooltip('hide');
+        $(nodes).removeAttr('data-pinned');
     }
 
     function closeAllCheckTooltips() {
-        $(`.checkGraphic`).tooltip('hide');
+        var nodes = $(`.checkGraphic`);
+        nodes.tooltip('hide');
+        nodes.removeAttr('data-pinned');
     }
 
     function addTooltip(check) {
@@ -671,7 +745,7 @@
         var activated = $(check).attr('data-bs-toggle') == "tooltip";
 
         $(check).attr('data-bs-toggle', "tooltip");
-        $(check).attr('data-bs-trigger', "click hover");
+        $(check).attr('data-bs-trigger', "manual");
         $(check).attr('data-bs-html', "true");
         $(check).attr('data-bs-title', title);
 
