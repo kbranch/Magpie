@@ -135,6 +135,11 @@ def _locationIsCheck(location):
     return len(location.items) > 0 and location.items[0].nameId != 'None'
 
 def loadChecks(logic, inventory):
+    nameOverrides = {
+        '0x0B1': '0x092',
+        '0x0B2': '0x0F2'
+    }
+
     checks = []
 
     e = explorer.Explorer()
@@ -153,6 +158,9 @@ def loadChecks(logic, inventory):
 
             if name in allChecks:
                 checks.append(allChecks[name])
+            else:
+                if name in nameOverrides:
+                    checks.append(allChecks[nameOverrides[name]])
     
     checks.sort(key=lambda x: (x.area, x.name))
 
