@@ -35,7 +35,7 @@ def home():
     flags = args.flags
     args.flags = []
 
-    return render_template("index.html", flags=flags, defaultSettings=defaultSettings, jsonArgs=jsonpickle.encode(args), jsonSettings=jsonpickle.encode(defaultSettings), local=local)
+    return render_template("index.html", flags=flags, args=args, defaultSettings=defaultSettings, jsonArgs=jsonpickle.encode(args), jsonSettings=jsonpickle.encode(defaultSettings), local=local)
 
 @app.route("/items", methods=['POST'])
 def renderItems():
@@ -100,10 +100,9 @@ def getAccessibility(allChecks, logics, inventory):
         logic = logics[i]
         
         accessibility[logic] = set(loadChecks(logic, inventory))
+        outOfLogic = outOfLogic.difference(accessibility[logics[i]])
     
     for i in range(1, len(logics)):
-        outOfLogic = outOfLogic.difference(accessibility[logics[i]])
-
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
         

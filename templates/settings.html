@@ -17,25 +17,158 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Main</legend>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-logic" class="form-label">Logic</label>
+                            <select id="arg-logic" class="form-select" data-flag="logic" aria-label="logic">
+                                <option value="casual">Casual</option>
+                                <option value="normal">Normal</option>
+                                <option value="hard">Hard</option>
+                                <option value="glitched">Glitched</option>
+                                <option value="hell">Hell</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Items</legend>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-heartpiece" class="form-check-input" data-flag="heartpiece">
+                            <label class="form-check-label" for="arg-heartpiece">Randomize heart pieces</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-seashells" class="form-check-input" data-flag="seashells">
+                            <label class="form-check-label" for="arg-seashells">Randomize hidden seashells</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-heartcontainers" class="form-check-input" data-flag="heartcontainers">
+                            <label class="form-check-label" for="arg-heartcontainers">Randomize heart containers</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-instruments" class="form-check-input" data-flag="instruments">
+                            <label class="form-check-label" for="arg-instruments">Randomize instruments</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-tradequest" class="form-check-input" data-flag="tradequest">
+                            <label class="form-check-label" for="arg-tradequest">Randomize trade quest</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-witch" class="form-check-input" data-flag="witch">
+                            <label class="form-check-label" for="arg-witch">Randomize item given by the witch</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-rooster" class="form-check-input" data-flag="rooster">
+                            <label class="form-check-label" for="arg-rooster">Add the rooster</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Gameplay</legend>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-dungeon_items" class="form-label">Dungeon items</label>
+                            <select id="arg-dungeon_items" class="form-select" data-flag="dungeon_items" aria-label="dungeon_items">
+                                <option value="standard">Standard</option>
+                                <option value="smallkeys">Small keys</option>
+                                <option value="localkeys">Map/Compass/Beaks</option>
+                                <option value="localnightmarekey">MCB + SmallKeys</option>
+                                <option value="keysanity">Keysanity</option>
+                                <option value="keysy">Keysy</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-goal" class="form-label">Goal</label>
+                            <select id="arg-goal" class="form-select" data-flag="goal" aria-label="goal">
+                                <option value="egg">Egg</option>
+                                <option value="seashells">Seashell hunt (20)</option>
+                                <option value="bingo">Bingo!</option>
+                                <option value="bingo-full">Bingo-25!</option>
+                                <option value="raft">Raft</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Special</legend>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-bowwow" class="form-label">Good boy mode</label>
+                            <select id="arg-bowwow" class="form-select" data-flag="bowwow" aria-label="bowwow">
+                                <option value="normal">Disabled</option>
+                                <option value="always">Enabled</option>
+                                <option value="swordless">Enabled (swordless)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-overworld" class="form-label">Overworld</label>
+                            <select id="arg-overworld" class="form-select" data-flag="overworld" aria-label="overworld">
+                                <option value="normal">Normal</option>
+                                <option value="dungeondive">Dungeon dive</option>
+                                <option value="nodungeons">No dungeons</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-owlstatues" class="form-label">Owl statues</label>
+                            <select id="arg-owlstatues" class="form-select" data-flag="owlstatues" aria-label="owlstatues">
+                                <option value="none">Never</option>
+                                <option value="dungeon">In dungeons</option>
+                                <option value="overworld">On the overworld</option>
+                                <option value="both">Dungeons and overworld</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
             {% set ns = namespace(group='') %}
             {% set groupWhitelist = ['Main flags', 'Item flags', 'Gameplay flags', 'Special flags'] %}
-            {% set flagBlacklist = ['race', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang'] %}
+            {% set knownFlags = ['logic', 'heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster', 'dungeon_items', 'goal', 'bowwow', 'overworld', 'owlstatues'] %}
+            {#% set knownFlags = ['heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster'] %#}
+            {% set flagBlacklist = ['race', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal'] %}
 
-            {% for arg in flags if arg.group in groupWhitelist and arg.name not in flagBlacklist %}
-                {% if arg.group != ns.group %}
+            {% for arg in flags if arg.group in groupWhitelist and arg.name not in flagBlacklist and arg.name not in knownFlags %}
+                {% if 'Other' != ns.group %}
                     {% if ns.group != '' %}
                         </fieldset>
                     </div>
                     {% endif %}
                     <div class="col-auto">
                         <fieldset class="form-group">
-                            <legend>{{arg.group}}</legend>
+                            <legend>Other</legend>
                 {% endif %}
 
                 <div class="row pb-3">
                     <div class="col">
                     {% if arg.type != 'bool' %}
-                        <label for="arg-{{arg.name}}" class="form-label">{{arg.name}}</label>
+                        <label for="arg-{{arg.name}}" class="form-label">{{arg.name | title}}</label>
                         <select id="arg-{{arg.name}}" class="form-select" data-flag="{{arg.name}}" aria-label="{{arg.name}}">
                             {% for choice in arg.choices %}
                                 {% if choice == arg.value %}
@@ -44,7 +177,7 @@
                                     {% set selected = "" %}
                                 {% endif %}
 
-                                <option value="{{choice}}" {{selected}}>{{choice}}</option>
+                                <option value="{{choice}}" {{selected}}>{{choice | title}}</option>
                             {% endfor %}
                         </select>
                     {% else %}
@@ -56,17 +189,20 @@
 
                         <input type="checkbox" id="arg-{{arg.name}}" class="form-check-input" data-flag="{{arg.name}}" {{checked}} value="">
                         <label class="form-check-label" for="arg-{{arg.name}}">
-                            {{arg.name}}
+                            {{arg.name | title}}
                         </label>
                     {% endif %}
                     </div>
                 </div>
 
-            {% set ns.group = arg.group %}
+                {% set ns.group = 'Other' %}
 
             {% endfor %}
+
+            {% if ns.group != '' %}
                 </div>
             </fieldset>
+            {% endif %}
         </div>
         <div class="row">
             <div class="col-auto">

@@ -40,6 +40,9 @@ class Check:
     
     def cloneBehindKeys(self):
         return Check(self.id, self.metadata, behindKeys=True)
+    
+    def __repr__(self) -> str:
+        return f'{self.id}: {self.area} - {self.name}'
 
 def getArgs(values=None):
     class Args():
