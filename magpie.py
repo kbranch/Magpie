@@ -75,12 +75,6 @@ def renderCheckList():
 
 @app.route("/mapCoords")
 def mapCoords():
-    # checks = getAllChecks()
-    # for check in checks:
-    #     checks[check].id = check
-    
-    # checkList = list(checks.values())
-
     return render_template("mapCoords.html")
 
 def parseArgs(argsString):
@@ -129,7 +123,6 @@ def getAccessibility(allChecks, logics, inventory):
                 continue
 
             alreadyInKeyLogic.add(check)
-            # outOfLogic.remove(check)
             level.add(check.cloneBehindKeys())
 
         logics[i].difficulty = i
@@ -146,11 +139,6 @@ def getAccessibility(allChecks, logics, inventory):
         check.difficulty = 9 
 
     for i in range(1, len(logics)):
-        # checks = accessibility[logic.name]
-        # del accessibility[logic.name]
-
-        # if logic == logics[0]:
-        #     continue
         logics[i].friendlyName = f'In {logics[i].name} logic'
 
         accessibility[logics[i]] = sorted(accessibility[logics[i]], key=lambda x: (x.area, x.name))

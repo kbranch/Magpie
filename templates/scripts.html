@@ -379,8 +379,8 @@
     function toggleNode(node) {
         $(node).tooltip('hide');
         var keys = $(node).attr('data-ids').split(',');
-        var toggleList = [];
-        var outOfLogic = [];
+        var toggleList = new Set();
+        var outOfLogic = new Set();
 
         for (const key of keys) {
             var chunks = key.split(';');
@@ -389,22 +389,22 @@
             var coord = coordDict[id][0];
             var fullName = `${coord.area}-${coord.name}`
             if (!(fullName in checkedChecks || difficulty == 9)) {
-                toggleList.push(id);
+                toggleList.add(id);
             }
 
             if (difficulty == 9) {
-                outOfLogic.push(id);
+                outOfLogic.add(id);
             }
         }
 
-        if (toggleList.length > 0) {
+        if (toggleList.size > 0) {
             for (const id of toggleList) {
                 var textCheck = $(`li[data-id="${id}"`);
                 toggleCheck(null, textCheck, false);
             }
         }
         else {
-            if (outOfLogic.length > 0) {
+            if (outOfLogic.size > 0) {
                 for (const id of outOfLogic) {
                     var textCheck = $(`li[data-id="${id}"`);
                     toggleCheck(null, textCheck, false);
