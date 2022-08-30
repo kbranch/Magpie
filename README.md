@@ -9,7 +9,7 @@ Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/yHxuDe3V)
 
 Special thanks to:
  - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is essentially a port of, and for help with the design
- - [Daid](https://github.com/daid) for creating [LADXR](https://github.com/daid/LADXR) and keeping it open
+ - [Daid](https://github.com/daid) for creating [LADXR](https://daid.github.io/LADXR/) and keeping it open
 
 ## Setup
 ### Downloading
