@@ -1,4 +1,4 @@
-var coordDict = {
+let coordDict = {
 	"0x297-Trade": [{
 		"map": "overworld",
 		"x": 1554,

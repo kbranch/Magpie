@@ -6,19 +6,19 @@ function initKnownItems() {
         resetInventory();
     }
 
-    var columns = document.querySelectorAll('div[data-primary]');
+    let columns = $('div[data-primary]');
 
     for (const col of columns) {
         // Set custom max values
-        if ("max" in col.dataset) {
-            var primary = col.dataset.primary;
-            var max = Number(col.dataset.max);
+        if (hasAttr(col, "data-max")) {
+            let primary = $(col).attr('data-primary');
+            let max = Number($(col).attr('data-max'));
             maxInventory[primary] = max;
         }
 
-        if ("secondary_max" in col.dataset) {
-            var secondary = col.dataset.secondary;
-            var max = Number(col.dataset.secondary_max);
+        if (hasAttr(col, "secondary_max")) {
+            let secondary = $(col).attr('data-secondary');
+            let max = Number($(col).attr('data-secondary_max'));
             maxInventory[secondary] = max;
         }
     }
@@ -31,54 +31,54 @@ function setImgSrc(img, item) {
         inventory[item] = 0;
     }
 
-    if ('src' in img.dataset) {
-        img.src = eval(img.dataset.src);
+    if (hasAttr(img, 'data-src')) {
+        $(img).attr('src', eval($(img).attr('data-src')));
     }
     else {
         max = 9999;
 
-        if ('max_image' in img.dataset) {
-            max = img.dataset.max_image;
+        if (hasAttr(img, 'data-max_image')) {
+            max = $(img).attr('data-max_image');
         }
 
-        img.src = `static/images/${item}_${Math.min(inventory[item], max)}.png`;
+        $(img).attr('src', `static/images/${item}_${Math.min(inventory[item], max)}.png`);
     }
 }
 
 function setItemImage(item) {
-    var img = document.querySelector(`img[data-item="${item}"]`);
+    let img = $(`img[data-item="${item}"]`);
 
-    if (img == null) {
-        col = document.querySelector(`div[data-secondary="${item}"]`);
-        img = col.children[0].children[0];
+    if (img.length == 0) {
+        col = $(`div[data-secondary="${item}"]`);
+        img = $(col).children()[0].children[0];
     }
 
     setImgSrc(img, item);
 }
 
 function updateOverlay(item) {
-    var texts = document.querySelectorAll(`span[data-overlay_count=${item}]`);
+    let texts = $(`span[data-overlay_count=${item}]`);
 
-    if (!texts) {
+    if (texts.length == 0) {
         return;
     }
 
     for (const text of texts) {
         if (inventory[item] == 0) {
-            text.classList.add('hidden');
+            $(text).addClass('hidden');
         }
         else {
-            text.classList.remove('hidden');
+            $(text).removeClass('hidden');
         }
 
         if (inventory[item] == maxInventory[item]) {
-            text.classList.add('full');
+            $(text).addClass('full');
         }
         else {
-            text.classList.remove('full');
+            $(text).removeClass('full');
         }
 
-        text.innerHTML = inventory[item];
+        $(text).html(inventory[item]);
     }
 }
 
@@ -106,8 +106,8 @@ function addItem(item, qty) {
 }
 
 function itemValueUpdated(element) {
-    var item = element.dataset.item;
-    var value = null;
+    let item = element.dataset.item;
+    let value = null;
 
     if (element.type == 'checkbox') {
        value = element.checked ? 1 : 0;
@@ -123,7 +123,7 @@ function itemValueUpdated(element) {
 }
 
 function resetInventory() {
-    inventory = new Object();
+    inventory = {};
     saveInventory();
 }
 
@@ -133,21 +133,22 @@ function saveInventory() {
 
 function loadInventory() {
     inventory = JSON.parse(localStorage.getItem("inventory"));
+
     if (inventory == null) {
         resetInventory();
     }
 }
 
 function refreshImages() {
-    var columns = document.querySelectorAll('div[data-primary]');
+    let columns = $('div[data-primary]');
 
     for (const col of columns) {
-        var primary = col.dataset.primary;
+        let primary = $(col).attr('data-primary');
 
         setItemImage(primary);
 
-        if ('secondary' in col.dataset) {
-            setItemImage(col.dataset.secondary);
+        if (hasAttr(col, 'data-secondary')) {
+            setItemImage($(col).attr('data-secondary'));
         }
 
         updateOverlay(primary);
@@ -155,7 +156,7 @@ function refreshImages() {
 
     inputs = $('input[data-item]')
     for (const input of inputs) {
-        var item = input.dataset.item;
+        let item = input.dataset.item;
 
         if (input.type == 'checkbox') {
             input.checked = inventory[item] >= 1;
