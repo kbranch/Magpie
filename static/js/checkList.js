@@ -31,7 +31,7 @@ function toggleNode(node) {
         let chunks = checkId.split(';');
         let id = chunks[0];
         let difficulty = chunks[1];
-        let coord = coordDict[id][0];
+        let coord = coordDict[id];
         let fullName = `${coord.area}-${coord.name}`
 
         if (!(fullName in checkedChecks || difficulty == 9)) {

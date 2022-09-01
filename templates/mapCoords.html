@@ -1,225 +1,36 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="color-scheme" content="dark">
+{% extends "base.html" %}
+{% block otherContent %}
 
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}" />
+<img id="cursor" style="position:fixed; top:0; left:0; pointer-events:none; z-index: 10;" src="static/images/cursor.png">
 
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-        <title>Magpie</title>
-    </head>
-
-    <body>
-        <nav class="navbar bg-light">
-            <div class="container">
-                <a class="nav-link" href="/">Magpie</a>
-                <!-- <div class="col text-end">
-                    <button type="button" class="btn btn-secondary" onclick="resetInventory();resetChecks();refreshImages();refreshMap();" data-bs-toggle="tooltip" data-bs-title="Reset Checks">
-                        <img src="static/images/arrow-clockwise.svg">
-                    </button>
-                    <span data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
-                        <button class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Change Flags">
-                            <img src="static/images/gear.svg">
-                        </a>
-                    </span>
-                </div> -->
-            </div>
-        </nav>
-
-        <!-- <div class="container body-content">
-            <div class="row">
-                <div class="col-9">
-                    <ul class="nav nav-tabs" id="mapTabs" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="overworldTab" data-bs-toggle="tab" data-bs-target="#overworldTabContent" type="button" role="tab" aria-controls="overworldTabContent" aria-selected="true">Overworld</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d1Tab" data-bs-toggle="tab" data-bs-target="#d1TabContent" type="button" role="tab" aria-controls="d1TabContent" aria-selected="true">D1</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d2Tab" data-bs-toggle="tab" data-bs-target="#d2TabContent" type="button" role="tab" aria-controls="d2TabContent" aria-selected="true">D2</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d3Tab" data-bs-toggle="tab" data-bs-target="#d3TabContent" type="button" role="tab" aria-controls="d3TabContent" aria-selected="true">D3</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d4Tab" data-bs-toggle="tab" data-bs-target="#d4TabContent" type="button" role="tab" aria-controls="d4TabContent" aria-selected="true">D4</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d5Tab" data-bs-toggle="tab" data-bs-target="#d5TabContent" type="button" role="tab" aria-controls="d5TabContent" aria-selected="true">D5</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d6Tab" data-bs-toggle="tab" data-bs-target="#d6TabContent" type="button" role="tab" aria-controls="d6TabContent" aria-selected="true">D6</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d7Tab" data-bs-toggle="tab" data-bs-target="#d7TabContent" type="button" role="tab" aria-controls="d7TabContent" aria-selected="true">D7</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d8Tab" data-bs-toggle="tab" data-bs-target="#d8TabContent" type="button" role="tab" aria-controls="d8TabContent" aria-selected="true">D8</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="d0Tab" data-bs-toggle="tab" data-bs-target="#d0TabContent" type="button" role="tab" aria-controls="d0TabContent" aria-selected="true">D0</a>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content" id="tabContents">
-                        <div class="tab-pane fade show active" id="overworldTabContent" role="tabpanel" aria-labelledby="overworldTab">
-                            <img class="map" data-mapname="overworld" src="static/images/overworld.png">
-                        </div>
-                        <div class="tab-pane fade" id="d1TabContent" role="tabpanel" aria-labelledby="d1Tab">
-                            <img class="map" data-mapname="Tail Cave" src="static/images/d1.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d2TabContent" role="tabpanel" aria-labelledby="d2Tab">
-                            <img class="map" data-mapname="Bottle Grotto" src="static/images/d2.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d3TabContent" role="tabpanel" aria-labelledby="d3Tab">
-                            <img class="map" data-mapname="Key Cavern" src="static/images/d3.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d4TabContent" role="tabpanel" aria-labelledby="d4Tab">
-                            <img class="map" data-mapname="Angler's Tunnel" src="static/images/d4.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d5TabContent" role="tabpanel" aria-labelledby="d5Tab">
-                            <img class="map" data-mapname="Catfish's Maw" src="static/images/d5.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d6TabContent" role="tabpanel" aria-labelledby="d6Tab">
-                            <img class="map" data-mapname="Face Shrine" src="static/images/d6.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d7TabContent" role="tabpanel" aria-labelledby="d7Tab">
-                            <img class="map" data-mapname="Eagle's Tower" src="static/images/d7.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d8TabContent" role="tabpanel" aria-labelledby="d8Tab">
-                            <img class="map" data-mapname="Turtle Rock" src="static/images/d8.png"><br>
-                        </div>
-                        <div class="tab-pane fade" id="d0TabContent" role="tabpanel" aria-labelledby="d0Tab">
-                            <img class="map" data-mapname="Color Dungeon" src="static/images/d0.png"><br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-            <pre id="coords" style="position:fixed; top:0; right:0;">this is a test</pre>
-            <img id="cursor" style="position:fixed; top:0; left:0; pointer-events:none;" src="static/images/cursor.png">
-        <!-- <div class="container body-content"> -->
-            <img class="mapImage" data-mapname="overworld" src="static/images/overworld.png"><br>
-            <img class="mapImage" data-mapname="d0" src="static/images/d0.png"><br>
-            <img class="mapImage" data-mapname="d2" src="static/images/d2.png"><br>
-            <img class="mapImage" data-mapname="d3" src="static/images/d3.png"><br>
-            <img class="mapImage" data-mapname="d4" src="static/images/d4.png"><br>
-            <img class="mapImage" data-mapname="d5" src="static/images/d5.png"><br>
-            <img class="mapImage" data-mapname="d6" src="static/images/d6.png"><br>
-            <img class="mapImage" data-mapname="d7" src="static/images/d7.png"><br>
-            <img class="mapImage" data-mapname="d8" src="static/images/d8.png">
-        <!-- </div> -->
-
-        <div class="form-check form-switch">
-            <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
+<div class="row">
+    <div class="col">
+        {% include 'map.html' %}
+    </div>
+    <div id="checkListCol" class="col-auto">
+        <div id="checkListGroup" class="list-group">
         </div>
+        <div id="checkLocationsListGroup" class="list-group">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="copyChecks()">Copy Checks</button>
+    </div>
+</div>
 
-        {% include 'scripts.html' %}
+<div class="form-check form-switch">
+    <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
+</div>
 
-        <script type="application/javascript">
-            /*checkCoords = [];
-            //localStorage.setItem("coords", JSON.stringify(checkCoords));
-            checkCoords = JSON.parse(localStorage.getItem('coords'));
-            //allLocations = JSON.parse(`{checks|safe}`);
-            currentLocation = allLocations.pop();
-            $('#currentCheck').html(`${currentLocation.area}: ${currentLocation.name}`);
+<script src="static/lib/jquery/jquery-3.6.0.min.js"></script>
+<script src="static/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="static/lib/light-switch-bootstrap-0.1.3/switch.js"></script>
+<script src="static/js/locations.js"></script>
+<script src="static/js/mapCoords.js"></script>
 
-            $(document).ready(function() {
-                $("img").on("contextmenu", function(event) {
-                    currentLocation = allLocations.pop();
-                    $('#currentCheck').html(`${currentLocation.area}: ${currentLocation.name}`);
+<script type="application/javascript">
+    $(document).ready(function() {
+        $(".map").on("mousemove", function() { drawCursor(event, this, window) });
+        $(".map").on("click", function() { mapClick(this, event) });
+    });
+</script>
 
-                    return false;
-                });
-            });*/
-
-            $(document).ready(function() {
-                $(".mapImage").on("mousemove", function(event) {
-                    bounds=this.getBoundingClientRect();
-                    var left=bounds.left;
-                    var top=bounds.top;
-                    var x = event.pageX - left - window.scrollX;
-                    var y = event.pageY - top - window.scrollY;
-                    var map = this.dataset.mapname;
-
-                    if (map == 'overworld') {
-                        x -= Math.floor(x / 160) * 2;
-                        y -= Math.floor(y / 128) * 2;
-                    }
-
-                    var targetX = Math.floor(x/8) * 8;
-                    var targetY = Math.floor(y/8) * 8;
-
-                    if (map == 'overworld') {
-                        xOffset = Math.floor(x / 160) * 2;
-                        yOffset = Math.floor(y / 128) * 2;
-
-
-                        targetX += xOffset;
-                        targetY += yOffset;
-                    }
-
-                    targetX += left;
-                    targetY += top;
-
-                    $("#cursor").css('top', targetY);
-                    $("#cursor").css('left', targetX);
-                    $('#coords').html(`"map": "${map}",
-"x": ${targetX - left},
-"y": ${targetY - top},`)
-                });
-            });
-
-            function copyCoords() {
-                navigator.clipboard.writeText($('#coords').html());
-            }
-
-            $(document).ready(function() {
-                $(".mapImage").on("click", function(event) {
-                    navigator.clipboard.writeText($('#coords').html());
-
-                    /*bounds=this.getBoundingClientRect();
-                    var left=bounds.left;
-                    var top=bounds.top;
-                    var x = event.pageX - left - window.scrollX;
-                    var y = event.pageY - top - window.scrollY;
-                    var map = this.dataset.mapname;
-
-                    if (map == 'overworld') {
-                        x -= Math.floor(x / 160) * 2;
-                        y -= Math.floor(y / 128) * 2;
-                    }
-
-                    var targetX = Math.floor(x/16) * 16;
-                    var targetY = Math.floor(y/16) * 16;
-
-                    if (map == 'overworld') {
-                        xOffset = Math.floor(x / 160) * 2;
-                        yOffset = Math.floor(y / 128) * 2;
-
-
-                        targetX += xOffset;
-                        targetY += yOffset;
-                    }
-
-
-
-                    check = new Object();
-                    check.map = this.dataset.mapname;
-                    check.x = targetX;
-                    check.y = targetY;
-                    check.location = currentLocation;
-
-                    checkCoords.push(check);
-
-                    localStorage.setItem("coords", JSON.stringify(checkCoords));*/
-                });
-            });
-        </script>
-    </body>
-</html>
+{% endblock %}

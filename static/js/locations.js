@@ -1,3281 +1,4355 @@
 let coordDict = {
-	"0x297-Trade": [{
-		"map": "overworld",
-		"x": 1554,
-		"y": 1852,
-		"name": "Mermaid Statue",
-		"area": "Martha's Bay",
-		"id": "0x297-Trade"
-	}],
-	"0x0C9-Trade": [{
-		"map": "overworld",
-		"x": 1570,
-		"y": 1624,
-		"name": "Mermaid",
-		"area": "Martha's Bay",
-		"id": "0x0C9-Trade"
-	}],
-	"0x2F5-Trade": [{
-		"map": "overworld",
-		"x": 1716,
-		"y": 1852,
-		"name": "Fisher",
-		"area": "Martha's Bay",
-		"id": "0x2F5-Trade"
-	}],
-	"0x0CD-Trade": [{
-		"map": "overworld",
-		"x": 2202,
-		"y": 1640,
-		"name": "Grandma",
-		"area": "Animal Village",
-		"id": "0x0CD-Trade"
-	}],
-	"0x2A8-Trade": [{
-		"map": "overworld",
-		"x": 112,
-		"y": 422,
-		"name": "MrWrite",
-		"area": "Goponga Swamp",
-		"id": "0x2A8-Trade"
-	}],
-	"0x2D9-Trade": [{
-		"map": "overworld",
-		"x": 2138,
-		"y": 1624,
-		"name": "Goat",
-		"area": "Animal Village",
-		"id": "0x2D9-Trade"
-	}],
-	"0x019-Trade": [{
-		"map": "overworld",
-		"x": 1554,
-		"y": 162,
-		"name": "Papahl",
-		"area": "Tal Tal Heights",
-		"id": "0x019-Trade"
-	}],
-	"0x2D7-Trade": [{
-		"map": "overworld",
-		"x": 2186,
-		"y": 1738,
-		"name": "Bear Cook",
-		"area": "Animal Village",
-		"id": "0x2D7-Trade"
-	}],
-	"0x087-Trade": [{
-		"map": "overworld",
-		"x": 1206,
-		"y": 1088,
-		"name": "Honeycomb",
-		"area": "Ukuku Prairie",
-		"id": "0x087-Trade"
-	}],
-	"0x07B-Trade": [{
-		"map": "overworld",
-		"x": 1846,
-		"y": 974,
-		"name": "Kiki",
-		"area": "Ukuku Prairie",
-		"id": "0x07B-Trade"
-	}],
-	"0x2FE-Trade": [{
-		"map": "overworld",
-		"x": 550,
-		"y": 1852,
-		"name": "Banana Sale",
-		"area": "Toronbo Shores",
-		"id": "0x2FE-Trade"
-	}],
-	"0x2B2-Trade": [{
-		"map": "overworld",
-		"x": 242,
-		"y": 1348,
-		"name": "YipYip",
-		"area": "Mabe Village",
-		"id": "0x2B2-Trade"
-	}],
-	"0x2A6-Trade": [{
-		"map": "overworld",
-		"x": 436,
-		"y": 1104,
-		"name": "Papahl's Wife",
-		"area": "Mabe Village",
-		"id": "0x2A6-Trade"
-	}],
-	"0x2A0-Trade": [{
-		"map": "overworld",
-		"x": 566,
-		"y": 1494,
-		"name": "Trendy Game",
-		"area": "Mabe Village",
-		"id": "0x2A0-Trade"
-	}],
-	"0x1E4": [{
-		"map": "overworld",
-		"x": 404,
-		"y": 1234,
-		"name": "Rooster",
-		"area": "Mabe Village",
-		"id": "0x1E4"
-	}],
-	"0x2FB": [{
-		"map": "overworld",
-		"x": 776,
-		"y": 1706,
-		"name": "Mamu",
-		"area": "Ukuku Prairie",
-		"id": "0x2FB"
-	}],
-	"0x2FD": [{
-		"map": "overworld",
-		"x": 1716,
-		"y": 292,
-		"name": "Manbo's Mambo",
-		"area": "Tal Tal Heights",
-		"id": "0x2FD"
-	}],
-	"0x092": [{
-		"map": "overworld",
-		"x": 356,
-		"y": 1218,
-		"name": "Ballad of the Wind Fish",
-		"area": "Mabe Village",
-		"id": "0x092"
-	}, {
-		"map": "overworld",
-		"x": 2024,
-		"y": 1738,
-		"name": "Ballad of the Wind Fish",
-		"area": "Mabe Village",
-		"id": "0x092"
-	}],
-	"0x27A": [{
-		"map": "overworld",
-		"x": 1732,
-		"y": 96,
-		"name": "Bird Key Cave",
-		"area": "Tal Tal Mountains",
-		"id": "0x27A"
-	}],
-	"0x27F": [{
-		"map": "overworld",
-		"x": 2024,
-		"y": 1348,
-		"name": "Armos Knight",
-		"area": "Southern Face Shrine",
-		"id": "0x27F"
-	}],
-	"0x0CE": [{
-		"map": "overworld",
-		"x": 2340,
-		"y": 1616,
-		"name": "Lanmola",
-		"area": "Yarna Desert",
-		"id": "0x0CE"
-	}],
-	"0x050": [{
-		"map": "overworld",
-		"x": 32,
-		"y": 698,
-		"name": "Toadstool",
-		"area": "Mysterious Woods",
-		"id": "0x050"
-	}],
-	"0x0F2": [{
-		"map": "overworld",
-		"x": 404,
-		"y": 2030,
-		"name": "Sword on the Beach",
-		"area": "Toronbo Shores",
-		"id": "0x0F2"
-	}],
-	"0x2BA": [{
-		"map": "overworld",
-		"x": 938,
-		"y": 178,
-		"name": "Access Tunnel Bombable Heart Piece",
-		"area": "Tal Tal Mountains",
-		"id": "0x2BA"
-	}, {
-		"map": "overworld",
-		"x": 1182,
-		"y": 64,
-		"name": "Access Tunnel Bombable Heart Piece",
-		"area": "Tal Tal Mountains",
-		"id": "0x2BA"
-	}],
-	"0x1E2": [{
-		"map": "overworld",
-		"x": 744,
-		"y": 96,
-		"name": "Mad Batter",
-		"area": "Tal Tal Mountains",
-		"id": "0x1E2"
-	}],
-	"0x004": [{
-		"map": "overworld",
-		"x": 728,
-		"y": 64,
-		"name": "Outside Mad Batter",
-		"area": "Tal Tal Mountains",
-		"id": "0x004"
-	}],
-	"0x01D": [{
-		"map": "overworld",
-		"x": 2186,
-		"y": 146,
-		"name": "Outside Five Chest Game",
-		"area": "Tal Tal Mountains",
-		"id": "0x01D"
-	}],
-	"0x2F2": [{
-		"map": "overworld",
-		"x": 2122,
-		"y": 96,
-		"name": "Five Chest Game",
-		"area": "Tal Tal Mountains",
-		"id": "0x2F2"
-	}, {
-		"map": "overworld",
-		"x": 2122,
-		"y": 162,
-		"name": "Five Chest Game",
-		"area": "Tal Tal Mountains",
-		"id": "0x2F2"
-	}, {
-		"map": "overworld",
-		"x": 2218,
-		"y": 194,
-		"name": "Five Chest Game",
-		"area": "Tal Tal Mountains",
-		"id": "0x2F2"
-	}],
-	"0x00C": [{
-		"map": "overworld",
-		"x": 2056,
-		"y": 48,
-		"name": "Bridge Rock",
-		"area": "Tal Tal Mountains",
-		"id": "0x00C"
-	}],
-	"0x01E-Owl": [{
-		"map": "overworld",
-		"x": 2284,
-		"y": 194,
-		"name": "Outside D7 Owl",
-		"area": "Tal Tal Mountains",
-		"id": "0x01E-Owl"
-	}],
-	"0x05D-Owl": [{
-		"map": "overworld",
-		"x": 2170,
-		"y": 666,
-		"name": "Owl",
-		"area": "Rapids Ride",
-		"id": "0x05D-Owl"
-	}],
-	"0x05D": [{
-		"map": "overworld",
-		"x": 2202,
-		"y": 666,
-		"name": "East",
-		"area": "Rapids Ride",
-		"id": "0x05D"
-	}],
-	"0x05C": [{
-		"map": "overworld",
-		"x": 2008,
-		"y": 682,
-		"name": "West",
-		"area": "Rapids Ride",
-		"id": "0x05C"
-	}],
-	"0x08F-Owl": [{
-		"map": "overworld",
-		"x": 2542,
-		"y": 1104,
-		"name": "Outside Owl",
-		"area": "Southern Face Shrine",
-		"id": "0x08F-Owl"
-	}],
-	"0x2FC": [{
-		"map": "overworld",
-		"x": 2332,
-		"y": 1380,
-		"name": "Under Armos Cave",
-		"area": "Southern Face Shrine",
-		"id": "0x2FC"
-	}],
-	"0x1F2": [{
-		"map": "overworld",
-		"x": 2348,
-		"y": 276,
-		"name": "Damp Cave Heart Piece",
-		"area": "Tal Tal Heights",
-		"id": "0x1F2"
-	}],
-	"0x28A": [{
-		"map": "overworld",
-		"x": 1586,
-		"y": 178,
-		"name": "Paphl Cave",
-		"area": "Tal Tal Mountains",
-		"id": "0x28A"
-	}, {
-		"map": "overworld",
-		"x": 1636,
-		"y": 96,
-		"name": "Paphl Cave",
-		"area": "Tal Tal Mountains",
-		"id": "0x28A"
-	}],
-	"0x2BB": [{
-		"map": "overworld",
-		"x": 1392,
-		"y": 130,
-		"name": "Access Tunnel Interior",
-		"area": "Tal Tal Mountains",
-		"id": "0x2BB"
-	}, {
-		"map": "overworld",
-		"x": 1424,
-		"y": 130,
-		"name": "Access Tunnel Interior",
-		"area": "Tal Tal Mountains",
-		"id": "0x2BB"
-	}, {
-		"map": "overworld",
-		"x": 1182,
-		"y": 162,
-		"name": "Access Tunnel Interior",
-		"area": "Tal Tal Mountains",
-		"id": "0x2BB"
-	}],
-	"0x018": [{
-		"map": "overworld",
-		"x": 1360,
-		"y": 146,
-		"name": "Access Tunnel Exterior",
-		"area": "Tal Tal Mountains",
-		"id": "0x018"
-	}],
-	"0x0FF": [{
-		"map": "overworld",
-		"x": 2510,
-		"y": 1998,
-		"name": "Rock Seashell",
-		"area": "Yarna Desert",
-		"id": "0x0FF"
-	}],
-	"0x1E8": [{
-		"map": "overworld",
-		"x": 2510,
-		"y": 1560,
-		"name": "Cave Under Lanmola",
-		"area": "Yarna Desert",
-		"id": "0x1E8"
-	}],
-	"0x2E6": [{
-		"map": "overworld",
-		"x": 2234,
-		"y": 1576,
-		"name": "Bomb Arrow Cave",
-		"area": "Yarna Desert",
-		"id": "0x2E6"
-	}],
-	"0x0CF-Owl": [{
-		"map": "overworld",
-		"x": 2478,
-		"y": 1576,
-		"name": "Desert Owl",
-		"area": "Yarna Desert",
-		"id": "0x0CF-Owl"
-	}],
-	"0x0DA-Owl": [{
-		"map": "overworld",
-		"x": 1692,
-		"y": 1738,
-		"name": "Peninsula Owl",
-		"area": "Martha's Bay",
-		"id": "0x0DA-Owl"
-	}],
-	"0x0DA": [{
-		"map": "overworld",
-		"x": 1660,
-		"y": 1738,
-		"name": "Peninsula Dig",
-		"area": "Martha's Bay",
-		"id": "0x0DA"
-	}],
-	"0x2C6": [{
-		"map": "overworld",
-		"x": 1538,
-		"y": 698,
-		"name": "Ball and Chain Darknut Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x2C6"
-	}],
-	"0x2C5": [{
-		"map": "overworld",
-		"x": 1474,
-		"y": 682,
-		"name": "Bombable Darknut Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x2C5"
-	}, {
-		"map": "overworld",
-		"x": 1538,
-		"y": 828,
-		"name": "Bombable Darknut Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x2C5"
-	}],
-	"0x2D2": [{
-		"map": "overworld",
-		"x": 1538,
-		"y": 828,
-		"name": "Darknut, Zol, Bubble Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x2D2"
-	}, {
-		"map": "overworld",
-		"x": 1474,
-		"y": 682,
-		"name": "Darknut, Zol, Bubble Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x2D2"
-	}],
-	"0x058": [{
-		"map": "overworld",
-		"x": 1360,
-		"y": 666,
-		"name": "Crow Rock Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x058"
-	}],
-	"0x05A": [{
-		"map": "overworld",
-		"x": 1700,
-		"y": 714,
-		"name": "Bomberman Meets Whack-a-mole Leaf",
-		"area": "Kanalet Castle",
-		"id": "0x05A"
-	}],
-	"0x078": [{
-		"map": "overworld",
-		"x": 1392,
-		"y": 974,
-		"name": "In the Moat Heart Piece",
-		"area": "Kanalet Castle",
-		"id": "0x078"
-	}],
-	"0x2C8": [{
-		"map": "overworld",
-		"x": 1020,
-		"y": 1624,
-		"name": "Under Richard's House",
-		"area": "Pothole Field",
-		"id": "0x2C8"
-	}, {
-		"map": "overworld",
-		"x": 1036,
-		"y": 1754,
-		"name": "Under Richard's House",
-		"area": "Pothole Field",
-		"id": "0x2C8"
-	}],
-	"0x0C6": [{
-		"map": "overworld",
-		"x": 1084,
-		"y": 1608,
-		"name": "Slime Key Dig",
-		"area": "Pothole Field",
-		"id": "0x0C6"
-	}],
-	"0x0C6-Owl": [{
-		"map": "overworld",
-		"x": 1084,
-		"y": 1576,
-		"name": "Slime Key Owl",
-		"area": "Pothole Field",
-		"id": "0x0C6-Owl"
-	}],
-	"0x1E0": [{
-		"map": "overworld",
-		"x": 1036,
-		"y": 1868,
-		"name": "Mad Batter",
-		"area": "Martha's Bay",
-		"id": "0x1E0"
-	},{
-		"map": "overworld",
-		"x": 1570,
-		"y": 2014,
-		"name": "Mad Batter",
-		"area": "Martha's Bay",
-		"id": "0x1E0"
-	}],
-	"0x0A8-Owl": [{
-		"map": "overworld",
-		"x": 1368,
-		"y": 1364,
-		"name": "Donut Plains Ledge Owl",
-		"area": "Donut Plains",
-		"id": "0x0A8-Owl"
-	}],
-	"0x0A8": [{
-		"map": "overworld",
-		"x": 1336,
-		"y": 1364,
-		"name": "Donut Plains Ledge Dig",
-		"area": "Donut Plains",
-		"id": "0x0A8"
-	}],
-	"0x0F8": [{
-		"map": "overworld",
-		"x": 1360,
-		"y": 2014,
-		"name": "Island Bush of Destiny",
-		"area": "Martha's Bay",
-		"id": "0x0F8"
-	}],
-	"0x0E9": [{
-		"map": "overworld",
-		"x": 1490,
-		"y": 1916,
-		"name": "Lone Bush",
-		"area": "Martha's Bay",
-		"id": "0x0E9"
-	}],
-	"0x0B9": [{
-		"map": "overworld",
-		"x": 1522,
-		"y": 1478,
-		"name": "Rock Seashell",
-		"area": "Donut Plains",
-		"id": "0x0B9"
-	}],
-	"0x1FD": [{
-		"map": "overworld",
-		"x": 1328,
-		"y": 1006,
-		"name": "Boots Pit",
-		"area": "Kanalet Castle",
-		"id": "0x1FD"
-	}],
-	"0x2E9": [{
-		"map": "overworld",
-		"x": 1700,
-		"y": 1088,
-		"name": "Seashell Mansion",
-		"area": "Ukuku Prairie",
-		"id": "0x2E9"
-	}],
-	"0x0A4": [{
-		"map": "overworld",
-		"x": 752,
-		"y": 1340,
-		"name": "East of Mabe Tree Bonk",
-		"area": "Ukuku Prairie",
-		"id": "0x0A4"
-	}],
-	"0x08B": [{
-		"map": "overworld",
-		"x": 1846,
-		"y": 1120,
-		"name": "East of Seashell Mansion Bush",
-		"area": "Ukuku Prairie",
-		"id": "0x08B"
-	}],
-	"0x0A6": [{
-		"map": "overworld",
-		"x": 1068,
-		"y": 1364,
-		"name": "Outside D3 Island Bush",
-		"area": "Ukuku Prairie",
-		"id": "0x0A6"
-	}],
-	"0x0A5": [{
-		"map": "overworld",
-		"x": 890,
-		"y": 1364,
-		"name": "Outside D3 Ledge Dig",
-		"area": "Ukuku Prairie",
-		"id": "0x0A5"
-	}],
-	"0x2E5": [{
-		"map": "overworld",
-		"x": 988,
-		"y": 1088,
-		"name": "Boots 'n' Bomb Cave Chest",
-		"area": "Ukuku Prairie",
-		"id": "0x2E5"
-	}],
-	"0x2F4": [{
-		"map": "overworld",
-		"x": 988,
-		"y": 1088,
-		"name": "Boots 'n' Bomb Cave Bombable Wall",
-		"area": "Ukuku Prairie",
-		"id": "0x2F4"
-	}],
-	"0x2CD": [{
-		"map": "overworld",
-		"x": 792,
-		"y": 1120,
-		"name": "Cave East of Mabe",
-		"area": "Ukuku Prairie",
-		"id": "0x2CD"
-	}],
-	"0x2E2": [{
-		"map": "overworld",
-		"x": 906,
-		"y": 454,
-		"name": "Moblin Cave",
-		"area": "Tal Tal Heights",
-		"id": "0x2E2"
-	}],
-	"0x074": [{
-		"map": "overworld",
-		"x": 744,
-		"y": 958,
-		"name": "Ghost Grave Dig",
-		"area": "Koholint Prairie",
-		"id": "0x074"
-	}],
-	"0x2DF": [{
-		"map": "overworld",
-		"x": 858,
-		"y": 958,
-		"name": "Graveyard Connector",
-		"area": "Koholint Prairie",
-		"id": "0x2DF"
-	}, {
-		"map": "overworld",
-		"x": 1068,
-		"y": 958,
-		"name": "Graveyard Connector",
-		"area": "Koholint Prairie",
-		"id": "0x2DF"
-	}],
-	"0x035-Owl": [{
-		"map": "overworld",
-		"x": 858,
-		"y": 470,
-		"name": "Moblin Cave Owl",
-		"area": "Tal Tal Heights",
-		"id": "0x035-Owl"
-	}],
-	"0x2AF": [{
-		"map": "overworld",
-		"x": 178,
-		"y": 292,
-		"name": "Write Cave East",
-		"area": "Goponga Swamp",
-		"id": "0x2AF"
-	}, {
-		"map": "overworld",
-		"x": 128,
-		"y": 292,
-		"name": "Write Cave East",
-		"area": "Goponga Swamp",
-		"id": "0x2AF"
-	}],
-	"0x011-Owl": [{
-		"map": "overworld",
-		"x": 178,
-		"y": 210,
-		"name": "North of Write Owl",
-		"area": "Goponga Swamp",
-		"id": "0x011-Owl"
-	}],
-	"0x2AE": [{
-		"map": "overworld",
-		"x": 128,
-		"y": 292,
-		"name": "Write Cave West",
-		"area": "Goponga Swamp",
-		"id": "0x2AE"
-	}, {
-		"map": "overworld",
-		"x": 178,
-		"y": 292,
-		"name": "Write Cave West",
-		"area": "Goponga Swamp",
-		"id": "0x2AE"
-	}],
-	"0x2B3": [{
-		"map": "overworld",
-		"x": 372,
-		"y": 568,
-		"name": "Hookshot Cave",
-		"area": "Mysterious Woods",
-		"id": "0x2B3"
-	}],
-	"0x2AB": [{
-		"map": "overworld",
-		"x": 128,
-		"y": 682,
-		"name": "Cave Skull Heart Piece",
-		"area": "Mysterious Woods",
-		"id": "0x2AB"
-	}, {
-		"map": "overworld",
-		"x": 436,
-		"y": 828,
-		"name": "Cave Skull Heart Piece",
-		"area": "Mysterious Woods",
-		"id": "0x2AB"
-	}],
-	"0x2BD": [{
-		"map": "overworld",
-		"x": 436,
-		"y": 828,
-		"name": "Cave Crystal Chest",
-		"area": "Mysterious Woods",
-		"id": "0x2BD"
-	}, {
-		"map": "overworld",
-		"x": 128,
-		"y": 682,
-		"name": "Cave Crystal Chest",
-		"area": "Mysterious Woods",
-		"id": "0x2BD"
-	}],
-	"0x041": [{
-		"map": "overworld",
-		"x": 226,
-		"y": 568,
-		"name": "Tail Key Chest",
-		"area": "Mysterious Woods",
-		"id": "0x041"
-	}],
-	"0x034": [{
-		"map": "overworld",
-		"x": 664,
-		"y": 406,
-		"name": "Swampy Chest",
-		"area": "Goponga Swamp",
-		"id": "0x034"
-	}],
-	"0x1E1": [{
-		"map": "overworld",
-		"x": 436,
-		"y": 682,
-		"name": "Mad Batter",
-		"area": "Mysterious Woods",
-		"id": "0x1E1"
-	}],
-	"0x071": [{
-		"map": "overworld",
-		"x": 226,
-		"y": 990,
-		"name": "Two Zol, Moblin Chest",
-		"area": "Mysterious Woods",
-		"id": "0x071"
-	}],
-	"0x044": [{
-		"map": "overworld",
-		"x": 712,
-		"y": 584,
-		"name": "Heart Piece of Shame",
-		"area": "Koholint Prairie",
-		"id": "0x044"
-	}],
-	"0x1E3": [{
-		"map": "overworld",
-		"x": 1052,
-		"y": 1998,
-		"name": "Ghost House Barrel",
-		"area": "Martha's Bay",
-		"id": "0x1E3"
-	}],
-	"0x0E5": [{
-		"map": "overworld",
-		"x": 922,
-		"y": 1852,
-		"name": "West of Ghost House Chest",
-		"area": "Toronbo Shores",
-		"id": "0x0E5"
-	}],
-	"0x0D2": [{
-		"map": "overworld",
-		"x": 380,
-		"y": 1762,
-		"name": "Outside D1 Tree Bonk",
-		"area": "Toronbo Shores",
-		"id": "0x0D2"
-	}],
-	"0x2B2": [{
-		"map": "overworld",
-		"x": 242,
-		"y": 1348,
-		"name": "Dog House Dig",
-		"area": "Mabe Village",
-		"id": "0x2B2"
-	}],
-	"0x0A3": [{
-		"map": "overworld",
-		"x": 566,
-		"y": 1348,
-		"name": "Bush Field",
-		"area": "Mabe Village",
-		"id": "0x0A3"
-	}],
-	"0x2B1": [{
-		"map": "overworld",
-		"x": 258,
-		"y": 1104,
-		"name": "Fishing Game Heart Piece",
-		"area": "Mabe Village",
-		"id": "0x2B1"
-	}],
-	"0x2A4": [{
-		"map": "overworld",
-		"x": 80,
-		"y": 1380,
-		"name": "Well Heart Piece",
-		"area": "Mabe Village",
-		"id": "0x2A4"
-	}],
-	"0x2BE": [{
-		"map": "overworld",
-		"x": 518,
-		"y": 1088,
-		"name": "Dream Hut West",
-		"area": "Mabe Village",
-		"id": "0x2BE"
-	}],
-	"0x2BF": [{
-		"map": "overworld",
-		"x": 518,
-		"y": 1088,
-		"name": "Dream Hut East",
-		"area": "Mabe Village",
-		"id": "0x2BF"
-	}],
-	"0x30A-Owl": [{
-		"map": "d0",
-		"x": 208,
-		"y": 256,
-		"name": "Puzzowl",
-		"area": "Color Dungeon",
-		"id": "0x30A-Owl"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Puzzowl",
-		"area": "Color Dungeon",
-		"id": "0x30A-Owl"
-	}],
-	"0x307": [{
-		"map": "d0",
-		"x": 544,
-		"y": 176,
-		"name": "Bullshit Room",
-		"area": "Color Dungeon",
-		"id": "0x307"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Bullshit Room",
-		"area": "Color Dungeon",
-		"id": "0x307"
-	}],
-	"0x306": [{
-		"map": "d0",
-		"x": 448,
-		"y": 160,
-		"name": "Zol Chest",
-		"area": "Color Dungeon",
-		"id": "0x306"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Zol Chest",
-		"area": "Color Dungeon",
-		"id": "0x306"
-	}],
-	"0x302": [{
-		"map": "d0",
-		"x": 704,
-		"y": 16,
-		"name": "Nightmare Key Chest",
-		"area": "Color Dungeon",
-		"id": "0x302"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Nightmare Key Chest",
-		"area": "Color Dungeon",
-		"id": "0x302"
-	}],
-	"0x311": [{
-		"map": "d0",
-		"x": 768,
-		"y": 416,
-		"name": "Two Socket Chest",
-		"area": "Color Dungeon",
-		"id": "0x311"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Two Socket Chest",
-		"area": "Color Dungeon",
-		"id": "0x311"
-	}],
-	"0x30F": [{
-		"map": "d0",
-		"x": 448,
-		"y": 416,
-		"name": "Entrance Chest",
-		"area": "Color Dungeon",
-		"id": "0x30F"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Entrance Chest",
-		"area": "Color Dungeon",
-		"id": "0x30F"
-	}],
-	"0x30F-Owl": [{
-		"map": "d0",
-		"x": 400,
-		"y": 384,
-		"name": "Entrance Owl",
-		"area": "Color Dungeon",
-		"id": "0x30F-Owl"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Entrance Owl",
-		"area": "Color Dungeon",
-		"id": "0x30F-Owl"
-	}],
-	"0x308": [{
-		"map": "d0",
-		"x": 720,
-		"y": 176,
-		"name": "Upper Small Key",
-		"area": "Color Dungeon",
-		"id": "0x308"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Upper Small Key",
-		"area": "Color Dungeon",
-		"id": "0x308"
-	}],
-	"0x308-Owl": [{
-		"map": "d0",
-		"x": 704,
-		"y": 128,
-		"name": "Upper Key Owl",
-		"area": "Color Dungeon",
-		"id": "0x308-Owl"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Upper Key Owl",
-		"area": "Color Dungeon",
-		"id": "0x308-Owl"
-	}],
-	"0x314": [{
-		"map": "d0",
-		"x": 512,
-		"y": 592,
-		"name": "Lower Small Key",
-		"area": "Color Dungeon",
-		"id": "0x314"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Lower Small Key",
-		"area": "Color Dungeon",
-		"id": "0x314"
-	}],
-	"0x230": [{
-		"map": "d8",
-		"x": 552,
-		"y": 32,
-		"name": "Thunder Drum",
-		"area": "Turtle Rock",
-		"id": "0x230"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Thunder Drum",
-		"area": "Turtle Rock",
-		"id": "0x230"
-	}],
-	"0x234": [{
-		"map": "d8",
-		"x": 552,
-		"y": 176,
-		"name": "Hot Head Heart Container",
-		"area": "Turtle Rock",
-		"id": "0x234"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Hot Head Heart Container",
-		"area": "Turtle Rock",
-		"id": "0x234"
-	}],
-	"0x232": [{
-		"map": "d8",
-		"x": 128,
-		"y": 160,
-		"name": "Nightmare Key/Big Zamboni Chest",
-		"area": "Turtle Rock",
-		"id": "0x232"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Nightmare Key/Big Zamboni Chest",
-		"area": "Turtle Rock",
-		"id": "0x232"
-	}],
-	"0x23A": [{
-		"map": "d8",
-		"x": 448,
-		"y": 272,
-		"name": "West of Boss Door Ledge Chest",
-		"area": "Turtle Rock",
-		"id": "0x23A"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "West of Boss Door Ledge Chest",
-		"area": "Turtle Rock",
-		"id": "0x23A"
-	}],
-	"0x241-Owl": [{
-		"map": "d8",
-		"x": 416,
-		"y": 384,
-		"name": "Lava Arrow Statue Owl",
-		"area": "Turtle Rock",
-		"id": "0x241-Owl"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Lava Arrow Statue Owl",
-		"area": "Turtle Rock",
-		"id": "0x241-Owl"
-	}],
-	"0x241": [{
-		"map": "d8",
-		"x": 352,
-		"y": 432,
-		"name": "Lava Arrow Statue Key",
-		"area": "Turtle Rock",
-		"id": "0x241"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Lava Arrow Statue Key",
-		"area": "Turtle Rock",
-		"id": "0x241"
-	}],
-	"0x000": [{
-		"map": "overworld",
-		"x": 64,
-		"y": 32,
-		"name": "Outside Heart Piece",
-		"area": "Turtle Rock",
-		"id": "0x000"
-	},{
-		"map": "d8",
-		"x": 400,
-		"y": 256,
-		"name": "Outside Heart Piece",
-		"area": "Turtle Rock",
-		"id": "0x000"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Outside Heart Piece",
-		"area": "Turtle Rock",
-		"id": "0x000"
-	}],
-	"0x23D": [{
-		"map": "d8",
-		"x": 928,
-		"y": 288,
-		"name": "Dodongo Chest",
-		"area": "Turtle Rock",
-		"id": "0x23D"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Dodongo Chest",
-		"area": "Turtle Rock",
-		"id": "0x23D"
-	}],
-	"0x240": [{
-		"map": "d8",
-		"x": 256,
-		"y": 432,
-		"name": "Beamos Blocked Chest",
-		"area": "Turtle Rock",
-		"id": "0x240"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Beamos Blocked Chest",
-		"area": "Turtle Rock",
-		"id": "0x240"
-	}],
-	"0x237": [{
-		"map": "d8",
-		"x": 1168,
-		"y": 144,
-		"name": "Magic Rod Chest",
-		"area": "Turtle Rock",
-		"id": "0x237"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Magic Rod Chest",
-		"area": "Turtle Rock",
-		"id": "0x237"
-	}],
-	"0x235": [{
-		"map": "d8",
-		"x": 688,
-		"y": 144,
-		"name": "Lava Ledge Chest",
-		"area": "Turtle Rock",
-		"id": "0x235"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Lava Ledge Chest",
-		"area": "Turtle Rock",
-		"id": "0x235"
-	}],
-	"0x23E": [{
-		"map": "d8",
-		"x": 992,
-		"y": 304,
-		"name": "Gibdos on Cracked Floor Key",
-		"area": "Turtle Rock",
-		"id": "0x23E"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Gibdos on Cracked Floor Key",
-		"area": "Turtle Rock",
-		"id": "0x23E"
-	}],
-	"0x245-Owl": [{
-		"map": "d8",
-		"x": 1072,
-		"y": 384,
-		"name": "Bombable Blocks Owl",
-		"area": "Turtle Rock",
-		"id": "0x245-Owl"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Bombable Blocks Owl",
-		"area": "Turtle Rock",
-		"id": "0x245-Owl"
-	}],
-	"0x25F": [{
-		"map": "d8",
-		"x": 1248,
-		"y": 928,
-		"name": "Four Ropes Pot Chest",
-		"area": "Turtle Rock",
-		"id": "0x25F"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Four Ropes Pot Chest",
-		"area": "Turtle Rock",
-		"id": "0x25F"
-	}],
-	"0x25A": [{
-		"map": "d8",
-		"x": 992,
-		"y": 816,
-		"name": "Zamboni, Two Zol Key",
-		"area": "Turtle Rock",
-		"id": "0x25A"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Zamboni, Two Zol Key",
-		"area": "Turtle Rock",
-		"id": "0x25A"
-	}],
-	"0x259": [{
-		"map": "d8",
-		"x": 864,
-		"y": 832,
-		"name": "Right Lava Chest",
-		"area": "Turtle Rock",
-		"id": "0x259"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Right Lava Chest",
-		"area": "Turtle Rock",
-		"id": "0x259"
-	}],
-	"0x253-Owl": [{
-		"map": "d8",
-		"x": 1136,
-		"y": 720,
-		"name": "Beamos Owl",
-		"area": "Turtle Rock",
-		"id": "0x253-Owl"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Beamos Owl",
-		"area": "Turtle Rock",
-		"id": "0x253-Owl"
-	}],
-	"0x246": [{
-		"map": "d8",
-		"x": 288,
-		"y": 544,
-		"name": "Two Torches Room Chest",
-		"area": "Turtle Rock",
-		"id": "0x246"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Two Torches Room Chest",
-		"area": "Turtle Rock",
-		"id": "0x246"
-	}],
-	"0x255": [{
-		"map": "d8",
-		"x": 256,
-		"y": 800,
-		"name": "Spark, Pit Chest",
-		"area": "Turtle Rock",
-		"id": "0x255"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Spark, Pit Chest",
-		"area": "Turtle Rock",
-		"id": "0x255"
-	}],
-	"0x24C": [{
-		"map": "d8",
-		"x": 32,
-		"y": 688,
-		"name": "Left Vire Key",
-		"area": "Turtle Rock",
-		"id": "0x24C"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Left Vire Key",
-		"area": "Turtle Rock",
-		"id": "0x24C"
-	}],
-	"0x25C": [{
-		"map": "d8",
-		"x": 64,
-		"y": 944,
-		"name": "Vacuum Mouth Chest",
-		"area": "Turtle Rock",
-		"id": "0x25C"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Vacuum Mouth Chest",
-		"area": "Turtle Rock",
-		"id": "0x25C"
-	}],
-	"0x24D": [{
-		"map": "d8",
-		"x": 288,
-		"y": 672,
-		"name": "Left of Hinox Zamboni Chest",
-		"area": "Turtle Rock",
-		"id": "0x24D"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Left of Hinox Zamboni Chest",
-		"area": "Turtle Rock",
-		"id": "0x24D"
-	}],
-	"0x24F": [{
-		"map": "d8",
-		"x": 528,
-		"y": 672,
-		"name": "Push Block Chest",
-		"area": "Turtle Rock",
-		"id": "0x24F"
-	},{
-		"map": "overworld",
-		"x": 80,
-		"y": 130,
-		"name": "Push Block Chest",
-		"area": "Turtle Rock",
-		"id": "0x24F"
-	}],
-	"0x22C": [{
-		"map": "d7",
-		"x": 1032,
-		"y": 160,
-		"name": "Organ of Evening Calm",
-		"area": "Eagle's Tower",
-		"id": "0x22C"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Organ of Evening Calm",
-		"area": "Eagle's Tower",
-		"id": "0x22C"
-	}],
-	"0x223": [{
-		"map": "d7",
-		"x": 976,
-		"y": 256,
-		"name": "Evil Eagle Heart Container",
-		"area": "Eagle's Tower",
-		"id": "0x223"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Evil Eagle Heart Container",
-		"area": "Eagle's Tower",
-		"id": "0x223"
-	}],
-	"0x220": [{
-		"map": "d7",
-		"x": 1088,
-		"y": 32,
-		"name": "Conveyor Beamos Chest",
-		"area": "Eagle's Tower",
-		"id": "0x220"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Conveyor Beamos Chest",
-		"area": "Eagle's Tower",
-		"id": "0x220"
-	}],
-	"0x21A": [{
-		"map": "d7",
-		"x": 528,
-		"y": 288,
-		"name": "Mirror Shield Chest",
-		"area": "Eagle's Tower",
-		"id": "0x21A"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Mirror Shield Chest",
-		"area": "Eagle's Tower",
-		"id": "0x21A"
-	}],
-	"0x224": [{
-		"map": "d7",
-		"x": 1248,
-		"y": 160,
-		"name": "Nightmare Key/After Grim Creeper Chest",
-		"area": "Eagle's Tower",
-		"id": "0x224"
-	},{
-		"map": "d7",
-		"x": 1248,
-		"y": 672,
-		"name": "Nightmare Key/After Grim Creeper Chest",
-		"area": "Eagle's Tower",
-		"id": "0x224"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Nightmare Key/After Grim Creeper Chest",
-		"area": "Eagle's Tower",
-		"id": "0x224"
-	}],
-	"0x21C": [{
-		"map": "d7",
-		"x": 288,
-		"y": 416,
-		"name": "Three of a Kind, Pit Chest",
-		"area": "Eagle's Tower",
-		"id": "0x21C"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Three of a Kind, Pit Chest",
-		"area": "Eagle's Tower",
-		"id": "0x21C"
-	}],
-	"0x21C-Owl": [{
-		"map": "d7",
-		"x": 176,
-		"y": 384,
-		"name": "Three of a Kind, Pit Owl",
-		"area": "Eagle's Tower",
-		"id": "0x21C-Owl"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Three of a Kind, Pit Owl",
-		"area": "Eagle's Tower",
-		"id": "0x21C-Owl"
-	}],
-	"0x201": [{
-		"map": "d7",
-		"x": 16,
-		"y": 528,
-		"name": "Kirby Ledge Chest",
-		"area": "Eagle's Tower",
-		"id": "0x201"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Kirby Ledge Chest",
-		"area": "Eagle's Tower",
-		"id": "0x201"
-	}],
-	"0x21B": [{
-		"map": "d7",
-		"x": 32,
-		"y": 432,
-		"name": "Hinox Key",
-		"area": "Eagle's Tower",
-		"id": "0x21B"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Hinox Key",
-		"area": "Eagle's Tower",
-		"id": "0x21B"
-	}],
-	"0x211": [{
-		"map": "d7",
-		"x": 288,
-		"y": 32,
-		"name": "Three of a Kind, No Pit Chest",
-		"area": "Eagle's Tower",
-		"id": "0x211"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Three of a Kind, No Pit Chest",
-		"area": "Eagle's Tower",
-		"id": "0x211"
-	}],
-	"0x209": [{
-		"map": "d7",
-		"x": 80,
-		"y": 800,
-		"name": "Switch Wrapped Chest",
-		"area": "Eagle's Tower",
-		"id": "0x209"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Switch Wrapped Chest",
-		"area": "Eagle's Tower",
-		"id": "0x209"
-	}],
-	"0x204": [{
-		"map": "d7",
-		"x": 608,
-		"y": 528,
-		"name": "Beamos Ledge Chest",
-		"area": "Eagle's Tower",
-		"id": "0x204"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Beamos Ledge Chest",
-		"area": "Eagle's Tower",
-		"id": "0x204"
-	}],
-	"0x204-Owl": [{
-		"map": "d7",
-		"x": 544,
-		"y": 544,
-		"name": "Beamos Owl",
-		"area": "Eagle's Tower",
-		"id": "0x204-Owl"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Beamos Owl",
-		"area": "Eagle's Tower",
-		"id": "0x204-Owl"
-	}],
-	"0x212": [{
-		"map": "d7",
-		"x": 448,
-		"y": 32,
-		"name": "Horse Head, Bubble Chest",
-		"area": "Eagle's Tower",
-		"id": "0x212"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Horse Head, Bubble Chest",
-		"area": "Eagle's Tower",
-		"id": "0x212"
-	}],
-	"0x216-Owl": [{
-		"map": "d7",
-		"x": 496,
-		"y": 128,
-		"name": "Ball Owl",
-		"area": "Eagle's Tower",
-		"id": "0x216-Owl"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Ball Owl",
-		"area": "Eagle's Tower",
-		"id": "0x216-Owl"
-	}],
-	"0x210": [{
-		"map": "d7",
-		"x": 512,
-		"y": 944,
-		"name": "Entrance Key",
-		"area": "Eagle's Tower",
-		"id": "0x210"
-	},{
-		"map": "overworld",
-		"x": 2348,
-		"y": 32,
-		"name": "Entrance Key",
-		"area": "Eagle's Tower",
-		"id": "0x210"
-	}],
-	"0x1B5": [{
-		"map": "d6",
-		"x": 712,
-		"y": 160,
-		"name": "Coral Triangle",
-		"area": "Face Shrine",
-		"id": "0x1B5"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Coral Triangle",
-		"area": "Face Shrine",
-		"id": "0x1B5"
-	}],
-	"0x1BC": [{
-		"map": "d6",
-		"x": 712,
-		"y": 312,
-		"name": "Facade Heart Container",
-		"area": "Face Shrine",
-		"id": "0x1BC"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Facade Heart Container",
-		"area": "Face Shrine",
-		"id": "0x1BC"
-	}],
-	"0x1B6": [{
-		"map": "d6",
-		"x": 1008,
-		"y": 160,
-		"name": "Pot Locked Chest",
-		"area": "Face Shrine",
-		"id": "0x1B6"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Pot Locked Chest",
-		"area": "Face Shrine",
-		"id": "0x1B6"
-	}],
-	"0x1B6-Owl": [{
-		"map": "d6",
-		"x": 1024,
-		"y": 128,
-		"name": "Pot Owl",
-		"area": "Face Shrine",
-		"id": "0x1B6-Owl"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Pot Owl",
-		"area": "Face Shrine",
-		"id": "0x1B6-Owl"
-	}],
-	"0x1B1": [{
-		"map": "d6",
-		"x": 1152,
-		"y": 32,
-		"name": "Top Right Horse Heads Chest",
-		"area": "Face Shrine",
-		"id": "0x1B1"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Top Right Horse Heads Chest",
-		"area": "Face Shrine",
-		"id": "0x1B1"
-	}],
-	"0x1C3": [{
-		"map": "d6",
-		"x": 512,
-		"y": 432,
-		"name": "Tile Room Key",
-		"area": "Face Shrine",
-		"id": "0x1C3"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Tile Room Key",
-		"area": "Face Shrine",
-		"id": "0x1C3"
-	}],
-	"0x1D7-Owl": [{
-		"map": "d6",
-		"x": 976,
-		"y": 768,
-		"name": "Blade Trap Owl",
-		"area": "Face Shrine",
-		"id": "0x1D7-Owl"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Blade Trap Owl",
-		"area": "Face Shrine",
-		"id": "0x1D7-Owl"
-	}],
-	"0x1D1": [{
-		"map": "d6",
-		"x": 1088,
-		"y": 720,
-		"name": "Four Wizzrobe Ledge Chest",
-		"area": "Face Shrine",
-		"id": "0x1D1"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Four Wizzrobe Ledge Chest",
-		"area": "Face Shrine",
-		"id": "0x1D1"
-	}],
-	"0x1BE": [{
-		"map": "d6",
-		"x": 1056,
-		"y": 272,
-		"name": "Water Tektite Chest",
-		"area": "Face Shrine",
-		"id": "0x1BE"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Water Tektite Chest",
-		"area": "Face Shrine",
-		"id": "0x1BE"
-	}],
-	"0x06C": [{
-		"map": "overworld",
-		"x": 1992,
-		"y": 828,
-		"name": "Raft Chest",
-		"area": "Face Shrine",
-		"id": "0x06C"
-	},{
-		"map": "d6",
-		"x": 112,
-		"y": 0,
-		"name": "Raft Chest",
-		"area": "Face Shrine",
-		"id": "0x06C"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Raft Chest",
-		"area": "Face Shrine",
-		"id": "0x06C"
-	}],
-	"0x1B0": [{
-		"map": "d6",
-		"x": 112,
-		"y": 32,
-		"name": "Top Left Horse Heads Chest",
-		"area": "Face Shrine",
-		"id": "0x1B0"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Top Left Horse Heads Chest",
-		"area": "Face Shrine",
-		"id": "0x1B0"
-	}],
-	"0x1B4": [{
-		"map": "d6",
-		"x": 512,
-		"y": 176,
-		"name": "Two Wizzrobe Key",
-		"area": "Face Shrine",
-		"id": "0x1B4"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Two Wizzrobe Key",
-		"area": "Face Shrine",
-		"id": "0x1B4"
-	}],
-	"0x1B3": [{
-		"map": "d6",
-		"x": 208,
-		"y": 192,
-		"name": "Switch, Star Above Statues Chest",
-		"area": "Face Shrine",
-		"id": "0x1B3"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Switch, Star Above Statues Chest",
-		"area": "Face Shrine",
-		"id": "0x1B3"
-	}],
-	"0x1B9": [{
-		"map": "d6",
-		"x": 208,
-		"y": 272,
-		"name": "Stairs Across Statues Chest",
-		"area": "Face Shrine",
-		"id": "0x1B9"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Stairs Across Statues Chest",
-		"area": "Face Shrine",
-		"id": "0x1B9"
-	}],
-	"0x1C0": [{
-		"map": "d6",
-		"x": 128,
-		"y": 416,
-		"name": "Three Wizzrobe, Switch Chest",
-		"area": "Face Shrine",
-		"id": "0x1C0"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Three Wizzrobe, Switch Chest",
-		"area": "Face Shrine",
-		"id": "0x1C0"
-	}],
-	"0x1CE": [{
-		"map": "d6",
-		"x": 176,
-		"y": 656,
-		"name": "L2 Bracelet Chest",
-		"area": "Face Shrine",
-		"id": "0x1CE"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "L2 Bracelet Chest",
-		"area": "Face Shrine",
-		"id": "0x1CE"
-	}],
-	"0x1BB-Owl": [{
-		"map": "d6",
-		"x": 560,
-		"y": 336,
-		"name": "Corridor Owl",
-		"area": "Face Shrine",
-		"id": "0x1BB-Owl"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Corridor Owl",
-		"area": "Face Shrine",
-		"id": "0x1BB-Owl"
-	}],
-	"0x1C9": [{
-		"map": "d6",
-		"x": 432,
-		"y": 544,
-		"name": "Flying Heart, Statue Chest",
-		"area": "Face Shrine",
-		"id": "0x1C9"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Flying Heart, Statue Chest",
-		"area": "Face Shrine",
-		"id": "0x1C9"
-	}],
-	"0x1CF": [{
-		"map": "d6",
-		"x": 432,
-		"y": 688,
-		"name": "Mini-Moldorm, Spark Chest",
-		"area": "Face Shrine",
-		"id": "0x1CF"
-	},{
-		"map": "overworld",
-		"x": 1992,
-		"y": 1080,
-		"name": "Mini-Moldorm, Spark Chest",
-		"area": "Face Shrine",
-		"id": "0x1CF"
-	}],
-	"0x182": [{
-		"map": "d5",
-		"x": 392,
-		"y": 32,
-		"name": "Wind Marimba",
-		"area": "Catfish's Maw",
-		"id": "0x182"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Wind Marimba",
-		"area": "Catfish's Maw",
-		"id": "0x182"
-	}],
-	"0x185": [{
-		"map": "d5",
-		"x": 392,
-		"y": 184,
-		"name": "Slime Eel Heart Container",
-		"area": "Catfish's Maw",
-		"id": "0x185"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Slime Eel Heart Container",
-		"area": "Catfish's Maw",
-		"id": "0x185"
-	}],
-	"0x186": [{
-		"map": "d5",
-		"x": 720,
-		"y": 320,
-		"name": "Nightmare Key/Torch Cross Chest",
-		"area": "Catfish's Maw",
-		"id": "0x186"
-	}, {
-		"map": "d5",
-		"x": 512,
-		"y": 160,
-		"name": "Nightmare Key/Torch Cross Chest",
-		"area": "Catfish's Maw",
-		"id": "0x186"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Nightmare Key/Torch Cross Chest",
-		"area": "Catfish's Maw",
-		"id": "0x186"
-	}],
-	"0x183": [{
-		"map": "d5",
-		"x": 544,
-		"y": 32,
-		"name": "Three Stalfos Chest",
-		"area": "Catfish's Maw",
-		"id": "0x183"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Three Stalfos Chest",
-		"area": "Catfish's Maw",
-		"id": "0x183"
-	}],
-	"0x180": [{
-		"map": "d5",
-		"x": 64,
-		"y": 48,
-		"name": "Master Stalfos Item",
-		"area": "Catfish's Maw",
-		"id": "0x180"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Master Stalfos Item",
-		"area": "Catfish's Maw",
-		"id": "0x180"
-	}],
-	"0x18F": [{
-		"map": "d5",
-		"x": 1088,
-		"y": 304,
-		"name": "Flying Bomb Chest East",
-		"area": "Catfish's Maw",
-		"id": "0x18F"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Flying Bomb Chest East",
-		"area": "Catfish's Maw",
-		"id": "0x18F"
-	}],
-	"0x188": [{
-		"map": "d5",
-		"x": 928,
-		"y": 144,
-		"name": "Swort Stalfos, Star, Bridge Chest",
-		"area": "Catfish's Maw",
-		"id": "0x188"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Swort Stalfos, Star, Bridge Chest",
-		"area": "Catfish's Maw",
-		"id": "0x188"
-	}],
-	"0x18E": [{
-		"map": "d5",
-		"x": 912,
-		"y": 272,
-		"name": "Two Stalfos, Star Pit Chest",
-		"area": "Catfish's Maw",
-		"id": "0x18E"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Two Stalfos, Star Pit Chest",
-		"area": "Catfish's Maw",
-		"id": "0x18E"
-	}],
-	"0x18A-Owl": [{
-		"map": "d5",
-		"x": 240,
-		"y": 256,
-		"name": "Star Owl",
-		"area": "Catfish's Maw",
-		"id": "0x18A-Owl"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Star Owl",
-		"area": "Catfish's Maw",
-		"id": "0x18A-Owl"
-	}],
-	"0x196": [{
-		"map": "d5",
-		"x": 832,
-		"y": 544,
-		"name": "Hookshot Note Chest",
-		"area": "Catfish's Maw",
-		"id": "0x196"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Hookshot Note Chest",
-		"area": "Catfish's Maw",
-		"id": "0x196"
-	}],
-	"0x197": [{
-		"map": "d5",
-		"x": 208,
-		"y": 672,
-		"name": "Three Iron Mask Chest",
-		"area": "Catfish's Maw",
-		"id": "0x197"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Three Iron Mask Chest",
-		"area": "Catfish's Maw",
-		"id": "0x197"
-	}],
-	"0x19B": [{
-		"map": "d5",
-		"x": 448,
-		"y": 800,
-		"name": "Flying Bomb Chest South",
-		"area": "Catfish's Maw",
-		"id": "0x19B"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Flying Bomb Chest South",
-		"area": "Catfish's Maw",
-		"id": "0x19B"
-	}],
-	"0x19A-Owl": [{
-		"map": "d5",
-		"x": 752,
-		"y": 640,
-		"name": "Crystal Owl",
-		"area": "Catfish's Maw",
-		"id": "0x19A-Owl"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Crystal Owl",
-		"area": "Catfish's Maw",
-		"id": "0x19A-Owl"
-	}],
-	"0x181": [{
-		"map": "d5",
-		"x": 192,
-		"y": 48,
-		"name": "Crystal Key",
-		"area": "Catfish's Maw",
-		"id": "0x181"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Crystal Key",
-		"area": "Catfish's Maw",
-		"id": "0x181"
-	}],
-	"0x19E": [{
-		"map": "d5",
-		"x": 592,
-		"y": 928,
-		"name": "Spark, Two Iron Mask Chest",
-		"area": "Catfish's Maw",
-		"id": "0x19E"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Spark, Two Iron Mask Chest",
-		"area": "Catfish's Maw",
-		"id": "0x19E"
-	}],
-	"0x1A0": [{
-		"map": "d5",
-		"x": 912,
-		"y": 912,
-		"name": "Entrance Hookshottable Chest",
-		"area": "Catfish's Maw",
-		"id": "0x1A0"
-	},{
-		"map": "overworld",
-		"x": 1538,
-		"y": 1738,
-		"name": "Entrance Hookshottable Chest",
-		"area": "Catfish's Maw",
-		"id": "0x1A0"
-	}],
-	"0x162": [{
-		"map": "d4",
-		"x": 74,
-		"y": 160,
-		"name": "Surf Harp",
-		"area": "Angler's Tunnel",
-		"id": "0x162"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Surf Harp",
-		"area": "Angler's Tunnel",
-		"id": "0x162"
-	}],
-	"0x166": [{
-		"map": "d4",
-		"x": 64,
-		"y": 320,
-		"name": "Angler Fish Heart Container",
-		"area": "Angler's Tunnel",
-		"id": "0x166"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Angler Fish Heart Container",
-		"area": "Angler's Tunnel",
-		"id": "0x166"
-	}],
-	"0x176": [{
-		"map": "d4",
-		"x": 192,
-		"y": 656,
-		"name": "Nightmare Key Ledge Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x176"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Nightmare Key Ledge Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x176"
-	}],
-	"0x160": [{
-		"map": "d4",
-		"x": 384,
-		"y": 32,
-		"name": "Flippers Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x160"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Flippers Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x160"
-	}],
-	"0x168": [{
-		"map": "d4",
-		"x": 352,
-		"y": 288,
-		"name": "Spark Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x168"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Spark Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x168"
-	}],
-	"0x16D": [{
-		"map": "d4",
-		"x": 256,
-		"y": 432,
-		"name": "Blob Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x16D"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Blob Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x16D"
-	}],
-	"0x16E": [{
-		"map": "d4",
-		"x": 416,
-		"y": 432,
-		"name": "Flipper Locked After Boots Pit Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x16E"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Flipper Locked After Boots Pit Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x16E"
-	}],
-	"0x169": [{
-		"map": "d4",
-		"x": 752,
-		"y": 288,
-		"name": "Pit Key",
-		"area": "Angler's Tunnel",
-		"id": "0x169"
-	},{
-		"map": "d4",
-		"x": 512,
-		"y": 304,
-		"name": "Pit Key",
-		"area": "Angler's Tunnel",
-		"id": "0x169"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Pit Key",
-		"area": "Angler's Tunnel",
-		"id": "0x169"
-	}],
-	"0x16F-Owl": [{
-		"map": "d4",
-		"x": 528,
-		"y": 448,
-		"name": "Spiked Beetle Owl",
-		"area": "Angler's Tunnel",
-		"id": "0x16F-Owl"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Spiked Beetle Owl",
-		"area": "Angler's Tunnel",
-		"id": "0x16F-Owl"
-	}],
-	"0x175": [{
-		"map": "d4",
-		"x": 672,
-		"y": 560,
-		"name": "Flipper Locked Before Boots Pit Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x175"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Flipper Locked Before Boots Pit Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x175"
-	}],
-	"0x165": [{
-		"map": "d4",
-		"x": 880,
-		"y": 160,
-		"name": "Upper Bomb Locked Watery Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x165"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Upper Bomb Locked Watery Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x165"
-	}],
-	"0x171": [{
-		"map": "d4",
-		"x": 912,
-		"y": 432,
-		"name": "Lower Bomb Locked Watery Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x171"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Lower Bomb Locked Watery Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x171"
-	}],
-	"0x17B": [{
-		"map": "d4",
-		"x": 544,
-		"y": 832,
-		"name": "Crystal Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x17B"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Crystal Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x17B"
-	}],
-	"0x178": [{
-		"map": "d4",
-		"x": 576,
-		"y": 704,
-		"name": "Two Spiked Beetle, Zol Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x178"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Two Spiked Beetle, Zol Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x178"
-	}],
-	"0x16A": [{
-		"map": "d4",
-		"x": 656,
-		"y": 336,
-		"name": "NW of Boots Pit Ledge Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x16A"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "NW of Boots Pit Ledge Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x16A"
-	}],
-	"0x179": [{
-		"map": "d4",
-		"x": 704,
-		"y": 672,
-		"name": "Watery Statue Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x179"
-	},{
-		"map": "overworld",
-		"x": 1846,
-		"y": 276,
-		"name": "Watery Statue Chest",
-		"area": "Angler's Tunnel",
-		"id": "0x179"
-	}],
-	"0x159": [{
-		"map": "d3",
-		"x": 872,
-		"y": 672,
-		"name": "Sea Lily's Bell",
-		"area": "Key Cavern",
-		"id": "0x159"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Sea Lily's Bell",
-		"area": "Key Cavern",
-		"id": "0x159"
-	}],
-	"0x15A": [{
-		"map": "d3",
-		"x": 872,
-		"y": 816,
-		"name": "Slime Eye Heart Container",
-		"area": "Key Cavern",
-		"id": "0x15A"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Slime Eye Heart Container",
-		"area": "Key Cavern",
-		"id": "0x15A"
-	}],
-	"0x15B": [{
-		"map": "d3",
-		"x": 832,
-		"y": 944,
-		"name": "Nightmare Door Key",
-		"area": "Key Cavern",
-		"id": "0x15B"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Nightmare Door Key",
-		"area": "Key Cavern",
-		"id": "0x15B"
-	}],
-	"0x140-Owl": [{
-		"map": "d3",
-		"x": 64,
-		"y": 0,
-		"name": "Flying Bomb Owl",
-		"area": "Key Cavern",
-		"id": "0x140-Owl"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Flying Bomb Owl",
-		"area": "Key Cavern",
-		"id": "0x140-Owl"
-	}],
-	"0x144": [{
-		"map": "d3",
-		"x": 128,
-		"y": 160,
-		"name": "Two Zol, Stalfos Ledge Chest",
-		"area": "Key Cavern",
-		"id": "0x144"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Two Zol, Stalfos Ledge Chest",
-		"area": "Key Cavern",
-		"id": "0x144"
-	}],
-	"0x148": [{
-		"map": "d3",
-		"x": 32,
-		"y": 304,
-		"name": "Two Zol, Two Pairodd Key",
-		"area": "Key Cavern",
-		"id": "0x148"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Two Zol, Two Pairodd Key",
-		"area": "Key Cavern",
-		"id": "0x148"
-	}],
-	"0x141": [{
-		"map": "d3",
-		"x": 192,
-		"y": 48,
-		"name": "Three Bombite Key",
-		"area": "Key Cavern",
-		"id": "0x141"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Three Bombite Key",
-		"area": "Key Cavern",
-		"id": "0x141"
-	}],
-	"0x142": [{
-		"map": "d3",
-		"x": 384,
-		"y": 32,
-		"name": "Three Zol, Stalfos Chest",
-		"area": "Key Cavern",
-		"id": "0x142"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Three Zol, Stalfos Chest",
-		"area": "Key Cavern",
-		"id": "0x142"
-	}],
-	"0x146": [{
-		"map": "d3",
-		"x": 384,
-		"y": 160,
-		"name": "Boots Chest",
-		"area": "Key Cavern",
-		"id": "0x146"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Boots Chest",
-		"area": "Key Cavern",
-		"id": "0x146"
-	}],
-	"0x147": [{
-		"map": "d3",
-		"x": 608,
-		"y": 144,
-		"name": "Tile Arrow Ledge Chest",
-		"area": "Key Cavern",
-		"id": "0x147"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Tile Arrow Ledge Chest",
-		"area": "Key Cavern",
-		"id": "0x147"
-	}],
-	"0x147-Owl": [{
-		"map": "d3",
-		"x": 528,
-		"y": 128,
-		"name": "Tile Arrow Owl",
-		"area": "Key Cavern",
-		"id": "0x147-Owl"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Tile Arrow Owl",
-		"area": "Key Cavern",
-		"id": "0x147-Owl"
-	}],
-	"0x14D": [{
-		"map": "d3",
-		"x": 352,
-		"y": 432,
-		"name": "After Stairs Key",
-		"area": "Key Cavern",
-		"id": "0x14D"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "After Stairs Key",
-		"area": "Key Cavern",
-		"id": "0x14D"
-	}],
-	"0x158": [{
-		"map": "d3",
-		"x": 832,
-		"y": 560,
-		"name": "South Key Room Key",
-		"area": "Key Cavern",
-		"id": "0x158"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "South Key Room Key",
-		"area": "Key Cavern",
-		"id": "0x158"
-	}],
-	"0x155": [{
-		"map": "d3",
-		"x": 672,
-		"y": 432,
-		"name": "West Key Room Key",
-		"area": "Key Cavern",
-		"id": "0x155"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "West Key Room Key",
-		"area": "Key Cavern",
-		"id": "0x155"
-	}],
-	"0x14C": [{
-		"map": "d3",
-		"x": 208,
-		"y": 432,
-		"name": "Zol Switch Chest",
-		"area": "Key Cavern",
-		"id": "0x14C"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Zol Switch Chest",
-		"area": "Key Cavern",
-		"id": "0x14C"
-	}],
-	"0x150": [{
-		"map": "d3",
-		"x": 400,
-		"y": 688,
-		"name": "Sword Stalfos, Keese Switch Chest",
-		"area": "Key Cavern",
-		"id": "0x150"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Sword Stalfos, Keese Switch Chest",
-		"area": "Key Cavern",
-		"id": "0x150"
-	}],
-	"0x154-Owl": [{
-		"map": "d3",
-		"x": 848,
-		"y": 304,
-		"name": "North Key Room Owl",
-		"area": "Key Cavern",
-		"id": "0x154-Owl"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "North Key Room Owl",
-		"area": "Key Cavern",
-		"id": "0x154-Owl"
-	}],
-	"0x154": [{
-		"map": "d3",
-		"x": 832,
-		"y": 304,
-		"name": "North Key Room Key",
-		"area": "Key Cavern",
-		"id": "0x154"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "North Key Room Key",
-		"area": "Key Cavern",
-		"id": "0x154"
-	}],
-	"0x14E": [{
-		"map": "d3",
-		"x": 288,
-		"y": 544,
-		"name": "Two Stalfos, Zol Chest",
-		"area": "Key Cavern",
-		"id": "0x14E"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Two Stalfos, Zol Chest",
-		"area": "Key Cavern",
-		"id": "0x14E"
-	}],
-	"0x14F": [{
-		"map": "d3",
-		"x": 272,
-		"y": 672,
-		"name": "Four Zol Chest",
-		"area": "Key Cavern",
-		"id": "0x14F"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Four Zol Chest",
-		"area": "Key Cavern",
-		"id": "0x14F"
-	}],
-	"0x151": [{
-		"map": "d3",
-		"x": 288,
-		"y": 816,
-		"name": "Two Bombite, Sword Stalfos, Zol Chest",
-		"area": "Key Cavern",
-		"id": "0x151"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Two Bombite, Sword Stalfos, Zol Chest",
-		"area": "Key Cavern",
-		"id": "0x151"
-	}],
-	"0x153": [{
-		"map": "d3",
-		"x": 448,
-		"y": 928,
-		"name": "Vacuum Mouth Chest",
-		"area": "Key Cavern",
-		"id": "0x153"
-	},{
-		"map": "overworld",
-		"x": 906,
-		"y": 1446,
-		"name": "Vacuum Mouth Chest",
-		"area": "Key Cavern",
-		"id": "0x153"
-	}],
-	"0x12A": [{
-		"map": "d2",
-		"x": 712,
-		"y": 288,
-		"name": "Conch Horn",
-		"area": "Bottle Grotto",
-		"id": "0x12A"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Conch Horn",
-		"area": "Bottle Grotto",
-		"id": "0x12A"
-	}],
-	"0x12B": [{
-		"map": "d2",
-		"x": 872,
-		"y": 312,
-		"name": "Genie Heart Container",
-		"area": "Bottle Grotto",
-		"id": "0x12B"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Genie Heart Container",
-		"area": "Bottle Grotto",
-		"id": "0x12B"
-	}],
-	"0x127": [{
-		"map": "d2",
-		"x": 768,
-		"y": 160,
-		"name": "Enemy Order Room Chest",
-		"area": "Bottle Grotto",
-		"id": "0x127"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Enemy Order Room Chest",
-		"area": "Bottle Grotto",
-		"id": "0x127"
-	}],
-	"0x122": [{
-		"map": "d2",
-		"x": 432,
-		"y": 32,
-		"name": "Second Switch Locked Chest",
-		"area": "Bottle Grotto",
-		"id": "0x122"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Second Switch Locked Chest",
-		"area": "Bottle Grotto",
-		"id": "0x122"
-	}],
-	"0x120": [{
-		"map": "d2",
-		"x": 128,
-		"y": 32,
-		"name": "Boo Buddies Room Chest",
-		"area": "Bottle Grotto",
-		"id": "0x120"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Boo Buddies Room Chest",
-		"area": "Bottle Grotto",
-		"id": "0x120"
-	}],
-	"0x12F-Owl": [{
-		"map": "d2",
-		"x": 832,
-		"y": 512,
-		"name": "Before First Staircase Owl",
-		"area": "Bottle Grotto",
-		"id": "0x12F-Owl"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Before First Staircase Owl",
-		"area": "Bottle Grotto",
-		"id": "0x12F-Owl"
-	}],
-	"0x129-Owl": [{
-		"map": "d2",
-		"x": 240,
-		"y": 256,
-		"name": "After Hinox Owl",
-		"area": "Bottle Grotto",
-		"id": "0x129-Owl"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "After Hinox Owl",
-		"area": "Bottle Grotto",
-		"id": "0x129-Owl"
-	}],
-	"0x121": [{
-		"map": "d2",
-		"x": 272,
-		"y": 32,
-		"name": "Outside Boo Buddies Room Chest",
-		"area": "Bottle Grotto",
-		"id": "0x121"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Outside Boo Buddies Room Chest",
-		"area": "Bottle Grotto",
-		"id": "0x121"
-	}],
-	"0x126": [{
-		"map": "d2",
-		"x": 192,
-		"y": 160,
-		"name": "Vacuum Mouth Chest",
-		"area": "Bottle Grotto",
-		"id": "0x126"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Vacuum Mouth Chest",
-		"area": "Bottle Grotto",
-		"id": "0x126"
-	}],
-	"0x134": [{
-		"map": "d2",
-		"x": 672,
-		"y": 688,
-		"name": "Mask-Mimic Key",
-		"area": "Bottle Grotto",
-		"id": "0x134"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Mask-Mimic Key",
-		"area": "Bottle Grotto",
-		"id": "0x134"
-	}],
-	"0x139": [{
-		"map": "d2",
-		"x": 768,
-		"y": 800,
-		"name": "Button Spawn Chest",
-		"area": "Bottle Grotto",
-		"id": "0x139"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Button Spawn Chest",
-		"area": "Bottle Grotto",
-		"id": "0x139"
-	}],
-	"0x138": [{
-		"map": "d2",
-		"x": 528,
-		"y": 832,
-		"name": "First Switch Locked Chest",
-		"area": "Bottle Grotto",
-		"id": "0x138"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "First Switch Locked Chest",
-		"area": "Bottle Grotto",
-		"id": "0x138"
-	}],
-	"0x133-Owl": [{
-		"map": "d2",
-		"x": 544,
-		"y": 640,
-		"name": "Switch Owl",
-		"area": "Bottle Grotto",
-		"id": "0x133-Owl"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Switch Owl",
-		"area": "Bottle Grotto",
-		"id": "0x133-Owl"
-	}],
-	"0x137": [{
-		"map": "d2",
-		"x": 448,
-		"y": 800,
-		"name": "Mask-Mimic Chest",
-		"area": "Bottle Grotto",
-		"id": "0x137"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Mask-Mimic Chest",
-		"area": "Bottle Grotto",
-		"id": "0x137"
-	}],
-	"0x132": [{
-		"map": "d2",
-		"x": 352,
-		"y": 688,
-		"name": "Two Stalfos Key",
-		"area": "Bottle Grotto",
-		"id": "0x132"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Two Stalfos Key",
-		"area": "Bottle Grotto",
-		"id": "0x132"
-	}],
-	"0x12E": [{
-		"map": "d2",
-		"x": 64,
-		"y": 544,
-		"name": "Hardhat Beetle Pit Chest",
-		"area": "Bottle Grotto",
-		"id": "0x12E"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Hardhat Beetle Pit Chest",
-		"area": "Bottle Grotto",
-		"id": "0x12E"
-	}],
-	"0x136": [{
-		"map": "d2",
-		"x": 176,
-		"y": 800,
-		"name": "Entrance Chest",
-		"area": "Bottle Grotto",
-		"id": "0x136"
-	},{
-		"map": "overworld",
-		"x": 696,
-		"y": 276,
-		"name": "Entrance Chest",
-		"area": "Bottle Grotto",
-		"id": "0x136"
-	}],
-	"0x102": [{
-		"map": "d1",
-		"x": 1032,
-		"y": 32,
-		"name": "Full Moon Cello",
-		"area": "Tail Cave",
-		"id": "0x102"
-	}, {
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Full Moon Cello",
-		"area": "Tail Cave",
-		"id": "0x102"
-	}],
-	"0x106": [{
-		"map": "d1",
-		"x": 1008,
-		"y": 160,
-		"name": "Moldorm Heart Container",
-		"area": "Tail Cave",
-		"id": "0x106"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Moldorm Heart Container",
-		"area": "Tail Cave",
-		"id": "0x106"
-	}],
-	"0x10A-Owl": [{
-		"map": "d1",
-		"x": 880,
-		"y": 256,
-		"name": "Three of a Kind Owl",
-		"area": "Tail Cave",
-		"id": "0x10A-Owl"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Three of a Kind Owl",
-		"area": "Tail Cave",
-		"id": "0x10A-Owl"
-	}],
-	"0x10A": [{
-		"map": "d1",
-		"x": 928,
-		"y": 288,
-		"name": "Three of a Kind Chest",
-		"area": "Tail Cave",
-		"id": "0x10A"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Three of a Kind Chest",
-		"area": "Tail Cave",
-		"id": "0x10A"
-	}],
-	"0x108": [{
-		"map": "d1",
-		"x": 544,
-		"y": 272,
-		"name": "Nightmare Key Chest",
-		"area": "Tail Cave",
-		"id": "0x108"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Nightmare Key Chest",
-		"area": "Tail Cave",
-		"id": "0x108"
-	}],
-	"0x11D": [{
-		"map": "d1",
-		"x": 64,
-		"y": 288,
-		"name": "Feather Chest",
-		"area": "Tail Cave",
-		"id": "0x11D"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Feather Chest",
-		"area": "Tail Cave",
-		"id": "0x11D"
-	}],
-	"0x104-Owl": [{
-		"map": "d1",
-		"x": 368,
-		"y": 128,
-		"name": "Movable Block Owl",
-		"area": "Tail Cave",
-		"id": "0x104-Owl"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Movable Block Owl",
-		"area": "Tail Cave",
-		"id": "0x104-Owl"
-	}],
-	"0x103-Owl": [{
-		"map": "d1",
-		"x": 240,
-		"y": 128,
-		"name": "Spiked Beetle Owl",
-		"area": "Tail Cave",
-		"id": "0x103-Owl"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Spiked Beetle Owl",
-		"area": "Tail Cave",
-		"id": "0x103-Owl"
-	}],
-	"0x10C": [{
-		"map": "d1",
-		"x": 224,
-		"y": 432,
-		"name": "Bombable Wall Seashell Chest",
-		"area": "Tail Cave",
-		"id": "0x10C"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Bombable Wall Seashell Chest",
-		"area": "Tail Cave",
-		"id": "0x10C"
-	}],
-	"0x114": [{
-		"map": "d1",
-		"x": 768,
-		"y": 544,
-		"name": "Two Stalfos, Two Keese Chest",
-		"area": "Tail Cave",
-		"id": "0x114"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Two Stalfos, Two Keese Chest",
-		"area": "Tail Cave",
-		"id": "0x114"
-	}],
-	"0x10D": [{
-		"map": "d1",
-		"x": 448,
-		"y": 416,
-		"name": "Mini-Moldorm Spawn Chest",
-		"area": "Tail Cave",
-		"id": "0x10D"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Mini-Moldorm Spawn Chest",
-		"area": "Tail Cave",
-		"id": "0x10D"
-	}],
-	"0x116": [{
-		"map": "d1",
-		"x": 352,
-		"y": 688,
-		"name": "Hardhat Beetles Key",
-		"area": "Tail Cave",
-		"id": "0x116"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Hardhat Beetles Key",
-		"area": "Tail Cave",
-		"id": "0x116"
-	}],
-	"0x10E": [{
-		"map": "d1",
-		"x": 544,
-		"y": 416,
-		"name": "Spark, Mini-Moldorm Chest",
-		"area": "Tail Cave",
-		"id": "0x10E"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Spark, Mini-Moldorm Chest",
-		"area": "Tail Cave",
-		"id": "0x10E"
-	}],
-	"0x115": [{
-		"map": "d1",
-		"x": 208,
-		"y": 688,
-		"name": "Four Zol Chest",
-		"area": "Tail Cave",
-		"id": "0x115"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Four Zol Chest",
-		"area": "Tail Cave",
-		"id": "0x115"
-	}],
-	"0x113": [{
-		"map": "d1",
-		"x": 560,
-		"y": 560,
-		"name": "Pit Button Chest",
-		"area": "Tail Cave",
-		"id": "0x113"
-	},{
-		"map": "overworld",
-		"x": 582,
-		"y": 1706,
-		"name": "Pit Button Chest",
-		"area": "Tail Cave",
-		"id": "0x113"
-	}],
-	"0x2A1-2": [{
-		"map": "overworld",
-		"x": 550,
-		"y": 1250,
-		"name": "Shop 10 Item",
-		"area": "Mabe Village",
-		"id": "0x2A1-2"
-	}],
-	"0x2A1-1": [{
-		"map": "overworld",
-		"x": 550,
-		"y": 1250,
-		"name": "Shop 980 Item",
-		"area": "Mabe Village",
-		"id": "0x2A1-1"
-	}],
-	"0x2A1-0": [{
-		"map": "overworld",
-		"x": 550,
-		"y": 1250,
-		"name": "Shop 200 Item",
-		"area": "Mabe Village",
-		"id": "0x2A1-0"
-	}],
-	"0x2A2": [{
-		"map": "overworld",
-		"x": 874,
-		"y": 812,
-		"name": "Witch Item",
-		"area": "Koholint Prairie",
-		"id": "0x2A2"
-	}],
-	"0x301-1": [{
-		"map": "d0",
-		"x": 232,
-		"y": 64,
-		"name": "Tunic Fairy Item 2",
-		"area": "Color Dungeon",
-		"id": "0x301-1"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Tunic Fairy Item 2",
-		"area": "Color Dungeon",
-		"id": "0x301-1"
-	}],
-	"0x301-0": [{
-		"map": "d0",
-		"x": 232,
-		"y": 64,
-		"name": "Tunic Fairy Item 1",
-		"area": "Color Dungeon",
-		"id": "0x301-0"
-	},{
-		"map": "overworld",
-		"x": 1246,
-		"y": 926,
-		"name": "Tunic Fairy Item 1",
-		"area": "Color Dungeon",
-		"id": "0x301-0"
-	}],
-	"0x2A3": [{
-		"map": "overworld",
-		"x": 404,
-		"y": 1364,
-		"name": "Tarin's Gift",
-		"area": "Mabe Village",
-		"id": "0x2A3"
-	}],
-	"0x1F5": [{
-		"map": "overworld",
-		"x": 664,
-		"y": 1966,
-		"name": "Boomerang Guy Item",
-		"area": "Toronbo Shores",
-		"id": "0x1F5"
-	}]
-}
+	"0x297-Trade":{
+	   "id":"0x297-Trade",
+	   "area":"Martha's Bay",
+	   "name":"Mermaid Statue",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1554,
+			 "y":1852,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0C9-Trade":{
+	   "id":"0x0C9-Trade",
+	   "area":"Martha's Bay",
+	   "name":"Mermaid",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1570,
+			 "y":1624,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2F5-Trade":{
+	   "id":"0x2F5-Trade",
+	   "area":"Martha's Bay",
+	   "name":"Fisher",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1716,
+			 "y":1852,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0CD-Trade":{
+	   "id":"0x0CD-Trade",
+	   "area":"Animal Village",
+	   "name":"Grandma",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2202,
+			 "y":1640,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A8-Trade":{
+	   "id":"0x2A8-Trade",
+	   "area":"Goponga Swamp",
+	   "name":"MrWrite",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":112,
+			 "y":422,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2D9-Trade":{
+	   "id":"0x2D9-Trade",
+	   "area":"Animal Village",
+	   "name":"Goat",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2138,
+			 "y":1624,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x019-Trade":{
+	   "id":"0x019-Trade",
+	   "area":"Tal Tal Heights",
+	   "name":"Papahl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1554,
+			 "y":162,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1586,
+			 "y":178,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2D7-Trade":{
+	   "id":"0x2D7-Trade",
+	   "area":"Animal Village",
+	   "name":"Bear Cook",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2186,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x087-Trade":{
+	   "id":"0x087-Trade",
+	   "area":"Ukuku Prairie",
+	   "name":"Honeycomb",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1206,
+			 "y":1088,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x07B-Trade":{
+	   "id":"0x07B-Trade",
+	   "area":"Ukuku Prairie",
+	   "name":"Kiki",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":990,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2FE-Trade":{
+	   "id":"0x2FE-Trade",
+	   "area":"Toronbo Shores",
+	   "name":"Banana Sale",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":1852,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2B2-Trade":{
+	   "id":"0x2B2-Trade",
+	   "area":"Mabe Village",
+	   "name":"YipYip",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":242,
+			 "y":1348,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A6-Trade":{
+	   "id":"0x2A6-Trade",
+	   "area":"Mabe Village",
+	   "name":"Papahl's Wife",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":1104,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A0-Trade":{
+	   "id":"0x2A0-Trade",
+	   "area":"Mabe Village",
+	   "name":"Trendy Game",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":566,
+			 "y":1494,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1E4":{
+	   "id":"0x1E4",
+	   "area":"Mabe Village",
+	   "name":"Rooster",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":1234,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2FB":{
+	   "id":"0x2FB",
+	   "area":"Ukuku Prairie",
+	   "name":"Mamu",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":776,
+			 "y":1722,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2FD":{
+	   "id":"0x2FD",
+	   "area":"Tal Tal Heights",
+	   "name":"Manbo's Mambo",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1716,
+			 "y":292,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x092":{
+	   "id":"0x092",
+	   "area":"Mabe Village",
+	   "name":"Ballad of the Wind Fish",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2024,
+			 "y":1738,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":356,
+			 "y":1234,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x27A":{
+	   "id":"0x27A",
+	   "area":"Tal Tal Mountains",
+	   "name":"Bird Key Cave",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1732,
+			 "y":96,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x27F":{
+	   "id":"0x27F",
+	   "area":"Southern Face Shrine",
+	   "name":"Armos Knight",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2024,
+			 "y":1348,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0CE":{
+	   "id":"0x0CE",
+	   "area":"Yarna Desert",
+	   "name":"Lanmola",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2340,
+			 "y":1616,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x050":{
+	   "id":"0x050",
+	   "area":"Mysterious Woods",
+	   "name":"Toadstool",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":32,
+			 "y":698,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0F2":{
+	   "id":"0x0F2",
+	   "area":"Toronbo Shores",
+	   "name":"Sword on the Beach",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":2030,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2BA":{
+	   "id":"0x2BA",
+	   "area":"Tal Tal Mountains",
+	   "name":"Access Tunnel Bombable Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":938,
+			 "y":178,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1182,
+			 "y":64,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1E2":{
+	   "id":"0x1E2",
+	   "area":"Tal Tal Mountains",
+	   "name":"Mad Batter",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":744,
+			 "y":96,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x004":{
+	   "id":"0x004",
+	   "area":"Tal Tal Mountains",
+	   "name":"Outside Mad Batter",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":728,
+			 "y":64,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x01D":{
+	   "id":"0x01D",
+	   "area":"Tal Tal Mountains",
+	   "name":"Outside Five Chest Game",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2186,
+			 "y":146,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2122,
+			 "y":162,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2218,
+			 "y":194,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2F2":{
+	   "id":"0x2F2",
+	   "area":"Tal Tal Mountains",
+	   "name":"Five Chest Game",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2122,
+			 "y":162,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2218,
+			 "y":194,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x00C":{
+	   "id":"0x00C",
+	   "area":"Tal Tal Mountains",
+	   "name":"Bridge Rock",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2072,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x01E-Owl":{
+	   "id":"0x01E-Owl",
+	   "area":"Tal Tal Mountains",
+	   "name":"Outside D7 Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2284,
+			 "y":194,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x05D-Owl":{
+	   "id":"0x05D-Owl",
+	   "area":"Rapids Ride",
+	   "name":"Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2170,
+			 "y":666,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x05D":{
+	   "id":"0x05D",
+	   "area":"Rapids Ride",
+	   "name":"East",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2202,
+			 "y":666,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x05C":{
+	   "id":"0x05C",
+	   "area":"Rapids Ride",
+	   "name":"West",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2008,
+			 "y":682,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x08F-Owl":{
+	   "id":"0x08F-Owl",
+	   "area":"Southern Face Shrine",
+	   "name":"Outside Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2542,
+			 "y":1104,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2FC":{
+	   "id":"0x2FC",
+	   "area":"Southern Face Shrine",
+	   "name":"Under Armos Cave",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2332,
+			 "y":1380,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1F2":{
+	   "id":"0x1F2",
+	   "area":"Tal Tal Heights",
+	   "name":"Damp Cave Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x28A":{
+	   "id":"0x28A",
+	   "area":"Tal Tal Mountains",
+	   "name":"Paphl Cave",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1586,
+			 "y":178,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2BB":{
+	   "id":"0x2BB",
+	   "area":"Tal Tal Mountains",
+	   "name":"Access Tunnel Interior",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1182,
+			 "y":162,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1424,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x018":{
+	   "id":"0x018",
+	   "area":"Tal Tal Mountains",
+	   "name":"Access Tunnel Exterior",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1360,
+			 "y":146,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0FF":{
+	   "id":"0x0FF",
+	   "area":"Yarna Desert",
+	   "name":"Rock Seashell",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2510,
+			 "y":1998,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1E8":{
+	   "id":"0x1E8",
+	   "area":"Yarna Desert",
+	   "name":"Cave Under Lanmola",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2510,
+			 "y":1560,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2E6":{
+	   "id":"0x2E6",
+	   "area":"Yarna Desert",
+	   "name":"Bomb Arrow Cave",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2234,
+			 "y":1576,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0CF-Owl":{
+	   "id":"0x0CF-Owl",
+	   "area":"Yarna Desert",
+	   "name":"Desert Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2478,
+			 "y":1576,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0DA-Owl":{
+	   "id":"0x0DA-Owl",
+	   "area":"Martha's Bay",
+	   "name":"Peninsula Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1692,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0DA":{
+	   "id":"0x0DA",
+	   "area":"Martha's Bay",
+	   "name":"Peninsula Dig",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1660,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2C6":{
+	   "id":"0x2C6",
+	   "area":"Kanalet Castle",
+	   "name":"Ball and Chain Darknut Leaf",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":698,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2C5":{
+	   "id":"0x2C5",
+	   "area":"Kanalet Castle",
+	   "name":"Bombable Darknut Leaf",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":828,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2D2":{
+	   "id":"0x2D2",
+	   "area":"Kanalet Castle",
+	   "name":"Darknut, Zol, Bubble Leaf",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":828,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x058":{
+	   "id":"0x058",
+	   "area":"Kanalet Castle",
+	   "name":"Crow Rock Leaf",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1360,
+			 "y":666,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x05A":{
+	   "id":"0x05A",
+	   "area":"Kanalet Castle",
+	   "name":"Bomberman Meets Whack-a-mole Leaf",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1700,
+			 "y":714,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x078":{
+	   "id":"0x078",
+	   "area":"Kanalet Castle",
+	   "name":"In the Moat Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1392,
+			 "y":974,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2C8":{
+	   "id":"0x2C8",
+	   "area":"Pothole Field",
+	   "name":"Under Richard's House",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1020,
+			 "y":1624,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1036,
+			 "y":1754,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0C6":{
+	   "id":"0x0C6",
+	   "area":"Pothole Field",
+	   "name":"Slime Key Dig",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1084,
+			 "y":1608,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0C6-Owl":{
+	   "id":"0x0C6-Owl",
+	   "area":"Pothole Field",
+	   "name":"Slime Key Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1084,
+			 "y":1576,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1E0":{
+	   "id":"0x1E0",
+	   "area":"Martha's Bay",
+	   "name":"Mad Batter",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1036,
+			 "y":1868,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1570,
+			 "y":2014,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0A8-Owl":{
+	   "id":"0x0A8-Owl",
+	   "area":"Donut Plains",
+	   "name":"Donut Plains Ledge Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1368,
+			 "y":1364,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0A8":{
+	   "id":"0x0A8",
+	   "area":"Donut Plains",
+	   "name":"Donut Plains Ledge Dig",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1336,
+			 "y":1364,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0F8":{
+	   "id":"0x0F8",
+	   "area":"Martha's Bay",
+	   "name":"Island Bush of Destiny",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1360,
+			 "y":2014,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0E9":{
+	   "id":"0x0E9",
+	   "area":"Martha's Bay",
+	   "name":"Lone Bush",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1490,
+			 "y":1916,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0B9":{
+	   "id":"0x0B9",
+	   "area":"Donut Plains",
+	   "name":"Rock Seashell",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1522,
+			 "y":1478,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1FD":{
+	   "id":"0x1FD",
+	   "area":"Kanalet Castle",
+	   "name":"Boots Pit",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1328,
+			 "y":1006,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2E9":{
+	   "id":"0x2E9",
+	   "area":"Ukuku Prairie",
+	   "name":"Seashell Mansion",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1700,
+			 "y":1088,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0A4":{
+	   "id":"0x0A4",
+	   "area":"Ukuku Prairie",
+	   "name":"East of Mabe Tree Bonk",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":752,
+			 "y":1340,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x08B":{
+	   "id":"0x08B",
+	   "area":"Ukuku Prairie",
+	   "name":"East of Seashell Mansion Bush",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":1120,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0A6":{
+	   "id":"0x0A6",
+	   "area":"Ukuku Prairie",
+	   "name":"Outside D3 Island Bush",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1068,
+			 "y":1364,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0A5":{
+	   "id":"0x0A5",
+	   "area":"Ukuku Prairie",
+	   "name":"Outside D3 Ledge Dig",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":890,
+			 "y":1364,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2E5":{
+	   "id":"0x2E5",
+	   "area":"Ukuku Prairie",
+	   "name":"Boots 'n' Bomb Cave Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":988,
+			 "y":1088,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2F4":{
+	   "id":"0x2F4",
+	   "area":"Ukuku Prairie",
+	   "name":"Boots 'n' Bomb Cave Bombable Wall",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":988,
+			 "y":1088,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2CD":{
+	   "id":"0x2CD",
+	   "area":"Ukuku Prairie",
+	   "name":"Cave East of Mabe",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":792,
+			 "y":1120,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2E2":{
+	   "id":"0x2E2",
+	   "area":"Tal Tal Heights",
+	   "name":"Moblin Cave",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":454,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x074":{
+	   "id":"0x074",
+	   "area":"Koholint Prairie",
+	   "name":"Ghost Grave Dig",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":744,
+			 "y":958,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2DF":{
+	   "id":"0x2DF",
+	   "area":"Koholint Prairie",
+	   "name":"Graveyard Connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":858,
+			 "y":958,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1068,
+			 "y":958,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x035-Owl":{
+	   "id":"0x035-Owl",
+	   "area":"Tal Tal Heights",
+	   "name":"Moblin Cave Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":858,
+			 "y":470,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2AF":{
+	   "id":"0x2AF",
+	   "area":"Goponga Swamp",
+	   "name":"Write Cave East",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":152,
+			 "y":292,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x011-Owl":{
+	   "id":"0x011-Owl",
+	   "area":"Goponga Swamp",
+	   "name":"North of Write Owl",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":178,
+			 "y":210,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2AE":{
+	   "id":"0x2AE",
+	   "area":"Goponga Swamp",
+	   "name":"Write Cave West",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":152,
+			 "y":292,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2B3":{
+	   "id":"0x2B3",
+	   "area":"Mysterious Woods",
+	   "name":"Hookshot Cave",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":372,
+			 "y":568,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2AB":{
+	   "id":"0x2AB",
+	   "area":"Mysterious Woods",
+	   "name":"Cave Skull Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":128,
+			 "y":682,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":828,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2BD":{
+	   "id":"0x2BD",
+	   "area":"Mysterious Woods",
+	   "name":"Cave Crystal Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":828,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":128,
+			 "y":682,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x041":{
+	   "id":"0x041",
+	   "area":"Mysterious Woods",
+	   "name":"Tail Key Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":226,
+			 "y":568,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x034":{
+	   "id":"0x034",
+	   "area":"Goponga Swamp",
+	   "name":"Swampy Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":664,
+			 "y":406,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1E1":{
+	   "id":"0x1E1",
+	   "area":"Mysterious Woods",
+	   "name":"Mad Batter",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":682,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x071":{
+	   "id":"0x071",
+	   "area":"Mysterious Woods",
+	   "name":"Two Zol, Moblin Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":226,
+			 "y":990,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x044":{
+	   "id":"0x044",
+	   "area":"Koholint Prairie",
+	   "name":"Heart Piece of Shame",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":712,
+			 "y":584,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1E3":{
+	   "id":"0x1E3",
+	   "area":"Martha's Bay",
+	   "name":"Ghost House Barrel",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1052,
+			 "y":1998,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0E5":{
+	   "id":"0x0E5",
+	   "area":"Toronbo Shores",
+	   "name":"West of Ghost House Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":922,
+			 "y":1852,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0D2":{
+	   "id":"0x0D2",
+	   "area":"Toronbo Shores",
+	   "name":"Outside D1 Tree Bonk",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":380,
+			 "y":1762,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2B2":{
+	   "id":"0x2B2",
+	   "area":"Mabe Village",
+	   "name":"Dog House Dig",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":242,
+			 "y":1348,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x0A3":{
+	   "id":"0x0A3",
+	   "area":"Mabe Village",
+	   "name":"Bush Field",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":566,
+			 "y":1348,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2B1":{
+	   "id":"0x2B1",
+	   "area":"Mabe Village",
+	   "name":"Fishing Game Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":258,
+			 "y":1104,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A4":{
+	   "id":"0x2A4",
+	   "area":"Mabe Village",
+	   "name":"Well Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":1380,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2BE":{
+	   "id":"0x2BE",
+	   "area":"Mabe Village",
+	   "name":"Dream Hut West",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":518,
+			 "y":1088,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2BF":{
+	   "id":"0x2BF",
+	   "area":"Mabe Village",
+	   "name":"Dream Hut East",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":518,
+			 "y":1088,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x30A-Owl":{
+	   "id":"0x30A-Owl",
+	   "area":"Color Dungeon",
+	   "name":"Puzzowl",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":208,
+			 "y":256,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x307":{
+	   "id":"0x307",
+	   "area":"Color Dungeon",
+	   "name":"Bullshit Room",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":544,
+			 "y":176,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x306":{
+	   "id":"0x306",
+	   "area":"Color Dungeon",
+	   "name":"Zol Chest",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":448,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x302":{
+	   "id":"0x302",
+	   "area":"Color Dungeon",
+	   "name":"Nightmare Key Chest",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":704,
+			 "y":16,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x311":{
+	   "id":"0x311",
+	   "area":"Color Dungeon",
+	   "name":"Two Socket Chest",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":768,
+			 "y":416,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x30F":{
+	   "id":"0x30F",
+	   "area":"Color Dungeon",
+	   "name":"Entrance Chest",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":448,
+			 "y":416,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x30F-Owl":{
+	   "id":"0x30F-Owl",
+	   "area":"Color Dungeon",
+	   "name":"Entrance Owl",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":400,
+			 "y":384,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x308":{
+	   "id":"0x308",
+	   "area":"Color Dungeon",
+	   "name":"Upper Small Key",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":720,
+			 "y":176,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x308-Owl":{
+	   "id":"0x308-Owl",
+	   "area":"Color Dungeon",
+	   "name":"Upper Key Owl",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":704,
+			 "y":128,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x314":{
+	   "id":"0x314",
+	   "area":"Color Dungeon",
+	   "name":"Lower Small Key",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":512,
+			 "y":592,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x230":{
+	   "id":"0x230",
+	   "area":"Turtle Rock",
+	   "name":"Thunder Drum",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":552,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x234":{
+	   "id":"0x234",
+	   "area":"Turtle Rock",
+	   "name":"Hot Head Heart Container",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":552,
+			 "y":176,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x232":{
+	   "id":"0x232",
+	   "area":"Turtle Rock",
+	   "name":"Nightmare Key/Big Zamboni Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":128,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x23A":{
+	   "id":"0x23A",
+	   "area":"Turtle Rock",
+	   "name":"West of Boss Door Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":448,
+			 "y":272,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x241-Owl":{
+	   "id":"0x241-Owl",
+	   "area":"Turtle Rock",
+	   "name":"Lava Arrow Statue Owl",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":416,
+			 "y":384,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x241":{
+	   "id":"0x241",
+	   "area":"Turtle Rock",
+	   "name":"Lava Arrow Statue Key",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":352,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x000":{
+	   "id":"0x000",
+	   "area":"Turtle Rock",
+	   "name":"Outside Heart Piece",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":64,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"d8",
+			 "x":400,
+			 "y":256,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x23D":{
+	   "id":"0x23D",
+	   "area":"Turtle Rock",
+	   "name":"Dodongo Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":928,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x240":{
+	   "id":"0x240",
+	   "area":"Turtle Rock",
+	   "name":"Beamos Blocked Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":256,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x237":{
+	   "id":"0x237",
+	   "area":"Turtle Rock",
+	   "name":"Magic Rod Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":1168,
+			 "y":144,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x235":{
+	   "id":"0x235",
+	   "area":"Turtle Rock",
+	   "name":"Lava Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":688,
+			 "y":144,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x23E":{
+	   "id":"0x23E",
+	   "area":"Turtle Rock",
+	   "name":"Gibdos on Cracked Floor Key",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":992,
+			 "y":304,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x245-Owl":{
+	   "id":"0x245-Owl",
+	   "area":"Turtle Rock",
+	   "name":"Bombable Blocks Owl",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":1072,
+			 "y":384,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x25F":{
+	   "id":"0x25F",
+	   "area":"Turtle Rock",
+	   "name":"Four Ropes Pot Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":1248,
+			 "y":928,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x25A":{
+	   "id":"0x25A",
+	   "area":"Turtle Rock",
+	   "name":"Zamboni, Two Zol Key",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":992,
+			 "y":816,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x259":{
+	   "id":"0x259",
+	   "area":"Turtle Rock",
+	   "name":"Right Lava Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":864,
+			 "y":832,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x253-Owl":{
+	   "id":"0x253-Owl",
+	   "area":"Turtle Rock",
+	   "name":"Beamos Owl",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":1136,
+			 "y":720,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x246":{
+	   "id":"0x246",
+	   "area":"Turtle Rock",
+	   "name":"Two Torches Room Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":288,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x255":{
+	   "id":"0x255",
+	   "area":"Turtle Rock",
+	   "name":"Spark, Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":256,
+			 "y":800,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x24C":{
+	   "id":"0x24C",
+	   "area":"Turtle Rock",
+	   "name":"Left Vire Key",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":32,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x25C":{
+	   "id":"0x25C",
+	   "area":"Turtle Rock",
+	   "name":"Vacuum Mouth Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":64,
+			 "y":944,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x24D":{
+	   "id":"0x24D",
+	   "area":"Turtle Rock",
+	   "name":"Left of Hinox Zamboni Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":288,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x24F":{
+	   "id":"0x24F",
+	   "area":"Turtle Rock",
+	   "name":"Push Block Chest",
+	   "locations":[
+		  {
+			 "map":"d8",
+			 "x":528,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x22C":{
+	   "id":"0x22C",
+	   "area":"Eagle's Tower",
+	   "name":"Organ of Evening Calm",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":1032,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x223":{
+	   "id":"0x223",
+	   "area":"Eagle's Tower",
+	   "name":"Evil Eagle Heart Container",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":976,
+			 "y":256,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x220":{
+	   "id":"0x220",
+	   "area":"Eagle's Tower",
+	   "name":"Conveyor Beamos Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":1088,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x21A":{
+	   "id":"0x21A",
+	   "area":"Eagle's Tower",
+	   "name":"Mirror Shield Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":528,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x224":{
+	   "id":"0x224",
+	   "area":"Eagle's Tower",
+	   "name":"Nightmare Key/After Grim Creeper Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":1248,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"d7",
+			 "x":1248,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x21C":{
+	   "id":"0x21C",
+	   "area":"Eagle's Tower",
+	   "name":"Three of a Kind, Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":288,
+			 "y":416,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x21C-Owl":{
+	   "id":"0x21C-Owl",
+	   "area":"Eagle's Tower",
+	   "name":"Three of a Kind, Pit Owl",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":176,
+			 "y":384,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x201":{
+	   "id":"0x201",
+	   "area":"Eagle's Tower",
+	   "name":"Kirby Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":16,
+			 "y":528,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x21B":{
+	   "id":"0x21B",
+	   "area":"Eagle's Tower",
+	   "name":"Hinox Key",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":32,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x211":{
+	   "id":"0x211",
+	   "area":"Eagle's Tower",
+	   "name":"Three of a Kind, No Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":288,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x209":{
+	   "id":"0x209",
+	   "area":"Eagle's Tower",
+	   "name":"Switch Wrapped Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":80,
+			 "y":800,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x204":{
+	   "id":"0x204",
+	   "area":"Eagle's Tower",
+	   "name":"Beamos Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":608,
+			 "y":528,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x204-Owl":{
+	   "id":"0x204-Owl",
+	   "area":"Eagle's Tower",
+	   "name":"Beamos Owl",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":544,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x212":{
+	   "id":"0x212",
+	   "area":"Eagle's Tower",
+	   "name":"Horse Head, Bubble Chest",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":448,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x216-Owl":{
+	   "id":"0x216-Owl",
+	   "area":"Eagle's Tower",
+	   "name":"Ball Owl",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":496,
+			 "y":128,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x210":{
+	   "id":"0x210",
+	   "area":"Eagle's Tower",
+	   "name":"Entrance Key",
+	   "locations":[
+		  {
+			 "map":"d7",
+			 "x":512,
+			 "y":944,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B5":{
+	   "id":"0x1B5",
+	   "area":"Face Shrine",
+	   "name":"Coral Triangle",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":712,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1BC":{
+	   "id":"0x1BC",
+	   "area":"Face Shrine",
+	   "name":"Facade Heart Container",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":712,
+			 "y":312,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B6":{
+	   "id":"0x1B6",
+	   "area":"Face Shrine",
+	   "name":"Pot Locked Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":1008,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B6-Owl":{
+	   "id":"0x1B6-Owl",
+	   "area":"Face Shrine",
+	   "name":"Pot Owl",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":1024,
+			 "y":128,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B1":{
+	   "id":"0x1B1",
+	   "area":"Face Shrine",
+	   "name":"Top Right Horse Heads Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":1152,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1C3":{
+	   "id":"0x1C3",
+	   "area":"Face Shrine",
+	   "name":"Tile Room Key",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":512,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1D7-Owl":{
+	   "id":"0x1D7-Owl",
+	   "area":"Face Shrine",
+	   "name":"Blade Trap Owl",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":976,
+			 "y":768,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1D1":{
+	   "id":"0x1D1",
+	   "area":"Face Shrine",
+	   "name":"Four Wizzrobe Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":1088,
+			 "y":720,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1BE":{
+	   "id":"0x1BE",
+	   "area":"Face Shrine",
+	   "name":"Water Tektite Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":1056,
+			 "y":272,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x06C":{
+	   "id":"0x06C",
+	   "area":"Face Shrine",
+	   "name":"Raft Chest",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":828,
+			 "index":0
+		  },
+		  {
+			 "map":"d6",
+			 "x":112,
+			 "y":0,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B0":{
+	   "id":"0x1B0",
+	   "area":"Face Shrine",
+	   "name":"Top Left Horse Heads Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":112,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B4":{
+	   "id":"0x1B4",
+	   "area":"Face Shrine",
+	   "name":"Two Wizzrobe Key",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":512,
+			 "y":176,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B3":{
+	   "id":"0x1B3",
+	   "area":"Face Shrine",
+	   "name":"Switch, Star Above Statues Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":208,
+			 "y":192,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1B9":{
+	   "id":"0x1B9",
+	   "area":"Face Shrine",
+	   "name":"Stairs Across Statues Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":208,
+			 "y":272,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1C0":{
+	   "id":"0x1C0",
+	   "area":"Face Shrine",
+	   "name":"Three Wizzrobe, Switch Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":128,
+			 "y":416,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1CE":{
+	   "id":"0x1CE",
+	   "area":"Face Shrine",
+	   "name":"L2 Bracelet Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":176,
+			 "y":656,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1BB-Owl":{
+	   "id":"0x1BB-Owl",
+	   "area":"Face Shrine",
+	   "name":"Corridor Owl",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":560,
+			 "y":336,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1C9":{
+	   "id":"0x1C9",
+	   "area":"Face Shrine",
+	   "name":"Flying Heart, Statue Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":432,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1CF":{
+	   "id":"0x1CF",
+	   "area":"Face Shrine",
+	   "name":"Mini-Moldorm, Spark Chest",
+	   "locations":[
+		  {
+			 "map":"d6",
+			 "x":432,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1080,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x182":{
+	   "id":"0x182",
+	   "area":"Catfish's Maw",
+	   "name":"Wind Marimba",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":392,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x185":{
+	   "id":"0x185",
+	   "area":"Catfish's Maw",
+	   "name":"Slime Eel Heart Container",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":392,
+			 "y":184,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x186":{
+	   "id":"0x186",
+	   "area":"Catfish's Maw",
+	   "name":"Nightmare Key/Torch Cross Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":720,
+			 "y":320,
+			 "index":0
+		  },
+		  {
+			 "map":"d5",
+			 "x":512,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x183":{
+	   "id":"0x183",
+	   "area":"Catfish's Maw",
+	   "name":"Three Stalfos Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":544,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x180":{
+	   "id":"0x180",
+	   "area":"Catfish's Maw",
+	   "name":"Master Stalfos Item",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":64,
+			 "y":48,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x18F":{
+	   "id":"0x18F",
+	   "area":"Catfish's Maw",
+	   "name":"Flying Bomb Chest East",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":1088,
+			 "y":304,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x188":{
+	   "id":"0x188",
+	   "area":"Catfish's Maw",
+	   "name":"Swort Stalfos, Star, Bridge Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":928,
+			 "y":144,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x18E":{
+	   "id":"0x18E",
+	   "area":"Catfish's Maw",
+	   "name":"Two Stalfos, Star Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":912,
+			 "y":272,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x18A-Owl":{
+	   "id":"0x18A-Owl",
+	   "area":"Catfish's Maw",
+	   "name":"Star Owl",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":240,
+			 "y":256,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x196":{
+	   "id":"0x196",
+	   "area":"Catfish's Maw",
+	   "name":"Hookshot Note Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":832,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x197":{
+	   "id":"0x197",
+	   "area":"Catfish's Maw",
+	   "name":"Three Iron Mask Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":208,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x19B":{
+	   "id":"0x19B",
+	   "area":"Catfish's Maw",
+	   "name":"Flying Bomb Chest South",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":448,
+			 "y":800,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x19A-Owl":{
+	   "id":"0x19A-Owl",
+	   "area":"Catfish's Maw",
+	   "name":"Crystal Owl",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":752,
+			 "y":640,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x181":{
+	   "id":"0x181",
+	   "area":"Catfish's Maw",
+	   "name":"Crystal Key",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":192,
+			 "y":48,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x19E":{
+	   "id":"0x19E",
+	   "area":"Catfish's Maw",
+	   "name":"Spark, Two Iron Mask Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":592,
+			 "y":928,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1A0":{
+	   "id":"0x1A0",
+	   "area":"Catfish's Maw",
+	   "name":"Entrance Hookshottable Chest",
+	   "locations":[
+		  {
+			 "map":"d5",
+			 "x":912,
+			 "y":912,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x162":{
+	   "id":"0x162",
+	   "area":"Angler's Tunnel",
+	   "name":"Surf Harp",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":74,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x166":{
+	   "id":"0x166",
+	   "area":"Angler's Tunnel",
+	   "name":"Angler Fish Heart Container",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":64,
+			 "y":320,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x176":{
+	   "id":"0x176",
+	   "area":"Angler's Tunnel",
+	   "name":"Nightmare Key Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":192,
+			 "y":656,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x160":{
+	   "id":"0x160",
+	   "area":"Angler's Tunnel",
+	   "name":"Flippers Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":384,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x168":{
+	   "id":"0x168",
+	   "area":"Angler's Tunnel",
+	   "name":"Spark Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":352,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x16D":{
+	   "id":"0x16D",
+	   "area":"Angler's Tunnel",
+	   "name":"Blob Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":256,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x16E":{
+	   "id":"0x16E",
+	   "area":"Angler's Tunnel",
+	   "name":"Flipper Locked After Boots Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":416,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x169":{
+	   "id":"0x169",
+	   "area":"Angler's Tunnel",
+	   "name":"Pit Key",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":752,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"d4",
+			 "x":512,
+			 "y":304,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x16F-Owl":{
+	   "id":"0x16F-Owl",
+	   "area":"Angler's Tunnel",
+	   "name":"Spiked Beetle Owl",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":528,
+			 "y":448,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x175":{
+	   "id":"0x175",
+	   "area":"Angler's Tunnel",
+	   "name":"Flipper Locked Before Boots Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":672,
+			 "y":560,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x165":{
+	   "id":"0x165",
+	   "area":"Angler's Tunnel",
+	   "name":"Upper Bomb Locked Watery Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":880,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x171":{
+	   "id":"0x171",
+	   "area":"Angler's Tunnel",
+	   "name":"Lower Bomb Locked Watery Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":912,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x17B":{
+	   "id":"0x17B",
+	   "area":"Angler's Tunnel",
+	   "name":"Crystal Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":544,
+			 "y":832,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x178":{
+	   "id":"0x178",
+	   "area":"Angler's Tunnel",
+	   "name":"Two Spiked Beetle, Zol Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":576,
+			 "y":704,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x16A":{
+	   "id":"0x16A",
+	   "area":"Angler's Tunnel",
+	   "name":"NW of Boots Pit Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":656,
+			 "y":336,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x179":{
+	   "id":"0x179",
+	   "area":"Angler's Tunnel",
+	   "name":"Watery Statue Chest",
+	   "locations":[
+		  {
+			 "map":"d4",
+			 "x":704,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x159":{
+	   "id":"0x159",
+	   "area":"Key Cavern",
+	   "name":"Sea Lily's Bell",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":872,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x15A":{
+	   "id":"0x15A",
+	   "area":"Key Cavern",
+	   "name":"Slime Eye Heart Container",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":872,
+			 "y":816,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x15B":{
+	   "id":"0x15B",
+	   "area":"Key Cavern",
+	   "name":"Nightmare Door Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":832,
+			 "y":944,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x140-Owl":{
+	   "id":"0x140-Owl",
+	   "area":"Key Cavern",
+	   "name":"Flying Bomb Owl",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":64,
+			 "y":0,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x144":{
+	   "id":"0x144",
+	   "area":"Key Cavern",
+	   "name":"Two Zol, Stalfos Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":128,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x148":{
+	   "id":"0x148",
+	   "area":"Key Cavern",
+	   "name":"Two Zol, Two Pairodd Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":32,
+			 "y":304,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x141":{
+	   "id":"0x141",
+	   "area":"Key Cavern",
+	   "name":"Three Bombite Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":192,
+			 "y":48,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x142":{
+	   "id":"0x142",
+	   "area":"Key Cavern",
+	   "name":"Three Zol, Stalfos Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":384,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x146":{
+	   "id":"0x146",
+	   "area":"Key Cavern",
+	   "name":"Boots Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":384,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x147":{
+	   "id":"0x147",
+	   "area":"Key Cavern",
+	   "name":"Tile Arrow Ledge Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":608,
+			 "y":144,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x147-Owl":{
+	   "id":"0x147-Owl",
+	   "area":"Key Cavern",
+	   "name":"Tile Arrow Owl",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":528,
+			 "y":128,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x14D":{
+	   "id":"0x14D",
+	   "area":"Key Cavern",
+	   "name":"After Stairs Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":352,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x158":{
+	   "id":"0x158",
+	   "area":"Key Cavern",
+	   "name":"South Key Room Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":832,
+			 "y":560,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x155":{
+	   "id":"0x155",
+	   "area":"Key Cavern",
+	   "name":"West Key Room Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":672,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x14C":{
+	   "id":"0x14C",
+	   "area":"Key Cavern",
+	   "name":"Zol Switch Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":208,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x150":{
+	   "id":"0x150",
+	   "area":"Key Cavern",
+	   "name":"Sword Stalfos, Keese Switch Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":400,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x154-Owl":{
+	   "id":"0x154-Owl",
+	   "area":"Key Cavern",
+	   "name":"North Key Room Owl",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":848,
+			 "y":304,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x154":{
+	   "id":"0x154",
+	   "area":"Key Cavern",
+	   "name":"North Key Room Key",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":832,
+			 "y":304,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x14E":{
+	   "id":"0x14E",
+	   "area":"Key Cavern",
+	   "name":"Two Stalfos, Zol Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":288,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x14F":{
+	   "id":"0x14F",
+	   "area":"Key Cavern",
+	   "name":"Four Zol Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":272,
+			 "y":672,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x151":{
+	   "id":"0x151",
+	   "area":"Key Cavern",
+	   "name":"Two Bombite, Sword Stalfos, Zol Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":288,
+			 "y":816,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x153":{
+	   "id":"0x153",
+	   "area":"Key Cavern",
+	   "name":"Vacuum Mouth Chest",
+	   "locations":[
+		  {
+			 "map":"d3",
+			 "x":448,
+			 "y":928,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x12A":{
+	   "id":"0x12A",
+	   "area":"Bottle Grotto",
+	   "name":"Conch Horn",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":712,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x12B":{
+	   "id":"0x12B",
+	   "area":"Bottle Grotto",
+	   "name":"Genie Heart Container",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":872,
+			 "y":312,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x127":{
+	   "id":"0x127",
+	   "area":"Bottle Grotto",
+	   "name":"Enemy Order Room Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":768,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x122":{
+	   "id":"0x122",
+	   "area":"Bottle Grotto",
+	   "name":"Second Switch Locked Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":432,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x120":{
+	   "id":"0x120",
+	   "area":"Bottle Grotto",
+	   "name":"Boo Buddies Room Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":128,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x12F-Owl":{
+	   "id":"0x12F-Owl",
+	   "area":"Bottle Grotto",
+	   "name":"Before First Staircase Owl",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":832,
+			 "y":512,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x129-Owl":{
+	   "id":"0x129-Owl",
+	   "area":"Bottle Grotto",
+	   "name":"After Hinox Owl",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":240,
+			 "y":256,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x121":{
+	   "id":"0x121",
+	   "area":"Bottle Grotto",
+	   "name":"Outside Boo Buddies Room Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":272,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x126":{
+	   "id":"0x126",
+	   "area":"Bottle Grotto",
+	   "name":"Vacuum Mouth Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":192,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x134":{
+	   "id":"0x134",
+	   "area":"Bottle Grotto",
+	   "name":"Mask-Mimic Key",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":672,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x139":{
+	   "id":"0x139",
+	   "area":"Bottle Grotto",
+	   "name":"Button Spawn Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":768,
+			 "y":800,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x138":{
+	   "id":"0x138",
+	   "area":"Bottle Grotto",
+	   "name":"First Switch Locked Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":528,
+			 "y":832,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x133-Owl":{
+	   "id":"0x133-Owl",
+	   "area":"Bottle Grotto",
+	   "name":"Switch Owl",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":544,
+			 "y":640,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x137":{
+	   "id":"0x137",
+	   "area":"Bottle Grotto",
+	   "name":"Mask-Mimic Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":448,
+			 "y":800,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x132":{
+	   "id":"0x132",
+	   "area":"Bottle Grotto",
+	   "name":"Two Stalfos Key",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":352,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x12E":{
+	   "id":"0x12E",
+	   "area":"Bottle Grotto",
+	   "name":"Hardhat Beetle Pit Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":64,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x136":{
+	   "id":"0x136",
+	   "area":"Bottle Grotto",
+	   "name":"Entrance Chest",
+	   "locations":[
+		  {
+			 "map":"d2",
+			 "x":176,
+			 "y":800,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x102":{
+	   "id":"0x102",
+	   "area":"Tail Cave",
+	   "name":"Full Moon Cello",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":1032,
+			 "y":32,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x106":{
+	   "id":"0x106",
+	   "area":"Tail Cave",
+	   "name":"Moldorm Heart Container",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":1008,
+			 "y":160,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x10A-Owl":{
+	   "id":"0x10A-Owl",
+	   "area":"Tail Cave",
+	   "name":"Three of a Kind Owl",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":880,
+			 "y":256,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x10A":{
+	   "id":"0x10A",
+	   "area":"Tail Cave",
+	   "name":"Three of a Kind Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":928,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x108":{
+	   "id":"0x108",
+	   "area":"Tail Cave",
+	   "name":"Nightmare Key Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":544,
+			 "y":272,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x11D":{
+	   "id":"0x11D",
+	   "area":"Tail Cave",
+	   "name":"Feather Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":64,
+			 "y":288,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x104-Owl":{
+	   "id":"0x104-Owl",
+	   "area":"Tail Cave",
+	   "name":"Movable Block Owl",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":368,
+			 "y":128,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x103-Owl":{
+	   "id":"0x103-Owl",
+	   "area":"Tail Cave",
+	   "name":"Spiked Beetle Owl",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":240,
+			 "y":128,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x10C":{
+	   "id":"0x10C",
+	   "area":"Tail Cave",
+	   "name":"Bombable Wall Seashell Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":224,
+			 "y":432,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x114":{
+	   "id":"0x114",
+	   "area":"Tail Cave",
+	   "name":"Two Stalfos, Two Keese Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":768,
+			 "y":544,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x10D":{
+	   "id":"0x10D",
+	   "area":"Tail Cave",
+	   "name":"Mini-Moldorm Spawn Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":448,
+			 "y":416,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x116":{
+	   "id":"0x116",
+	   "area":"Tail Cave",
+	   "name":"Hardhat Beetles Key",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":352,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x10E":{
+	   "id":"0x10E",
+	   "area":"Tail Cave",
+	   "name":"Spark, Mini-Moldorm Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":544,
+			 "y":416,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x115":{
+	   "id":"0x115",
+	   "area":"Tail Cave",
+	   "name":"Four Zol Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":208,
+			 "y":688,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x113":{
+	   "id":"0x113",
+	   "area":"Tail Cave",
+	   "name":"Pit Button Chest",
+	   "locations":[
+		  {
+			 "map":"d1",
+			 "x":560,
+			 "y":560,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A1-2":{
+	   "id":"0x2A1-2",
+	   "area":"Mabe Village",
+	   "name":"Shop 10 Item",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":1250,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A1-1":{
+	   "id":"0x2A1-1",
+	   "area":"Mabe Village",
+	   "name":"Shop 980 Item",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":1250,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A1-0":{
+	   "id":"0x2A1-0",
+	   "area":"Mabe Village",
+	   "name":"Shop 200 Item",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":1250,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A2":{
+	   "id":"0x2A2",
+	   "area":"Koholint Prairie",
+	   "name":"Witch Item",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":874,
+			 "y":812,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x301-1":{
+	   "id":"0x301-1",
+	   "area":"Color Dungeon",
+	   "name":"Tunic Fairy Item 2",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":232,
+			 "y":64,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x301-0":{
+	   "id":"0x301-0",
+	   "area":"Color Dungeon",
+	   "name":"Tunic Fairy Item 1",
+	   "locations":[
+		  {
+			 "map":"d0",
+			 "x":232,
+			 "y":64,
+			 "index":0
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x2A3":{
+	   "id":"0x2A3",
+	   "area":"Mabe Village",
+	   "name":"Tarin's Gift",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":1364,
+			 "index":0
+		  }
+	   ]
+	},
+	"0x1F5":{
+	   "id":"0x1F5",
+	   "area":"Toronbo Shores",
+	   "name":"Boomerang Guy Item",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":664,
+			 "y":1966,
+			 "index":0
+		  }
+	   ]
+	}
+ }

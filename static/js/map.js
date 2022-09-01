@@ -104,7 +104,7 @@ function addTooltip(check) {
 
         }
 
-        let coord = coordDict[id][0];
+        let coord = coordDict[id];
         let line = template.replace('{1}', id)
                            .replace('{2}', graphic)
                            .replace('{3}', coord.area)
@@ -155,7 +155,7 @@ function condenseNodes(map, mapName) {
     let checks = $('li[data-logic]');
     for (const check of checks) {
         let id = $(check).attr('data-id');
-        let checkMaps = coordDict[id].map(function(x) { return x.map; });
+        let checkMaps = coordDict[id].locations.map(function(x) { return x.map; });
 
         if (!(checkMaps.includes(mapName))
             || ($(check).attr('data-logic') == 'Out of logic'
@@ -168,7 +168,7 @@ function condenseNodes(map, mapName) {
         let behindKeys = $(check).attr('data-behind_keys') == 'True'
         let isChecked = `${area}-${name}` in checkedChecks;
         let difficulty = isChecked ? -1 : Number($(check).attr('data-difficulty'));
-        let coords = coordDict[id];
+        let coords = coordDict[id].locations;
 
         for (const coord of coords) {
             if (coord.map != mapName) {

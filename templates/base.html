@@ -21,11 +21,7 @@
             {% endfor %}
             {% block content %}{% endblock %}
         </div>
-
-        <div class="form-check form-switch">
-            <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
-        </div>
-
-        {% include 'scripts.html' %}
     </body>
+
+    {% block otherContent %}{% endblock %}
 </html>

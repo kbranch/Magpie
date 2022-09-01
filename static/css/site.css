@@ -100,7 +100,6 @@ img {
 
 .map {
     max-width: 100%;
-    filter: brightness(50%)
 }
 
 .mapImage {
@@ -294,4 +293,26 @@ button.nav-link.active {
     background-size: contain;
     background-position: center center;
     transform: scaleX(-1);
+}
+
+#checkListGroup {
+    max-height: 800px;
+    overflow: scroll;
+}
+
+#checkLocationsListGroup {
+    max-height: 800px;
+    overflow: scroll;
+}
+
+#checkListCol {
+    width: 300px;
+}
+
+.check-input {
+    width: 100%;
+}
+
+.check-item {
+    display: block;
 }

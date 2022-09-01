@@ -22,6 +22,10 @@
     </div>
 </div>
 
+<div class="form-check form-switch">
+    <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
+</div>
+
 <script type="application/javascript">
     function hardReset() {
         if (confirm("Completely clear all tracker data?")) {
@@ -30,5 +34,7 @@
         }
     }
 </script>
+
+{% include 'scripts.html' %}
 
 {% endblock %}
