@@ -32,7 +32,7 @@ function toggleNode(node) {
         let id = chunks[0];
         let difficulty = chunks[1];
         let coord = coordDict[id];
-        let fullName = `${coord.area}-${coord.name}`
+        let fullName = `${coord.area}-${coord.name}`;
 
         if (!(fullName in checkedChecks || difficulty == 9)) {
             toggleList.add(id);
@@ -51,7 +51,7 @@ function toggleNode(node) {
             toggleChecks(outOfLogic);
         }
         else {
-            toggleChecks(checkIds.map(x => x.split(';')[0]))
+            toggleChecks(new Set(checkIds.map(x => x.split(';')[0])));
         }
     }
 

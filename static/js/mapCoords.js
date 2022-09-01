@@ -4,37 +4,25 @@ var activeCheck = null;
 function loadChecks() {
     for (const id in coordDict) {
         newChecks.push(coordDict[id]);
-        // let checks = coordDict[id];
-
-        // let newCheck = {
-        //     id: checks[0].id,
-        //     area: checks[0].area,
-        //     name: checks[0].name,
-        //     locations: [],
-        // };
-
-        // for (const check of checks) {
-        //     let newLocation = {
-        //         map: check.map,
-        //         x: check.x,
-        //         y: check.y,
-        //         index: 0,
-        //     };
-
-        //     newCheck.locations.push(newLocation);
-        // }
-
-        // newChecks.push(newCheck);
     }
 }
 
 function checkClicked(element) {
-    let id = $(`#${element.id}-id`).attr('value');
-    activeCheck = newChecks.filter(x => x.id == id)[0];
+    // var elementId = element.id
+    // let id = $(`#${element.id}\\|id`).attr('value');
+    // activeCheck = newChecks.filter(x => x.id == id)[0];
+    activeCheck = newChecks.filter(x => x.id == element.id)[0];
     $('.check-item.active').removeClass('active');
     $(element).addClass('active');
 
     refreshLocationList();
+}
+
+function indexChanged(element) {
+    let value = element.value;
+    let id = $(element).attr('id').split('|')[0];
+    let check = newChecks.filter(x => x.id == id)[0];
+    check.index = Number(value);
 }
 
 function refreshCheckList() {
@@ -43,9 +31,11 @@ function refreshCheckList() {
     for(const check of newChecks) {
         let item = `<div id="${check.id}" class="list-group-item check-item" onclick="checkClicked(this);">
             <p>${check.id}: ${check.area} - ${check.name}</p>
-            <input class="form-input check-input" type="text" value="${check.id}" id="${check.id}-id">
-            <input class="form-input check-input" type="text" value="${check.area}" id="${check.area}-area">
-            <input class="form-input check-input" type="text" value="${check.name}" id="${check.area}-name">
+            <label class="form-label" for="${check.id}|index">Index</input>
+            <input class="form-input check-input" type="number" value="${check.index}" id="${check.id}|index" onchange="indexChanged(this)">
+            <!--<input class="form-input check-input" type="text" value="${check.id}" id="${check.id}|id">
+            <input class="form-input check-input" type="text" value="${check.area}" id="${check.id}|area">
+            <input class="form-input check-input" type="text" value="${check.name}" id="${check.id}|name"> -->
         </div>`;
 
         $(checkListGroup).append(item);

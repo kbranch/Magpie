@@ -168,7 +168,9 @@ function condenseNodes(map, mapName) {
         let behindKeys = $(check).attr('data-behind_keys') == 'True'
         let isChecked = `${area}-${name}` in checkedChecks;
         let difficulty = isChecked ? -1 : Number($(check).attr('data-difficulty'));
-        let coords = coordDict[id].locations;
+        let coord = coordDict[id];
+        let coords = coord.locations;
+        let index = coord.index;
 
         for (const coord of coords) {
             if (coord.map != mapName) {
@@ -183,8 +185,12 @@ function condenseNodes(map, mapName) {
                 nodes[coordString] = [];
             }
 
-            nodes[coordString].push({id: id, difficulty: difficulty, behindKeys: behindKeys});
+            nodes[coordString].push({id: id, difficulty: difficulty, behindKeys: behindKeys, index: index});
         }
+    }
+
+    for (const key in nodes) {
+        nodes[key].sort((a, b) => a.index - b.index);
     }
 
     return nodes;
