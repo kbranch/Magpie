@@ -151,6 +151,9 @@ def getAccessibility(allChecks, logics, inventory):
     return accessibility
 
 def addStartingItems(inventory, args):
+    if args.bowwow != 'normal':
+        inventory['SWORD'] = inventory['SWORD'] + 1
+
     if args.dungeon_items == 'keysy':
         for n in range(9):
             for amount, item_name in ((9, "KEY"), (1, "NIGHTMARE_KEY")):
