@@ -36,7 +36,7 @@
         <h2 id="heading-{{safeLogic}}" class="accordion-header">
             <button class="accordion-button{{ns.collapsed}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{safeLogic}}" aria-expanded="{{ns.expanded}}" aria-controls="collapse-{{safeLogic}}">
                 <div class="tooltip-check-graphic difficulty-{{logic.difficulty}} align-middle"></div>
-                <span class="ps-2">{{logic.friendlyName}}</span>
+                <span class="ps-2">{{ logic.friendlyName }} ({{ accessibility[logic] | length }})</span>
             </button>
         </h2>
 

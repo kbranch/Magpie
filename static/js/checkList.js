@@ -2,6 +2,34 @@ function saveChecked() {
     localStorage.setItem('checkedChecks', JSON.stringify(checkedChecks));
 }
 
+function saveEntrances() {
+    localStorage.setItem('entranceMapping', JSON.stringify(entranceMapping));
+}
+
+function saveLocations() {
+    saveChecked();
+    saveEntrances();
+}
+
+function loadLocations() {
+    loadChecked();
+    loadEntrances();
+
+    refreshChecked();
+}
+
+function loadEntrances() {
+    try {
+        entranceMapping = JSON.parse(localStorage.getItem('entranceMapping'));
+    }
+    catch (err) {
+    }
+
+    if (entranceMapping == null) {
+        entranceMapping = {};
+    }
+}
+
 function loadChecked() {
     try {
         checkedChecks = JSON.parse(localStorage.getItem('checkedChecks'));
@@ -12,8 +40,6 @@ function loadChecked() {
     if (checkedChecks == null) {
         checkedChecks = {};
     }
-
-    refreshChecked();
 }
 
 function getCheckedKey(area, name) {
@@ -181,7 +207,8 @@ function refreshChecked() {
     }
 }
 
-function resetChecks() {
+function resetLocations() {
     checkedChecks = {};
-    saveChecked();
+    entranceMapping = {};
+    saveLocations();
 }

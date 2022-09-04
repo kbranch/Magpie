@@ -35,7 +35,16 @@ def home():
     flags = args.flags
     args.flags = []
 
-    return render_template("index.html", flags=flags, args=args, defaultSettings=defaultSettings, jsonArgs=jsonpickle.encode(args), jsonSettings=jsonpickle.encode(defaultSettings), local=local)
+    entrancePool = getEntrancePool(args)
+
+    return render_template("index.html", flags=flags, args=args,
+                                         defaultSettings=defaultSettings,
+                                         entrancePool=jsonpickle.encode(entrancePool),
+                                         startLocations=jsonpickle.encode(getStartLocations()),
+                                         jsonArgs=jsonpickle.encode(args),
+                                         jsonSettings=jsonpickle.encode(defaultSettings),
+                                         local=local,
+                                         )
 
 @app.route("/items", methods=['POST'])
 def renderItems():
@@ -54,6 +63,8 @@ def renderCheckList():
     try:
         argValues = parseArgs(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
+        entranceMapping = jsonpickle.decode(request.form['entranceMapping'])
+        # entranceMapping = {'shop': 'shop', 'madambowwow': 'prairie_left_cave1'}
 
         inventory['RUPEES_500'] = 10
         inventory['RAFT'] = 1
@@ -62,11 +73,13 @@ def renderCheckList():
         initChecks()
         args = getArgs(values=argValues)
 
+        # args.entranceshuffle = 'advanced'
+
         addStartingItems(inventory, args)
 
         allItems = getAllItems(args)
-        logics = getLogics(args)
-        allChecks = loadChecks(logics[0], allItems)
+        logics = getLogics(args, entranceMapping)
+        allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, logics, inventory)
 
         return render_template("checklist.html", accessibility=accessibility, logics=logics)
@@ -151,6 +164,9 @@ def getAccessibility(allChecks, logics, inventory):
     return accessibility
 
 def addStartingItems(inventory, args):
+    if args.bowwow != 'normal':
+        inventory['SWORD'] = inventory['SWORD'] + 1
+
     if args.dungeon_items == 'keysy':
         for n in range(9):
             for amount, item_name in ((9, "KEY"), (1, "NIGHTMARE_KEY")):

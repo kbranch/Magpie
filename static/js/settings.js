@@ -139,7 +139,7 @@ async function importState() {
             && 'logic' in state.args) {
                 inventory = state.inventory;
                 checkedChecks = state.checkedChecks;
-                saveChecked();
+                saveLocations();
                 saveInventory();
                 saveSettingsToStorage(state.args, state.settings);
                 location.reload();

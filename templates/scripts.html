@@ -11,7 +11,10 @@
 <script type="application/javascript">
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
+    const entrancePool = JSON.parse('{{entrancePool|safe}}')
+    const startLocations = JSON.parse('{{startLocations|safe}}');
     var localSettings = null;
+    var entranceMapping = {};
     var checkedChecks = {};
     var inventory = {};
     var mapNodes = null;
@@ -45,6 +48,7 @@
             data: {
                 args: JSON.stringify(args),
                 inventory: JSON.stringify(inventory),
+                entranceMapping: JSON.stringify(entranceMapping),
             },
             success: function(response) {
                 $('#checkList').html(response);
@@ -105,7 +109,7 @@
     modifyTooltipAllowList();
     initKnownItems();
     loadSettings();
-    loadChecked();
+    loadLocations();
 
     {% if local %}
     async function getRequest(url='') {

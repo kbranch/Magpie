@@ -316,3 +316,11 @@ button.nav-link.active {
 .check-item {
     display: block;
 }
+
+.modal-content {
+    color: #000;
+}
+
+.modal-body {
+    display: inline-block;
+}

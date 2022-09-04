@@ -3,16 +3,69 @@
 
 <img id="cursor" style="position:fixed; top:0; left:0; pointer-events:none; z-index: 10;" src="static/images/cursor.png">
 
+<div class="modal fade" id="newLocationModal" tabindex="-1" aria-labelledby="newLocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newLocationModalLabel">New Location</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <label class="col-4 col-form-label" for="newId">ID</label>
+                        <div class="col">
+                            <input class="form-input" type="text" value="" id="newId">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-4 col-form-label" for="newName">Name</label>
+                        <div class="col">
+                            <input class="form-input" type="text" value="" id="newName">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-4 col-form-label" for="newArea">Area</label>
+                        <div class="col">
+                            <input class="form-input" type="text" value="" id="newArea">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-4 col-form-label" for="newEntranceType">Entrance Type</label>
+                        <div class="col">
+                            <select id="newEntranceType">
+                                <option value="none">None</option>
+                                <option value="dummy">Dummy</option>
+                                <option value="connector">Connector</option>
+                                <option value="single">Single</option>
+                                <option value="dungeon">Dungeon</option>
+                                <option value="insanity">Insanity</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="modalCreateButton" type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="createLocation(this)">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col">
         {% include 'map.html' %}
     </div>
     <div id="checkListCol" class="col-auto">
+        <div>
+        </div>
         <div id="checkListGroup" class="list-group">
         </div>
         <div id="checkLocationsListGroup" class="list-group">
         </div>
-        <button type="button" class="btn btn-primary" onclick="copyChecks()">Copy Checks</button>
+        <button type="button" class="btn btn-primary" data-location_type="check" data-bs-toggle="modal" data-bs-target="#newLocationModal">Add Location</button>
+        <button type="button" class="btn btn-secondary" onclick="copyChecks()">Copy Checks</button>
     </div>
 </div>
 

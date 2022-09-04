@@ -1,5 +1,6 @@
 import os
 import sys
+import copy
 import random
 import argparse
 import jsonpickle
@@ -9,7 +10,7 @@ sys.path.append(os.path.abspath('LADXR/'))
 import explorer
 import itempool
 import logic
-from worldSetup import WorldSetup
+from worldSetup import WorldSetup, start_locations
 from LADXR.main import buildArgParser
 from checkMetadata import checkMetadataTable
 
@@ -59,15 +60,11 @@ def getArgs(values=None):
     args = Args()
 
     for flag in ladxrFlags:
-        if flag.default != None:
-            if flag.dest == 'goal':
-                flag.choices = ('egg', 'bingo', 'bingo-full', 'seashells', 'raft')
+        value = flag.default
+        if values and flag.dest in values.__dict__:
+            value = values.__dict__[flag.dest]
 
-            value = flag.default
-            if values and flag.dest in values.__dict__:
-                value = values.__dict__[flag.dest]
-
-            args.add(flag, value)
+        args.add(flag, value)
 
 
     args.multiworld = None
@@ -108,9 +105,33 @@ def getItems(args):
 
     return pool
 
-def getLogics(args):
+def getLogicWithoutER(realArgs):
+    args = copy.copy(realArgs)
+    args.dungeonshuffle = False
+    args.randomstartlocation = False
+    args.entranceshuffle = 'none'
+    args.boss = 'default'
+    args.miniboss = 'default'
+    
     worldSetup = WorldSetup()
     worldSetup.randomize(args, random.Random())
+
+    log = logic.Logic(args, world_setup=worldSetup)
+    log.name = 'noER'
+    
+    return log
+
+def getLogics(args, entranceMapping):
+    worldSetup = WorldSetup()
+    worldSetup.randomize(args, random.Random())
+
+    entrancePool = getEntrancePool(args)
+
+    for entrance in worldSetup.entrance_mapping:
+        if entrance in entranceMapping:
+            worldSetup.entrance_mapping[entrance] = entranceMapping[entrance]
+        elif entrance in entrancePool:
+            worldSetup.entrance_mapping[entrance] = 'rooster_house'
 
     logicFlag = [x for x in args.flags if x.name == 'logic'][0]
     originalLogic = args.logic
@@ -152,7 +173,17 @@ def loadChecks(logic, inventory):
     
     e.visit(logic.start)
 
-    for location in [x for x in e.getAccessableLocations() if _locationIsCheck(x)]:
+    locations = e.getAccessableLocations()
+    # reverseOutdoorDict = {v[0]: k for k, v in logic.world.overworld_entrance.items()}
+    # reverseIndoorDict = {v: k for k, v in logic.world.indoor_location.items()}
+    # test = ''
+
+    # for location in locations:
+    #     for connection in location.simple_connections:
+    #         test = ''
+    #     test = ''
+
+    for location in [x for x in locations if _locationIsCheck(x)]:
         for item in location.items:
             name = item.nameId
 
@@ -170,3 +201,15 @@ def initChecks():
     for id in checkMetadataTable:
         if id != 'None':
             allChecks[id] = Check(id, checkMetadataTable[id])
+
+def getEntrancePool(args):
+    entrances = set(WorldSetup.getEntrancePool(None, args))
+    entrances = entrances.union(set(WorldSetup.getEntrancePool(None, args, connectorsOnly=True)))
+
+    if args.randomstartlocation:
+        entrances = entrances.union(set(getStartLocations()))
+
+    return entrances
+
+def getStartLocations():
+    return start_locations

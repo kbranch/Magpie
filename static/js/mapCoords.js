@@ -3,6 +3,8 @@ var activeCheck = null;
 
 function loadChecks() {
     for (const id in coordDict) {
+        coordDict[id].icon = '';
+        coordDict[id].type = 'check';
         newChecks.push(coordDict[id]);
     }
 }
@@ -25,18 +27,41 @@ function indexChanged(element) {
     check.index = Number(value);
 }
 
+function iconChanged(element) {
+    let value = element.value;
+    let id = $(element).attr('id').split('|')[0];
+    let check = newChecks.filter(x => x.id == id)[0];
+    check.icon = value;
+}
+
+function nameChanged(element) {
+    let value = element.value;
+    let id = $(element).attr('id').split('|')[0];
+    let check = newChecks.filter(x => x.id == id)[0];
+    check.name = value;
+}
+
 function refreshCheckList() {
     let checkListGroup = $('#checkListGroup');
 
     for(const check of newChecks) {
+        let existingDiv = $(`div#${check.id}`);
+        if (existingDiv.length > 0) { continue; }
+
         let item = `<div id="${check.id}" class="list-group-item check-item" onclick="checkClicked(this);">
             <p>${check.id}: ${check.area} - ${check.name}</p>
             <label class="form-label" for="${check.id}|index">Index</input>
-            <input class="form-input check-input" type="number" value="${check.index}" id="${check.id}|index" onchange="indexChanged(this)">
-            <!--<input class="form-input check-input" type="text" value="${check.id}" id="${check.id}|id">
-            <input class="form-input check-input" type="text" value="${check.area}" id="${check.id}|area">
-            <input class="form-input check-input" type="text" value="${check.name}" id="${check.id}|name"> -->
-        </div>`;
+            <input class="form-input" type="number" value="${check.index}" id="${check.id}|index" onchange="indexChanged(this)">
+            <label class="form-label" for="${check.id}|icon">Icon</input>
+            <input class="form-input" type="text" value="${check.icon}" id="${check.id}|icon" onchange="iconChanged(this)">`;
+
+        if (false && check.type == 'entrance') {
+            
+            item += `<label class="form-label" for="${check.id}|name">Name</input>
+            <input class="form-input" type="text" value="${check.name}" id="${check.id}|name" onchange="nameChanged(this)"></input>`;
+        }
+
+        item += '</div>';
 
         $(checkListGroup).append(item);
     }
@@ -112,7 +137,6 @@ function mapClick(img, event) {
         map: info.map,
         x: info.x,
         y: info.y,
-        index: 0,
     }
 
     activeCheck.locations.push(location);
@@ -209,6 +233,31 @@ function copyChecks() {
     navigator.clipboard.writeText(json);
 }
 
+function createLocation(button) {
+    let check = {
+        id: $('#newId').val(),
+        area: $('#newArea').val(),
+        name: $('#newName').val(),
+        index: 0,
+        icon: '',
+        entranceType: $('#newEntranceType').val(),
+        locations: [],
+    };
+
+    newChecks.push(check);
+
+    refreshCheckList();
+    $(`div#${check.id}`).scrollIntoView();
+}
+
 loadChecks();
 refreshCheckList();
 $("#overworldTab").click();
+
+const modal = document.getElementById('newLocationModal');
+modal.addEventListener('show.bs.modal', event => {
+  $('#newId').val('');
+  $('#newArea').val('');
+  $('#newName').val('');
+  $('#newEntranceType').val('');
+})

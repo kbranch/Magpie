@@ -10,7 +10,10 @@ let coordDict = {
 			 "y":1852
 		  }
 	   ],
-	   "index":0
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0C9-Trade":{
 	   "id":"0x0C9-Trade",
@@ -23,7 +26,10 @@ let coordDict = {
 			 "y":1624
 		  }
 	   ],
-	   "index":1
+	   "index":1,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2F5-Trade":{
 	   "id":"0x2F5-Trade",
@@ -36,7 +42,10 @@ let coordDict = {
 			 "y":1852
 		  }
 	   ],
-	   "index":2
+	   "index":2,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0CD-Trade":{
 	   "id":"0x0CD-Trade",
@@ -49,7 +58,10 @@ let coordDict = {
 			 "y":1640
 		  }
 	   ],
-	   "index":3
+	   "index":3,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A8-Trade":{
 	   "id":"0x2A8-Trade",
@@ -62,7 +74,10 @@ let coordDict = {
 			 "y":422
 		  }
 	   ],
-	   "index":4
+	   "index":4,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2D9-Trade":{
 	   "id":"0x2D9-Trade",
@@ -75,7 +90,10 @@ let coordDict = {
 			 "y":1624
 		  }
 	   ],
-	   "index":5
+	   "index":5,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x019-Trade":{
 	   "id":"0x019-Trade",
@@ -93,7 +111,10 @@ let coordDict = {
 			 "y":178
 		  }
 	   ],
-	   "index":6
+	   "index":6,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2D7-Trade":{
 	   "id":"0x2D7-Trade",
@@ -106,7 +127,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":7
+	   "index":7,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x087-Trade":{
 	   "id":"0x087-Trade",
@@ -119,7 +143,10 @@ let coordDict = {
 			 "y":1088
 		  }
 	   ],
-	   "index":8
+	   "index":8,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x07B-Trade":{
 	   "id":"0x07B-Trade",
@@ -132,7 +159,10 @@ let coordDict = {
 			 "y":990
 		  }
 	   ],
-	   "index":9
+	   "index":9,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2FE-Trade":{
 	   "id":"0x2FE-Trade",
@@ -145,7 +175,10 @@ let coordDict = {
 			 "y":1852
 		  }
 	   ],
-	   "index":10
+	   "index":10,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2B2-Trade":{
 	   "id":"0x2B2-Trade",
@@ -158,7 +191,10 @@ let coordDict = {
 			 "y":1348
 		  }
 	   ],
-	   "index":11
+	   "index":11,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A6-Trade":{
 	   "id":"0x2A6-Trade",
@@ -171,7 +207,10 @@ let coordDict = {
 			 "y":1104
 		  }
 	   ],
-	   "index":12
+	   "index":12,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A0-Trade":{
 	   "id":"0x2A0-Trade",
@@ -184,7 +223,10 @@ let coordDict = {
 			 "y":1494
 		  }
 	   ],
-	   "index":13
+	   "index":13,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1E4":{
 	   "id":"0x1E4",
@@ -197,7 +239,10 @@ let coordDict = {
 			 "y":1234
 		  }
 	   ],
-	   "index":14
+	   "index":14,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2FB":{
 	   "id":"0x2FB",
@@ -210,7 +255,10 @@ let coordDict = {
 			 "y":1722
 		  }
 	   ],
-	   "index":15
+	   "index":15,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2FD":{
 	   "id":"0x2FD",
@@ -223,7 +271,10 @@ let coordDict = {
 			 "y":292
 		  }
 	   ],
-	   "index":16
+	   "index":16,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x092":{
 	   "id":"0x092",
@@ -241,7 +292,10 @@ let coordDict = {
 			 "y":1234
 		  }
 	   ],
-	   "index":17
+	   "index":17,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x27A":{
 	   "id":"0x27A",
@@ -254,7 +308,10 @@ let coordDict = {
 			 "y":96
 		  }
 	   ],
-	   "index":18
+	   "index":18,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x27F":{
 	   "id":"0x27F",
@@ -267,7 +324,10 @@ let coordDict = {
 			 "y":1348
 		  }
 	   ],
-	   "index":19
+	   "index":19,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0CE":{
 	   "id":"0x0CE",
@@ -280,7 +340,10 @@ let coordDict = {
 			 "y":1616
 		  }
 	   ],
-	   "index":20
+	   "index":20,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x050":{
 	   "id":"0x050",
@@ -293,7 +356,10 @@ let coordDict = {
 			 "y":698
 		  }
 	   ],
-	   "index":21
+	   "index":21,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0F2":{
 	   "id":"0x0F2",
@@ -306,7 +372,10 @@ let coordDict = {
 			 "y":2030
 		  }
 	   ],
-	   "index":22
+	   "index":22,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2BA":{
 	   "id":"0x2BA",
@@ -324,7 +393,10 @@ let coordDict = {
 			 "y":64
 		  }
 	   ],
-	   "index":23
+	   "index":23,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1E2":{
 	   "id":"0x1E2",
@@ -337,7 +409,10 @@ let coordDict = {
 			 "y":96
 		  }
 	   ],
-	   "index":24
+	   "index":24,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x004":{
 	   "id":"0x004",
@@ -350,7 +425,10 @@ let coordDict = {
 			 "y":64
 		  }
 	   ],
-	   "index":25
+	   "index":25,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x01D":{
 	   "id":"0x01D",
@@ -373,7 +451,10 @@ let coordDict = {
 			 "y":194
 		  }
 	   ],
-	   "index":26
+	   "index":26,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2F2":{
 	   "id":"0x2F2",
@@ -391,7 +472,10 @@ let coordDict = {
 			 "y":194
 		  }
 	   ],
-	   "index":27
+	   "index":27,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x00C":{
 	   "id":"0x00C",
@@ -404,7 +488,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":28
+	   "index":28,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x01E-Owl":{
 	   "id":"0x01E-Owl",
@@ -417,7 +504,10 @@ let coordDict = {
 			 "y":194
 		  }
 	   ],
-	   "index":29
+	   "index":29,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x05D-Owl":{
 	   "id":"0x05D-Owl",
@@ -430,7 +520,10 @@ let coordDict = {
 			 "y":666
 		  }
 	   ],
-	   "index":30
+	   "index":30,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x05D":{
 	   "id":"0x05D",
@@ -443,7 +536,10 @@ let coordDict = {
 			 "y":666
 		  }
 	   ],
-	   "index":31
+	   "index":31,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x05C":{
 	   "id":"0x05C",
@@ -456,7 +552,10 @@ let coordDict = {
 			 "y":682
 		  }
 	   ],
-	   "index":32
+	   "index":32,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x08F-Owl":{
 	   "id":"0x08F-Owl",
@@ -469,7 +568,10 @@ let coordDict = {
 			 "y":1104
 		  }
 	   ],
-	   "index":33
+	   "index":33,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2FC":{
 	   "id":"0x2FC",
@@ -482,7 +584,10 @@ let coordDict = {
 			 "y":1380
 		  }
 	   ],
-	   "index":34
+	   "index":34,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1F2":{
 	   "id":"0x1F2",
@@ -495,7 +600,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":35
+	   "index":35,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x28A":{
 	   "id":"0x28A",
@@ -508,7 +616,10 @@ let coordDict = {
 			 "y":178
 		  }
 	   ],
-	   "index":36
+	   "index":36,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2BB":{
 	   "id":"0x2BB",
@@ -526,7 +637,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":37
+	   "index":37,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x018":{
 	   "id":"0x018",
@@ -539,7 +653,10 @@ let coordDict = {
 			 "y":146
 		  }
 	   ],
-	   "index":38
+	   "index":38,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0FF":{
 	   "id":"0x0FF",
@@ -552,7 +669,10 @@ let coordDict = {
 			 "y":1998
 		  }
 	   ],
-	   "index":39
+	   "index":39,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1E8":{
 	   "id":"0x1E8",
@@ -565,7 +685,10 @@ let coordDict = {
 			 "y":1560
 		  }
 	   ],
-	   "index":40
+	   "index":40,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2E6":{
 	   "id":"0x2E6",
@@ -578,7 +701,10 @@ let coordDict = {
 			 "y":1576
 		  }
 	   ],
-	   "index":41
+	   "index":41,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0CF-Owl":{
 	   "id":"0x0CF-Owl",
@@ -591,7 +717,10 @@ let coordDict = {
 			 "y":1576
 		  }
 	   ],
-	   "index":42
+	   "index":42,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0DA-Owl":{
 	   "id":"0x0DA-Owl",
@@ -604,7 +733,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":43
+	   "index":43,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0DA":{
 	   "id":"0x0DA",
@@ -617,7 +749,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":44
+	   "index":44,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2C6":{
 	   "id":"0x2C6",
@@ -630,7 +765,10 @@ let coordDict = {
 			 "y":698
 		  }
 	   ],
-	   "index":45
+	   "index":45,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2C5":{
 	   "id":"0x2C5",
@@ -643,7 +781,10 @@ let coordDict = {
 			 "y":828
 		  }
 	   ],
-	   "index":46
+	   "index":46,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2D2":{
 	   "id":"0x2D2",
@@ -656,7 +797,10 @@ let coordDict = {
 			 "y":828
 		  }
 	   ],
-	   "index":47
+	   "index":47,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x058":{
 	   "id":"0x058",
@@ -669,7 +813,10 @@ let coordDict = {
 			 "y":666
 		  }
 	   ],
-	   "index":48
+	   "index":48,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x05A":{
 	   "id":"0x05A",
@@ -682,7 +829,10 @@ let coordDict = {
 			 "y":714
 		  }
 	   ],
-	   "index":49
+	   "index":49,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x078":{
 	   "id":"0x078",
@@ -695,7 +845,10 @@ let coordDict = {
 			 "y":974
 		  }
 	   ],
-	   "index":50
+	   "index":50,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2C8":{
 	   "id":"0x2C8",
@@ -713,7 +866,10 @@ let coordDict = {
 			 "y":1754
 		  }
 	   ],
-	   "index":51
+	   "index":51,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0C6":{
 	   "id":"0x0C6",
@@ -726,7 +882,10 @@ let coordDict = {
 			 "y":1608
 		  }
 	   ],
-	   "index":52
+	   "index":52,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0C6-Owl":{
 	   "id":"0x0C6-Owl",
@@ -739,7 +898,10 @@ let coordDict = {
 			 "y":1576
 		  }
 	   ],
-	   "index":53
+	   "index":53,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1E0":{
 	   "id":"0x1E0",
@@ -757,7 +919,10 @@ let coordDict = {
 			 "y":2014
 		  }
 	   ],
-	   "index":54
+	   "index":54,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0A8-Owl":{
 	   "id":"0x0A8-Owl",
@@ -770,7 +935,10 @@ let coordDict = {
 			 "y":1364
 		  }
 	   ],
-	   "index":55
+	   "index":55,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0A8":{
 	   "id":"0x0A8",
@@ -783,7 +951,10 @@ let coordDict = {
 			 "y":1364
 		  }
 	   ],
-	   "index":56
+	   "index":56,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0F8":{
 	   "id":"0x0F8",
@@ -796,7 +967,10 @@ let coordDict = {
 			 "y":2014
 		  }
 	   ],
-	   "index":57
+	   "index":57,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0E9":{
 	   "id":"0x0E9",
@@ -809,7 +983,10 @@ let coordDict = {
 			 "y":1916
 		  }
 	   ],
-	   "index":58
+	   "index":58,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0B9":{
 	   "id":"0x0B9",
@@ -822,7 +999,10 @@ let coordDict = {
 			 "y":1478
 		  }
 	   ],
-	   "index":59
+	   "index":59,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1FD":{
 	   "id":"0x1FD",
@@ -835,7 +1015,10 @@ let coordDict = {
 			 "y":1006
 		  }
 	   ],
-	   "index":60
+	   "index":60,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2E9":{
 	   "id":"0x2E9",
@@ -848,7 +1031,10 @@ let coordDict = {
 			 "y":1088
 		  }
 	   ],
-	   "index":61
+	   "index":61,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0A4":{
 	   "id":"0x0A4",
@@ -861,7 +1047,10 @@ let coordDict = {
 			 "y":1340
 		  }
 	   ],
-	   "index":62
+	   "index":62,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x08B":{
 	   "id":"0x08B",
@@ -874,7 +1063,10 @@ let coordDict = {
 			 "y":1120
 		  }
 	   ],
-	   "index":63
+	   "index":63,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0A6":{
 	   "id":"0x0A6",
@@ -887,7 +1079,10 @@ let coordDict = {
 			 "y":1364
 		  }
 	   ],
-	   "index":64
+	   "index":64,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0A5":{
 	   "id":"0x0A5",
@@ -900,7 +1095,10 @@ let coordDict = {
 			 "y":1364
 		  }
 	   ],
-	   "index":65
+	   "index":65,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2E5":{
 	   "id":"0x2E5",
@@ -913,7 +1111,10 @@ let coordDict = {
 			 "y":1088
 		  }
 	   ],
-	   "index":66
+	   "index":66,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2F4":{
 	   "id":"0x2F4",
@@ -926,7 +1127,10 @@ let coordDict = {
 			 "y":1088
 		  }
 	   ],
-	   "index":67
+	   "index":67,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2CD":{
 	   "id":"0x2CD",
@@ -939,7 +1143,10 @@ let coordDict = {
 			 "y":1120
 		  }
 	   ],
-	   "index":68
+	   "index":68,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2E2":{
 	   "id":"0x2E2",
@@ -952,7 +1159,10 @@ let coordDict = {
 			 "y":454
 		  }
 	   ],
-	   "index":69
+	   "index":69,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x074":{
 	   "id":"0x074",
@@ -965,7 +1175,10 @@ let coordDict = {
 			 "y":958
 		  }
 	   ],
-	   "index":70
+	   "index":70,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2DF":{
 	   "id":"0x2DF",
@@ -983,7 +1196,10 @@ let coordDict = {
 			 "y":958
 		  }
 	   ],
-	   "index":71
+	   "index":71,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x035-Owl":{
 	   "id":"0x035-Owl",
@@ -996,7 +1212,10 @@ let coordDict = {
 			 "y":470
 		  }
 	   ],
-	   "index":72
+	   "index":72,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2AF":{
 	   "id":"0x2AF",
@@ -1009,7 +1228,10 @@ let coordDict = {
 			 "y":292
 		  }
 	   ],
-	   "index":73
+	   "index":73,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x011-Owl":{
 	   "id":"0x011-Owl",
@@ -1022,7 +1244,10 @@ let coordDict = {
 			 "y":210
 		  }
 	   ],
-	   "index":74
+	   "index":74,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2AE":{
 	   "id":"0x2AE",
@@ -1035,7 +1260,10 @@ let coordDict = {
 			 "y":292
 		  }
 	   ],
-	   "index":75
+	   "index":75,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2B3":{
 	   "id":"0x2B3",
@@ -1048,7 +1276,10 @@ let coordDict = {
 			 "y":568
 		  }
 	   ],
-	   "index":76
+	   "index":76,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2AB":{
 	   "id":"0x2AB",
@@ -1066,7 +1297,10 @@ let coordDict = {
 			 "y":828
 		  }
 	   ],
-	   "index":77
+	   "index":77,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2BD":{
 	   "id":"0x2BD",
@@ -1084,7 +1318,10 @@ let coordDict = {
 			 "y":682
 		  }
 	   ],
-	   "index":78
+	   "index":78,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x041":{
 	   "id":"0x041",
@@ -1097,7 +1334,10 @@ let coordDict = {
 			 "y":568
 		  }
 	   ],
-	   "index":79
+	   "index":79,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x034":{
 	   "id":"0x034",
@@ -1110,7 +1350,10 @@ let coordDict = {
 			 "y":406
 		  }
 	   ],
-	   "index":80
+	   "index":80,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1E1":{
 	   "id":"0x1E1",
@@ -1123,7 +1366,10 @@ let coordDict = {
 			 "y":682
 		  }
 	   ],
-	   "index":81
+	   "index":81,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x071":{
 	   "id":"0x071",
@@ -1136,7 +1382,10 @@ let coordDict = {
 			 "y":990
 		  }
 	   ],
-	   "index":82
+	   "index":82,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x044":{
 	   "id":"0x044",
@@ -1149,7 +1398,10 @@ let coordDict = {
 			 "y":584
 		  }
 	   ],
-	   "index":83
+	   "index":83,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1E3":{
 	   "id":"0x1E3",
@@ -1162,7 +1414,10 @@ let coordDict = {
 			 "y":1998
 		  }
 	   ],
-	   "index":84
+	   "index":84,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0E5":{
 	   "id":"0x0E5",
@@ -1175,7 +1430,10 @@ let coordDict = {
 			 "y":1852
 		  }
 	   ],
-	   "index":85
+	   "index":85,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0D2":{
 	   "id":"0x0D2",
@@ -1188,7 +1446,10 @@ let coordDict = {
 			 "y":1762
 		  }
 	   ],
-	   "index":86
+	   "index":86,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2B2":{
 	   "id":"0x2B2",
@@ -1201,7 +1462,10 @@ let coordDict = {
 			 "y":1348
 		  }
 	   ],
-	   "index":87
+	   "index":87,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x0A3":{
 	   "id":"0x0A3",
@@ -1214,7 +1478,10 @@ let coordDict = {
 			 "y":1348
 		  }
 	   ],
-	   "index":88
+	   "index":88,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2B1":{
 	   "id":"0x2B1",
@@ -1227,7 +1494,10 @@ let coordDict = {
 			 "y":1104
 		  }
 	   ],
-	   "index":89
+	   "index":89,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A4":{
 	   "id":"0x2A4",
@@ -1240,7 +1510,10 @@ let coordDict = {
 			 "y":1380
 		  }
 	   ],
-	   "index":90
+	   "index":90,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2BE":{
 	   "id":"0x2BE",
@@ -1253,7 +1526,10 @@ let coordDict = {
 			 "y":1088
 		  }
 	   ],
-	   "index":91
+	   "index":91,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2BF":{
 	   "id":"0x2BF",
@@ -1266,7 +1542,10 @@ let coordDict = {
 			 "y":1088
 		  }
 	   ],
-	   "index":92
+	   "index":92,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x30A-Owl":{
 	   "id":"0x30A-Owl",
@@ -1284,7 +1563,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":10
+	   "index":10,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x307":{
 	   "id":"0x307",
@@ -1302,7 +1584,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":9
+	   "index":9,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x306":{
 	   "id":"0x306",
@@ -1320,7 +1605,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":8
+	   "index":8,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x302":{
 	   "id":"0x302",
@@ -1338,7 +1626,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":7
+	   "index":7,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x311":{
 	   "id":"0x311",
@@ -1356,7 +1647,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":3
+	   "index":3,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x30F":{
 	   "id":"0x30F",
@@ -1374,7 +1668,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":1
+	   "index":1,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x30F-Owl":{
 	   "id":"0x30F-Owl",
@@ -1392,7 +1689,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":2
+	   "index":2,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x308":{
 	   "id":"0x308",
@@ -1410,7 +1710,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":5
+	   "index":5,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x308-Owl":{
 	   "id":"0x308-Owl",
@@ -1428,7 +1731,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":6
+	   "index":6,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x314":{
 	   "id":"0x314",
@@ -1446,7 +1752,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":4
+	   "index":4,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x230":{
 	   "id":"0x230",
@@ -1464,7 +1773,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":23
+	   "index":23,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x234":{
 	   "id":"0x234",
@@ -1482,7 +1794,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":22
+	   "index":22,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x232":{
 	   "id":"0x232",
@@ -1500,7 +1815,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":15
+	   "index":15,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x23A":{
 	   "id":"0x23A",
@@ -1518,7 +1836,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":17
+	   "index":17,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x241-Owl":{
 	   "id":"0x241-Owl",
@@ -1536,7 +1857,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":13
+	   "index":13,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x241":{
 	   "id":"0x241",
@@ -1554,7 +1878,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":12
+	   "index":12,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x000":{
 	   "id":"0x000",
@@ -1577,7 +1904,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":16
+	   "index":16,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x23D":{
 	   "id":"0x23D",
@@ -1595,7 +1925,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":20
+	   "index":20,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x240":{
 	   "id":"0x240",
@@ -1613,7 +1946,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":14
+	   "index":14,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x237":{
 	   "id":"0x237",
@@ -1631,7 +1967,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":11
+	   "index":11,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x235":{
 	   "id":"0x235",
@@ -1649,7 +1988,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":21
+	   "index":21,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x23E":{
 	   "id":"0x23E",
@@ -1667,7 +2009,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":18
+	   "index":18,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x245-Owl":{
 	   "id":"0x245-Owl",
@@ -1685,7 +2030,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":19
+	   "index":19,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x25F":{
 	   "id":"0x25F",
@@ -1703,7 +2051,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":9
+	   "index":9,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x25A":{
 	   "id":"0x25A",
@@ -1721,7 +2072,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":7
+	   "index":7,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x259":{
 	   "id":"0x259",
@@ -1739,7 +2093,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":6
+	   "index":6,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x253-Owl":{
 	   "id":"0x253-Owl",
@@ -1757,7 +2114,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":8
+	   "index":8,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x246":{
 	   "id":"0x246",
@@ -1775,7 +2135,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":2
+	   "index":2,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x255":{
 	   "id":"0x255",
@@ -1793,7 +2156,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":3
+	   "index":3,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x24C":{
 	   "id":"0x24C",
@@ -1811,7 +2177,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":4
+	   "index":4,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x25C":{
 	   "id":"0x25C",
@@ -1829,7 +2198,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":5
+	   "index":5,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x24D":{
 	   "id":"0x24D",
@@ -1847,7 +2219,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":1
+	   "index":1,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x24F":{
 	   "id":"0x24F",
@@ -1865,7 +2240,10 @@ let coordDict = {
 			 "y":130
 		  }
 	   ],
-	   "index":10
+	   "index":10,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x22C":{
 	   "id":"0x22C",
@@ -1883,7 +2261,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":141
+	   "index":141,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x223":{
 	   "id":"0x223",
@@ -1901,7 +2282,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":140
+	   "index":140,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x220":{
 	   "id":"0x220",
@@ -1919,7 +2303,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":139
+	   "index":139,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x21A":{
 	   "id":"0x21A",
@@ -1937,7 +2324,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":127
+	   "index":127,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x224":{
 	   "id":"0x224",
@@ -1960,7 +2350,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":138
+	   "index":138,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x21C":{
 	   "id":"0x21C",
@@ -1978,7 +2371,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":137
+	   "index":137,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x21C-Owl":{
 	   "id":"0x21C-Owl",
@@ -1996,7 +2392,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":136
+	   "index":136,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x201":{
 	   "id":"0x201",
@@ -2014,7 +2413,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":134
+	   "index":134,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x21B":{
 	   "id":"0x21B",
@@ -2032,7 +2434,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":133
+	   "index":133,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x211":{
 	   "id":"0x211",
@@ -2050,7 +2455,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":130
+	   "index":130,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x209":{
 	   "id":"0x209",
@@ -2068,7 +2476,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":135
+	   "index":135,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x204":{
 	   "id":"0x204",
@@ -2086,7 +2497,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":131
+	   "index":131,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x204-Owl":{
 	   "id":"0x204-Owl",
@@ -2104,7 +2518,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":132
+	   "index":132,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x212":{
 	   "id":"0x212",
@@ -2122,7 +2539,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":129
+	   "index":129,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x216-Owl":{
 	   "id":"0x216-Owl",
@@ -2140,7 +2560,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":128
+	   "index":128,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x210":{
 	   "id":"0x210",
@@ -2158,7 +2581,10 @@ let coordDict = {
 			 "y":32
 		  }
 	   ],
-	   "index":126
+	   "index":126,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B5":{
 	   "id":"0x1B5",
@@ -2176,7 +2602,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":160
+	   "index":160,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1BC":{
 	   "id":"0x1BC",
@@ -2194,7 +2623,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":159
+	   "index":159,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B6":{
 	   "id":"0x1B6",
@@ -2212,7 +2644,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":157
+	   "index":157,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B6-Owl":{
 	   "id":"0x1B6-Owl",
@@ -2230,7 +2665,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":158
+	   "index":158,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B1":{
 	   "id":"0x1B1",
@@ -2248,7 +2686,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":156
+	   "index":156,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1C3":{
 	   "id":"0x1C3",
@@ -2266,7 +2707,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":155
+	   "index":155,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1D7-Owl":{
 	   "id":"0x1D7-Owl",
@@ -2284,7 +2728,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":152
+	   "index":152,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1D1":{
 	   "id":"0x1D1",
@@ -2302,7 +2749,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":153
+	   "index":153,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1BE":{
 	   "id":"0x1BE",
@@ -2320,7 +2770,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":154
+	   "index":154,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x06C":{
 	   "id":"0x06C",
@@ -2343,7 +2796,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":151
+	   "index":151,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B0":{
 	   "id":"0x1B0",
@@ -2361,7 +2817,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":150
+	   "index":150,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B4":{
 	   "id":"0x1B4",
@@ -2379,7 +2838,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":149
+	   "index":149,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B3":{
 	   "id":"0x1B3",
@@ -2397,7 +2859,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":148
+	   "index":148,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1B9":{
 	   "id":"0x1B9",
@@ -2415,7 +2880,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":147
+	   "index":147,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1C0":{
 	   "id":"0x1C0",
@@ -2433,7 +2901,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":146
+	   "index":146,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1CE":{
 	   "id":"0x1CE",
@@ -2451,7 +2922,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":144
+	   "index":144,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1BB-Owl":{
 	   "id":"0x1BB-Owl",
@@ -2469,7 +2943,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":145
+	   "index":145,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1C9":{
 	   "id":"0x1C9",
@@ -2487,7 +2964,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":143
+	   "index":143,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1CF":{
 	   "id":"0x1CF",
@@ -2505,7 +2985,10 @@ let coordDict = {
 			 "y":1080
 		  }
 	   ],
-	   "index":142
+	   "index":142,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x182":{
 	   "id":"0x182",
@@ -2523,7 +3006,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":176
+	   "index":176,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x185":{
 	   "id":"0x185",
@@ -2541,7 +3027,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":175
+	   "index":175,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x186":{
 	   "id":"0x186",
@@ -2564,7 +3053,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":168
+	   "index":168,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x183":{
 	   "id":"0x183",
@@ -2582,7 +3074,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":172
+	   "index":172,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x180":{
 	   "id":"0x180",
@@ -2600,7 +3095,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":174
+	   "index":174,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x18F":{
 	   "id":"0x18F",
@@ -2618,7 +3116,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":170
+	   "index":170,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x188":{
 	   "id":"0x188",
@@ -2636,7 +3137,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":171
+	   "index":171,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x18E":{
 	   "id":"0x18E",
@@ -2654,7 +3158,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":169
+	   "index":169,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x18A-Owl":{
 	   "id":"0x18A-Owl",
@@ -2672,7 +3179,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":167
+	   "index":167,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x196":{
 	   "id":"0x196",
@@ -2690,7 +3200,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":166
+	   "index":166,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x197":{
 	   "id":"0x197",
@@ -2708,7 +3221,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":164
+	   "index":164,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x19B":{
 	   "id":"0x19B",
@@ -2726,7 +3242,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":163
+	   "index":163,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x19A-Owl":{
 	   "id":"0x19A-Owl",
@@ -2744,7 +3263,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":165
+	   "index":165,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x181":{
 	   "id":"0x181",
@@ -2762,7 +3284,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":173
+	   "index":173,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x19E":{
 	   "id":"0x19E",
@@ -2780,7 +3305,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":162
+	   "index":162,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1A0":{
 	   "id":"0x1A0",
@@ -2798,7 +3326,10 @@ let coordDict = {
 			 "y":1738
 		  }
 	   ],
-	   "index":161
+	   "index":161,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x162":{
 	   "id":"0x162",
@@ -2816,7 +3347,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":192
+	   "index":192,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x166":{
 	   "id":"0x166",
@@ -2834,7 +3368,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":191
+	   "index":191,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x176":{
 	   "id":"0x176",
@@ -2852,7 +3389,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":190
+	   "index":190,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x160":{
 	   "id":"0x160",
@@ -2870,7 +3410,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":188
+	   "index":188,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x168":{
 	   "id":"0x168",
@@ -2888,7 +3431,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":187
+	   "index":187,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x16D":{
 	   "id":"0x16D",
@@ -2906,7 +3452,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":186
+	   "index":186,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x16E":{
 	   "id":"0x16E",
@@ -2924,7 +3473,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":189
+	   "index":189,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x169":{
 	   "id":"0x169",
@@ -2947,7 +3499,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":184
+	   "index":184,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x16F-Owl":{
 	   "id":"0x16F-Owl",
@@ -2965,7 +3520,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":185
+	   "index":185,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x175":{
 	   "id":"0x175",
@@ -2983,7 +3541,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":183
+	   "index":183,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x165":{
 	   "id":"0x165",
@@ -3001,7 +3562,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":182
+	   "index":182,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x171":{
 	   "id":"0x171",
@@ -3019,7 +3583,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":181
+	   "index":181,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x17B":{
 	   "id":"0x17B",
@@ -3037,7 +3604,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":180
+	   "index":180,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x178":{
 	   "id":"0x178",
@@ -3055,7 +3625,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":179
+	   "index":179,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x16A":{
 	   "id":"0x16A",
@@ -3073,7 +3646,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":178
+	   "index":178,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x179":{
 	   "id":"0x179",
@@ -3091,7 +3667,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":177
+	   "index":177,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x159":{
 	   "id":"0x159",
@@ -3109,7 +3688,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":214
+	   "index":214,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x15A":{
 	   "id":"0x15A",
@@ -3127,7 +3709,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":213
+	   "index":213,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x15B":{
 	   "id":"0x15B",
@@ -3145,7 +3730,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":212
+	   "index":212,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x140-Owl":{
 	   "id":"0x140-Owl",
@@ -3163,7 +3751,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":205
+	   "index":205,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x144":{
 	   "id":"0x144",
@@ -3181,7 +3772,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":206
+	   "index":206,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x148":{
 	   "id":"0x148",
@@ -3199,7 +3793,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":204
+	   "index":204,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x141":{
 	   "id":"0x141",
@@ -3217,7 +3814,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":211
+	   "index":211,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x142":{
 	   "id":"0x142",
@@ -3235,7 +3835,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":210
+	   "index":210,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x146":{
 	   "id":"0x146",
@@ -3253,7 +3856,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":207
+	   "index":207,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x147":{
 	   "id":"0x147",
@@ -3271,7 +3877,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":208
+	   "index":208,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x147-Owl":{
 	   "id":"0x147-Owl",
@@ -3289,7 +3898,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":209
+	   "index":209,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x14D":{
 	   "id":"0x14D",
@@ -3307,7 +3919,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":203
+	   "index":203,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x158":{
 	   "id":"0x158",
@@ -3325,7 +3940,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":202
+	   "index":202,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x155":{
 	   "id":"0x155",
@@ -3343,7 +3961,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":201
+	   "index":201,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x14C":{
 	   "id":"0x14C",
@@ -3361,7 +3982,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":200
+	   "index":200,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x150":{
 	   "id":"0x150",
@@ -3379,7 +4003,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":196
+	   "index":196,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x154-Owl":{
 	   "id":"0x154-Owl",
@@ -3397,7 +4024,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":199
+	   "index":199,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x154":{
 	   "id":"0x154",
@@ -3415,7 +4045,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":198
+	   "index":198,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x14E":{
 	   "id":"0x14E",
@@ -3433,7 +4066,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":197
+	   "index":197,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x14F":{
 	   "id":"0x14F",
@@ -3451,7 +4087,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":195
+	   "index":195,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x151":{
 	   "id":"0x151",
@@ -3469,7 +4108,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":194
+	   "index":194,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x153":{
 	   "id":"0x153",
@@ -3487,7 +4129,10 @@ let coordDict = {
 			 "y":1446
 		  }
 	   ],
-	   "index":193
+	   "index":193,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x12A":{
 	   "id":"0x12A",
@@ -3505,7 +4150,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":231
+	   "index":231,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x12B":{
 	   "id":"0x12B",
@@ -3523,7 +4171,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":230
+	   "index":230,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x127":{
 	   "id":"0x127",
@@ -3541,7 +4192,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":229
+	   "index":229,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x122":{
 	   "id":"0x122",
@@ -3559,7 +4213,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":228
+	   "index":228,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x120":{
 	   "id":"0x120",
@@ -3577,7 +4234,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":227
+	   "index":227,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x12F-Owl":{
 	   "id":"0x12F-Owl",
@@ -3595,7 +4255,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":223
+	   "index":223,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x129-Owl":{
 	   "id":"0x129-Owl",
@@ -3613,7 +4276,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":224
+	   "index":224,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x121":{
 	   "id":"0x121",
@@ -3631,7 +4297,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":226
+	   "index":226,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x126":{
 	   "id":"0x126",
@@ -3649,7 +4318,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":225
+	   "index":225,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x134":{
 	   "id":"0x134",
@@ -3667,7 +4339,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":220
+	   "index":220,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x139":{
 	   "id":"0x139",
@@ -3685,7 +4360,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":222
+	   "index":222,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x138":{
 	   "id":"0x138",
@@ -3703,7 +4381,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":221
+	   "index":221,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x133-Owl":{
 	   "id":"0x133-Owl",
@@ -3721,7 +4402,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":219
+	   "index":219,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x137":{
 	   "id":"0x137",
@@ -3739,7 +4423,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":218
+	   "index":218,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x132":{
 	   "id":"0x132",
@@ -3757,7 +4444,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":217
+	   "index":217,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x12E":{
 	   "id":"0x12E",
@@ -3775,7 +4465,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":216
+	   "index":216,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x136":{
 	   "id":"0x136",
@@ -3793,7 +4486,10 @@ let coordDict = {
 			 "y":276
 		  }
 	   ],
-	   "index":215
+	   "index":215,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x102":{
 	   "id":"0x102",
@@ -3811,7 +4507,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":246
+	   "index":246,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x106":{
 	   "id":"0x106",
@@ -3829,7 +4528,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":235
+	   "index":235,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x10A-Owl":{
 	   "id":"0x10A-Owl",
@@ -3847,7 +4549,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":244
+	   "index":244,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x10A":{
 	   "id":"0x10A",
@@ -3865,7 +4570,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":243
+	   "index":243,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x108":{
 	   "id":"0x108",
@@ -3883,7 +4591,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":242
+	   "index":242,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x11D":{
 	   "id":"0x11D",
@@ -3901,7 +4612,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":241
+	   "index":241,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x104-Owl":{
 	   "id":"0x104-Owl",
@@ -3919,7 +4633,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":239
+	   "index":239,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x103-Owl":{
 	   "id":"0x103-Owl",
@@ -3937,7 +4654,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":240
+	   "index":240,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x10C":{
 	   "id":"0x10C",
@@ -3955,7 +4675,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":238
+	   "index":238,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x114":{
 	   "id":"0x114",
@@ -3973,7 +4696,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":235
+	   "index":235,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x10D":{
 	   "id":"0x10D",
@@ -3991,7 +4717,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":237
+	   "index":237,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x116":{
 	   "id":"0x116",
@@ -4009,7 +4738,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":232
+	   "index":232,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x10E":{
 	   "id":"0x10E",
@@ -4027,7 +4759,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":236
+	   "index":236,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x115":{
 	   "id":"0x115",
@@ -4045,7 +4780,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":233
+	   "index":233,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x113":{
 	   "id":"0x113",
@@ -4063,7 +4801,10 @@ let coordDict = {
 			 "y":1706
 		  }
 	   ],
-	   "index":234
+	   "index":234,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A1-2":{
 	   "id":"0x2A1-2",
@@ -4076,7 +4817,10 @@ let coordDict = {
 			 "y":1250
 		  }
 	   ],
-	   "index":247
+	   "index":247,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A1-1":{
 	   "id":"0x2A1-1",
@@ -4089,7 +4833,10 @@ let coordDict = {
 			 "y":1250
 		  }
 	   ],
-	   "index":248
+	   "index":248,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A1-0":{
 	   "id":"0x2A1-0",
@@ -4102,7 +4849,10 @@ let coordDict = {
 			 "y":1250
 		  }
 	   ],
-	   "index":249
+	   "index":249,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A2":{
 	   "id":"0x2A2",
@@ -4115,7 +4865,10 @@ let coordDict = {
 			 "y":812
 		  }
 	   ],
-	   "index":250
+	   "index":250,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x301-1":{
 	   "id":"0x301-1",
@@ -4133,7 +4886,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":12
+	   "index":12,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x301-0":{
 	   "id":"0x301-0",
@@ -4151,7 +4907,10 @@ let coordDict = {
 			 "y":926
 		  }
 	   ],
-	   "index":11
+	   "index":11,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x2A3":{
 	   "id":"0x2A3",
@@ -4164,7 +4923,10 @@ let coordDict = {
 			 "y":1364
 		  }
 	   ],
-	   "index":253
+	   "index":253,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
 	},
 	"0x1F5":{
 	   "id":"0x1F5",
@@ -4177,6 +4939,1593 @@ let coordDict = {
 			 "y":1966
 		  }
 	   ],
-	   "index":254
+	   "index":254,
+	   "icon":"",
+	   "entranceType":"none",
+	   "type":"check"
+	},
+}
+
+entranceDict = {
+	"d0":{
+	   "id":"d0",
+	   "area":"Koholint Prairie",
+	   "name":"Color Dungeon",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d1":{
+	   "id":"d1",
+	   "area":"Toronbo Shores",
+	   "name":"Tail Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":582,
+			 "y":1706
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d2":{
+	   "id":"d2",
+	   "area":"Goponga Swamp",
+	   "name":"Bottle Grotto",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d3":{
+	   "id":"d3",
+	   "area":"Ukuku Prairie",
+	   "name":"Key Cavern",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":1446
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d4":{
+	   "id":"d4",
+	   "area":"Tal Tal Heights",
+	   "name":"Angler's Tunnel",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":276
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d5":{
+	   "id":"d5",
+	   "area":"Martha's Bay",
+	   "name":"Catfish's Maw",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":1738
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d6":{
+	   "id":"d6",
+	   "area":"Ukuku Prairie",
+	   "name":"Face Shrine",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1992,
+			 "y":1088
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d7":{
+	   "id":"d7",
+	   "area":"Tal Tal Mountains",
+	   "name":"Eagle's Tower",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":32
+		  }
+	   ],
+	   "type":"check"
+	},
+	"d8":{
+	   "id":"d8",
+	   "area":"Tal Tal Mountains",
+	   "name":"Turtle Rock",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dungeon",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130
+		  }
+	   ],
+	   "type":"check"
+	},
+	"phone_d8":{
+	   "id":"phone_d8",
+	   "area":"Tal Tal Mountains",
+	   "name":"D8 Phone",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":258,
+			 "y":162
+		  }
+	   ],
+	   "type":"check"
+	},
+	"fire_cave_exit":{
+	   "id":"fire_cave_exit",
+	   "area":"Tal Tal Mountains",
+	   "name":"Fire Cave Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":64
+		  }
+	   ],
+	   "type":"check"
+	},
+	"fire_cave_entrance":{
+	   "id":"fire_cave_entrance",
+	   "area":"Tal Tal Mountains",
+	   "name":"Fire Cave Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":566,
+			 "y":130
+		  }
+	   ],
+	   "type":"check"
+	},
+	"madbatter_taltal":{
+	   "id":"madbatter_taltal",
+	   "area":"Tal Tal Mountains",
+	   "name":"Mad Batter",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":744,
+			 "y":96
+		  }
+	   ],
+	   "type":"check"
+	},
+	"left_taltal_entrance":{
+	   "id":"left_taltal_entrance",
+	   "area":"Tal Tal Mountains",
+	   "name":"Left Tal Tal Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":938,
+			 "y":178
+		  }
+	   ],
+	   "type":"check"
+	},
+	"obstacle_cave_entrance":{
+	   "id":"obstacle_cave_entrance",
+	   "area":"Tal Tal Mountains",
+	   "name":"Obstacle Cave Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1182,
+			 "y":162
+		  }
+	   ],
+	   "type":"check"
+	},
+	"left_to_right_taltalentrance":{
+	   "id":"left_to_right_taltalentrance",
+	   "area":"Tal Tal Mountains",
+	   "name":"Left to Right Tal Tal Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1182,
+			 "y":64
+		  }
+	   ],
+	   "type":"check"
+	},
+	"obstacle_cave_outside_chest":{
+	   "id":"obstacle_cave_outside_chest",
+	   "area":"Tal Tal Mountains",
+	   "name":"Obstacle Cave Outside Chest",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1392,
+			 "y":130
+		  }
+	   ],
+	   "type":"check"
+	},
+	"obstacle_cave_exit":{
+	   "id":"obstacle_cave_exit",
+	   "area":"Tal Tal Mountains",
+	   "name":"Obstacle Cave Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1424,
+			 "y":130
+		  }
+	   ],
+	   "type":"check"
+	},
+	"papahl_entrance":{
+	   "id":"papahl_entrance",
+	   "area":"Tal Tal Mountains",
+	   "name":"Papahl Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1586,
+			 "y":178
+		  }
+	   ],
+	   "type":"check"
+	},
+	"papahl_exit":{
+	   "id":"papahl_exit",
+	   "area":"Tal Tal Mountains",
+	   "name":"Papahl Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1636,
+			 "y":96
+		  }
+	   ],
+	   "type":"check"
+	},
+	"rooster_house":{
+	   "id":"rooster_house",
+	   "area":"Tal Tal Mountains",
+	   "name":"Rooster House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1684,
+			 "y":16
+		  }
+	   ],
+	   "type":"check"
+	},
+	"bird_cave":{
+	   "id":"bird_cave",
+	   "area":"Tal Tal Mountains",
+	   "name":"Bird Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1732,
+			 "y":96
+		  }
+	   ]
+	},
+	"multichest_left":{
+	   "id":"multichest_left",
+	   "area":"Tal Tal Mountains",
+	   "name":"Multichest Left",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2122,
+			 "y":162
+		  }
+	   ]
+	},
+	"multichest_right":{
+	   "id":"multichest_right",
+	   "area":"Tal Tal Mountains",
+	   "name":"Multichest Right",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2218,
+			 "y":194
+		  }
+	   ]
+	},
+	"multichest_top":{
+	   "id":"multichest_top",
+	   "area":"Tal Tal Mountains",
+	   "name":"Multichest Top",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2122,
+			 "y":96
+		  }
+	   ]
+	},
+	"right_taltal_connector1":{
+	   "id":"right_taltal_connector1",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Tal Tal Connector 1",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2316,
+			 "y":130
+		  }
+	   ]
+	},
+	"right_taltal_connector2":{
+	   "id":"right_taltal_connector2",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Tal Tal Connector 2",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2462,
+			 "y":130
+		  }
+	   ]
+	},
+	"right_taltal_connector3":{
+	   "id":"right_taltal_connector3",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Tal Tal Connector 3",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2380,
+			 "y":130
+		  }
+	   ]
+	},
+	"right_taltal_connector4":{
+	   "id":"right_taltal_connector4",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Tal Tal Connector 4",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2510,
+			 "y":178
+		  }
+	   ]
+	},
+	"right_taltal_connector5":{
+	   "id":"right_taltal_connector5",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Tal Tal Connector 5",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2542,
+			 "y":130
+		  }
+	   ]
+	},
+	"right_taltal_connector6":{
+	   "id":"right_taltal_connector6",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Tal Tal Connector 6",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2494,
+			 "y":64
+		  }
+	   ]
+	},
+	"right_fairy":{
+	   "id":"right_fairy",
+	   "area":"Tal Tal Mountains",
+	   "name":"Right Fairy",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2478,
+			 "y":194
+		  }
+	   ]
+	},
+	"writes_cave_left":{
+	   "id":"writes_cave_left",
+	   "area":"Goponga Swamp",
+	   "name":"Write Cave Left",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":128,
+			 "y":292
+		  }
+	   ]
+	},
+	"writes_cave_right":{
+	   "id":"writes_cave_right",
+	   "area":"Goponga Swamp",
+	   "name":"Write Cave Right",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":178,
+			 "y":292
+		  }
+	   ]
+	},
+	"writes_house":{
+	   "id":"writes_house",
+	   "area":"Goponga Swamp",
+	   "name":"Write's House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":112,
+			 "y":422
+		  }
+	   ]
+	},
+	"writes_phone":{
+	   "id":"writes_phone",
+	   "area":"Goponga Swamp",
+	   "name":"Write's Phone",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":258,
+			 "y":454
+		  }
+	   ]
+	},
+	"moblin_cave":{
+	   "id":"moblin_cave",
+	   "area":"Tal Tal Heights",
+	   "name":"Moblin Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":906,
+			 "y":454
+		  }
+	   ]
+	},
+	"photo_house":{
+	   "id":"photo_house",
+	   "area":"Tal Tal Heights",
+	   "name":"Photo House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1198,
+			 "y":438
+		  }
+	   ]
+	},
+	"mambo":{
+	   "id":"mambo",
+	   "area":"Tal Tal Heights",
+	   "name":"Manbo's Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1716,
+			 "y":292
+		  }
+	   ]
+	},
+	"heartpiece_swim_cave":{
+	   "id":"heartpiece_swim_cave",
+	   "area":"Tal Tal Heights",
+	   "name":"Damp Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2348,
+			 "y":276
+		  }
+	   ]
+	},
+	"raft_return_exit":{
+	   "id":"raft_return_exit",
+	   "area":"Tal Tal Heights",
+	   "name":"Raft Return Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2446,
+			 "y":356
+		  }
+	   ]
+	},
+	"raft_house":{
+	   "id":"raft_house",
+	   "area":"Tal Tal Heights",
+	   "name":"Raft House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"insanity",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2462,
+			 "y":406
+		  }
+	   ]
+	},
+	"raft_return_enter":{
+	   "id":"raft_return_enter",
+	   "area":"Southern Face Shrine",
+	   "name":"Raft Return Enter",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2430,
+			 "y":1056
+		  }
+	   ]
+	},
+	"hookshot_cave":{
+	   "id":"hookshot_cave",
+	   "area":"Mysterious Woods",
+	   "name":"Hookshot Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":372,
+			 "y":568
+		  }
+	   ]
+	},
+	"toadstool_exit":{
+	   "id":"toadstool_exit",
+	   "area":"Mysterious Woods",
+	   "name":"Toadstool Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":128,
+			 "y":682
+		  }
+	   ]
+	},
+	"forest_madbatter":{
+	   "id":"forest_madbatter",
+	   "area":"Mysterious Woods",
+	   "name":"Mad Batter",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":682
+		  }
+	   ]
+	},
+	"toadstool_entrance":{
+	   "id":"toadstool_entrance",
+	   "area":"Mysterious Woods",
+	   "name":"Toadstool Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":828
+		  }
+	   ]
+	},
+	"crazy_tracy":{
+	   "id":"crazy_tracy",
+	   "area":"Koholint Prairie",
+	   "name":"Crazy Tracy",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":938,
+			 "y":568
+		  }
+	   ]
+	},
+	"witch":{
+	   "id":"witch",
+	   "area":"Koholint Prairie",
+	   "name":"Witch's Hut",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":874,
+			 "y":812
+		  }
+	   ]
+	},
+	"graveyard_cave_left":{
+	   "id":"graveyard_cave_left",
+	   "area":"Koholint Prairie",
+	   "name":"Graveyard Connector Left",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":858,
+			 "y":958
+		  }
+	   ]
+	},
+	"graveyard_cave_right":{
+	   "id":"graveyard_cave_right",
+	   "area":"Koholint Prairie",
+	   "name":"Graveyard Connector Right",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1068,
+			 "y":958
+		  }
+	   ]
+	},
+	"castle_jump_cave":{
+	   "id":"castle_jump_cave",
+	   "area":"Kanalet Castle",
+	   "name":"Boots Pit Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1328,
+			 "y":1006
+		  }
+	   ]
+	},
+	"castle_main_entrance":{
+	   "id":"castle_main_entrance",
+	   "area":"Kanalet Castle",
+	   "name":"Main Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":828
+		  }
+	   ]
+	},
+	"castle_upper_left":{
+	   "id":"castle_upper_left",
+	   "area":"Kanalet Castle",
+	   "name":"Upper Left",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1474,
+			 "y":682
+		  }
+	   ]
+	},
+	"castle_upper_right":{
+	   "id":"castle_upper_right",
+	   "area":"Kanalet Castle",
+	   "name":"Upper Right",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1538,
+			 "y":698
+		  }
+	   ]
+	},
+	"castle_secret_exit":{
+	   "id":"castle_secret_exit",
+	   "area":"Kanalet Castle",
+	   "name":"Secret Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1554,
+			 "y":584
+		  }
+	   ]
+	},
+	"castle_secret_entrance":{
+	   "id":"castle_secret_entrance",
+	   "area":"Kanalet Castle",
+	   "name":"Secret Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1748,
+			 "y":552
+		  }
+	   ]
+	},
+	"castle_phone":{
+	   "id":"castle_phone",
+	   "area":"Kanalet Castle",
+	   "name":"Phone",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1846,
+			 "y":536
+		  }
+	   ]
+	},
+	"papahl_house_left":{
+	   "id":"papahl_house_left",
+	   "area":"Mabe Village",
+	   "name":"Papahl House Left",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":1104
+		  }
+	   ]
+	},
+	"papahl_house_right":{
+	   "id":"papahl_house_right",
+	   "area":"Mabe Village",
+	   "name":"Papahl House Right",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":436,
+			 "y":1104
+		  }
+	   ]
+	},
+	"dream_hut":{
+	   "id":"dream_hut",
+	   "area":"Mabe Village",
+	   "name":"Dream Hut",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":518,
+			 "y":1088
+		  }
+	   ]
+	},
+	"rooster_grave":{
+	   "id":"rooster_grave",
+	   "area":"Mabe Village",
+	   "name":"Rooster Grave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":1234
+		  }
+	   ]
+	},
+	"shop":{
+	   "id":"shop",
+	   "area":"Mabe Village",
+	   "name":"Shop",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":1250
+		  }
+	   ]
+	},
+	"madambowwow":{
+	   "id":"madambowwow",
+	   "area":"Mabe Village",
+	   "name":"Madam MeowMeow",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":210,
+			 "y":1348
+		  }
+	   ]
+	},
+	"kennel":{
+	   "id":"kennel",
+	   "area":"Mabe Village",
+	   "name":"Dog House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":242,
+			 "y":1348
+		  }
+	   ]
+	},
+	"start_house":{
+	   "id":"start_house",
+	   "area":"Mabe Village",
+	   "name":"Marin's House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":1364
+		  }
+	   ]
+	},
+	"library":{
+	   "id":"library",
+	   "area":"Mabe Village",
+	   "name":"Library",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":48,
+			 "y":1462
+		  }
+	   ]
+	},
+	"ulrira":{
+	   "id":"ulrira",
+	   "area":"Mabe Village",
+	   "name":"Ulrira",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":226,
+			 "y":1510
+		  }
+	   ]
+	},
+	"mabe_phone":{
+	   "id":"mabe_phone",
+	   "area":"Mabe Village",
+	   "name":"Phonebooth",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":404,
+			 "y":1494
+		  }
+	   ]
+	},
+	"trendy_shop":{
+	   "id":"trendy_shop",
+	   "area":"Mabe Village",
+	   "name":"Trendy Game",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":566,
+			 "y":1494
+		  }
+	   ]
+	},
+	"prairie_left_phone":{
+	   "id":"prairie_left_phone",
+	   "area":"Ukuku Prairie",
+	   "name":"Left Phonebooth",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":1348
+		  }
+	   ]
+	},
+	"prairie_left_cave1":{
+	   "id":"prairie_left_cave1",
+	   "area":"Ukuku Prairie",
+	   "name":"East of Mabe Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":792,
+			 "y":1120
+		  }
+	   ]
+	},
+	"prairie_left_cave2":{
+	   "id":"prairie_left_cave2",
+	   "area":"Ukuku Prairie",
+	   "name":"Boots 'n' Bomb Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":988,
+			 "y":1088
+		  }
+	   ]
+	},
+	"prairie_left_fairy":{
+	   "id":"prairie_left_fairy",
+	   "area":"Ukuku Prairie",
+	   "name":"Honeycomb Fairy",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1166,
+			 "y":1040
+		  }
+	   ]
+	},
+	"mamu":{
+	   "id":"mamu",
+	   "area":"Ukuku Prairie",
+	   "name":"Mamu",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"insanity",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":776,
+			 "y":1722
+		  }
+	   ]
+	},
+	"prairie_right_phone":{
+	   "id":"prairie_right_phone",
+	   "area":"Ukuku Prairie",
+	   "name":"Right Phone Booth",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1376,
+			 "y":1104
+		  }
+	   ]
+	},
+	"seashell_mansion":{
+	   "id":"seashell_mansion",
+	   "area":"Ukuku Prairie",
+	   "name":"Seashell Mansion",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1700,
+			 "y":1088
+		  }
+	   ]
+	},
+	"prairie_right_cave_top":{
+	   "id":"prairie_right_cave_top",
+	   "area":"Donut Plains",
+	   "name":"North Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1408,
+			 "y":1510
+		  }
+	   ]
+	},
+	"prairie_right_cave_bottom":{
+	   "id":"prairie_right_cave_bottom",
+	   "area":"Donut Plains",
+	   "name":"South Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1328,
+			 "y":1624
+		  }
+	   ]
+	},
+	"prairie_right_cave_high":{
+	   "id":"prairie_right_cave_high",
+	   "area":"Donut Plains",
+	   "name":"High Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1376,
+			 "y":1462
+		  }
+	   ]
+	},
+	"prairie_to_animal_connector":{
+	   "id":"prairie_to_animal_connector",
+	   "area":"Ukuku Prairie",
+	   "name":"Prairie to Animal Connector",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1748,
+			 "y":1364
+		  }
+	   ]
+	},
+	"animal_to_prairie_connector":{
+	   "id":"animal_to_prairie_connector",
+	   "area":"Ukuku Prairie",
+	   "name":"Animal to Prairie Connector",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1894,
+			 "y":1364
+		  }
+	   ]
+	},
+	"d6_connector_exit":{
+	   "id":"d6_connector_exit",
+	   "area":"Southern Face Shrine",
+	   "name":"D6 Connector Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2024,
+			 "y":1170
+		  }
+	   ]
+	},
+	"d6_connector_entrance":{
+	   "id":"d6_connector_entrance",
+	   "area":"Southern Face Shrine",
+	   "name":"D6 Connector Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2138,
+			 "y":1202
+		  }
+	   ]
+	},
+	"armos_fairy":{
+	   "id":"armos_fairy",
+	   "area":"Southern Face Shrine",
+	   "name":"Fairy",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2154,
+			 "y":1056
+		  }
+	   ]
+	},
+	"armos_maze_cave":{
+	   "id":"armos_maze_cave",
+	   "area":"Southern Face Shrine",
+	   "name":"Maze Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2332,
+			 "y":1380
+		  }
+	   ]
+	},
+	"armos_temple":{
+	   "id":"armos_temple",
+	   "area":"Southern Face Shrine",
+	   "name":"Armos Temple",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2024,
+			 "y":1348
+		  }
+	   ]
+	},
+	"boomerang_cave":{
+	   "id":"boomerang_cave",
+	   "area":"Toronbo Shores",
+	   "name":"Boomerang Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":664,
+			 "y":1966
+		  }
+	   ]
+	},
+	"banana_seller":{
+	   "id":"banana_seller",
+	   "area":"Toronbo Shores",
+	   "name":"Sale's House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":550,
+			 "y":1852
+		  }
+	   ]
+	},
+	"ghost_house":{
+	   "id":"ghost_house",
+	   "area":"Martha's Bay",
+	   "name":"Ghost House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1052,
+			 "y":1998
+		  }
+	   ]
+	},
+	"richard_house":{
+	   "id":"richard_house",
+	   "area":"Pothole Field",
+	   "name":"Richard's House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1036,
+			 "y":1754
+		  }
+	   ]
+	},
+	"richard_maze":{
+	   "id":"richard_maze",
+	   "area":"Pothole Field",
+	   "name":"Richard's Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1020,
+			 "y":1624
+		  }
+	   ]
+	},
+	"prairie_low_phone":{
+	   "id":"prairie_low_phone",
+	   "area":"Martha's Bay",
+	   "name":"Phone Booth",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1344,
+			 "y":1900
+		  }
+	   ]
+	},
+	"prairie_madbatter_connector_entrance":{
+	   "id":"prairie_madbatter_connector_entrance",
+	   "area":"Martha's Bay",
+	   "name":"Mad Batter Connector Entrance",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1570,
+			 "y":2014
+		  }
+	   ]
+	},
+	"prairie_madbatter_connector_exit":{
+	   "id":"prairie_madbatter_connector_exit",
+	   "area":"Martha's Bay",
+	   "name":"Mad Batter Connector Exit",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"connector",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1230,
+			 "y":1836
+		  }
+	   ]
+	},
+	"prairie_madbatter":{
+	   "id":"prairie_madbatter",
+	   "area":"Martha's Bay",
+	   "name":"Mad Batter",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1036,
+			 "y":1868
+		  }
+	   ]
+	},
+	"animal_phone":{
+	   "id":"animal_phone",
+	   "area":"Animal Village",
+	   "name":"Phone Booth",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1894,
+			 "y":1754
+		  }
+	   ]
+	},
+	"animal_house1":{
+	   "id":"animal_house1",
+	   "area":"Animal Village",
+	   "name":"Left Top Left House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":1976,
+			 "y":1624
+		  }
+	   ]
+	},
+	"animal_house2":{
+	   "id":"animal_house2",
+	   "area":"Animal Village",
+	   "name":"Right Top Left House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2056,
+			 "y":1624
+		  }
+	   ]
+	},
+	"animal_house3":{
+	   "id":"animal_house3",
+	   "area":"Animal Village",
+	   "name":"Left Top Right House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2138,
+			 "y":1624
+		  }
+	   ]
+	},
+	"animal_house4":{
+	   "id":"animal_house4",
+	   "area":"Animal Village",
+	   "name":"Right Top Right House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2186,
+			 "y":1624
+		  }
+	   ]
+	},
+	"animal_house5":{
+	   "id":"animal_house5",
+	   "area":"Animal Village",
+	   "name":"Bear House",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2186,
+			 "y":1738
+		  }
+	   ]
+	},
+	"animal_cave":{
+	   "id":"animal_cave",
+	   "area":"Yarna Desert",
+	   "name":"Bomb Arrow Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2234,
+			 "y":1576
+		  }
+	   ]
+	},
+	"desert_cave":{
+	   "id":"desert_cave",
+	   "area":"Yarna Desert",
+	   "name":"Lanmola Cave",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"single",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":2510,
+			 "y":1560
+		  }
+	   ]
 	}
  }

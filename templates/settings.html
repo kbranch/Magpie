@@ -97,6 +97,50 @@
                             </select>
                         </div>
                     </div>
+                    <!-- <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-randomstartlocation" class="form-check-input" data-flag="randomstartlocation">
+                            <label class="form-check-label" for="arg-randomstartlocation">Random start location</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-dungeonshuffle" class="form-check-input" data-flag="dungeonshuffle">
+                            <label class="form-check-label" for="arg-dungeonshuffle">Dungeon shuffle</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-entranceshuffle" class="form-label">Entrance randomizer</label>
+                            <select id="arg-entranceshuffle" class="form-select" data-flag="entranceshuffle" aria-label="entranceshuffle">
+                                <option value="none">Default</option>
+                                <option value="simple">Simple</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="expert">Expert</option>
+                                <option value="insanity">Insanity</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-boss" class="form-label">Boss shuffle</label>
+                            <select id="arg-boss" class="form-select" data-flag="boss" aria-label="boss">
+                                <option value="default">Normal</option>
+                                <option value="shuffle">Shuffle</option>
+                                <option value="random">Randomize</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-miniboss" class="form-label">Miniboss shuffle</label>
+                            <select id="arg-miniboss" class="form-select" data-flag="miniboss" aria-label="miniboss">
+                                <option value="default">Normal</option>
+                                <option value="shuffle">Shuffle</option>
+                                <option value="random">Randomize</option>
+                            </select>
+                        </div>
+                    </div> -->
                     <div class="row pb-3">
                         <div class="col">
                             <label for="arg-goal" class="form-label">Goal</label>
@@ -149,12 +193,13 @@
             </div>
 
             {% set ns = namespace(group='') %}
-            {% set groupWhitelist = ['Main flags', 'Item flags', 'Gameplay flags', 'Special flags'] %}
-            {% set knownFlags = ['logic', 'heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster', 'dungeon_items', 'goal', 'bowwow', 'overworld', 'owlstatues'] %}
-            {#% set knownFlags = ['heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster'] %#}
-            {% set flagBlacklist = ['race', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal'] %}
+            {% set knownFlags = ['logic', 'heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster', 'dungeon_items', 'goal', 'bowwow', 
+                                 'overworld', 'owlstatues', 'race', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 
+                                 'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
+                                 'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
+                                 'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette'] %}
 
-            {% for arg in flags if arg.group in groupWhitelist and arg.name not in flagBlacklist and arg.name not in knownFlags %}
+            {% for arg in flags if  arg.name not in knownFlags %}
                 {% if 'Other' != ns.group %}
                     {% if ns.group != '' %}
                         </fieldset>
@@ -170,6 +215,7 @@
                     {% if arg.type != 'bool' %}
                         <label for="arg-{{arg.name}}" class="form-label">{{arg.name | title}}</label>
                         <select id="arg-{{arg.name}}" class="form-select" data-flag="{{arg.name}}" aria-label="{{arg.name}}">
+                        {% if arg.choices != None %}
                             {% for choice in arg.choices %}
                                 {% if choice == arg.value %}
                                     {% set selected = "selected" %}
@@ -179,6 +225,7 @@
 
                                 <option value="{{choice}}" {{selected}}>{{choice | title}}</option>
                             {% endfor %}
+                        {% endif %}
                         </select>
                     {% else %}
                         {% if arg.value %}
