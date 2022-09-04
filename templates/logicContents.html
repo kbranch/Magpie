@@ -13,7 +13,7 @@
                         <ul class="list-group list-group-flush px-2">
         {% endif %}
 
-        <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-id="{{check.id}}" data-difficulty="{{check.difficulty}}" onclick="toggleCheck(event, $(this))">
+        <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-check-id="{{check.id}}" data-difficulty="{{check.difficulty}}" onclick="toggleCheck(event, $(this))">
             {% if check.behindKeys %}
             <div class="key-indicator-wrapper pe-2">
                 <img class="key-indicator" src="static/images/keyLocked.png">

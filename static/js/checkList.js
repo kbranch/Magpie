@@ -46,26 +46,20 @@ function getCheckedKey(area, name) {
     return `${area}-${name}`;
 }
 
-function toggleNode(node) {
-    $(node).tooltip('hide');
+function toggleNode(nodeGraphic) {
+    $(nodeGraphic).tooltip('hide');
+    let node = nodes[$(nodeGraphic).attr('data-node-id')];
 
-    let checkIds = $(node).attr('data-ids').split(',');
     let toggleList = new Set();
     let outOfLogic = new Set();
 
-    for (const checkId of checkIds) {
-        let chunks = checkId.split(';');
-        let id = chunks[0];
-        let difficulty = chunks[1];
-        let coord = coordDict[id];
-        let fullName = `${coord.area}-${coord.name}`;
-
-        if (!(fullName in checkedChecks || difficulty == 9)) {
-            toggleList.add(id);
+    for (const check of node.checks) {
+        if (!(check.isChecked() || check.difficulty == 9)) {
+            toggleList.add(check);
         }
 
-        if (difficulty == 9) {
-            outOfLogic.add(id);
+        if (!check.isChecked() && check.difficulty == 9) {
+            outOfLogic.add(check);
         }
     }
 
@@ -77,7 +71,7 @@ function toggleNode(node) {
             toggleChecks(outOfLogic);
         }
         else {
-            toggleChecks(new Set(checkIds.map(x => x.split(';')[0])));
+            toggleChecks(node.checks);
         }
     }
 
@@ -85,15 +79,15 @@ function toggleNode(node) {
 }
 
 function toggleSingleNodeCheck(check) {
-    let id = $(check).attr('data-id');
-    let textCheck = $(`li[data-id="${id}"`);
+    let id = $(check).attr('data-check-id');
+    let textCheck = $(`li[data-check-id="${id}"`);
     $(`.checkGraphic`).tooltip('hide');
     toggleCheck(null, textCheck);
 }
 
 function toggleChecks(checks) {
-    for (const id of checks) {
-        let textCheck = $(`li[data-id="${id}"`);
+    for (const check of checks) {
+        let textCheck = $(`li[data-id="${check.id}"`);
         toggleCheck(null, textCheck, false);
     }
 }

@@ -1,3 +1,5 @@
+var nodes = {};
+
 function drawChecks(mapName, animate=true) {
     let mapImg = $(`.map[data-mapname="${mapName}"`);
 
@@ -17,39 +19,18 @@ function drawChecks(mapName, animate=true) {
 
     let map = $(mapImg).closest('div.tab-pane');
     let parent = $(map).find('div.map-wrapper');
-    let nodes = condenseNodes(map, mapName);
-    for (const coordString in nodes) {
-        let nodeDiff = 'checked';
-        let allBehindKeys = false;
-        let checkIds = [];
-
-        for (const check of nodes[coordString]) {
-            checkIds.push(`${check.id};${check.difficulty};${check.behindKeys ? 1 : 0}`);
-            
-            let diff = check.difficulty;
-            if (diff >= 0) {
-                if ((diff < nodeDiff || nodeDiff == 'checked')) {
-                    nodeDiff = diff;
-                    allBehindKeys = true;
-                }
-            
-                if (!check.behindKeys && diff <= nodeDiff) {
-                    allBehindKeys = false;
-                }
-            }
-        }
-
-        checkIds = checkIds.join(',');
-
-        let keyClass = allBehindKeys ? ' behind-keys' : '';
+    createNodes(map, mapName);
+    for (const nodeId in nodes) {
+        let node = nodes[nodeId];
+        let keyClass = node.behindKeys ? ' behind-keys' : '';
         let animationClass = animate ? ' animate__bounceInDown' : '';
-        let classes = `checkGraphic animate__animated difficulty-${nodeDiff}${keyClass}`;
-        let graphic = $(`[data-node-id="${coordString}"]`);
+        let classes = `checkGraphic animate__animated difficulty-${node.difficulty}${keyClass}`;
+        let graphic = $(`[data-node-id="${nodeId}"]`);
 
         if (graphic.length > 0) {
             let currentDiff = $(graphic).attr('data-difficulty');
 
-            if (currentDiff == "9" && nodeDiff >= 0 && nodeDiff < 9) {
+            if (currentDiff == "9" && node.difficulty >= 0 && node.difficulty < 9) {
                 classes += animationClass;
             }
             else {
@@ -59,20 +40,19 @@ function drawChecks(mapName, animate=true) {
         else {
             classes += animationClass;
 
-            graphic = buildNewCheckGraphic(coordString);
+            graphic = buildNewCheckGraphic(nodeId);
 
             $(parent).append(graphic);
         }
 
         $(graphic).attr({
             'class': classes,
-            'data-ids': checkIds,
-            'data-difficulty': nodeDiff,
+            'data-difficulty': node.difficulty,
         })
 
         addTooltip(graphic);
 
-        oldNodes.delete(coordString);
+        oldNodes.delete(nodeId);
     }
 
     for (const staleNode of oldNodes) {
@@ -82,33 +62,29 @@ function drawChecks(mapName, animate=true) {
     }
 }
 
-function addTooltip(check) {
-    let checkIds = $(check).attr('data-ids').split(',');
-    let uniqueIds = new Set(checkIds.map(x => x.split(';')[0]));
+function addTooltip(checkGraphic) {
+    let node = nodes[$(checkGraphic).attr('data-node-id')]
     let graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{0}{1}'></div>";
-    let template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {0}' data-id='{1}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>{2}<div class='tooltip-text align-middle ps-2'>{3} - {4}</div></div>"
+    let template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {0}' data-check-id='{1}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>{2}<div class='tooltip-text align-middle ps-2'>{3} - {4}</div></div>"
     let title = "<div class='map-container'>";
     let first = true;
 
-    for (const id of uniqueIds) {
-        let matchingIds = checkIds.filter(x => x.split(';')[0] == id);
+    for (const id of node.uniqueCheckIds()) {
+        let checks = node.checksWithId(id);
         let graphic = '';
 
-        for (const matchingId of matchingIds) {
-            let chunks = matchingId.split(';');
-            let difficulty = chunks[1] == -1 ? 'checked' : chunks[1];
-            let behindKeys = chunks[2] == 1 ? ' behind-keys' : '';
+        for (const check of checks) {
+            let difficulty = check.isChecked() ? 'checked' : check.difficulty;
+            let behindKeys = check.behindKeys ? ' behind-keys' : '';
 
             graphic += graphicTemplate.replace('{0}', difficulty)
                                       .replace('{1}', behindKeys);
-
         }
 
-        let coord = coordDict[id];
         let line = template.replace('{1}', id)
                            .replace('{2}', graphic)
-                           .replace('{3}', coord.area)
-                           .replace('{4}', coord.name);
+                           .replace('{3}', checks[0].metadata.area)
+                           .replace('{4}', checks[0].metadata.name);
 
         if (!first) {
             line = line.replace('{0}', 'pt-2')
@@ -123,9 +99,9 @@ function addTooltip(check) {
 
     title += '</div>';
 
-    let activated = $(check).attr('data-bs-toggle') == "tooltip";
+    let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
 
-    $(check).attr({
+    $(checkGraphic).attr({
         'data-bs-toggle': 'tooltip',
         'data-bs-trigger': 'manual',
         'data-bs-html': 'true',
@@ -133,18 +109,18 @@ function addTooltip(check) {
     });
 
     if (activated) {
-        let oldTooltip = bootstrap.Tooltip.getInstance(check);
+        let oldTooltip = bootstrap.Tooltip.getInstance(checkGraphic);
         oldTooltip.dispose();
     }
 
-    let tooltip = new bootstrap.Tooltip(check);
-    check[0].addEventListener('inserted.bs.tooltip', (x) => {
+    let tooltip = new bootstrap.Tooltip(checkGraphic);
+    checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
         $('.tooltip').attr('oncontextmenu', 'return false;');
     })
 }
 
-function condenseNodes(map, mapName) {
-    let nodes = {};
+function createNodes(map, mapName) {
+    nodes = {};
 
     let xScale = Math.min(1, $(map).width() / $(map).find('.map').prop('naturalWidth'));
     let yScale = Math.min(1, $(map).height() / $(map).find('.map').prop('naturalHeight'));
@@ -152,9 +128,15 @@ function condenseNodes(map, mapName) {
     let xOffset = (16 * xScale - localSettings.checkSize) / 2;
     let yOffset = (16 * yScale - localSettings.checkSize) / 2;
 
+    if (entrancePool.length > 0) {
+        for (const entrance of entrancePool) {
+            entraceData = entranceDict[entrance.id];
+        }
+    }
+
     let checks = $('li[data-logic]');
     for (const check of checks) {
-        let id = $(check).attr('data-id');
+        let id = $(check).attr('data-check-id');
         let checkMaps = coordDict[id].locations.map(function(x) { return x.map; });
 
         if (!(checkMaps.includes(mapName))
@@ -163,14 +145,10 @@ function condenseNodes(map, mapName) {
             continue;
         }
 
-        let name = $(check).attr('data-checkname');
-        let area = $(check).attr('data-checkarea');
+        let checkData = coordDict[id];
         let behindKeys = $(check).attr('data-behind_keys') == 'True'
-        let isChecked = `${area}-${name}` in checkedChecks;
-        let difficulty = isChecked ? -1 : Number($(check).attr('data-difficulty'));
-        let coord = coordDict[id];
-        let coords = coord.locations;
-        let index = coord.index;
+        let difficulty = Number($(check).attr('data-difficulty'));
+        let coords = checkData.locations;
 
         for (const coord of coords) {
             if (coord.map != mapName) {
@@ -179,32 +157,30 @@ function condenseNodes(map, mapName) {
 
             let x = Math.round(coord.x * xScale + xOffset);
             let y = Math.round(coord.y * yScale + yOffset);
-            let coordString = `${x},${y}`;
+            let coordString = MapNode.nodeId(x, y);
 
             if (!(coordString in nodes)) {
-                nodes[coordString] = [];
+                nodes[coordString] = new MapNode(x, y);
             }
 
-            nodes[coordString].push({id: id, difficulty: difficulty, behindKeys: behindKeys, index: index});
+            nodes[coordString].addCheck(id, behindKeys, difficulty);
         }
     }
 
     for (const key in nodes) {
-        nodes[key].sort((a, b) => a.index - b.index);
+        nodes[key].update();
     }
-
-    return nodes;
 }
 
-function buildNewCheckGraphic(coordString) {
-    let coords = coordString.split(',');
+function buildNewCheckGraphic(id) {
+    let coords = MapNode.coordsFromId(id);
 
     graphic = $('<div>', {
-        'data-node-id': coordString,
+        'data-node-id': id,
         'draggable': false,
         css: {
-            'top': Number(coords[1]),
-            'left': Number(coords[0]),
+            'top': coords.y,
+            'left': coords.x,
             'width': localSettings.checkSize,
             'height': localSettings.checkSize,
         },
