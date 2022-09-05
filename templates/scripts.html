@@ -13,8 +13,8 @@
 <script type="application/javascript">
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
-    const entrancePool = JSON.parse('{{entrancePool|safe}}')
-    const startLocations = JSON.parse('{{startLocations|safe}}');
+    var startLocations = [];
+    var entrances = [];
     var localSettings = null;
     var entranceMapping = {};
     var checkedChecks = {};

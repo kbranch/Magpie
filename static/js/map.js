@@ -8,8 +8,6 @@ function drawChecks(mapName, animate=true) {
         return;
     }
 
-    closeAllCheckTooltips();
-
     $('.animate__fadeOut').remove();
 
     let oldNodes = new Set();
@@ -20,11 +18,13 @@ function drawChecks(mapName, animate=true) {
     let map = $(mapImg).closest('div.tab-pane');
     let parent = $(map).find('div.map-wrapper');
     createNodes(map, mapName);
+
     for (const nodeId in nodes) {
         let node = nodes[nodeId];
         let keyClass = node.behindKeys ? ' behind-keys' : '';
         let animationClass = animate ? ' animate__bounceInDown' : '';
-        let classes = `checkGraphic animate__animated difficulty-${node.difficulty}${keyClass}`;
+        let iconClass = node.checks.length > 0 ? `difficulty-${node.difficulty}` : 'entrance-only';
+        let classes = `checkGraphic animate__animated ${iconClass}${keyClass}`;
         let graphic = $(`[data-node-id="${nodeId}"]`);
 
         if (graphic.length > 0) {
@@ -57,6 +57,7 @@ function drawChecks(mapName, animate=true) {
 
     for (const staleNode of oldNodes) {
         let node = $(`[data-node-id="${staleNode}"]`);
+        $(node).tooltip('hide');
         $(node).removeClass('animate__bounceInDown');
         $(node).addClass('animate__fadeOut');
     }
@@ -64,40 +65,7 @@ function drawChecks(mapName, animate=true) {
 
 function addTooltip(checkGraphic) {
     let node = nodes[$(checkGraphic).attr('data-node-id')]
-    let graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{0}{1}'></div>";
-    let template = "<div class='tooltip-check text-start d-flex p-1 mb-0 {0}' data-check-id='{1}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>{2}<div class='tooltip-text align-middle ps-2'>{3} - {4}</div></div>"
-    let title = "<div class='map-container'>";
-    let first = true;
-
-    for (const id of node.uniqueCheckIds()) {
-        let checks = node.checksWithId(id);
-        let graphic = '';
-
-        for (const check of checks) {
-            let difficulty = check.isChecked() ? 'checked' : check.difficulty;
-            let behindKeys = check.behindKeys ? ' behind-keys' : '';
-
-            graphic += graphicTemplate.replace('{0}', difficulty)
-                                      .replace('{1}', behindKeys);
-        }
-
-        let line = template.replace('{1}', id)
-                           .replace('{2}', graphic)
-                           .replace('{3}', checks[0].metadata.area)
-                           .replace('{4}', checks[0].metadata.name);
-
-        if (!first) {
-            line = line.replace('{0}', 'pt-2')
-        }
-        else {
-            line = line.replace(' {0}', '')
-            first = false;
-        }
-
-        title += line;
-    }
-
-    title += '</div>';
+    let title = node.tooltipHtml($(checkGraphic).attr('data-pinned'));
 
     let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
 
@@ -106,17 +74,20 @@ function addTooltip(checkGraphic) {
         'data-bs-trigger': 'manual',
         'data-bs-html': 'true',
         'data-bs-title': title,
+        'data-bs-animation': 'false',
     });
 
     if (activated) {
         let oldTooltip = bootstrap.Tooltip.getInstance(checkGraphic);
-        oldTooltip.dispose();
+        oldTooltip.setContent({'.tooltip-inner': title});
+    }
+    else {
+        let tooltip = new bootstrap.Tooltip(checkGraphic);
+        checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
+            $('.tooltip').attr('oncontextmenu', 'return false;');
+        })
     }
 
-    let tooltip = new bootstrap.Tooltip(checkGraphic);
-    checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
-        $('.tooltip').attr('oncontextmenu', 'return false;');
-    })
 }
 
 function createNodes(map, mapName) {
@@ -128,9 +99,16 @@ function createNodes(map, mapName) {
     let xOffset = (16 * xScale - localSettings.checkSize) / 2;
     let yOffset = (16 * yScale - localSettings.checkSize) / 2;
 
-    if (entrancePool.length > 0) {
-        for (const entrance of entrancePool) {
-            entraceData = entranceDict[entrance.id];
+    if (entrances.length > 0) {
+        for (const entrance of entrances) {
+            let entranceData = entranceDict[entrance];
+            let x = Math.round(entranceData.locations[0].x * xScale + xOffset);
+            let y = Math.round(entranceData.locations[0].y * yScale + yOffset);
+            let coordString = MapNode.nodeId(x, y);
+
+            if (!(coordString in nodes)) {
+                nodes[coordString] = new MapNode(x, y, entranceData);
+            }
         }
     }
 
@@ -207,15 +185,25 @@ function clearCheckImages() {
 
 function closeOtherTooltips(element) {
     let id = $(element).attr('data-node-id');
-    let nodes = $(`.checkGraphic[data-node-id!="${id}"]`);
+    let nodes = $(`.checkGraphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
     $(nodes).tooltip('hide');
     $(nodes).removeAttr('data-pinned');
+
+    for (const node of nodes) {
+        addTooltip(node);
+    }
 }
 
 function closeAllCheckTooltips() {
     let nodes = $(`.checkGraphic`);
     nodes.tooltip('hide');
-    nodes.removeAttr('data-pinned');
+
+    let pinnedNodes = $('.checkGraphic[data-pinned]');
+    pinnedNodes.removeAttr('data-pinned');
+
+    for (const node of pinnedNodes) {
+        addTooltip(node);
+    }
 }
 
 function drawActiveTab() {
@@ -263,6 +251,8 @@ function nodeSecondary(element) {
     else {
         $(element).attr('data-pinned', true);
     }
+
+    addTooltip(element);
 }
 
 function checkGraphicLeftClick(element) {
@@ -281,4 +271,25 @@ function checkGraphicRightClick(element) {
     else {
         nodeSecondary(element);
     }
+}
+
+function setStartLocation(element) {
+    const startHouse = 'start_house';
+
+    let nodeId = $(element).attr('data-node-id');
+    let node = nodes[nodeId];
+    let entrance = node.entrance;
+
+    for (const start of startLocations) {
+        if (entranceMapping[start] == startHouse && start != startHouse) {
+            entranceMapping[start] = entranceMapping[startHouse];
+            break;
+        }
+    }
+
+    entranceMapping[entrance.id] = startHouse;
+    entranceMapping[startHouse] = entrance.id;
+
+    closeAllCheckTooltips();
+    refreshCheckList();
 }

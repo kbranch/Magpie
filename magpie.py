@@ -35,12 +35,8 @@ def home():
     flags = args.flags
     args.flags = []
 
-    entrancePool = getEntrancePool(args)
-
     return render_template("index.html", flags=flags, args=args,
                                          defaultSettings=defaultSettings,
-                                         entrancePool=jsonpickle.encode(entrancePool),
-                                         startLocations=jsonpickle.encode(getStartLocations()),
                                          jsonArgs=jsonpickle.encode(args),
                                          jsonSettings=jsonpickle.encode(defaultSettings),
                                          local=local,
@@ -77,12 +73,22 @@ def renderCheckList():
 
         addStartingItems(inventory, args)
 
+        entrances = getEntrancePool(args)
+        if args.randomstartlocation:
+            entrances = entrances.union(set(getStartLocations()))
+
+        entrances = list(entrances)
         allItems = getAllItems(args)
         logics = getLogics(args, entranceMapping)
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, logics, inventory)
 
-        return render_template("checklist.html", accessibility=accessibility, logics=logics)
+        return render_template("checklist.html", accessibility=accessibility,
+                                                 logics=logics,
+                                                 checkCount=len(allChecks),
+                                                 entrances=jsonpickle.encode(entrances),
+                                                 startLocations=jsonpickle.encode(getStartLocations()),
+                                                 )
     except:
         return renderTraceback()
 

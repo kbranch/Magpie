@@ -112,6 +112,16 @@ img {
     pointer-events: auto;
 }
 
+.tooltip-body {
+    display: inline-block;
+    position: relative;
+    pointer-events: auto;
+}
+
+.tooltip {
+    opacity: 1 !important;
+}
+
 .animate__animated.animate__fadeOut {
     --animate-duration: 0.3s;
 }
@@ -135,16 +145,31 @@ img {
     display: inline-block;
 }
 
+.tooltip-area-card {
+    background-color: var(--bs-tooltip-bg);
+}
+
+.tooltip-item {
+    background-color: var(--bs-tooltip-bg);
+    color: var(--bs-tooltip-color);
+    padding: 1px;
+    cursor: default;
+}
+
+.tooltip-area-header {
+    background-color: #222;
+    background-blend-mode: normal;
+}
+
 .tooltip-text {
     display: inline-block;
-    cursor: default;
 }
 
 .text-check {
     cursor: default;
 }
 
-.tooltip-check:hover {
+.tooltip-item:hover {
     background-color: #444;
     border-radius: 3px;
 }
@@ -175,6 +200,13 @@ img {
 
 .checkGraphic:hover {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
+}
+
+.entrance-only {
+    border-style: none;
+    background-image: url('/static/images/entrance.svg');
+    background-size: contain;
+    z-index: 3;
 }
 
 .difficulty-checked {

@@ -123,7 +123,7 @@ def getLogicWithoutER(realArgs):
 
 def getLogics(args, entranceMapping):
     worldSetup = WorldSetup()
-    worldSetup.randomize(args, random.Random())
+    # worldSetup.randomize(args, random.Random())
 
     entrancePool = getEntrancePool(args)
 
@@ -132,6 +132,9 @@ def getLogics(args, entranceMapping):
             worldSetup.entrance_mapping[entrance] = entranceMapping[entrance]
         elif entrance in entrancePool:
             worldSetup.entrance_mapping[entrance] = 'rooster_house'
+
+    if args.overworld == "dungeondive":
+        worldSetup.entrance_mapping = {"d%d" % (n): "d%d" % (n) for n in range(9)}
 
     logicFlag = [x for x in args.flags if x.name == 'logic'][0]
     originalLogic = args.logic
@@ -205,9 +208,6 @@ def initChecks():
 def getEntrancePool(args):
     entrances = set(WorldSetup.getEntrancePool(None, args))
     entrances = entrances.union(set(WorldSetup.getEntrancePool(None, args, connectorsOnly=True)))
-
-    if args.randomstartlocation:
-        entrances = entrances.union(set(getStartLocations()))
 
     return entrances
 

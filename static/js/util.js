@@ -39,8 +39,11 @@ function download(filename, text) {
 
 function modifyTooltipAllowList() {
     const allowList = bootstrap.Tooltip.Default.allowList
-    allowList.div.push('data-id');
+    allowList.div.push('data-check-id');
+    allowList.div.push('data-entrance-id');
     allowList.div.push('onclick');
+    allowList.li.push('onclick');
+    allowList.li.push('data-node-id');
 }
 
 function preventDoubleClick(event) {

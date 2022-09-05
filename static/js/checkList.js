@@ -81,13 +81,12 @@ function toggleNode(nodeGraphic) {
 function toggleSingleNodeCheck(check) {
     let id = $(check).attr('data-check-id');
     let textCheck = $(`li[data-check-id="${id}"`);
-    $(`.checkGraphic`).tooltip('hide');
     toggleCheck(null, textCheck);
 }
 
 function toggleChecks(checks) {
     for (const check of checks) {
-        let textCheck = $(`li[data-id="${check.id}"`);
+        let textCheck = $(`li[data-check-id="${check.id}"`);
         toggleCheck(null, textCheck, false);
     }
 }

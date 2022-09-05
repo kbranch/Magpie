@@ -8,7 +8,7 @@ class MapNode {
     }
 
     id() {
-        return nodeId(self.x, self.y);
+        return MapNode.nodeId(this.x, this.y);
     }
 
     uniqueCheckIds() {
@@ -28,8 +28,9 @@ class MapNode {
     }
 
     updateBehindKeys() {
-        this.behindKeys = this.checks.filter(x => x.difficulty == this.difficulty)
-                                     .every(x => x.behindKeys);
+        this.behindKeys = this.checks.length > 0 
+                          && this.checks.filter(x => x.difficulty == this.difficulty)
+                                        .every(x => x.behindKeys);
     }
 
     updateDifficulty() {
@@ -48,6 +49,115 @@ class MapNode {
         this.updateDifficulty();
         this.updateBehindKeys();
         this.sortChecks();
+    }
+
+    checkGraphicHtml(id) {
+        let checks = this.checksWithId(id);
+        let graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{difficulty}{behind-keys}'></div>";
+        let graphic = '';
+
+        for (const check of checks) {
+            let difficulty = check.isChecked() ? 'checked' : check.difficulty;
+            let behindKeys = check.behindKeys ? ' behind-keys' : '';
+
+            graphic += graphicTemplate.replace('{difficulty}', difficulty)
+                                    .replace('{behind-keys}', behindKeys);
+        }
+
+        return graphic;
+    }
+
+    entranceGraphicHtml() {
+        return "<div class='tooltip-check-graphic align-self-center entrance-only'></div>";
+    }
+
+    tooltipHtml(pinned) {
+        let titleTemplate = `<div class='tooltip-body'>
+    {areas}
+</div>`;
+        let areaTemplate = `<div class='card tooltip-area-card'>
+    <div class='card-header tooltip-area-header'>
+        {area}
+    </div>
+    <ul class='list-group'>
+        {checks}
+        {entrance}
+    </ul>
+</div>`;
+        let entranceTemplate = `<li class="list-group-item tooltip-item">
+        <div class='text-start d-flex p-1 mb-0 {top-padding}' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
+            {graphic}
+            <div class='tooltip-text align-middle ps-2'>
+                {name}
+            </div>
+        </div>
+    </li>`;
+        let checkTemplate = `<li class="list-group-item tooltip-item">
+    <div class='text-start d-flex p-1 mb-0 {top-padding}' data-check-id='{check-id}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
+        {graphic}
+        <div class='tooltip-text align-middle ps-2'>
+            {name}
+        </div>
+    </div>
+</li>`;
+        let menuItemTemplate = `<li class="list-group-item tooltip-item p-1"{attributes} onclick='{action}' oncontextmenu='return false;'>
+    {text}
+</li>`
+
+        let uniqueIds = this.uniqueCheckIds();
+        let areaHtml = '';
+        let areas = {};
+        let padding = 'pt-2';
+
+        if (this.entrance != null) {
+            areas[this.entrance.area] = '';
+        }
+
+        for (const id of uniqueIds) {
+            let metadata = coordDict[id];
+            let graphic = this.checkGraphicHtml(id);
+
+            if (!(metadata.area in areas)) {
+                areas[metadata.area] = '';
+            }
+
+            let line = checkTemplate.replace('{check-id}', id)
+                            .replace('{graphic}', graphic)
+                            .replace('{name}', metadata.name)
+                            .replace('{top-padding}', padding);
+
+            padding = '';
+
+            areas[metadata.area] += line;
+        }
+
+        for (const area in areas) {
+            let entranceHtml = '';
+
+            if (this.entrance != null && this.entrance.area == area) {
+                let graphic = this.entranceGraphicHtml();
+                entranceHtml = entranceTemplate.replace('{entrance-id}', this.entrance.id)
+                                               .replace('{graphic}', graphic)
+                                               .replace('{name}', this.entrance.name)
+                                               .replace('{top-padding}', padding);
+            }
+
+            areaHtml += areaTemplate.replace('{area}', area)
+                                    .replace('{checks}', areas[area])
+                                    .replace('{entrance}', entranceHtml);
+        }
+
+        if (pinned == "true") {
+            if (this.entrance != null && startLocations.includes(this.entrance.id)) {
+                areaHtml += menuItemTemplate.replace('{action}', 'setStartLocation(this);')
+                                            .replace('{text}', 'Set as start location')
+                                            .replace('{attributes}', ` data-node-id=${this.id()}`);
+            }
+        }
+
+        let title = titleTemplate.replace('{areas}', areaHtml);
+
+        return title;
     }
 
     static nodeId(x, y) {
