@@ -24,7 +24,10 @@ function drawChecks(mapName, animate=true) {
         let keyClass = node.behindKeys ? ' behind-keys' : '';
         let animationClass = animate ? ' animate__bounceInDown' : '';
         let iconClass = node.checks.length > 0 ? `difficulty-${node.difficulty}` : 'entrance-only';
-        let classes = `checkGraphic animate__animated ${iconClass}${keyClass}`;
+        let startClass = args.randomstartlocation 
+                         && node.entrance != null 
+                         && entranceMapping[node.entrance.id] == 'start_house' ? ' start-location' : '';
+        let classes = `checkGraphic animate__animated ${iconClass}${keyClass}${startClass}`;
         let graphic = $(`[data-node-id="${nodeId}"]`);
 
         if (graphic.length > 0) {

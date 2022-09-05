@@ -374,3 +374,14 @@ button.nav-link.active {
     border-radius: 100%;
     z-index: 101;
 }
+
+.start-location:before {
+    content: '';
+    background-image: url('/static/images/house.svg');
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: -100%;
+}
