@@ -72,10 +72,10 @@ class MapNode {
     }
 
     tooltipHtml(pinned) {
-        let titleTemplate = `<div class='tooltip-body'>
+        const titleTemplate = `<div class='tooltip-body'>
     {areas}
 </div>`;
-        let areaTemplate = `<div class='card tooltip-area-card'>
+        const areaTemplate = `<div class='card tooltip-area-card'>
     <div class='card-header tooltip-area-header'>
         {area}
     </div>
@@ -84,15 +84,7 @@ class MapNode {
         {entrance}
     </ul>
 </div>`;
-        let entranceTemplate = `<li class="list-group-item tooltip-item">
-        <div class='text-start d-flex p-1 mb-0 {top-padding}' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
-            {graphic}
-            <div class='tooltip-text align-middle ps-2'>
-                {name}
-            </div>
-        </div>
-    </li>`;
-        let checkTemplate = `<li class="list-group-item tooltip-item">
+        const checkTemplate = `<li class="list-group-item tooltip-item">
     <div class='text-start d-flex p-1 mb-0 {top-padding}' data-check-id='{check-id}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
@@ -100,17 +92,16 @@ class MapNode {
         </div>
     </div>
 </li>`;
-        let menuItemTemplate = `<li class="list-group-item tooltip-item p-1"{attributes} onclick='{action}' oncontextmenu='return false;'>
-    {text}
-</li>`
 
         let uniqueIds = this.uniqueCheckIds();
         let areaHtml = '';
         let areas = {};
         let padding = 'pt-2';
+        let entranceArea = '';
 
         if (this.entrance != null) {
-            areas[this.entrance.area] = '';
+            entranceArea = this.entrance.area;
+            areas[entranceArea] = '';
         }
 
         for (const id of uniqueIds) {
@@ -131,16 +122,10 @@ class MapNode {
             areas[metadata.area] += line;
         }
 
-        for (const area in areas) {
-            let entranceHtml = '';
+        for (const area of sortByKey(Object.keys(areas), x => [x == entranceArea, x])) {
+            let entranceHtml = this.getEntranceHtml(area, padding);
 
-            if (this.entrance != null && this.entrance.area == area) {
-                let graphic = this.entranceGraphicHtml();
-                entranceHtml = entranceTemplate.replace('{entrance-id}', this.entrance.id)
-                                               .replace('{graphic}', graphic)
-                                               .replace('{name}', this.entrance.name)
-                                               .replace('{top-padding}', padding);
-            }
+            padding = '';
 
             areaHtml += areaTemplate.replace('{area}', area)
                                     .replace('{checks}', areas[area])
@@ -148,16 +133,73 @@ class MapNode {
         }
 
         if (pinned == "true") {
-            if (this.entrance != null && startLocations.includes(this.entrance.id)) {
-                areaHtml += menuItemTemplate.replace('{action}', 'setStartLocation(this);')
-                                            .replace('{text}', 'Set as start location')
-                                            .replace('{attributes}', ` data-node-id=${this.id()}`);
-            }
+            areaHtml += this.getPinnedHtml();
         }
 
         let title = titleTemplate.replace('{areas}', areaHtml);
 
         return title;
+    }
+
+    getEntranceHtml(area, padding) {
+        const entranceTemplate = `<li class="list-group-item tooltip-item">
+    <div class='text-start d-flex p-1 mb-0 {top-padding}' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
+        {graphic}
+        <div class='tooltip-text align-middle ps-2'>
+            {name}
+        </div>
+    </div>
+</li>`;
+        const connectionTemplate = `<li class="list-group-item tooltip-item">
+    <div class='tooltip-text align-middle ps-2'>
+        {connection}
+    </div>
+</li>`;
+        let entranceHtml = '';
+
+        if (this.entrance != null && this.entrance.area == area) {
+            let graphic = this.entranceGraphicHtml();
+            entranceHtml = entranceTemplate.replace('{entrance-id}', this.entrance.id)
+                                            .replace('{graphic}', graphic)
+                                            .replace('{name}', this.entrance.name)
+                                            .replace('{top-padding}', padding);
+            if (this.entrance.id in entranceMap
+                && entranceMap[this.entrance.id] != this.entrance.id) {
+                let connection = entranceDict[entranceMap[this.entrance.id]];
+                entranceHtml += connectionTemplate.replace('{connection}', `Leads to ${connection.area}: ${connection.name}`);
+            }
+            if (this.entrance.id in reverseEntranceMap
+                && reverseEntranceMap[this.entrance.id] != this.entrance.id) {
+                let connection = entranceDict[entranceMap[this.entrance.id]];
+                entranceHtml += connectionTemplate.replace('{connection}', `Accessed from ${connection.area}: ${connection.name}`);
+            }
+        }
+
+        return entranceHtml;
+    }
+
+    getPinnedHtml() {
+        const menuItemTemplate = `<li class="list-group-item tooltip-item p-1"{attributes} onclick='{action}' oncontextmenu='return false;'>
+    {text}
+</li>`
+        let pinnedHtml = '';
+
+        if (this.entrance != null) {
+            if (startLocations.includes(this.entrance.id)) {
+                pinnedHtml += menuItemTemplate.replace('{action}', 'setStartLocation(this);')
+                                              .replace('{text}', 'Set as start location')
+                                              .replace('{attributes}', ` data-node-id=${this.id()}`);
+            }
+
+            if (args.entranceshuffle == 'none'
+                && args.dungeonshuffle
+                && this.entrance.id.startsWith('d')
+                && this.entrance.id.length == 2) {
+                
+            }
+        }
+
+        return pinnedHtml;
     }
 
     static nodeId(x, y) {

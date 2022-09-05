@@ -53,3 +53,17 @@ function preventDoubleClick(event) {
         }
     }
 }
+
+function compare(a, b) {
+    if (a > b) {
+        return 1
+    } else if (a < b) {
+        return -1
+    } else {
+        return 0
+    }
+}
+
+function sortByKey(arr, key) {
+    return arr.sort((a, b) => compare(key(a), key(b)))
+}

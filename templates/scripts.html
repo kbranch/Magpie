@@ -17,7 +17,8 @@
     var startLocations = [];
     var entrances = [];
     var localSettings = null;
-    var entranceMapping = {};
+    var entranceMap = {};
+    var reverseEntranceMap = {};
     var checkedChecks = {};
     var inventory = {};
     var mapNodes = null;
@@ -51,7 +52,7 @@
             data: {
                 args: JSON.stringify(args),
                 inventory: JSON.stringify(inventory),
-                entranceMapping: JSON.stringify(entranceMapping),
+                entranceMap: JSON.stringify(entranceMap),
             },
             success: function(response) {
                 $('#checkList').html(response);

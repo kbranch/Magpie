@@ -121,15 +121,15 @@ def getLogicWithoutER(realArgs):
     
     return log
 
-def getLogics(args, entranceMapping):
+def getLogics(args, entranceMap):
     worldSetup = WorldSetup()
     # worldSetup.randomize(args, random.Random())
 
     entrancePool = getEntrancePool(args)
 
     for entrance in worldSetup.entrance_mapping:
-        if entrance in entranceMapping:
-            worldSetup.entrance_mapping[entrance] = entranceMapping[entrance]
+        if entrance in entranceMap:
+            worldSetup.entrance_mapping[entrance] = entranceMap[entrance]
         elif entrance in entrancePool:
             worldSetup.entrance_mapping[entrance] = 'rooster_house'
 

@@ -3,7 +3,7 @@ function saveChecked() {
 }
 
 function saveEntrances() {
-    localStorage.setItem('entranceMapping', JSON.stringify(entranceMapping));
+    localStorage.setItem('entranceMap', JSON.stringify(entranceMap));
 }
 
 function saveLocations() {
@@ -20,13 +20,13 @@ function loadLocations() {
 
 function loadEntrances() {
     try {
-        entranceMapping = JSON.parse(localStorage.getItem('entranceMapping'));
+        entranceMap = JSON.parse(localStorage.getItem('entranceMap'));
     }
     catch (err) {
     }
 
-    if (entranceMapping == null) {
-        entranceMapping = {};
+    if (entranceMap == null) {
+        entranceMap = {};
     }
 }
 
@@ -40,6 +40,11 @@ function loadChecked() {
     if (checkedChecks == null) {
         checkedChecks = {};
     }
+}
+
+function updateReverseMap() {
+    reverseEntranceMap = Object.entries(entranceMap)
+                               .reduce((rev, [key, value]) => (rev[value] = key, rev), {});
 }
 
 function getCheckedKey(area, name) {
@@ -206,7 +211,7 @@ function resetLocations() {
 }
 
 function resetEntrances() {
-    entranceMapping = {};
+    entranceMap = {};
     saveEntrances();
 }
 

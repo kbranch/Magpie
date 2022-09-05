@@ -15,50 +15,72 @@ function drawChecks(mapName, animate=true) {
         oldNodes.add($(this).attr('data-node-id'));
     });
 
+    updateReverseMap();
+
     let map = $(mapImg).closest('div.tab-pane');
     let parent = $(map).find('div.map-wrapper');
     createNodes(map, mapName);
 
     for (const nodeId in nodes) {
         let node = nodes[nodeId];
-        let keyClass = node.behindKeys ? ' behind-keys' : '';
-        let animationClass = animate ? ' animate__bounceInDown' : '';
-        let iconClass = node.checks.length > 0 ? `difficulty-${node.difficulty}` : 'entrance-only';
-        let startClass = args.randomstartlocation 
-                         && node.entrance != null 
-                         && entranceMapping[node.entrance.id] == 'start_house' ? ' start-location' : '';
-        let classes = `checkGraphic animate__animated ${iconClass}${keyClass}${startClass}`;
-        let graphic = $(`[data-node-id="${nodeId}"]`);
+        let animationClass = animate ? 'animate__bounceInDown' : '';
+        let classes = ['checkGraphic', 'animate__animated'];
 
+        if (node.behindKeys) classes.push('behind-keys');
+        if (args.randomstartlocation 
+            && node.entrance != null 
+            && entranceMap[node.entrance.id] == 'start_house') {
+            classes.push('start-location');
+        }
+
+        node.checks.length > 0 ? classes.push(`difficulty-${node.difficulty}`) : classes.push('entrance-only');
+
+        let graphic = $(`[data-node-id="${nodeId}"]`);
         if (graphic.length > 0) {
             let currentDiff = $(graphic).attr('data-difficulty');
 
             if (currentDiff == "9" && node.difficulty >= 0 && node.difficulty < 9) {
-                classes += animationClass;
+                classes.push(animationClass);
             }
             else {
                 $(graphic).removeClass('animate__bounceInDown');
             }
         }
         else {
-            classes += animationClass;
+            classes.push(animationClass);
 
             graphic = buildNewCheckGraphic(nodeId);
 
             $(parent).append(graphic);
         }
 
-        $(graphic).attr({
-            'class': classes,
-            'data-difficulty': node.difficulty,
-        })
-
         if (node.entrance != null) {
             $(graphic).attr('data-entrance-id', node.entrance.id);
+
+            if (node.entrance.id in entranceMap
+                && entranceMap[node.entrance.id] != node.entrance.id) {
+                $(graphic.attr('data-connected-to', entranceMap[node.entrance.id]));
+            }
+            else {
+                $(graphic).removeAttr('data-connected-to');
+            }
+
+            if (node.entrance.id in reverseEntranceMap
+                && reverseEntranceMap[node.entrance.id] != node.entrance.id) {
+                $(graphic.attr('data-connected-from', reverseEntranceMap[node.entrance.id]));
+            }
+            else {
+                $(graphic).removeAttr('data-connected-from');
+            }
         }
         else {
             $(graphic).removeAttr('data-entrance-id');
         }
+
+        $(graphic).attr({
+            'class': classes.join(' '),
+            'data-difficulty': node.difficulty,
+        })
 
         addTooltip(graphic);
 
@@ -164,8 +186,8 @@ function createNodes(map, mapName) {
         }
 
         let entranceId = node.entrance.id;
-        if (!(entranceId in entranceMapping)
-            || entranceMapping[entranceId] == entranceId) {
+        if (!(entranceId in entranceMap)
+            || entranceMap[entranceId] == entranceId) {
             continue;
         }
 
@@ -174,7 +196,7 @@ function createNodes(map, mapName) {
     }
 
     for (const node of remappedNodes) {
-        node.checks = checksByEntrance[entranceMapping[node.entrance.id]];
+        node.checks = checksByEntrance[entranceMap[node.entrance.id]];
     }
 
     for (const key in nodes) {
@@ -264,15 +286,15 @@ function checkGraphicMouseEnter(element) {
 
         let nodeId = $(element).attr('data-node-id');
         let node = nodes[nodeId];
-        if (node.entrance != null && entranceMapping[node.entrance.id] != node.entrance.id) {
+        if (node.entrance != null && entranceMap[node.entrance.id] != node.entrance.id) {
             let entranceId = node.entrance.id;
-            let target = entranceMapping[entranceId];
+            let target = entranceMap[entranceId];
             let selector = `.checkGraphic[data-entrance-id="${target}"]`;
 
             $(element).connections({ class: 'entrance-to', to: selector });
             $(element).connections({ class: 'outer-entrance-connection', to: selector });
 
-            let connectingElement = Object.keys(entranceMapping).find(x => entranceMapping[x] == entranceId);
+            let connectingElement = Object.keys(entranceMap).find(x => entranceMap[x] == entranceId);
             if (connectingElement) {
                 let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
 
@@ -335,14 +357,14 @@ function setStartLocation(element) {
     let entrance = node.entrance;
 
     for (const start of startLocations) {
-        if (entranceMapping[start] == startHouse && start != startHouse) {
-            entranceMapping[start] = entranceMapping[startHouse];
+        if (entranceMap[start] == startHouse && start != startHouse) {
+            entranceMap[start] = entranceMap[startHouse];
             break;
         }
     }
 
-    entranceMapping[entrance.id] = startHouse;
-    entranceMapping[startHouse] = entrance.id;
+    entranceMap[entrance.id] = startHouse;
+    entranceMap[startHouse] = entrance.id;
 
     saveEntrances();
     closeAllCheckTooltips();

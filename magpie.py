@@ -59,7 +59,7 @@ def renderCheckList():
     try:
         argValues = parseArgs(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
-        entranceMapping = jsonpickle.decode(request.form['entranceMapping'])
+        entranceMap = jsonpickle.decode(request.form['entranceMap'])
 
         inventory['RUPEES_500'] = 10
         inventory['RAFT'] = 1
@@ -76,7 +76,7 @@ def renderCheckList():
 
         entrances = list(entrances)
         allItems = getAllItems(args)
-        logics = getLogics(args, entranceMapping)
+        logics = getLogics(args, entranceMap)
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, logics, inventory)
 
