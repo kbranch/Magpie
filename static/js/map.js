@@ -145,6 +145,28 @@ function createNodes(map, mapName) {
         }
     }
 
+    let checksByEntrance = {};
+    let remappedNodes = [];
+    for (const key in nodes) {
+        let node = nodes[key];
+        if (node.entrance == null) {
+            continue;
+        }
+
+        let entranceId = node.entrance.id;
+        if (!(entranceId in entranceMapping)
+            || entranceMapping[entranceId] == entranceId) {
+            continue;
+        }
+
+        checksByEntrance[entranceId] = node.checks;
+        remappedNodes.push(node);
+    }
+
+    for (const node of remappedNodes) {
+        node.checks = checksByEntrance[entranceMapping[node.entrance.id]];
+    }
+
     for (const key in nodes) {
         nodes[key].update();
     }
@@ -290,6 +312,7 @@ function setStartLocation(element) {
     entranceMapping[entrance.id] = startHouse;
     entranceMapping[startHouse] = entrance.id;
 
+    saveEntrances();
     closeAllCheckTooltips();
     refreshCheckList();
 }

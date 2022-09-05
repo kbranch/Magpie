@@ -60,7 +60,6 @@ def renderCheckList():
         argValues = parseArgs(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
         entranceMapping = jsonpickle.decode(request.form['entranceMapping'])
-        # entranceMapping = {'shop': 'shop', 'madambowwow': 'prairie_left_cave1'}
 
         inventory['RUPEES_500'] = 10
         inventory['RAFT'] = 1
@@ -68,8 +67,6 @@ def renderCheckList():
 
         initChecks()
         args = getArgs(values=argValues)
-
-        # args.entranceshuffle = 'advanced'
 
         addStartingItems(inventory, args)
 
