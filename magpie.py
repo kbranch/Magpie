@@ -71,8 +71,8 @@ def renderCheckList():
         addStartingItems(inventory, args)
 
         entrances = getEntrancePool(args)
-        if args.randomstartlocation:
-            entrances = entrances.union(set(getStartLocations()))
+        if args.randomstartlocation and args.entranceshuffle == 'none':
+            entrances = entrances.union(set(getStartLocations(args)))
 
         entrances = list(entrances)
         allItems = getAllItems(args)
@@ -84,7 +84,7 @@ def renderCheckList():
                                                  logics=logics,
                                                  checkCount=len(allChecks),
                                                  entrances=jsonpickle.encode(entrances),
-                                                 startLocations=jsonpickle.encode(getStartLocations()),
+                                                 startLocations=jsonpickle.encode(getStartLocations(args)),
                                                  )
     except:
         return renderTraceback()

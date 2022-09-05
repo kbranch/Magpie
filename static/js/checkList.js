@@ -201,7 +201,16 @@ function refreshChecked() {
 }
 
 function resetLocations() {
-    checkedChecks = {};
+    resetEntrances();
+    resetChecks();
+}
+
+function resetEntrances() {
     entranceMapping = {};
-    saveLocations();
+    saveEntrances();
+}
+
+function resetChecks() {
+    checkedChecks = {};
+    saveChecked();
 }

@@ -211,5 +211,11 @@ def getEntrancePool(args):
 
     return entrances
 
-def getStartLocations():
-    return start_locations
+def getStartLocations(args):
+    if not args.randomstartlocation:
+        return []
+
+    if args.entranceshuffle == 'none':
+        return start_locations
+    else:
+        return WorldSetup.getEntrancePool(None, args)
