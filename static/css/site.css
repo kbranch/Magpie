@@ -356,3 +356,21 @@ button.nav-link.active {
 .modal-body {
     display: inline-block;
 }
+
+.entrance-from {
+    border: 10px solid #ff9a00;
+    border-radius: 100%;
+    z-index: 100;
+}
+
+.entrance-to {
+    border: 10px solid #00a2ff;
+    border-radius: 100%;
+    z-index: 100;
+}
+
+.outer-entrance-connection {
+    border: 10px double #000;
+    border-radius: 100%;
+    z-index: 101;
+}

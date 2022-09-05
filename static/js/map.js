@@ -8,7 +8,7 @@ function drawChecks(mapName, animate=true) {
         return;
     }
 
-    $('.animate__fadeOut').remove();
+    $('.checkGraphic.animate__fadeOut').remove();
 
     let oldNodes = new Set();
     $('.checkGraphic').each(function () {
@@ -49,6 +49,13 @@ function drawChecks(mapName, animate=true) {
             'class': classes,
             'data-difficulty': node.difficulty,
         })
+
+        if (node.entrance != null) {
+            $(graphic).attr('data-entrance-id', node.entrance.id);
+        }
+        else {
+            $(graphic).removeAttr('data-entrance-id');
+        }
 
         addTooltip(graphic);
 
@@ -217,6 +224,7 @@ function closeOtherTooltips(element) {
 }
 
 function closeAllCheckTooltips() {
+    $('connection').connections('remove');
     let nodes = $(`.checkGraphic`);
     nodes.tooltip('hide');
 
@@ -250,6 +258,25 @@ function checkGraphicMouseEnter(element) {
     if (!hasAttr(element, 'data-pinned')) {
         let tooltip = bootstrap.Tooltip.getInstance(element);
         tooltip.show();
+
+        let nodeId = $(element).attr('data-node-id');
+        let node = nodes[nodeId];
+        if (node.entrance != null && entranceMapping[node.entrance.id] != node.entrance.id) {
+            let entranceId = node.entrance.id;
+            let target = entranceMapping[entranceId];
+            let selector = `.checkGraphic[data-entrance-id="${target}"]`;
+
+            $(element).connections({ class: 'entrance-to', to: selector });
+            $(element).connections({ class: 'outer-entrance-connection', to: selector });
+
+            let connectingElement = Object.keys(entranceMapping).find(x => entranceMapping[x] == entranceId);
+            if (connectingElement) {
+                let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
+
+                $(element).connections({ class: 'entrance-from', from: selector });
+                $(element).connections({ class: 'outer-entrance-connection', from: selector });
+            }
+        }
     }
 }
 
@@ -257,6 +284,7 @@ function checkGraphicMouseLeave(element) {
     if (!hasAttr(element, 'data-pinned')) {
         let tooltip = bootstrap.Tooltip.getInstance(element);
         tooltip.hide();
+        $('connection').connections('remove');
     }
 }
 
@@ -275,6 +303,7 @@ function nodeSecondary(element) {
     }
 
     addTooltip(element);
+
 }
 
 function checkGraphicLeftClick(element) {
