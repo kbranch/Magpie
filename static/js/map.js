@@ -217,9 +217,12 @@ function createNodes(map, mapName) {
     }
 
     for (const key in nodes) {
-        nodes[key].update();
+        let node = nodes[key];
+        node.update();
 
-        if (localSettings.hideChecked && nodes[key].isChecked) {
+        if (localSettings.hideChecked
+            && node.isChecked
+            && entranceMap[node.entrance] != 'start_house') {
             delete nodes[key];
         }
     }
