@@ -29,7 +29,8 @@ class MapNode {
 
     updateBehindKeys() {
         this.behindKeys = this.checks.length > 0 
-                          && this.checks.filter(x => x.difficulty == this.difficulty)
+                          && this.checks.filter(x => x.difficulty == this.difficulty
+                                                     && !x.isChecked())
                                         .every(x => x.behindKeys);
     }
 
@@ -45,9 +46,14 @@ class MapNode {
         }
     }
 
+    updateIsChecked() {
+        this.isChecked = this.checks.every(x => x.isChecked());
+    }
+
     update() {
         this.updateDifficulty();
         this.updateBehindKeys();
+        this.updateIsChecked();
         this.sortChecks();
     }
 

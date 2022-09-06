@@ -52,37 +52,13 @@ function getCheckedKey(area, name) {
 }
 
 function toggleNode(nodeGraphic) {
-    $(nodeGraphic).tooltip('hide');
     let node = nodes[$(nodeGraphic).attr('data-node-id')];
+    let toggleList = new Set(node.checks.filter(x => (x.difficulty == node.difficulty
+                                                      && x.behindKeys == node.behindKeys)
+                                                     || (x.isChecked() && node.isChecked))
+                                        .map(x => x.id));
 
-    let toggleList = {};
-    let outOfLogic = {};
-
-    for (const check of node.checks) {
-        if (!(check.isChecked() || check.difficulty == 9)) {
-            toggleList[check.id] = check;
-        }
-
-        if (!check.isChecked() && check.difficulty == 9) {
-            outOfLogic[check.id] = check;
-        }
-    }
-
-    toggleList = Object.values(toggleList);
-    outOfLogic = Object.values(outOfLogic);
-
-    if (toggleList.length > 0) {
-        toggleChecks(toggleList);
-    }
-    else {
-        if (outOfLogic.length > 0) {
-            toggleChecks(outOfLogic);
-        }
-        else {
-            let checks = node.checks.reduce((dict, x) => { dict[x.id] = x; return dict }, {});
-            toggleChecks(Object.values(checks));
-        }
-    }
+    toggleChecks(toggleList);
 
     drawActiveTab();
 }
@@ -94,8 +70,8 @@ function toggleSingleNodeCheck(check) {
 }
 
 function toggleChecks(checks) {
-    for (const check of checks) {
-        let textCheck = $(`li[data-check-id="${check.id}"`);
+    for (const id of checks) {
+        let textCheck = $(`li[data-check-id="${id}"`);
         toggleCheck(null, textCheck, false);
     }
 }
