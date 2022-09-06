@@ -8,6 +8,8 @@ function drawChecks(mapName, animate=true) {
         return;
     }
 
+    animate = animate && localSettings.animateChecks;
+
     $('.checkGraphic.animate__fadeOut').remove();
 
     let oldNodes = new Set();
