@@ -377,7 +377,14 @@ button.nav-link.active {
     z-index: 101;
 }
 
-.start-location:before {
+.start-location.difficulty-checked {
+    border-style: none;
+    background-image: url('/static/images/house.svg');
+    background-size: contain;
+    z-index: 1;
+}
+
+.start-location:not(.difficulty-checked):before {
     content: '';
     background-image: url('/static/images/house.svg');
     background-size: 100%;
