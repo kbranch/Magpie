@@ -26,6 +26,8 @@ class LocalSettings:
         self.animateChecks = True
         self.swapMouseButtons = False
         self.swapItemsAndMap = False
+        self.hideChecked = False
+        self.ignoreHigherLogic = False
 
 @app.route("/")
 def home():

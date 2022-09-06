@@ -153,16 +153,20 @@ function createNodes(map, mapName) {
     for (const check of checks) {
         let id = $(check).attr('data-check-id');
         let checkMaps = coordDict[id].locations.map(function(x) { return x.map; });
+        let difficulty = Number($(check).attr('data-difficulty'));
+
+        if (localSettings.ignoreHigherLogic && difficulty > 0) {
+            difficulty = 9;
+        }
 
         if (!(checkMaps.includes(mapName))
-            || ($(check).attr('data-logic') == 'Out of logic'
+            || (difficulty == 9
                 && !localSettings.showOutOfLogic)) {
             continue;
         }
 
         let checkData = coordDict[id];
         let behindKeys = $(check).attr('data-behind_keys') == 'True'
-        let difficulty = Number($(check).attr('data-difficulty'));
         let coords = checkData.locations;
 
         for (const coord of coords) {
@@ -214,6 +218,10 @@ function createNodes(map, mapName) {
 
     for (const key in nodes) {
         nodes[key].update();
+
+        if (localSettings.hideChecked && nodes[key].isChecked) {
+            delete nodes[key];
+        }
     }
 }
 
