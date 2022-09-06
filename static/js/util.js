@@ -44,6 +44,7 @@ function modifyTooltipAllowList() {
     allowList.div.push('onclick');
     allowList.li.push('onclick');
     allowList.li.push('data-node-id');
+    allowList.button = ['class', 'type', 'data-value', 'onclick', 'data-bs-toggle', 'aria-expanded'];
 }
 
 function preventDoubleClick(event) {

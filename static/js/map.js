@@ -186,12 +186,20 @@ function createNodes(map, mapName) {
         }
 
         let entranceId = node.entrance.id;
+        checksByEntrance[entranceId] = node.checks;
+
+        if (!(entranceId in entranceMap)) {
+            if (args.entranceshuffle != 'none'
+                || !(entranceId in startLocations)) {
+                node.checks = [];
+            }
+        }
+
         if (!(entranceId in entranceMap)
             || entranceMap[entranceId] == entranceId) {
             continue;
         }
 
-        checksByEntrance[entranceId] = node.checks;
         remappedNodes.push(node);
     }
 
@@ -365,6 +373,19 @@ function setStartLocation(element) {
 
     entranceMap[entrance.id] = startHouse;
     entranceMap[startHouse] = entrance.id;
+
+    saveEntrances();
+    closeAllCheckTooltips();
+    refreshCheckList();
+}
+
+function connectEntrances(from, to) {
+    if (to == 'clear') {
+        delete entranceMap[from];
+    }
+    else {
+        entranceMap[from] = to;
+    }
 
     saveEntrances();
     closeAllCheckTooltips();

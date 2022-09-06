@@ -106,7 +106,7 @@ let entranceDict = {
 		  {
 			 "map":"overworld",
 			 "x":1992,
-			 "y":1088
+			 "y":1080
 		  }
 	   ],
 	   "type":"check"

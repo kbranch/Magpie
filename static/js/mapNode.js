@@ -85,7 +85,7 @@ class MapNode {
     </ul>
 </div>`;
         const checkTemplate = `<li class="list-group-item tooltip-item">
-    <div class='text-start d-flex p-1 mb-0 {top-padding}' data-check-id='{check-id}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
+    <div class='text-start d-flex p-1 mb-0' data-check-id='{check-id}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
             {name}
@@ -96,7 +96,6 @@ class MapNode {
         let uniqueIds = this.uniqueCheckIds();
         let areaHtml = '';
         let areas = {};
-        let padding = 'pt-2';
         let entranceArea = '';
 
         if (this.entrance != null) {
@@ -114,18 +113,14 @@ class MapNode {
 
             let line = checkTemplate.replace('{check-id}', id)
                             .replace('{graphic}', graphic)
-                            .replace('{name}', metadata.name)
-                            .replace('{top-padding}', padding);
+                            .replace('{name}', metadata.name);
 
-            padding = '';
 
             areas[metadata.area] += line;
         }
 
         for (const area of sortByKey(Object.keys(areas), x => [x == entranceArea, x])) {
-            let entranceHtml = this.getEntranceHtml(area, padding);
-
-            padding = '';
+            let entranceHtml = this.getEntranceHtml(area);
 
             areaHtml += areaTemplate.replace('{area}', area)
                                     .replace('{checks}', areas[area])
@@ -141,9 +136,9 @@ class MapNode {
         return title;
     }
 
-    getEntranceHtml(area, padding) {
+    getEntranceHtml(area) {
         const entranceTemplate = `<li class="list-group-item tooltip-item">
-    <div class='text-start d-flex p-1 mb-0 {top-padding}' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
+    <div class='text-start d-flex p-1 mb-0' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
             {name}
@@ -161,17 +156,17 @@ class MapNode {
             let graphic = this.entranceGraphicHtml();
             entranceHtml = entranceTemplate.replace('{entrance-id}', this.entrance.id)
                                             .replace('{graphic}', graphic)
-                                            .replace('{name}', this.entrance.name)
-                                            .replace('{top-padding}', padding);
+                                            .replace('{name}', this.entrance.name);
             if (this.entrance.id in entranceMap
                 && entranceMap[this.entrance.id] != this.entrance.id) {
                 let connection = entranceDict[entranceMap[this.entrance.id]];
-                entranceHtml += connectionTemplate.replace('{connection}', `Leads to ${connection.area}: ${connection.name}`);
+                entranceHtml += connectionTemplate.replace('{connection}', `Leads to ${connection.name}`);
             }
             if (this.entrance.id in reverseEntranceMap
-                && reverseEntranceMap[this.entrance.id] != this.entrance.id) {
-                let connection = entranceDict[entranceMap[this.entrance.id]];
-                entranceHtml += connectionTemplate.replace('{connection}', `Accessed from ${connection.area}: ${connection.name}`);
+                && reverseEntranceMap[this.entrance.id] != this.entrance.id
+                /*&& this.entrance.id in entranceMap*/) {
+                let connection = entranceDict[reverseEntranceMap[this.entrance.id]];
+                entranceHtml += connectionTemplate.replace('{connection}', `Accessed from ${connection.name}`);
             }
         }
 
@@ -195,11 +190,38 @@ class MapNode {
                 && args.dungeonshuffle
                 && this.entrance.id.startsWith('d')
                 && this.entrance.id.length == 2) {
+
+                let options = entrances.filter(x => x.startsWith('d') && x.length == 2)
+                        .map(x => [x, entranceDict[x].name]);
                 
+                options = sortByKey(options, x => [x[0]]);
+                options.push(['clear', 'Clear'])
+
+                let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
+
+                pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
             }
         }
 
         return pinnedHtml;
+    }
+
+    static createDropdown(title, action, options, optionAction) {
+        let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="${optionAction}">{name}</button></li>`;
+        let items = '';
+
+        for (const option of options) {
+            items += itemTemplate.replace('{value}', option[0])
+                                 .replace('{name}', option[1]);
+        }
+
+        return `<div class="btn-group dropend">
+        <button type="button" class="btn tooltip-item" onclick="${action}">${title}</button>
+        <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split px-2" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <ul class="dropdown-menu">
+            ${items}
+        </ul>
+      </div>`;
     }
 
     static nodeId(x, y) {

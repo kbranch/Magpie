@@ -154,6 +154,25 @@ img {
     color: var(--bs-tooltip-color);
     padding: 1px;
     cursor: default;
+    border: none;
+}
+
+.tooltip-item:hover {
+    background-color: #444;
+    color: var(--bs-tooltip-color);
+    border-radius: 3px;
+}
+
+.dropdown-menu {
+    padding: 0.5rem;
+    background-color: var(--bs-tooltip-bg);
+    color: var(--bs-tooltip-color);
+}
+
+.dropdown-item:focus {
+    background-color: #444;
+    color: var(--bs-tooltip-color);
+    border-radius: 3px;
 }
 
 .tooltip-area-header {
@@ -169,11 +188,6 @@ img {
     cursor: default;
 }
 
-.tooltip-item:hover {
-    background-color: #444;
-    border-radius: 3px;
-}
-
 .text-check:hover {
     background-color: #444;
     border-radius: 3px;
@@ -184,14 +198,14 @@ img {
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 74%;
-    height: 74%;
-    margin-left: 13%;
-    margin-top: 13%;
-    background-image: url('/static/images/keyLocked.png');
+    width: 90%;
+    height: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+    background-image: url('/static/images/key.svg');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: contain;
+    background-size: cover;
 }
 
 .checkGraphic {
@@ -384,4 +398,12 @@ button.nav-link.active {
     position: absolute;
     top: 0px;
     left: -100%;
+}
+
+.dropend {
+    width: 100%;
+}
+
+.dropdown-toggle-split {
+    width: 30px !important;
 }

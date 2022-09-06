@@ -55,28 +55,32 @@ function toggleNode(nodeGraphic) {
     $(nodeGraphic).tooltip('hide');
     let node = nodes[$(nodeGraphic).attr('data-node-id')];
 
-    let toggleList = new Set();
-    let outOfLogic = new Set();
+    let toggleList = {};
+    let outOfLogic = {};
 
     for (const check of node.checks) {
         if (!(check.isChecked() || check.difficulty == 9)) {
-            toggleList.add(check);
+            toggleList[check.id] = check;
         }
 
         if (!check.isChecked() && check.difficulty == 9) {
-            outOfLogic.add(check);
+            outOfLogic[check.id] = check;
         }
     }
 
-    if (toggleList.size > 0) {
+    toggleList = Object.values(toggleList);
+    outOfLogic = Object.values(outOfLogic);
+
+    if (toggleList.length > 0) {
         toggleChecks(toggleList);
     }
     else {
-        if (outOfLogic.size > 0) {
+        if (outOfLogic.length > 0) {
             toggleChecks(outOfLogic);
         }
         else {
-            toggleChecks(node.checks);
+            let checks = node.checks.reduce((dict, x) => { dict[x.id] = x; return dict }, {});
+            toggleChecks(Object.values(checks));
         }
     }
 
