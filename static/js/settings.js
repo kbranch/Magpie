@@ -40,8 +40,6 @@ function saveSettings() {
     fixGoal(args);
     saveSettingsToStorage(args, localSettings);
 
-    clearCheckImages();
-
     applySettings();
 
     refreshItems();
