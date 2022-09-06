@@ -2,7 +2,7 @@ let entranceDict = {
 	"d0":{
 	   "id":"d0",
 	   "area":"Koholint Prairie",
-	   "name":"Color Dungeon",
+	   "name":"D0: Color Dungeon",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -18,7 +18,7 @@ let entranceDict = {
 	"d1":{
 	   "id":"d1",
 	   "area":"Toronbo Shores",
-	   "name":"Tail Cave",
+	   "name":"D1: Tail Cave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -34,7 +34,7 @@ let entranceDict = {
 	"d2":{
 	   "id":"d2",
 	   "area":"Goponga Swamp",
-	   "name":"Bottle Grotto",
+	   "name":"D2: Bottle Grotto",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -50,7 +50,7 @@ let entranceDict = {
 	"d3":{
 	   "id":"d3",
 	   "area":"Ukuku Prairie",
-	   "name":"Key Cavern",
+	   "name":"D3: Key Cavern",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -66,7 +66,7 @@ let entranceDict = {
 	"d4":{
 	   "id":"d4",
 	   "area":"Tal Tal Heights",
-	   "name":"Angler's Tunnel",
+	   "name":"D4: Angler's Tunnel",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -82,7 +82,7 @@ let entranceDict = {
 	"d5":{
 	   "id":"d5",
 	   "area":"Martha's Bay",
-	   "name":"Catfish's Maw",
+	   "name":"D5: Catfish's Maw",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -98,7 +98,7 @@ let entranceDict = {
 	"d6":{
 	   "id":"d6",
 	   "area":"Ukuku Prairie",
-	   "name":"Face Shrine",
+	   "name":"D6: Face Shrine",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -114,7 +114,7 @@ let entranceDict = {
 	"d7":{
 	   "id":"d7",
 	   "area":"Tal Tal Mountains",
-	   "name":"Eagle's Tower",
+	   "name":"D7: Eagle's Tower",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -130,7 +130,7 @@ let entranceDict = {
 	"d8":{
 	   "id":"d8",
 	   "area":"Tal Tal Mountains",
-	   "name":"Turtle Rock",
+	   "name":"D8: Turtle Rock",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dungeon",
@@ -146,7 +146,7 @@ let entranceDict = {
 	"phone_d8":{
 	   "id":"phone_d8",
 	   "area":"Tal Tal Mountains",
-	   "name":"D8 Phone",
+	   "name":"Phone Near D8",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -162,7 +162,7 @@ let entranceDict = {
 	"fire_cave_exit":{
 	   "id":"fire_cave_exit",
 	   "area":"Tal Tal Mountains",
-	   "name":"Fire Cave Exit",
+	   "name":"Flamethrower Cave Exit",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -178,7 +178,7 @@ let entranceDict = {
 	"fire_cave_entrance":{
 	   "id":"fire_cave_entrance",
 	   "area":"Tal Tal Mountains",
-	   "name":"Fire Cave Entrance",
+	   "name":"Flamethrower Cave Entrance",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -194,7 +194,7 @@ let entranceDict = {
 	"madbatter_taltal":{
 	   "id":"madbatter_taltal",
 	   "area":"Tal Tal Mountains",
-	   "name":"Mad Batter",
+	   "name":"Mad Batter - Mountain",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -210,7 +210,7 @@ let entranceDict = {
 	"left_taltal_entrance":{
 	   "id":"left_taltal_entrance",
 	   "area":"Tal Tal Mountains",
-	   "name":"Left Tal Tal Entrance",
+	   "name":"Bottom of West Tal Tal",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -226,7 +226,7 @@ let entranceDict = {
 	"obstacle_cave_entrance":{
 	   "id":"obstacle_cave_entrance",
 	   "area":"Tal Tal Mountains",
-	   "name":"Obstacle Cave Entrance",
+	   "name":"Mountain Access",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -242,7 +242,7 @@ let entranceDict = {
 	"left_to_right_taltalentrance":{
 	   "id":"left_to_right_taltalentrance",
 	   "area":"Tal Tal Mountains",
-	   "name":"Left to Right Tal Tal Entrance",
+	   "name":"Path to West Tal Tal Entrance",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -258,7 +258,7 @@ let entranceDict = {
 	"obstacle_cave_outside_chest":{
 	   "id":"obstacle_cave_outside_chest",
 	   "area":"Tal Tal Mountains",
-	   "name":"Obstacle Cave Outside Chest",
+	   "name":"Mountain Access Outside Chest",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -274,7 +274,7 @@ let entranceDict = {
 	"obstacle_cave_exit":{
 	   "id":"obstacle_cave_exit",
 	   "area":"Tal Tal Mountains",
-	   "name":"Obstacle Cave Exit",
+	   "name":"Mountain Access Exit",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -290,7 +290,7 @@ let entranceDict = {
 	"papahl_entrance":{
 	   "id":"papahl_entrance",
 	   "area":"Tal Tal Mountains",
-	   "name":"Papahl Entrance",
+	   "name":"Path to Papahl",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -306,7 +306,7 @@ let entranceDict = {
 	"papahl_exit":{
 	   "id":"papahl_exit",
 	   "area":"Tal Tal Mountains",
-	   "name":"Papahl Exit",
+	   "name":"Near Papahl",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -322,7 +322,7 @@ let entranceDict = {
 	"rooster_house":{
 	   "id":"rooster_house",
 	   "area":"Tal Tal Mountains",
-	   "name":"Rooster House",
+	   "name":"Luigi's House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -338,7 +338,7 @@ let entranceDict = {
 	"bird_cave":{
 	   "id":"bird_cave",
 	   "area":"Tal Tal Mountains",
-	   "name":"Bird Cave",
+	   "name":"Rooster Key Cave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -353,7 +353,7 @@ let entranceDict = {
 	"multichest_left":{
 	   "id":"multichest_left",
 	   "area":"Tal Tal Mountains",
-	   "name":"Multichest Left",
+	   "name":"Before 5 Chest Game",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -368,7 +368,7 @@ let entranceDict = {
 	"multichest_right":{
 	   "id":"multichest_right",
 	   "area":"Tal Tal Mountains",
-	   "name":"Multichest Right",
+	   "name":"After 5 Chest Game",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -383,7 +383,7 @@ let entranceDict = {
 	"multichest_top":{
 	   "id":"multichest_top",
 	   "area":"Tal Tal Mountains",
-	   "name":"Multichest Top",
+	   "name":"Outside 5 Chest Game",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -398,7 +398,7 @@ let entranceDict = {
 	"right_taltal_connector1":{
 	   "id":"right_taltal_connector1",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Tal Tal Connector 1",
+	   "name":"Outer Rainbow Cave Left",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -413,7 +413,7 @@ let entranceDict = {
 	"right_taltal_connector2":{
 	   "id":"right_taltal_connector2",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Tal Tal Connector 2",
+	   "name":"Outer Rainbow Cave Right",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -428,7 +428,7 @@ let entranceDict = {
 	"right_taltal_connector3":{
 	   "id":"right_taltal_connector3",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Tal Tal Connector 3",
+	   "name":"Inner Rainbow Cave Left",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -443,7 +443,7 @@ let entranceDict = {
 	"right_taltal_connector4":{
 	   "id":"right_taltal_connector4",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Tal Tal Connector 4",
+	   "name":"Inner Rainbow Cave Right",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -458,7 +458,7 @@ let entranceDict = {
 	"right_taltal_connector5":{
 	   "id":"right_taltal_connector5",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Tal Tal Connector 5",
+	   "name":"Path to D7",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -473,7 +473,7 @@ let entranceDict = {
 	"right_taltal_connector6":{
 	   "id":"right_taltal_connector6",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Tal Tal Connector 6",
+	   "name":"House Near D7",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -488,7 +488,7 @@ let entranceDict = {
 	"right_fairy":{
 	   "id":"right_fairy",
 	   "area":"Tal Tal Mountains",
-	   "name":"Right Fairy",
+	   "name":"Fairy Near D7",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -533,7 +533,7 @@ let entranceDict = {
 	"writes_house":{
 	   "id":"writes_house",
 	   "area":"Goponga Swamp",
-	   "name":"Write's House",
+	   "name":"Mr. Write's House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -548,7 +548,7 @@ let entranceDict = {
 	"writes_phone":{
 	   "id":"writes_phone",
 	   "area":"Goponga Swamp",
-	   "name":"Write's Phone",
+	   "name":"Swamp Phone",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -638,7 +638,7 @@ let entranceDict = {
 	"raft_house":{
 	   "id":"raft_house",
 	   "area":"Tal Tal Heights",
-	   "name":"Raft House",
+	   "name":"Raft Hut",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"insanity",
@@ -653,7 +653,7 @@ let entranceDict = {
 	"raft_return_enter":{
 	   "id":"raft_return_enter",
 	   "area":"Southern Face Shrine",
-	   "name":"Raft Return Enter",
+	   "name":"Raft Return Entrance",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -683,7 +683,7 @@ let entranceDict = {
 	"toadstool_exit":{
 	   "id":"toadstool_exit",
 	   "area":"Mysterious Woods",
-	   "name":"Toadstool Exit",
+	   "name":"Log Cave Mushroom Side",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -698,7 +698,7 @@ let entranceDict = {
 	"forest_madbatter":{
 	   "id":"forest_madbatter",
 	   "area":"Mysterious Woods",
-	   "name":"Mad Batter",
+	   "name":"Mad Batter - Forest",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -713,7 +713,7 @@ let entranceDict = {
 	"toadstool_entrance":{
 	   "id":"toadstool_entrance",
 	   "area":"Mysterious Woods",
-	   "name":"Toadstool Entrance",
+	   "name":"Log Cave Entrance",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -728,7 +728,7 @@ let entranceDict = {
 	"crazy_tracy":{
 	   "id":"crazy_tracy",
 	   "area":"Koholint Prairie",
-	   "name":"Crazy Tracy",
+	   "name":"Crazy Tracy's Hut",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -788,7 +788,7 @@ let entranceDict = {
 	"castle_jump_cave":{
 	   "id":"castle_jump_cave",
 	   "area":"Kanalet Castle",
-	   "name":"Boots Pit Cave",
+	   "name":"Kanlet Jump Cave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -803,7 +803,7 @@ let entranceDict = {
 	"castle_main_entrance":{
 	   "id":"castle_main_entrance",
 	   "area":"Kanalet Castle",
-	   "name":"Main Entrance",
+	   "name":"Kanalet Front Door",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -818,7 +818,7 @@ let entranceDict = {
 	"castle_upper_left":{
 	   "id":"castle_upper_left",
 	   "area":"Kanalet Castle",
-	   "name":"Upper Left",
+	   "name":"Kanalet Top Left",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -833,7 +833,7 @@ let entranceDict = {
 	"castle_upper_right":{
 	   "id":"castle_upper_right",
 	   "area":"Kanalet Castle",
-	   "name":"Upper Right",
+	   "name":"Kanalet Top Right",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -848,7 +848,7 @@ let entranceDict = {
 	"castle_secret_exit":{
 	   "id":"castle_secret_exit",
 	   "area":"Kanalet Castle",
-	   "name":"Secret Exit",
+	   "name":"Kanalet Tunnel Exit",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -863,7 +863,7 @@ let entranceDict = {
 	"castle_secret_entrance":{
 	   "id":"castle_secret_entrance",
 	   "area":"Kanalet Castle",
-	   "name":"Secret Entrance",
+	   "name":"Kanalet Tunnel Entrance",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -878,7 +878,7 @@ let entranceDict = {
 	"castle_phone":{
 	   "id":"castle_phone",
 	   "area":"Kanalet Castle",
-	   "name":"Phone",
+	   "name":"Kanalet Phone",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -893,7 +893,7 @@ let entranceDict = {
 	"papahl_house_left":{
 	   "id":"papahl_house_left",
 	   "area":"Mabe Village",
-	   "name":"Papahl House Left",
+	   "name":"Quadruplet's House Left",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -908,7 +908,7 @@ let entranceDict = {
 	"papahl_house_right":{
 	   "id":"papahl_house_right",
 	   "area":"Mabe Village",
-	   "name":"Papahl House Right",
+	   "name":"Quadruplet's House Right",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -938,7 +938,7 @@ let entranceDict = {
 	"rooster_grave":{
 	   "id":"rooster_grave",
 	   "area":"Mabe Village",
-	   "name":"Rooster Grave",
+	   "name":"Rooster's Grave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -953,7 +953,7 @@ let entranceDict = {
 	"shop":{
 	   "id":"shop",
 	   "area":"Mabe Village",
-	   "name":"Shop",
+	   "name":"Town Tool Shop",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -968,7 +968,7 @@ let entranceDict = {
 	"madambowwow":{
 	   "id":"madambowwow",
 	   "area":"Mabe Village",
-	   "name":"Madam MeowMeow",
+	   "name":"Madam MeowMeow's House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -983,7 +983,7 @@ let entranceDict = {
 	"kennel":{
 	   "id":"kennel",
 	   "area":"Mabe Village",
-	   "name":"Dog House",
+	   "name":"Doghouse",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -998,7 +998,7 @@ let entranceDict = {
 	"start_house":{
 	   "id":"start_house",
 	   "area":"Mabe Village",
-	   "name":"Marin's House",
+	   "name":"Marin and Tarin's House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1013,7 +1013,7 @@ let entranceDict = {
 	"library":{
 	   "id":"library",
 	   "area":"Mabe Village",
-	   "name":"Library",
+	   "name":"Town Library",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1028,7 +1028,7 @@ let entranceDict = {
 	"ulrira":{
 	   "id":"ulrira",
 	   "area":"Mabe Village",
-	   "name":"Ulrira",
+	   "name":"Ulrira's House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1043,7 +1043,7 @@ let entranceDict = {
 	"mabe_phone":{
 	   "id":"mabe_phone",
 	   "area":"Mabe Village",
-	   "name":"Phonebooth",
+	   "name":"Mabe Phone",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1073,7 +1073,7 @@ let entranceDict = {
 	"prairie_left_phone":{
 	   "id":"prairie_left_phone",
 	   "area":"Ukuku Prairie",
-	   "name":"Left Phonebooth",
+	   "name":"Phone East of Mabe",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1133,7 +1133,7 @@ let entranceDict = {
 	"mamu":{
 	   "id":"mamu",
 	   "area":"Ukuku Prairie",
-	   "name":"Mamu",
+	   "name":"Mamu's Staircase",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"insanity",
@@ -1148,7 +1148,7 @@ let entranceDict = {
 	"prairie_right_phone":{
 	   "id":"prairie_right_phone",
 	   "area":"Ukuku Prairie",
-	   "name":"Right Phone Booth",
+	   "name":"Central Koholint Phone",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1178,7 +1178,7 @@ let entranceDict = {
 	"prairie_right_cave_top":{
 	   "id":"prairie_right_cave_top",
 	   "area":"Donut Plains",
-	   "name":"North Cave",
+	   "name":"Martha's Bay Cliff Bottom Right",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1193,7 +1193,7 @@ let entranceDict = {
 	"prairie_right_cave_bottom":{
 	   "id":"prairie_right_cave_bottom",
 	   "area":"Donut Plains",
-	   "name":"South Cave",
+	   "name":"Martha's Bay Cliff Bottom Left",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1208,7 +1208,7 @@ let entranceDict = {
 	"prairie_right_cave_high":{
 	   "id":"prairie_right_cave_high",
 	   "area":"Donut Plains",
-	   "name":"High Cave",
+	   "name":"Martha's Bay Cliff Top",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1223,7 +1223,7 @@ let entranceDict = {
 	"prairie_to_animal_connector":{
 	   "id":"prairie_to_animal_connector",
 	   "area":"Ukuku Prairie",
-	   "name":"Prairie to Animal Connector",
+	   "name":"Under the River Left",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1238,7 +1238,7 @@ let entranceDict = {
 	"animal_to_prairie_connector":{
 	   "id":"animal_to_prairie_connector",
 	   "area":"Ukuku Prairie",
-	   "name":"Animal to Prairie Connector",
+	   "name":"Under the River Right",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1253,7 +1253,7 @@ let entranceDict = {
 	"d6_connector_exit":{
 	   "id":"d6_connector_exit",
 	   "area":"Southern Face Shrine",
-	   "name":"D6 Connector Exit",
+	   "name":"Cave Near D6",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1268,7 +1268,7 @@ let entranceDict = {
 	"d6_connector_entrance":{
 	   "id":"d6_connector_entrance",
 	   "area":"Southern Face Shrine",
-	   "name":"D6 Connector Entrance",
+	   "name":"Armos Island",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1283,7 +1283,7 @@ let entranceDict = {
 	"armos_fairy":{
 	   "id":"armos_fairy",
 	   "area":"Southern Face Shrine",
-	   "name":"Fairy",
+	   "name":"Fairy Near D6",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1298,7 +1298,7 @@ let entranceDict = {
 	"armos_maze_cave":{
 	   "id":"armos_maze_cave",
 	   "area":"Southern Face Shrine",
-	   "name":"Maze Cave",
+	   "name":"Armos Maze Cave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -1313,7 +1313,7 @@ let entranceDict = {
 	"armos_temple":{
 	   "id":"armos_temple",
 	   "area":"Southern Face Shrine",
-	   "name":"Armos Temple",
+	   "name":"Southern Shrine",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -1328,7 +1328,7 @@ let entranceDict = {
 	"boomerang_cave":{
 	   "id":"boomerang_cave",
 	   "area":"Toronbo Shores",
-	   "name":"Boomerang Cave",
+	   "name":"Boomerang Salesman Cave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -1343,7 +1343,7 @@ let entranceDict = {
 	"banana_seller":{
 	   "id":"banana_seller",
 	   "area":"Toronbo Shores",
-	   "name":"Sale's House",
+	   "name":"Sale's Hut",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1373,7 +1373,7 @@ let entranceDict = {
 	"richard_house":{
 	   "id":"richard_house",
 	   "area":"Pothole Field",
-	   "name":"Richard's House",
+	   "name":"Richard's Villa",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1388,7 +1388,7 @@ let entranceDict = {
 	"richard_maze":{
 	   "id":"richard_maze",
 	   "area":"Pothole Field",
-	   "name":"Richard's Cave",
+	   "name":"Pothole Field",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1403,7 +1403,7 @@ let entranceDict = {
 	"prairie_low_phone":{
 	   "id":"prairie_low_phone",
 	   "area":"Martha's Bay",
-	   "name":"Phone Booth",
+	   "name":"Martha's Bay Phone",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1418,7 +1418,7 @@ let entranceDict = {
 	"prairie_madbatter_connector_entrance":{
 	   "id":"prairie_madbatter_connector_entrance",
 	   "area":"Martha's Bay",
-	   "name":"Mad Batter Connector Entrance",
+	   "name":"Bay Batter Connector Entrance",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1433,7 +1433,7 @@ let entranceDict = {
 	"prairie_madbatter_connector_exit":{
 	   "id":"prairie_madbatter_connector_exit",
 	   "area":"Martha's Bay",
-	   "name":"Mad Batter Connector Exit",
+	   "name":"Bay Batter Connector Exit",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"connector",
@@ -1448,7 +1448,7 @@ let entranceDict = {
 	"prairie_madbatter":{
 	   "id":"prairie_madbatter",
 	   "area":"Martha's Bay",
-	   "name":"Mad Batter",
+	   "name":"Mad Batter - Bay",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
@@ -1463,7 +1463,7 @@ let entranceDict = {
 	"animal_phone":{
 	   "id":"animal_phone",
 	   "area":"Animal Village",
-	   "name":"Phone Booth",
+	   "name":"Animal Village Phone",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1478,7 +1478,7 @@ let entranceDict = {
 	"animal_house1":{
 	   "id":"animal_house1",
 	   "area":"Animal Village",
-	   "name":"Left Top Left House",
+	   "name":"Animal Village Lefter House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1493,7 +1493,7 @@ let entranceDict = {
 	"animal_house2":{
 	   "id":"animal_house2",
 	   "area":"Animal Village",
-	   "name":"Right Top Left House",
+	   "name":"Animal Village Left House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1508,7 +1508,7 @@ let entranceDict = {
 	"animal_house3":{
 	   "id":"animal_house3",
 	   "area":"Animal Village",
-	   "name":"Left Top Right House",
+	   "name":"Animal Village Goat House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1523,7 +1523,7 @@ let entranceDict = {
 	"animal_house4":{
 	   "id":"animal_house4",
 	   "area":"Animal Village",
-	   "name":"Right Top Right House",
+	   "name":"Animal Village Right House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1538,7 +1538,7 @@ let entranceDict = {
 	"animal_house5":{
 	   "id":"animal_house5",
 	   "area":"Animal Village",
-	   "name":"Bear House",
+	   "name":"Animal Village Bear Chef's House",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"dummy",
@@ -1568,7 +1568,7 @@ let entranceDict = {
 	"desert_cave":{
 	   "id":"desert_cave",
 	   "area":"Yarna Desert",
-	   "name":"Lanmola Cave",
+	   "name":"Desert Cave",
 	   "index":0,
 	   "icon":"",
 	   "entranceType":"single",
