@@ -6,6 +6,8 @@ function drawChecks(mapName, animate=true) {
         return;
     }
 
+    animate = animate && localSettings.animateChecks;
+
     closeAllCheckTooltips();
 
     $('.animate__fadeOut').remove();
