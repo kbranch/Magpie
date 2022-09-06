@@ -163,8 +163,7 @@ class MapNode {
                 entranceHtml += connectionTemplate.replace('{connection}', `Leads to ${connection.name}`);
             }
             if (this.entrance.id in reverseEntranceMap
-                && reverseEntranceMap[this.entrance.id] != this.entrance.id
-                /*&& this.entrance.id in entranceMap*/) {
+                && reverseEntranceMap[this.entrance.id] != this.entrance.id) {
                 let connection = entranceDict[reverseEntranceMap[this.entrance.id]];
                 entranceHtml += connectionTemplate.replace('{connection}', `Accessed from ${connection.name}`);
             }
@@ -195,6 +194,18 @@ class MapNode {
                         .map(x => [x, entranceDict[x].name]);
                 
                 options = sortByKey(options, x => [x[0]]);
+                options.push(['clear', 'Clear'])
+
+                let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
+
+                pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
+            }
+            else if (args.entranceshuffle != 'none') {
+                let requireConnector = this.entrance.entranceType == 'connector';
+                let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector)
+                                       .map(x => [x, entranceDict[x].name]);
+                
+                options = sortByKey(options, x => [x[1]]);
                 options.push(['clear', 'Clear'])
 
                 let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;

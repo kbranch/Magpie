@@ -26,7 +26,10 @@ function drawChecks(mapName, animate=true) {
         let animationClass = animate ? 'animate__bounceInDown' : '';
         let classes = ['checkGraphic', 'animate__animated'];
 
-        if (node.behindKeys) classes.push('behind-keys');
+        if (node.behindKeys) {
+            classes.push('behind-keys');
+        }
+
         if (args.randomstartlocation 
             && node.entrance != null 
             && entranceMap[node.entrance.id] == 'start_house') {
@@ -131,7 +134,7 @@ function createNodes(map, mapName) {
     let xOffset = (16 * xScale - localSettings.checkSize) / 2;
     let yOffset = (16 * yScale - localSettings.checkSize) / 2;
 
-    if (entrances.length > 0) {
+    if (entrances.length > 0 && mapName == 'overworld') {
         for (const entrance of entrances) {
             let entranceData = entranceDict[entrance];
             let x = Math.round(entranceData.locations[0].x * xScale + xOffset);
@@ -288,27 +291,34 @@ function drawTab(button) {
 }
 
 function checkGraphicMouseEnter(element) {
-    if (!hasAttr(element, 'data-pinned')) {
-        let tooltip = bootstrap.Tooltip.getInstance(element);
-        tooltip.show();
+    if ($(element).hasClass('animate__fadeOut')) {
+        return;
+    }
 
-        let nodeId = $(element).attr('data-node-id');
-        let node = nodes[nodeId];
-        if (node.entrance != null && entranceMap[node.entrance.id] != node.entrance.id) {
-            let entranceId = node.entrance.id;
-            let target = entranceMap[entranceId];
-            let selector = `.checkGraphic[data-entrance-id="${target}"]`;
+    let tooltip = bootstrap.Tooltip.getInstance(element);
 
-            $(element).connections({ class: 'entrance-to', to: selector });
-            $(element).connections({ class: 'outer-entrance-connection', to: selector });
+    if (tooltip._isShown()) {
+        return;
+    }
 
-            let connectingElement = Object.keys(entranceMap).find(x => entranceMap[x] == entranceId);
-            if (connectingElement) {
-                let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
+    tooltip.show();
 
-                $(element).connections({ class: 'entrance-from', from: selector });
-                $(element).connections({ class: 'outer-entrance-connection', from: selector });
-            }
+    let nodeId = $(element).attr('data-node-id');
+    let node = nodes[nodeId];
+    if (node.entrance != null && entranceMap[node.entrance.id] != node.entrance.id) {
+        let entranceId = node.entrance.id;
+        let target = entranceMap[entranceId];
+        let selector = `.checkGraphic[data-entrance-id="${target}"]`;
+
+        $(element).connections({ class: 'entrance-to', to: selector });
+        $(element).connections({ class: 'outer-entrance-connection', to: selector });
+
+        let connectingElement = Object.keys(entranceMap).find(x => entranceMap[x] == entranceId);
+        if (connectingElement) {
+            let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
+
+            $(element).connections({ class: 'entrance-from', from: selector });
+            $(element).connections({ class: 'outer-entrance-connection', from: selector });
         }
     }
 }
@@ -340,6 +350,10 @@ function nodeSecondary(element) {
 }
 
 function checkGraphicLeftClick(element) {
+    if ($(element).hasClass('animate__fadeOut')) {
+        return;
+    }
+
     if (localSettings.swapMouseButtons) {
         nodeSecondary(element);
     }
@@ -349,6 +363,10 @@ function checkGraphicLeftClick(element) {
 }
 
 function checkGraphicRightClick(element) {
+    if ($(element).hasClass('animate__fadeOut')) {
+        return;
+    }
+
     if (localSettings.swapMouseButtons) {
         nodePrimary(element);
     }

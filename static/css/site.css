@@ -163,18 +163,6 @@ img {
     border-radius: 3px;
 }
 
-.dropdown-menu {
-    padding: 0.5rem;
-    background-color: var(--bs-tooltip-bg);
-    color: var(--bs-tooltip-color);
-}
-
-.dropdown-item:focus {
-    background-color: #444;
-    color: var(--bs-tooltip-color);
-    border-radius: 3px;
-}
-
 .tooltip-area-header {
     background-color: #222;
     background-blend-mode: normal;
@@ -406,4 +394,18 @@ button.nav-link.active {
 
 .dropdown-toggle-split {
     width: 30px !important;
+}
+
+.dropdown-menu {
+    padding: 0.5rem;
+    background-color: var(--bs-tooltip-bg);
+    color: var(--bs-tooltip-color);
+    max-height: 80vh;
+    overflow: auto;
+}
+
+.dropdown-item:focus {
+    background-color: #444;
+    color: var(--bs-tooltip-color);
+    border-radius: 3px;
 }
