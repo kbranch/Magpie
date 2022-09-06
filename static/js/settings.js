@@ -38,7 +38,6 @@ function saveSettings() {
     localSettings = getInputValues('setting', localSettings);
 
     fixGoal(args);
-    resetEntrances();
     saveSettingsToStorage(args, localSettings);
 
     clearCheckImages();

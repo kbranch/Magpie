@@ -195,6 +195,16 @@ function resetEntrances() {
     saveEntrances();
 }
 
+function pruneEntranceMap() {
+    for (const entrance in entranceMap) {
+        if (!entrances.includes(entrance)) {
+            delete entranceMap[entrance];
+        }
+    }
+
+    saveEntrances();
+}
+
 function resetChecks() {
     checkedChecks = {};
     saveChecked();
