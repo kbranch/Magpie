@@ -28,17 +28,7 @@ function drawChecks(mapName, animate=true) {
         let animationClass = animate ? 'animate__bounceInDown' : '';
         let classes = ['checkGraphic', 'animate__animated'];
 
-        if (node.behindKeys) {
-            classes.push('behind-keys');
-        }
-
-        if (args.randomstartlocation 
-            && node.entrance != null 
-            && entranceMap[node.entrance.id] == 'start_house') {
-            classes.push('start-location');
-        }
-
-        node.checks.length > 0 ? classes.push(`difficulty-${node.difficulty}`) : classes.push('entrance-only');
+        classes = classes.concat(pickNodeIconClasses(node));
 
         let graphic = $(`[data-node-id="${nodeId}"]`);
         if (graphic.length > 0) {
@@ -98,6 +88,45 @@ function drawChecks(mapName, animate=true) {
         $(node).removeClass('animate__bounceInDown');
         $(node).addClass('animate__fadeOut');
     }
+}
+
+function pickNodeIconClasses(node) {
+    let classes = [];
+
+    if (node.behindKeys) {
+        classes.push('behind-keys');
+    }
+
+    if (node.entrance != null) {
+        if (node.entrance.id in entranceMap) {
+            let mappedEntrance = entranceDict[entranceMap[node.entrance.id]];
+
+            if (args.randomstartlocation 
+                && mappedEntrance.id == 'start_house') {
+                classes.push('start-location');
+            }
+
+            if (mappedEntrance.entranceType == 'connector') {
+                if (node.isChecked || node.checks.length == 0) {
+                    classes.push('entrance-only')
+                }
+                else {
+                    classes.push(`difficulty-${node.difficulty}`);
+                }
+            }
+            else {
+                classes.push(`difficulty-${node.difficulty}`);
+            }
+        }
+        else {
+            classes.push('unmapped-entrance');
+        }
+    }
+    else {
+        classes.push(`difficulty-${node.difficulty}`);
+    }
+
+    return classes;
 }
 
 function addTooltip(checkGraphic) {
@@ -220,9 +249,7 @@ function createNodes(map, mapName) {
         let node = nodes[key];
         node.update();
 
-        if (localSettings.hideChecked
-            && node.isChecked
-            && entranceMap[node.entrance] != 'start_house') {
+        if (node.canBeHidden()) {
             delete nodes[key];
         }
     }
@@ -273,7 +300,7 @@ function closeOtherTooltips(element) {
 }
 
 function closeAllCheckTooltips() {
-    $('connection').connections('remove');
+    // $('connection').connections('remove');
     let nodes = $(`.checkGraphic`);
     nodes.tooltip('hide');
 
@@ -316,31 +343,31 @@ function checkGraphicMouseEnter(element) {
 
     tooltip.show();
 
-    let nodeId = $(element).attr('data-node-id');
-    let node = nodes[nodeId];
-    if (node.entrance != null && entranceMap[node.entrance.id] != node.entrance.id) {
-        let entranceId = node.entrance.id;
-        let target = entranceMap[entranceId];
-        let selector = `.checkGraphic[data-entrance-id="${target}"]`;
+    // let nodeId = $(element).attr('data-node-id');
+    // let node = nodes[nodeId];
+    // if (node.entrance != null && entranceMap[node.entrance.id] != node.entrance.id) {
+    //     let entranceId = node.entrance.id;
+    //     let target = entranceMap[entranceId];
+    //     let selector = `.checkGraphic[data-entrance-id="${target}"]`;
 
-        $(element).connections({ class: 'entrance-to', to: selector });
-        $(element).connections({ class: 'outer-entrance-connection', to: selector });
+    //     $(element).connections({ class: 'entrance-to', to: selector });
+    //     $(element).connections({ class: 'outer-entrance-connection', to: selector });
 
-        let connectingElement = Object.keys(entranceMap).find(x => entranceMap[x] == entranceId);
-        if (connectingElement) {
-            let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
+    //     let connectingElement = Object.keys(entranceMap).find(x => entranceMap[x] == entranceId);
+    //     if (connectingElement) {
+    //         let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
 
-            $(element).connections({ class: 'entrance-from', from: selector });
-            $(element).connections({ class: 'outer-entrance-connection', from: selector });
-        }
-    }
+    //         $(element).connections({ class: 'entrance-from', from: selector });
+    //         $(element).connections({ class: 'outer-entrance-connection', from: selector });
+    //     }
+    // }
 }
 
 function checkGraphicMouseLeave(element) {
     if (!hasAttr(element, 'data-pinned')) {
         let tooltip = bootstrap.Tooltip.getInstance(element);
         tooltip.hide();
-        $('connection').connections('remove');
+        // $('connection').connections('remove');
     }
 }
 
@@ -386,28 +413,6 @@ function checkGraphicRightClick(element) {
     else {
         nodeSecondary(element);
     }
-}
-
-function setStartLocation(element) {
-    const startHouse = 'start_house';
-
-    let nodeId = $(element).attr('data-node-id');
-    let node = nodes[nodeId];
-    let entrance = node.entrance;
-
-    for (const start of startLocations) {
-        if (entranceMap[start] == startHouse && start != startHouse) {
-            entranceMap[start] = entranceMap[startHouse];
-            break;
-        }
-    }
-
-    entranceMap[entrance.id] = startHouse;
-    entranceMap[startHouse] = entrance.id;
-
-    saveEntrances();
-    closeAllCheckTooltips();
-    refreshCheckList();
 }
 
 function connectEntrances(from, to) {

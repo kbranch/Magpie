@@ -152,3 +152,45 @@ async function importState() {
         }
     }
 }
+
+function setStartLocation(entranceId) {
+    const startHouse = 'start_house';
+
+    if (args.entranceshuffle == 'none') {
+        for (const start of startLocations) {
+            if (entranceMap[start] == startHouse && start != startHouse) {
+                entranceMap[start] = entranceMap[startHouse];
+                break;
+            }
+        }
+
+        entranceMap[entranceId] = startHouse;
+        entranceMap[startHouse] = entranceId;
+    }
+    else {
+        for (const start of startLocations) {
+            if (entranceMap[start] == startHouse) {
+                delete entranceMap[start];
+            }
+        }
+
+        entranceMap[entranceId] = startHouse;
+    }
+
+    saveEntrances();
+    closeAllCheckTooltips();
+    refreshCheckList();
+}
+
+function clearEntranceMapping(entranceId) {
+    if (args.entranceshuffle == 'none'
+        && entranceMap[entranceId] == 'start_house') {
+        delete entranceMap['start_house'];
+    }
+
+    delete entranceMap[entranceId];
+
+    saveEntrances();
+    closeAllCheckTooltips();
+    refreshCheckList();
+}

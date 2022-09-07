@@ -28,10 +28,11 @@ class MapNode {
     }
 
     updateBehindKeys() {
-        this.behindKeys = this.checks.length > 0 
-                          && this.checks.filter(x => x.difficulty == this.difficulty
-                                                     && !x.isChecked())
-                                        .every(x => x.behindKeys);
+        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
+                                                      && !x.isChecked())
+
+        this.behindKeys = uncheckedChecks.length > 0 
+                          && uncheckedChecks.every(x => x.behindKeys);
     }
 
     updateDifficulty() {
@@ -47,7 +48,8 @@ class MapNode {
     }
 
     updateIsChecked() {
-        this.isChecked = this.checks.every(x => x.isChecked());
+        this.isChecked = this.checks.length > 0
+                         && this.checks.every(x => x.isChecked());
     }
 
     update() {
@@ -55,6 +57,35 @@ class MapNode {
         this.updateBehindKeys();
         this.updateIsChecked();
         this.sortChecks();
+    }
+
+    canBeHidden() {
+        if (localSettings.hideChecked
+            && this.isChecked
+            && (this.entrance == null
+                || (entranceMap[this.entrance.id] != 'start_house'
+                    && this.entrance.entranceType != 'connector'))) {
+            return true;
+        }
+
+        if (this.entrance == null) {
+            return false;
+        }
+
+        if (args.randomstartlocation
+            && args.entranceshuffle == 'none'
+            && 'start_house' in reverseEntranceMap
+            && this.entrance.id != reverseEntranceMap['start_house']) {
+
+            if (!args.dungeonshuffle) {
+                return true;
+            }
+
+            if (args.dungeonshuffle
+                && startLocations.includes(this.entrance.id)) {
+                return true;
+            }
+        }
     }
 
     checkGraphicHtml(id) {
@@ -80,6 +111,8 @@ class MapNode {
     tooltipHtml(pinned) {
         const titleTemplate = `<div class='tooltip-body'>
     {areas}
+    {entrance}
+    {pinned}
 </div>`;
         const areaTemplate = `<div class='card tooltip-area-card'>
     <div class='card-header tooltip-area-header'>
@@ -87,7 +120,6 @@ class MapNode {
     </div>
     <ul class='list-group'>
         {checks}
-        {entrance}
     </ul>
 </div>`;
         const checkTemplate = `<li class="list-group-item tooltip-item">
@@ -102,12 +134,7 @@ class MapNode {
         let uniqueIds = this.uniqueCheckIds();
         let areaHtml = '';
         let areas = {};
-        let entranceArea = '';
-
-        if (this.entrance != null) {
-            entranceArea = this.entrance.area;
-            areas[entranceArea] = '';
-        }
+        let pinnedHtml = '';
 
         for (const id of uniqueIds) {
             let metadata = coordDict[id];
@@ -125,40 +152,39 @@ class MapNode {
             areas[metadata.area] += line;
         }
 
-        for (const area of sortByKey(Object.keys(areas), x => [x == entranceArea, x])) {
-            let entranceHtml = this.getEntranceHtml(area);
-
+        for (const area of sortByKey(Object.keys(areas), x => [x])) {
             areaHtml += areaTemplate.replace('{area}', area)
-                                    .replace('{checks}', areas[area])
-                                    .replace('{entrance}', entranceHtml);
+                                    .replace('{checks}', areas[area]);
         }
 
         if (pinned == "true") {
-            areaHtml += this.getPinnedHtml();
+            pinnedHtml = this.getPinnedHtml();
         }
 
-        let title = titleTemplate.replace('{areas}', areaHtml);
+        let entranceHtml = this.getEntranceHtml();
+
+        let title = titleTemplate.replace('{areas}', areaHtml)
+                                 .replace('{entrance}', entranceHtml)
+                                 .replace('{pinned}', pinnedHtml);
 
         return title;
     }
 
-    getEntranceHtml(area) {
-        const entranceTemplate = `<li class="list-group-item tooltip-item">
-    <div class='text-start d-flex p-1 mb-0' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
+    getEntranceHtml() {
+        const entranceTemplate = `<div class='text-start tooltip-item d-flex p-1 mb-0' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
             {name}
         </div>
-    </div>
-</li>`;
-        const connectionTemplate = `<li class="list-group-item tooltip-item">
-    <div class='tooltip-text align-middle ps-2'>
+    </div>`;
+        const connectionTemplate = `<li class="list-group-item text-start tooltip-item">
+    <div class='tooltip-text text-start align-middle'>
         {connection}
     </div>
 </li>`;
         let entranceHtml = '';
 
-        if (this.entrance != null && this.entrance.area == area) {
+        if (this.entrance != null) {
             let graphic = this.entranceGraphicHtml();
             entranceHtml = entranceTemplate.replace('{entrance-id}', this.entrance.id)
                                             .replace('{graphic}', graphic)
@@ -166,12 +192,12 @@ class MapNode {
             if (this.entrance.id in entranceMap
                 && entranceMap[this.entrance.id] != this.entrance.id) {
                 let connection = entranceDict[entranceMap[this.entrance.id]];
-                entranceHtml += connectionTemplate.replace('{connection}', `Leads to ${connection.name}`);
+                entranceHtml += connectionTemplate.replace('{connection}', `To ${connection.name}`);
             }
             if (this.entrance.id in reverseEntranceMap
                 && reverseEntranceMap[this.entrance.id] != this.entrance.id) {
                 let connection = entranceDict[reverseEntranceMap[this.entrance.id]];
-                entranceHtml += connectionTemplate.replace('{connection}', `Accessed from ${connection.name}`);
+                entranceHtml += connectionTemplate.replace('{connection}', `From ${connection.name}`);
             }
         }
 
@@ -179,16 +205,17 @@ class MapNode {
     }
 
     getPinnedHtml() {
-        const menuItemTemplate = `<li class="list-group-item tooltip-item p-1"{attributes} onclick='{action}' oncontextmenu='return false;'>
+        const menuItemTemplate = `<li class="list-group-item text-start tooltip-item p-1"{attributes} onclick='{action}' oncontextmenu='return false;'>
     {text}
 </li>`
         let pinnedHtml = '';
 
         if (this.entrance != null) {
-            if (startLocations.includes(this.entrance.id)) {
-                pinnedHtml += menuItemTemplate.replace('{action}', 'setStartLocation(this);')
+            if (startLocations.includes(this.entrance.id)
+                && !(this.entrance.id in entranceMap)) {
+                pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation("${this.entrance.id}");`)
                                               .replace('{text}', 'Set as start location')
-                                              .replace('{attributes}', ` data-node-id=${this.id()}`);
+                                              .replace('{attributes}', ` data-node-id="${this.id()}"`);
             }
 
             if (args.entranceshuffle == 'none'
@@ -200,7 +227,6 @@ class MapNode {
                         .map(x => [x, entranceDict[x].name]);
                 
                 options = sortByKey(options, x => [x[0]]);
-                options.push(['clear', 'Clear'])
 
                 let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
 
@@ -208,16 +234,26 @@ class MapNode {
             }
             else if (args.entranceshuffle != 'none') {
                 let requireConnector = this.entrance.entranceType == 'connector';
-                let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector)
+                let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector
+                                                     && entranceDict[x].entranceType != 'dummy')
                                        .map(x => [x, entranceDict[x].name]);
                 
                 options = sortByKey(options, x => [x[1]]);
-                options.push(['clear', 'Clear'])
 
                 let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
 
                 pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
             }
+
+            if (this.entrance.id in entranceMap) {
+                pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping("${this.entrance.id}")`)
+                                              .replace('{text}', 'Clear Mapping')
+                                              .replace('{attributes}', ` data-node-id="${this.id()}"`);
+            }
+        }
+
+        if (pinnedHtml != '') {
+            pinnedHtml = '<hr class="m-1">' + pinnedHtml;
         }
 
         return pinnedHtml;
@@ -233,8 +269,8 @@ class MapNode {
         }
 
         return `<div class="btn-group dropend">
-        <button type="button" class="btn tooltip-item" onclick="${action}">${title}</button>
-        <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split px-2" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <button type="button" class="btn tooltip-item text-start p-1" onclick="${action}">${title}</button>
+        <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split px-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
             ${items}
         </ul>

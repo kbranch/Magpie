@@ -155,6 +155,7 @@ img {
     padding: 1px;
     cursor: default;
     border: none;
+    font-size: var(--bs-tooltip-font-size) !important;
 }
 
 .tooltip-item:hover {
@@ -207,6 +208,13 @@ img {
 .entrance-only {
     border-style: none;
     background-image: url('/static/images/entrance.svg');
+    background-size: contain;
+    z-index: 3;
+}
+
+.unmapped-entrance {
+    border-style: none;
+    background-image: url('/static/images/unmapped-entrance.svg');
     background-size: contain;
     z-index: 3;
 }
