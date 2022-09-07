@@ -63,6 +63,9 @@ def renderCheckList():
         inventory = jsonpickle.decode(request.form['inventory'])
         entranceMap = jsonpickle.decode(request.form['entranceMap'])
 
+        if entranceMap == {} and argValues.randomstartlocation:
+            entranceMap['start_house'] = 'rooster_house'
+
         for source, dest in entranceMap.items():
             if dest == 'landfill':
                 entranceMap[source] = 'rooster_house'

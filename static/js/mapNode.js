@@ -48,8 +48,10 @@ class MapNode {
     }
 
     updateIsChecked() {
-        this.isChecked = this.checks.length > 0
-                         && this.checks.every(x => x.isChecked());
+        this.isChecked = (this.checks.length > 0
+                          && this.checks.every(x => x.isChecked()))
+                         || (this.entrance != null
+                             && entranceMap[this.entrance.id] == 'landfill');
     }
 
     update() {
