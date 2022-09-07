@@ -203,6 +203,10 @@ function resetEntrances() {
 }
 
 function pruneEntranceMap() {
+    if (entrances == null) {
+        return;
+    }
+
     for (const entrance in entranceMap) {
         if (!entrances.includes(entrance)) {
             delete entranceMap[entrance];

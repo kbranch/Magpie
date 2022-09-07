@@ -182,92 +182,108 @@ function createNodes(map, mapName) {
     let xOffset = (16 * xScale - localSettings.checkSize) / 2;
     let yOffset = (16 * yScale - localSettings.checkSize) / 2;
 
-    if (entrances.length > 0 && mapName == 'overworld') {
-        for (const entrance of entrances) {
+    if (graphicalMapSource != null) {
+        for (const entrance of graphicalMapChoices) {
             let entranceData = entranceDict[entrance];
             let x = Math.round(entranceData.locations[0].x * xScale + xOffset);
             let y = Math.round(entranceData.locations[0].y * yScale + yOffset);
             let coordString = MapNode.nodeId(x, y);
 
             if (!(coordString in nodes)) {
-                nodes[coordString] = new MapNode(x, y, entranceData);
+                let node = new MapNode(x, y, entranceData);
+                nodes[coordString] = node;
+                node.update();
             }
         }
     }
+    else {
+        if (entrances.length > 0 && mapName == 'overworld') {
+            for (const entrance of entrances) {
+                let entranceData = entranceDict[entrance];
+                let x = Math.round(entranceData.locations[0].x * xScale + xOffset);
+                let y = Math.round(entranceData.locations[0].y * yScale + yOffset);
+                let coordString = MapNode.nodeId(x, y);
 
-    let checks = $('li[data-logic]');
-    for (const check of checks) {
-        let id = $(check).attr('data-check-id');
-        let checkMaps = coordDict[id].locations.map(function(x) { return x.map; });
-        let difficulty = Number($(check).attr('data-difficulty'));
-
-        if (localSettings.ignoreHigherLogic && difficulty > 0) {
-            difficulty = 9;
+                if (!(coordString in nodes)) {
+                    nodes[coordString] = new MapNode(x, y, entranceData);
+                }
+            }
         }
 
-        if (!(checkMaps.includes(mapName))
-            || (difficulty == 9
-                && !localSettings.showOutOfLogic)) {
-            continue;
-        }
+        let checks = $('li[data-logic]');
+        for (const check of checks) {
+            let id = $(check).attr('data-check-id');
+            let checkMaps = coordDict[id].locations.map(function(x) { return x.map; });
+            let difficulty = Number($(check).attr('data-difficulty'));
 
-        let checkData = coordDict[id];
-        let behindKeys = $(check).attr('data-behind_keys') == 'True'
-        let coords = checkData.locations;
+            if (localSettings.ignoreHigherLogic && difficulty > 0) {
+                difficulty = 9;
+            }
 
-        for (const coord of coords) {
-            if (coord.map != mapName) {
+            if (!(checkMaps.includes(mapName))
+                || (difficulty == 9
+                    && !localSettings.showOutOfLogic)) {
                 continue;
             }
 
-            let x = Math.round(coord.x * xScale + xOffset);
-            let y = Math.round(coord.y * yScale + yOffset);
-            let coordString = MapNode.nodeId(x, y);
+            let checkData = coordDict[id];
+            let behindKeys = $(check).attr('data-behind_keys') == 'True'
+            let coords = checkData.locations;
 
-            if (!(coordString in nodes)) {
-                nodes[coordString] = new MapNode(x, y);
-            }
+            for (const coord of coords) {
+                if (coord.map != mapName) {
+                    continue;
+                }
 
-            nodes[coordString].addCheck(id, behindKeys, difficulty);
-        }
-    }
+                let x = Math.round(coord.x * xScale + xOffset);
+                let y = Math.round(coord.y * yScale + yOffset);
+                let coordString = MapNode.nodeId(x, y);
 
-    let checksByEntrance = {'landfill': []};
-    let remappedNodes = [];
-    for (const key in nodes) {
-        let node = nodes[key];
-        if (node.entrance == null) {
-            continue;
-        }
+                if (!(coordString in nodes)) {
+                    nodes[coordString] = new MapNode(x, y);
+                }
 
-        let entranceId = node.entrance.id;
-        checksByEntrance[entranceId] = node.checks;
-
-        if (!(entranceId in entranceMap)) {
-            if (args.entranceshuffle != 'none'
-                || !(entranceId in startLocations)) {
-                node.checks = [];
+                nodes[coordString].addCheck(id, behindKeys, difficulty);
             }
         }
 
-        if (!(entranceId in entranceMap)
-            || entranceMap[entranceId] == entranceId) {
-            continue;
+        let checksByEntrance = {'landfill': []};
+        let remappedNodes = [];
+        for (const key in nodes) {
+            let node = nodes[key];
+            if (node.entrance == null) {
+                continue;
+            }
+
+            let entranceId = node.entrance.id;
+            checksByEntrance[entranceId] = node.checks;
+
+            if (!(entranceId in entranceMap)) {
+                if (args.entranceshuffle != 'none'
+                    || !(entranceId in startLocations)) {
+                    node.checks = [];
+                }
+            }
+
+            if (!(entranceId in entranceMap)
+                || entranceMap[entranceId] == entranceId) {
+                continue;
+            }
+
+            remappedNodes.push(node);
         }
 
-        remappedNodes.push(node);
-    }
+        for (const node of remappedNodes) {
+            node.checks = checksByEntrance[entranceMap[node.entrance.id]];
+        }
 
-    for (const node of remappedNodes) {
-        node.checks = checksByEntrance[entranceMap[node.entrance.id]];
-    }
+        for (const key in nodes) {
+            let node = nodes[key];
+            node.update();
 
-    for (const key in nodes) {
-        let node = nodes[key];
-        node.update();
-
-        if (node.canBeHidden()) {
-            delete nodes[key];
+            if (node.canBeHidden()) {
+                delete nodes[key];
+            }
         }
     }
 }
@@ -421,6 +437,14 @@ function checkGraphicLeftClick(element) {
         return;
     }
 
+    if (graphicalMapSource != null) {
+        connectEntrances(graphicalMapSource, $(element).attr('data-entrance-id'));
+        graphicalMapSource = null;
+        graphicalMapChoices = null;
+
+        return;
+    }
+
     if (localSettings.swapMouseButtons) {
         nodeSecondary(element);
     }
@@ -434,10 +458,25 @@ function checkGraphicRightClick(element) {
         return;
     }
 
+    if (graphicalMapSource != null) {
+        connectEntrances(graphicalMapSource, $(element).attr('data-entrance-id'));
+        graphicalMapSource = null;
+        graphicalMapChoices = null;
+
+        return;
+    }
+
     if (localSettings.swapMouseButtons) {
         nodePrimary(element);
     }
     else {
         nodeSecondary(element);
     }
+}
+
+function graphicalConnection(entranceId) {
+    closeAllCheckTooltips();
+    graphicalMapSource = entranceId;
+    graphicalMapChoices = new Set(MapNode.getValidConnections(entranceId).map(x => x[0]));
+    drawActiveTab();
 }

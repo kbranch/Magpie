@@ -239,21 +239,17 @@ class MapNode {
                 pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
             }
             else if (args.entranceshuffle != 'none') {
-                let requireConnector = this.entrance.entranceType == 'connector';
-                let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector
-                                                     && entranceDict[x].entranceType != 'dummy'
-                                                     && !(x in reverseEntranceMap))
-                                       .map(x => [x, entranceDict[x].name]);
-                
+                let options = MapNode.getValidConnections(this.entrance.id);
                 options = sortByKey(options, x => [x[1]]);
 
+                let action = `graphicalConnection('${this.entrance.id}')`;
                 let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
 
-                pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
+                pinnedHtml += MapNode.createDropdown('Connect to...', action, options, optionAction);
 
                 if (entranceMap[this.entrance.id] != 'landfill') {
                     pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill("${this.entrance.id}")`)
-                                                    .replace('{text}', 'Map to Landfill')
+                                                    .replace('{text}', 'Connect to Landfill')
                                                     .replace('{attributes}', ` data-node-id="${this.id()}"`);
                 }
             }
@@ -300,6 +296,16 @@ class MapNode {
             x: Number(chunks[0]),
             y: Number(chunks[1])
         };
+    }
+
+    static getValidConnections(entranceId) {
+        let entrance = entranceDict[entranceId];
+        let requireConnector = entrance.entranceType == 'connector';
+        let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector
+                                             && entranceDict[x].entranceType != 'dummy'
+                                             && !(x in reverseEntranceMap))
+                                .map(x => [x, entranceDict[x].name]);
+        return options;
     }
 }
 

@@ -223,6 +223,8 @@ function connectEntrances(from, to) {
         entranceMap[from] = to;
     }
 
+    skipNextAnimation = true;
+
     saveEntrances();
     closeAllCheckTooltips();
     refreshCheckList();

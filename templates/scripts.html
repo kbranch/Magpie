@@ -15,7 +15,7 @@
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
     var startLocations = [];
-    var entrances = [];
+    var entrances = null;
     var localSettings = null;
     var entranceMap = {};
     var reverseEntranceMap = {};
@@ -26,6 +26,8 @@
     var skipNextAnimation = true;
     var undoStack = [];
     var redoStack = [];
+    var graphicalMapSource = null;
+    var graphicalMapChoices = null;
 
     function refreshItems() {
         $.ajax({
