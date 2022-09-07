@@ -114,8 +114,11 @@ function pickNodeIconClasses(node) {
                     classes.push(`difficulty-${node.difficulty}`);
                 }
             }
-            else {
+            else if (node.checks.length > 0) {
                 classes.push(`difficulty-${node.difficulty}`);
+            }
+            else {
+                classes.push('entrance-only')
             }
         }
         else {
