@@ -21,6 +21,7 @@ function loadLocations() {
 function loadEntrances() {
     try {
         entranceMap = JSON.parse(localStorage.getItem('entranceMap'));
+        pruneEntranceMap();
     }
     catch (err) {
     }
@@ -70,13 +71,19 @@ function toggleSingleNodeCheck(check) {
 }
 
 function toggleChecks(checks) {
+    pushUndoState();
+
     for (const id of checks) {
         let textCheck = $(`li[data-check-id="${id}"`);
-        toggleCheck(null, textCheck, false);
+        toggleCheck(null, textCheck, draw=false, pushUndo=false);
     }
 }
 
-function toggleCheck(event, elements, draw=true) {
+function toggleCheck(event, elements, draw=true, pushUndo=true) {
+    if (pushUndo) {
+        pushUndoState();
+    }
+
     for (const element of elements) {
         let area = $(element).attr('data-checkarea');
         let name = $(element).attr('data-checkname');
@@ -199,6 +206,15 @@ function pruneEntranceMap() {
     for (const entrance in entranceMap) {
         if (!entrances.includes(entrance)) {
             delete entranceMap[entrance];
+        }
+    }
+
+    if (!args.randomstartlocation) {
+        if ('start_house' in entranceMap) {
+            delete entranceMap['start_house'];
+        }
+        if ('start_house' in reverseEntranceMap) {
+            delete entranceMap[reverseEntranceMap['start_house']];
         }
     }
 

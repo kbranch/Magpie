@@ -317,7 +317,6 @@ function closeOtherTooltips(element) {
 }
 
 function closeAllCheckTooltips() {
-    // $('connection').connections('remove');
     let nodes = $(`.checkGraphic`);
     nodes.tooltip('hide');
 
@@ -359,32 +358,12 @@ function checkGraphicMouseEnter(element) {
     }
 
     tooltip.show();
-
-    // let nodeId = $(element).attr('data-node-id');
-    // let node = nodes[nodeId];
-    // if (node.entrance != null && entranceMap[node.entrance.id] != node.entrance.id) {
-    //     let entranceId = node.entrance.id;
-    //     let target = entranceMap[entranceId];
-    //     let selector = `.checkGraphic[data-entrance-id="${target}"]`;
-
-    //     $(element).connections({ class: 'entrance-to', to: selector });
-    //     $(element).connections({ class: 'outer-entrance-connection', to: selector });
-
-    //     let connectingElement = Object.keys(entranceMap).find(x => entranceMap[x] == entranceId);
-    //     if (connectingElement) {
-    //         let selector = `.checkGraphic[data-entrance-id="${connectingElement}"]`;
-
-    //         $(element).connections({ class: 'entrance-from', from: selector });
-    //         $(element).connections({ class: 'outer-entrance-connection', from: selector });
-    //     }
-    // }
 }
 
 function checkGraphicMouseLeave(element) {
     if (!hasAttr(element, 'data-pinned')) {
         let tooltip = bootstrap.Tooltip.getInstance(element);
         tooltip.hide();
-        // $('connection').connections('remove');
     }
 }
 

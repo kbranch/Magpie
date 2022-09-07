@@ -37,6 +37,8 @@ function saveSettings() {
     args = getInputValues('flag', args);
     localSettings = getInputValues('setting', localSettings);
 
+    resetUndoRedo()
+
     fixGoal(args);
     saveSettingsToStorage(args, localSettings);
 
@@ -158,6 +160,8 @@ async function importState() {
 function setStartLocation(entranceId) {
     const startHouse = 'start_house';
 
+    pushUndoState();
+
     if (args.entranceshuffle == 'none') {
         for (const start of startLocations) {
             if (entranceMap[start] == startHouse && start != startHouse) {
@@ -185,6 +189,8 @@ function setStartLocation(entranceId) {
 }
 
 function clearEntranceMapping(entranceId) {
+    pushUndoState();
+
     if (args.entranceshuffle == 'none'
         && entranceMap[entranceId] == 'start_house') {
         delete entranceMap['start_house'];
@@ -198,6 +204,8 @@ function clearEntranceMapping(entranceId) {
 }
 
 function mapToLandfill(entranceId) {
+    pushUndoState();
+
     entranceMap[entranceId] = 'landfill';
 
     saveEntrances();
@@ -206,6 +214,8 @@ function mapToLandfill(entranceId) {
 }
 
 function connectEntrances(from, to) {
+    pushUndoState();
+
     if (to == 'clear') {
         delete entranceMap[from];
     }
@@ -216,4 +226,64 @@ function connectEntrances(from, to) {
     saveEntrances();
     closeAllCheckTooltips();
     refreshCheckList();
+}
+
+function resetUndoRedo() {
+    undoStack = [];
+    redoStack = [];
+}
+
+function getUndoState() {
+    let state = new Object();
+    // state.inventory = inventory;
+    // state.settings = localSettings;
+    // state.args = args;
+    state.checkedChecks = Object.assign({}, checkedChecks);
+    state.entranceMap = Object.assign({}, entranceMap);
+
+    return state;
+}
+
+function applyUndoState(state) {
+    checkedChecks = state.checkedChecks;
+    entranceMap = state.entranceMap;
+
+    pruneEntranceMap();
+    saveLocations();
+    refreshCheckList();
+}
+
+function pushUndoState() {
+    undoStack.push(getUndoState());
+    redoStack = [];
+}
+
+function undo() {
+    if (undoStack.length == 0) {
+        return;
+    }
+
+    redoStack.push(getUndoState());
+    let state = undoStack.pop();
+    applyUndoState(state);
+}
+
+function redo() {
+    if (redoStack.length == 0) {
+        return;
+    }
+
+    undoStack.push(getUndoState());
+    let state = redoStack.pop();
+    applyUndoState(state);
+}
+
+function keyDown(e) {
+    if (e.ctrlKey && e.key == 'z') {
+        undo();
+    }
+    else if ((e.ctrlKey && e.shiftKey && e.key == 'Z')
+             || (e.ctrlKey && e.key == 'y')) {
+        redo();
+    }
 }

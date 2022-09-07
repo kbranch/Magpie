@@ -24,6 +24,8 @@
     var mapNodes = null;
     var args = null;
     var skipNextAnimation = true;
+    var undoStack = [];
+    var redoStack = [];
 
     function refreshItems() {
         $.ajax({
@@ -56,6 +58,8 @@
                 entranceMap: JSON.stringify(entranceMap),
             },
             success: function(response) {
+                pruneEntranceMap();
+
                 $('#checkList').html(response);
                 refreshChecked();
 
@@ -67,7 +71,6 @@
                 $(button).attr('aria-selected', "true");
                 $(button).addClass('active');
 
-                pruneEntranceMap();
                 drawActiveTab();
              }
         });
@@ -116,6 +119,8 @@
     initKnownItems();
     loadSettings();
     loadLocations();
+
+    $(document).keydown(keyDown);
 
     {% if local %}
     async function getRequest(url='') {

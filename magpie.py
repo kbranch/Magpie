@@ -63,13 +63,6 @@ def renderCheckList():
         inventory = jsonpickle.decode(request.form['inventory'])
         entranceMap = jsonpickle.decode(request.form['entranceMap'])
 
-        if entranceMap == {} and argValues.randomstartlocation:
-            entranceMap['start_house'] = 'rooster_house'
-
-        for source, dest in entranceMap.items():
-            if dest == 'landfill':
-                entranceMap[source] = 'rooster_house'
-
         inventory['RUPEES_500'] = 10
         inventory['RAFT'] = 1
         inventory['ANGLER_KEYHOLE'] = 1
@@ -82,6 +75,8 @@ def renderCheckList():
         entrances = getEntrancePool(args)
         if args.randomstartlocation and args.entranceshuffle == 'none':
             entrances = entrances.union(set(getStartLocations(args)))
+
+        cleanUpEntranceMap(entranceMap, entrances, args)
 
         entrances = list(entrances)
         allItems = getAllItems(args)
@@ -187,6 +182,25 @@ def addStartingItems(inventory, args):
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
+
+def cleanUpEntranceMap(entranceMap, entrances, args):
+    for source, dest in entranceMap.items():
+        if dest == 'landfill':
+            entranceMap[source] = 'rooster_house'
+
+    for entrance in list(entranceMap.keys()):
+        if entrance not in entrances:
+            del entranceMap[entrance]
+
+    if entranceMap == {} and args.randomstartlocation:
+        entranceMap['start_house'] = 'rooster_house'
+
+    if not args.randomstartlocation: 
+        reverseMap = {value: key for (key, value) in entranceMap.items()}
+        if 'start_house' in entranceMap:
+            del entranceMap['start_house']
+        if 'start_house' in reverseMap:
+            del entranceMap[reverseMap['start_house']]
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
