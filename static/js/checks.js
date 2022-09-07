@@ -12,7 +12,6 @@ let coordDict = {
 	   ],
 	   "index":0,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0C9-Trade":{
@@ -28,7 +27,6 @@ let coordDict = {
 	   ],
 	   "index":1,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2F5-Trade":{
@@ -44,7 +42,6 @@ let coordDict = {
 	   ],
 	   "index":2,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0CD-Trade":{
@@ -60,7 +57,6 @@ let coordDict = {
 	   ],
 	   "index":3,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A8-Trade":{
@@ -76,7 +72,6 @@ let coordDict = {
 	   ],
 	   "index":4,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2D9-Trade":{
@@ -92,7 +87,6 @@ let coordDict = {
 	   ],
 	   "index":5,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x019-Trade":{
@@ -113,7 +107,6 @@ let coordDict = {
 	   ],
 	   "index":6,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2D7-Trade":{
@@ -129,7 +122,6 @@ let coordDict = {
 	   ],
 	   "index":7,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x087-Trade":{
@@ -145,7 +137,6 @@ let coordDict = {
 	   ],
 	   "index":8,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x07B-Trade":{
@@ -161,7 +152,6 @@ let coordDict = {
 	   ],
 	   "index":9,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2FE-Trade":{
@@ -177,7 +167,6 @@ let coordDict = {
 	   ],
 	   "index":10,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2B2-Trade":{
@@ -193,7 +182,6 @@ let coordDict = {
 	   ],
 	   "index":11,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A6-Trade":{
@@ -209,7 +197,6 @@ let coordDict = {
 	   ],
 	   "index":12,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A0-Trade":{
@@ -225,7 +212,6 @@ let coordDict = {
 	   ],
 	   "index":13,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1E4":{
@@ -241,7 +227,6 @@ let coordDict = {
 	   ],
 	   "index":14,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2FB":{
@@ -257,7 +242,6 @@ let coordDict = {
 	   ],
 	   "index":15,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2FD":{
@@ -273,7 +257,6 @@ let coordDict = {
 	   ],
 	   "index":16,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x092":{
@@ -294,7 +277,6 @@ let coordDict = {
 	   ],
 	   "index":17,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x27A":{
@@ -310,7 +292,6 @@ let coordDict = {
 	   ],
 	   "index":18,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x27F":{
@@ -326,7 +307,6 @@ let coordDict = {
 	   ],
 	   "index":19,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0CE":{
@@ -342,7 +322,6 @@ let coordDict = {
 	   ],
 	   "index":20,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x050":{
@@ -358,7 +337,6 @@ let coordDict = {
 	   ],
 	   "index":21,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0F2":{
@@ -374,7 +352,6 @@ let coordDict = {
 	   ],
 	   "index":22,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2BA":{
@@ -395,7 +372,6 @@ let coordDict = {
 	   ],
 	   "index":23,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1E2":{
@@ -411,7 +387,6 @@ let coordDict = {
 	   ],
 	   "index":24,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x004":{
@@ -427,7 +402,6 @@ let coordDict = {
 	   ],
 	   "index":25,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x01D":{
@@ -453,7 +427,6 @@ let coordDict = {
 	   ],
 	   "index":26,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2F2":{
@@ -474,7 +447,6 @@ let coordDict = {
 	   ],
 	   "index":27,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x00C":{
@@ -490,7 +462,6 @@ let coordDict = {
 	   ],
 	   "index":28,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x01E-Owl":{
@@ -506,7 +477,6 @@ let coordDict = {
 	   ],
 	   "index":29,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x05D-Owl":{
@@ -522,7 +492,6 @@ let coordDict = {
 	   ],
 	   "index":30,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x05D":{
@@ -538,7 +507,6 @@ let coordDict = {
 	   ],
 	   "index":31,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x05C":{
@@ -554,7 +522,6 @@ let coordDict = {
 	   ],
 	   "index":32,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x08F-Owl":{
@@ -570,7 +537,6 @@ let coordDict = {
 	   ],
 	   "index":33,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2FC":{
@@ -586,7 +552,6 @@ let coordDict = {
 	   ],
 	   "index":34,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1F2":{
@@ -602,7 +567,6 @@ let coordDict = {
 	   ],
 	   "index":35,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x28A":{
@@ -618,7 +582,6 @@ let coordDict = {
 	   ],
 	   "index":36,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2BB":{
@@ -639,7 +602,6 @@ let coordDict = {
 	   ],
 	   "index":37,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x018":{
@@ -655,7 +617,6 @@ let coordDict = {
 	   ],
 	   "index":38,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0FF":{
@@ -671,7 +632,6 @@ let coordDict = {
 	   ],
 	   "index":39,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1E8":{
@@ -687,7 +647,6 @@ let coordDict = {
 	   ],
 	   "index":40,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2E6":{
@@ -703,7 +662,6 @@ let coordDict = {
 	   ],
 	   "index":41,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0CF-Owl":{
@@ -719,7 +677,6 @@ let coordDict = {
 	   ],
 	   "index":42,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0DA-Owl":{
@@ -735,7 +692,6 @@ let coordDict = {
 	   ],
 	   "index":43,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0DA":{
@@ -751,7 +707,6 @@ let coordDict = {
 	   ],
 	   "index":44,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2C6":{
@@ -767,7 +722,6 @@ let coordDict = {
 	   ],
 	   "index":45,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2C5":{
@@ -783,7 +737,6 @@ let coordDict = {
 	   ],
 	   "index":46,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2D2":{
@@ -799,7 +752,6 @@ let coordDict = {
 	   ],
 	   "index":47,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x058":{
@@ -815,7 +767,6 @@ let coordDict = {
 	   ],
 	   "index":48,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x05A":{
@@ -831,7 +782,6 @@ let coordDict = {
 	   ],
 	   "index":49,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x078":{
@@ -847,7 +797,6 @@ let coordDict = {
 	   ],
 	   "index":50,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2C8":{
@@ -868,7 +817,6 @@ let coordDict = {
 	   ],
 	   "index":51,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0C6":{
@@ -884,7 +832,6 @@ let coordDict = {
 	   ],
 	   "index":52,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0C6-Owl":{
@@ -900,7 +847,6 @@ let coordDict = {
 	   ],
 	   "index":53,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1E0":{
@@ -921,7 +867,6 @@ let coordDict = {
 	   ],
 	   "index":54,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0A8-Owl":{
@@ -937,7 +882,6 @@ let coordDict = {
 	   ],
 	   "index":55,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0A8":{
@@ -953,7 +897,6 @@ let coordDict = {
 	   ],
 	   "index":56,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0F8":{
@@ -969,7 +912,6 @@ let coordDict = {
 	   ],
 	   "index":57,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0E9":{
@@ -985,7 +927,6 @@ let coordDict = {
 	   ],
 	   "index":58,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0B9":{
@@ -1001,7 +942,6 @@ let coordDict = {
 	   ],
 	   "index":59,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1FD":{
@@ -1017,7 +957,6 @@ let coordDict = {
 	   ],
 	   "index":60,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2E9":{
@@ -1033,7 +972,6 @@ let coordDict = {
 	   ],
 	   "index":61,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0A4":{
@@ -1049,7 +987,6 @@ let coordDict = {
 	   ],
 	   "index":62,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x08B":{
@@ -1065,7 +1002,6 @@ let coordDict = {
 	   ],
 	   "index":63,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0A6":{
@@ -1081,7 +1017,6 @@ let coordDict = {
 	   ],
 	   "index":64,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0A5":{
@@ -1097,7 +1032,6 @@ let coordDict = {
 	   ],
 	   "index":65,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2E5":{
@@ -1113,7 +1047,6 @@ let coordDict = {
 	   ],
 	   "index":66,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2F4":{
@@ -1129,7 +1062,6 @@ let coordDict = {
 	   ],
 	   "index":67,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2CD":{
@@ -1145,7 +1077,6 @@ let coordDict = {
 	   ],
 	   "index":68,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2E2":{
@@ -1161,7 +1092,6 @@ let coordDict = {
 	   ],
 	   "index":69,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x074":{
@@ -1177,7 +1107,6 @@ let coordDict = {
 	   ],
 	   "index":70,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2DF":{
@@ -1198,7 +1127,6 @@ let coordDict = {
 	   ],
 	   "index":71,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x035-Owl":{
@@ -1214,7 +1142,6 @@ let coordDict = {
 	   ],
 	   "index":72,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2AF":{
@@ -1230,7 +1157,6 @@ let coordDict = {
 	   ],
 	   "index":73,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x011-Owl":{
@@ -1246,7 +1172,6 @@ let coordDict = {
 	   ],
 	   "index":74,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2AE":{
@@ -1262,7 +1187,6 @@ let coordDict = {
 	   ],
 	   "index":75,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2B3":{
@@ -1278,7 +1202,6 @@ let coordDict = {
 	   ],
 	   "index":76,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2AB":{
@@ -1299,7 +1222,6 @@ let coordDict = {
 	   ],
 	   "index":77,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2BD":{
@@ -1320,7 +1242,6 @@ let coordDict = {
 	   ],
 	   "index":78,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x041":{
@@ -1336,7 +1257,6 @@ let coordDict = {
 	   ],
 	   "index":79,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x034":{
@@ -1352,7 +1272,6 @@ let coordDict = {
 	   ],
 	   "index":80,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1E1":{
@@ -1368,7 +1287,6 @@ let coordDict = {
 	   ],
 	   "index":81,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x071":{
@@ -1384,7 +1302,6 @@ let coordDict = {
 	   ],
 	   "index":82,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x044":{
@@ -1400,7 +1317,6 @@ let coordDict = {
 	   ],
 	   "index":83,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1E3":{
@@ -1416,7 +1332,6 @@ let coordDict = {
 	   ],
 	   "index":84,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0E5":{
@@ -1432,7 +1347,6 @@ let coordDict = {
 	   ],
 	   "index":85,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0D2":{
@@ -1448,7 +1362,6 @@ let coordDict = {
 	   ],
 	   "index":86,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2B2":{
@@ -1464,7 +1377,6 @@ let coordDict = {
 	   ],
 	   "index":87,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x0A3":{
@@ -1480,7 +1392,6 @@ let coordDict = {
 	   ],
 	   "index":88,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2B1":{
@@ -1496,7 +1407,6 @@ let coordDict = {
 	   ],
 	   "index":89,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A4":{
@@ -1512,7 +1422,6 @@ let coordDict = {
 	   ],
 	   "index":90,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2BE":{
@@ -1528,7 +1437,6 @@ let coordDict = {
 	   ],
 	   "index":91,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2BF":{
@@ -1544,7 +1452,6 @@ let coordDict = {
 	   ],
 	   "index":92,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x30A-Owl":{
@@ -1565,7 +1472,6 @@ let coordDict = {
 	   ],
 	   "index":10,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x307":{
@@ -1586,7 +1492,6 @@ let coordDict = {
 	   ],
 	   "index":9,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x306":{
@@ -1607,7 +1512,6 @@ let coordDict = {
 	   ],
 	   "index":8,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x302":{
@@ -1628,7 +1532,6 @@ let coordDict = {
 	   ],
 	   "index":7,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x311":{
@@ -1649,7 +1552,6 @@ let coordDict = {
 	   ],
 	   "index":3,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x30F":{
@@ -1670,7 +1572,6 @@ let coordDict = {
 	   ],
 	   "index":1,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x30F-Owl":{
@@ -1691,7 +1592,6 @@ let coordDict = {
 	   ],
 	   "index":2,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x308":{
@@ -1712,7 +1612,6 @@ let coordDict = {
 	   ],
 	   "index":5,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x308-Owl":{
@@ -1733,7 +1632,6 @@ let coordDict = {
 	   ],
 	   "index":6,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x314":{
@@ -1754,7 +1652,6 @@ let coordDict = {
 	   ],
 	   "index":4,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x230":{
@@ -1775,7 +1672,6 @@ let coordDict = {
 	   ],
 	   "index":23,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x234":{
@@ -1796,7 +1692,6 @@ let coordDict = {
 	   ],
 	   "index":22,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x232":{
@@ -1817,7 +1712,6 @@ let coordDict = {
 	   ],
 	   "index":15,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x23A":{
@@ -1838,7 +1732,6 @@ let coordDict = {
 	   ],
 	   "index":17,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x241-Owl":{
@@ -1859,7 +1752,6 @@ let coordDict = {
 	   ],
 	   "index":13,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x241":{
@@ -1880,7 +1772,6 @@ let coordDict = {
 	   ],
 	   "index":12,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x000":{
@@ -1906,7 +1797,6 @@ let coordDict = {
 	   ],
 	   "index":16,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x23D":{
@@ -1927,7 +1817,6 @@ let coordDict = {
 	   ],
 	   "index":20,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x240":{
@@ -1948,7 +1837,6 @@ let coordDict = {
 	   ],
 	   "index":14,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x237":{
@@ -1969,7 +1857,6 @@ let coordDict = {
 	   ],
 	   "index":11,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x235":{
@@ -1990,7 +1877,6 @@ let coordDict = {
 	   ],
 	   "index":21,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x23E":{
@@ -2011,7 +1897,6 @@ let coordDict = {
 	   ],
 	   "index":18,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x245-Owl":{
@@ -2032,7 +1917,6 @@ let coordDict = {
 	   ],
 	   "index":19,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x25F":{
@@ -2053,7 +1937,6 @@ let coordDict = {
 	   ],
 	   "index":9,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x25A":{
@@ -2074,7 +1957,6 @@ let coordDict = {
 	   ],
 	   "index":7,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x259":{
@@ -2095,7 +1977,6 @@ let coordDict = {
 	   ],
 	   "index":6,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x253-Owl":{
@@ -2116,7 +1997,6 @@ let coordDict = {
 	   ],
 	   "index":8,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x246":{
@@ -2137,7 +2017,6 @@ let coordDict = {
 	   ],
 	   "index":2,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x255":{
@@ -2158,7 +2037,6 @@ let coordDict = {
 	   ],
 	   "index":3,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x24C":{
@@ -2179,7 +2057,6 @@ let coordDict = {
 	   ],
 	   "index":4,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x25C":{
@@ -2200,7 +2077,6 @@ let coordDict = {
 	   ],
 	   "index":5,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x24D":{
@@ -2221,7 +2097,6 @@ let coordDict = {
 	   ],
 	   "index":1,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x24F":{
@@ -2242,7 +2117,6 @@ let coordDict = {
 	   ],
 	   "index":10,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x22C":{
@@ -2263,7 +2137,6 @@ let coordDict = {
 	   ],
 	   "index":141,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x223":{
@@ -2284,7 +2157,6 @@ let coordDict = {
 	   ],
 	   "index":140,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x220":{
@@ -2305,7 +2177,6 @@ let coordDict = {
 	   ],
 	   "index":139,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x21A":{
@@ -2326,7 +2197,6 @@ let coordDict = {
 	   ],
 	   "index":127,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x224":{
@@ -2352,7 +2222,6 @@ let coordDict = {
 	   ],
 	   "index":138,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x21C":{
@@ -2373,7 +2242,6 @@ let coordDict = {
 	   ],
 	   "index":137,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x21C-Owl":{
@@ -2394,7 +2262,6 @@ let coordDict = {
 	   ],
 	   "index":136,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x201":{
@@ -2415,7 +2282,6 @@ let coordDict = {
 	   ],
 	   "index":134,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x21B":{
@@ -2436,7 +2302,6 @@ let coordDict = {
 	   ],
 	   "index":133,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x211":{
@@ -2457,7 +2322,6 @@ let coordDict = {
 	   ],
 	   "index":130,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x209":{
@@ -2478,7 +2342,6 @@ let coordDict = {
 	   ],
 	   "index":135,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x204":{
@@ -2499,7 +2362,6 @@ let coordDict = {
 	   ],
 	   "index":131,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x204-Owl":{
@@ -2520,7 +2382,6 @@ let coordDict = {
 	   ],
 	   "index":132,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x212":{
@@ -2541,7 +2402,6 @@ let coordDict = {
 	   ],
 	   "index":129,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x216-Owl":{
@@ -2562,7 +2422,6 @@ let coordDict = {
 	   ],
 	   "index":128,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x210":{
@@ -2583,7 +2442,6 @@ let coordDict = {
 	   ],
 	   "index":126,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B5":{
@@ -2604,7 +2462,6 @@ let coordDict = {
 	   ],
 	   "index":160,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1BC":{
@@ -2625,7 +2482,6 @@ let coordDict = {
 	   ],
 	   "index":159,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B6":{
@@ -2646,7 +2502,6 @@ let coordDict = {
 	   ],
 	   "index":157,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B6-Owl":{
@@ -2667,7 +2522,6 @@ let coordDict = {
 	   ],
 	   "index":158,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B1":{
@@ -2688,7 +2542,6 @@ let coordDict = {
 	   ],
 	   "index":156,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1C3":{
@@ -2709,7 +2562,6 @@ let coordDict = {
 	   ],
 	   "index":155,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1D7-Owl":{
@@ -2730,7 +2582,6 @@ let coordDict = {
 	   ],
 	   "index":152,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1D1":{
@@ -2751,7 +2602,6 @@ let coordDict = {
 	   ],
 	   "index":153,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1BE":{
@@ -2772,7 +2622,6 @@ let coordDict = {
 	   ],
 	   "index":154,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x06C":{
@@ -2798,7 +2647,6 @@ let coordDict = {
 	   ],
 	   "index":151,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B0":{
@@ -2819,7 +2667,6 @@ let coordDict = {
 	   ],
 	   "index":150,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B4":{
@@ -2840,7 +2687,6 @@ let coordDict = {
 	   ],
 	   "index":149,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B3":{
@@ -2861,7 +2707,6 @@ let coordDict = {
 	   ],
 	   "index":148,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1B9":{
@@ -2882,7 +2727,6 @@ let coordDict = {
 	   ],
 	   "index":147,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1C0":{
@@ -2903,7 +2747,6 @@ let coordDict = {
 	   ],
 	   "index":146,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1CE":{
@@ -2924,7 +2767,6 @@ let coordDict = {
 	   ],
 	   "index":144,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1BB-Owl":{
@@ -2945,7 +2787,6 @@ let coordDict = {
 	   ],
 	   "index":145,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1C9":{
@@ -2966,7 +2807,6 @@ let coordDict = {
 	   ],
 	   "index":143,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1CF":{
@@ -2987,7 +2827,6 @@ let coordDict = {
 	   ],
 	   "index":142,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x182":{
@@ -3008,7 +2847,6 @@ let coordDict = {
 	   ],
 	   "index":176,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x185":{
@@ -3029,7 +2867,6 @@ let coordDict = {
 	   ],
 	   "index":175,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x186":{
@@ -3055,7 +2892,6 @@ let coordDict = {
 	   ],
 	   "index":168,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x183":{
@@ -3076,7 +2912,6 @@ let coordDict = {
 	   ],
 	   "index":172,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x180":{
@@ -3097,7 +2932,6 @@ let coordDict = {
 	   ],
 	   "index":174,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x18F":{
@@ -3118,7 +2952,6 @@ let coordDict = {
 	   ],
 	   "index":170,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x188":{
@@ -3139,7 +2972,6 @@ let coordDict = {
 	   ],
 	   "index":171,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x18E":{
@@ -3160,7 +2992,6 @@ let coordDict = {
 	   ],
 	   "index":169,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x18A-Owl":{
@@ -3181,7 +3012,6 @@ let coordDict = {
 	   ],
 	   "index":167,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x196":{
@@ -3202,7 +3032,6 @@ let coordDict = {
 	   ],
 	   "index":166,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x197":{
@@ -3223,7 +3052,6 @@ let coordDict = {
 	   ],
 	   "index":164,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x19B":{
@@ -3244,7 +3072,6 @@ let coordDict = {
 	   ],
 	   "index":163,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x19A-Owl":{
@@ -3265,7 +3092,6 @@ let coordDict = {
 	   ],
 	   "index":165,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x181":{
@@ -3286,7 +3112,6 @@ let coordDict = {
 	   ],
 	   "index":173,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x19E":{
@@ -3307,7 +3132,6 @@ let coordDict = {
 	   ],
 	   "index":162,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1A0":{
@@ -3328,7 +3152,6 @@ let coordDict = {
 	   ],
 	   "index":161,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x162":{
@@ -3349,7 +3172,6 @@ let coordDict = {
 	   ],
 	   "index":192,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x166":{
@@ -3370,7 +3192,6 @@ let coordDict = {
 	   ],
 	   "index":191,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x176":{
@@ -3391,7 +3212,6 @@ let coordDict = {
 	   ],
 	   "index":190,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x160":{
@@ -3412,7 +3232,6 @@ let coordDict = {
 	   ],
 	   "index":188,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x168":{
@@ -3433,7 +3252,6 @@ let coordDict = {
 	   ],
 	   "index":187,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x16D":{
@@ -3454,7 +3272,6 @@ let coordDict = {
 	   ],
 	   "index":186,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x16E":{
@@ -3475,7 +3292,6 @@ let coordDict = {
 	   ],
 	   "index":189,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x169":{
@@ -3501,7 +3317,6 @@ let coordDict = {
 	   ],
 	   "index":184,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x16F-Owl":{
@@ -3522,7 +3337,6 @@ let coordDict = {
 	   ],
 	   "index":185,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x175":{
@@ -3543,7 +3357,6 @@ let coordDict = {
 	   ],
 	   "index":183,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x165":{
@@ -3564,7 +3377,6 @@ let coordDict = {
 	   ],
 	   "index":182,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x171":{
@@ -3585,7 +3397,6 @@ let coordDict = {
 	   ],
 	   "index":181,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x17B":{
@@ -3606,7 +3417,6 @@ let coordDict = {
 	   ],
 	   "index":180,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x178":{
@@ -3627,7 +3437,6 @@ let coordDict = {
 	   ],
 	   "index":179,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x16A":{
@@ -3648,7 +3457,6 @@ let coordDict = {
 	   ],
 	   "index":178,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x179":{
@@ -3669,7 +3477,6 @@ let coordDict = {
 	   ],
 	   "index":177,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x159":{
@@ -3690,7 +3497,6 @@ let coordDict = {
 	   ],
 	   "index":214,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x15A":{
@@ -3711,7 +3517,6 @@ let coordDict = {
 	   ],
 	   "index":213,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x15B":{
@@ -3732,7 +3537,6 @@ let coordDict = {
 	   ],
 	   "index":212,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x140-Owl":{
@@ -3753,7 +3557,6 @@ let coordDict = {
 	   ],
 	   "index":205,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x144":{
@@ -3774,7 +3577,6 @@ let coordDict = {
 	   ],
 	   "index":206,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x148":{
@@ -3795,7 +3597,6 @@ let coordDict = {
 	   ],
 	   "index":204,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x141":{
@@ -3816,7 +3617,6 @@ let coordDict = {
 	   ],
 	   "index":211,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x142":{
@@ -3837,7 +3637,6 @@ let coordDict = {
 	   ],
 	   "index":210,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x146":{
@@ -3858,7 +3657,6 @@ let coordDict = {
 	   ],
 	   "index":207,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x147":{
@@ -3879,7 +3677,6 @@ let coordDict = {
 	   ],
 	   "index":208,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x147-Owl":{
@@ -3900,7 +3697,6 @@ let coordDict = {
 	   ],
 	   "index":209,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x14D":{
@@ -3921,7 +3717,6 @@ let coordDict = {
 	   ],
 	   "index":203,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x158":{
@@ -3942,7 +3737,6 @@ let coordDict = {
 	   ],
 	   "index":202,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x155":{
@@ -3963,7 +3757,6 @@ let coordDict = {
 	   ],
 	   "index":201,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x14C":{
@@ -3984,7 +3777,6 @@ let coordDict = {
 	   ],
 	   "index":200,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x150":{
@@ -4005,7 +3797,6 @@ let coordDict = {
 	   ],
 	   "index":196,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x154-Owl":{
@@ -4026,7 +3817,6 @@ let coordDict = {
 	   ],
 	   "index":199,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x154":{
@@ -4047,7 +3837,6 @@ let coordDict = {
 	   ],
 	   "index":198,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x14E":{
@@ -4068,7 +3857,6 @@ let coordDict = {
 	   ],
 	   "index":197,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x14F":{
@@ -4089,7 +3877,6 @@ let coordDict = {
 	   ],
 	   "index":195,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x151":{
@@ -4110,7 +3897,6 @@ let coordDict = {
 	   ],
 	   "index":194,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x153":{
@@ -4131,7 +3917,6 @@ let coordDict = {
 	   ],
 	   "index":193,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x12A":{
@@ -4152,7 +3937,6 @@ let coordDict = {
 	   ],
 	   "index":231,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x12B":{
@@ -4173,7 +3957,6 @@ let coordDict = {
 	   ],
 	   "index":230,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x127":{
@@ -4194,7 +3977,6 @@ let coordDict = {
 	   ],
 	   "index":229,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x122":{
@@ -4215,7 +3997,6 @@ let coordDict = {
 	   ],
 	   "index":228,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x120":{
@@ -4236,7 +4017,6 @@ let coordDict = {
 	   ],
 	   "index":227,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x12F-Owl":{
@@ -4257,7 +4037,6 @@ let coordDict = {
 	   ],
 	   "index":223,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x129-Owl":{
@@ -4278,7 +4057,6 @@ let coordDict = {
 	   ],
 	   "index":224,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x121":{
@@ -4299,7 +4077,6 @@ let coordDict = {
 	   ],
 	   "index":226,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x126":{
@@ -4320,7 +4097,6 @@ let coordDict = {
 	   ],
 	   "index":225,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x134":{
@@ -4341,7 +4117,6 @@ let coordDict = {
 	   ],
 	   "index":220,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x139":{
@@ -4362,7 +4137,6 @@ let coordDict = {
 	   ],
 	   "index":222,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x138":{
@@ -4383,7 +4157,6 @@ let coordDict = {
 	   ],
 	   "index":221,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x133-Owl":{
@@ -4404,7 +4177,6 @@ let coordDict = {
 	   ],
 	   "index":219,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x137":{
@@ -4425,7 +4197,6 @@ let coordDict = {
 	   ],
 	   "index":218,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x132":{
@@ -4446,7 +4217,6 @@ let coordDict = {
 	   ],
 	   "index":217,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x12E":{
@@ -4467,7 +4237,6 @@ let coordDict = {
 	   ],
 	   "index":216,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x136":{
@@ -4488,7 +4257,6 @@ let coordDict = {
 	   ],
 	   "index":215,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x102":{
@@ -4509,7 +4277,6 @@ let coordDict = {
 	   ],
 	   "index":246,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x106":{
@@ -4530,7 +4297,6 @@ let coordDict = {
 	   ],
 	   "index":235,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x10A-Owl":{
@@ -4551,7 +4317,6 @@ let coordDict = {
 	   ],
 	   "index":244,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x10A":{
@@ -4572,7 +4337,6 @@ let coordDict = {
 	   ],
 	   "index":243,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x108":{
@@ -4593,7 +4357,6 @@ let coordDict = {
 	   ],
 	   "index":242,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x11D":{
@@ -4614,7 +4377,6 @@ let coordDict = {
 	   ],
 	   "index":241,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x104-Owl":{
@@ -4635,7 +4397,6 @@ let coordDict = {
 	   ],
 	   "index":239,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x103-Owl":{
@@ -4656,7 +4417,6 @@ let coordDict = {
 	   ],
 	   "index":240,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x10C":{
@@ -4677,7 +4437,6 @@ let coordDict = {
 	   ],
 	   "index":238,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x114":{
@@ -4698,7 +4457,6 @@ let coordDict = {
 	   ],
 	   "index":235,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x10D":{
@@ -4719,7 +4477,6 @@ let coordDict = {
 	   ],
 	   "index":237,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x116":{
@@ -4740,7 +4497,6 @@ let coordDict = {
 	   ],
 	   "index":232,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x10E":{
@@ -4761,7 +4517,6 @@ let coordDict = {
 	   ],
 	   "index":236,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x115":{
@@ -4782,7 +4537,6 @@ let coordDict = {
 	   ],
 	   "index":233,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x113":{
@@ -4803,7 +4557,6 @@ let coordDict = {
 	   ],
 	   "index":234,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A1-2":{
@@ -4819,7 +4572,6 @@ let coordDict = {
 	   ],
 	   "index":247,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A1-1":{
@@ -4835,7 +4587,6 @@ let coordDict = {
 	   ],
 	   "index":248,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A1-0":{
@@ -4851,7 +4602,6 @@ let coordDict = {
 	   ],
 	   "index":249,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A2":{
@@ -4867,7 +4617,6 @@ let coordDict = {
 	   ],
 	   "index":250,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x301-1":{
@@ -4888,7 +4637,6 @@ let coordDict = {
 	   ],
 	   "index":12,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x301-0":{
@@ -4909,7 +4657,6 @@ let coordDict = {
 	   ],
 	   "index":11,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x2A3":{
@@ -4925,7 +4672,6 @@ let coordDict = {
 	   ],
 	   "index":253,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 	"0x1F5":{
@@ -4941,7 +4687,6 @@ let coordDict = {
 	   ],
 	   "index":254,
 	   "icon":"",
-	   "entranceType":"none",
 	   "type":"check"
 	},
 }

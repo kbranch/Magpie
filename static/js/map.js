@@ -8,7 +8,11 @@ function drawChecks(mapName, animate=true) {
         return;
     }
 
-    animate = animate && localSettings.animateChecks;
+    animate = animate
+              && localSettings.animateChecks
+              && !skipNextAnimation;
+    
+    skipNextAnimation = false;
 
     $('.checkGraphic.animate__fadeOut').remove();
 
@@ -82,6 +86,8 @@ function drawChecks(mapName, animate=true) {
         oldNodes.delete(nodeId);
     }
 
+    drawConnectorLines();
+
     for (const staleNode of oldNodes) {
         let node = $(`[data-node-id="${staleNode}"]`);
         $(node).tooltip('hide');
@@ -137,6 +143,11 @@ function pickNodeIconClasses(node) {
 
 function addTooltip(checkGraphic) {
     let node = nodes[$(checkGraphic).attr('data-node-id')]
+
+    if (node == undefined) {
+        return;
+    }
+
     let title = node.tooltipHtml($(checkGraphic).attr('data-pinned'));
 
     let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
@@ -377,6 +388,37 @@ function checkGraphicMouseLeave(element) {
     }
 }
 
+function drawConnectorLines() {
+    $('connection').connections('remove');
+
+    let connected = {};
+    for (const connector of Object.keys(reverseEntranceMap).filter(x => entranceDict[x].entranceType == 'connector')) {
+        let entrance = entranceDict[connector];
+        let others = entrance.connectedTo;
+        let mappedOthers = others.filter(x => x in reverseEntranceMap);
+
+        if (mappedOthers.length > 0) {
+            let id = getConnectorId([connector].concat(others));
+            connected[id] = [connector].concat(mappedOthers);
+        }
+    }
+
+    for (const key in connected) {
+        let entrances = connected[key];
+        let first = $(`[data-entrance-id="${reverseEntranceMap[entrances[0]]}"`);
+
+        for (let i = 1; i < entrances.length; i++) {
+            let selector = `[data-entrance-id="${reverseEntranceMap[entrances[i]]}"]`;
+            $(first).connections({ class: 'entrance-to', to: selector });
+            $(first).connections({ class: 'outer-entrance-connection', to: selector });
+        }
+    }
+}
+
+function getConnectorId(entrances) {
+    return sortByKey(entrances, x => [x]).join('-');
+}
+
 function nodePrimary(element) { 
     toggleNode(element);
 }
@@ -419,17 +461,4 @@ function checkGraphicRightClick(element) {
     else {
         nodeSecondary(element);
     }
-}
-
-function connectEntrances(from, to) {
-    if (to == 'clear') {
-        delete entranceMap[from];
-    }
-    else {
-        entranceMap[from] = to;
-    }
-
-    saveEntrances();
-    closeAllCheckTooltips();
-    refreshCheckList();
 }

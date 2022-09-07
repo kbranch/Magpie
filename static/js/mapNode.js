@@ -227,8 +227,10 @@ class MapNode {
             if (args.entranceshuffle == 'none'
                 && isDungeon) {
 
-                let options = entrances.filter(x => x.startsWith('d') && x.length == 2)
-                        .map(x => [x, entranceDict[x].name]);
+                let options = entrances.filter(x => x.startsWith('d')
+                                                    && x.length == 2
+                                                    && !(x in reverseEntranceMap))
+                                       .map(x => [x, entranceDict[x].name]);
                 
                 options = sortByKey(options, x => [x[0]]);
 
@@ -239,7 +241,8 @@ class MapNode {
             else if (args.entranceshuffle != 'none') {
                 let requireConnector = this.entrance.entranceType == 'connector';
                 let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector
-                                                     && entranceDict[x].entranceType != 'dummy')
+                                                     && entranceDict[x].entranceType != 'dummy'
+                                                     && !(x in reverseEntranceMap))
                                        .map(x => [x, entranceDict[x].name]);
                 
                 options = sortByKey(options, x => [x[1]]);

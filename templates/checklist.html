@@ -81,6 +81,7 @@
     function resizeTimeout() {
         clearCheckImages();
         clearTimeout(timeoutId);
+        skipNextAnimation = true;
         timeoutId = setTimeout(drawActiveTab, 100);
     }
 

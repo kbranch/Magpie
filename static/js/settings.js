@@ -204,3 +204,16 @@ function mapToLandfill(entranceId) {
     closeAllCheckTooltips();
     refreshCheckList();
 }
+
+function connectEntrances(from, to) {
+    if (to == 'clear') {
+        delete entranceMap[from];
+    }
+    else {
+        entranceMap[from] = to;
+    }
+
+    saveEntrances();
+    closeAllCheckTooltips();
+    refreshCheckList();
+}
