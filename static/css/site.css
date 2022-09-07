@@ -371,18 +371,21 @@ button.nav-link.active {
     border: 10px solid #ff9a00;
     border-radius: 100%;
     z-index: 100;
+    pointer-events: none;
 }
 
 .entrance-to {
     border: 10px solid #00a2ff;
     border-radius: 100%;
     z-index: 100;
+    pointer-events: none;
 }
 
 .outer-entrance-connection {
     border: 10px double #000;
     border-radius: 100%;
     z-index: 101;
+    pointer-events: none;
 }
 
 .start-location.difficulty-checked {
