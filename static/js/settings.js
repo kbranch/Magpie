@@ -196,3 +196,11 @@ function clearEntranceMapping(entranceId) {
     closeAllCheckTooltips();
     refreshCheckList();
 }
+
+function mapToLandfill(entranceId) {
+    entranceMap[entranceId] = 'landfill';
+
+    saveEntrances();
+    closeAllCheckTooltips();
+    refreshCheckList();
+}

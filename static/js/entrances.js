@@ -1579,5 +1579,20 @@ let entranceDict = {
 			 "y":1560
 		  }
 	   ]
-	}
+	},
+	"landfill":{
+	   "id":"landfill",
+	   "area":"Landfill",
+	   "name":"Landfill",
+	   "index":0,
+	   "icon":"",
+	   "entranceType":"dummy",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":0,
+			 "y":0
+		  }
+	   ]
+	},
  }

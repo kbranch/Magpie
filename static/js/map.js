@@ -108,7 +108,7 @@ function pickNodeIconClasses(node) {
 
             if (mappedEntrance.entranceType == 'connector') {
                 if (node.isChecked || node.checks.length == 0) {
-                    classes.push('entrance-only')
+                    classes.push('entrance-only');
                 }
                 else {
                     classes.push(`difficulty-${node.difficulty}`);
@@ -117,8 +117,11 @@ function pickNodeIconClasses(node) {
             else if (node.checks.length > 0) {
                 classes.push(`difficulty-${node.difficulty}`);
             }
+            else if (mappedEntrance.id == 'landfill') {
+                classes.push('difficulty-checked');
+            }
             else {
-                classes.push('entrance-only')
+                classes.push('entrance-only');
             }
         }
         else {
@@ -218,7 +221,7 @@ function createNodes(map, mapName) {
         }
     }
 
-    let checksByEntrance = {};
+    let checksByEntrance = {'landfill': []};
     let remappedNodes = [];
     for (const key in nodes) {
         let node = nodes[key];

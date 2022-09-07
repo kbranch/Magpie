@@ -211,6 +211,10 @@ class MapNode {
         let pinnedHtml = '';
 
         if (this.entrance != null) {
+            let isDungeon = args.dungeonshuffle
+                            && this.entrance.id.startsWith('d')
+                            && this.entrance.id.length == 2;
+
             if (startLocations.includes(this.entrance.id)
                 && !(this.entrance.id in entranceMap)) {
                 pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation("${this.entrance.id}");`)
@@ -219,9 +223,7 @@ class MapNode {
             }
 
             if (args.entranceshuffle == 'none'
-                && args.dungeonshuffle
-                && this.entrance.id.startsWith('d')
-                && this.entrance.id.length == 2) {
+                && isDungeon) {
 
                 let options = entrances.filter(x => x.startsWith('d') && x.length == 2)
                         .map(x => [x, entranceDict[x].name]);
@@ -243,6 +245,12 @@ class MapNode {
                 let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
 
                 pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
+
+                if (entranceMap[this.entrance.id] != 'landfill') {
+                    pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill("${this.entrance.id}")`)
+                                                    .replace('{text}', 'Map to Landfill')
+                                                    .replace('{attributes}', ` data-node-id="${this.id()}"`);
+                }
             }
 
             if (this.entrance.id in entranceMap) {
