@@ -234,9 +234,10 @@ class MapNode {
                 
                 options = sortByKey(options, x => [x[0]]);
 
+                let action = `graphicalConnection('${this.entrance.id}')`;
                 let optionAction = `connectEntrances('${this.entrance.id}', $(this).attr('data-value'))`;
 
-                pinnedHtml += MapNode.createDropdown('Connect to...', '', options, optionAction);
+                pinnedHtml += MapNode.createDropdown('Connect to...', action, options, optionAction);
             }
             else if (args.entranceshuffle != 'none') {
                 let options = MapNode.getValidConnections(this.entrance.id);

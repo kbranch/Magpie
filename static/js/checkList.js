@@ -211,6 +211,15 @@ function pruneEntranceMap() {
         if (!entrances.includes(entrance)) {
             delete entranceMap[entrance];
         }
+        else if (!entrances.includes(entranceMap[entrance])) {
+            delete entranceMap[entrance];
+        }
+    }
+
+    for (const entrance in reverseEntranceMap) {
+        if (!entrances.includes(entrance)) {
+            delete entranceMap[reverseEntranceMap[entrance]];
+        }
     }
 
     if (!args.randomstartlocation) {
