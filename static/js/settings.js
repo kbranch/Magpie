@@ -288,4 +288,7 @@ function keyDown(e) {
              || (e.ctrlKey && e.key == 'y')) {
         redo();
     }
+    else if (e.key == 'Escape' && graphicalMapSource != null) {
+        endGraphicalConnection();
+    }
 }

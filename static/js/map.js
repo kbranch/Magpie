@@ -342,6 +342,10 @@ function closeAllCheckTooltips() {
     for (const node of pinnedNodes) {
         addTooltip(node);
     }
+
+    if (graphicalMapSource != null) {
+        endGraphicalConnection();
+    }
 }
 
 function drawActiveTab() {
@@ -438,10 +442,7 @@ function checkGraphicLeftClick(element) {
     }
 
     if (graphicalMapSource != null) {
-        connectEntrances(graphicalMapSource, $(element).attr('data-entrance-id'));
-        graphicalMapSource = null;
-        graphicalMapChoices = null;
-
+        endGraphicalConnection(destId=$(element).attr('data-entrance-id'));
         return;
     }
 
@@ -459,10 +460,7 @@ function checkGraphicRightClick(element) {
     }
 
     if (graphicalMapSource != null) {
-        connectEntrances(graphicalMapSource, $(element).attr('data-entrance-id'));
-        graphicalMapSource = null;
-        graphicalMapChoices = null;
-
+        endGraphicalConnection(destId=$(element).attr('data-entrance-id'));
         return;
     }
 
@@ -474,9 +472,60 @@ function checkGraphicRightClick(element) {
     }
 }
 
+function connectorMouseMove(event) {
+    let mouseTracker = $('#mouseTracker');
+
+    if (mouseTracker.length == 0) {
+        mouseTracker = $('<div>', {
+            id: 'mouseTracker',
+            css: {
+                left: event.pageX,
+                top: event.pageY,
+                position: 'absolute',
+                'pointer-events': 'none',
+                width: 1,
+                height: 1,
+            }
+        });
+
+        $('#firstRow').append(mouseTracker);
+
+        let source = $(`[data-entrance-id="${graphicalMapSource}"]`);
+        $(source).connections({ class: 'entrance-from', to: $(mouseTracker) });
+        $(source).connections({ class: 'outer-entrance-connection', to: $(mouseTracker) });
+    }
+
+    $(mouseTracker).css({
+        left: event.pageX,
+        top: event.pageY,
+    });
+
+    $(mouseTracker).connections('update');
+}
+
 function graphicalConnection(entranceId) {
     closeAllCheckTooltips();
     graphicalMapSource = entranceId;
     graphicalMapChoices = new Set(MapNode.getValidConnections(entranceId).map(x => x[0]));
+    $('#overworldTabContent').mousemove(connectorMouseMove);
     drawActiveTab();
+}
+
+function endGraphicalConnection(destId = null) {
+    let originalSource = graphicalMapSource;
+
+    graphicalMapSource = null;
+    graphicalMapChoices = null;
+
+    $('#mouseTracker').connections('remove');
+    $('#overworldTabContent').off('mousemove');
+    $('#mouseTracker').remove();
+
+    if (destId != null) {
+        connectEntrances(originalSource, destId);
+    }
+    else if(originalSource != null) {
+        skipNextAnimation = true;
+        refreshCheckList();
+    }
 }
