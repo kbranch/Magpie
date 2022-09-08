@@ -250,7 +250,7 @@ class MapNode {
 
                 if (entranceMap[this.entrance.id] != 'landfill') {
                     pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill("${this.entrance.id}")`)
-                                                    .replace('{text}', 'Connect to Landfill')
+                                                    .replace('{text}', 'Mark as useless')
                                                     .replace('{attributes}', ` data-node-id="${this.id()}"`);
                 }
             }

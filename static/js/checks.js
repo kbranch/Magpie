@@ -1037,7 +1037,7 @@ let coordDict = {
 	"0x2E5":{
 	   "id":"0x2E5",
 	   "area":"Ukuku Prairie",
-	   "name":"Boots 'n' Bomb Cave Chest",
+	   "name":"Boots 'n' Bomb Cave Bombable Wall",
 	   "locations":[
 		  {
 			 "map":"overworld",
@@ -1052,7 +1052,7 @@ let coordDict = {
 	"0x2F4":{
 	   "id":"0x2F4",
 	   "area":"Ukuku Prairie",
-	   "name":"Boots 'n' Bomb Cave Bombable Wall",
+	   "name":"Boots 'n' Bomb Cave Chest",
 	   "locations":[
 		  {
 			 "map":"overworld",

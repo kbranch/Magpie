@@ -208,16 +208,18 @@ function pruneEntranceMap() {
     }
 
     for (const entrance in entranceMap) {
+        let mappedEntrance = entranceMap[entrance];
+
         if (!entrances.includes(entrance)) {
             delete entranceMap[entrance];
         }
-        else if (!entrances.includes(entranceMap[entrance])) {
+        else if (mappedEntrance != 'landfill' && !entrances.includes(mappedEntrance)) {
             delete entranceMap[entrance];
         }
     }
 
     for (const entrance in reverseEntranceMap) {
-        if (!entrances.includes(entrance)) {
+        if (entrance != 'landfill' && !entrances.includes(entrance)) {
             delete entranceMap[reverseEntranceMap[entrance]];
         }
     }
