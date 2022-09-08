@@ -44,6 +44,8 @@ function saveSettings() {
 
     applySettings();
 
+    skipNextAnimation = true;
+
     refreshItems();
 }
 
