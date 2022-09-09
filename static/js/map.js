@@ -103,6 +103,10 @@ function pickNodeIconClasses(node) {
         classes.push('behind-keys');
     }
 
+    if (node.isVanilla) {
+        classes.push('vanilla');
+    }
+
     if (node.entrance != null) {
         if (node.entrance.id in entranceMap) {
             let mappedEntrance = entranceDict[entranceMap[node.entrance.id]];
@@ -215,6 +219,7 @@ function createNodes(map, mapName) {
             let id = $(check).attr('data-check-id');
             let checkMaps = coordDict[id].locations.map(function(x) { return x.map; });
             let difficulty = Number($(check).attr('data-difficulty'));
+            let vanilla = $(check).attr('data-vanilla') == 'true';
 
             if (localSettings.ignoreHigherLogic && difficulty > 0) {
                 difficulty = 9;
@@ -222,7 +227,9 @@ function createNodes(map, mapName) {
 
             if (!(checkMaps.includes(mapName))
                 || (difficulty == 9
-                    && !localSettings.showOutOfLogic)) {
+                    && !localSettings.showOutOfLogic)
+                || (vanilla
+                    && localSettings.hideVanilla)) {
                 continue;
             }
 
@@ -243,7 +250,7 @@ function createNodes(map, mapName) {
                     nodes[coordString] = new MapNode(x, y);
                 }
 
-                nodes[coordString].addCheck(id, behindKeys, difficulty);
+                nodes[coordString].addCheck(id, behindKeys, difficulty, vanilla);
             }
         }
 
@@ -362,7 +369,11 @@ function getMapNameFromButton(button) {
     return mapName;
 }
 
-function drawTab(button) {
+function drawTab(button, clear=false) {
+    if (clear) {
+        clearCheckImages();
+    }
+
     drawChecks(getMapNameFromButton(button), false);
 }
 

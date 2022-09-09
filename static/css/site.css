@@ -233,11 +233,19 @@ img {
     z-index: 2;
 }
 
+.difficulty-0.vanilla {
+    background-image: url('/static/images/vanilla-circle.svg');
+}
+
 .difficulty-1 {
     border-style: none;
     background-image: url('/static/images/square.svg');
     background-size: contain;
     z-index: 2;
+}
+
+.difficulty-1.vanilla {
+    background-image: url('/static/images/vanilla-square.svg');
 }
 
 .difficulty-2 {
@@ -247,11 +255,19 @@ img {
     z-index: 2;
 }
 
+.difficulty-2.vanilla {
+    background-image: url('/static/images/vanilla-triangle.svg');
+}
+
 .difficulty-3 {
     border-style: none;
     background-image: url('/static/images/diamond.svg');
     background-size: contain;
     z-index: 2;
+}
+
+.difficulty-3.vanilla {
+    background-image: url('/static/images/vanilla-diamond.svg');
 }
 
 .difficulty-4 {
@@ -261,12 +277,19 @@ img {
     z-index: 2;
 }
 
+.difficulty-4.vanilla {
+    background-image: url('/static/images/vanilla-diamond.svg');
+}
+
 .difficulty-9 {
-    /* position: absolute; */
     border-style: none;
     background-image: url('/static/images/outoflogic.svg');
     background-size: contain;
     z-index: 0;
+}
+
+.difficulty-9.vanilla {
+    background-image: url('/static/images/vanilla-outoflogic.svg');
 }
 
 button.nav-link {

@@ -28,6 +28,7 @@ class LocalSettings:
         self.swapItemsAndMap = False
         self.hideChecked = False
         self.ignoreHigherLogic = False
+        self.hideVanilla = False
 
 @app.route("/")
 def home():
@@ -67,8 +68,8 @@ def renderCheckList():
         inventory['RAFT'] = 1
         inventory['ANGLER_KEYHOLE'] = 1
 
-        initChecks()
         args = getArgs(values=argValues)
+        initChecks(args)
 
         addStartingItems(inventory, args)
 

@@ -19,8 +19,8 @@ class MapNode {
         return this.checks.filter(x => x.id == id);
     }
 
-    addCheck(id, behindKeys, difficulty) {
-        this.checks.push(new Check(id, behindKeys, difficulty));
+    addCheck(id, behindKeys, difficulty, vanilla=false) {
+        this.checks.push(new Check(id, behindKeys, difficulty, vanilla=vanilla));
     }
 
     sortChecks() {
@@ -54,10 +54,19 @@ class MapNode {
                              && entranceMap[this.entrance.id] == 'landfill');
     }
 
+    updateIsVanilla() {
+        this.isVanilla = (this.checks.length > 0
+                          && this.checks.filter(x => x.difficulty == this.difficulty
+                                                     && x.behindKeys == this.behindKeys
+                                                     && x.isChecked() == this.isChecked)
+                                        .every(x => x.isVanilla));
+    }
+
     update() {
         this.updateDifficulty();
         this.updateBehindKeys();
         this.updateIsChecked();
+        this.updateIsVanilla();
         this.sortChecks();
     }
 
@@ -92,15 +101,17 @@ class MapNode {
 
     checkGraphicHtml(id) {
         let checks = this.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{difficulty}{behind-keys}'></div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{difficulty}{behind-keys}{vanilla}'></div>";
         let graphic = '';
 
         for (const check of checks) {
             let difficulty = check.isChecked() ? 'checked' : check.difficulty;
             let behindKeys = check.behindKeys ? ' behind-keys' : '';
+            let vanilla = check.isVanilla ? ' vanilla' : '';
 
             graphic += graphicTemplate.replace('{difficulty}', difficulty)
-                                    .replace('{behind-keys}', behindKeys);
+                                      .replace('{behind-keys}', behindKeys)
+                                      .replace('{vanilla}', vanilla);
         }
 
         return graphic;
@@ -125,7 +136,7 @@ class MapNode {
     </ul>
 </div>`;
         const checkTemplate = `<li class="list-group-item tooltip-item">
-    <div class='text-start d-flex p-1 mb-0' data-check-id='{check-id}' onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
+    <div class='text-start d-flex p-1 mb-0' data-check-id='{check-id}'{vanilla} onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
             {name}
@@ -139,6 +150,8 @@ class MapNode {
         let pinnedHtml = '';
 
         for (const id of uniqueIds) {
+            let checks = this.checksWithId(id);
+            let isVanilla = checks.every(x => x.isVanilla);
             let metadata = coordDict[id];
             let graphic = this.checkGraphicHtml(id);
 
@@ -148,8 +161,8 @@ class MapNode {
 
             let line = checkTemplate.replace('{check-id}', id)
                             .replace('{graphic}', graphic)
-                            .replace('{name}', metadata.name);
-
+                            .replace('{name}', metadata.name)
+                            .replace('{vanilla}', isVanilla ? ' data-vanilla="true"' : '');
 
             areas[metadata.area] += line;
         }
@@ -311,10 +324,11 @@ class MapNode {
 }
 
 class Check {
-    constructor(id, behindKeys, difficulty) {
+    constructor(id, behindKeys, difficulty, vanilla=false) {
         this.id = id;
         this.metadata = coordDict[this.id];
         this.behindKeys = behindKeys;
+        this.isVanilla = vanilla;
 
         if (this.fullName in checkedChecks) {
             this.difficulty = -1;

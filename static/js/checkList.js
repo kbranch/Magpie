@@ -55,7 +55,8 @@ function getCheckedKey(area, name) {
 function toggleNode(nodeGraphic) {
     let node = nodes[$(nodeGraphic).attr('data-node-id')];
     let toggleList = new Set(node.checks.filter(x => (x.difficulty == node.difficulty
-                                                      && x.behindKeys == node.behindKeys)
+                                                      && x.behindKeys == node.behindKeys
+                                                      && !x.isChecked())
                                                      || (x.isChecked() && node.isChecked))
                                         .map(x => x.id));
 
