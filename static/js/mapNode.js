@@ -86,7 +86,8 @@ class MapNode {
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
             && 'start_house' in reverseEntranceMap
-            && this.entrance.id != reverseEntranceMap['start_house']) {
+            && this.entrance.id != reverseEntranceMap['start_house']
+            && this.checks.length == 0) {
 
             if (!args.dungeonshuffle) {
                 return true;
