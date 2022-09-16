@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="dark">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css') }}" />
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <title>LADXR Multiworld Instructions</title>
+    </head>
+
+    <body>
+        <div class="container body-content">
+            <ul>
+                <li>
+                    Generate your seed (<a href="http://ladxr.daid.eu/latest/multiworld.php?player_count=2">online generator</a> - change <code>player_count=2</code> to match the number of players you want)
+                </li>
+                <li>
+                    Download the <a href="https://tasvideos.org/BizHawk">BizHawk emulator</a>
+                </li>
+                <li>
+                    Place <a href="socket.dll">socket.dll</a> in the <code>dll</code> folder inside BizHawk's folder (e.g. <code>BizHawk-2.8-win-x64\dll\socket.dll</code>)
+                </li>
+                <li>
+                    Start BizHawk (<code>EmuHawk.exe</code>) and load the seed you generated
+                </li>
+                <li>
+                    Go to <code>Tools->Lua Console</code> <ul><li><img src="ToolsLuaConsole.png"></li></ul>
+                </li>
+                <li>
+                    Open <a href="bizhawkConnector.lua">bizhawkConnector.lua</a> <ul><li><img src="OpenScript.png"></li></ul>
+                </li>
+                <li>
+                    If everything is working, the Lua console and LADX should look like this <ul><li><img src="ScriptStarted.png"></li><li><img src="WaitingForSavegame.png"></li></ul>
+                </li>
+                <li>
+                    If it doesn't work, the multiworld server may be down - you can try an alternate server by using a <a href="bizhawkConnector-kbranch.lua">different connector script</a>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
+
