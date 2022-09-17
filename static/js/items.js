@@ -43,6 +43,13 @@ function setImgSrc(img, item) {
 
         $(img).attr('src', `static/images/${item}_${Math.min(inventory[item], max)}.png`);
     }
+
+    if (inventory[item] > 0) {
+        $(img).addClass('owned-item');
+    }
+    else {
+        $(img).removeClass('owned-item');
+    }
 }
 
 function setItemImage(item) {

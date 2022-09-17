@@ -3,3 +3,5 @@ __pycache__/
 ladx_maptracker_muffinjets_wolfman2000/
 graphics/
 states/
+static/images/temp/
+static/images/backup/

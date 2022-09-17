@@ -34,6 +34,9 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));
+    line-height: 16px;
+    padding-left: 2px;
 }
 
 .full {
@@ -41,10 +44,17 @@
 }
 
 .small {
-    padding-left: 0;
-    padding-right: 0;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    /* padding-left: 0;
+    padding-right: 0; */
     display: inline-block;
 }
+
+/* .dungeon-wrapper {
+    margin-left: -5px !important;
+    margin-right: -5px !important;
+} */
 
 .center {
     width: 50%;
@@ -129,6 +139,12 @@ img {
 .animate__animated.animate__bounceInDown {
     --animate-duration: 0.3s;
 }
+
+/* .owned-item:not(.secondary) { */
+    /* background-color: #444;
+    border-radius: 3px; */
+    /* filter: drop-shadow(0px 0px 2px #ccc);
+} */
 
 .itemImage:hover {
     filter: drop-shadow(0px 0px 5px #ccc);
@@ -228,68 +244,68 @@ img {
 
 .difficulty-0 {
     border-style: none;
-    background-image: url('/static/images/circle.svg');
+    background-image: url('/static/images/difficulty-0.svg');
     background-size: contain;
     z-index: 2;
 }
 
 .difficulty-0.vanilla {
-    background-image: url('/static/images/vanilla-circle.svg');
+    background-image: url('/static/images/difficulty-0-vanilla.svg');
 }
 
 .difficulty-1 {
     border-style: none;
-    background-image: url('/static/images/square.svg');
+    background-image: url('/static/images/difficulty-1.svg');
     background-size: contain;
     z-index: 2;
 }
 
 .difficulty-1.vanilla {
-    background-image: url('/static/images/vanilla-square.svg');
+    background-image: url('/static/images/difficulty-1-vanilla.svg');
 }
 
 .difficulty-2 {
     border-style: none;
-    background-image: url('/static/images/triangle.svg');
+    background-image: url('/static/images/difficulty-2.svg');
     background-size: contain;
     z-index: 2;
 }
 
 .difficulty-2.vanilla {
-    background-image: url('/static/images/vanilla-triangle.svg');
+    background-image: url('/static/images/difficulty-2-vanilla.svg');
 }
 
 .difficulty-3 {
     border-style: none;
-    background-image: url('/static/images/diamond.svg');
+    background-image: url('/static/images/difficulty-3.svg');
     background-size: contain;
     z-index: 2;
 }
 
 .difficulty-3.vanilla {
-    background-image: url('/static/images/vanilla-diamond.svg');
+    background-image: url('/static/images/difficulty-3-vanilla.svg');
 }
 
 .difficulty-4 {
     border-style: none;
-    background-image: url('/static/images/diamond.svg');
+    background-image: url('/static/images/difficulty-3.svg');
     background-size: contain;
     z-index: 2;
 }
 
 .difficulty-4.vanilla {
-    background-image: url('/static/images/vanilla-diamond.svg');
+    background-image: url('/static/images/difficulty-3-vanilla.svg');
 }
 
 .difficulty-9 {
     border-style: none;
-    background-image: url('/static/images/outoflogic.svg');
+    background-image: url('/static/images/difficulty-9.svg');
     background-size: contain;
     z-index: 0;
 }
 
 .difficulty-9.vanilla {
-    background-image: url('/static/images/vanilla-outoflogic.svg');
+    background-image: url('/static/images/difficulty-9-vanilla.svg');
 }
 
 button.nav-link {
