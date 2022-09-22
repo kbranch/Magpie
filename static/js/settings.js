@@ -239,9 +239,6 @@ function resetUndoRedo() {
 
 function getUndoState() {
     let state = new Object();
-    // state.inventory = inventory;
-    // state.settings = localSettings;
-    // state.args = args;
     state.checkedChecks = Object.assign({}, checkedChecks);
     state.entranceMap = Object.assign({}, entranceMap);
 
