@@ -1,16 +1,24 @@
 class MapNode {
-    constructor(location, scaling, entrance=null) {
+    constructor(location, scaling, entranceId=null) {
         this.x = Math.round(location.x * scaling.x + scaling.offset.x);
         this.y = Math.round(location.y * scaling.y + scaling.offset.y);
         this.location = location;
         this.scaling = scaling;
 
         this.checks = [];
-        this.entrance = entrance;
+        this.entrance = entranceId == null ? null : new Entrance(entranceId);
     }
 
     id() {
         return MapNode.nodeId(this.location, this.scaling);
+    }
+
+    entranceConnectedTo() {
+        return this.entrance?.connectedTo() ?? null;
+    }
+
+    entranceConnectedFrom() {
+        return this.entrance?.connectedFrom() ?? null;
     }
 
     uniqueCheckIds() {
@@ -48,8 +56,7 @@ class MapNode {
     updateIsChecked() {
         this.isChecked = (this.checks.length > 0
                           && this.checks.every(x => x.isChecked()))
-                         || (this.entrance != null
-                             && entranceMap[this.entrance.id] == 'landfill');
+                         || this.entranceConnectedTo() == 'landfill';
     }
 
     updateIsVanilla() {
@@ -72,8 +79,8 @@ class MapNode {
         if (localSettings.hideChecked
             && this.isChecked
             && (this.entrance == null
-                || (entranceMap[this.entrance.id] != 'start_house'
-                    && this.entrance.entranceType != 'connector'))) {
+                || (this.entranceConnectedTo() != startHouse
+                    && this.entrance.type != 'connector'))) {
             return true;
         }
 
@@ -83,8 +90,8 @@ class MapNode {
 
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
-            && 'start_house' in reverseEntranceMap
-            && this.entrance.id != reverseEntranceMap['start_house']
+            && Entrance.isFound(startHouse)
+            && this.entrance.connectedTo() != startHouse
             && this.checks.length == 0) {
 
             if (!args.dungeonshuffle) {
@@ -92,7 +99,7 @@ class MapNode {
             }
 
             if (args.dungeonshuffle
-                && startLocations.includes(this.entrance.id)) {
+                && this.entrance.canBeStart()) {
                 return true;
             }
         }
@@ -115,15 +122,15 @@ class MapNode {
         }
 
         if (this.entrance != null) {
-            if (this.entrance.id in entranceMap) {
-                let mappedEntrance = entranceDict[entranceMap[this.entrance.id]];
+            if (this.entrance.isMapped()) {
+                let mappedEntrance = new Entrance(this.entrance.connectedTo());//entranceDict[entranceMap[this.entrance.id]];
 
                 if (args.randomstartlocation 
-                    && mappedEntrance.id == 'start_house') {
+                    && mappedEntrance.id == startHouse) {
                     classes.push('start-location');
                 }
 
-                if (mappedEntrance.entranceType == 'connector') {
+                if (mappedEntrance.type == 'connector') {
                     if (this.isChecked || this.checks.length == 0) {
                         classes.push('entrance-only');
                     }
@@ -162,15 +169,5 @@ class MapNode {
             x: Number(chunks[0]),
             y: Number(chunks[1])
         };
-    }
-
-    static getValidConnections(entranceId) {
-        let entrance = entranceDict[entranceId];
-        let requireConnector = entrance.entranceType == 'connector';
-        let options = entrances.filter(x => (entranceDict[x].entranceType == 'connector') == requireConnector
-                                             && entranceDict[x].entranceType != 'dummy'
-                                             && !(x in reverseEntranceMap))
-                                .map(x => [x, entranceDict[x].name]);
-        return options;
     }
 }

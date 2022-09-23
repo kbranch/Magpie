@@ -4,157 +4,137 @@ let entranceDict = {
 		"name": "D0: Color Dungeon",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 1246,
 				"y": 926
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d1": {
 		"id": "d1",
 		"name": "D1: Tail Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 582,
 				"y": 1706
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d2": {
 		"id": "d2",
 		"name": "D2: Bottle Grotto",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 696,
 				"y": 276
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d3": {
 		"id": "d3",
 		"name": "D3: Key Cavern",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 906,
 				"y": 1446
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d4": {
 		"id": "d4",
 		"name": "D4: Angler's Tunnel",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 1846,
 				"y": 276
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d5": {
 		"id": "d5",
 		"name": "D5: Catfish's Maw",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 1538,
 				"y": 1738
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d6": {
 		"id": "d6",
 		"name": "D6: Face Shrine",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 1992,
 				"y": 1080
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d7": {
 		"id": "d7",
 		"name": "D7: Eagle's Tower",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 2348,
 				"y": 32
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"d8": {
 		"id": "d8",
 		"name": "D8: Turtle Rock",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dungeon",
+		"type": "dungeon",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 80,
 				"y": 130
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"phone_d8": {
 		"id": "phone_d8",
 		"name": "Phone Near D8",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 258,
 				"y": 162
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"fire_cave_exit": {
 		"id": "fire_cave_exit",
 		"name": "Flamethrower Cave Exit",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -164,15 +144,13 @@ let entranceDict = {
 		],
 		"connectedTo": [
 			"fire_cave_entrance",
-		],
-		"type": "check"
-	},
+		],	},
 	"fire_cave_entrance": {
 		"id": "fire_cave_entrance",
 		"name": "Flamethrower Cave Entrance",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -182,30 +160,26 @@ let entranceDict = {
 		],
 		"connectedTo": [
 			"fire_cave_exit",
-		],
-		"type": "check"
-	},
+		],	},
 	"madbatter_taltal": {
 		"id": "madbatter_taltal",
 		"name": "Mad Batter - Mountain",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 744,
 				"y": 96
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"left_taltal_entrance": {
 		"id": "left_taltal_entrance",
 		"name": "Bottom of West Tal Tal",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -215,15 +189,13 @@ let entranceDict = {
 		],
 		"connectedTo": [
 			"left_to_right_taltalentrance",
-		],
-		"type": "check"
-	},
+		],	},
 	"obstacle_cave_entrance": {
 		"id": "obstacle_cave_entrance",
 		"name": "Mountain Access",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -234,15 +206,13 @@ let entranceDict = {
 		"connectedTo": [
 			"obstacle_cave_outside_chest",
 			"obstacle_cave_exit",
-		],
-		"type": "check"
-	},
+		],	},
 	"left_to_right_taltalentrance": {
 		"id": "left_to_right_taltalentrance",
 		"name": "Path to West Tal Tal Entrance",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -252,15 +222,13 @@ let entranceDict = {
 		],
 		"connectedTo": [
 			"left_taltal_entrance",
-		],
-		"type": "check"
-	},
+		],	},
 	"obstacle_cave_outside_chest": {
 		"id": "obstacle_cave_outside_chest",
 		"name": "Mountain Access Outside Chest",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -271,15 +239,13 @@ let entranceDict = {
 		"connectedTo": [
 			"obstacle_cave_entrance",
 			"obstacle_cave_exit",
-		],
-		"type": "check"
-	},
+		],	},
 	"obstacle_cave_exit": {
 		"id": "obstacle_cave_exit",
 		"name": "Mountain Access Exit",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -290,15 +256,13 @@ let entranceDict = {
 		"connectedTo": [
 			"obstacle_cave_outside_chest",
 			"obstacle_cave_entrance",
-		],
-		"type": "check"
-	},
+		],	},
 	"papahl_entrance": {
 		"id": "papahl_entrance",
 		"name": "Path to Papahl",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -308,15 +272,13 @@ let entranceDict = {
 		],
 		"connectedTo": [
 			"papahl_exit",
-		],
-		"type": "check"
-	},
+		],	},
 	"papahl_exit": {
 		"id": "papahl_exit",
 		"name": "Near Papahl",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -326,30 +288,26 @@ let entranceDict = {
 		],
 		"connectedTo": [
 			"papahl_entrance",
-		],
-		"type": "check"
-	},
+		],	},
 	"rooster_house": {
 		"id": "rooster_house",
 		"name": "Luigi's House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 1684,
 				"y": 16
 			}
-		],
-		"type": "check"
-	},
+		],	},
 	"bird_cave": {
 		"id": "bird_cave",
 		"name": "Rooster Key Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -363,7 +321,7 @@ let entranceDict = {
 		"name": "Before 5 Chest Game",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -381,7 +339,7 @@ let entranceDict = {
 		"name": "After 5 Chest Game",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -399,7 +357,7 @@ let entranceDict = {
 		"name": "Outside 5 Chest Game",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -417,7 +375,7 @@ let entranceDict = {
 		"name": "Outer Rainbow Cave Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -434,7 +392,7 @@ let entranceDict = {
 		"name": "Outer Rainbow Cave Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -451,7 +409,7 @@ let entranceDict = {
 		"name": "Inner Rainbow Cave Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -468,7 +426,7 @@ let entranceDict = {
 		"name": "Inner Rainbow Cave Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -485,7 +443,7 @@ let entranceDict = {
 		"name": "Path to D7",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -502,7 +460,7 @@ let entranceDict = {
 		"name": "House Near D7",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -519,7 +477,7 @@ let entranceDict = {
 		"name": "Fairy Near D7",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -533,7 +491,7 @@ let entranceDict = {
 		"name": "Write Cave Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -550,7 +508,7 @@ let entranceDict = {
 		"name": "Write Cave Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -567,7 +525,7 @@ let entranceDict = {
 		"name": "Mr. Write's House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -581,7 +539,7 @@ let entranceDict = {
 		"name": "Swamp Phone",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -595,7 +553,7 @@ let entranceDict = {
 		"name": "Moblin Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -609,7 +567,7 @@ let entranceDict = {
 		"name": "Photo House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -623,7 +581,7 @@ let entranceDict = {
 		"name": "Manbo's Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -637,7 +595,7 @@ let entranceDict = {
 		"name": "Damp Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -651,7 +609,7 @@ let entranceDict = {
 		"name": "Raft Return Exit",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -668,7 +626,7 @@ let entranceDict = {
 		"name": "Raft Hut",
 		"index": 0,
 		"icon": "",
-		"entranceType": "insanity",
+		"type": "insanity",
 		"locations": [
 			{
 				"map": "overworld",
@@ -682,7 +640,7 @@ let entranceDict = {
 		"name": "Raft Return Entrance",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -699,7 +657,7 @@ let entranceDict = {
 		"name": "Hookshot Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -713,7 +671,7 @@ let entranceDict = {
 		"name": "Log Cave Mushroom Side",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -730,7 +688,7 @@ let entranceDict = {
 		"name": "Mad Batter - Forest",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -744,7 +702,7 @@ let entranceDict = {
 		"name": "Log Cave Entrance",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -761,7 +719,7 @@ let entranceDict = {
 		"name": "Crazy Tracy's Hut",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -775,7 +733,7 @@ let entranceDict = {
 		"name": "Witch's Hut",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -789,7 +747,7 @@ let entranceDict = {
 		"name": "Graveyard Connector Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -806,7 +764,7 @@ let entranceDict = {
 		"name": "Graveyard Connector Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -823,7 +781,7 @@ let entranceDict = {
 		"name": "Kanlet Jump Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -837,7 +795,7 @@ let entranceDict = {
 		"name": "Kanalet Front Door",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -854,7 +812,7 @@ let entranceDict = {
 		"name": "Kanalet Top Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -871,7 +829,7 @@ let entranceDict = {
 		"name": "Kanalet Top Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -885,7 +843,7 @@ let entranceDict = {
 		"name": "Kanalet Tunnel Exit",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -902,7 +860,7 @@ let entranceDict = {
 		"name": "Kanalet Tunnel Entrance",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -919,7 +877,7 @@ let entranceDict = {
 		"name": "Kanalet Phone",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -933,7 +891,7 @@ let entranceDict = {
 		"name": "Quadruplet's House Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -950,7 +908,7 @@ let entranceDict = {
 		"name": "Quadruplet's House Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -967,7 +925,7 @@ let entranceDict = {
 		"name": "Dream Hut",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -981,7 +939,7 @@ let entranceDict = {
 		"name": "Rooster's Grave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -995,7 +953,7 @@ let entranceDict = {
 		"name": "Town Tool Shop",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1009,7 +967,7 @@ let entranceDict = {
 		"name": "Madam MeowMeow's House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1023,7 +981,7 @@ let entranceDict = {
 		"name": "Doghouse",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1037,7 +995,7 @@ let entranceDict = {
 		"name": "Marin and Tarin's House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1051,7 +1009,7 @@ let entranceDict = {
 		"name": "Town Library",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1065,7 +1023,7 @@ let entranceDict = {
 		"name": "Ulrira's House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1079,7 +1037,7 @@ let entranceDict = {
 		"name": "Mabe Phone",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1093,7 +1051,7 @@ let entranceDict = {
 		"name": "Trendy Game",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1107,7 +1065,7 @@ let entranceDict = {
 		"name": "Phone East of Mabe",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1121,7 +1079,7 @@ let entranceDict = {
 		"name": "East of Mabe Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1135,7 +1093,7 @@ let entranceDict = {
 		"name": "Boots 'n' Bomb Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1149,7 +1107,7 @@ let entranceDict = {
 		"name": "Honeycomb Fairy",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1163,7 +1121,7 @@ let entranceDict = {
 		"name": "Mamu's Staircase",
 		"index": 0,
 		"icon": "",
-		"entranceType": "insanity",
+		"type": "insanity",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1177,7 +1135,7 @@ let entranceDict = {
 		"name": "Central Koholint Phone",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1191,7 +1149,7 @@ let entranceDict = {
 		"name": "Seashell Mansion",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1205,7 +1163,7 @@ let entranceDict = {
 		"name": "Martha's Bay Cliff Bottom Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1223,7 +1181,7 @@ let entranceDict = {
 		"name": "Martha's Bay Cliff Bottom Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1241,7 +1199,7 @@ let entranceDict = {
 		"name": "Martha's Bay Cliff Top",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1259,7 +1217,7 @@ let entranceDict = {
 		"name": "Under the River Left",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1276,7 +1234,7 @@ let entranceDict = {
 		"name": "Under the River Right",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1293,7 +1251,7 @@ let entranceDict = {
 		"name": "Cave Near D6",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1310,7 +1268,7 @@ let entranceDict = {
 		"name": "Armos Island",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1327,7 +1285,7 @@ let entranceDict = {
 		"name": "Fairy Near D6",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1341,7 +1299,7 @@ let entranceDict = {
 		"name": "Armos Maze Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1355,7 +1313,7 @@ let entranceDict = {
 		"name": "Southern Shrine",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1369,7 +1327,7 @@ let entranceDict = {
 		"name": "Boomerang Salesman Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1383,7 +1341,7 @@ let entranceDict = {
 		"name": "Sale's Hut",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1397,7 +1355,7 @@ let entranceDict = {
 		"name": "Ghost House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1411,7 +1369,7 @@ let entranceDict = {
 		"name": "Richard's Villa",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1428,7 +1386,7 @@ let entranceDict = {
 		"name": "Pothole Field",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1445,7 +1403,7 @@ let entranceDict = {
 		"name": "Martha's Bay Phone",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1459,7 +1417,7 @@ let entranceDict = {
 		"name": "Bay Batter Connector Entrance",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1476,7 +1434,7 @@ let entranceDict = {
 		"name": "Bay Batter Connector Exit",
 		"index": 0,
 		"icon": "",
-		"entranceType": "connector",
+		"type": "connector",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1493,7 +1451,7 @@ let entranceDict = {
 		"name": "Mad Batter - Bay",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1507,7 +1465,7 @@ let entranceDict = {
 		"name": "Animal Village Phone",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1521,7 +1479,7 @@ let entranceDict = {
 		"name": "Animal Village Lefter House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1535,7 +1493,7 @@ let entranceDict = {
 		"name": "Animal Village Left House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1549,7 +1507,7 @@ let entranceDict = {
 		"name": "Animal Village Goat House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1563,7 +1521,7 @@ let entranceDict = {
 		"name": "Animal Village Right House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1577,7 +1535,7 @@ let entranceDict = {
 		"name": "Animal Village Bear Chef's House",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1591,7 +1549,7 @@ let entranceDict = {
 		"name": "Bomb Arrow Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1605,7 +1563,7 @@ let entranceDict = {
 		"name": "Desert Cave",
 		"index": 0,
 		"icon": "",
-		"entranceType": "single",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1619,7 +1577,7 @@ let entranceDict = {
 		"name": "Landfill",
 		"index": 0,
 		"icon": "",
-		"entranceType": "dummy",
+		"type": "dummy",
 		"locations": [
 			{
 				"map": "overworld",

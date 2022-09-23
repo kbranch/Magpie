@@ -240,7 +240,7 @@ function createLocation(button) {
         name: $('#newName').val(),
         index: 0,
         icon: '',
-        entranceType: $('#newEntranceType').val(),
+        type: $('#newEntranceType').val(),
         locations: [],
     };
 

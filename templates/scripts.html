@@ -8,6 +8,7 @@
 <script src="static/js/map/check.js"></script>
 <script src="static/js/map/graphics.js"></script>
 <script src="static/js/map/input.js"></script>
+<script src="static/js/map/entrance.js"></script>
 <script src="static/js/checks.js"></script>
 <script src="static/js/entrances.js"></script>
 <script src="static/js/checkList.js"></script>
@@ -18,7 +19,7 @@
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
     var startLocations = [];
-    var entrances = null;
+    var randomizedEntrances = null;
     var localSettings = null;
     var entranceMap = {};
     var reverseEntranceMap = {};
@@ -31,6 +32,7 @@
     var redoStack = [];
     var graphicalMapSource = null;
     var graphicalMapChoices = null;
+    const startHouse = 'start_house';
 
     function refreshItems() {
         $.ajax({

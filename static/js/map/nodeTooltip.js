@@ -87,15 +87,14 @@ class NodeTooltip {
             let graphic = this.entranceGraphicHtml();
             entranceHtml = entranceTemplate.replace('{entrance-id}', entrance.id)
                                             .replace('{graphic}', graphic)
-                                            .replace('{name}', entrance.name);
-            if (entrance.id in entranceMap
-                && entranceMap[entrance.id] != entrance.id) {
-                let connection = entranceDict[entranceMap[entrance.id]];
+                                            .replace('{name}', entrance.metadata.name);
+            if (entrance.isRemapped()) {
+                let connection = entranceDict[entrance.connectedTo()];
                 entranceHtml += connectionTemplate.replace('{connection}', `To ${connection.name}`);
             }
-            if (entrance.id in reverseEntranceMap
-                && reverseEntranceMap[entrance.id] != entrance.id) {
-                let connection = entranceDict[reverseEntranceMap[entrance.id]];
+
+            if (entrance.isFound() && !entrance.isMappedToSelf()) {
+                let connection = entranceDict[entrance.connectedFrom()];
                 entranceHtml += connectionTemplate.replace('{connection}', `From ${connection.name}`);
             }
         }
@@ -111,24 +110,20 @@ class NodeTooltip {
         let entrance = this.node.entrance;
 
         if (entrance != null) {
-            let isDungeon = args.dungeonshuffle
-                            && entrance.id.startsWith('d')
-                            && entrance.id.length == 2;
-
-            if (startLocations.includes(entrance.id)
-                && !(entrance.id in entranceMap)) {
+            if (entrance.canBeStart()
+                && !entrance.isMapped()) {
                 pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation("${entrance.id}");`)
                                               .replace('{text}', 'Set as start location')
                                               .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
             }
 
             if (args.entranceshuffle == 'none'
-                && isDungeon) {
+                && args.dungeonshuffle
+                && entrance.isDungeon()) {
 
-                let options = entrances.filter(x => x.startsWith('d')
-                                                    && x.length == 2
-                                                    && !(x in reverseEntranceMap))
-                                       .map(x => [x, entranceDict[x].name]);
+                let options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
+                                                              && !Entrance.isFound(x))
+                                                 .map(x => [x, entranceDict[x].name]);
                 
                 options = sortByKey(options, x => [x[0]]);
 
@@ -138,7 +133,7 @@ class NodeTooltip {
                 pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
             }
             else if (args.entranceshuffle != 'none') {
-                let options = MapNode.getValidConnections(entrance.id);
+                let options = Entrance.validConnections(entrance.id);
                 options = sortByKey(options, x => [x[1]]);
 
                 let action = `graphicalConnection('${entrance.id}')`;
@@ -146,14 +141,14 @@ class NodeTooltip {
 
                 pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
 
-                if (entranceMap[entrance.id] != 'landfill') {
+                if (entrance.connectedTo() != 'landfill') {
                     pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill("${entrance.id}")`)
                                                     .replace('{text}', 'Mark as useless')
                                                     .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
                 }
             }
 
-            if (entrance.id in entranceMap) {
+            if (entrance.isMapped()) {
                 pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping("${entrance.id}")`)
                                               .replace('{text}', 'Clear Mapping')
                                               .replace('{attributes}', ` data-node-id="${this.node.id()}"`);

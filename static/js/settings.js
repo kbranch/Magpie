@@ -160,8 +160,6 @@ async function importState() {
 }
 
 function setStartLocation(entranceId) {
-    const startHouse = 'start_house';
-
     pushUndoState();
 
     if (args.entranceshuffle == 'none') {
@@ -194,8 +192,8 @@ function clearEntranceMapping(entranceId) {
     pushUndoState();
 
     if (args.entranceshuffle == 'none'
-        && entranceMap[entranceId] == 'start_house') {
-        delete entranceMap['start_house'];
+        && entranceMap[entranceId] == startHouse) {
+        delete entranceMap[startHouse];
     }
 
     delete entranceMap[entranceId];

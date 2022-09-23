@@ -204,33 +204,33 @@ function resetEntrances() {
 }
 
 function pruneEntranceMap() {
-    if (entrances == null) {
+    if (randomizedEntrances == null) {
         return;
     }
 
     for (const entrance in entranceMap) {
         let mappedEntrance = entranceMap[entrance];
 
-        if (!entrances.includes(entrance)) {
+        if (!randomizedEntrances.includes(entrance)) {
             delete entranceMap[entrance];
         }
-        else if (mappedEntrance != 'landfill' && !entrances.includes(mappedEntrance)) {
+        else if (mappedEntrance != 'landfill' && !randomizedEntrances.includes(mappedEntrance)) {
             delete entranceMap[entrance];
         }
     }
 
     for (const entrance in reverseEntranceMap) {
-        if (entrance != 'landfill' && !entrances.includes(entrance)) {
+        if (entrance != 'landfill' && !randomizedEntrances.includes(entrance)) {
             delete entranceMap[reverseEntranceMap[entrance]];
         }
     }
 
     if (!args.randomstartlocation) {
-        if ('start_house' in entranceMap) {
-            delete entranceMap['start_house'];
+        if (startHouse in entranceMap) {
+            delete entranceMap[startHouse];
         }
-        if ('start_house' in reverseEntranceMap) {
-            delete entranceMap[reverseEntranceMap['start_house']];
+        if (startHouse in reverseEntranceMap) {
+            delete entranceMap[reverseEntranceMap[startHouse]];
         }
     }
 

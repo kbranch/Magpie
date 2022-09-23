@@ -58,27 +58,28 @@ function removeOldNodes() {
 
 function updateEntranceAttrs(graphic, node) {
     let entrance = node.entrance
-    if (entrance != null) {
-        $(graphic).attr('data-entrance-id', entrance.id);
 
-        if (entrance.id in entranceMap
-            && entranceMap[entrance.id] != entrance.id) {
-            $(graphic.attr('data-connected-to', entranceMap[entrance.id]));
-        }
-        else {
-            $(graphic).removeAttr('data-connected-to');
-        }
+    if (entrance == null) {
+        $(graphic).removeAttr('data-entrance-id');
 
-        if (entrance.id in reverseEntranceMap
-            && reverseEntranceMap[entrance.id] != entrance.id) {
-            $(graphic.attr('data-connected-from', reverseEntranceMap[entrance.id]));
-        }
-        else {
-            $(graphic).removeAttr('data-connected-from');
-        }
+        return;
+    }
+
+    $(graphic).attr('data-entrance-id', entrance.id);
+
+    if (entrance.isRemapped()) {
+        $(graphic.attr('data-connected-to', entrance.connectedTo()));
     }
     else {
-        $(graphic).removeAttr('data-entrance-id');
+        $(graphic).removeAttr('data-connected-to');
+    }
+
+    if (entrance.isFound()
+        && !entrance.isMappedToSelf()) {
+        $(graphic.attr('data-connected-from', entrance.connectedFrom()));
+    }
+    else {
+        $(graphic).removeAttr('data-connected-from');
     }
 }
 
@@ -148,8 +149,8 @@ function createNodes(map, mapName) {
         return;
     }
 
-    if (entrances.length > 0 && mapName == 'overworld') {
-        createEntranceNodes(entrances, scaling);
+    if (randomizedEntrances.length > 0 && mapName == 'overworld') {
+        createEntranceNodes(randomizedEntrances, scaling);
     }
 
     let checks = $('li[data-logic]').toArray()
@@ -186,7 +187,7 @@ function createEntranceNodes(entrances, scaling, update=false) {
         let coordString = MapNode.nodeId(entranceData.locations[0], scaling);
 
         if (!(coordString in nodes)) {
-            let node = new MapNode(entranceData.locations[0], scaling, entranceData);
+            let node = new MapNode(entranceData.locations[0], scaling, entranceData.id);
             nodes[coordString] = node;
 
             if (update) {
@@ -219,23 +220,20 @@ function distributeChecks() {
         let entranceId = node.entrance.id;
         checksByEntrance[entranceId] = node.checks;
 
-        if (!(entranceId in entranceMap)) {
+        if (!node.entrance.isMapped()) {
             if (args.entranceshuffle != 'none'
-                || !(entranceId in startLocations)) {
+                || !node.entrance.canBeStart()) {
                 node.checks = [];
             }
         }
 
-        if (!(entranceId in entranceMap)
-            || entranceMap[entranceId] == entranceId) {
-            continue;
+        if (node.entrance.isRemapped()) {
+            remappedNodes.push(node);
         }
-
-        remappedNodes.push(node);
     }
 
     for (const node of remappedNodes) {
-        node.checks = checksByEntrance[entranceMap[node.entrance.id]];
+        node.checks = checksByEntrance[node.entrance.connectedTo()];
     }
 
 }
@@ -326,7 +324,7 @@ function drawConnectorLines() {
     $('connection').connections('remove');
 
     let connected = {};
-    for (const connector of Object.keys(reverseEntranceMap).filter(x => entranceDict[x].entranceType == 'connector')) {
+    for (const connector of Object.keys(reverseEntranceMap).filter(x => entranceDict[x].type == 'connector')) {
         let entrance = entranceDict[connector];
         let others = entrance.connectedTo;
         let mappedOthers = others.filter(x => x in reverseEntranceMap);
@@ -356,7 +354,7 @@ function getConnectorId(entrances) {
 function graphicalConnection(entranceId) {
     closeAllCheckTooltips();
     graphicalMapSource = entranceId;
-    graphicalMapChoices = new Set(MapNode.getValidConnections(entranceId).map(x => x[0]));
+    graphicalMapChoices = new Set(Entrance.validConnections(entranceId).map(x => x[0]));
     $('#overworldTabContent').mousemove(connectorMouseMove);
     drawActiveTab();
 }
