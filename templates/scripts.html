@@ -9,8 +9,10 @@
 <script src="static/js/map/graphics.js"></script>
 <script src="static/js/map/input.js"></script>
 <script src="static/js/map/entrance.js"></script>
-<script src="static/js/checks.js"></script>
-<script src="static/js/entrances.js"></script>
+<script src="static/js/map/connection.js"></script>
+<script src="static/js/checkMetadata.js"></script>
+<script src="static/js/entranceMetadata.js"></script>
+<script src="static/js/connectorMetadata.js"></script>
 <script src="static/js/checkList.js"></script>
 <script src="static/js/settings.js"></script>
 <script src="static/js/items.js"></script>
@@ -22,6 +24,7 @@
     var randomizedEntrances = null;
     var localSettings = null;
     var entranceMap = {};
+    var connections = [];
     var reverseEntranceMap = {};
     var checkedChecks = {};
     var inventory = {};

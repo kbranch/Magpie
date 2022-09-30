@@ -14,7 +14,7 @@ function drawNodes(mapName, animate=true) {
     
     skipNextAnimation = false;
 
-    $('.checkGraphic.animate__fadeOut').remove();
+    $('.check-graphic.animate__fadeOut').remove();
 
     updateReverseMap();
 
@@ -38,13 +38,13 @@ function drawNodes(mapName, animate=true) {
         updateTooltip(graphic);
     }
 
-    drawConnectorLines();
+    // drawConnectorLines();
 
     removeOldNodes();
 }
 
 function removeOldNodes() {
-    let oldNodeIds = $('.checkGraphic').toArray()
+    let oldNodeIds = $('.check-graphic').toArray()
                          .map(x => $(x).attr('data-node-id'))
                          .filter(x => !(x in nodes));
 
@@ -67,19 +67,32 @@ function updateEntranceAttrs(graphic, node) {
 
     $(graphic).attr('data-entrance-id', entrance.id);
 
-    if (entrance.isRemapped()) {
-        $(graphic.attr('data-connected-to', entrance.connectedTo()));
+    if (entrance.isConnector()) {
+        if (entrance.isConnected()) {
+            connection = entrance.mappedConnection();
+            $(graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
+            updateNodeOverlay(graphic, connection.label);
+        }
+        else {
+            $(graphic).removeAttr('data-connected-to');
+            $(graphic).empty();
+        }
     }
     else {
-        $(graphic).removeAttr('data-connected-to');
-    }
+        if (entrance.isRemapped()) {
+            $(graphic).attr('data-connected-to', entrance.connectedTo());
+        }
+        else {
+            $(graphic).removeAttr('data-connected-to');
+        }
 
-    if (entrance.isFound()
-        && !entrance.isMappedToSelf()) {
-        $(graphic.attr('data-connected-from', entrance.connectedFrom()));
-    }
-    else {
-        $(graphic).removeAttr('data-connected-from');
+        if (entrance.isFound()
+            && !entrance.isMappedToSelf()) {
+            $(graphic).attr('data-connected-from', entrance.connectedFrom());
+        }
+        else {
+            $(graphic).removeAttr('data-connected-from');
+        }
     }
 }
 
@@ -238,6 +251,22 @@ function distributeChecks() {
 
 }
 
+function updateNodeOverlay(graphic, text) {
+
+    let overlay = $('<p>', {
+        'class': "node-overlay",
+        'data-connector-label': text,
+        css: {
+            'font-size': `${localSettings.checkSize * 0.72}px`,
+        },
+        onmousedown: "preventDoubleClick(event)"
+    });
+
+    $(overlay).append(text);
+    $(graphic).empty();
+    $(graphic).append(overlay);
+}
+
 function buildNewCheckGraphic(id) {
     let coords = MapNode.coordsFromId(id);
 
@@ -260,7 +289,7 @@ function buildNewCheckGraphic(id) {
 }
 
 function clearCheckTooltips() {
-    $('.checkGraphic').each((i, e) => {
+    $('.check-graphic').each((i, e) => {
         let oldTooltip = bootstrap.Tooltip.getInstance(e);
         oldTooltip.dispose();
     });
@@ -268,12 +297,12 @@ function clearCheckTooltips() {
 
 function clearCheckImages() {
     clearCheckTooltips();
-    $('.checkGraphic').remove();
+    $('.check-graphic').remove();
 }
 
 function closeOtherTooltips(element) {
     let id = $(element).attr('data-node-id');
-    let nodes = $(`.checkGraphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
+    let nodes = $(`.check-graphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
     $(nodes).tooltip('hide');
     $(nodes).removeAttr('data-pinned');
 
@@ -283,10 +312,11 @@ function closeOtherTooltips(element) {
 }
 
 function closeAllCheckTooltips() {
-    let nodes = $(`.checkGraphic`);
+    let nodes = $(`.check-graphic`);
     nodes.tooltip('hide');
+    $('connection.connector-line').connections('remove');
 
-    let pinnedNodes = $('.checkGraphic[data-pinned]');
+    let pinnedNodes = $('.check-graphic[data-pinned]');
     pinnedNodes.removeAttr('data-pinned');
 
     for (const node of pinnedNodes) {
@@ -323,35 +353,35 @@ function drawTab(button, clear=false) {
 function drawConnectorLines() {
     $('connection').connections('remove');
 
-    let connected = {};
-    for (const connector of Object.keys(reverseEntranceMap).filter(x => entranceDict[x].type == 'connector')) {
-        let entrance = entranceDict[connector];
-        let others = entrance.connectedTo;
-        let mappedOthers = others.filter(x => x in reverseEntranceMap);
+    // let connected = {};
+    // for (const connector of Object.keys(reverseEntranceMap).filter(x => entranceDict[x].type == 'connector')) {
+    //     let entrance = entranceDict[connector];
+    //     let others = entrance.connectedTo;
+    //     let mappedOthers = others.filter(x => x in reverseEntranceMap);
 
-        if (mappedOthers.length > 0) {
-            let id = getConnectorId([connector].concat(others));
-            connected[id] = [connector].concat(mappedOthers);
-        }
-    }
+    //     if (mappedOthers.length > 0) {
+    //         let id = getConnectorId([connector].concat(others));
+    //         connected[id] = [connector].concat(mappedOthers);
+    //     }
+    // }
 
-    for (const key in connected) {
-        let entrances = connected[key];
-        let first = $(`[data-entrance-id="${reverseEntranceMap[entrances[0]]}"`);
+    // for (const key in connected) {
+    //     let entrances = connected[key];
+    //     let first = $(`[data-entrance-id="${reverseEntranceMap[entrances[0]]}"`);
 
-        for (let i = 1; i < entrances.length; i++) {
-            let selector = `[data-entrance-id="${reverseEntranceMap[entrances[i]]}"]`;
-            $(first).connections({ class: 'entrance-to', to: selector });
-            $(first).connections({ class: 'outer-entrance-connection', to: selector });
-        }
-    }
+    //     for (let i = 1; i < entrances.length; i++) {
+    //         let selector = `[data-entrance-id="${reverseEntranceMap[entrances[i]]}"]`;
+    //         $(first).connections({ class: 'entrance-to', to: selector });
+    //         $(first).connections({ class: 'outer-entrance-connection', to: selector });
+    //     }
+    // }
 }
 
 function getConnectorId(entrances) {
     return sortByKey(entrances, x => [x]).join('-');
 }
 
-function graphicalConnection(entranceId) {
+function startGraphicalConnection(entranceId) {
     closeAllCheckTooltips();
     graphicalMapSource = entranceId;
     graphicalMapChoices = new Set(Entrance.validConnections(entranceId).map(x => x[0]));
@@ -376,6 +406,8 @@ function endGraphicalConnection(destId = null) {
         skipNextAnimation = true;
         refreshCheckList();
     }
+
+    drawActiveTab();
 }
 
 function getMapScaling(map) {

@@ -39,6 +39,22 @@
     padding-left: 2px;
 }
 
+.node-overlay {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    text-shadow:
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .full {
     color: green;
 }
@@ -213,11 +229,11 @@ img {
     background-size: cover;
 }
 
-.checkGraphic {
+.check-graphic {
     position: absolute;
 }
 
-.checkGraphic:hover {
+.check-graphic:hover {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 
@@ -226,6 +242,28 @@ img {
     background-image: url('/static/images/entrance.svg');
     background-size: contain;
     z-index: 3;
+}
+
+.one-way-out:before {
+    content: '';
+    background-image: url('/static/images/one-way-out.svg');
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -80%;
+    left: 0px;
+}
+
+.one-way-in:before {
+    content: '';
+    background-image: url('/static/images/one-way-in.svg');
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: -80%;
+    left: 0px;
 }
 
 .unmapped-entrance {
@@ -399,11 +437,44 @@ button.nav-link.active {
 }
 
 .modal-content {
-    color: #000;
+    color: var(--bs-light-rgb);
+    background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));
+}
+
+.modal-header {
+    color: var(--bs-light-rgb);
+    background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));
+}
+.modal-footer {
+    color: var(--bs-light-rgb);
+    background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));
 }
 
 .modal-body {
     display: inline-block;
+}
+
+.connector-row:hover {
+    background-color: #555;
+    border-radius: 10px;
+}
+
+.connector-item:hover {
+    background-color: #555;
+    border-radius: 10px;
+}
+
+.connector-item.checked {
+    background-color: #999;
+    border-radius: 10px;
+}
+
+.big-button {
+    width: 100%;
+}
+
+.footer-row {
+    width: 100%;
 }
 
 .entrance-from {

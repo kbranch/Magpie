@@ -89,11 +89,21 @@ class NodeTooltip {
                                             .replace('{graphic}', graphic)
                                             .replace('{name}', entrance.metadata.name);
             if (entrance.isRemapped()) {
-                let connection = entranceDict[entrance.connectedTo()];
-                entranceHtml += connectionTemplate.replace('{connection}', `To ${connection.name}`);
+                let connectionName = entranceDict[entrance.connectedTo()].name;
+
+                if (entrance.isConnected()) {
+                    connectionName = entrance.mappedConnection()
+                                             .otherSides(entrance.id)
+                                             .map(x => entranceDict[x].name)
+                                             .join(', ');
+                }
+
+                entranceHtml += connectionTemplate.replace('{connection}', `To ${connectionName}`);
             }
 
-            if (entrance.isFound() && !entrance.isMappedToSelf()) {
+            if (entrance.isFound()
+                && !entrance.isMappedToSelf()
+                && !entrance.isConnector()) {
                 let connection = entranceDict[entrance.connectedFrom()];
                 entranceHtml += connectionTemplate.replace('{connection}', `From ${connection.name}`);
             }
@@ -103,56 +113,70 @@ class NodeTooltip {
     }
 
     getPinnedHtml() {
-        const menuItemTemplate = `<li class="list-group-item text-start tooltip-item p-1"{attributes} onclick='{action}' oncontextmenu='return false;'>
+        const menuItemTemplate = `<li class="list-group-item text-start tooltip-item p-1"{attributes} onclick="{action}" oncontextmenu="return false;">
     {text}
 </li>`
         let pinnedHtml = '';
         let entrance = this.node.entrance;
 
-        if (entrance != null) {
-            if (entrance.canBeStart()
-                && !entrance.isMapped()) {
-                pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation("${entrance.id}");`)
-                                              .replace('{text}', 'Set as start location')
-                                              .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+        if (entrance == null) {
+            return '';
+        }
+
+        if (entrance.canBeStart()
+            && !entrance.isMapped()) {
+            pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation('${entrance.id}');`)
+                                            .replace('{text}', 'Set as start location')
+                                            .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+        }
+
+        if (args.entranceshuffle == 'none'
+            && args.dungeonshuffle
+            && entrance.isDungeon()) {
+
+            let options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
+                                                            && !Entrance.isFound(x))
+                                                .map(x => [x, entranceDict[x].name]);
+            
+            options = sortByKey(options, x => [x[0]]);
+
+            let action = `startGraphicalConnection("${entrance.id}")`;
+            let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
+
+            pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
+        }
+        else if (args.entranceshuffle != 'none') {
+            let options = Entrance.validConnections(entrance.id);
+            options = sortByKey(options, x => [x[1]]);
+
+            let action = `startGraphicalConnection('${entrance.id}')`;
+
+            if (entrance.type == "connector") {
+                pinnedHtml += menuItemTemplate.replace('{action}', action)
+                                                .replace('{text}', 'Connect to...')
+                                                .replace('{attributes}', '');
+
+                pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
+                                                .replace('{text}', 'Dead ends in...')
+                                                .replace('{attributes}', '');
             }
-
-            if (args.entranceshuffle == 'none'
-                && args.dungeonshuffle
-                && entrance.isDungeon()) {
-
-                let options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
-                                                              && !Entrance.isFound(x))
-                                                 .map(x => [x, entranceDict[x].name]);
-                
-                options = sortByKey(options, x => [x[0]]);
-
-                let action = `graphicalConnection('${entrance.id}')`;
+            else {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
-
                 pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
             }
-            else if (args.entranceshuffle != 'none') {
-                let options = Entrance.validConnections(entrance.id);
-                options = sortByKey(options, x => [x[1]]);
 
-                let action = `graphicalConnection('${entrance.id}')`;
-                let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
 
-                pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
-
-                if (entrance.connectedTo() != 'landfill') {
-                    pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill("${entrance.id}")`)
-                                                    .replace('{text}', 'Mark as useless')
-                                                    .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
-                }
+            if (entrance.connectedTo() != 'landfill') {
+                pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill('${entrance.id}')`)
+                                                .replace('{text}', 'Mark as useless')
+                                                .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
             }
+        }
 
-            if (entrance.isMapped()) {
-                pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping("${entrance.id}")`)
-                                              .replace('{text}', 'Clear Mapping')
-                                              .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
-            }
+        if (entrance.isMapped()) {
+            pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping('${entrance.id}')`)
+                                            .replace('{text}', 'Clear Mapping')
+                                            .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
         }
 
         if (pinnedHtml != '') {

@@ -11,7 +11,8 @@ let entranceDict = {
 				"x": 1246,
 				"y": 926
 			}
-		],	},
+		],
+	},
 	"d1": {
 		"id": "d1",
 		"name": "D1: Tail Cave",
@@ -24,7 +25,8 @@ let entranceDict = {
 				"x": 582,
 				"y": 1706
 			}
-		],	},
+		],
+	},
 	"d2": {
 		"id": "d2",
 		"name": "D2: Bottle Grotto",
@@ -37,7 +39,8 @@ let entranceDict = {
 				"x": 696,
 				"y": 276
 			}
-		],	},
+		],
+	},
 	"d3": {
 		"id": "d3",
 		"name": "D3: Key Cavern",
@@ -50,7 +53,8 @@ let entranceDict = {
 				"x": 906,
 				"y": 1446
 			}
-		],	},
+		],
+	},
 	"d4": {
 		"id": "d4",
 		"name": "D4: Angler's Tunnel",
@@ -63,7 +67,8 @@ let entranceDict = {
 				"x": 1846,
 				"y": 276
 			}
-		],	},
+		],
+	},
 	"d5": {
 		"id": "d5",
 		"name": "D5: Catfish's Maw",
@@ -76,7 +81,8 @@ let entranceDict = {
 				"x": 1538,
 				"y": 1738
 			}
-		],	},
+		],
+	},
 	"d6": {
 		"id": "d6",
 		"name": "D6: Face Shrine",
@@ -89,7 +95,8 @@ let entranceDict = {
 				"x": 1992,
 				"y": 1080
 			}
-		],	},
+		],
+	},
 	"d7": {
 		"id": "d7",
 		"name": "D7: Eagle's Tower",
@@ -102,7 +109,8 @@ let entranceDict = {
 				"x": 2348,
 				"y": 32
 			}
-		],	},
+		],
+	},
 	"d8": {
 		"id": "d8",
 		"name": "D8: Turtle Rock",
@@ -115,7 +123,8 @@ let entranceDict = {
 				"x": 80,
 				"y": 130
 			}
-		],	},
+		],
+	},
 	"phone_d8": {
 		"id": "phone_d8",
 		"name": "Phone Near D8",
@@ -128,12 +137,12 @@ let entranceDict = {
 				"x": 258,
 				"y": 162
 			}
-		],	},
+		],
+	},
 	"fire_cave_exit": {
 		"id": "fire_cave_exit",
 		"name": "Flamethrower Cave Exit",
 		"index": 0,
-		"icon": "",
 		"type": "connector",
 		"locations": [
 			{
@@ -142,9 +151,9 @@ let entranceDict = {
 				"y": 64
 			}
 		],
-		"connectedTo": [
-			"fire_cave_entrance",
-		],	},
+		"connector": "fire_cave",
+		"interiorImage": "01EE",
+	},
 	"fire_cave_entrance": {
 		"id": "fire_cave_entrance",
 		"name": "Flamethrower Cave Entrance",
@@ -158,9 +167,9 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"fire_cave_exit",
-		],	},
+		"connector": "fire_cave",
+		"interiorImage": "01FE",
+	},
 	"madbatter_taltal": {
 		"id": "madbatter_taltal",
 		"name": "Mad Batter - Mountain",
@@ -173,7 +182,8 @@ let entranceDict = {
 				"x": 744,
 				"y": 96
 			}
-		],	},
+		],
+	},
 	"left_taltal_entrance": {
 		"id": "left_taltal_entrance",
 		"name": "Bottom of West Tal Tal",
@@ -187,9 +197,10 @@ let entranceDict = {
 				"y": 178
 			}
 		],
-		"connectedTo": [
-			"left_to_right_taltalentrance",
-		],	},
+		"connector": "west_taltal",
+		"oneWayBlocked": true,
+		"interiorImage": "02EA",
+	},
 	"obstacle_cave_entrance": {
 		"id": "obstacle_cave_entrance",
 		"name": "Mountain Access",
@@ -203,10 +214,9 @@ let entranceDict = {
 				"y": 162
 			}
 		],
-		"connectedTo": [
-			"obstacle_cave_outside_chest",
-			"obstacle_cave_exit",
-		],	},
+		"connector": "mountain_access",
+		"interiorImage": "02B6",
+	},
 	"left_to_right_taltalentrance": {
 		"id": "left_to_right_taltalentrance",
 		"name": "Path to West Tal Tal Entrance",
@@ -220,9 +230,9 @@ let entranceDict = {
 				"y": 64
 			}
 		],
-		"connectedTo": [
-			"left_taltal_entrance",
-		],	},
+		"connector": "west_taltal",
+		"interiorImage": "02EE",
+	},
 	"obstacle_cave_outside_chest": {
 		"id": "obstacle_cave_outside_chest",
 		"name": "Mountain Access Outside Chest",
@@ -236,10 +246,9 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"obstacle_cave_entrance",
-			"obstacle_cave_exit",
-		],	},
+		"connector": "mountain_access",
+		"interiorImage": "02BB",
+	},
 	"obstacle_cave_exit": {
 		"id": "obstacle_cave_exit",
 		"name": "Mountain Access Exit",
@@ -253,10 +262,9 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"obstacle_cave_outside_chest",
-			"obstacle_cave_entrance",
-		],	},
+		"connector": "mountain_access",
+		"interiorImage": "02BC",
+	},
 	"papahl_entrance": {
 		"id": "papahl_entrance",
 		"name": "Path to Papahl",
@@ -270,9 +278,9 @@ let entranceDict = {
 				"y": 178
 			}
 		],
-		"connectedTo": [
-			"papahl_exit",
-		],	},
+		"connector": "papahl",
+		"interiorImage": "0289",
+	},
 	"papahl_exit": {
 		"id": "papahl_exit",
 		"name": "Near Papahl",
@@ -286,9 +294,9 @@ let entranceDict = {
 				"y": 96
 			}
 		],
-		"connectedTo": [
-			"papahl_entrance",
-		],	},
+		"connector": "papahl",
+		"interiorImage": "028B",
+	},
 	"rooster_house": {
 		"id": "rooster_house",
 		"name": "Luigi's House",
@@ -301,7 +309,8 @@ let entranceDict = {
 				"x": 1684,
 				"y": 16
 			}
-		],	},
+		],
+	},
 	"bird_cave": {
 		"id": "bird_cave",
 		"name": "Rooster Key Cave",
@@ -329,10 +338,8 @@ let entranceDict = {
 				"y": 162
 			}
 		],
-		"connectedTo": [
-			"multichest_right",
-			"multichest_top",
-		],
+		"connector": "multichest",
+		"interiorImage": "02F9",
 	},
 	"multichest_right": {
 		"id": "multichest_right",
@@ -347,10 +354,8 @@ let entranceDict = {
 				"y": 194
 			}
 		],
-		"connectedTo": [
-			"multichest_left",
-			"multichest_top",
-		],
+		"connector": "multichest",
+		"interiorImage": "02FA",
 	},
 	"multichest_top": {
 		"id": "multichest_top",
@@ -365,10 +370,8 @@ let entranceDict = {
 				"y": 96
 			}
 		],
-		"connectedTo": [
-			"multichest_left",
-			"multichest_right",
-		],
+		"connector": "multichest",
+		"interiorImage": "02F2",
 	},
 	"right_taltal_connector1": {
 		"id": "right_taltal_connector1",
@@ -383,9 +386,8 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"right_taltal_connector2",
-		],
+		"connector": "outer_rainbow",
+		"interiorImage": "0280-1",
 	},
 	"right_taltal_connector2": {
 		"id": "right_taltal_connector2",
@@ -400,9 +402,8 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"right_taltal_connector1",
-		],
+		"connector": "outer_rainbow",
+		"interiorImage": "0282",
 	},
 	"right_taltal_connector3": {
 		"id": "right_taltal_connector3",
@@ -417,9 +418,8 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"right_taltal_connector4",
-		],
+		"connector": "inner_rainbow",
+		"interiorImage": "0280-2",
 	},
 	"right_taltal_connector4": {
 		"id": "right_taltal_connector4",
@@ -434,9 +434,9 @@ let entranceDict = {
 				"y": 178
 			}
 		],
-		"connectedTo": [
-			"right_taltal_connector3",
-		],
+		"connector": "inner_rainbow",
+		"oneWayBlocked": true,
+		"interiorImage": "0287",
 	},
 	"right_taltal_connector5": {
 		"id": "right_taltal_connector5",
@@ -451,9 +451,8 @@ let entranceDict = {
 				"y": 130
 			}
 		],
-		"connectedTo": [
-			"right_taltal_connector6",
-		],
+		"connector": "to_d7",
+		"interiorImage": "028C",
 	},
 	"right_taltal_connector6": {
 		"id": "right_taltal_connector6",
@@ -468,9 +467,8 @@ let entranceDict = {
 				"y": 64
 			}
 		],
-		"connectedTo": [
-			"right_taltal_connector5",
-		],
+		"connector": "to_d7",
+		"interiorImage": "028E",
 	},
 	"right_fairy": {
 		"id": "right_fairy",
@@ -499,9 +497,8 @@ let entranceDict = {
 				"y": 292
 			}
 		],
-		"connectedTo": [
-			"writes_cave_right",
-		],
+		"connector": "write",
+		"interiorImage": "02AE",
 	},
 	"writes_cave_right": {
 		"id": "writes_cave_right",
@@ -516,9 +513,8 @@ let entranceDict = {
 				"y": 292
 			}
 		],
-		"connectedTo": [
-			"writes_cave_left",
-		],
+		"connector": "write",
+		"interiorImage": "02AF",
 	},
 	"writes_house": {
 		"id": "writes_house",
@@ -617,9 +613,9 @@ let entranceDict = {
 				"y": 356
 			}
 		],
-		"connectedTo": [
-			"raft_return_enter",
-		],
+		"connector": "raft_return",
+		"oneWayBlocked": true,
+		"interiorImage": "01E7",
 	},
 	"raft_house": {
 		"id": "raft_house",
@@ -648,9 +644,8 @@ let entranceDict = {
 				"y": 1056
 			}
 		],
-		"connectedTo": [
-			"raft_return_exit",
-		],
+		"connector": "raft_return",
+		"interiorImage": "01F7",
 	},
 	"hookshot_cave": {
 		"id": "hookshot_cave",
@@ -679,9 +674,8 @@ let entranceDict = {
 				"y": 682
 			}
 		],
-		"connectedTo": [
-			"toadstool_entrance",
-		],
+		"connector": "log_cave",
+		"interiorImage": "02AB",
 	},
 	"forest_madbatter": {
 		"id": "forest_madbatter",
@@ -710,9 +704,8 @@ let entranceDict = {
 				"y": 828
 			}
 		],
-		"connectedTo": [
-			"toadstool_exit",
-		],
+		"connector": "log_cave",
+		"interiorImage": "02BD",
 	},
 	"crazy_tracy": {
 		"id": "crazy_tracy",
@@ -755,9 +748,8 @@ let entranceDict = {
 				"y": 958
 			}
 		],
-		"connectedTo": [
-			"graveyard_cave_right",
-		],
+		"connector": "graveyard",
+		"interiorImage": "02DE",
 	},
 	"graveyard_cave_right": {
 		"id": "graveyard_cave_right",
@@ -772,9 +764,8 @@ let entranceDict = {
 				"y": 958
 			}
 		],
-		"connectedTo": [
-			"graveyard_cave_left",
-		],
+		"connector": "graveyard",
+		"interiorImage": "02DF",
 	},
 	"castle_jump_cave": {
 		"id": "castle_jump_cave",
@@ -803,9 +794,8 @@ let entranceDict = {
 				"y": 828
 			}
 		],
-		"connectedTo": [
-			"castle_upper_left",
-		],
+		"connector": "castle",
+		"interiorImage": "02D3",
 	},
 	"castle_upper_left": {
 		"id": "castle_upper_left",
@@ -820,9 +810,8 @@ let entranceDict = {
 				"y": 682
 			}
 		],
-		"connectedTo": [
-			"castle_main_entrance",
-		],
+		"connector": "castle",
+		"interiorImage": "02D6",
 	},
 	"castle_upper_right": {
 		"id": "castle_upper_right",
@@ -851,9 +840,8 @@ let entranceDict = {
 				"y": 584
 			}
 		],
-		"connectedTo": [
-			"castle_secret_entrance",
-		],
+		"connector": "secret_tunnel",
+		"interiorImage": "01EB",
 	},
 	"castle_secret_entrance": {
 		"id": "castle_secret_entrance",
@@ -868,9 +856,8 @@ let entranceDict = {
 				"y": 552
 			}
 		],
-		"connectedTo": [
-			"castle_secret_exit",
-		],
+		"connector": "secret_tunnel",
+		"interiorImage": "01EC",
 	},
 	"castle_phone": {
 		"id": "castle_phone",
@@ -888,7 +875,7 @@ let entranceDict = {
 	},
 	"papahl_house_left": {
 		"id": "papahl_house_left",
-		"name": "Quadruplet's House Left",
+		"name": "Quadruplets' House Left",
 		"index": 0,
 		"icon": "",
 		"type": "connector",
@@ -899,13 +886,12 @@ let entranceDict = {
 				"y": 1104
 			}
 		],
-		"connectedTo": [
-			"papahl_house_right",
-		],
+		"connector": "quadruplets",
+		"interiorImage": "02A5",
 	},
 	"papahl_house_right": {
 		"id": "papahl_house_right",
-		"name": "Quadruplet's House Right",
+		"name": "Quadruplets' House Right",
 		"index": 0,
 		"icon": "",
 		"type": "connector",
@@ -916,9 +902,8 @@ let entranceDict = {
 				"y": 1104
 			}
 		],
-		"connectedTo": [
-			"papahl_house_left",
-		],
+		"connector": "quadruplets",
+		"interiorImage": "02A6",
 	},
 	"dream_hut": {
 		"id": "dream_hut",
@@ -1171,10 +1156,8 @@ let entranceDict = {
 				"y": 1510
 			}
 		],
-		"connectedTo": [
-			"prairie_right_cave_bottom",
-			"prairie_right_cave_high",
-		],
+		"connector": "bay_cliff",
+		"interiorImage": "0292",
 	},
 	"prairie_right_cave_bottom": {
 		"id": "prairie_right_cave_bottom",
@@ -1189,10 +1172,8 @@ let entranceDict = {
 				"y": 1624
 			}
 		],
-		"connectedTo": [
-			"prairie_right_cave_top",
-			"prairie_right_cave_high",
-		],
+		"connector": "bay_cliff",
+		"interiorImage": "0293",
 	},
 	"prairie_right_cave_high": {
 		"id": "prairie_right_cave_high",
@@ -1207,10 +1188,8 @@ let entranceDict = {
 				"y": 1462
 			}
 		],
-		"connectedTo": [
-			"prairie_right_cave_bottom",
-			"prairie_right_cave_top",
-		],
+		"connector": "bay_cliff",
+		"interiorImage": "0295",
 	},
 	"prairie_to_animal_connector": {
 		"id": "prairie_to_animal_connector",
@@ -1225,9 +1204,8 @@ let entranceDict = {
 				"y": 1364
 			}
 		],
-		"connectedTo": [
-			"animal_to_prairie_connector",
-		],
+		"connector": "under_river",
+		"interiorImage": "02D0",
 	},
 	"animal_to_prairie_connector": {
 		"id": "animal_to_prairie_connector",
@@ -1242,9 +1220,8 @@ let entranceDict = {
 				"y": 1364
 			}
 		],
-		"connectedTo": [
-			"prairie_to_animal_connector",
-		],
+		"connector": "under_river",
+		"interiorImage": "02D1",
 	},
 	"d6_connector_exit": {
 		"id": "d6_connector_exit",
@@ -1259,9 +1236,8 @@ let entranceDict = {
 				"y": 1170
 			}
 		],
-		"connectedTo": [
-			"d6_connector_entrance",
-		],
+		"connector": "d6",
+		"interiorImage": "01F0",
 	},
 	"d6_connector_entrance": {
 		"id": "d6_connector_entrance",
@@ -1276,9 +1252,8 @@ let entranceDict = {
 				"y": 1202
 			}
 		],
-		"connectedTo": [
-			"d6_connector_exit",
-		],
+		"connector": "d6",
+		"interiorImage": "01F1",
 	},
 	"armos_fairy": {
 		"id": "armos_fairy",
@@ -1377,9 +1352,8 @@ let entranceDict = {
 				"y": 1754
 			}
 		],
-		"connectedTo": [
-			"richard_maze",
-		],
+		"connector": "richard",
+		"interiorImage": "02C7",
 	},
 	"richard_maze": {
 		"id": "richard_maze",
@@ -1394,9 +1368,8 @@ let entranceDict = {
 				"y": 1624
 			}
 		],
-		"connectedTo": [
-			"richard_house",
-		],
+		"connector": "richard",
+		"interiorImage": "02C8",
 	},
 	"prairie_low_phone": {
 		"id": "prairie_low_phone",
@@ -1425,9 +1398,8 @@ let entranceDict = {
 				"y": 2014
 			}
 		],
-		"connectedTo": [
-			"prairie_madbatter_connector_exit",
-		],
+		"connector": "bay_batter",
+		"interiorImage": "01F6",
 	},
 	"prairie_madbatter_connector_exit": {
 		"id": "prairie_madbatter_connector_exit",
@@ -1442,9 +1414,8 @@ let entranceDict = {
 				"y": 1836
 			}
 		],
-		"connectedTo": [
-			"prairie_madbatter_connector_entrance",
-		],
+		"connector": "bay_batter",
+		"interiorImage": "01E5",
 	},
 	"prairie_madbatter": {
 		"id": "prairie_madbatter",

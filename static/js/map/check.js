@@ -20,11 +20,11 @@ class Check {
     }
 
     isChecked() {
-        return this.fullName() in checkedChecks;
+        return Check.isChecked(this.fullName());
     }
 
     fullName() {
-        return `${this.metadata.area}-${this.metadata.name}`;
+        return Check.fullName(this.metadata.area, this.metadata.name);
     }
 
     shouldDraw() {
@@ -37,5 +37,13 @@ class Check {
         }
 
         return true;
+    }
+
+    static fullName(area, name) {
+        return `${area}-${name}`;
+    }
+
+    static isChecked(fullName) {
+        return fullName in checkedChecks;
     }
 }

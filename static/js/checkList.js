@@ -4,6 +4,7 @@ function saveChecked() {
 
 function saveEntrances() {
     localStorage.setItem('entranceMap', JSON.stringify(entranceMap));
+    localStorage.setItem('connections', JSON.stringify(connections));
 }
 
 function saveLocations() {
@@ -28,6 +29,21 @@ function loadEntrances() {
 
     if (entranceMap == null) {
         entranceMap = {};
+    }
+
+    try {
+        dehydratedConnections = JSON.parse(localStorage.getItem('connections'));
+        connections = [];
+        for (const conn of dehydratedConnections) {
+            connections.push(new Connection(conn.entrances, null, conn.label));
+        }
+    }
+    catch (err) {
+
+    }
+
+    if (connections == null) {
+        connections = [];
     }
 }
 
@@ -71,10 +87,10 @@ function toggleSingleNodeCheck(check) {
     toggleCheck(null, textCheck);
 }
 
-function toggleChecks(checks) {
+function toggleChecks(checkIds) {
     pushUndoState();
 
-    for (const id of checks) {
+    for (const id of checkIds) {
         let textCheck = $(`li[data-check-id="${id}"`);
         toggleCheck(null, textCheck, draw=false, pushUndo=false);
     }
@@ -200,6 +216,7 @@ function resetLocations() {
 
 function resetEntrances() {
     entranceMap = {};
+    connections = [];
     saveEntrances();
 }
 

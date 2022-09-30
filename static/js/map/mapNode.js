@@ -80,7 +80,8 @@ class MapNode {
             && this.isChecked
             && (this.entrance == null
                 || (this.entranceConnectedTo() != startHouse
-                    && this.entrance.type != 'connector'))) {
+                    && (this.entrance.type != 'connector')
+                        || this.entrance.connectedTo() == 'landfill'))) {
             return true;
         }
 
@@ -111,7 +112,15 @@ class MapNode {
     }
 
     iconClasses() {
-        let classes = ['checkGraphic', 'animate__animated'];
+        let pickingEntrance = graphicalMapSource != null;
+        let classes = ['check-graphic', 'animate__animated'];
+
+        if (pickingEntrance)
+        {
+            return ['check-graphic', 'entrance-only'];
+            // classes.push('entrance-only');
+            // return classes;
+        }
 
         if (this.behindKeys) {
             classes.push('behind-keys');
@@ -123,7 +132,7 @@ class MapNode {
 
         if (this.entrance != null) {
             if (this.entrance.isMapped()) {
-                let mappedEntrance = new Entrance(this.entrance.connectedTo());//entranceDict[entranceMap[this.entrance.id]];
+                let mappedEntrance = new Entrance(this.entrance.connectedTo());
 
                 if (args.randomstartlocation 
                     && mappedEntrance.id == startHouse) {
@@ -131,12 +140,22 @@ class MapNode {
                 }
 
                 if (mappedEntrance.type == 'connector') {
+                    let connection = this.entrance.mappedConnection();
+                    if (connection?.thisSideBlocked(this.entrance.id)) {
+                        classes.push('one-way-out');
+                    }
+                    else if (connection?.otherSideBlocked(this.entrance.id)) {
+                        classes.push('one-way-in');
+                    }
+
                     if (this.isChecked || this.checks.length == 0) {
                         classes.push('entrance-only');
                     }
                     else {
                         classes.push(`difficulty-${this.difficulty}`);
                     }
+
+                    classes.push('connector');
                 }
                 else if (this.checks.length > 0) {
                     classes.push(`difficulty-${this.difficulty}`);

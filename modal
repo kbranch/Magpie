@@ -1,0 +1,48 @@
+connectors only:
+
+right click -> connect to
+
+left click other end of connector to open modal
+	modal asks you to pick which connector was used
+		if simple, hit a button that says so to skip the rest of the modal
+	also list all elligible connectors, filtered in real time as obstacles get checked
+	click on a connector to move to detail view in modal
+		check off everything you couldn't get to (checks, entrances), hit done
+	map both selected ends to the chosen connector, mark any unchecked checks as checked
+
+improvements:
+	+filter out exhausted connectors
+	+prevent selecting more anything other than exactly two entrances
+	+filter out entrances if requirements must have been met for connection to be made
+	+put icons on linked entrances
+	+put one way icons on appropriate entrances
+	+add dead end version of modal
+	+rephrase modal to match new intentions
+	fix check distribution
+	+fix mark as useless on mapped connector
+	+automatically add to three way if one half of connection is already in it, skip modal
+	+convert dead end to connection if two+ ends found
+	show interior of connector on hover if not simple
+	+hide landfill connectors
+	show a 'via' in tooltip if three way
+	maybe some indicator that there's an unmapped entrance in a mapped three way?
+	+richard's connector enters in his actual house
+	+in entrance connector line mode, revert icons to regular entrance icon
+	+cut out the check selection, just leave them unchecked
+	+test and fix three way clear mapping
+	+make three ways smarter - detect which entrances should be being connected, remove the choice
+	+handle three ways
+		+just detect when a new connection is happening with an entrance that's already connected
+
+#left click other end of connector for a simple connection
+#right click other end -> pick connector:
+   #modal opens, asks what obstacles are left (sword, boots, etc.)
+   #also list all elligible connectors below, filtered in real time as obstacles get checked
+   #click on a connector to move to detail view in modal
+      #check off everything you couldn't get to (checks, entrances), hit done
+   
+   #map both selected ends to the chosen connector, mark any unchecked checks as checked
+
+
+
+use entranceMap to directly map exteriors together? no

@@ -196,6 +196,14 @@ function clearEntranceMapping(entranceId) {
         delete entranceMap[startHouse];
     }
 
+    if (Entrance.isConnected(entranceId)) {
+        let conn = Entrance.mappedConnection(entranceId);
+        if (conn.entrances.length == 2) {
+            delete entranceMap[conn.otherSide(entranceId)];
+        }
+    }
+
+    Connection.disconnect(entranceId);
     delete entranceMap[entranceId];
 
     saveEntrances();
@@ -206,7 +214,49 @@ function clearEntranceMapping(entranceId) {
 function mapToLandfill(entranceId) {
     pushUndoState();
 
+    let otherSide = null;
+    let connector = Connection.findConnector({ exterior: entranceId });
+    let connection = Connection.existingConnection(connector);
+
+    if (connection != null && connection.entrances.length == 2) {
+        otherSide = connection.otherSide(entranceId);
+    }
+
+    Connection.disconnect(entranceId);
+
     entranceMap[entranceId] = 'landfill';
+
+    if (otherSide != null) {
+        entranceMap[otherSide] = 'landfill';
+    }
+
+    saveEntrances();
+    closeAllCheckTooltips();
+    refreshCheckList();
+}
+
+function connectExteriors(from, fromInterior, to, toInterior) {
+    pushUndoState();
+
+    let connector = Connection.findConnector({ interior: fromInterior });
+    let connection = Connection.existingConnection(connector);
+    
+    if (connection == null || connector.id == 'outer_rainbow') {
+        entranceMap[from] = fromInterior;
+        entranceMap[to] = toInterior;
+    }
+    else {
+        if (connection.entrances.includes(from)) {
+            entranceMap[to] = toInterior;
+        }
+        else {
+            entranceMap[from] = fromInterior;
+        }
+    }
+
+    Connection.createConnection([from, to]);
+
+    skipNextAnimation = true;
 
     saveEntrances();
     closeAllCheckTooltips();
@@ -216,12 +266,13 @@ function mapToLandfill(entranceId) {
 function connectEntrances(from, to) {
     pushUndoState();
 
-    if (to == 'clear') {
-        delete entranceMap[from];
-    }
-    else {
-        entranceMap[from] = to;
-    }
+    console.assert(to != 'clear');
+    // if (to == 'clear') {
+    //     delete entranceMap[from];
+    // }
+    // else {
+    entranceMap[from] = to;
+    // }
 
     skipNextAnimation = true;
 
@@ -239,6 +290,7 @@ function getUndoState() {
     let state = new Object();
     state.checkedChecks = Object.assign({}, checkedChecks);
     state.entranceMap = Object.assign({}, entranceMap);
+    state.connections = connections.map(x => x.clone());
 
     return state;
 }
@@ -246,6 +298,7 @@ function getUndoState() {
 function applyUndoState(state) {
     checkedChecks = state.checkedChecks;
     entranceMap = state.entranceMap;
+    connections = state.connections;
 
     pruneEntranceMap();
     saveLocations();

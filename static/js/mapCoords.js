@@ -100,7 +100,7 @@ function drawTab(button) {
     let parent = $(map).find('div.map-wrapper');
     let checkSize = 24;
 
-    $('.checkGraphic').remove();
+    $('.check-graphic').remove();
 
     for (const location of activeCheck.locations) {
         if (location.map != mapName) { continue; }
@@ -122,7 +122,7 @@ function drawTab(button) {
                 'width': checkSize,
                 'height': checkSize,
             },
-            class: 'checkGraphic difficulty-0',
+            class: 'check-graphic difficulty-0',
             onclick: 'graphicClick(this);',
             oncontextmenu: 'checkGraphicRightClick(this); return false;',
         });

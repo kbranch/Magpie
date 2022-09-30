@@ -172,6 +172,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":12,
+	   "image": "02A6-Trade",
 	},
 	"0x2A0-Trade":{
 	   "id":"0x2A0-Trade",
@@ -325,6 +326,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":23,
+	   "image": "02BA",
 	},
 	"0x1E2":{
 	   "id":"0x1E2",
@@ -527,6 +529,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":37,
+	   "image": "02BB",
 	},
 	"0x018":{
 	   "id":"0x018",
@@ -631,6 +634,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":45,
+	   "image": "02C6",
 	},
 	"0x2C5":{
 	   "id":"0x2C5",
@@ -644,6 +648,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":46,
+	   "image": "02C5",
 	},
 	"0x2D2":{
 	   "id":"0x2D2",
@@ -657,6 +662,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":47,
+	   "image": "02D2",
 	},
 	"0x058":{
 	   "id":"0x058",
@@ -714,6 +720,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":51,
+	   "image": "02C8",
 	},
 	"0x0C6":{
 	   "id":"0x0C6",
@@ -984,6 +991,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":71,
+	   "image": "02DF",
 	},
 	"0x035-Owl":{
 	   "id":"0x035-Owl",
@@ -1010,6 +1018,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":73,
+	   "image": "02AF",
 	},
 	"0x011-Owl":{
 	   "id":"0x011-Owl",
@@ -1036,6 +1045,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":75,
+	   "image": "02AE",
 	},
 	"0x2B3":{
 	   "id":"0x2B3",
@@ -1067,6 +1077,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":77,
+	   "image": "02AB",
 	},
 	"0x2BD":{
 	   "id":"0x2BD",
@@ -1085,6 +1096,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":78,
+	   "image": "02BD",
 	},
 	"0x041":{
 	   "id":"0x041",
