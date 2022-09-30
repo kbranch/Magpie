@@ -70,7 +70,11 @@ class Connection {
     }
 
     isIncomplete() {
-        return this.entrances.length < this.connector.entrances.length;
+        return this.entrances.length < this.connector?.entrances.length ?? 2;
+    }
+
+    isSimple() {
+        return (this.connector ?? null) == null || this.connector?.id == 'outer_rainbow';
     }
 
     static disconnect(entranceId) {

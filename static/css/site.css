@@ -237,6 +237,13 @@ img {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 
+.partial-entrance {
+    border-style: none;
+    background-image: url('/static/images/partial-entrance.svg');
+    background-size: contain;
+    z-index: 3;
+}
+
 .entrance-only {
     border-style: none;
     background-image: url('/static/images/entrance.svg');

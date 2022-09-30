@@ -92,10 +92,14 @@ class NodeTooltip {
                 let connectionName = entranceDict[entrance.connectedTo()].name;
 
                 if (entrance.isConnected()) {
-                    connectionName = entrance.mappedConnection()
-                                             .otherSides(entrance.id)
-                                             .map(x => entranceDict[x].name)
-                                             .join(', ');
+                    let connection = entrance.mappedConnection();
+                    connectionName = connection.otherSides(entrance.id)
+                                               .map(x => entranceDict[x].name)
+                                               .join(', ');
+
+                    if (!connection.isSimple()) {
+                        connectionName += ` via ${connection.connector.name}`;
+                    }
                 }
 
                 entranceHtml += connectionTemplate.replace('{connection}', `To ${connectionName}`);
@@ -164,7 +168,6 @@ class NodeTooltip {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
                 pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
             }
-
 
             if (entrance.connectedTo() != 'landfill') {
                 pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill('${entrance.id}')`)

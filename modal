@@ -24,8 +24,8 @@ improvements:
 	+convert dead end to connection if two+ ends found
 	show interior of connector on hover if not simple
 	+hide landfill connectors
-	show a 'via' in tooltip if three way
-	maybe some indicator that there's an unmapped entrance in a mapped three way?
+	+show a 'via' in tooltip if three way
+	+maybe some indicator that there's an unmapped entrance in a mapped three way?
 	+richard's connector enters in his actual house
 	+in entrance connector line mode, revert icons to regular entrance icon
 	+cut out the check selection, just leave them unchecked

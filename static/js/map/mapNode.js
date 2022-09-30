@@ -118,8 +118,6 @@ class MapNode {
         if (pickingEntrance)
         {
             return ['check-graphic', 'entrance-only'];
-            // classes.push('entrance-only');
-            // return classes;
         }
 
         if (this.behindKeys) {
@@ -149,7 +147,12 @@ class MapNode {
                     }
 
                     if (this.isChecked || this.checks.length == 0) {
-                        classes.push('entrance-only');
+                        if (connection?.isIncomplete()) {
+                            classes.push('partial-entrance');
+                        }
+                        else {
+                            classes.push('entrance-only');
+                        }
                     }
                     else {
                         classes.push(`difficulty-${this.difficulty}`);
