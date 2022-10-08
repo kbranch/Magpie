@@ -93,76 +93,83 @@
             </div>
             <div class="modal-body">
                 <div data-page="1">
-                    <div id="modalTwoWay">
-                        <div id="#simpleButton" class="row mb-2 ms-0 btn btn-primary big-button" data-bs-dismiss="modal" onclick="connectConnectors()">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5>Simple Connector</h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <p>Select this if you don't care which connector is used</p>
-                                </div>
-                            </div>
-                        </div>
-                        <h4>Otherwise, pick the connector you found</h4>
-                    </div>
-
-                    <div id="modalDeadEnd">
+                    <div>
                         <h4>Pick the connector you found</h4>
                     </div>
 
                     <div id="connector-blockers" class="row">
-                        <h6>Filter by obstacle type:</h6>
-                        <div class="row">
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-sword" data-item="SWORD" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-sword">Sword</label>
+                        <div class="col-auto">
+                            <h6>Filter by obstacle type:</h6>
+                            <div class="row">
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-sword" data-item="SWORD" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-sword">Sword</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-feather" data-item="FEATHER" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-feather">Feather</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-bracelet" data-item="BRACELET" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-bracelet">Bracelet</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-hookshot" data-item="HOOKSHOT" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-hookshot">Hookshot</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-boots" data-item="BOOTS" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-boots">Boots</label>
+                                </div>
                             </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-feather" data-item="FEATHER" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-feather">Feather</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-bracelet" data-item="BRACELET" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-bracelet">Bracelet</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-hookshot" data-item="HOOKSHOT" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-hookshot">Hookshot</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-boots" data-item="BOOTS" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-boots">Boots</label>
+                            <div class="row">
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-bombs" data-item="BOMBS" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-bombs">Bombs</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-flippers" data-item="FLIPPERS" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-flippers">Flippers</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-oneway" data-item="ONEWAY" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-oneway">One Way</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-shield2" data-item="SHIELD2" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-shield2">L2 Shield</label>
+                                </div>
+                                <div class="filter-col">
+                                    <input type="checkbox" class="form-check-input item-requirement" id="item-yoshi" data-item="YOSHI" onclick="filterConnectors()">
+                                    <label class="form-check-label" for="item-yoshi">Yoshi</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-bombs" data-item="BOMBS" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-bombs">Bombs</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-flippers" data-item="FLIPPERS" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-flippers">Flippers</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-oneway" data-item="ONEWAY" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-oneway">One Way</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-shield2" data-item="SHIELD2" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-shield2">L2 Shield</label>
-                            </div>
-                            <div class="col-2">
-                                <input type="checkbox" class="form-check-input item-requirement" id="item-yoshi" data-item="YOSHI" onclick="filterConnectors()">
-                                <label class="form-check-label" for="item-yoshi">Yoshi</label>
+                        <div class="col">
+                            <div id="#simpleButton" class="row  btn btn-primary big-button" data-bs-dismiss="modal" onclick="connectConnectors()">
+                                <h5 class="big-button big-button-text">
+                                    Simple Connector
+                                </h5>
                             </div>
                         </div>
                     </div>
                     <hr class="my-1">
 
                     <div id="connectorGrid">
+                    </div>
+
+                    <div id="connectToWarning" class="row">
+                        <div class="col">
+                            <h5>Can't find your connector?</h5>
+                            <ul>
+                                <li>
+                                    If you were able to go through two different entrances, you probably found a simple connector. Click the big blue button up top!
+                                </li>
+                                <li>
+                                    If you only went through one entrance and hit a dead end, close this and choose "Dead ends in..." instead
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 

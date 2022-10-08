@@ -117,7 +117,7 @@ class NodeTooltip {
     }
 
     getPinnedHtml() {
-        const menuItemTemplate = `<li class="list-group-item text-start tooltip-item p-1"{attributes} onclick="{action}" oncontextmenu="return false;">
+        const menuItemTemplate = `<li class="list-group-item text-start tooltip-item p-1 text-align-middle {classes}"{attributes} onclick="{action}" oncontextmenu="return false;">
     {text}
 </li>`
         let pinnedHtml = '';
@@ -128,10 +128,12 @@ class NodeTooltip {
         }
 
         if (entrance.canBeStart()
-            && !entrance.isMapped()) {
+            && !entrance.isMapped()
+            && !Entrance.isFound(startHouse)) {
             pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation('${entrance.id}');`)
-                                            .replace('{text}', 'Set as start location')
-                                            .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+                                          .replace('{text}', 'Set as start location')
+                                          .replace('{classes}', '')
+                                          .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
         }
 
         if (args.entranceshuffle == 'none'
@@ -156,13 +158,17 @@ class NodeTooltip {
             let action = `startGraphicalConnection('${entrance.id}')`;
 
             if (entrance.type == "connector") {
+                let text = 'Connect to... <img class="helper" data-bs-toggle="tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
                 pinnedHtml += menuItemTemplate.replace('{action}', action)
-                                                .replace('{text}', 'Connect to...')
-                                                .replace('{attributes}', '');
+                                              .replace('{text}', text)
+                                              .replace('{classes}', '')
+                                              .replace('{attributes}', '');
 
+                text = 'Dead ends in... <img class="helper" data-bs-toggle="tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
                 pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
-                                                .replace('{text}', 'Dead ends in...')
-                                                .replace('{attributes}', '');
+                                              .replace('{text}', text)
+                                              .replace('{classes}', '')
+                                              .replace('{attributes}', '');
             }
             else {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
@@ -171,15 +177,17 @@ class NodeTooltip {
 
             if (entrance.connectedTo() != 'landfill') {
                 pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill('${entrance.id}')`)
-                                                .replace('{text}', 'Mark as useless')
-                                                .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+                                              .replace('{text}', 'Mark as useless')
+                                              .replace('{classes}', '')
+                                              .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
             }
         }
 
         if (entrance.isMapped()) {
             pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping('${entrance.id}')`)
-                                            .replace('{text}', 'Clear Mapping')
-                                            .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+                                          .replace('{text}', 'Clear Mapping')
+                                          .replace('{classes}', '')
+                                          .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
         }
 
         if (pinnedHtml != '') {

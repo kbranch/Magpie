@@ -127,7 +127,9 @@ function updateTooltip(checkGraphic) {
         return;
     }
 
-    let title = node.tooltipHtml($(checkGraphic).attr('data-pinned'));
+    let pinned = $(checkGraphic).attr('data-pinned');
+
+    let title = node.tooltipHtml(pinned);
     let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
 
     $(checkGraphic).attr({
@@ -136,19 +138,23 @@ function updateTooltip(checkGraphic) {
         'data-bs-html': 'true',
         'data-bs-title': title,
         'data-bs-animation': 'false',
+        'data-bs-container': 'body',
     });
 
+    let tooltip;
+
     if (activated) {
-        let oldTooltip = bootstrap.Tooltip.getInstance(checkGraphic);
-        oldTooltip.setContent({'.tooltip-inner': title});
+        tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
+        tooltip.setContent({'.tooltip-inner': title});
     }
     else {
-        let tooltip = new bootstrap.Tooltip(checkGraphic);
+        tooltip = new bootstrap.Tooltip(checkGraphic);
         checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
             $('.tooltip').attr('oncontextmenu', 'return false;');
+            const helpers = document.querySelectorAll('.helper');
+            const helperTips = [...helpers].map(x => new bootstrap.Tooltip(x));
         })
     }
-
 }
 
 function createNodes(map, mapName) {

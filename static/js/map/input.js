@@ -147,21 +147,19 @@ function openConnectorDialog(entranceId) {
         }
     }
 
+    let isDeadEnd = entranceId == 'deadEnd';
+
     $('.item-requirement:checked').map((x, y) => $(y).prop('checked', false));
     $('#connector-blockers').show();
     $('#connectorModal').attr('data-destination', entranceId)
     $('#entranceAlert').hide();
     $('#deadEndEntranceAlert').hide();
 
-    let isDeadEnd = entranceId == 'deadEnd';
-
     if (isDeadEnd) {
-        $('#modalTwoWay').hide();
-        $('#modalDeadEnd').show();
+        $('#connectToWarning').hide();
     }
     else {
-        $('#modalTwoWay').show();
-        $('#modalDeadEnd').hide();
+        $('#connectToWarning').show();
     }
 
     filterConnectors();
