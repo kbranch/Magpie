@@ -924,7 +924,7 @@ let entranceDict = {
 		"name": "Rooster's Grave",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "single",
 		"locations": [
 			{
 				"map": "overworld",
