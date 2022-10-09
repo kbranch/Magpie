@@ -3,6 +3,7 @@ import sys
 import copy
 import random
 import argparse
+from xmlrpc.client import boolean
 import jsonpickle
 
 sys.path.append(os.path.abspath('LADXR/'))
@@ -11,7 +12,7 @@ import explorer
 import itempool
 import logic
 from worldSetup import WorldSetup, start_locations
-from LADXR.main import buildArgParser
+from LADXR.settings import *
 from checkMetadata import checkMetadataTable
 
 allChecks = {}
@@ -28,16 +29,15 @@ vanillaBySetting = {
 
 class Flag():
     def __init__(self, ladxrArg, value):
-        if isinstance(ladxrArg, (argparse._StoreTrueAction, argparse._StoreFalseAction)):
+        if isinstance(ladxrArg.default, boolean):
             self.type = 'bool'
         else:
             self.type = 'string'
         
         self.default = ladxrArg.default
         self.value = value
-        self.name = ladxrArg.dest
-        self.choices = ladxrArg.choices
-        self.group = ladxrArg.container.title
+        self.name = ladxrArg.key
+        self.choices = [x[0] for x in ladxrArg.options] if ladxrArg.options != None else None
     
     def __repr__(self) -> str:
         return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
@@ -63,17 +63,16 @@ def getArgs(values=None):
 
         def add(self, flag, value):
             self.flags.append(Flag(flag, value))
-            setattr(self, flag.dest, value)
+            setattr(self, flag.key, value)
 
-    parser = buildArgParser()
-    ladxrFlags = [x for x in parser._actions if isinstance(x, (argparse._StoreAction, argparse._StoreTrueAction, argparse._StoreFalseAction))]
+    ladxrFlags = [x for x in Settings()._Settings__all if not x.aesthetic and (x.options != None or isinstance(x.default, boolean))]
 
     args = Args()
 
     for flag in ladxrFlags:
         value = flag.default
-        if values and flag.dest in values.__dict__:
-            value = values.__dict__[flag.dest]
+        if values and flag.key in values.__dict__:
+            value = values.__dict__[flag.key]
 
         args.add(flag, value)
 

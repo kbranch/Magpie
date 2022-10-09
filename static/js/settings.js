@@ -39,7 +39,7 @@ function saveSettings() {
 
     resetUndoRedo()
 
-    fixGoal(args);
+    fixArgs(args);
     saveSettingsToStorage(args, localSettings);
 
     applySettings();
@@ -86,7 +86,7 @@ function loadSettings() {
         }
     }
 
-    fixGoal(args);
+    fixArgs(args);
 
     setInputValues('flag', args);
     setInputValues('setting', localSettings);
@@ -113,9 +113,25 @@ function applySettings() {
     }
 }
 
-function fixGoal(args) {
+function fixArgs(args) {
     if (['', 'undefined', 'null', '8'].includes(String(args.goal))) {
         args.goal = 'egg';
+    }
+
+    if (args.logic == 'normal') {
+        args.logic = '';
+    }
+
+    if (args.dungeon_items == 'standard') {
+        args.dungeon_items = '';
+    }
+
+    if (args.dungeon_items == 'localnightmarekey') {
+        args.dungeon_items = 'nightmarekey';
+    }
+
+    if (args.owlstatues == 'none') {
+        args.owlstatues = '';
     }
 }
 
