@@ -229,15 +229,18 @@ function pruneEntranceMap() {
         let mappedEntrance = entranceMap[entrance];
 
         if (!randomizedEntrances.includes(entrance)) {
+            Connection.disconnect(entrance);
             delete entranceMap[entrance];
         }
         else if (mappedEntrance != 'landfill' && !randomizedEntrances.includes(mappedEntrance)) {
+            Connection.disconnect(entrance);
             delete entranceMap[entrance];
         }
     }
 
     for (const entrance in reverseEntranceMap) {
         if (entrance != 'landfill' && !randomizedEntrances.includes(entrance)) {
+            Connection.disconnect(reverseEntranceMap[entrance]);
             delete entranceMap[reverseEntranceMap[entrance]];
         }
     }
