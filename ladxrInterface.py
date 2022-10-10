@@ -158,7 +158,7 @@ def getLogics(args, entranceMap):
         if foundTarget:
             args.logic = choice
             log = logic.Logic(args, world_setup=worldSetup)
-            log.name = choice
+            log.name = 'normal' if choice == '' else choice
             logics.append(log)
 
     args.logic = originalLogic

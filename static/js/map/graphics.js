@@ -229,15 +229,41 @@ function createCheck(checkElement, mapName) {
 
 function distributeChecks() {
     let checksByEntrance = {'landfill': []};
+    let checksByConnector = {};
+    let entrancesByConnector = {};
     let remappedNodes = [];
+    let connectorsByCheckId = {};
+
+    connectors.map(connector => connector.checks.map(checkId => connectorsByCheckId[checkId] = connector));
+
     for (const key in nodes) {
         let node = nodes[key];
+
+        if(node.entrance == null && node.checks.some(x => x.id in connectorsByCheckId)) {
+            let connector = connectorsByCheckId[node.checks[0].id];
+            node.entrance = new Entrance(connector.entrances[0]);
+            node.hideMe = true;
+        }
+
         if (node.entrance == null) {
             continue;
         }
 
         let entranceId = node.entrance.id;
-        checksByEntrance[entranceId] = node.checks;
+        if (['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
+            && node.entrance.isConnector()) {
+            let connector = node.entrance.metadata.connector;
+            if (!(connector in checksByConnector)) {
+                checksByConnector[connector] = new Set();
+                entrancesByConnector[connector] = [];
+            }
+
+            node.checks.map(x => checksByConnector[connector].add(x));
+            entrancesByConnector[connector].push(entranceId);
+        }
+        else {
+            checksByEntrance[entranceId] = node.checks;
+        }
 
         if (!node.entrance.isMapped()) {
             if (args.entranceshuffle != 'none'
@@ -248,6 +274,12 @@ function distributeChecks() {
 
         if (node.entrance.isRemapped()) {
             remappedNodes.push(node);
+        }
+    }
+
+    for (const connector in entrancesByConnector) {
+        for (const entranceId of entrancesByConnector[connector]) {
+            checksByEntrance[entranceId] = Array.from(checksByConnector[connector]);
         }
     }
 

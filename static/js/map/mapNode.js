@@ -4,6 +4,7 @@ class MapNode {
         this.y = Math.round(location.y * scaling.y + scaling.offset.y);
         this.location = location;
         this.scaling = scaling;
+        this.hideMe = false;
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
@@ -76,6 +77,10 @@ class MapNode {
     }
 
     canBeHidden() {
+        if (this.hideMe){
+            return true;
+        }
+
         if (localSettings.hideChecked
             && this.isChecked
             && (this.entrance == null
