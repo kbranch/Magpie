@@ -497,7 +497,19 @@ button.nav-link.active {
 }
 
 .filter-col {
-    width: 115px;
+    width: 80px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+
+.end-filter-col {
+    width: 125px;
+}
+
+.filter-image {
+    height: 32px;
+    width: 32px;
 }
 
 .entrance-from {

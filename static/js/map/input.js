@@ -169,12 +169,12 @@ function openConnectorDialog(entranceId) {
 }
 
 function filterConnectors() {
-    let isDeadEnd = $('#connectorModal').attr('data-destination') == 'deadEnd';
+    // let isDeadEnd = $('#connectorModal').attr('data-destination') == 'deadEnd';
     let obstacles = $('.item-requirement:checked').map((x, y) => $(y).attr('data-item'));
-    let validConnectors = [...connectors].filter(x => x.entrances.length > 2
+    let validConnectors = [...connectors]/*.filter(x => x.entrances.length > 2
                                                       || x.checks.length > 0
                                                       || x.obstacleTypes.includes('ONEWAY')
-                                                      || isDeadEnd);
+                                                      || isDeadEnd);*/
 
     for (const obstacle of obstacles) {
         validConnectors = validConnectors.filter(x => x.obstacleTypes.includes(obstacle));

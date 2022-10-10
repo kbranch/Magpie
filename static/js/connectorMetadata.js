@@ -251,6 +251,7 @@ var connectorDict = {
         ],
         "obstacleTypes": [
             "FEATHER",
+            "LEAVES",
         ],
         "checks": [
             "0x2C8",
