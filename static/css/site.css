@@ -203,6 +203,7 @@ img {
 
 .tooltip-text {
     display: inline-block;
+    width: 100%;
 }
 
 .text-check {
@@ -490,6 +491,7 @@ button.nav-link.active {
 .helper {
     float: right;
     height: 21px;
+    padding-left: 10px;
 }
 
 .footer-row {
@@ -571,4 +573,8 @@ button.nav-link.active {
     background-color: #444;
     color: var(--bs-tooltip-color);
     border-radius: 3px;
+}
+
+.dropdown-item {
+    margin-right: 31px;
 }

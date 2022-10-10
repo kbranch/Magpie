@@ -4,7 +4,7 @@ class NodeTooltip {
         this.node = node;
     }
 
-    tooltipHtml(pinned, pickingEntrance) {
+    tooltipHtml(pinned, connectionType) {
         const titleTemplate = `<div class='tooltip-body'>
     {areas}
     {entrance}
@@ -26,6 +26,8 @@ class NodeTooltip {
         </div>
     </div>
 </li>`;
+        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
+        const helperTitleTemplate = `<img src="static/images/checks/{id}.png">`;
 
         let uniqueIds = this.node.uniqueCheckIds();
         let areaHtml = '';
@@ -37,6 +39,12 @@ class NodeTooltip {
             let isVanilla = checks.every(x => x.isVanilla);
             let metadata = coordDict[id];
             let graphic = this.checkGraphicHtml(id);
+            let name = metadata.name;
+
+            if ('image' in metadata) {
+                let title = helperTitleTemplate.replace('{id}', metadata.image);
+                name += helperTemplate.replace('{title}', title);
+            }
 
             if (!(metadata.area in areas)) {
                 areas[metadata.area] = '';
@@ -44,7 +52,7 @@ class NodeTooltip {
 
             let line = checkTemplate.replace('{check-id}', id)
                             .replace('{graphic}', graphic)
-                            .replace('{name}', metadata.name)
+                            .replace('{name}', name)
                             .replace('{vanilla}', isVanilla ? ' data-vanilla="true"' : '');
 
             areas[metadata.area] += line;
@@ -59,7 +67,7 @@ class NodeTooltip {
             pinnedHtml = this.getPinnedHtml();
         }
 
-        let entranceHtml = this.getEntranceHtml(pickingEntrance);
+        let entranceHtml = this.getEntranceHtml(connectionType);
 
         let title = titleTemplate.replace('{areas}', areaHtml)
                                  .replace('{entrance}', entranceHtml)
@@ -68,7 +76,7 @@ class NodeTooltip {
         return title;
     }
 
-    getEntranceHtml(pickingEntrance) {
+    getEntranceHtml(connectionType) {
         const interiorImageTemplate = `<div>
             <img src="static/images/entrances/{image}.png">
         </div>`
@@ -91,7 +99,7 @@ class NodeTooltip {
             entranceHtml = entranceTemplate.replace('{entrance-id}', entrance.id)
                                             .replace('{graphic}', graphic)
                                             .replace('{name}', entrance.metadata.name);
-            if (entrance.isRemapped()) {
+            if (entrance.isRemapped() && connectionType == 'none') {
                 let connectionName = entranceDict[entrance.connectedTo()].name;
 
                 if (entrance.isConnected()) {
@@ -110,12 +118,13 @@ class NodeTooltip {
 
             if (entrance.isFound()
                 && !entrance.isMappedToSelf()
-                && !entrance.isConnector()) {
+                && !entrance.isConnector()
+                && connectionType == 'none') {
                 let connection = entranceDict[entrance.connectedFrom()];
                 entranceHtml += connectionTemplate.replace('{connection}', `From ${connection.name}`);
             }
 
-            if (pickingEntrance && entrance.metadata.interiorImage) {
+            if (connectionType == 'simple' && entrance.metadata.interiorImage) {
                 entranceHtml += interiorImageTemplate.replace('{image}', entrance.metadata.interiorImage);
             }
         }
@@ -179,7 +188,9 @@ class NodeTooltip {
             }
             else {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
-                pinnedHtml += NodeTooltip.createDropdown('Connect to...', action, options, optionAction);
+                let title = 'Connect to...';
+
+                pinnedHtml += NodeTooltip.createDropdown(title, action, options, optionAction);
             }
 
             if (entrance.connectedTo() != 'landfill') {
@@ -205,13 +216,26 @@ class NodeTooltip {
     }
 
     static createDropdown(title, action, options, optionAction) {
+        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
+        const helperTitleTemplate = `<img src="static/images/entrances/{id}.png">`;
         let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="${optionAction}">{name}</button></li>`;
         let items = '';
 
         for (const option of options) {
+            let name = option[1];
+
+            if (option[0] in entranceDict) {
+                let metadata = entranceDict[option[0]];
+                if ('interiorImage' in metadata) {
+                    let helperTitle = helperTitleTemplate.replace('{id}', metadata.interiorImage);
+                    name += helperTemplate.replace('{title}', helperTitle);
+                }
+            }
+
             items += itemTemplate.replace('{value}', option[0])
-                                 .replace('{name}', option[1]);
+                                 .replace('{name}', name);
         }
+
 
         return `<div class="btn-group dropend">
         <button type="button" class="btn tooltip-item text-start p-1" onclick="${action}">${title}</button>

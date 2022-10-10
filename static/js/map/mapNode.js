@@ -111,9 +111,9 @@ class MapNode {
         }
     }
 
-    tooltipHtml(pinned, pickingEntrance) {
+    tooltipHtml(pinned, connectionType) {
         let tooltip = new NodeTooltip(this);
-        return tooltip.tooltipHtml(pinned, pickingEntrance);
+        return tooltip.tooltipHtml(pinned, connectionType);
     }
 
     iconClasses() {

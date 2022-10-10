@@ -129,7 +129,18 @@ function updateTooltip(checkGraphic) {
 
     let pinned = $(checkGraphic).attr('data-pinned');
 
-    let title = node.tooltipHtml(pinned, graphicalMapSource != null);
+    let connectionType = 'none';
+
+    if (graphicalMapSource != null) {
+        if (Entrance.isConnector(graphicalMapSource)) {
+            connectionType = 'connector';
+        }
+        else {
+            connectionType = 'simple';
+        }
+    }
+
+    let title = node.tooltipHtml(pinned, connectionType);
     let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
 
     $(checkGraphic).attr({
@@ -233,13 +244,16 @@ function distributeChecks() {
     let entrancesByConnector = {};
     let remappedNodes = [];
     let connectorsByCheckId = {};
+    let shuffleConnectors = ['advanced', 'expert', 'insanity'].includes(args.entranceshuffle);
 
     connectors.map(connector => connector.checks.map(checkId => connectorsByCheckId[checkId] = connector));
 
     for (const key in nodes) {
         let node = nodes[key];
 
-        if(node.entrance == null && node.checks.some(x => x.id in connectorsByCheckId)) {
+        if(node.entrance == null 
+           && shuffleConnectors
+           && node.checks.some(x => x.id in connectorsByCheckId)) {
             let connector = connectorsByCheckId[node.checks[0].id];
             node.entrance = new Entrance(connector.entrances[0]);
             node.hideMe = true;
@@ -250,7 +264,7 @@ function distributeChecks() {
         }
 
         let entranceId = node.entrance.id;
-        if (['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
+        if (shuffleConnectors
             && node.entrance.isConnector()) {
             let connector = node.entrance.metadata.connector;
             if (!(connector in checksByConnector)) {
