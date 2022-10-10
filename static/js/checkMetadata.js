@@ -498,6 +498,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":35,
+	   "image":"01F2",
 	},
 	"0x28A":{
 	   "id":"0x28A",
@@ -569,6 +570,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":40,
+	   "image":"01E8",
 	},
 	"0x2E6":{
 	   "id":"0x2E6",
@@ -1175,6 +1177,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":84,
+	   "image":"01E3",
 	},
 	"0x0E5":{
 	   "id":"0x0E5",
@@ -1214,6 +1217,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":87,
+	   "image":"02B2",
 	},
 	"0x0A3":{
 	   "id":"0x0A3",

@@ -129,7 +129,7 @@ function updateTooltip(checkGraphic) {
 
     let pinned = $(checkGraphic).attr('data-pinned');
 
-    let title = node.tooltipHtml(pinned);
+    let title = node.tooltipHtml(pinned, graphicalMapSource != null);
     let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
 
     $(checkGraphic).attr({

@@ -12,6 +12,7 @@ let entranceDict = {
 				"y": 926
 			}
 		],
+		"interiorImage": "0312",
 	},
 	"d1": {
 		"id": "d1",
@@ -26,6 +27,7 @@ let entranceDict = {
 				"y": 1706
 			}
 		],
+		"interiorImage": "0117",
 	},
 	"d2": {
 		"id": "d2",
@@ -40,6 +42,7 @@ let entranceDict = {
 				"y": 276
 			}
 		],
+		"interiorImage": "0136",
 	},
 	"d3": {
 		"id": "d3",
@@ -54,6 +57,7 @@ let entranceDict = {
 				"y": 1446
 			}
 		],
+		"interiorImage": "0152",
 	},
 	"d4": {
 		"id": "d4",
@@ -68,6 +72,7 @@ let entranceDict = {
 				"y": 276
 			}
 		],
+		"interiorImage": "017A",
 	},
 	"d5": {
 		"id": "d5",
@@ -82,6 +87,7 @@ let entranceDict = {
 				"y": 1738
 			}
 		],
+		"interiorImage": "01A1",
 	},
 	"d6": {
 		"id": "d6",
@@ -96,6 +102,7 @@ let entranceDict = {
 				"y": 1080
 			}
 		],
+		"interiorImage": "01D4",
 	},
 	"d7": {
 		"id": "d7",
@@ -110,6 +117,7 @@ let entranceDict = {
 				"y": 32
 			}
 		],
+		"interiorImage": "020E",
 	},
 	"d8": {
 		"id": "d8",
@@ -124,6 +132,7 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"interiorImage": "025D",
 	},
 	"phone_d8": {
 		"id": "phone_d8",
@@ -183,6 +192,7 @@ let entranceDict = {
 				"y": 96
 			}
 		],
+		"interiorImage": "01E2",
 	},
 	"left_taltal_entrance": {
 		"id": "left_taltal_entrance",
@@ -323,7 +333,8 @@ let entranceDict = {
 				"x": 1732,
 				"y": 96
 			}
-		]
+		],
+		"interiorImage": "027E",
 	},
 	"multichest_left": {
 		"id": "multichest_left",
@@ -528,7 +539,8 @@ let entranceDict = {
 				"x": 112,
 				"y": 422
 			}
-		]
+		],
+		"interiorImage": "02A8",
 	},
 	"writes_phone": {
 		"id": "writes_phone",
@@ -556,7 +568,8 @@ let entranceDict = {
 				"x": 906,
 				"y": 454
 			}
-		]
+		],
+		"interiorImage": "02F0",
 	},
 	"photo_house": {
 		"id": "photo_house",
@@ -584,7 +597,8 @@ let entranceDict = {
 				"x": 1716,
 				"y": 292
 			}
-		]
+		],
+	    "interiorImage":"02FD",
 	},
 	"heartpiece_swim_cave": {
 		"id": "heartpiece_swim_cave",
@@ -598,7 +612,8 @@ let entranceDict = {
 				"x": 2348,
 				"y": 276
 			}
-		]
+		],
+		"interiorImage": "01F2",
 	},
 	"raft_return_exit": {
 		"id": "raft_return_exit",
@@ -659,7 +674,8 @@ let entranceDict = {
 				"x": 372,
 				"y": 568
 			}
-		]
+		],
+		"interiorImage": "02B3",
 	},
 	"toadstool_exit": {
 		"id": "toadstool_exit",
@@ -689,7 +705,8 @@ let entranceDict = {
 				"x": 436,
 				"y": 682
 			}
-		]
+		],
+		"interiorImage": "01E1",
 	},
 	"toadstool_entrance": {
 		"id": "toadstool_entrance",
@@ -733,7 +750,8 @@ let entranceDict = {
 				"x": 874,
 				"y": 812
 			}
-		]
+		],
+		"interiorImage": "02A2",
 	},
 	"graveyard_cave_left": {
 		"id": "graveyard_cave_left",
@@ -779,7 +797,8 @@ let entranceDict = {
 				"x": 1328,
 				"y": 1006
 			}
-		]
+		],
+		"interiorImage": "01FD",
 	},
 	"castle_main_entrance": {
 		"id": "castle_main_entrance",
@@ -825,7 +844,8 @@ let entranceDict = {
 				"x": 1538,
 				"y": 698
 			}
-		]
+		],
+		"interiorImage": "02D5",
 	},
 	"castle_secret_exit": {
 		"id": "castle_secret_exit",
@@ -917,7 +937,8 @@ let entranceDict = {
 				"x": 518,
 				"y": 1088
 			}
-		]
+		],
+		"interiorImage": "02AA",
 	},
 	"rooster_grave": {
 		"id": "rooster_grave",
@@ -931,7 +952,8 @@ let entranceDict = {
 				"x": 404,
 				"y": 1234
 			}
-		]
+		],
+		"interiorImage": "01E4",
 	},
 	"shop": {
 		"id": "shop",
@@ -945,7 +967,8 @@ let entranceDict = {
 				"x": 550,
 				"y": 1250
 			}
-		]
+		],
+		"interiorImage": "02A1",
 	},
 	"madambowwow": {
 		"id": "madambowwow",
@@ -973,7 +996,8 @@ let entranceDict = {
 				"x": 242,
 				"y": 1348
 			}
-		]
+		],
+		"interiorImage": "02B2",
 	},
 	"start_house": {
 		"id": "start_house",
@@ -1043,7 +1067,8 @@ let entranceDict = {
 				"x": 566,
 				"y": 1494
 			}
-		]
+		],
+		"interiorImage": "02A0",
 	},
 	"prairie_left_phone": {
 		"id": "prairie_left_phone",
@@ -1071,7 +1096,8 @@ let entranceDict = {
 				"x": 792,
 				"y": 1120
 			}
-		]
+		],
+		"interiorImage": "02CD",
 	},
 	"prairie_left_cave2": {
 		"id": "prairie_left_cave2",
@@ -1085,7 +1111,8 @@ let entranceDict = {
 				"x": 988,
 				"y": 1088
 			}
-		]
+		],
+		"interiorImage": "02F4",
 	},
 	"prairie_left_fairy": {
 		"id": "prairie_left_fairy",
@@ -1113,7 +1140,8 @@ let entranceDict = {
 				"x": 776,
 				"y": 1722
 			}
-		]
+		],
+	    "interiorImage":"02FB",
 	},
 	"prairie_right_phone": {
 		"id": "prairie_right_phone",
@@ -1141,7 +1169,8 @@ let entranceDict = {
 				"x": 1700,
 				"y": 1088
 			}
-		]
+		],
+		"interiorImage": "02E9",
 	},
 	"prairie_right_cave_top": {
 		"id": "prairie_right_cave_top",
@@ -1281,7 +1310,8 @@ let entranceDict = {
 				"x": 2332,
 				"y": 1380
 			}
-		]
+		],
+		"interiorImage": "02FC",
 	},
 	"armos_temple": {
 		"id": "armos_temple",
@@ -1295,7 +1325,8 @@ let entranceDict = {
 				"x": 2024,
 				"y": 1348
 			}
-		]
+		],
+		"interiorImage": "028F",
 	},
 	"boomerang_cave": {
 		"id": "boomerang_cave",
@@ -1309,7 +1340,8 @@ let entranceDict = {
 				"x": 664,
 				"y": 1966
 			}
-		]
+		],
+		"interiorImage": "01F5",
 	},
 	"banana_seller": {
 		"id": "banana_seller",
@@ -1323,7 +1355,8 @@ let entranceDict = {
 				"x": 550,
 				"y": 1852
 			}
-		]
+		],
+	    "interiorImage": "02FE",
 	},
 	"ghost_house": {
 		"id": "ghost_house",
@@ -1337,7 +1370,8 @@ let entranceDict = {
 				"x": 1052,
 				"y": 1998
 			}
-		]
+		],
+		"interiorImage": "01E3",
 	},
 	"richard_house": {
 		"id": "richard_house",
@@ -1429,7 +1463,8 @@ let entranceDict = {
 				"x": 1036,
 				"y": 1868
 			}
-		]
+		],
+		"interiorImage": "01E0",
 	},
 	"animal_phone": {
 		"id": "animal_phone",
@@ -1485,7 +1520,8 @@ let entranceDict = {
 				"x": 2138,
 				"y": 1624
 			}
-		]
+		],
+		"interiorImage": "02D9",
 	},
 	"animal_house4": {
 		"id": "animal_house4",
@@ -1513,7 +1549,8 @@ let entranceDict = {
 				"x": 2186,
 				"y": 1738
 			}
-		]
+		],
+		"interiorImage": "02D7",
 	},
 	"animal_cave": {
 		"id": "animal_cave",
@@ -1527,7 +1564,8 @@ let entranceDict = {
 				"x": 2234,
 				"y": 1576
 			}
-		]
+		],
+		"interiorImage": "02F7",
 	},
 	"desert_cave": {
 		"id": "desert_cave",
@@ -1541,7 +1579,8 @@ let entranceDict = {
 				"x": 2510,
 				"y": 1560
 			}
-		]
+		],
+		"interiorImage": "01F9",
 	},
 	"landfill": {
 		"id": "landfill",

@@ -4,7 +4,7 @@ class NodeTooltip {
         this.node = node;
     }
 
-    tooltipHtml(pinned) {
+    tooltipHtml(pinned, pickingEntrance) {
         const titleTemplate = `<div class='tooltip-body'>
     {areas}
     {entrance}
@@ -59,7 +59,7 @@ class NodeTooltip {
             pinnedHtml = this.getPinnedHtml();
         }
 
-        let entranceHtml = this.getEntranceHtml();
+        let entranceHtml = this.getEntranceHtml(pickingEntrance);
 
         let title = titleTemplate.replace('{areas}', areaHtml)
                                  .replace('{entrance}', entranceHtml)
@@ -68,7 +68,10 @@ class NodeTooltip {
         return title;
     }
 
-    getEntranceHtml() {
+    getEntranceHtml(pickingEntrance) {
+        const interiorImageTemplate = `<div>
+            <img src="static/images/entrances/{image}.png">
+        </div>`
         const entranceTemplate = `<div class='text-start tooltip-item d-flex p-1 mb-0' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
@@ -110,6 +113,10 @@ class NodeTooltip {
                 && !entrance.isConnector()) {
                 let connection = entranceDict[entrance.connectedFrom()];
                 entranceHtml += connectionTemplate.replace('{connection}', `From ${connection.name}`);
+            }
+
+            if (pickingEntrance && entrance.metadata.interiorImage) {
+                entranceHtml += interiorImageTemplate.replace('{image}', entrance.metadata.interiorImage);
             }
         }
 
