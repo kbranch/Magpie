@@ -67,6 +67,8 @@ class Entrance {
         else {
             options = randomizedEntrances.filter(x => entranceDict[x].type != 'connector'
                                                       && entranceDict[x].type != 'dummy'
+                                                      && (args.tradequest
+                                                          || entranceDict[x].type != 'trade')
                                                       && !Entrance.isFound(x))
                                          .map(x => [x, entranceDict[x].name]);
         }

@@ -521,7 +521,7 @@ let entranceDict = {
 		"name": "Mr. Write's House",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "trade",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1316,7 +1316,7 @@ let entranceDict = {
 		"name": "Sale's Hut",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "trade",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1478,7 +1478,7 @@ let entranceDict = {
 		"name": "Animal Village Goat House",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "trade",
 		"locations": [
 			{
 				"map": "overworld",
@@ -1506,7 +1506,7 @@ let entranceDict = {
 		"name": "Animal Village Bear Chef's House",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "trade",
 		"locations": [
 			{
 				"map": "overworld",

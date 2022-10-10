@@ -111,11 +111,6 @@ function applySettings() {
         inventory['ROOSTER'] = 0;
         saveInventory();
     }
-
-    tradeEntrances = ['writes_house', 'banana_seller', 'animal_house5', 'animal_house3'];
-    for (const entrance of tradeEntrances) {
-        entranceDict[entrance].type = args.tradequest ? 'single' : 'dummy';
-    }
 }
 
 function fixArgs(args) {
