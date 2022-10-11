@@ -209,6 +209,9 @@ def initChecks(args):
         if flag.name in vanillaBySetting and not flag.value:
             vanillaIds = vanillaIds.union(vanillaBySetting[flag.name])
 
+    if not args.instruments and args.goal == 'seashells':
+        vanillaIds -= vanillaBySetting['instruments']
+
     for id in checkMetadataTable:
         if id != 'None':
             allChecks[id] = Check(id, checkMetadataTable[id], vanilla=id in vanillaIds)
