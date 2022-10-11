@@ -355,6 +355,9 @@ function clearCheckImages() {
 function closeOtherTooltips(element) {
     let id = $(element).attr('data-node-id');
     let nodes = $(`.check-graphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
+    let secondaries = $('.helper');
+
+    $(secondaries).tooltip('hide');
     $(nodes).tooltip('hide');
     $(nodes).removeAttr('data-pinned');
 
@@ -364,8 +367,10 @@ function closeOtherTooltips(element) {
 }
 
 function closeAllCheckTooltips() {
+    let secondaries = $('.helper');
     let nodes = $(`.check-graphic`);
-    nodes.tooltip('hide');
+    $(secondaries).tooltip('hide');
+    $(nodes).tooltip('hide');
     $('connection.connector-line').connections('remove');
 
     let pinnedNodes = $('.check-graphic[data-pinned]');

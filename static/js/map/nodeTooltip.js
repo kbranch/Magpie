@@ -26,7 +26,7 @@ class NodeTooltip {
         </div>
     </div>
 </li>`;
-        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
+        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
         const helperTitleTemplate = `<img src="static/images/checks/{id}.png">`;
 
         let uniqueIds = this.node.uniqueCheckIds();
@@ -181,13 +181,13 @@ class NodeTooltip {
             let action = `startGraphicalConnection('${entrance.id}')`;
 
             if (entrance.type == "connector") {
-                let text = 'Connect to... <img class="helper" data-bs-toggle="tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
+                let text = 'Connect to... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
                 pinnedHtml += menuItemTemplate.replace('{action}', action)
                                               .replace('{text}', text)
                                               .replace('{classes}', '')
                                               .replace('{attributes}', '');
 
-                text = 'Dead ends in... <img class="helper" data-bs-toggle="tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                text = 'Dead ends in... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
                 pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
                                               .replace('{text}', text)
                                               .replace('{classes}', '')
@@ -223,7 +223,7 @@ class NodeTooltip {
     }
 
     static createDropdown(title, action, options, optionAction) {
-        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
+        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
         const helperTitleTemplate = `<img src="static/images/entrances/{id}.png">`;
         let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="${optionAction}">{name}</button></li>`;
         let items = '';
