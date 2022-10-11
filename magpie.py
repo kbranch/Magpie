@@ -172,7 +172,7 @@ def getAccessibility(allChecks, logics, inventory):
 def addStartingItems(inventory, args, entranceMap):
     reverseMap = {value: key for (key, value) in entranceMap.items()}
 
-    if args.entranceshuffle == 'insanity' and 'raft_house' in reverseMap:
+    if args.entranceshuffle != 'insanity' or 'raft_house' in reverseMap:
         inventory['RAFT'] = 1
 
     if args.bowwow != 'normal':
