@@ -246,8 +246,8 @@ var connectorDict = {
         "id": "richard",
         "name": "Richard's Cave",
         "entrances": [
-            "richard_house",
             "richard_maze",
+            "richard_house",
         ],
         "obstacleTypes": [
             "FEATHER",

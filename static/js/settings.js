@@ -142,6 +142,7 @@ function exportState() {
     state.args = args;
     state.checkedChecks = checkedChecks;
     state.entranceMap = entranceMap;
+    state.connections = connections;
 
     download(`Magpie-state-${(new Date()).toISOString()}.json`, JSON.stringify(state));
 }
@@ -159,6 +160,7 @@ async function importState() {
                 inventory = state.inventory;
                 checkedChecks = state.checkedChecks;
                 entranceMap = state.entranceMap;
+                connections = state.connections;
                 saveLocations();
                 saveInventory();
                 saveSettingsToStorage(state.args, state.settings);
