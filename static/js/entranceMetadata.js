@@ -1060,7 +1060,7 @@ let entranceDict = {
 		"name": "Trendy Game",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "trade",
 		"locations": [
 			{
 				"map": "overworld",
