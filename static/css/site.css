@@ -206,6 +206,10 @@ img {
     width: 100%;
 }
 
+.legend-text {
+    display: inline-block;
+}
+
 .text-check {
     cursor: default;
 }
