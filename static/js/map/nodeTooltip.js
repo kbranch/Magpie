@@ -21,8 +21,8 @@ class NodeTooltip {
         const checkTemplate = `<li class="list-group-item tooltip-item">
     <div class='text-start d-flex p-1 mb-0' data-check-id='{check-id}'{vanilla} onclick='toggleSingleNodeCheck(this);' oncontextmenu='return false;'>
         {graphic}
-        <div class='tooltip-text align-middle ps-2'>
-            {name}
+        <div class='tooltip-text ps-2'>
+            <span class='tooltip-text-span'>{name}</span>
         </div>
     </div>
 </li>`;
@@ -255,7 +255,7 @@ class NodeTooltip {
 
     checkGraphicHtml(id) {
         let checks = this.node.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic align-self-center difficulty-{difficulty}{behind-keys}{vanilla}'></div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{behind-keys}{vanilla}'></div>";
         let graphic = '';
 
         for (const check of checks) {
@@ -272,6 +272,6 @@ class NodeTooltip {
     }
 
     entranceGraphicHtml() {
-        return "<div class='tooltip-check-graphic align-self-center entrance-only'></div>";
+        return "<div class='tooltip-check-graphic entrance-only'></div>";
     }
 }

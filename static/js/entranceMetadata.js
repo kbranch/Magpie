@@ -644,7 +644,8 @@ let entranceDict = {
 				"x": 2462,
 				"y": 406
 			}
-		]
+		],
+		"interiorImage": "02B0",
 	},
 	"raft_return_enter": {
 		"id": "raft_return_enter",
@@ -1525,17 +1526,18 @@ let entranceDict = {
 	},
 	"animal_house4": {
 		"id": "animal_house4",
-		"name": "Animal Village Right House",
+		"name": "Animal Village Zora House",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "bingo",
 		"locations": [
 			{
 				"map": "overworld",
 				"x": 2186,
 				"y": 1624
 			}
-		]
+		],
+		"interiorImage": "02DA",
 	},
 	"animal_house5": {
 		"id": "animal_house5",

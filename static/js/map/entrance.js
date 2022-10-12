@@ -67,6 +67,8 @@ class Entrance {
         else {
             options = randomizedEntrances.filter(x => entranceDict[x].type != 'connector'
                                                       && entranceDict[x].type != 'dummy'
+                                                      && (['bingo', 'bingo-full'].includes(args.goal)
+                                                          || entranceDict[x].type != 'bingo')
                                                       && (args.tradequest
                                                           || entranceDict[x].type != 'trade')
                                                       && !Entrance.isFound(x))

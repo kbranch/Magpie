@@ -133,6 +133,7 @@ def getLogicWithoutER(realArgs):
 
 def getLogics(args, entranceMap):
     worldSetup = WorldSetup()
+    worldSetup.goal = args.goal
     # worldSetup.randomize(args, random.Random())
 
     entrancePool = getEntrancePool(args)
