@@ -100,6 +100,7 @@ img {
 
 .hidden {
     display: none;
+    z-index: -50;
 }
 
 .offcanvas {
@@ -247,6 +248,8 @@ img {
     border-style: none;
     background-image: url('/static/images/partial-entrance.svg');
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     z-index: 3;
 }
 
@@ -254,6 +257,8 @@ img {
     border-style: none;
     background-image: url('/static/images/entrance.svg');
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     z-index: 3;
 }
 
@@ -560,6 +565,8 @@ button.nav-link.active {
     border-style: none;
     background-image: url('/static/images/house.svg');
     background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     z-index: 1;
 }
 
