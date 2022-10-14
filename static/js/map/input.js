@@ -155,15 +155,17 @@ function openConnectorDialog(entranceId) {
     $('#entranceAlert').hide();
     $('#deadEndEntranceAlert').hide();
 
+    filterConnectors();
+    setModalPage(1);
+
     if (isDeadEnd) {
         $('#connectToWarning').hide();
+        $('.simple-connector').hide();
     }
     else {
         $('#connectToWarning').show();
+        $('.simple-connector').show();
     }
-
-    filterConnectors();
-    setModalPage(1);
 
     new bootstrap.Modal('#connectorModal', null).show();
 }

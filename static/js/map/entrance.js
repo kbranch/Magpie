@@ -61,7 +61,8 @@ class Entrance {
             options = randomizedEntrances.filter(x => entranceDict[x].type == 'connector'
                                                       && (!Entrance.isConnected(x)
                                                           || Connection.isIncomplete({ exterior: x }))
-                                                      && Entrance.connectedTo(x) != 'landfill')
+                                                      && Entrance.connectedTo(x) != 'landfill'
+                                                      && x != sourceId)
                                          .map(x => [x, entranceDict[x].name]);
         }
         else {

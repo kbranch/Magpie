@@ -76,7 +76,18 @@ function toggleNode(nodeGraphic) {
                                                      || (x.isChecked() && node.isChecked))
                                         .map(x => x.id));
 
-    toggleChecks(toggleList);
+    if (toggleList.size == 0 
+        && node.entrance) {
+        if (!node.entrance.isMapped()) {
+            mapToLandfill(node.entrance.id);
+        }
+        else if(node.entrance.connectedTo() == 'landfill') {
+            clearEntranceMapping(node.entrance.id);
+        }
+    }
+    else {
+        toggleChecks(toggleList);
+    }
 
     drawActiveTab();
 }
