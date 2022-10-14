@@ -730,7 +730,7 @@ let entranceDict = {
 		"name": "Crazy Tracy's Hut",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "hell",
 		"locations": [
 			{
 				"map": "overworld",

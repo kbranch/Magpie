@@ -71,6 +71,8 @@ class Entrance {
                                                           || entranceDict[x].type != 'bingo')
                                                       && (args.tradequest
                                                           || entranceDict[x].type != 'trade')
+                                                    //   && (args.logic == 'hell'
+                                                    //       || entranceDict[x].type != 'hell')
                                                       && !Entrance.isFound(x))
                                          .map(x => [x, entranceDict[x].name]);
         }

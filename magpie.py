@@ -63,9 +63,6 @@ def renderCheckList():
         inventory = jsonpickle.decode(request.form['inventory'])
         entranceMap = jsonpickle.decode(request.form['entranceMap'])
 
-        inventory['RUPEES_500'] = 10
-        inventory['ANGLER_KEYHOLE'] = 1
-
         args = getArgs(values=argValues)
         initChecks(args)
 
@@ -171,6 +168,15 @@ def getAccessibility(allChecks, logics, inventory):
 
 def addStartingItems(inventory, args, entranceMap):
     reverseMap = {value: key for (key, value) in entranceMap.items()}
+
+    inventory['RUPEES_500'] = 10
+    inventory['ANGLER_KEYHOLE'] = 1
+
+    if args.entranceshuffle not in ('insanity', 'expert') or 'crazy_tracy' in reverseMap:
+        inventory['MEDICINE2'] = 1
+
+    if args.entranceshuffle not in ('insanity', 'expert', 'advanced') or 'castle_main_entrance' in reverseMap:
+        inventory['CASTLE_BUTTON'] = 1
 
     if args.entranceshuffle != 'insanity' or 'raft_house' in reverseMap:
         inventory['RAFT'] = 1
