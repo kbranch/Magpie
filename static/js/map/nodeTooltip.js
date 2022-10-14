@@ -121,7 +121,7 @@ class NodeTooltip {
                 && !entrance.isConnector()
                 && connectionType == 'none') {
                 let connection = entranceDict[entrance.connectedFrom()];
-                entranceHtml += connectionTemplate.replace('{connection}', `From ${connection.name}`);
+                entranceHtml += connectionTemplate.replace('{connection}', `Found at ${connection.name}`);
             }
 
             if (connectionType == 'simple' && entrance.metadata.interiorImage) {
