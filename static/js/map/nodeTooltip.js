@@ -128,7 +128,8 @@ class NodeTooltip {
                 entranceHtml += interiorImageTemplate.replace('{image}', entrance.metadata.interiorImage);
             }
             else if(connectionType == 'none'
-                    && entrance.isRemapped()) {
+                    && entrance.isMapped()
+                    && entrance.connectedTo() != 'landfill') {
                 let connection = entranceDict[entrance.connectedTo()];
                 if (connection.interiorImage) {
                     entranceHtml += interiorImageTemplate.replace('{image}', connection.interiorImage);

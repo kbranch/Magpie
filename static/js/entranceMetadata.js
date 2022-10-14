@@ -737,7 +737,8 @@ let entranceDict = {
 				"x": 938,
 				"y": 568
 			}
-		]
+		],
+		"interiorImage": "02AD",
 	},
 	"witch": {
 		"id": "witch",
