@@ -175,7 +175,7 @@ def addStartingItems(inventory, args, entranceMap):
     if args.entranceshuffle not in ('insanity', 'expert') or 'crazy_tracy' in reverseMap:
         inventory['MEDICINE2'] = 1
 
-    if args.entranceshuffle not in ('insanity', 'expert', 'advanced') or 'castle_main_entrance' in reverseMap:
+    if 'castle_main_entrance' in reverseMap:
         inventory['CASTLE_BUTTON'] = 1
 
     if args.entranceshuffle != 'insanity' or 'raft_house' in reverseMap:
