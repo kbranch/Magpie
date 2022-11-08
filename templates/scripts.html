@@ -43,6 +43,7 @@
             url: "/items",
             data: {
                 args: JSON.stringify(args),
+                localSettings: JSON.stringify(localSettings),
             },
             success: function(response) {
                 $('#itemContainer').html(response);

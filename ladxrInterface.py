@@ -76,7 +76,7 @@ def getArgs(values=None):
 
         args.add(flag, value)
 
-
+    args.nagmessages = True
     args.multiworld = None
     args.boomerang = 'gift'
 

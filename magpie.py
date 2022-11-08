@@ -28,6 +28,8 @@ class LocalSettings:
         self.hideChecked = False
         self.ignoreHigherLogic = False
         self.hideVanilla = False
+        self.dungeonItemsTemplate = 'default.html'
+        self.itemsTemplate = 'default.html'
 
 @app.route("/")
 def home():
@@ -48,9 +50,10 @@ def home():
 def renderItems():
     try:
         args = parseArgs(request.form['args'])
+        localSettings = parseLocalSettings(request.form['localSettings'])
         allItems = getItems(args)
 
-        result = render_template("items.html", allItems=allItems, args=args)
+        result = render_template('items.html', allItems=allItems, args=args, localSettings=localSettings)
 
         return result
     except:
@@ -100,6 +103,11 @@ def parseArgs(argsString):
         args.goal = '8'
 
     return args
+
+def parseLocalSettings(settingsString):
+    localSettings = jsonpickle.decode(settingsString)
+
+    return localSettings
 
 def getAccessibility(allChecks, logics, inventory):
     accessibility = {}

@@ -1,0 +1,52 @@
+{% from 'item.html' import item %}
+
+<!-- Main items -->
+<div class="row">
+    {{ item('SHIELD', max="2") }}
+    {{ item("SWORD", max="2") }}
+    {{ item("TOADSTOOL") }}
+    {{ item("MAGIC_POWDER", max="1", secondary="MAX_POWDER_UPGRADE") }}
+    {{ item("SHOVEL", max="1") }}
+    {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE") }}
+    {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE") }}
+    {{ item("FEATHER", max="1", secondary="ROOSTER", secondaryMax="1", src="jumpSrc()", condition=allItems['ROOSTER'] >= 1) }}
+    {{ item("FEATHER", max="1", condition=allItems['ROOSTER'] == 0) }}
+    {{ item("POWER_BRACELET", max="2") }}
+    {{ item("PEGASUS_BOOTS", max="1") }}
+    {{ item("FLIPPERS", max="1") }}
+    {{ item("HOOKSHOT", max="1") }}
+    {{ item("MAGIC_ROD", max="1") }}
+    {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc()") }}
+    {{ item("OCARINA", max="1") }}
+    {{ item("SONG1", max="1") }}
+    {{ item("SONG2", max="1") }}
+    {{ item("SONG3", max="1") }}
+    {{ item("BOWWOW", max="1") }}
+    {{ item("BOOMERANG", max="1") }}
+    {{ item("SEASHELL", max_image="1", overlay_count="SEASHELL") }}
+    {{ item("TAIL_KEY", max="1") }}
+    {{ item("ANGLER_KEY", max="1") }}
+    {{ item("FACE_KEY", max="1") }}
+    {{ item("BIRD_KEY", max="1") }}
+    {{ item("SLIME_KEY", max="1") }}
+    {{ item("GOLD_LEAF", max_image="5") }}
+</div>
+
+{% if args.tradequest %}
+<div class="row pb-3 pt-1">
+    {{ item('TRADING_ITEM_YOSHI_DOLL', max="1") }}
+    {{ item('TRADING_ITEM_RIBBON', max="1") }}
+    {{ item('TRADING_ITEM_DOG_FOOD', max="1") }}
+    {{ item('TRADING_ITEM_BANANAS', max="1") }}
+    {{ item('TRADING_ITEM_STICK', max="1") }}
+    {{ item('TRADING_ITEM_HONEYCOMB', max="1") }}
+    {{ item('TRADING_ITEM_PINEAPPLE', max="1") }}
+    {{ item('TRADING_ITEM_HIBISCUS', max="1") }}
+    {{ item('TRADING_ITEM_LETTER', max="1") }}
+    {{ item('TRADING_ITEM_BROOM', max="1") }}
+    {{ item('TRADING_ITEM_FISHING_HOOK', max="1") }}
+    {{ item('TRADING_ITEM_NECKLACE', max="1") }}
+    {{ item('TRADING_ITEM_SCALE', max="1") }}
+    {{ item('TRADING_ITEM_MAGNIFYING_GLASS', max="1") }}
+</div>
+{% endif %}

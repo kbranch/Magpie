@@ -175,8 +175,11 @@ class MapNode {
                     classes.push('entrance-only');
                 }
             }
-            else {
+            else if (this.difficulty == 'checked') {
                 classes.push('unmapped-entrance');
+            }
+            else {
+                classes.push(`difficulty-${this.difficulty}`);
             }
         }
         else {
