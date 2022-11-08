@@ -54,6 +54,8 @@ Flags that were added to the randomizer after Magpie was last updated will appea
 ## Contributing layouts
 Most of the layout definition happens in [Jinja templates](https://jinja.palletsprojects.com/en/3.1.x/). Simple changes can be done purely in the templates, but more complicated changes may involve Javascript or the item macro. Improvements and updates are always welcome.
 
-The item layout is defined in [templates/items.html](templates/items.html). The circle of dungeon items is currently separated out into [templates/dungeonItems.html](templates/dungeonItems.html). [templates/item.html](templates/item.html) contains a macro that abstracts away some of the details.
+The item layouts are defined in [templates/mainitems](templates/mainitems) and [templates/dungeonitems](templates/dungeonitems). Each file is selectable from a dropdown in the settings pane. Contributions are welcome - send me a new template or make a pull request and I'll get it added!
 
-Locations for the map are stored in [static/js/locations.js](static/js/locations.js). There is an interface at the [/mapCoords](https://magpietracker.us/mapCoords) route to help manage locations without manual JSON editing.
+[templates/item.html](templates/item.html) contains a macro that abstracts away most of the details.
+
+Check locations for the map are stored in [static/js/checkMetadata.js](static/js/checkMetadata.js), entrances are in [static/js/entranceMetadata.js](static/js/entranceMetadata.js), and connectors are in [static/js/connectorMetadata.js](static/js/connectorMetadata.js). There is an interface at the [/mapCoords](https://magpietracker.us/mapCoords) route to help manage locations without manual JSON editing, although it's often broken - I generally tweak it to do exactly what I need at the time.
