@@ -152,7 +152,8 @@ class MapNode {
                     }
 
                     if (this.isChecked || this.checks.length == 0) {
-                        if (connection?.isIncomplete()) {
+                        if (connection?.isIncomplete()
+                            || (this.entrance.isConnector() && !this.entrance.isConnected())) {
                             classes.push('partial-entrance');
                         }
                         else {
