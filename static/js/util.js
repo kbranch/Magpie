@@ -4,16 +4,20 @@ function hasAttr(element, attrName) {
     return typeof attr !== 'undefined' && attr !== false;
 }
 
-async function getFile() {
-    const pickerOpts = {
-        types: [
+async function getFile(types=null) {
+    if (types == null) {
+        types = [
             {
-                description: 'Magpie state',
+                description: 'Magpie state (*.json)',
                 accept: {
                     'application/json': ['.json']
                 }
             },
-        ],
+        ];
+    }
+
+    const pickerOpts = {
+        types: types,
         excludeAcceptAllOption: true,
         multiple: false
     };

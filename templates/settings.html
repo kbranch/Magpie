@@ -340,7 +340,11 @@
                     <select id="itemsTemplate" class="form-select" data-setting="itemsTemplate" aria-label="itemsTemplate">
                         <option value="default.html">Default</option>
                         <option value="notrade.html">No Trade Items</option>
+                        <option value="custom">Custom</option>
                     </select>
+                </div>
+                <div class="row pt-2">
+                    <button type="button" class="btn btn-secondary" onclick="pickCustomItemsPath()">Pick Custom</button>
                 </div>
             </div>
             <div class="col col-auto mx-2">
@@ -349,7 +353,11 @@
                     <select id="dungeonItemsTemplate" class="form-select" data-setting="dungeonItemsTemplate" aria-label="dungeonItemsTemplate">
                         <option value="default.html">Default</option>
                         <option value="compact.html">Compact</option>
+                        <option value="custom">Custom</option>
                     </select>
+                </div>
+                <div class="row pt-2">
+                    <button type="button" class="btn btn-secondary" onclick="pickCustomDungeonItemsPath()">Pick Custom</button>
                 </div>
             </div>
         </div>

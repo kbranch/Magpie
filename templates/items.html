@@ -45,9 +45,17 @@
 
 <div class="d-flex justify-content-center">
     <div id="items">
-        {% include "mainitems/" + localSettings.itemsTemplate %}
+        {% if localSettings.itemsTemplate == "custom" %}
+            {% include customItems %}
+        {% else %}
+            {% include "mainitems/" + localSettings.itemsTemplate %}
+        {% endif %}
 
-        {% include "dungeonitems/" + localSettings.dungeonItemsTemplate %}
+        {% if localSettings.dungeonItemsTemplate == "custom" %}
+            {% include customDungeonItems %}
+        {% else %}
+            {% include "dungeonitems/" + localSettings.dungeonItemsTemplate %}
+        {% endif %}
 
         <!-- Unknown items -->
         {% set unknownItems = allItems.keys() | reject("in", knownItems) | list %}

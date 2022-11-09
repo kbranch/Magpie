@@ -3,6 +3,7 @@ import traceback
 import jsonpickle
 from flaskwebgui import FlaskUI
 from flask import Flask, render_template, request
+from jinja2 import Template
 
 from ladxrInterface import *
 
@@ -30,6 +31,8 @@ class LocalSettings:
         self.hideVanilla = False
         self.dungeonItemsTemplate = 'default.html'
         self.itemsTemplate = 'default.html'
+        self.customDungeonItems = None
+        self.customItems = None
 
 @app.route("/")
 def home():
@@ -53,7 +56,22 @@ def renderItems():
         localSettings = parseLocalSettings(request.form['localSettings'])
         allItems = getItems(args)
 
-        result = render_template('items.html', allItems=allItems, args=args, localSettings=localSettings)
+        customItems = None
+        customDungeonItems = None
+
+        if localSettings.itemsTemplate == 'custom':
+            if localSettings.customItems == None:
+                localSettings.itemsTemplate = 'default.html'
+            else:
+                customItems = Template(localSettings.customItems)
+
+        if localSettings.dungeonItemsTemplate == 'custom':
+            if localSettings.customDungeonItems == None:
+                localSettings.dungeonItemsTemplate = 'default.html'
+            else:
+                customDungeonItems = Template(localSettings.customDungeonItems)
+
+        result = render_template('items.html', allItems=allItems, args=args, localSettings=localSettings, customItems=customItems, customDungeonItems=customDungeonItems)
 
         return result
     except:

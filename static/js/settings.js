@@ -177,6 +177,40 @@ async function importState() {
     }
 }
 
+async function pickCustomItemsPath() {
+    types = [
+        {
+            description: 'Layout templates (*.html)',
+            accept: {
+                'text/html': ['.html', '.htm']
+            }
+        },
+    ];
+
+    let data = await getFile(types);
+    localSettings.customItems = data;
+    localSettings.itemsTemplate = "custom";
+    saveSettings();
+    applySettings();
+}
+
+async function pickCustomDungeonItemsPath() {
+    types = [
+        {
+            description: 'Layout templates (*.html)',
+            accept: {
+                'text/html': ['.html', '.htm']
+            }
+        },
+    ];
+
+    let data = await getFile(types);
+    localSettings.customDungeonItems = data;
+    localSettings.dungeonItemsTemplate = "custom";
+    saveSettings();
+    applySettings();
+}
+
 function setStartLocation(entranceId) {
     pushUndoState();
 
