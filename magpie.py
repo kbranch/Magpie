@@ -59,6 +59,16 @@ def renderItems():
     except:
         return renderTraceback()
 
+@app.route("/shortString", methods=['POST'])
+def parseShortString():
+    try:
+        shortString = request.form['shortString']
+        settings = getArgsFromShortString(shortString)
+
+        return jsonpickle.encode(settings)
+    except:
+        return renderTraceback()
+
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():
     try:

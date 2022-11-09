@@ -84,7 +84,24 @@
                 $(button).addClass('active');
 
                 drawActiveTab();
-             }
+            }
+        });
+    }
+
+    function loadShortString() {
+        let shortString = $("#shortString")[0].value;
+
+        $.ajax({
+            type: "POST",
+            url: "/shortString",
+            data: {
+                shortString: shortString,
+            },
+            success: function(response) {
+                newArgs = JSON.parse(response);
+                fixArgs(newArgs);
+                setInputValues('flag', newArgs);
+            }
         });
     }
 

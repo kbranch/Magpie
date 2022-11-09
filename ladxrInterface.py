@@ -56,7 +56,12 @@ class Check:
     def __repr__(self) -> str:
         return f'{self.id}: {self.area} - {self.name}'
 
-def getArgs(values=None):
+def getArgsFromShortString(shortString):
+    settings = Settings()
+    settings.loadShortString(shortString)
+    return getArgs(ladxrFlags=settings, useCurrentValue=True)
+
+def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     class Args():
         def __init__(self):
             self.flags = []
@@ -65,12 +70,13 @@ def getArgs(values=None):
             self.flags.append(Flag(flag, value))
             setattr(self, flag.key, value)
 
-    ladxrFlags = [x for x in Settings()._Settings__all if not x.aesthetic and (x.options != None or isinstance(x.default, boolean))]
+    if ladxrFlags == None:
+        ladxrFlags = [x for x in Settings()._Settings__all if not x.aesthetic and (x.options != None or isinstance(x.default, boolean))]
 
     args = Args()
 
     for flag in ladxrFlags:
-        value = flag.default
+        value = flag.value if useCurrentValue else flag.default
         if values and flag.key in values.__dict__:
             value = values.__dict__[flag.key]
 
