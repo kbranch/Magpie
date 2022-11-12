@@ -610,3 +610,16 @@ button.nav-link.active {
 .tooltip-text-span {
     vertical-align: middle;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-item {
+    flex-grow: 1;
+}
+
+.great-fairy {
+    width: 74px;
+    margin: auto;
+}

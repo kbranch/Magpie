@@ -33,6 +33,7 @@ class LocalSettings:
         self.itemsTemplate = 'default.html'
         self.customDungeonItems = None
         self.customItems = None
+        self.showDungeonItemCount = False
 
 @app.route("/")
 def home():
@@ -55,6 +56,14 @@ def renderItems():
         args = parseArgs(request.form['args'])
         localSettings = parseLocalSettings(request.form['localSettings'])
         allItems = getItems(args)
+
+        initChecks(args)
+
+        if localSettings.showDungeonItemCount:
+            dungeonItemCount = getDungeonItemCount(args)
+
+            for item in dungeonItemCount:
+                allItems[item] = dungeonItemCount[item]
 
         customItems = None
         customDungeonItems = None

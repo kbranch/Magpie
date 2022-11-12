@@ -99,7 +99,7 @@ def getAllItems(args):
     return pool
 
 
-def getItems(args):
+def getItems(args, trimDungeonItems=True):
     pool = getAllItems(args)
 
     defaultItemPool = itempool.DEFAULT_ITEM_POOL
@@ -108,16 +108,19 @@ def getItems(args):
             pool[item] = 0
     
     for n in range(9):
-        if args.dungeon_items == 'keysy':
-            for item_name in ("KEY", "NIGHTMARE_KEY"):
-                item_name = "%s%d" % (item_name, n + 1)
-                pool[item_name] = 0
-        if args.goal not in ('bingo', 'bingo-full'):
-            for item_name in ("MAP", "COMPASS"):
-                item_name = "%s%d" % (item_name, n + 1)
-                pool[item_name] = 0
-        if args.owlstatues not in ('both', 'dungeon') and args.goal not in ('bingo', 'bingo-full'):
-            pool[f'STONE_BEAK{n + 1}'] = 0
+        if trimDungeonItems:
+            if args.dungeon_items == 'keysy':
+                for item_name in ("KEY", "NIGHTMARE_KEY"):
+                    item_name = f"{item_name}{n + 1}"
+                    pool[item_name] = 0
+            if args.goal not in ('bingo', 'bingo-full'):
+                for item_name in ("MAP", "COMPASS"):
+                    item_name = f"{item_name}{n + 1}"
+                    pool[item_name] = 0
+            if args.owlstatues not in ('both', 'dungeon') and args.goal not in ('bingo', 'bingo-full'):
+                pool[f'STONE_BEAK{n + 1}'] = 0
+
+        pool[f'ITEM{n + 1}'] = 0
 
     return pool
 
@@ -237,3 +240,43 @@ def getStartLocations(args):
         return start_locations
     else:
         return WorldSetup.getEntrancePool(None, args)
+
+def getDungeonItemCount(args):
+    dungeonList = ["Tail Cave",
+                   "Bottle Grotto",
+                   "Key Cavern",
+                   "Angler's Tunnel",
+                   "Catfish's Maw",
+                   "Face Shrine",
+                   "Eagle's Tower",
+                   "Turtle Rock",
+                   "Color Dungeon"]
+    itemCount = {}
+
+    allItems = getItems(args, trimDungeonItems=False)
+
+    checks = loadChecks(getLogicWithoutER(args), allItems)
+    checks = [x for x in checks if not x.vanilla and x.area in dungeonList]
+
+    for check in checks:
+        index = dungeonList.index(check.area)
+        if index not in itemCount:
+            itemCount[index] = 0
+        
+        itemCount[index] += 1
+    
+    for i in range(len(dungeonList)):
+        if args.dungeon_items in ('', 'localkeys'):
+            itemCount[i] -= allItems[f'KEY{i + 1}']
+        if args.dungeon_items in ('', 'smallkeys', 'keysy'):
+            itemCount[i] -= allItems[f'MAP{i + 1}']
+            itemCount[i] -= allItems[f'COMPASS{i + 1}']
+            itemCount[i] -= allItems[f'STONE_BEAK{i + 1}']
+        if args.dungeon_items in ('', 'smallkeys', 'localkeys', 'nightmarekey'):
+            itemCount[i] -= allItems[f'NIGHTMARE_KEY{i + 1}']
+    
+    for i in range(len(dungeonList)):
+        itemCount[f'ITEM{i + 1}'] = itemCount[i]
+        del itemCount[i]
+    
+    return itemCount

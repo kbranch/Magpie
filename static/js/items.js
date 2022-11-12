@@ -31,6 +31,8 @@ function setImgSrc(img, item) {
         inventory[item] = 0;
     }
 
+    let number = $(img).attr('data-invert_count') != '' ? inventory[item] : maxInventory[item] - inventory[item];
+
     if (hasAttr(img, 'data-src')) {
         $(img).attr('src', eval($(img).attr('data-src')));
     }
@@ -41,10 +43,10 @@ function setImgSrc(img, item) {
             max = $(img).attr('data-max_image');
         }
 
-        $(img).attr('src', `static/images/${item}_${Math.min(inventory[item], max)}.png`);
+        $(img).attr('src', `static/images/${item}_${Math.min(number, max)}.png`);
     }
 
-    if (inventory[item] > 0) {
+    if (number > 0) {
         $(img).addClass('owned-item');
     }
     else {
@@ -71,21 +73,23 @@ function updateOverlay(item) {
     }
 
     for (const text of texts) {
-        if (inventory[item] == 0) {
+        let number = $(text).attr('data-invert_count') != '' ? inventory[item] : maxInventory[item] - inventory[item];
+
+        if (number == 0) {
             $(text).addClass('hidden');
         }
         else {
             $(text).removeClass('hidden');
         }
 
-        if (inventory[item] == maxInventory[item]) {
+        if (number == maxInventory[item]) {
             $(text).addClass('full');
         }
         else {
             $(text).removeClass('full');
         }
 
-        $(text).html(inventory[item]);
+        $(text).html(number);
     }
 }
 
