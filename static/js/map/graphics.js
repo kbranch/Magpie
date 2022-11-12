@@ -269,11 +269,11 @@ function distributeChecks() {
             let connector = node.entrance.metadata.connector;
             if (!(connector in checksByConnector)) {
                 checksByConnector[connector] = new Set();
-                entrancesByConnector[connector] = [];
+                entrancesByConnector[connector] = new Set();
             }
 
             node.checks.map(x => checksByConnector[connector].add(x));
-            entrancesByConnector[connector].push(entranceId);
+            entrancesByConnector[connector].add(entranceId);
         }
         else {
             checksByEntrance[entranceId] = node.checks;
@@ -286,7 +286,7 @@ function distributeChecks() {
             }
         }
 
-        if (node.entrance.isRemapped()) {
+        if (node.entrance.isMapped()) {
             remappedNodes.push(node);
         }
     }

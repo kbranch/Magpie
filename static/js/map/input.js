@@ -133,17 +133,32 @@ function openDeadEndDialog(entranceId) {
 }
 
 function openConnectorDialog(entranceId) {
-    if (entranceId != 'deadEnd' && Entrance.isConnected(entranceId)) {
-        let connector = Connection.findConnector({ exterior: entranceId });
-        let connection = Connection.existingConnection(connector);
+    let connector = null;
 
-        if (connection != null) {
-            let fromInterior = connector.entrances.filter(x => !connection.entrances.includes(Entrance.connectedFrom(x)))[0];
-            let to = connection.entrances[0];
-            let toInterior = Entrance.connectedTo(to);
-            connectExteriors(graphicalMapSource, fromInterior, to, toInterior);
+    if (entranceId != 'deadEnd') {
+        if (Entrance.isConnected(entranceId)) {
+            let connector = Connection.findConnector({ exterior: entranceId });
+            let connection = Connection.existingConnection(connector);
 
-            return;
+            if (connection != null) {
+                let fromInterior = connector.entrances.filter(x => !connection.entrances.includes(Entrance.connectedFrom(x)))[0];
+                let to = connection.entrances[0];
+                let toInterior = Entrance.connectedTo(to);
+                connectExteriors(graphicalMapSource, fromInterior, to, toInterior);
+
+                return;
+            }
+        }
+        else if (Entrance.isMapped(entranceId)) {
+            connector = Connection.findConnector({ exterior: entranceId });
+            let unmappedEntrances = connector.entrances.filter(x => !Entrance.isFound(x));
+
+            if (unmappedEntrances.length == 1) {
+                let mappedEntrance = Entrance.connectedTo(entranceId);
+                connectExteriors(graphicalMapSource, unmappedEntrances[0], entranceId, mappedEntrance);
+
+                return;
+            }
         }
     }
 
@@ -168,6 +183,10 @@ function openConnectorDialog(entranceId) {
     }
 
     new bootstrap.Modal('#connectorModal', null).show();
+
+    if (connector != null) {
+        connectorDetail(connector.id);
+    }
 }
 
 function filterConnectors() {
@@ -327,21 +346,15 @@ function connectConnectors(simple=true) {
             return;
         }
 
-        // connectorId = $('#connectorDetailGrid').attr('data-connector-id');
-        
-        let unselectedCheckIds = $('#connectorDetailGrid .connector-item[data-type="check"]:not(.checked)')
-                                     .map((x, y) => $(y).attr('data-id'))
-                                     .toArray();
-
         connectExteriors(source, uncheckedEntranceIds[0], destination, uncheckedEntranceIds[1]);
 
-        if (unselectedCheckIds.length > 0) {
-            let checksToMark = unselectedCheckIds.filter(id => {
-                let checkData = coordDict[id];
-                return !Check.isChecked(Check.fullName(checkData.area, checkData.name));
-            })
+        let connector = Connection.findConnector({ interior: uncheckedEntranceIds[0] });
+        let otherSide = connector.entrances.filter(x => Entrance.isFound(x) && !Entrance.isConnected(Entrance.connectedFrom(x)))
+                                            .map(x => Entrance.connectedFrom(x))[0] ?? null;
 
-            toggleChecks(checksToMark);
+        if (otherSide != null) {
+            let otherInterior = Entrance.connectedTo(otherSide);
+            connectExteriors(source, uncheckedEntranceIds[0], otherSide, otherInterior);
         }
     }
     else {
