@@ -198,6 +198,11 @@ class NodeTooltip {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
                 let title = 'Connect to...';
 
+                pinnedHtml += menuItemTemplate.replace('{action}', action)
+                                              .replace('{text}', "Connect using map...")
+                                              .replace('{classes}', '')
+                                              .replace('{attributes}', '');
+
                 pinnedHtml += NodeTooltip.createDropdown(title, action, options, optionAction);
             }
 
