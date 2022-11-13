@@ -147,6 +147,7 @@ def suggestion():
     from email.mime.base import MIMEBase
     from email.mime.text import MIMEText
 
+    subject = 'New Magpie Suggestion'
     emailFrom = 'MagpieSuggestions'
     emailTo = 'root'
 
@@ -155,23 +156,32 @@ def suggestion():
         body = request.form['body']
         state = request.form['state']
 
+        if '<img' in body:
+            subject += ' (with images)'
+
         html = MIMEText(f'<p>New Magpie suggestion from "{email}:"</p>' + body, 'html')
         alternative = MIMEMultipart('alternative')
         alternative.attach(html)
 
         attachment = MIMEText(state)
-        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.datetime.now}-magpie-state.json')
+        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.datetime.now()}-magpie-state.json')
+
+        htmlFile = MIMEText(body)
+        htmlFile.add_header('Content-Disposition', 'attachment', filename=f'{datetime.datetime.now()}-magpie-suggestion.html')
 
         msg = MIMEMultipart('mixed')
         msg.attach(alternative)
         msg.attach(attachment)
-        msg['Subject'] = 'New Magpie Suggestion'
+        msg.attach(htmlFile)
+        msg['Subject'] = subject
         msg['From'] = emailFrom
         msg['To'] = emailTo
         p = Popen(["/usr/sbin/sendmail", "-t", "-oi"], stdin=PIPE)
         p.communicate(msg.as_bytes())
     except:
         pass
+
+    return "thx"
 
 def parseArgs(argsString):
     args = jsonpickle.decode(argsString)
