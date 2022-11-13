@@ -35,6 +35,7 @@ class LocalSettings:
         self.customDungeonItems = None
         self.customItems = None
         self.showDungeonItemCount = False
+        self.showItemsOnly = False
 
 @app.route("/")
 def home():
@@ -124,7 +125,7 @@ def renderCheckList():
         allItems = getAllItems(args)
         logics = getLogics(args, entranceMap)
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
-        accessibility = getAccessibility(allChecks, logics, inventory)
+        accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
         return render_template("checklist.html", accessibility=accessibility,
                                                  logics=logics,
@@ -141,7 +142,6 @@ def mapCoords():
 
 @app.route("/suggestion", methods=['POST'])
 def suggestion():
-    import smtplib
     from subprocess import Popen, PIPE
     from email.mime.multipart import MIMEMultipart
     from email.mime.base import MIMEBase
@@ -196,7 +196,13 @@ def parseLocalSettings(settingsString):
 
     return localSettings
 
-def getAccessibility(allChecks, logics, inventory):
+def getAccessibility(allChecks, allEntrances, logics, inventory):
+    checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
+    entranceAccessibility = getEntranceAccessibility(allEntrances, logics, inventory)
+
+    return checkAccessibility
+
+def getCheckAccessibility(allChecks, logics, inventory):
     accessibility = {}
 
     outOfLogic = set(allChecks)
@@ -258,8 +264,23 @@ def getAccessibility(allChecks, logics, inventory):
     oolLogic.friendlyName = 'Out of logic'
     oolLogic.difficulty = 9
     accessibility[oolLogic] = outOfLogic
-    
+
     return accessibility
+
+def getEntranceAccessibility(allEntrances, logics, inventory):
+    accessibility = {}
+
+    outOfLogic = set(allEntrances)
+
+    for i in range(len(logics)):
+        logic = logics[i]
+        
+        accessibility[logic] = set(loadEntrances(logic, inventory))
+        outOfLogic = outOfLogic.difference(accessibility[logics[i]])
+    
+    for i in range(1, len(logics)):
+        for j in range(i):
+            accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
 
 def addStartingItems(inventory, args, entranceMap):
     reverseMap = {value: key for (key, value) in entranceMap.items()}

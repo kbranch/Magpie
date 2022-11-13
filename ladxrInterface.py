@@ -89,7 +89,8 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     return args
 
 def getAllItems(args):
-    pool = itempool.ItemPool(args, random.Random()).toDict()
+    logic = getLogicWithoutER(args)
+    pool = itempool.ItemPool(logic, args, random.Random()).toDict()
 
     # No dungeons mode seems to not have bombs sometimes due to the rupee randomization
     # Force a bomb into the pool to fix it
@@ -97,7 +98,6 @@ def getAllItems(args):
         pool['BOMB'] = 1
 
     return pool
-
 
 def getItems(args, trimDungeonItems=True):
     pool = getAllItems(args)
@@ -177,6 +177,49 @@ def getLogics(args, entranceMap):
 
 def _locationIsCheck(location):
     return len(location.items) > 0 and location.items[0].nameId != 'None'
+
+def testEntrance(entrance, inventory):
+    smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
+
+    if entrance.requirement == None:
+        return True
+    
+    if type(entrance.requirement) == str:
+        return entrance.requirement in smallInventory
+    
+    return entrance.requirement.test(smallInventory)
+
+def loadEntrances(logic, inventory):
+    inLogicEntrances = []
+
+    e = explorer.Explorer()
+
+    for item in inventory:
+        count = inventory[item]
+
+        for _ in range(count):
+            e.addItem(item)
+    
+    e.visit(logic.start)
+
+    entrances = {}
+    for name,exterior in logic.world.overworld_entrance.items():
+        if not testEntrance(exterior, inventory):
+            continue
+
+        if exterior.location not in entrances:
+            entrances[exterior.location] = []
+        
+        entrances[exterior.location].append(name)
+             
+    locations = e.getAccessableLocations()
+
+    for location,names in entrances.items():
+        if location in locations:
+            for name in names:
+                inLogicEntrances.append(name)
+
+    return inLogicEntrances
 
 def loadChecks(logic, inventory):
     nameOverrides = {

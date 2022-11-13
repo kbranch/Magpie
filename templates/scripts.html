@@ -47,6 +47,15 @@
                 localSettings: JSON.stringify(localSettings),
             },
             success: function(response) {
+                if (localSettings.showItemsOnly) {
+                    $('#checkList').hide()
+                    $('#mapContainer').hide()
+                }
+                else {
+                    $('#checkList').show()
+                    $('#mapContainer').show()
+                }
+
                 $('#itemContainer').html(response);
                 initKnownItems();
                 refreshCheckList();
