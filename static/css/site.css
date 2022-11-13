@@ -623,3 +623,21 @@ button.nav-link.active {
     width: 74px;
     margin: auto;
 }
+
+.flex-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.fill-box {
+    flex: 1 1 auto;
+}
+
+.bottom-container {
+    position: relative;
+}
+
+.note-editable {
+    background: #fff;
+    color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}

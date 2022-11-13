@@ -6,7 +6,7 @@
     <div id="mapContainer" class="col-xs-12 col-md">
         {% include 'map.html' %}
     </div>
-    <div id="itemContainer" class="col-xs col-md-auto"></div>
+    <div id="itemContainer" class="col-xs col-md-auto flex-container"></div>
 </div>
 <div class="row">
     <div id="checkList" class="col"></div>
@@ -26,12 +26,52 @@
     <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
 </div>
 
+<div class="modal fade" id="suggestionModal" tabindex="-1" aria-labelledby="suggestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="suggestionModalLabel">Make a suggestion or report a bug</h6>
+                <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="suggestionEmail" class="form-label">Email address (optional)</label>
+                    <input type="email" class="form-control" id="suggestionEmail" placeholder="Optional">
+                </div>
+                <div>
+                    <div id="bodyTextArea" name="editordata"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="sendSuggestionButton" type="button" class="btn btn-primary big-button" onclick="sendSuggestion()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="application/javascript">
     function hardReset() {
         if (confirm("Completely clear all tracker data?")) {
             localStorage.clear();
             location.reload();
         }
+    }
+
+    function sendSuggestion() {
+        $.ajax({
+            type: "POST",
+            url: "/suggestion",
+            data: {
+                email: $('#suggestionEmail')[0].value,
+                body: $('#bodyTextArea').summernote('code'),
+                state: JSON.stringify(getState()),
+            },
+            success: function(response) {
+                newArgs = JSON.parse(response);
+                fixArgs(newArgs);
+                setInputValues('flag', newArgs);
+            }
+        });
     }
 </script>
 

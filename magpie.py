@@ -1,4 +1,5 @@
 import argparse
+import datetime
 import traceback
 import jsonpickle
 from flaskwebgui import FlaskUI
@@ -80,7 +81,12 @@ def renderItems():
             else:
                 customDungeonItems = Template(localSettings.customDungeonItems)
 
-        result = render_template('items.html', allItems=allItems, args=args, localSettings=localSettings, customItems=customItems, customDungeonItems=customDungeonItems)
+        result = render_template('items.html', allItems=allItems,
+                                               args=args,
+                                               localSettings=localSettings,
+                                               customItems=customItems,
+                                               customDungeonItems=customDungeonItems,
+                                               local=local)
 
         return result
     except:
@@ -132,6 +138,40 @@ def renderCheckList():
 @app.route("/mapCoords")
 def mapCoords():
     return render_template("mapCoords.html")
+
+@app.route("/suggestion", methods=['POST'])
+def suggestion():
+    import smtplib
+    from subprocess import Popen, PIPE
+    from email.mime.multipart import MIMEMultipart
+    from email.mime.base import MIMEBase
+    from email.mime.text import MIMEText
+
+    emailFrom = 'MagpieSuggestions'
+    emailTo = 'root'
+
+    try:
+        email = request.form['email']
+        body = request.form['body']
+        state = request.form['state']
+
+        html = MIMEText(f'<p>New Magpie suggestion from "{email}:"</p>' + body, 'html')
+        alternative = MIMEMultipart('alternative')
+        alternative.attach(html)
+
+        attachment = MIMEText(state)
+        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.datetime.now}-magpie-state.json')
+
+        msg = MIMEMultipart('mixed')
+        msg.attach(alternative)
+        msg.attach(attachment)
+        msg['Subject'] = 'New Magpie Suggestion'
+        msg['From'] = emailFrom
+        msg['To'] = emailTo
+        p = Popen(["/usr/sbin/sendmail", "-t", "-oi"], stdin=PIPE)
+        p.communicate(msg.as_bytes())
+    except:
+        pass
 
 def parseArgs(argsString):
     args = jsonpickle.decode(argsString)

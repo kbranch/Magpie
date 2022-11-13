@@ -80,6 +80,18 @@
     </div>
 </div>
 
+{% if not local %}
+<div class="fill-box">
+    <div class="row justify-content-center align-items-end h-100 pt-4 pb-2">
+        <div class="col-auto">
+            <button class="btn btn-secondary bottom" alt="Make a suggestion or report a bug" data-bs-toggle="modal" data-bs-target="#suggestionModal" type="button">
+                <img src="static/images/envelope.svg">/<img src="static/images/bug.svg">
+            </button>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <script type="application/javascript">
     maxInventory = {{ allItems|safe }};
 

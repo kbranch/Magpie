@@ -135,7 +135,7 @@ function fixArgs(args) {
     }
 }
 
-function exportState() {
+function getState() {
     let state = new Object();
     state.inventory = inventory;
     state.settings = localSettings;
@@ -144,6 +144,11 @@ function exportState() {
     state.entranceMap = entranceMap;
     state.connections = connections;
 
+    return state;
+}
+
+function exportState() {
+    let state = getState();
     download(`Magpie-state-${(new Date()).toISOString()}.json`, JSON.stringify(state));
 }
 
