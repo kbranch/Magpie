@@ -48,15 +48,23 @@
             },
             success: function(response) {
                 if (localSettings.showItemsOnly) {
-                    $('#checkList').hide()
-                    $('#mapContainer').hide()
+                    $('#checkList').hide();
+                    $('#mapContainer').hide();
                 }
                 else {
-                    $('#checkList').show()
-                    $('#mapContainer').show()
+                    $('#checkList').show();
+                    $('#mapContainer').show();
                 }
 
                 $('#itemContainer').html(response);
+
+                if (localSettings.highlightItemsOnHover) {
+                    $('.itemImage').addClass('glow');
+                }
+                else {
+                    $('.itemImage').removeClass('glow');
+                }
+
                 initKnownItems();
                 refreshCheckList();
              }

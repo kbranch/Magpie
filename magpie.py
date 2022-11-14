@@ -12,9 +12,10 @@ app = Flask(__name__)
 app.jinja_options['trim_blocks'] = True
 app.jinja_options['lstrip_blocks'] = True
 
-ui = FlaskUI(app, port=5000)
 
 local = False
+width = 500
+height = 500
 
 class FakeLogic:
     pass
@@ -36,6 +37,7 @@ class LocalSettings:
         self.customItems = None
         self.showDungeonItemCount = False
         self.showItemsOnly = False
+        self.highlightItemsOnHover = True
 
 @app.route("/")
 def home():
@@ -331,9 +333,13 @@ def cleanUpEntranceMap(entranceMap, entrances, args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
+    parser.add_argument('--width', dest='width', action='store', default=500, type=int, help='Local application starting window width')
+    parser.add_argument('--height', dest='height', action='store', default=500, type=int, help='Local application starting window height')
     args = parser.parse_args()
 
     local = args.local
+
+    ui = FlaskUI(app, port=5000, width=args.width, height=args.height)
 
     if args.local:
         ui.run()
