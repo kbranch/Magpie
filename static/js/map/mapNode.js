@@ -177,7 +177,8 @@ class MapNode {
                 }
             }
             else if (this.difficulty == 'checked') {
-                if (Entrance.isFound(startHouse)
+                if (!args.randomstartlocation 
+                    || Entrance.isFound(startHouse)
                     || this.entrance.isConnector()) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');

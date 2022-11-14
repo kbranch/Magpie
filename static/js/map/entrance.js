@@ -57,7 +57,7 @@ class Entrance {
     shouldDraw() {
         if (this.difficulty == 9
               && !localSettings.showOutOfLogic
-              && (Entrance.isFound(startHouse) || this.isConnector())
+              && (!args.randomstartlocation || Entrance.isFound(startHouse) || this.isConnector())
               && (this.connectedTo() != startHouse)) {
             return false;
         }
