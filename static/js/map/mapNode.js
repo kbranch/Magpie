@@ -177,7 +177,9 @@ class MapNode {
                 }
             }
             else if (this.difficulty == 'checked') {
+                classes.push('entrance-only');
                 classes.push('unmapped-entrance');
+                classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
             }
             else {
                 classes.push(`difficulty-${this.difficulty}`);

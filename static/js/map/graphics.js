@@ -218,6 +218,11 @@ function createEntranceNodes(entrances, scaling, update=false) {
 
         if (!(coordString in nodes)) {
             let node = new MapNode(entranceData.locations[0], scaling, entranceData.id);
+            
+            if (node.entrance != null && !node.entrance.shouldDraw()) {
+                node.hideMe = true;
+            }
+
             nodes[coordString] = node;
 
             if (update) {

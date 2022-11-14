@@ -253,7 +253,7 @@ img {
     z-index: 3;
 }
 
-.entrance-only {
+.entrance-only:not(.unmapped-entrance) {
     border-style: none;
     background-image: url('/static/images/entrance.svg');
     background-size: contain;
@@ -284,14 +284,161 @@ img {
     left: -20%;
 }
 
-.unmapped-entrance {
+.entrance-only.unmapped-entrance:before {
+    content: '';
     border-style: none;
-    background-image: url('/static/images/unmapped-entrance.svg');
+    background-image: url('/static/images/entrance.svg');
+    z-index: 3;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 50%;
+    height: 50%;
+    margin-left: 25%;
+    margin-top: 35%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-0 {
+    border-style: none;
+    background-image: url('/static/images/difficulty-0.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 3;
+    z-index: 2;
 }
+
+.entrance-only.unmapped-entrance.entrance-difficulty-1 {
+    border-style: none;
+    background-image: url('/static/images/difficulty-1.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-2 {
+    border-style: none;
+    background-image: url('/static/images/difficulty-2.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-3 {
+    border-style: none;
+    background-image: url('/static/images/difficulty-3.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-4 {
+    border-style: none;
+    background-image: url('/static/images/difficulty-3.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-9 {
+    border-style: none;
+    background-image: url('/static/images/difficulty-9.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+/* .entrance-only.unmapped-entrance.entrance-difficulty-0:after {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/difficulty-0.svg');
+    z-index: -10;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-1:after {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/difficulty-1.svg');
+    z-index: -10;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-2:after {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/difficulty-2.svg');
+    z-index: -10;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-3:after {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/difficulty-3.svg');
+    z-index: -10;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.entrance-only.unmapped-entrance.entrance-difficulty-4:after {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/difficulty-3.svg');
+    z-index: -10;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    margin-top: 10%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+} */
 
 .difficulty-checked {
     border-style: none;

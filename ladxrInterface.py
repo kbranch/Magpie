@@ -41,6 +41,7 @@ class Flag():
     
     def __repr__(self) -> str:
         return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
+
 class Check:
     def __init__(self, id, metadata, behindKeys=False, vanilla=False):
         self.id = id
@@ -55,6 +56,11 @@ class Check:
     
     def __repr__(self) -> str:
         return f'{self.id}: {self.area} - {self.name}'
+
+class Entrance:
+    def __init__(self, id, difficulty=0):
+        self.id = id
+        self.difficulty = difficulty
 
 def getArgsFromShortString(shortString):
     settings = Settings()
@@ -178,16 +184,19 @@ def getLogics(args, entranceMap):
 def _locationIsCheck(location):
     return len(location.items) > 0 and location.items[0].nameId != 'None'
 
+def testRequirement(requirement, inventory):
+    if requirement == None:
+        return True
+    
+    if type(requirement) == str:
+        return requirement != 'UNSET' and requirement in inventory
+    
+    return requirement.test(inventory)
+
 def testEntrance(entrance, inventory):
     smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
 
-    if entrance.requirement == None:
-        return True
-    
-    if type(entrance.requirement) == str:
-        return entrance.requirement in smallInventory
-    
-    return entrance.requirement.test(smallInventory)
+    return testRequirement(entrance.requirement, smallInventory) or testRequirement(entrance.one_way_enter_requirement, smallInventory)
 
 def loadEntrances(logic, inventory):
     inLogicEntrances = []

@@ -20,6 +20,11 @@ height = 500
 class FakeLogic:
     pass
 
+class Accessibility:
+    def __init__(self, checks, entrances):
+        self.checks = checks
+        self.entrances = entrances
+
 class LocalSettings:
     def __init__(self):
         self.checkSize = 32
@@ -129,7 +134,8 @@ def renderCheckList():
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
-        return render_template("checklist.html", accessibility=accessibility,
+        return render_template("checklist.html", checkAccessibility=accessibility.checks,
+                                                 entranceAccessibility=jsonpickle.encode(accessibility.entrances),
                                                  logics=logics,
                                                  checkCount=len(allChecks),
                                                  entrances=jsonpickle.encode(entrances),
@@ -202,19 +208,21 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
     entranceAccessibility = getEntranceAccessibility(allEntrances, logics, inventory)
 
-    return checkAccessibility
+    return Accessibility(checkAccessibility, entranceAccessibility)
 
 def getCheckAccessibility(allChecks, logics, inventory):
     accessibility = {}
 
     outOfLogic = set(allChecks)
 
+    # Initialize each logic level with their full list of accessible Check objects
     for i in range(len(logics)):
         logic = logics[i]
         
         accessibility[logic] = set(loadChecks(logic, inventory))
         outOfLogic = outOfLogic.difference(accessibility[logics[i]])
     
+    # Remove duplicate checks from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
@@ -229,6 +237,7 @@ def getCheckAccessibility(allChecks, logics, inventory):
     inventory['KEY8'] = 9
     inventory['KEY9'] = 9
 
+    # Find more checks that are behind small keys
     alreadyInKeyLogic = set()
     for i in range(len(logics)):
         level = accessibility[logics[i]]
@@ -244,6 +253,7 @@ def getCheckAccessibility(allChecks, logics, inventory):
             alreadyInKeyLogic.add(check)
             level.add(check.cloneBehindKeys())
 
+        # Assign difficulties to each logic level (not just key locked)
         logics[i].difficulty = i
         for check in level:
             check.difficulty = i
@@ -271,18 +281,32 @@ def getCheckAccessibility(allChecks, logics, inventory):
 
 def getEntranceAccessibility(allEntrances, logics, inventory):
     accessibility = {}
+    entrances = {}
 
     outOfLogic = set(allEntrances)
 
+    # Initialize each logic level with their full list of accessible entrance IDs
     for i in range(len(logics)):
         logic = logics[i]
         
         accessibility[logic] = set(loadEntrances(logic, inventory))
         outOfLogic = outOfLogic.difference(accessibility[logics[i]])
     
+    # Remove duplicate entrances from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
+    
+    # Convert the entrance IDs to Entrance objects
+    for i in range(len(logics)):
+        for name in accessibility[logics[i]]:
+            entrance = Entrance(name, i)
+            entrances[name] = entrance
+
+    for name in outOfLogic:
+        entrances[name] = Entrance(name, 9)
+
+    return entrances
 
 def addStartingItems(inventory, args, entranceMap):
     reverseMap = {value: key for (key, value) in entranceMap.items()}

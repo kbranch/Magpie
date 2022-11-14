@@ -3,6 +3,7 @@ class Entrance {
         this.id = id;
         this.metadata = entranceDict[id];
         this.type = this.metadata.type;
+        this.difficulty = entranceAccessibility[id]?.difficulty ?? -1
     }
 
     connectedTo() {
@@ -51,6 +52,17 @@ class Entrance {
 
     isOneWayBlocked() {
         return this.entrance?.metadata.oneWayBlocked ?? false;
+    }
+
+    shouldDraw() {
+        if (this.difficulty == 9
+              && !localSettings.showOutOfLogic
+              && (Entrance.isFound(startHouse) || this.isConnector())
+              && (this.connectedTo() != startHouse)) {
+            return false;
+        }
+
+        return true;
     }
     
     static validConnections(sourceId) {

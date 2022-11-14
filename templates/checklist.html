@@ -34,9 +34,9 @@
 <div id="mapAccordion" class="accordion">
 
 {% set ns = namespace(expanded='true', show=' show', collapsed='') %}
-{% for logic in accessibility %}
+{% for logic in checkAccessibility %}
     {% set safeLogic = logic.friendlyName | replace(' ', '-') %}
-    {% if accessibility[logic]|length == 0 %}{% set hidden=' hidden' %}{% else %}{% set hidden='' %}{% endif %}
+    {% if checkAccessibility[logic]|length == 0 %}{% set hidden=' hidden' %}{% else %}{% set hidden='' %}{% endif %}
 
     <div class="accordion-item {{hidden}}">
         <h2 id="heading-{{safeLogic}}" class="accordion-header">
@@ -49,7 +49,7 @@
         <div id="collapse-{{safeLogic}}" class="accordion-collapse collapse{{ns.show}}" aria-labelledby="heading-{{safeLogic}}" data-bs-parent="#mapAccordion">
             <div class="accordion-body">
                 <div class="row" data-logic="{{logic.friendlyName}}" onclick="preventDoubleClick(event)">
-                    {{ logicContents(accessibility[logic], logic.friendlyName) }}
+                    {{ logicContents(checkAccessibility[logic], logic.friendlyName) }}
                 </div>
             </div>
         </div>
@@ -82,6 +82,7 @@
 <script type="application/javascript">
     randomizedEntrances = JSON.parse('{{entrances|safe}}');
     startLocations = JSON.parse('{{startLocations|safe}}');
+    entranceAccessibility = JSON.parse('{{entranceAccessibility|safe}}')
 
     var timeoutId;
     function resizeTimeout() {
