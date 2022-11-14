@@ -708,6 +708,32 @@ button.nav-link.active {
     pointer-events: none;
 }
 
+.possible-start-location {
+    border-style: none;
+    background-image: url('/static/images/house.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+}
+
+.possible-start-location:before {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/unmapped-entrance.svg');
+    z-index: 3;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 80%;
+    height: 80%;
+    margin-left: 10%;
+    margin-top: 15%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
 .start-location.difficulty-checked {
     border-style: none;
     background-image: url('/static/images/house.svg');
