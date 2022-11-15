@@ -797,7 +797,7 @@ button.nav-link.active {
     margin: auto;
 }
 
-.flex-container {
+.item-container {
     display: flex;
     flex-flow: column;
 }

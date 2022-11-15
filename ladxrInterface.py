@@ -326,6 +326,8 @@ def getDungeonItemCount(args):
             itemCount[i] -= allItems[f'STONE_BEAK{i + 1}']
         if args.dungeon_items in ('', 'smallkeys', 'localkeys', 'nightmarekey'):
             itemCount[i] -= allItems[f'NIGHTMARE_KEY{i + 1}']
+        if not args.instruments and f'INSTRUMENT{i + 1}' in allItems:
+            itemCount[i] -= allItems[f'INSTRUMENT{i + 1}']
     
     for i in range(len(dungeonList)):
         itemCount[f'ITEM{i + 1}'] = itemCount[i]
