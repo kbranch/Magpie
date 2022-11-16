@@ -180,7 +180,12 @@ function createNodes(map, mapName) {
     }
 
     if (randomizedEntrances.length > 0 && mapName == 'overworld') {
-        createEntranceNodes(randomizedEntrances, scaling);
+        if (args.randomstartlocation && !Entrance.isFound(startHouse)) {
+            createEntranceNodes(startLocations, scaling);
+        }
+        else {
+            createEntranceNodes(randomizedEntrances, scaling);
+        }
     }
 
     let checks = $('li[data-logic]').toArray()
@@ -286,7 +291,8 @@ function distributeChecks() {
 
         if (!node.entrance.isMapped()) {
             if (args.entranceshuffle != 'none'
-                || !node.entrance.canBeStart()) {
+                || (node.entrance.canBeStart()
+                    && !Entrance.isFound(startHouse))) {
                 node.checks = [];
             }
         }
@@ -305,7 +311,6 @@ function distributeChecks() {
     for (const node of remappedNodes) {
         node.checks = checksByEntrance[node.entrance.connectedTo()];
     }
-
 }
 
 function updateNodeOverlay(graphic, text) {
