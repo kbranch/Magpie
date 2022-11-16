@@ -1601,7 +1601,7 @@ let entranceDict = {
 	},
 	"bk_shop": {
 		"id": "bk_shop",
-		"name": "BK Shop",
+		"name": "Multiworld BK Shop",
 		"index": 0,
 		"icon": "",
 		"type": "single",
@@ -1611,6 +1611,7 @@ let entranceDict = {
 				"x": 0,
 				"y": 0
 			}
-		]
+		],
+		"interiorImage": "bk_shop",
 	},
 }

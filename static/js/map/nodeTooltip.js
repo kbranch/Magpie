@@ -129,7 +129,7 @@ class NodeTooltip {
             }
             else if(connectionType == 'none'
                     && entrance.isMapped()
-                    && entrance.connectedTo() != 'landfill') {
+                    && !['right_taltal_connector1', 'right_taltal_connector2', 'landfill'].includes(entrance.connectedTo())) {
                 let connection = entranceDict[entrance.connectedTo()];
                 if (connection.interiorImage) {
                     entranceHtml += interiorImageTemplate.replace('{image}', connection.interiorImage);
