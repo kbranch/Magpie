@@ -90,7 +90,8 @@ let coordDict = {
 		  {
 			 "map":"overworld",
 			 "x":1586,
-			 "y":178
+			 "y":178,
+			 "indirect":true
 		  }
 	   ],
 	   "index":6,
@@ -367,13 +368,14 @@ let coordDict = {
 		  {
 			 "map":"overworld",
 			 "x":2122,
-			 "y":162
+			 "y":162,
+			 "indirect":true
 		  },
-		  {
-			 "map":"overworld",
-			 "x":2218,
-			 "y":194
-		  }
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":2218,
+		// 	 "y":194
+		//   }
 	   ],
 	   "index":26,
 	},
@@ -387,11 +389,11 @@ let coordDict = {
 			 "x":2122,
 			 "y":162
 		  },
-		  {
-			 "map":"overworld",
-			 "x":2218,
-			 "y":194
-		  }
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":2218,
+		// 	 "y":194
+		//   }
 	   ],
 	   "index":27,
 	},
@@ -710,11 +712,11 @@ let coordDict = {
 	   "area":"Pothole Field",
 	   "name":"Under Richard's House",
 	   "locations":[
-		  {
-			 "map":"overworld",
-			 "x":1020,
-			 "y":1624
-		  },
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":1020,
+		// 	 "y":1624
+		//   },
 		  {
 			 "map":"overworld",
 			 "x":1036,
@@ -763,7 +765,8 @@ let coordDict = {
 		  {
 			 "map":"overworld",
 			 "x":1570,
-			 "y":2014
+			 "y":2014,
+			 "indirect":true
 		  }
 	   ],
 	   "index":54,

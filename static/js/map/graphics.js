@@ -194,6 +194,11 @@ function createNodes(map, mapName) {
 
     for (const check of checks) {
         for (const coord of check.locations) {
+            if (['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
+                && coord.indirect) {
+                continue;
+            }
+
             let coordString = MapNode.nodeId(coord, scaling);
 
             if (!(coordString in nodes)) {
