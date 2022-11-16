@@ -188,7 +188,7 @@ class NodeTooltip {
                                               .replace('{classes}', '')
                                               .replace('{attributes}', '');
 
-                text = 'Dead ends in... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                text = 'Connect one end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
                 pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
                                               .replace('{text}', text)
                                               .replace('{classes}', '')
