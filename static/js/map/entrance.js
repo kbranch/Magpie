@@ -88,6 +88,8 @@ class Entrance {
                                                     //       || entranceDict[x].type != 'hell')
                                                       && !Entrance.isFound(x))
                                          .map(x => [x, entranceDict[x].name]);
+
+            options.push(['bk_shop', entranceDict['bk_shop'].name])
         }
 
         return options;

@@ -244,7 +244,7 @@ function createCheck(checkElement, mapName) {
 }
 
 function distributeChecks() {
-    let checksByEntrance = {'landfill': []};
+    let checksByEntrance = {'landfill': [], 'bk_shop': []};
     let checksByConnector = {};
     let entrancesByConnector = {};
     let remappedNodes = [];
@@ -447,6 +447,7 @@ function startGraphicalConnection(entranceId) {
     closeAllCheckTooltips();
     graphicalMapSource = entranceId;
     graphicalMapChoices = new Set(Entrance.validConnections(entranceId).map(x => x[0]));
+    graphicalMapChoices.delete('bk_shop');
     $('#overworldTabContent').mousemove(connectorMouseMove);
     drawActiveTab();
 }
