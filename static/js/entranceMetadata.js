@@ -1599,4 +1599,18 @@ let entranceDict = {
 			}
 		]
 	},
+	"bk_shop": {
+		"id": "bk_shop",
+		"name": "BK Shop",
+		"index": 0,
+		"icon": "",
+		"type": "single",
+		"locations": [
+			{
+				"map": "overworld",
+				"x": 0,
+				"y": 0
+			}
+		]
+	},
 }

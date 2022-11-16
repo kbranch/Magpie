@@ -337,7 +337,7 @@ def renderTraceback():
 
 def cleanUpEntranceMap(entranceMap, entrances, args):
     for source, dest in entranceMap.items():
-        if dest == 'landfill':
+        if dest in {'landfill', 'bk_shop'}:
             entranceMap[source] = 'rooster_house'
 
     for entrance in list(entranceMap.keys()):

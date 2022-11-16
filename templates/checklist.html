@@ -84,6 +84,10 @@
     startLocations = JSON.parse('{{startLocations|safe}}');
     entranceAccessibility = JSON.parse('{{entranceAccessibility|safe}}')
 
+    if (randomizedEntrances.length > 0) {
+        randomizedEntrances.push('bk_shop');
+    }
+
     var timeoutId;
     function resizeTimeout() {
         clearCheckImages();

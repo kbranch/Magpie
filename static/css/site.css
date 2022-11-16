@@ -440,6 +440,15 @@ img {
     background-size: cover;
 } */
 
+.bk {
+    border-style: none;
+    background-image: url('/static/images/BK.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
 .difficulty-checked {
     border-style: none;
     background-image: url('/static/images/checked.svg');

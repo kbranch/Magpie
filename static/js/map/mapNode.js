@@ -172,6 +172,9 @@ class MapNode {
                 else if (mappedEntrance.id == 'landfill') {
                     classes.push('difficulty-checked');
                 }
+                else if (mappedEntrance.id == 'bk_shop') {
+                    classes.push('bk');
+                }
                 else {
                     classes.push('entrance-only');
                 }
