@@ -170,7 +170,7 @@ function openConnectorDialog(entranceId) {
         $('.simple-connector').hide();
     }
     else {
-        $('#connectToWarning').show();
+        $('#connectToWarning').hide();
         $('.simple-connector').show();
     }
 
@@ -231,14 +231,20 @@ function fillConnectorGrid(connectors) {
             continue;
         }
 
+        let usedIds = new Set();
         let images = '';
 
         for (const entranceId of connector.entrances) {
-            images += imageTemplate.replace('{entranceImage}', 'entrances/' + entranceDict[entranceId].interiorImage);
+            let id = entranceDict[entranceId].interiorImage;
+            images += imageTemplate.replace('{entranceImage}', 'entrances/' + id);
+            usedIds.add(id);
         }
 
         for (const checkId of connector.checks) {
-            images += imageTemplate.replace('{entranceImage}', 'checks/' + coordDict[checkId].image);
+            let id = coordDict[checkId].image;
+            if(!usedIds.has(id.split('-')[0])) {
+                images += imageTemplate.replace('{entranceImage}', 'checks/' + coordDict[checkId].image);
+            }
         }
 
         let row = connectorTemplate.replace('{connectorId}', connector.id)
