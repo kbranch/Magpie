@@ -122,4 +122,8 @@ class Connection {
         let connection = this.existingConnection(connector);
         return connection?.isIncomplete() ?? false;
     }
+
+    static unmappedEntrances(connector) {
+        return connector.entrances.filter(x => !Entrance.isFound(x));
+    }
 }

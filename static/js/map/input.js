@@ -135,34 +135,26 @@ function openDeadEndDialog(entranceId) {
 function openConnectorDialog(entranceId) {
     let connector = null;
 
-    if (entranceId != 'deadEnd') {
-        if (Entrance.isConnected(entranceId)) {
-            let connector = Connection.findConnector({ exterior: entranceId });
-            let connection = Connection.existingConnection(connector);
+    let skipModal = false;
+    let isDeadEnd = entranceId == 'deadEnd';
 
-            if (connection != null) {
-                let fromInterior = connector.entrances.filter(x => !connection.entrances.includes(Entrance.connectedFrom(x)))[0];
-                let to = connection.entrances[0];
-                let toInterior = Entrance.connectedTo(to);
-                connectExteriors(graphicalMapSource, fromInterior, to, toInterior);
+    if (!isDeadEnd) {
+        connector = Connection.findConnector({ exterior: entranceId })
+                    ?? Connection.findConnector({ exterior: graphicalMapSource });
 
-                return;
-            }
-        }
-        else if (Entrance.isMapped(entranceId)) {
-            connector = Connection.findConnector({ exterior: entranceId });
-            let unmappedEntrances = connector.entrances.filter(x => !Entrance.isFound(x));
+        if (connector != null){
+            let unamppedEntrances = Connection.unmappedEntrances(connector);
+            if (unamppedEntrances.length == 1) {
+                if (Entrance.isMapped(graphicalMapSource)) {
+                    graphicalMapSource = entranceId;
+                }
 
-            if (unmappedEntrances.length == 1) {
-                let mappedEntrance = Entrance.connectedTo(entranceId);
-                connectExteriors(graphicalMapSource, unmappedEntrances[0], entranceId, mappedEntrance);
-
-                return;
+                entranceId = 'deadEnd';
+                isDeadEnd = true;
+                skipModal = true;
             }
         }
     }
-
-    let isDeadEnd = entranceId == 'deadEnd';
 
     $('.item-requirement:checked').map((x, y) => $(y).prop('checked', false));
     $('#connector-blockers').show();
@@ -182,7 +174,9 @@ function openConnectorDialog(entranceId) {
         $('.simple-connector').show();
     }
 
-    new bootstrap.Modal('#connectorModal', null).show();
+    if (!skipModal) {
+        new bootstrap.Modal('#connectorModal', null).show();
+    }
 
     if (connector != null) {
         connectorDetail(connector.id);
@@ -269,8 +263,10 @@ function connectorDetail(connectorId) {
     let isDeadEnd = $('#connectorModal').attr('data-destination') == 'deadEnd';
     let grid = isDeadEnd ? $('#deadEndConnectorDetailGrid') : $('#connectorDetailGrid');
     let connector = connectorDict[connectorId];
+    let unmappedEntrances = Connection.unmappedEntrances(connector);
 
-    let hideEntrances = !isDeadEnd && connector.entrances.length == 2;
+    let hideEntrances = (!isDeadEnd && connector.entrances.length == 2)
+                        || (isDeadEnd && unmappedEntrances.length == 1);
 
     $(grid).empty();
     $(grid).attr('data-connector-id', connectorId);
@@ -284,15 +280,6 @@ function connectorDetail(connectorId) {
         $(grid).append(item);
     }
 
-    // for (const checkId of connector.checks) {
-    //     let item = imageTemplate.replaceAll('{image}', 'checks/' + coordDict[checkId].image)
-    //                             .replaceAll('{type}', 'check')
-    //                             .replaceAll('{hidden}', '')
-    //                             .replaceAll('{id}', checkId);
-
-    //     $(grid).append(item);
-    // }
-
     let connection = Connection.existingConnection(connector);
     if (!isDeadEnd && connection != null) {
         let interior = Entrance.connectedTo(connection.entrances[0]);
@@ -300,12 +287,14 @@ function connectorDetail(connectorId) {
         $(item).addClass('checked');
 
         $('#connectorDoneButton').click();
-        // connectConnectors(false);
     }
-    else if (hideEntrances /*&& connector.checks.length <= 1*/) {
+    else if (hideEntrances) {
+        if (isDeadEnd && unmappedEntrances.length == 1) {
+            $(`.connector-item[data-id="${unmappedEntrances[0]}"]`).addClass('checked');
+        }
+
         $(`.connector-item[data-type="check"]`).addClass('checked');
         $('#connectorDoneButton').click();
-        // connectConnectors(false);
     }
     else {
         setModalPage(isDeadEnd ? 3 : 2);
