@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    width="15.163406"
-   height="15.999999"
+   height="16.021198"
    fill="currentColor"
    class="bi bi-house-door-fill"
-   viewBox="0 0 15.163406 15.999999"
+   viewBox="0 0 15.163406 16.021198"
    version="1.1"
    id="svg2475"
    sodipodi:docname="house.svg"
@@ -31,6 +31,14 @@
      d="m 6.2934278,13.571782 v -3.007584 c 0,-0.210231 0.2147129,-0.424753 0.4294254,-0.424753 h 1.7177009 c 0.2147125,0 0.4294252,0.214522 0.4294252,0.429043 v 3.003294 a 0.42942521,0.42904214 0 0 0 0.4294256,0.429043 h 3.4354001 a 0.42942521,0.42904214 0 0 0 0.429426,-0.429043 V 7.5651924 A 0.42942521,0.42904214 0 0 0 13.038839,7.2614303 L 11.875956,6.1004426 V 3.2747708 A 0.42942521,0.42904214 0 0 0 11.446531,2.8457287 h -0.85885 A 0.42942521,0.42904214 0 0 0 10.158255,3.2747708 V 4.3842739 L 7.8857368,2.1129249 a 0.42942521,0.42904214 0 0 0 -0.6080663,0 L 2.1245677,7.2614303 A 0.42942521,0.42904214 0 0 0 1.9991756,7.5651924 v 6.0065896 a 0.42942521,0.42904214 0 0 0 0.4294252,0.429043 h 3.435402 a 0.42942521,0.42904214 0 0 0 0.429425,-0.429043 z"
      id="path2473"
      style="stroke:#ffffff;stroke-width:3.99835;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.853625;paint-order:stroke markers fill"
+     id="rect285-3"
+     width="8.2210779"
+     height="2.0208795"
+     x="3.4875429"
+     y="14.000319"
+     ry="0.060669489" />
   <rect
      style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.001;paint-order:stroke markers fill"
      id="rect285"
