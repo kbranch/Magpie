@@ -194,8 +194,11 @@ function createNodes(map, mapName) {
 
     for (const check of checks) {
         for (const coord of check.locations) {
-            if (['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
-                && coord.indirect) {
+            if ((['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
+                 && coord.indirect)
+                || (args.entranceshuffle == 'simple'
+                    && coord.indirect
+                    && coord.inSimpleEntrace)) {
                 continue;
             }
 

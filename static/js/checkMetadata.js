@@ -766,7 +766,8 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1570,
 			 "y":2014,
-			 "indirect":true
+			 "indirect":true,
+			 "inSimpleEntrance":true,
 		  }
 	   ],
 	   "index":54,
