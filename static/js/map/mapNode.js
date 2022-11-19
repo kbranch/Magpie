@@ -109,6 +109,8 @@ class MapNode {
                 return true;
             }
         }
+
+        return false;
     }
 
     tooltipHtml(pinned, connectionType) {

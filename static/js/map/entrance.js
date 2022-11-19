@@ -58,7 +58,9 @@ class Entrance {
         if (this.difficulty == 9
               && !localSettings.showOutOfLogic
               && (!args.randomstartlocation || Entrance.isFound(startHouse) || this.isConnector())
-              && (this.connectedTo() != startHouse)) {
+              && this.connectedTo() != startHouse
+              && !this.isConnected()
+              && (args.entranceshuffle == 'none' || this.isConnector())) {
             return false;
         }
 
