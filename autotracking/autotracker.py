@@ -17,34 +17,6 @@ async def socketLoop(websocket, path):
 
     while True:
         await asyncio.sleep(2)
-
-        if not gb.attached():
-            gb.attach()
-            if not gb.attached():
-                continue
-
-        try:
-            if gb.memread(gameStateAddress) not in validGameStates:
-                continue
-                
-            missingItems = {x for x in items if x.address == None}
-
-            # Main inventory items
-            for i in range(inventoryStartAddress, inventoryEndAddress):
-                value = gb.memread(i)
-                if value in inventoryItemIds:
-                    item = itemDict[inventoryItemIds[value]]
-                    await item.set(1, websocket)
-                    missingItems.remove(item)
-            
-            for item in missingItems:
-                await item.set(0, websocket)
-            
-            # All other items
-            for item in [x for x in items if x.address]:
-                await item.set(gb.memread(item.address), websocket)
-        except ValueError:
-            gb.detach()
         
         while websocket.messages:
             message = await websocket.recv()
@@ -59,6 +31,52 @@ async def socketLoop(websocket, path):
                     })
                 
                 await newMessage.send(websocket)
+
+        if not gb.attached():
+            gb.attach()
+            if not gb.attached():
+                continue
+
+        try:
+            itemsToSend = []
+
+            if gb.memread(gameStateAddress) not in validGameStates:
+                continue
+                
+            missingItems = {x for x in items if x.address == None}
+
+            # Main inventory items
+            for i in range(inventoryStartAddress, inventoryEndAddress):
+                value = gb.memread(i)
+                if value in inventoryItemIds:
+                    item = itemDict[inventoryItemIds[value]]
+                    await item.set(1)
+                    missingItems.remove(item)
+            
+            for item in missingItems:
+                await item.set(0)
+            
+            # All other items
+            for item in [x for x in items if x.address]:
+                await item.set(gb.memread(item.address))
+            
+            itemsToSend = [x for x in items if x.diff != 0]
+
+            if itemsToSend:
+                newMessage = Message('add')
+                for item in itemsToSend:
+                    newMessage.items.append(
+                        {
+                            'name': item.id,
+                            'qty': item.diff,
+                        }
+                    )
+                    item.diff = 0
+                
+                await newMessage.send(websocket)
+
+        except ValueError:
+            gb.detach()
 
 gb = Gameboy()
 
