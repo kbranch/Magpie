@@ -13,6 +13,8 @@ class Message:
         await socket.send(json.dumps(self.__dict__))
 
 async def socketLoop(websocket, path):
+    print('Connected to tracker')
+
     while True:
         await asyncio.sleep(2)
 
