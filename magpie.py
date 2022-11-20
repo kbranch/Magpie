@@ -43,6 +43,7 @@ class LocalSettings:
         self.showDungeonItemCount = False
         self.showItemsOnly = False
         self.highlightItemsOnHover = True
+        self.enableAutotracking = False
 
 @app.route("/")
 def home():

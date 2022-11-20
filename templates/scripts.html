@@ -36,6 +36,7 @@
     var redoStack = [];
     var graphicalMapSource = null;
     var graphicalMapChoices = null;
+    var autotrackerSocket = null;
     const startHouse = 'start_house';
 
     function refreshItems() {
@@ -169,6 +170,37 @@
 
     $(document).keydown(keyDown);
 
+    function connectToAutotracker() {
+        if (!localSettings.enableAutotracking) {
+            return;
+        }
+
+        if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
+            autotrackerSocket = new WebSocket("ws://127.0.0.1:17026/");
+
+            autotrackerSocket.onopen = autotrackerConnected;
+            autotrackerSocket.onmessage = (event) => processItemMessage(event.data);
+        }
+    }
+
+    function reloadFromAutotracker() {
+        if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
+            console.log('Sent request to send full autotracker inventory');
+            autotrackerSocket.send("sendFull");
+        }
+    }
+
+    function autotrackerConnected(event) {
+        console.log("Connected to autotracker");
+        reloadFromAutotracker();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        connectToAutotracker();
+
+        setInterval(connectToAutotracker, 3 * 1000);
+    });
+
     {% if local %}
     async function getRequest(url='') {
         const response = await fetch(url, {
@@ -179,19 +211,17 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-    
-    let url = document.location
-    let route = "/flaskwebgui-keep-server-alive"
-    let interval_request = 3 * 1000 //sec
-    
-    function keep_alive_server(){
-        getRequest(url + route)
-        .then(data => console.log(data))
-    }
-    
-    setInterval(keep_alive_server, interval_request)()
-    
-    })
+        let url = document.location
+        let route = "/flaskwebgui-keep-server-alive"
+        let interval_request = 3 * 1000 //sec
+        
+        function keep_alive_server(){
+            getRequest(url + route)
+            .then(data => console.log(data))
+        }
+        
+        setInterval(keep_alive_server, interval_request)()
+    });
     {% endif %}
 
     $(document).ready(function() {

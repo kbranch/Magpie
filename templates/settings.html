@@ -268,18 +268,21 @@
         </div>
         <div class="row">
             <div class="col-auto">
-                <div class="row">
-                    <div class="col">
-                        <label for="checkSize" class="form-label">Check size</label>
-                        <input id="checkSize" data-setting="checkSize" type="range" min="16" max="48" value="" class="form-range">
+                <fieldset class="form-group">
+                    <legend>Map</legend>
+                    <div class="row">
+                        <div class="col">
+                            <label for="checkSize" class="form-label">Icon size</label>
+                            <input id="checkSize" data-setting="checkSize" type="range" min="16" max="48" value="" class="form-range">
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="mapBrightness" class="form-label">Map brightness</label>
-                        <input id="mapBrightness" data-setting="mapBrightness" type="range" min="25" max="100" value="" class="form-range">
+                    <div class="row">
+                        <div class="col">
+                            <label for="mapBrightness" class="form-label">Brightness</label>
+                            <input id="mapBrightness" data-setting="mapBrightness" type="range" min="25" max="100" value="" class="form-range">
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
             <div class="col-auto">
                 <div class="row">
@@ -306,14 +309,6 @@
                         <label for="hideVanilla" class="form-label">Hide vanilla checks</label>
                     </div>
                 </div>
-            </div>
-            <div class="col-auto">
-                <div class="row">
-                    <div class="col">
-                        <input id="animateChecks" data-setting="animateChecks" type="checkbox" class="form-check-input">
-                        <label for="animateChecks" class="form-label">Animate checks</label>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col">
                         <input id="swapMouseButtons" data-setting="swapMouseButtons" type="checkbox" class="form-check-input">
@@ -322,28 +317,50 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <input id="swapItemsAndMap" data-setting="swapItemsAndMap" type="checkbox" class="form-check-input">
-                        <label for="swapItemsAndMap" class="form-label">Swap items and map</label>
+                        <input id="animateChecks" data-setting="animateChecks" type="checkbox" class="form-check-input">
+                        <label for="animateChecks" class="form-label">Animate checks</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <input id="showDungeonItemCount" data-setting="showDungeonItemCount" type="checkbox" class="form-check-input">
-                        <label for="showDungeonItemCount" class="form-label">Show major dungeon item count</label>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Layout</legend>
+                    <div class="row">
+                        <div class="col">
+                            <input id="swapItemsAndMap" data-setting="swapItemsAndMap" type="checkbox" class="form-check-input">
+                            <label for="swapItemsAndMap" class="form-label">Swap items and map</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input id="showItemsOnly" data-setting="showItemsOnly" type="checkbox" class="form-check-input">
-                        <label for="showItemsOnly" class="form-label">Only show items</label>
+                    <div class="row">
+                        <div class="col">
+                            <input id="showDungeonItemCount" data-setting="showDungeonItemCount" type="checkbox" class="form-check-input">
+                            <label for="showDungeonItemCount" class="form-label">Show major dungeon item count</label>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input id="highlightItemsOnHover" data-setting="highlightItemsOnHover" type="checkbox" class="form-check-input">
-                        <label for="highlightItemsOnHover" class="form-label">Highlight items on hover</label>
+                    <div class="row">
+                        <div class="col">
+                            <input id="showItemsOnly" data-setting="showItemsOnly" type="checkbox" class="form-check-input">
+                            <label for="showItemsOnly" class="form-label">Only show items</label>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col">
+                            <input id="highlightItemsOnHover" data-setting="highlightItemsOnHover" type="checkbox" class="form-check-input">
+                            <label for="highlightItemsOnHover" class="form-label">Highlight items on hover</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Other</legend>
+                    <div class="row">
+                        <div class="col">
+                            <input id="enableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input">
+                            <label for="enableAutotracking" class="form-label">Enable autotracking</label>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
         </div>
         <div class="row">

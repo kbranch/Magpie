@@ -93,7 +93,7 @@ function updateOverlay(item) {
     }
 }
 
-function addItem(item, qty) {
+function addItem(item, qty, wrap=true, refresh=true) {
     if (!(item in inventory)) {
         inventory[item] = 0;
     }
@@ -101,19 +101,53 @@ function addItem(item, qty) {
     inventory[item] += qty;
 
     if (inventory[item] > maxInventory[item]) {
-        inventory[item] = 0;
+        inventory[item] = wrap ? 0 : maxInventory[item];
     }
 
     if (inventory[item] < 0) {
-        inventory[item] = maxInventory[item];
+        inventory[item] = wrap ? maxInventory[item] : 0;
     }
 
     console.log(`${item}: ${inventory[item]}`);
 
-    saveInventory();
-    setItemImage(item);
-    updateOverlay(item);
-    refreshCheckList();
+    if (refresh) {
+        saveInventory();
+        setItemImage(item);
+        updateOverlay(item);
+        refreshCheckList();
+    }
+}
+
+function processItemMessage(messageText) {
+    if (typeof maxInventory == 'undefined') {
+        return;
+    }
+
+    message = JSON.parse(messageText);
+
+    switch (message.type) {
+        case 'add':
+            for (const item of message.items) {
+                addItem(item.name, item.qty, wrap=false, refresh=false);
+            }
+
+            saveInventory();
+            refreshImages();
+            refreshCheckList();
+
+            break;
+        case 'set':
+            console.log('Receiving full autotracker inventory');
+            resetInventory();
+            for (const item of message.items) {
+                addItem(item.name, item.qty, wrap=false, refresh=false);
+            }
+
+            saveInventory();
+            refreshImages();
+            refreshCheckList();
+            break;
+    }
 }
 
 function itemValueUpdated(element) {
