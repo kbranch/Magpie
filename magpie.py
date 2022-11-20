@@ -1,3 +1,4 @@
+import os
 import argparse
 import datetime
 import traceback
@@ -11,7 +12,6 @@ from ladxrInterface import *
 app = Flask(__name__)
 app.jinja_options['trim_blocks'] = True
 app.jinja_options['lstrip_blocks'] = True
-
 
 local = False
 width = 500
@@ -364,9 +364,20 @@ if __name__ == "__main__":
 
     local = args.local
 
-    ui = FlaskUI(app, port=5000, width=args.width, height=args.height)
-
     if args.local:
+        chromePaths = ['%ProgramFiles%\Google\Chrome\Application\chrome.exe',
+                       '%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe',
+                       '%LocalAppData%\Google\Chrome\Application\chrome.exe']
+        
+        browserPath = None
+        
+        for path in chromePaths:
+            expanded = os.path.expandvars(path)
+            if os.path.exists(expanded):
+                browserPath = expanded
+                break
+        
+        ui = FlaskUI(app, port=5000, width=args.width, height=args.height, browser_path=browserPath)
         ui.run()
     else:
         app.run()
