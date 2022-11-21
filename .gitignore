@@ -8,3 +8,4 @@ static/images/backup/
 static/images/entrances/backup/
 dist/
 build/
+*.spec

@@ -1,0 +1,1 @@
+pyinstaller --noconfirm --onefile -n magpie-autotracker --console "autotracker.py"
