@@ -1,6 +1,7 @@
 import ctypes.wintypes
 import struct
-
+import sys
+import re
 
 # HANDLE OpenProcess([in] DWORD dwDesiredAccess, [in] BOOL bInheritHandle, [in] DWORD dwProcessId);
 from typing import Optional
@@ -17,9 +18,9 @@ CloseHandle = ctypes.windll.kernel32.CloseHandle
 CloseHandle.argtypes = [ctypes.wintypes.HANDLE]
 CloseHandle.restype = ctypes.wintypes.BOOL
 # BOOL EnumProcessModules([in] HANDLE hProcess, [out] HMODULE *lphModule, [in] DWORD cb, [out] LPDWORD lpcbNeeded);
-EnumProcessModules = ctypes.windll.psapi.EnumProcessModules
-EnumProcessModules.argtypes = [ctypes.wintypes.HANDLE, ctypes.POINTER(ctypes.wintypes.HMODULE), ctypes.wintypes.DWORD, ctypes.wintypes.LPDWORD]
-EnumProcessModules.restype = ctypes.wintypes.BOOL
+EnumProcessModulesEx = ctypes.windll.psapi.EnumProcessModulesEx
+EnumProcessModulesEx.argtypes = [ctypes.wintypes.HANDLE, ctypes.POINTER(ctypes.wintypes.HMODULE), ctypes.wintypes.DWORD, ctypes.wintypes.LPDWORD, ctypes.wintypes.DWORD]
+EnumProcessModulesEx.restype = ctypes.wintypes.BOOL
 # DWORD GetModuleBaseNameA([in] HANDLE hProcess, [in, optional] HMODULE hModule, [out] LPSTR lpBaseName, [in] DWORD nSize);
 GetModuleBaseNameA = ctypes.windll.psapi.GetModuleBaseNameA
 GetModuleBaseNameA.argtypes = [ctypes.wintypes.HANDLE, ctypes.wintypes.HMODULE, ctypes.wintypes.LPSTR, ctypes.wintypes.DWORD]
@@ -43,6 +44,10 @@ GetModuleInformation = ctypes.windll.psapi.GetModuleInformation
 GetModuleInformation.argtypes = [ctypes.wintypes.HANDLE, ctypes.wintypes.HMODULE, ctypes.POINTER(MODULEINFO), ctypes.wintypes.DWORD]
 GetModuleInformation.restype = ctypes.wintypes.BOOL
 
+# DWORD GetLastError();
+GetLastError = ctypes.windll.kernel32.GetLastError
+GetLastError.restype = ctypes.wintypes.DWORD
+
 class MEMORY_BASIC_INFORMATION(ctypes.Structure):
     _fields_ = [
         ("BaseAddress", ctypes.wintypes.ULARGE_INTEGER),
@@ -64,6 +69,7 @@ PROCESS_VM_OPERATION = 0x08
 PROCESS_VM_READ = 0x10
 PROCESS_VM_WRITE = 0x20
 PROCESS_QUERY_INFORMATION = 0x0400
+LIST_MODULES_ALL = 0x03
 
 
 class Process:
@@ -108,23 +114,36 @@ class Process:
     def read_pointer32(self, addr: int) -> int:
         return struct.unpack("<I", self.read_memory(addr, 4))[0]
 
+    def read_pointer64(self, addr: int) -> int:
+        buffer = self.read_memory(addr, 8)
+        return struct.unpack("<Q", buffer)[0]
+
     def read_pointer_chain32(self, addr: int, *offsets: int) -> int:
         ptr = self.read_pointer32(addr)
         for offset in offsets:
             ptr = self.read_pointer32(ptr + offset)
         return ptr
 
+    def read_pointer_chain64(self, addr: int, *offsets: int) -> int:
+        ptr = self.read_pointer64(addr)
+        for offset in offsets:
+            ptr = self.read_pointer64(ptr + offset)
+        return ptr
+
     def search_module_memory(self, data: bytes) -> Optional[int]:
         module_list = (ctypes.wintypes.HMODULE * 32)()
         module_count = ctypes.wintypes.DWORD(0)
-        EnumProcessModules(self.__proc, module_list, ctypes.sizeof(module_list), module_count)
+        EnumProcessModulesEx(self.__proc, module_list, ctypes.sizeof(module_list), module_count, LIST_MODULES_ALL)
         info = MODULEINFO()
         GetModuleInformation(self.__proc, module_list[0], info, ctypes.sizeof(info))
         mem = self.read_memory(info.lpBaseOfDll, info.SizeOfImage)
-        idx = mem.find(data)
-        if idx == -1:
+
+        match = re.search(data, bytearray(mem), re.DOTALL)
+
+        if not match:
             return None
-        return info.lpBaseOfDll + idx
+
+        return info.lpBaseOfDll + match.start()
 
     def search_all_memory(self, data: bytes) -> Optional[int]:
         info = MEMORY_BASIC_INFORMATION()
@@ -137,13 +156,58 @@ class Process:
                 continue
             # if info.Type != 0x20000 and info.Type != 0x40000:
             #     continue
-            mem = self.read_memory(ptr, info.RegionSize)
-            idx = mem.find(data)
-            if idx != -1:
-                return ptr + idx
+            try:
+                mem = self.read_memory(ptr, info.RegionSize)
+                idx = mem.find(data)
+                if idx != -1:
+                    return ptr + idx
+            except:
+                pass
             ptr += info.RegionSize
         return None
 
+class Bgb32:
+    def __init__(self):
+        self.romAddr = None
+        self.ramAddr = None
+        self.process = None
+    
+    def findMemory(self):
+        self.process = Process('bgb.exe')
+
+        data = re.escape(b'\x6D\x61\x69\x6E\x6C\x6F\x6F\x70\x83\xC4\xF4\xA1')
+        ptr = self.process.search_module_memory(data)
+
+        if ptr == None:
+            raise ValueError('Failed to find ROM data')
+
+        ptr = self.process.read_pointer_chain32(ptr + 12, 0, 0, 0x34)
+        self.romAddr = self.process.read_pointer32(ptr + 0x10)
+        self.ramAddr = self.process.read_pointer32(ptr + 0x108)
+
+class Bgb64:
+    def __init__(self):
+        self.romAddr = None
+        self.ramAddr = None
+        self.process = None
+    
+    def findMemory(self):
+        self.process = Process('bgb64.exe')
+
+        data = re.escape(b'\x48\x83\xec\x28\x48\x8b\x05') + b'....' + re.escape(b'\x48\x83\x38\x00\x74\x1a\x48\x8b\x05') + b'....' + re.escape(b'\x48\x8b\x00\x80\xb8') + b'....' + re.escape(b'\x00\x74\x07')
+        ptr = self.process.search_module_memory(data)
+
+        if ptr == None:
+            raise ValueError('Failed to find ROM data')
+
+        ptr += 20
+        ptr = ptr + int.from_bytes(self.process.read_memory(ptr, 4), sys.byteorder) + 4
+        ptr = self.process.read_pointer_chain64(ptr, 0, 0x44)
+
+        self.romAddr = self.process.read_pointer64(ptr + 0x18)
+        self.ramAddr = self.process.read_pointer64(ptr + 0x190)
+
+emulators = [Bgb32(), Bgb64()]
 
 class Gameboy:
     def __init__(self):
@@ -151,24 +215,19 @@ class Gameboy:
         self.attach()
     
     def attach(self):
-        try:
-            if self.__proc == None:
-                self.__proc = Process("bgb.exe")
-                print('Found emulator')
+        for emulator in emulators:
+            try:
+                emulator.findMemory()
 
-            ptr = self.__proc.search_module_memory(b'\x6D\x61\x69\x6E\x6C\x6F\x6F\x70\x83\xC4\xF4\xA1')
+                self.__proc = emulator.process
+                self.__rom_addr = emulator.romAddr
+                self.__ram_addr = emulator.ramAddr
 
-            if ptr == None:
-                raise ValueError('Failed to find ROM data')
+                print('Found game memory')
 
-            ptr = self.__proc.read_pointer_chain32(ptr + 12, 0, 0, 0x34)
-
-            self.__rom_addr = self.__proc.read_pointer32(ptr + 0x10)
-            self.__ram_addr = self.__proc.read_pointer32(ptr + 0x108)
-
-            print('Found game memory')
-        except ValueError as ex:
-            print(f'Error attaching to game memory: {str(ex)}')
+                break
+            except ValueError as ex:
+                print(f'Error attaching to game memory: {str(ex)}')
 
     def detach(self):
         self.__proc = None

@@ -29,6 +29,8 @@ async def socketLoop(websocket, path):
                         'name': item.id,
                         'qty': item.value,
                     })
+
+                    item.diff = 0
                 
                 await newMessage.send(websocket)
 
@@ -71,6 +73,8 @@ async def socketLoop(websocket, path):
                             'qty': item.diff,
                         }
                     )
+
+                    print(f'Sending incremental {item.id}: {item.diff}')
                     item.diff = 0
                 
                 await newMessage.send(websocket)
