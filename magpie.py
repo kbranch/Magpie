@@ -377,7 +377,7 @@ if __name__ == "__main__":
                 browserPath = expanded
                 break
         
-        ui = FlaskUI(app, port=5000, width=args.width, height=args.height, browser_path=browserPath)
+        ui = FlaskUI(app, port=16114, width=args.width, height=args.height, browser_path=browserPath)
         ui.run()
     else:
         app.run()
