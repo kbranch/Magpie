@@ -179,7 +179,23 @@
             autotrackerSocket = new WebSocket("ws://127.0.0.1:17026/");
 
             autotrackerSocket.onopen = autotrackerConnected;
-            autotrackerSocket.onmessage = (event) => processItemMessage(event.data);
+            autotrackerSocket.onmessage = (event) => processMessage(event.data);
+        }
+    }
+
+    function processMessage(messageText) {
+        message = JSON.parse(messageText);
+        
+        switch (message.category) {
+            case 'item':
+                processItemMessage(message);
+                break;
+            case 'check':
+                processCheckMessage(message);
+                break;
+            default:
+                console.log(`Unrecognized message category: ${message.category}`)
+                break;
         }
     }
 

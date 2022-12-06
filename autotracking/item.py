@@ -32,4 +32,6 @@ class Item:
 
         if oldValue != self.value:
             self.diff += self.value - (oldValue or 0)
-            print(f'Found incremental {self.id}: {self.diff}')
+
+            if self.diff != 0:
+                print(f'Found {self.id}: {"+" if self.diff > 0 else ""}{self.diff}')

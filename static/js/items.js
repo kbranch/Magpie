@@ -118,36 +118,23 @@ function addItem(item, qty, wrap=true, refresh=true) {
     }
 }
 
-function processItemMessage(messageText) {
+function processItemMessage(message) {
     if (typeof maxInventory == 'undefined') {
         return;
     }
 
-    message = JSON.parse(messageText);
-
-    switch (message.type) {
-        case 'add':
-            for (const item of message.items) {
-                addItem(item.name, item.qty, wrap=false, refresh=false);
-            }
-
-            saveInventory();
-            refreshImages();
-            refreshCheckList();
-
-            break;
-        case 'set':
-            console.log('Receiving full autotracker inventory');
-            resetInventory();
-            for (const item of message.items) {
-                addItem(item.name, item.qty, wrap=false, refresh=false);
-            }
-
-            saveInventory();
-            refreshImages();
-            refreshCheckList();
-            break;
+    if (message.type == 'set') {
+        console.log('Receiving full autotracker inventory');
+        resetInventory();
     }
+
+    for (const item of message.items) {
+        addItem(item.id, item.qty, wrap=false, refresh=false);
+    }
+
+    saveInventory();
+    refreshImages();
+    refreshCheckList();
 }
 
 function itemValueUpdated(element) {

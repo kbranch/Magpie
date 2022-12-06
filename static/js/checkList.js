@@ -272,3 +272,28 @@ function resetChecks() {
     checkedChecks = {};
     saveChecked();
 }
+
+function processCheckMessage(message) {
+    if (message.type == 'set') {
+        console.log('Receiving full autotracker checks');
+        resetChecks();
+    }
+
+    for (const check of message.items) {
+        let metadata = coordDict[check.id];
+        let key = getCheckedKey(metadata.area, metadata.name);
+
+        if (check.qty > 0) {
+            checkedChecks[key] = {
+                name: metadata.name,
+                area: metadata.area,
+            };
+        }
+        else if (check.qty < 0) {
+            delete checkedChecks[key];
+        }
+    }
+
+    refreshChecked();
+    drawActiveTab();
+}
