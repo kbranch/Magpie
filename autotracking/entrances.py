@@ -1,6 +1,9 @@
 import os
 import sys
-from entrances import Entrance
+from message import Message
+from entrance import Entrance
+from romTables import ROMWithTables
+from worldSetup import WorldSetup
 
 sys.path.append(os.path.abspath('../LADXR/'))
 
@@ -33,6 +36,9 @@ mapMap = {
     0x17: 0x02,
     0x18: 0x02,
     0x19: 0x02,
+    0x1D: 0x01,
+    0x1E: 0x01,
+    0x1F: 0x01,
     0xFF: 0x03,
 }
 
@@ -40,10 +46,80 @@ roomAddress = 0xFFF6
 mapIdAddress = 0xFFF7
 indoorFlagAddress = 0xDBA5
 
-entrances = []
+lastRoom = None
+lastIndoors = None
 
-def loadEntrances():
-    entrances.clear()
+foundEntranceMap = {}
+reverseEntranceMap = {}
+entrances = {}
+world = None
+
+async def sendEntrances(mappings, socket, diff=True):
+    if not mappings: return
+
+    newMessage = Message('add' if diff else 'set', 'entrance')
+    newMessage.entranceMap = {}
+    for outdoor, indoor in mappings.items():
+        newMessage.entranceMap[outdoor] = indoor
+
+        print(f'Sending entrance {outdoor}: {indoor}')
+    
+    await newMessage.send(socket)
+
+def loadEntrances(gb):
+    global foundEntranceMap, reverseEntranceMap, entrances, world
+
+    entrances = {} 
 
     for name, info in ENTRANCE_INFO.items():
-        entrances.append(Entrance(info.room, info.target, name))
+        entrance = Entrance(info.room, info.target, name)
+        entrances[info.target] = entrance
+    
+    romData = gb.emulator.read_rom(0, 1024 * 1024)
+    # Super janky, I need to make an LADXR pull request
+    with open('rom', 'wb') as file:
+        file.write(romData)
+    
+    rom = ROMWithTables('rom')
+
+    os.remove('rom')
+
+    world = WorldSetup()
+    world.loadFromRom(rom)
+
+    reverseEntranceMap = {value: key for key, value in world.entrance_mapping.items()}
+
+def readEntrances(gb):
+    global lastRoom, lastIndoors
+
+    newMappings = {}
+
+    indoors = gb.readRamByte(indoorFlagAddress)
+    mapId = gb.readRamByte(mapIdAddress)
+    if mapId not in mapMap:
+        print(f'Unknown map ID {hex(mapId)}')
+        return
+
+    mapDigit = mapMap[mapId] << 8 if indoors else 0
+    room = gb.readRamByte(roomAddress) + mapDigit
+
+    if indoors != lastIndoors and lastRoom != None:
+        indoorRoom = room if indoors else lastRoom
+
+        if indoorRoom in entrances:
+            entrance = entrances[indoorRoom]
+            if entrance.name in reverseEntranceMap:
+                outdoorEntranceName = reverseEntranceMap[entrance.name]
+                if outdoorEntranceName not in foundEntranceMap:
+                    newMappings[outdoorEntranceName] = entrance.name
+                    print(f'Entrance found: {outdoorEntranceName}: {entrance.name}')
+
+                foundEntranceMap[outdoorEntranceName] = entrance.name
+
+    # if lastRoom != room:
+    #     print(f"Current room: {hex(room)}")
+
+    lastRoom = room
+    lastIndoors = indoors
+
+    return newMappings

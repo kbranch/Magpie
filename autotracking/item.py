@@ -10,7 +10,7 @@ class Item:
         self.rawValue = 0
         self.diff = 0
 
-    async def set(self, byte):
+    def set(self, byte):
         oldValue = self.value
 
         if self.mask:

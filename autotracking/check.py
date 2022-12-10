@@ -1,18 +1,23 @@
 class Check:
-    def __init__(self, id, address, mask):
+    def __init__(self, id, address, mask, alternateAddress=None):
         self.id = id
         self.address = address
+        self.alternateAddress = alternateAddress
         self.mask = mask
         self.value = None
         self.diff = 0
     
-    async def set(self, byte):
+    def set(self, bytes):
         oldValue = self.value
 
-        if self.mask:
-            byte = byte & self.mask
-        
-        self.value = int(byte > 0)
+        self.value = 0
+
+        for byte in bytes:
+            maskedByte = byte
+            if self.mask:
+                maskedByte &= self.mask
+            
+            self.value |= int(maskedByte > 0)
 
         if oldValue != self.value:
             self.diff += self.value - (oldValue or 0)

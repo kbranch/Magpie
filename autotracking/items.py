@@ -1,3 +1,4 @@
+from message import Message
 from item import Item
 
 gameStateAddress = 0xDB95
@@ -107,3 +108,41 @@ for i in range(len(dungeonItemAddresses)):
             items.append(Item(item.format(i + 1), dungeonItemAddresses[i] + offset))
 
 itemDict = {item.id: item for item in items}
+
+def readItems(gb):
+    missingItems = {x for x in items if x.address == None}
+
+    # Main inventory items
+    for i in range(inventoryStartAddress, inventoryEndAddress):
+        value = gb.readRamByte(i)
+
+        if value in inventoryItemIds:
+            item = itemDict[inventoryItemIds[value]]
+            item.set(1)
+            missingItems.remove(item)
+    
+    for item in missingItems:
+        item.set(0)
+    
+    # All other items
+    for item in [x for x in items if x.address]:
+        item.set(gb.readRamByte(item.address))
+
+async def sendItems(items, socket, diff=True):
+    if not items: return
+
+    newMessage = Message('add' if diff else 'set', 'item')
+    for item in items:
+        value = item.diff if diff else item.value
+
+        newMessage.items.append(
+            {
+                'id': item.id,
+                'qty': value,
+            }
+        )
+
+        print(f'Sending {item.id}: {"+" if value > 0 and diff else ""}{item.diff}')
+        item.diff = 0
+    
+    await newMessage.send(socket)

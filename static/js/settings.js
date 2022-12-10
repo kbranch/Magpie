@@ -320,7 +320,7 @@ function connectExteriors(from, fromInterior, to, toInterior) {
     refreshCheckList();
 }
 
-function connectEntrances(from, to) {
+function connectEntrances(from, to, refresh=true) {
     pushUndoState();
 
     console.assert(to != 'clear');
@@ -335,7 +335,10 @@ function connectEntrances(from, to) {
 
     saveEntrances();
     closeAllCheckTooltips();
-    refreshCheckList();
+
+    if (refresh) {
+        refreshCheckList();
+    }
 }
 
 function resetUndoRedo() {
@@ -398,4 +401,27 @@ function keyDown(e) {
     else if (e.key == 'Escape' && graphicalMapSource != null) {
         endGraphicalConnection();
     }
+}
+
+function processEntranceMessage(message) {
+    if (message.type == 'set') {
+        console.log('Receiving full autotracker entrances');
+        resetEntrances();
+    }
+
+    for (const outdoor in message.entranceMap) {
+        if (outdoor in entranceMap) {
+            continue;
+        }
+
+        if (Entrance.isConnector(outdoor)) {
+            connectOneEndConnector(outdoor, message.entranceMap[outdoor]);
+            updateReverseMap();
+        }
+        else {
+            connectEntrances(outdoor, message.entranceMap[outdoor], refresh=false);
+        }
+    }
+
+    refreshCheckList();
 }

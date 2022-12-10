@@ -180,6 +180,8 @@
 
             autotrackerSocket.onopen = autotrackerConnected;
             autotrackerSocket.onmessage = (event) => processMessage(event.data);
+            autotrackerSocket.onerror = (event) => console.log(event);
+            autotrackerSocket.onclose = (event) => console.log(event);
         }
     }
 
@@ -192,6 +194,9 @@
                 break;
             case 'check':
                 processCheckMessage(message);
+                break;
+            case 'entrance':
+                processEntranceMessage(message);
                 break;
             default:
                 console.log(`Unrecognized message category: ${message.category}`)

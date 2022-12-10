@@ -362,27 +362,31 @@ function connectConnectors(simple=true) {
             return;
         }
 
-        let connector = Connection.findConnector({ interior: checkedEntranceIds[0] });
-        let connection = Connection.existingConnection(connector);
-
-        if (connection != null) {
-            let to = connection.entrances[0];
-            let toInterior = Entrance.connectedTo(to);
-            connectExteriors(source, checkedEntranceIds[0], to, toInterior);
-        }
-        else {
-            let otherSide = connector.entrances.filter(x => Entrance.isFound(x))
-                                               .map(x => Entrance.connectedFrom(x))[0] ?? null;
-
-            if (otherSide != null) {
-                let otherInterior = Entrance.connectedTo(otherSide);
-                connectExteriors(source, checkedEntranceIds[0], otherSide, otherInterior);
-            }
-            else {
-                connectEntrances(source, checkedEntranceIds[0]);
-            }
-        }
+        connectOneEndConnector(source, checkedEntranceIds[0]);
     }
 
     $('#modalClose').click();
+}
+
+function connectOneEndConnector(outdoors, indoors) {
+    let connector = Connection.findConnector({ interior: indoors });
+    let connection = Connection.existingConnection(connector);
+
+    if (connection != null) {
+        let to = connection.entrances[0];
+        let toInterior = Entrance.connectedTo(to);
+        connectExteriors(outdoors, indoors, to, toInterior);
+    }
+    else {
+        let otherSide = connector.entrances.filter(x => Entrance.isFound(x))
+                                            .map(x => Entrance.connectedFrom(x))[0] ?? null;
+
+        if (otherSide != null) {
+            let otherInterior = Entrance.connectedTo(otherSide);
+            connectExteriors(outdoors, indoors, otherSide, otherInterior);
+        }
+        else {
+            connectEntrances(outdoors, indoors);
+        }
+    }
 }

@@ -227,6 +227,7 @@ function resetLocations() {
 
 function resetEntrances() {
     entranceMap = {};
+    reverseEntranceMap = {};
     connections = [];
     saveEntrances();
 }
@@ -294,6 +295,7 @@ function processCheckMessage(message) {
         }
     }
 
+    saveChecked();
     refreshChecked();
     drawActiveTab();
 }

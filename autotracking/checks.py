@@ -1,5 +1,6 @@
 import os
 import sys
+from message import Message
 from check import Check
 
 sys.path.append(os.path.abspath('../LADXR/'))
@@ -47,6 +48,11 @@ def loadChecks():
         '0x301-0': 0xDDE1,
         '0x301-1': 0xDDE1,
         '0x223': 0xDA2E,
+        '0x169': 0xD97C,
+    }
+
+    alternateAddresses = {
+        '0x0F2': 0xD8B2,
     }
 
     blacklist = {'None', '0x2A1-2'}
@@ -62,4 +68,32 @@ def loadChecks():
         if check in maskOverrides:
             mask = maskOverrides[check]
         
-        checks.append(Check(check, address, mask))
+        checks.append(Check(check, address, mask, alternateAddresses[check] if check in alternateAddresses else None))
+
+def readChecks(gb):
+    for check in checks:
+        bytes = [gb.readRamByte(check.address)]
+
+        if check.alternateAddress != None:
+            bytes.append(gb.readRamByte(check.alternateAddress))
+
+        check.set(bytes)
+
+async def sendChecks(checks, socket, diff=True):
+    if not checks: return
+
+    newMessage = Message('add' if diff else 'set', 'check')
+    for check in checks:
+        value = check.diff if diff else check.value
+        
+        newMessage.items.append(
+            {
+                'id': check.id,
+                'qty': value,
+            }
+        )
+
+        print(f'Sending {check.id}: {"+" if value > 0 and diff else ""}{value}')
+        check.diff = 0
+    
+    await newMessage.send(socket)
