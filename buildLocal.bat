@@ -3,7 +3,7 @@ rd /S /Q build
 del magpie-data.spec
 del dist\magpie-local.zip
 
-pyinstaller --noconfirm --onedir --windowed -n magpie-data --add-data "LADXR;LADXR/" --add-data "templates;templates/" --add-data "static;static/"  "magpie.py"
+pyinstaller --noconfirm --onedir --windowed -n magpie-data --add-data "LADXR;LADXR/" --add-data "templates;templates/" --add-data "static;static/" "magpie.py"
 
 copy magpie.bat dist\
 cd dist
