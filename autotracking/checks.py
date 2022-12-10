@@ -57,6 +57,10 @@ def loadChecks():
 
     blacklist = {'None', '0x2A1-2'}
 
+    # in no dungeons boss shuffle, the d3 boss in d7 set 0x20 in fascade's room (0x1BC)
+    # after beating evil eagile in D6, 0x1BC is now 0xAC (other things may have happened in between)
+    # entered d3, slime eye flag had already been set (0x15A 0x20). after killing angler fish, bits 0x0C were set
+
     for check in [x for x in checkMetadataTable if x not in blacklist]:
         room = check.split('-')[0]
         mask = 0x10
