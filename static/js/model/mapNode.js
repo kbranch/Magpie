@@ -204,83 +204,70 @@ class MapNode {
         return classes;
     }
 
-    static nodeId(location, scaling) {
-        return `${Math.round(location.x * scaling.x + scaling.offset.x)},${Math.round(location.y * scaling.y + scaling.offset.y)}`;
-    }
-
-    static coordsFromId(id) {
-        let chunks = id.split(',');
-        return {
-            x: Number(chunks[0]),
-            y: Number(chunks[1])
-        };
-    }
-
-    static updateEntranceAttrs(graphic, node) {
-        let entrance = node.entrance
+    updateEntranceAttrs() {
+        let entrance = this.entrance
     
         if (entrance == null) {
-            $(graphic).removeAttr('data-entrance-id');
+            $(this.graphic).removeAttr('data-entrance-id');
     
             return;
         }
     
-        $(graphic).attr('data-entrance-id', entrance.id);
+        $(this.graphic).attr('data-entrance-id', entrance.id);
     
         if (entrance.isConnector()) {
             if (entrance.isConnected()) {
                 connection = entrance.mappedConnection();
-                $(graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
-                MapNode.updateNodeOverlay(graphic, connection.label);
+                $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
+                this.updateNodeOverlay(connection.label);
             }
             else {
-                $(graphic).removeAttr('data-connected-to');
-                $(graphic).empty();
+                $(this.graphic).removeAttr('data-connected-to');
+                $(this.graphic).empty();
             }
         }
         else {
             if (entrance.isRemapped()) {
-                $(graphic).attr('data-connected-to', entrance.connectedTo());
+                $(this.graphic).attr('data-connected-to', entrance.connectedTo());
             }
             else {
-                $(graphic).removeAttr('data-connected-to');
+                $(this.graphic).removeAttr('data-connected-to');
             }
     
             if (entrance.isFound()
                 && !entrance.isMappedToSelf()) {
-                $(graphic).attr('data-connected-from', entrance.connectedFrom());
+                $(this.graphic).attr('data-connected-from', entrance.connectedFrom());
             }
             else {
-                $(graphic).removeAttr('data-connected-from');
+                $(this.graphic).removeAttr('data-connected-from');
             }
         }
     }
     
-    static updateAnimationClasses(classes, node, graphic, parent, animate) {
+    updateAnimationClasses(classes, parent, animate) {
         let animationClass = animate ? 'animate__bounceInDown' : '';
+        this.graphic = $(`[data-node-id="${this.id()}"]`);
     
-        if (graphic.length > 0) {
-            let currentDiff = $(graphic).attr('data-difficulty');
+        if (this.graphic.length > 0) {
+            let currentDiff = $(this.graphic).attr('data-difficulty');
     
-            if (currentDiff == "9" && node.difficulty >= 0 && node.difficulty < 9) {
+            if (currentDiff == "9" && this.difficulty >= 0 && this.difficulty < 9) {
                 classes.push(animationClass);
             }
             else {
-                $(graphic).removeClass('animate__bounceInDown');
+                $(this.graphic).removeClass('animate__bounceInDown');
             }
         }
         else {
             classes.push(animationClass);
     
-            graphic = //buildNewCheckGraphic(node.id());
+            this.createGraphic();
     
-            $(parent).append(graphic);
+            $(parent).append(this.graphic);
         }
-    
-        return graphic;
     }
 
-    static updateNodeOverlay(graphic, text) {
+    updateNodeOverlay(text) {
 
         let overlay = $('<p>', {
             'class': "node-overlay",
@@ -292,7 +279,38 @@ class MapNode {
         });
 
         $(overlay).append(text);
-        $(graphic).empty();
-        $(graphic).append(overlay);
+        $(graphic.html).empty();
+        $(graphic.html).append(overlay);
+    }
+
+    createGraphic() {
+        let coords = MapNode.coordsFromId(this.id());
+
+        this.graphic = $('<div>', {
+            'data-node-id': this.id(),
+            'draggable': false,
+            css: {
+                'top': coords.y,
+                'left': coords.x,
+                'width': localSettings.checkSize,
+                'height': localSettings.checkSize,
+            },
+            onclick: 'checkGraphicLeftClick(this);',
+            oncontextmenu: 'checkGraphicRightClick(this); return false;',
+            onmouseenter: 'checkGraphicMouseEnter(this)',
+            onmouseleave: 'checkGraphicMouseLeave(this)',
+        });
+    }
+
+    static nodeId(location, scaling) {
+        return `${Math.round(location.x * scaling.x + scaling.offset.x)},${Math.round(location.y * scaling.y + scaling.offset.y)}`;
+    }
+
+    static coordsFromId(id) {
+        let chunks = id.split(',');
+        return {
+            x: Number(chunks[0]),
+            y: Number(chunks[1])
+        };
     }
 }
