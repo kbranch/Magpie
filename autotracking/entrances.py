@@ -5,7 +5,9 @@ from entrance import Entrance
 from romTables import ROMWithTables
 from worldSetup import WorldSetup
 
+os.chdir(sys._MEIPASS)
 sys.path.append(os.path.abspath('../LADXR/'))
+sys.path.append(os.path.abspath('LADXR/'))
 
 from entranceInfo import ENTRANCE_INFO
 

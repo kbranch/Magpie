@@ -3,7 +3,9 @@ import sys
 from message import Message
 from check import Check
 
+os.chdir(sys._MEIPASS)
 sys.path.append(os.path.abspath('../LADXR/'))
+sys.path.append(os.path.abspath('LADXR/'))
 
 from checkMetadata import checkMetadataTable
 
