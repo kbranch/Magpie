@@ -1,0 +1,48 @@
+function resetUndoRedo() {
+    undoStack = [];
+    redoStack = [];
+}
+
+function getUndoState() {
+    let state = new Object();
+    state.checkedChecks = Object.assign({}, checkedChecks);
+    state.entranceMap = Object.assign({}, entranceMap);
+    state.connections = connections.map(x => x.clone());
+
+    return state;
+}
+
+function applyUndoState(state) {
+    checkedChecks = state.checkedChecks;
+    entranceMap = state.entranceMap;
+    connections = state.connections;
+
+    pruneEntranceMap();
+    saveLocations();
+    refreshCheckList();
+}
+
+function pushUndoState() {
+    undoStack.push(getUndoState());
+    redoStack = [];
+}
+
+function undo() {
+    if (undoStack.length == 0) {
+        return;
+    }
+
+    redoStack.push(getUndoState());
+    let state = undoStack.pop();
+    applyUndoState(state);
+}
+
+function redo() {
+    if (redoStack.length == 0) {
+        return;
+    }
+
+    undoStack.push(getUndoState());
+    let state = redoStack.pop();
+    applyUndoState(state);
+}

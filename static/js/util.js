@@ -76,3 +76,20 @@ function compare(a, b) {
 function sortByKey(arr, key) {
     return arr.sort((a, b) => compare(key(a), key(b)))
 }
+
+function applySettings() {
+    let children = $('#firstRow').children()
+    let firstElement = $(children)[0].id;
+    
+    if (localSettings.swapItemsAndMap && firstElement == 'mapContainer'
+        || !localSettings.swapItemsAndMap && firstElement != 'mapContainer') {
+            $(children[1]).insertBefore($(children[0]));
+    }
+
+    $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
+
+    if (!args.rooster) {
+        inventory['ROOSTER'] = 0;
+        saveInventory();
+    }
+}

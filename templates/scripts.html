@@ -4,19 +4,24 @@
 <script src="static/lib/jquery.connections/jquery.connections.js"></script>
 <script src="static/lib/summernote/summernote-lite.js"></script>
 <script src="static/js/util.js"></script>
-<script src="static/js/map/mapNode.js"></script>
-<script src="static/js/map/nodeTooltip.js"></script>
-<script src="static/js/map/check.js"></script>
+<script src="static/js/model/mapNode.js"></script>
+<script src="static/js/model/nodeTooltip.js"></script>
+<script src="static/js/model/check.js"></script>
+<script src="static/js/model/entrance.js"></script>
+<script src="static/js/model/connection.js"></script>
+<script src="static/js/map/connectorDialog.js"></script>
 <script src="static/js/map/graphics.js"></script>
 <script src="static/js/map/input.js"></script>
-<script src="static/js/map/entrance.js"></script>
-<script src="static/js/map/connection.js"></script>
-<script src="static/js/checkMetadata.js"></script>
-<script src="static/js/entranceMetadata.js"></script>
-<script src="static/js/connectorMetadata.js"></script>
+<script src="static/js/metadata/checkMetadata.js"></script>
+<script src="static/js/metadata/entranceMetadata.js"></script>
+<script src="static/js/metadata/connectorMetadata.js"></script>
+<script src="static/js/state/settings.js"></script>
+<script src="static/js/state/items.js"></script>
+<script src="static/js/state/locations.js"></script>
+<script src="static/js/state/undo.js"></script>
 <script src="static/js/checkList.js"></script>
-<script src="static/js/settings.js"></script>
 <script src="static/js/items.js"></script>
+<script src="static/js/messaging.js"></script>
 
 <script type="application/javascript">
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
@@ -124,130 +129,50 @@
         });
     }
 
-    // Composite item logic
-    function jumpSrc() {
-        feather = inventory['FEATHER'] > 0;
-        rooster = inventory['ROOSTER'] > 0;
+    function init() {
+        modifyTooltipAllowList();
+        initKnownItems();
+        loadSettings();
+        loadLocations();
 
-        if (!feather && !rooster) {
-            return 'static/images/NO_JUMP.png';
-        }
-        if (!feather && rooster) {
-            return 'static/images/ROOSTER.png';
-        }
-        if (feather && !rooster) {
-            return 'static/images/FEATHER.png';
-        }
+        $(document).keydown(keyDown);
 
-        return 'static/images/BOTH_JUMP.png';
-    }
+        document.addEventListener('DOMContentLoaded', function() {
+            connectToAutotracker();
 
-    function tunicSrc()
-    {
-        blue = inventory['BLUE_TUNIC'] > 0;
-        red = inventory['RED_TUNIC'] > 0;
-
-        if (!blue && !red)
-        {
-            return 'static/images/GREEN_TUNIC.png';
-        }
-        if (blue && !red)
-        {
-            return 'static/images/BLUE_TUNIC.png';
-        }
-        if (!blue && red)
-        {
-            return 'static/images/RED_TUNIC.png';
-        }
-        
-        return 'static/images/BLUERED_TUNIC.png';
-    }
-
-    modifyTooltipAllowList();
-    initKnownItems();
-    loadSettings();
-    loadLocations();
-
-    $(document).keydown(keyDown);
-
-    function connectToAutotracker() {
-        if (!localSettings.enableAutotracking) {
-            return;
-        }
-
-        if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
-            autotrackerSocket = new WebSocket("ws://127.0.0.1:17026/");
-
-            autotrackerSocket.onopen = autotrackerConnected;
-            autotrackerSocket.onmessage = (event) => processMessage(event.data);
-            autotrackerSocket.onerror = (event) => console.log(event);
-            autotrackerSocket.onclose = (event) => console.log(event);
-        }
-    }
-
-    function processMessage(messageText) {
-        message = JSON.parse(messageText);
-        
-        switch (message.category) {
-            case 'item':
-                processItemMessage(message);
-                break;
-            case 'check':
-                processCheckMessage(message);
-                break;
-            case 'entrance':
-                processEntranceMessage(message);
-                break;
-            default:
-                console.log(`Unrecognized message category: ${message.category}`)
-                break;
-        }
-    }
-
-    function reloadFromAutotracker() {
-        if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
-            console.log('Sent request to send full autotracker inventory');
-            autotrackerSocket.send("sendFull");
-        }
-    }
-
-    function autotrackerConnected(event) {
-        console.log("Connected to autotracker");
-        reloadFromAutotracker();
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        connectToAutotracker();
-
-        setInterval(connectToAutotracker, 3 * 1000);
-    });
-
-    {% if local %}
-    async function getRequest(url='') {
-        const response = await fetch(url, {
-          method: 'GET', 
-          cache: 'no-cache'
-        })
-        return response.json()
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        let url = document.location
-        let route = "/flaskwebgui-keep-server-alive"
-        let interval_request = 3 * 1000 //sec
-        
-        function keep_alive_server(){
-            getRequest(url + route)
-            .then(data => console.log(data))
-        }
-        
-        setInterval(keep_alive_server, interval_request)()
-    });
-    {% endif %}
-
-    $(document).ready(function() {
-        $('#bodyTextArea').summernote({
-            height: 320,
+            setInterval(connectToAutotracker, 3 * 1000);
         });
-      });
+
+        {% if local %}
+        async function getRequest(url='') {
+            const response = await fetch(url, {
+            method: 'GET', 
+            cache: 'no-cache'
+            })
+            return response.json()
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let url = document.location
+            let route = "/flaskwebgui-keep-server-alive"
+            let interval_request = 3 * 1000 //sec
+            
+            function keep_alive_server(){
+                getRequest(url + route)
+                .then(data => console.log(data))
+            }
+            
+            setInterval(keep_alive_server, interval_request)()
+        });
+        {% endif %}
+
+        $(document).ready(function() {
+            $('#bodyTextArea').summernote({
+                height: 320,
+            });
+        });
+    }
+
+    init();
+
 </script>

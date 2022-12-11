@@ -1,31 +1,3 @@
-function initKnownItems() {
-    try {
-        loadInventory();
-    }
-    catch(err) {
-        resetInventory();
-    }
-
-    let columns = $('div[data-primary]');
-
-    for (const col of columns) {
-        // Set custom max values
-        if (hasAttr(col, "data-max")) {
-            let primary = $(col).attr('data-primary');
-            let max = Number($(col).attr('data-max'));
-            maxInventory[primary] = max;
-        }
-
-        if (hasAttr(col, "secondary_max")) {
-            let secondary = $(col).attr('data-secondary');
-            let max = Number($(col).attr('data-secondary_max'));
-            maxInventory[secondary] = max;
-        }
-    }
-
-    refreshImages();
-}
-
 function setImgSrc(img, item) {
     if (!(item in inventory)) {
         inventory[item] = 0;
@@ -93,50 +65,6 @@ function updateOverlay(item) {
     }
 }
 
-function addItem(item, qty, wrap=true, refresh=true) {
-    if (!(item in inventory)) {
-        inventory[item] = 0;
-    }
-
-    inventory[item] += qty;
-
-    if (inventory[item] > maxInventory[item]) {
-        inventory[item] = wrap ? 0 : maxInventory[item];
-    }
-
-    if (inventory[item] < 0) {
-        inventory[item] = wrap ? maxInventory[item] : 0;
-    }
-
-    console.log(`${item}: ${inventory[item]}`);
-
-    if (refresh) {
-        saveInventory();
-        setItemImage(item);
-        updateOverlay(item);
-        refreshCheckList();
-    }
-}
-
-function processItemMessage(message) {
-    if (typeof maxInventory == 'undefined') {
-        return;
-    }
-
-    if (message.type == 'set') {
-        console.log('Receiving full autotracker inventory');
-        resetInventory();
-    }
-
-    for (const item of message.items) {
-        addItem(item.id, item.qty, wrap=false, refresh=false);
-    }
-
-    saveInventory();
-    refreshImages();
-    refreshCheckList();
-}
-
 function itemValueUpdated(element) {
     let item = element.dataset.item;
     let value = null;
@@ -152,23 +80,6 @@ function itemValueUpdated(element) {
 
     saveInventory();
     refreshCheckList();
-}
-
-function resetInventory() {
-    inventory = {};
-    saveInventory();
-}
-
-function saveInventory() {
-    localStorage.setItem("inventory", JSON.stringify(inventory));
-}
-
-function loadInventory() {
-    inventory = JSON.parse(localStorage.getItem("inventory"));
-
-    if (inventory == null) {
-        resetInventory();
-    }
 }
 
 function refreshImages() {
@@ -197,4 +108,43 @@ function refreshImages() {
             input.value = inventory[item];
         }
     }
+}
+
+// Composite item logic
+function jumpSrc() {
+    feather = inventory['FEATHER'] > 0;
+    rooster = inventory['ROOSTER'] > 0;
+
+    if (!feather && !rooster) {
+        return 'static/images/NO_JUMP.png';
+    }
+    if (!feather && rooster) {
+        return 'static/images/ROOSTER.png';
+    }
+    if (feather && !rooster) {
+        return 'static/images/FEATHER.png';
+    }
+
+    return 'static/images/BOTH_JUMP.png';
+}
+
+function tunicSrc()
+{
+    blue = inventory['BLUE_TUNIC'] > 0;
+    red = inventory['RED_TUNIC'] > 0;
+
+    if (!blue && !red)
+    {
+        return 'static/images/GREEN_TUNIC.png';
+    }
+    if (blue && !red)
+    {
+        return 'static/images/BLUE_TUNIC.png';
+    }
+    if (!blue && red)
+    {
+        return 'static/images/RED_TUNIC.png';
+    }
+    
+    return 'static/images/BLUERED_TUNIC.png';
 }

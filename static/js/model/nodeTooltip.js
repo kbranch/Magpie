@@ -1,4 +1,3 @@
-
 class NodeTooltip {
     constructor(node) {
         this.node = node;

@@ -86,7 +86,7 @@
 
     var timeoutId;
     function resizeTimeout() {
-        clearCheckImages();
+        removeNodes();
         clearTimeout(timeoutId);
         skipNextAnimation = true;
         timeoutId = setTimeout(drawActiveTab, 100);

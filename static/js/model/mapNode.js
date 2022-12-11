@@ -215,4 +215,84 @@ class MapNode {
             y: Number(chunks[1])
         };
     }
+
+    static updateEntranceAttrs(graphic, node) {
+        let entrance = node.entrance
+    
+        if (entrance == null) {
+            $(graphic).removeAttr('data-entrance-id');
+    
+            return;
+        }
+    
+        $(graphic).attr('data-entrance-id', entrance.id);
+    
+        if (entrance.isConnector()) {
+            if (entrance.isConnected()) {
+                connection = entrance.mappedConnection();
+                $(graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
+                MapNode.updateNodeOverlay(graphic, connection.label);
+            }
+            else {
+                $(graphic).removeAttr('data-connected-to');
+                $(graphic).empty();
+            }
+        }
+        else {
+            if (entrance.isRemapped()) {
+                $(graphic).attr('data-connected-to', entrance.connectedTo());
+            }
+            else {
+                $(graphic).removeAttr('data-connected-to');
+            }
+    
+            if (entrance.isFound()
+                && !entrance.isMappedToSelf()) {
+                $(graphic).attr('data-connected-from', entrance.connectedFrom());
+            }
+            else {
+                $(graphic).removeAttr('data-connected-from');
+            }
+        }
+    }
+    
+    static updateAnimationClasses(classes, node, graphic, parent, animate) {
+        let animationClass = animate ? 'animate__bounceInDown' : '';
+    
+        if (graphic.length > 0) {
+            let currentDiff = $(graphic).attr('data-difficulty');
+    
+            if (currentDiff == "9" && node.difficulty >= 0 && node.difficulty < 9) {
+                classes.push(animationClass);
+            }
+            else {
+                $(graphic).removeClass('animate__bounceInDown');
+            }
+        }
+        else {
+            classes.push(animationClass);
+    
+            graphic = //buildNewCheckGraphic(node.id());
+    
+            $(parent).append(graphic);
+        }
+    
+        return graphic;
+    }
+
+    static updateNodeOverlay(graphic, text) {
+
+        let overlay = $('<p>', {
+            'class': "node-overlay",
+            'data-connector-label': text,
+            css: {
+                'font-size': `${localSettings.checkSize * 0.72}px`,
+            },
+            onmousedown: "preventDoubleClick(event)"
+        });
+
+        $(overlay).append(text);
+        $(graphic).empty();
+        $(graphic).append(overlay);
+    }
 }
