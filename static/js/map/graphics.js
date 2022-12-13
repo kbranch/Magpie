@@ -1,23 +1,24 @@
 function drawActiveTab() {
-    let activeTabId = $('ul#mapTabs button.active').attr('id');
-    let button = $(`button#${activeTabId}`)[0];
-    drawNodes(getMapNameFromButton(button), true);
+    drawNodes(getMapNameFromButton($('.tab-button.active button')), true);
 }
 
 function getMapNameFromButton(button) {
-    let target = $(button).attr('data-bs-target');
-    let img = $(`${target} img.map`);
-    let mapName = $(img).attr('data-mapname');
-
-    return mapName;
+    return $(button).parent('li').attr('data-mapname')
 }
 
 function drawTab(button, clear=false) {
     if (clear) {
         removeNodes();
+        closeAllTooltips();
     }
 
-    drawNodes(getMapNameFromButton(button), false);
+    let mapName = getMapNameFromButton(button);
+    $('.tab.active').removeClass('active');
+    $('.tab-button.active').removeClass('active');
+    $(`.tab-button[data-mapname=${mapName}]`).addClass('active');
+    $(`.tab [data-mapname=${mapName}]`).closest('.map-container').addClass('active');
+
+    drawNodes(mapName, false);
 }
 
 function drawConnectorLines() {

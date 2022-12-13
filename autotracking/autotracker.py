@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+import time
 from gameboy import Gameboy
 from items import *
 from checks import *
@@ -16,9 +17,11 @@ async def processMessages(socket):
         print(f'Received: {message}')
 
         if message == 'sendFull':
-            await sendItems(items, socket, diff=False)
-            await sendChecks(checks, socket, diff=False)
-            await sendEntrances(foundEntranceMap, socket, diff=False)
+            await sendItems(items, socket, diff=False, refresh=False)
+            await sendChecks(checks, socket, diff=False, refresh=False)
+            await sendEntrances([x for x in entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
+
+            await Message('refresh', 'refresh').send(socket)
 
             handshook = True
     
@@ -33,12 +36,12 @@ async def socketLoop(socket, path):
     handshook = False
 
     while True:
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.4)
 
         if not gb.findEmulator():
             continue
 
-        if world == None:
+        if not handshook:
             loadEntrances(gb)
 
         try:
@@ -47,14 +50,14 @@ async def socketLoop(socket, path):
 
             readItems(gb)
             readChecks(gb)
-            newEntrances = readEntrances(gb)
+            readEntrances(gb)
 
             handshook = await processMessages(socket) or handshook
             
             if handshook:
                 await sendItems([x for x in items if x.diff != 0], socket)
                 await sendChecks([x for x in checks if x.diff != 0], socket)
-                await sendEntrances(newEntrances, socket)
+                await sendEntrances([x for x in entrancesByName.values() if x.changed], socket)
         except IOError:
             pass
 

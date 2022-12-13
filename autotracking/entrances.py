@@ -5,9 +5,12 @@ from entrance import Entrance
 from romTables import ROMWithTables
 from worldSetup import WorldSetup
 
-os.chdir(sys._MEIPASS)
-sys.path.append(os.path.abspath('../LADXR/'))
-sys.path.append(os.path.abspath('LADXR/'))
+# Deal with how pyinstaller's --onefile option packs things
+if hasattr(sys, '_MEIPASS'):
+    os.chdir(sys._MEIPASS)
+    sys.path.append(os.path.abspath('LADXR/'))
+else:
+    sys.path.append(os.path.abspath('../LADXR/'))
 
 from entranceInfo import ENTRANCE_INFO
 
@@ -47,37 +50,45 @@ mapMap = {
 roomAddress = 0xFFF6
 mapIdAddress = 0xFFF7
 indoorFlagAddress = 0xDBA5
+entranceRoomOffset = 0xD800
 
 lastRoom = None
 lastIndoors = None
 
-foundEntranceMap = {}
 reverseEntranceMap = {}
-entrances = {}
-world = None
+entrancesByTarget = {}
+entrancesByName = {}
 
-async def sendEntrances(mappings, socket, diff=True):
-    if not mappings: return
+async def sendEntrances(entrances, socket, diff=True, refresh=True):
+    if not entrances: return
 
-    newMessage = Message('add' if diff else 'set', 'entrance')
+    newMessage = Message('add' if diff else 'set', 'entrance', refresh)
     newMessage.entranceMap = {}
-    for outdoor, indoor in mappings.items():
-        newMessage.entranceMap[outdoor] = indoor
+    for entrance in entrances:
+        newMessage.entranceMap[entrance.name] = entrance.mappedIndoor
+        entrance.changed = False
 
-        print(f'Sending entrance {outdoor}: {indoor}')
+        print(f'Sending entrance {entrance.name}: {entrance.mappedIndoor}')
     
     await newMessage.send(socket)
 
 def loadEntrances(gb):
-    global foundEntranceMap, reverseEntranceMap, entrances, world
+    global reverseEntranceMap, entrancesByTarget
 
-    entrances = {} 
+    addressOverrides = {
+        0x312: 0xDDF2,
+    }
+
+    entrancesByTarget = {} 
 
     for name, info in ENTRANCE_INFO.items():
-        entrance = Entrance(info.room, info.target, name)
-        entrances[info.target] = entrance
+        alternateAddress = addressOverrides[info.target] if info.target in addressOverrides else None
+        entrance = Entrance(info.room, info.target, name, alternateAddress)
+        entrancesByTarget[info.target] = entrance
+        entrancesByName[name] = entrance
     
     romData = gb.emulator.read_rom(0, 1024 * 1024)
+
     # Super janky, I need to make an LADXR pull request
     with open('rom', 'wb') as file:
         file.write(romData)
@@ -91,12 +102,26 @@ def loadEntrances(gb):
 
     reverseEntranceMap = {value: key for key, value in world.entrance_mapping.items()}
 
-def readEntrances(gb):
-    global lastRoom, lastIndoors
+    readVisitedEntrances(gb)
 
-    newMappings = {}
+def readVisitedEntrances(gb):
+    for entrance in entrancesByTarget.values():
+        outdoorName = reverseEntranceMap[entrance.name]
+        outdoorEntrance = entrancesByName[outdoorName]
+
+        indoorAddress = entrance.indoorAddress or (entrance.indoorMap + entranceRoomOffset)
+
+        indoorVisited = gb.readRamByte(indoorAddress) & 0x80
+        outdoorVisited = gb.readRamByte(outdoorEntrance.outdoorRoom + entranceRoomOffset) & 0x80
+
+        if indoorVisited and outdoorVisited and entrance.name in reverseEntranceMap:
+            outdoorEntrance.map(entrance.name)
+
+def readEntrances(gb):
+    global lastIndoors, lastRoom
 
     indoors = gb.readRamByte(indoorFlagAddress)
+
     mapId = gb.readRamByte(mapIdAddress)
     if mapId not in mapMap:
         print(f'Unknown map ID {hex(mapId)}')
@@ -105,23 +130,14 @@ def readEntrances(gb):
     mapDigit = mapMap[mapId] << 8 if indoors else 0
     room = gb.readRamByte(roomAddress) + mapDigit
 
-    if indoors != lastIndoors and lastRoom != None:
+    if indoors != lastIndoors and lastIndoors != None:
         indoorRoom = room if indoors else lastRoom
 
-        if indoorRoom in entrances:
-            entrance = entrances[indoorRoom]
+        if indoorRoom in entrancesByTarget:
+            entrance = entrancesByTarget[indoorRoom]
             if entrance.name in reverseEntranceMap:
                 outdoorEntranceName = reverseEntranceMap[entrance.name]
-                if outdoorEntranceName not in foundEntranceMap:
-                    newMappings[outdoorEntranceName] = entrance.name
-                    print(f'Entrance found: {outdoorEntranceName}: {entrance.name}')
-
-                foundEntranceMap[outdoorEntranceName] = entrance.name
-
-    # if lastRoom != room:
-    #     print(f"Current room: {hex(room)}")
+                entrancesByName[outdoorEntranceName].map(entrance.name)
 
     lastRoom = room
     lastIndoors = indoors
-
-    return newMappings

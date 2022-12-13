@@ -137,6 +137,7 @@ img {
     display: inline-block;
     position: relative;
     pointer-events: auto;
+    width: 100%;
 }
 
 .tooltip-body {
@@ -822,4 +823,26 @@ button.nav-link.active {
 .note-editable {
     background: #fff;
     color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+}
+
+.tab:not(.active) {
+    display: none;
+}
+
+.tab-button.active .tab-link {
+    border-color: #fff;
+    border-radius: 5px 5px 0px 0px;
+    color: #fff;
+}
+
+.tab-button:not(.active) .tab-link:hover {
+    border-color: #ccc;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.tab-link {
+    border-color: transparent;
+    padding: 9px 16px 8px 16px;
+    border-width: 1px 1px 0px 1px;
+    color: #ccc;
 }

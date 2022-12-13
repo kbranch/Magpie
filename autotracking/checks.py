@@ -3,9 +3,12 @@ import sys
 from message import Message
 from check import Check
 
-os.chdir(sys._MEIPASS)
-sys.path.append(os.path.abspath('../LADXR/'))
-sys.path.append(os.path.abspath('LADXR/'))
+# Deal with how pyinstaller's --onefile option packs things
+if hasattr(sys, '_MEIPASS'):
+    os.chdir(sys._MEIPASS)
+    sys.path.append(os.path.abspath('LADXR/'))
+else:
+    sys.path.append(os.path.abspath('../LADXR/'))
 
 from checkMetadata import checkMetadataTable
 
@@ -85,10 +88,10 @@ def readChecks(gb):
 
         check.set(bytes)
 
-async def sendChecks(checks, socket, diff=True):
+async def sendChecks(checks, socket, diff=True, refresh=True):
     if not checks: return
 
-    newMessage = Message('add' if diff else 'set', 'check')
+    newMessage = Message('add' if diff else 'set', 'check', refresh)
     for check in checks:
         value = check.diff if diff else check.value
         

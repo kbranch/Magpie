@@ -118,14 +118,14 @@ function updateReverseMap() {
                                .reduce((rev, [key, value]) => (rev[value] = key, rev), {});
 }
 
-function connectOneEndConnector(outdoors, indoors) {
+function connectOneEndConnector(outdoors, indoors, refresh=true) {
     let connector = Connection.findConnector({ interior: indoors });
     let connection = Connection.existingConnection(connector);
 
     if (connection != null) {
         let to = connection.entrances[0];
         let toInterior = Entrance.connectedTo(to);
-        connectExteriors(outdoors, indoors, to, toInterior);
+        connectExteriors(outdoors, indoors, to, toInterior, refresh);
     }
     else {
         let otherSide = connector.entrances.filter(x => Entrance.isFound(x))
@@ -133,10 +133,10 @@ function connectOneEndConnector(outdoors, indoors) {
 
         if (otherSide != null) {
             let otherInterior = Entrance.connectedTo(otherSide);
-            connectExteriors(outdoors, indoors, otherSide, otherInterior);
+            connectExteriors(outdoors, indoors, otherSide, otherInterior, refresh);
         }
         else {
-            connectEntrances(outdoors, indoors);
+            connectEntrances(outdoors, indoors, refresh);
         }
     }
 }
@@ -238,7 +238,7 @@ function mapToLandfill(entranceId) {
     refreshCheckList();
 }
 
-function connectExteriors(from, fromInterior, to, toInterior) {
+function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
     pushUndoState();
 
     let connector = Connection.findConnector({ interior: fromInterior });
@@ -263,5 +263,8 @@ function connectExteriors(from, fromInterior, to, toInterior) {
 
     saveEntrances();
     closeAllCheckTooltips();
-    refreshCheckList();
+
+    if (refresh) {
+        refreshCheckList();
+    }
 }

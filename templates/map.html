@@ -1,85 +1,85 @@
-<ul class="nav nav-tabs" id="mapTabs" role="tablist">
-    <li class="nav-item" role="presentation">
-        <button class="nav-link" id="overworldTab" data-bs-toggle="tab" data-bs-target="#overworldTabContent" type="button" role="tab" aria-controls="overworldTabContent" aria-selected="true" onclick="drawTab(this, clear=true)">Overworld</button>
+<ul class="nav" id="mapTabs">
+    <li class="tab-button active" data-mapname="overworld">
+        <button class="btn tab-link" id="overworldTab" type="button" onclick="drawTab(this, clear=true)">Overworld</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Tail Cave" data-bs-trigger="hover">
-        <button class="nav-link" id="d1Tab" data-bs-toggle="tab" data-bs-target="#d1TabContent" type="button" role="tab" aria-controls="d1TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D1</button>
+    <li class="tab-button" data-mapname="d1" data-bs-toggle="tooltip" data-bs-title="Tail Cave" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d1Tab" type="button" onclick="drawTab(this, clear=true)">D1</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Bottle Grotto" data-bs-trigger="hover">
-        <button class="nav-link" id="d2Tab" data-bs-toggle="tab" data-bs-target="#d2TabContent" type="button" role="tab" aria-controls="d2TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D2</button>
+    <li class="tab-button" data-mapname="d2" data-bs-toggle="tooltip" data-bs-title="Bottle Grotto" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d2Tab" type="button" onclick="drawTab(this, clear=true)">D2</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Key Cavern" data-bs-trigger="hover">
-        <button class="nav-link" id="d3Tab" data-bs-toggle="tab" data-bs-target="#d3TabContent" type="button" role="tab" aria-controls="d3TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D3</button>
+    <li class="tab-button" data-mapname="d3" data-bs-toggle="tooltip" data-bs-title="Key Cavern" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d3Tab" type="button" onclick="drawTab(this, clear=true)">D3</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Angler's Tunnel" data-bs-trigger="hover">
-        <button class="nav-link" id="d4Tab" data-bs-toggle="tab" data-bs-target="#d4TabContent" type="button" role="tab" aria-controls="d4TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D4</button>
+    <li class="tab-button" data-mapname="d4" data-bs-toggle="tooltip" data-bs-title="Angler's Tunnel" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d4Tab" type="button" onclick="drawTab(this, clear=true)">D4</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Catfish's Maw" data-bs-trigger="hover">
-        <button class="nav-link" id="d5Tab" data-bs-toggle="tab" data-bs-target="#d5TabContent" type="button" role="tab" aria-controls="d5TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D5</button>
+    <li class="tab-button" data-mapname="d5" data-bs-toggle="tooltip" data-bs-title="Catfish's Maw" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d5Tab" type="button" onclick="drawTab(this, clear=true)">D5</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Face Shrine" data-bs-trigger="hover">
-        <button class="nav-link" id="d6Tab" data-bs-toggle="tab" data-bs-target="#d6TabContent" type="button" role="tab" aria-controls="d6TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D6</button>
+    <li class="tab-button" data-mapname="d6" data-bs-toggle="tooltip" data-bs-title="Face Shrine" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d6Tab" type="button" onclick="drawTab(this, clear=true)">D6</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Eagle's Tower" data-bs-trigger="hover">
-        <button class="nav-link" id="d7Tab" data-bs-toggle="tab" data-bs-target="#d7TabContent" type="button" role="tab" aria-controls="d7TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D7</button>
+    <li class="tab-button" data-mapname="d7" data-bs-toggle="tooltip" data-bs-title="Eagle's Tower" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d7Tab" type="button" onclick="drawTab(this, clear=true)">D7</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Turtle Rock" data-bs-trigger="hover">
-        <button class="nav-link" id="d8Tab" data-bs-toggle="tab" data-bs-target="#d8TabContent" type="button" role="tab" aria-controls="d8TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D8</button>
+    <li class="tab-button" data-mapname="d8" data-bs-toggle="tooltip" data-bs-title="Turtle Rock" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d8Tab" type="button" onclick="drawTab(this, clear=true)">D8</button>
     </li>
-    <li class="nav-item" role="presentation" data-bs-toggle="tooltip" data-bs-title="Color Dungeon" data-bs-trigger="hover">
-        <button class="nav-link" id="d0Tab" data-bs-toggle="tab" data-bs-target="#d0TabContent" type="button" role="tab" aria-controls="d0TabContent" aria-selected="true" onclick="drawTab(this, clear=true)">D0</button>
+    <li class="tab-button" data-mapname="d0" data-bs-toggle="tooltip" data-bs-title="Color Dungeon" data-bs-trigger="hover">
+        <button class="btn tab-link" id="d0Tab" type="button" onclick="drawTab(this, clear=true)">D0</button>
     </li>
 </ul>
 
-<div class="tab-content" id="tabContents">
-    <div class="tab-pane map-container text-center" id="overworldTabContent" role="tabpanel" aria-labelledby="overworldTab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="overworld" src="static/images/overworld.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+<div class="tabs" id="tabContents">
+    <div class="tab map-container text-center active" id="overworldTabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="overworld" src="static/images/overworld.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d1TabContent" role="tabpanel" aria-labelledby="d1Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d1" src="static/images/d1.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d1TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d1" src="static/images/d1.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d2TabContent" role="tabpanel" aria-labelledby="d2Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d2" src="static/images/d2.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d2TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d2" src="static/images/d2.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d3TabContent" role="tabpanel" aria-labelledby="d3Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d3" src="static/images/d3.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d3TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d3" src="static/images/d3.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d4TabContent" role="tabpanel" aria-labelledby="d4Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d4" src="static/images/d4.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d4TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d4" src="static/images/d4.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d5TabContent" role="tabpanel" aria-labelledby="d5Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d5" src="static/images/d5.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d5TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d5" src="static/images/d5.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d6TabContent" role="tabpanel" aria-labelledby="d6Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d6" src="static/images/d6.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d6TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d6" src="static/images/d6.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d7TabContent" role="tabpanel" aria-labelledby="d7Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d7" src="static/images/d7.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d7TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d7" src="static/images/d7.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d8TabContent" role="tabpanel" aria-labelledby="d8Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d8" src="static/images/d8.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d8TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d8" src="static/images/d8.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
-    <div class="tab-pane map-container text-center" id="d0TabContent" role="tabpanel" aria-labelledby="d0Tab">
-        <div class="map-wrapper">
-            <img class="map" data-mapname="d0" src="static/images/d0.png" onclick="closeAllCheckTooltips();" oncontextmenu="return false;" draggable="false">
+    <div class="tab map-container text-center" id="d0TabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="d0" src="static/images/d0.png" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
 </div>

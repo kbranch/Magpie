@@ -219,7 +219,7 @@ class MapNode {
             if (entrance.isConnected()) {
                 connection = entrance.mappedConnection();
                 $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
-                this.updateNodeOverlay(connection.label);
+                this.updateOverlay(connection.label);
             }
             else {
                 $(this.graphic).removeAttr('data-connected-to');
@@ -267,8 +267,7 @@ class MapNode {
         }
     }
 
-    updateNodeOverlay(text) {
-
+    updateOverlay(text) {
         let overlay = $('<p>', {
             'class': "node-overlay",
             'data-connector-label': text,

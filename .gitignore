@@ -10,3 +10,4 @@ dist/
 build/
 *.spec
 deploy*.bat
+autotracking/rom

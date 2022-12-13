@@ -14,7 +14,7 @@ function closeOtherTooltips(element) {
 
 function closeAllCheckTooltips() {
     let secondaries = $('.helper');
-    let nodes = $(`.check-graphic`);
+    let nodes = $('.check-graphic');
     $(secondaries).tooltip('hide');
     $(nodes).tooltip('hide');
     $('connection.connector-line').connections('remove');
@@ -29,6 +29,10 @@ function closeAllCheckTooltips() {
     if (graphicalMapSource != null) {
         endGraphicalConnection();
     }
+}
+
+function closeAllTooltips() {
+    $('.tooltip').tooltip('hide');
 }
 
 function removeNodeTooltips() {

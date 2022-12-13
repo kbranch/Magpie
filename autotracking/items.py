@@ -34,7 +34,7 @@ items = [
     Item('SHOVEL', None),
     Item('MAGIC_POWDER', None),
     Item('BOOMERANG', None),
-    Item('TOADSTOOL', None),
+    Item('TOADSTOOL', None, increaseOnly=True),
     Item('ROOSTER', None),
     Item('SWORD', 0xDB4E, count=True),
     Item('POWER_BRACELET', 0xDB43, count=True),
@@ -128,10 +128,10 @@ def readItems(gb):
     for item in [x for x in items if x.address]:
         item.set(gb.readRamByte(item.address))
 
-async def sendItems(items, socket, diff=True):
+async def sendItems(items, socket, diff=True, refresh=True):
     if not items: return
 
-    newMessage = Message('add' if diff else 'set', 'item')
+    newMessage = Message('add' if diff else 'set', 'item', refresh)
     for item in items:
         value = item.diff if diff else item.value
 

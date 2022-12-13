@@ -20,8 +20,11 @@ function processCheckMessage(message) {
     }
 
     saveChecked();
-    refreshChecked();
-    drawActiveTab();
+
+    if (message.refresh) {
+        refreshChecked();
+        drawActiveTab();
+    }
 }
 
 function processItemMessage(message) {
@@ -40,13 +43,16 @@ function processItemMessage(message) {
 
     saveInventory();
     refreshImages();
-    refreshCheckList();
+
+    if (message.refresh) {
+        refreshCheckList();
+    }
 }
 
 function processEntranceMessage(message) {
     if (message.type == 'set') {
         console.log('Receiving full autotracker entrances');
-        resetEntrances();
+        // resetEntrances();
     }
 
     for (const outdoor in message.entranceMap) {
@@ -55,7 +61,7 @@ function processEntranceMessage(message) {
         }
 
         if (Entrance.isConnector(outdoor)) {
-            connectOneEndConnector(outdoor, message.entranceMap[outdoor]);
+            connectOneEndConnector(outdoor, message.entranceMap[outdoor], refresh=false);
             updateReverseMap();
         }
         else {
@@ -63,7 +69,9 @@ function processEntranceMessage(message) {
         }
     }
 
-    refreshCheckList();
+    if (message.refresh) {
+        refreshCheckList();
+    }
 }
 
 function connectToAutotracker() {
@@ -94,6 +102,8 @@ function processMessage(messageText) {
         case 'entrance':
             processEntranceMessage(message);
             break;
+        case 'refresh':
+            refreshCheckList();
         default:
             console.log(`Unrecognized message category: ${message.category}`)
             break;

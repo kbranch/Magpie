@@ -80,12 +80,6 @@
     }
 
     function refreshCheckList() {
-        let activeTabId = $('ul#mapTabs button.active').attr('id');
-
-        if (activeTabId == undefined) {
-            activeTabId = 'overworldTab';
-        }
-
         $.ajax({
             type: "POST",
             url: "/checkList",
@@ -100,14 +94,6 @@
                 $('#checkList').html(response);
                 pruneEntranceMap();
                 refreshChecked();
-
-                let button = $(`button#${activeTabId}`);
-                let pane = $($(button).attr('data-bs-target'));
-
-                $(pane).addClass('show');
-                $(pane).addClass('active');
-                $(button).attr('aria-selected', "true");
-                $(button).addClass('active');
 
                 drawActiveTab();
             }

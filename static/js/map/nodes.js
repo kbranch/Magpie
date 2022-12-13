@@ -46,7 +46,7 @@ function createNodes(map, mapName) {
                  && coord.indirect)
                 || (args.entranceshuffle == 'simple'
                     && coord.indirect
-                    && coord.inSimpleEntrace)) {
+                    && coord.inSimpleEntrance)) {
                 continue;
             }
 
@@ -176,7 +176,7 @@ function drawNodes(mapName, animate=true) {
 
     updateReverseMap();
 
-    let map = $(mapImg).closest('div.tab-pane');
+    let map = $(mapImg).closest('div.map-container');
     let parent = $(map).find('div.map-wrapper');
     createNodes(map, mapName);
 
