@@ -5,7 +5,7 @@ The differentiating feature of Magpie compared to something like [EmoTracker](ht
 
 The item, map and even flag layouts also include a text-based section for new items, locations and flags that were not accounted for when the layout was created.
 
-Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/yHxuDe3V) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
+Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/QhAKagk84e) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
 
 Special thanks to:
  - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is essentially a port of, and for help with the design
