@@ -9,7 +9,7 @@ function getMapNameFromButton(button) {
 function drawTab(button, clear=false) {
     if (clear) {
         removeNodes();
-        closeAllTooltips();
+        closeAllCheckTooltips();
     }
 
     let mapName = getMapNameFromButton(button);

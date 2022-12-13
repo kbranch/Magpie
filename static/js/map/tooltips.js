@@ -31,9 +31,9 @@ function closeAllCheckTooltips() {
     }
 }
 
-function closeAllTooltips() {
-    $('.tooltip').tooltip('hide');
-}
+// function closeAllTooltips() {
+//     $('.tooltip').tooltip('hide');
+// }
 
 function removeNodeTooltips() {
     $('.check-graphic').each((i, e) => {

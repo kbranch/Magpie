@@ -217,7 +217,7 @@ class MapNode {
     
         if (entrance.isConnector()) {
             if (entrance.isConnected()) {
-                connection = entrance.mappedConnection();
+                let connection = entrance.mappedConnection();
                 $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
                 this.updateOverlay(connection.label);
             }
@@ -278,8 +278,8 @@ class MapNode {
         });
 
         $(overlay).append(text);
-        $(graphic.html).empty();
-        $(graphic.html).append(overlay);
+        $(this.graphic).empty();
+        $(this.graphic).append(overlay);
     }
 
     createGraphic() {
