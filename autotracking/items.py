@@ -3,6 +3,7 @@ from item import Item
 
 gameStateAddress = 0xDB95
 validGameStates = {0x0B, 0x0C}
+gameStateResetThreshold = 0x06
 
 inventorySlotCount = 16
 inventoryStartAddress = 0xDB00
@@ -80,6 +81,67 @@ items = [
     Item('BLUE_TUNIC', 0xDB6D, mask=1 << 1),
 ]
 
+dungeonKeyDoors = [
+    { # D0
+        0xDDE5: 0x02,
+        0xDDE9: 0x04,
+        0xDDF0: 0x04,
+    },
+    { # D1
+        0xD907: 0x04,
+        0xD909: 0x40,
+        0xD90F: 0x01,
+    },
+    { # D2
+        0xD921: 0x02,
+        0xD925: 0x01,
+        0xD931: 0x02,
+        0xD932: 0x08,
+        0xD935: 0x04,
+    },
+    { # D3
+        0xD945: 0x40,
+        0xD946: 0x40,
+        0xD949: 0x40,
+        0xD94A: 0x40,
+        0xD956: 0x01,
+        0xD956: 0x02,
+        0xD956: 0x04,
+        0xD956: 0x08,
+    },
+    { # D4
+        0xD969: 0x04,
+        0xD96A: 0x40,
+        0xD96E: 0x40,
+        0xD978: 0x01,
+        0xD979: 0x04,
+    },
+    { # D5
+        0xD98C: 0x40,
+        0xD994: 0x40,
+        0xD99F: 0x04
+    },
+    { # D6
+        0xD9C3: 0x40,
+        0xD9C6: 0x40,
+        0xD9D0: 0x04,
+    },
+    { # D7
+        0xDA10: 0x02,
+        0xDA1E: 0x40,
+        0xDA21: 0x40
+    },
+    { # D8
+        0xDA39: 0x04,
+        0xDA3B: 0x01,
+        0xDA42: 0x40,
+        0xDA43: 0x40,
+        0xDA44: 0x40,
+        0xDA49: 0x40,
+        0xDA4A: 0x01
+    },
+]
+
 dungeonItemAddresses = [
     0xDB16, # D1
     0xDB1B, # D2
@@ -103,7 +165,7 @@ dungeonItemOffsets = {
 for i in range(len(dungeonItemAddresses)):
     for item, offset in dungeonItemOffsets.items():
         if item.startswith('KEY'):
-            items.append(Item(item.format(i + 1), dungeonItemAddresses[i] + offset, count=True, increaseOnly=True))
+            items.append(Item(item.format(i + 1), dungeonItemAddresses[i] + offset, count=True))
         else:
             items.append(Item(item.format(i + 1), dungeonItemAddresses[i] + offset))
 
@@ -112,21 +174,34 @@ itemDict = {item.id: item for item in items}
 def readItems(gb):
     missingItems = {x for x in items if x.address == None}
 
+    extraItems = {}
+    
+    # Add keys for opened key doors
+    for i in range(len(dungeonKeyDoors)):
+        item = f'KEY{i}'
+        extraItems[item] = 0
+
+        for address, mask in dungeonKeyDoors[i].items():
+            value = gb.readRamByte(address) & mask
+            if value > 0:
+                extraItems[item] += 1
+
     # Main inventory items
     for i in range(inventoryStartAddress, inventoryEndAddress):
         value = gb.readRamByte(i)
 
         if value in inventoryItemIds:
             item = itemDict[inventoryItemIds[value]]
-            item.set(1)
+            item.set(1, 0)
             missingItems.remove(item)
     
     for item in missingItems:
-        item.set(0)
+        item.set(0, 0)
     
     # All other items
     for item in [x for x in items if x.address]:
-        item.set(gb.readRamByte(item.address))
+        extra = extraItems[item.id] if item.id in extraItems else 0
+        item.set(gb.readRamByte(item.address), extra)
 
 async def sendItems(items, socket, diff=True, refresh=True):
     if not items: return

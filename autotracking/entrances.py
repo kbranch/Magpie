@@ -102,10 +102,11 @@ def loadEntrances(gb):
 
     reverseEntranceMap = {value: key for key, value in world.entrance_mapping.items()}
 
-    readVisitedEntrances(gb)
-
 def readVisitedEntrances(gb):
     for entrance in entrancesByTarget.values():
+        if entrance.name not in reverseEntranceMap:
+            continue
+
         outdoorName = reverseEntranceMap[entrance.name]
         outdoorEntrance = entrancesByName[outdoorName]
 

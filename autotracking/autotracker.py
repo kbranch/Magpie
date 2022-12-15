@@ -27,13 +27,11 @@ async def processMessages(socket):
     
     return handshook
 
-def gameStateValid():
-    return gb.readRamByte(gameStateAddress) in validGameStates
-
 async def socketLoop(socket, path):
     print('Connected to tracker')
 
     handshook = False
+    visitedEntrancesRead = False
 
     while True:
         await asyncio.sleep(0.4)
@@ -45,8 +43,13 @@ async def socketLoop(socket, path):
             loadEntrances(gb)
 
         try:
-            if not gameStateValid():
+            gameState = gb.readRamByte(gameStateAddress)
+            if gameState not in validGameStates:
                 continue
+
+            if not visitedEntrancesRead:
+                readVisitedEntrances(gb)
+                visitedEntrancesRead = True
 
             readItems(gb)
             readChecks(gb)

@@ -10,11 +10,13 @@ class Item:
         self.rawValue = 0
         self.diff = 0
 
-    def set(self, byte):
+    def set(self, byte, extra):
         oldValue = self.value
 
         if self.mask:
             byte = byte & self.mask
+        
+        byte += extra
         
         if not self.count:
             byte = int(byte > self.threshold)

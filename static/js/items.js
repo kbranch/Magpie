@@ -31,7 +31,10 @@ function setItemImage(item) {
 
     if (img.length == 0) {
         col = $(`div[data-secondary="${item}"]`);
-        img = $(col).children()[0].children[0];
+
+        if (col.length > 0) {
+            img = $(col).children()[0].children[0];
+        }
     }
 
     setImgSrc(img, item);
