@@ -272,6 +272,7 @@ img {
     position: absolute;
     bottom: -120%;
     left: -20%;
+    pointer-events:none;
 }
 
 .one-way-in:before {
@@ -283,6 +284,7 @@ img {
     position: absolute;
     bottom: -120%;
     left: -20%;
+    pointer-events:none;
 }
 
 .entrance-only.unmapped-entrance:before {
