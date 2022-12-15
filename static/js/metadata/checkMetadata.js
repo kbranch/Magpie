@@ -1485,6 +1485,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":23,
+	   "linkedItem": "INSTRUMENT8",
+	   "vanillaLink": "true",
 	},
 	"0x234":{
 	   "id":"0x234",
@@ -1904,6 +1906,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":141,
+	   "linkedItem": "INSTRUMENT7",
+	   "vanillaLink": "true",
 	},
 	"0x223":{
 	   "id":"0x223",
@@ -2197,6 +2201,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":160,
+	   "linkedItem": "INSTRUMENT6",
+	   "vanillaLink": "true",
 	},
 	"0x1BC":{
 	   "id":"0x1BC",
@@ -2544,6 +2550,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":176,
+	   "linkedItem": "INSTRUMENT5",
+	   "vanillaLink": "true",
 	},
 	"0x185":{
 	   "id":"0x185",
@@ -2837,6 +2845,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":192,
+	   "linkedItem": "INSTRUMENT4",
+	   "vanillaLink": "true",
 	},
 	"0x166":{
 	   "id":"0x166",
@@ -3130,6 +3140,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":214,
+	   "linkedItem": "INSTRUMENT3",
+	   "vanillaLink": "true",
 	},
 	"0x15A":{
 	   "id":"0x15A",
@@ -3526,6 +3538,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":231,
+	   "linkedItem": "INSTRUMENT2",
+	   "vanillaLink": "true",
 	},
 	"0x12B":{
 	   "id":"0x12B",
@@ -3832,6 +3846,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":246,
+	   "linkedItem": "INSTRUMENT1",
+	   "vanillaLink": "true",
 	},
 	"0x106":{
 	   "id":"0x106",
@@ -4154,6 +4170,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":12,
+	   "linkedItem": "GREAT_FAIRY",
 	},
 	"0x301-0":{
 	   "id":"0x301-0",
@@ -4172,6 +4189,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":11,
+	   "linkedItem": "GREAT_FAIRY",
 	},
 	"0x2A3":{
 	   "id":"0x2A3",
@@ -4200,3 +4218,13 @@ let coordDict = {
 	   "index":254,
 	},
 }
+
+linkedChecks = {};
+
+Object.values(coordDict).filter(x => x.linkedItem).map(y => {
+	if (!linkedChecks[y.linkedItem]) {
+		linkedChecks[y.linkedItem] = [];
+	}
+
+	linkedChecks[y.linkedItem].push(y);
+});

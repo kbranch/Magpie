@@ -32,11 +32,35 @@ function addItem(item, qty, wrap=true, refresh=true) {
 
     console.log(`${item}: ${inventory[item]}`);
 
+    updateLinkedItemChecks(item);
+
+    setItemImage(item);
+    updateOverlay(item);
+    saveInventory();
+
     if (refresh) {
-        saveInventory();
-        setItemImage(item);
-        updateOverlay(item);
         refreshCheckList();
+    }
+}
+
+function updateLinkedItemChecks(item) {
+    if (item in linkedChecks) {
+        for (const check of linkedChecks[item]) {
+            checkKey = getCheckedKey(check.area, check.name);
+            checkValue = {
+                name: check.name,
+                area: check.area,
+            };
+
+            if (inventory[item] > 0) {
+                checkedChecks[checkKey] = checkValue
+            }
+            else {
+                delete checkedChecks[checkKey];
+            }
+        }
+
+        saveChecked();
     }
 }
 

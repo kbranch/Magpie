@@ -41,9 +41,6 @@ function processItemMessage(message) {
         addItem(item.id, item.qty, wrap=false, refresh=false);
     }
 
-    saveInventory();
-    refreshImages();
-
     if (message.refresh) {
         refreshCheckList();
     }

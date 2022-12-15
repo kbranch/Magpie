@@ -33,15 +33,23 @@ function toggleSingleNodeCheck(check) {
 }
 
 function toggleChecks(checkIds) {
+    let itemsChanged = false;
+
     pushUndoState();
 
     for (const id of checkIds) {
         let textCheck = $(`li[data-check-id="${id}"`);
-        toggleCheck(null, textCheck, draw=false, pushUndo=false);
+        itemsChanged |= toggleCheck(null, textCheck, draw=false, pushUndo=false);
+    }
+
+    if (itemsChanged) {
+        refreshCheckList();
     }
 }
 
 function toggleCheck(event, elements, draw=true, pushUndo=true) {
+    let itemsChanged = false;
+
     if (pushUndo) {
         pushUndoState();
     }
@@ -59,11 +67,11 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
             };
 
             checkedChecks[key] = check;
-            moveCheckToChecked(element);
+            itemsChanged = moveCheckToChecked(element, doLinked=true);
         }
         else {
             delete checkedChecks[key];
-            moveCheckFromChecked(element);
+            itemsChanged = moveCheckFromChecked(element, doLinked=true);
         }
 
         saveChecked();
@@ -73,14 +81,31 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
 
     if (draw) {
         drawActiveTab();
+
+        if (itemsChanged) {
+            refreshCheckList();
+        }
     }
+
+    return itemsChanged;
 }
 
-function moveCheckToChecked(element) {
+function moveCheckToChecked(element, doLinked=false) {
+    let itemsChanged = false;
     let logic = $(element).attr('data-logic');
     let area = $(element).attr('data-checkarea');
+    let checkId = $(element).attr('data-check-id');
+    let isVanilla = $(element).attr('data-vanilla');
+    let metadata = coordDict[checkId];
     let destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
     let sourceArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
+
+    if (doLinked && metadata.linkedItem) {
+        if (!metadata.vanillaLink || isVanilla) {
+            addItem(metadata.linkedItem, 1, wrap=false, refresh=false);
+            itemsChanged = true;
+        }
+    }
 
     if (destArea.length == 0) {
         let destLogic = $('.row[data-logic=Checked]');
@@ -109,13 +134,26 @@ function moveCheckToChecked(element) {
             $(sourceLogic).addClass('hidden');
         }
     }
+
+    return itemsChanged;
 }
 
-function moveCheckFromChecked(element) {
+function moveCheckFromChecked(element, doLinked=false) {
+    let itemsChanged = false;
     let logic = $(element).attr('data-logic');
     let area = $(element).attr('data-checkarea');
+    let checkId = $(element).attr('data-check-id');
+    let isVanilla = $(element).attr('data-vanilla');
+    let metadata = coordDict[checkId];
     let destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
     let sourceArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
+
+    if (doLinked && metadata.linkedItem) {
+        if (!metadata.vanillaLink || isVanilla) {
+            addItem(metadata.linkedItem, -1, wrap=false, refresh=false);
+            itemsChanged = true;
+        }
+    }
 
     if (destArea.length == 0) {
         let destLogic = $(`.row[data-logic="${logic}"]`);
@@ -142,6 +180,8 @@ function moveCheckFromChecked(element) {
     if ($(sourceLogic).find('[data-area]').length == 0) {
         $(sourceLogic).addClass('hidden');
     }
+
+    return itemsChanged;
 }
 
 function refreshChecked() {
