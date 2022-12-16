@@ -328,10 +328,14 @@ def addStartingItems(inventory, args, entranceMap):
         inventory['SWORD'] = inventory['SWORD'] + 1
 
     if args.dungeon_items == 'keysy':
-        for n in range(9):
+        for i in range(9):
             for amount, item_name in ((9, "KEY"), (1, "NIGHTMARE_KEY")):
-                item_name = "%s%d" % (item_name, n + 1)
+                item_name = f"{item_name}{i + 1}"
                 inventory[item_name] = amount
+    
+    if args.owlstatues not in ['both', 'dungeon'] and args.goal not in ['bingo', 'bingo-full']:
+        for i in range(9):
+            inventory[f"STONE_BEAK{i + 1}"] = 1
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"

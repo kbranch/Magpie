@@ -52,7 +52,7 @@ class Check:
         self.vanilla = vanilla
     
     def cloneBehindKeys(self):
-        return Check(self.id, self.metadata, behindKeys=True)
+        return Check(self.id, self.metadata, behindKeys=True, vanilla=self.vanilla)
     
     def __repr__(self) -> str:
         return f'{self.id}: {self.area} - {self.name}'
