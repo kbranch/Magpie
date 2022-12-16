@@ -287,6 +287,23 @@ img {
     pointer-events:none;
 }
 
+.owl:before {
+    content: '';
+    border-style: none;
+    background-image: url('/static/images/owl.svg');
+    z-index: 3;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 60%;
+    height: 60%;
+    margin-left: 20%;
+    margin-top: 25%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
 .entrance-only.unmapped-entrance:before {
     content: '';
     border-style: none;

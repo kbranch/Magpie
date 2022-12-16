@@ -135,6 +135,10 @@ class MapNode {
             classes.push('vanilla');
         }
 
+        if (this.checks.length == 1 && this.checks[0].id.includes('Owl')) {
+            classes.push('owl');
+        }
+
         if (this.entrance != null) {
             if (this.entrance.isMapped()) {
                 let mappedEntrance = new Entrance(this.entrance.connectedTo());

@@ -164,6 +164,8 @@ def getLogics(args, entranceMap):
 
     logicFlag = [x for x in args.flags if x.name == 'logic'][0]
     originalLogic = args.logic
+    originalOwls = args.owlstatues
+    args.owlstatues = 'both'
     foundTarget = False
     logics = []
 
@@ -178,6 +180,7 @@ def getLogics(args, entranceMap):
             logics.append(log)
 
     args.logic = originalLogic
+    args.owlstatues = originalOwls
     
     return logics
 
@@ -275,8 +278,12 @@ def initChecks(args):
         vanillaIds -= vanillaBySetting['instruments']
 
     for id in checkMetadataTable:
+        isOverworld = '0x0' in id
+        isOwl = 'Owl' in id
+        isVanillaOwl = isOwl and (args.owlstatues == '' or (args.owlstatues == 'dungeon' and isOverworld) or (args.owlstatues == 'overworld' and not isOverworld))
+
         if id != 'None':
-            allChecks[id] = Check(id, checkMetadataTable[id], vanilla=id in vanillaIds)
+            allChecks[id] = Check(id, checkMetadataTable[id], vanilla=id in vanillaIds or isVanillaOwl)
 
 def getEntrancePool(args):
     entrances = set(WorldSetup.getEntrancePool(None, args))
