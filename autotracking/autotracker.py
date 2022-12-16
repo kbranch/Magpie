@@ -42,6 +42,8 @@ async def socketLoop(socket, path):
         if not handshook:
             loadEntrances(gb)
 
+        extraItems = {}
+
         try:
             gameState = gb.readRamByte(gameStateAddress)
             if gameState not in validGameStates:
@@ -51,8 +53,8 @@ async def socketLoop(socket, path):
                 readVisitedEntrances(gb)
                 visitedEntrancesRead = True
 
-            readItems(gb)
-            readChecks(gb)
+            readChecks(gb, extraItems)
+            readItems(gb, extraItems)
             readEntrances(gb)
 
             handshook = await processMessages(socket) or handshook

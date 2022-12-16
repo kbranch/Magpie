@@ -56,6 +56,24 @@ def loadChecks():
         '0x169': 0xD97C,
     }
 
+    linkedItems = {
+        '0x2E9': {'item': 'SEASHELL', 'qty': 20},
+        '0x2A2': {'item': 'TOADSTOOL', 'qty':1},
+        '0x2A6-Trade': {'item': 'TRADING_ITEM_YOSHI_DOLL', 'qty':1},
+        '0x2B2-Trade': {'item': 'TRADING_ITEM_RIBBON', 'qty':1},
+        '0x2FE-Trade': {'item': 'TRADING_ITEM_DOG_FOOD', 'qty':1},
+        '0x07B-Trade': {'item': 'TRADING_ITEM_BANANAS', 'qty':1},
+        '0x087-Trade': {'item': 'TRADING_ITEM_STICK', 'qty':1},
+        '0x2D7-Trade': {'item': 'TRADING_ITEM_HONEYCOMB', 'qty':1},
+        '0x019-Trade': {'item': 'TRADING_ITEM_PINEAPPLE', 'qty':1},
+        '0x2D9-Trade': {'item': 'TRADING_ITEM_HIBISCUS', 'qty':1},
+        '0x2A8-Trade': {'item': 'TRADING_ITEM_LETTER', 'qty':1},
+        '0x0CD-Trade': {'item': 'TRADING_ITEM_BROOM', 'qty':1},
+        '0x2F5-Trade': {'item': 'TRADING_ITEM_FISHING_HOOK', 'qty':1},
+        '0x0C9-Trade': {'item': 'TRADING_ITEM_NECKLACE', 'qty':1},
+        '0x297-Trade': {'item': 'TRADING_ITEM_SCALE', 'qty':1},
+    }
+
     alternateAddresses = {
         '0x0F2': 0xD8B2,
     }
@@ -70,6 +88,7 @@ def loadChecks():
         room = check.split('-')[0]
         mask = 0x10
         address = addressOverrides[check] if check in addressOverrides else 0xD800 + int(room, 16)
+        linkedItem = linkedItems[check] if check in linkedItems else None
 
         if 'Trade' in check or 'Owl' in check:
             mask = 0x20
@@ -77,9 +96,9 @@ def loadChecks():
         if check in maskOverrides:
             mask = maskOverrides[check]
         
-        checks.append(Check(check, address, mask, alternateAddresses[check] if check in alternateAddresses else None))
+        checks.append(Check(check, address, mask, alternateAddresses[check] if check in alternateAddresses else None, linkedItem))
 
-def readChecks(gb):
+def readChecks(gb, extraItems):
     for check in checks:
         bytes = [gb.readRamByte(check.address)]
 
@@ -87,6 +106,9 @@ def readChecks(gb):
             bytes.append(gb.readRamByte(check.alternateAddress))
 
         check.set(bytes)
+
+        if check.value and check.linkedItem:
+            extraItems[check.linkedItem['item']] = check.linkedItem['qty']
 
 async def sendChecks(checks, socket, diff=True, refresh=True):
     if not checks: return

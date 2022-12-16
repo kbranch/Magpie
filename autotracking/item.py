@@ -1,5 +1,5 @@
 class Item:
-    def __init__(self, id, address, threshold=0, mask=None, increaseOnly=False, count=False):
+    def __init__(self, id, address, threshold=0, mask=None, increaseOnly=False, count=False, max=None):
         self.id = id
         self.address = address
         self.threshold = threshold
@@ -9,6 +9,7 @@ class Item:
         self.value = 0 if increaseOnly else None
         self.rawValue = 0
         self.diff = 0
+        self.max = max
 
     def set(self, byte, extra):
         oldValue = self.value
@@ -16,14 +17,17 @@ class Item:
         if self.mask:
             byte = byte & self.mask
         
-        byte += extra
-        
         if not self.count:
             byte = int(byte > self.threshold)
         else:
             # LADX seems to store one decimal digit per nibble
             byte = byte - (byte // 16 * 6)
         
+        byte += extra
+        
+        if self.max and byte > self.max:
+            byte = self.max
+
         if self.increaseOnly:
             if byte > self.rawValue:
                 self.value += byte - self.rawValue

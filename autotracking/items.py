@@ -35,7 +35,7 @@ items = [
     Item('SHOVEL', None),
     Item('MAGIC_POWDER', None),
     Item('BOOMERANG', None),
-    Item('TOADSTOOL', None, increaseOnly=True),
+    Item('TOADSTOOL', None),
     Item('ROOSTER', None),
     Item('SWORD', 0xDB4E, count=True),
     Item('POWER_BRACELET', 0xDB43, count=True),
@@ -50,8 +50,8 @@ items = [
     Item('FACE_KEY', 0xDB13),
     Item('BIRD_KEY', 0xDB14),
     Item('FLIPPERS', 0xDB3E),
-    Item('SEASHELL', 0xDB41, count=True, increaseOnly=True),
-    Item('GOLD_LEAF', 0xDB42, count=True, increaseOnly=True),
+    Item('SEASHELL', 0xDB41, count=True),
+    Item('GOLD_LEAF', 0xDB42, count=True, max=5),
     Item('INSTRUMENT1', 0xDB65, mask=1 << 1),
     Item('INSTRUMENT2', 0xDB66, mask=1 << 1),
     Item('INSTRUMENT3', 0xDB67, mask=1 << 1),
@@ -60,20 +60,20 @@ items = [
     Item('INSTRUMENT6', 0xDB6A, mask=1 << 1),
     Item('INSTRUMENT7', 0xDB6B, mask=1 << 1),
     Item('INSTRUMENT8', 0xDB6C, mask=1 << 1),
-    Item('TRADING_ITEM_YOSHI_DOLL', 0xDB40, mask=1 << 0, increaseOnly=True),
-    Item('TRADING_ITEM_RIBBON', 0xDB40, mask=1 << 1, increaseOnly=True),
-    Item('TRADING_ITEM_DOG_FOOD', 0xDB40, mask=1 << 2, increaseOnly=True),
-    Item('TRADING_ITEM_BANANAS', 0xDB40, mask=1 << 3, increaseOnly=True),
-    Item('TRADING_ITEM_STICK', 0xDB40, mask=1 << 4, increaseOnly=True),
-    Item('TRADING_ITEM_HONEYCOMB', 0xDB40, mask=1 << 5, increaseOnly=True),
-    Item('TRADING_ITEM_PINEAPPLE', 0xDB40, mask=1 << 6, increaseOnly=True),
-    Item('TRADING_ITEM_HIBISCUS', 0xDB40, mask=1 << 7, increaseOnly=True),
-    Item('TRADING_ITEM_LETTER', 0xDB7F, mask=1 << 0, increaseOnly=True),
-    Item('TRADING_ITEM_BROOM', 0xDB7F, mask=1 << 1, increaseOnly=True),
-    Item('TRADING_ITEM_FISHING_HOOK', 0xDB7F, mask=1 << 2, increaseOnly=True),
-    Item('TRADING_ITEM_NECKLACE', 0xDB7F, mask=1 << 3, increaseOnly=True),
-    Item('TRADING_ITEM_SCALE', 0xDB7F, mask=1 << 4, increaseOnly=True),
-    Item('TRADING_ITEM_MAGNIFYING_GLASS', 0xDB7F, mask=1 << 5, increaseOnly=True),
+    Item('TRADING_ITEM_YOSHI_DOLL', 0xDB40, mask=1 << 0),
+    Item('TRADING_ITEM_RIBBON', 0xDB40, mask=1 << 1),
+    Item('TRADING_ITEM_DOG_FOOD', 0xDB40, mask=1 << 2),
+    Item('TRADING_ITEM_BANANAS', 0xDB40, mask=1 << 3),
+    Item('TRADING_ITEM_STICK', 0xDB40, mask=1 << 4),
+    Item('TRADING_ITEM_HONEYCOMB', 0xDB40, mask=1 << 5),
+    Item('TRADING_ITEM_PINEAPPLE', 0xDB40, mask=1 << 6),
+    Item('TRADING_ITEM_HIBISCUS', 0xDB40, mask=1 << 7),
+    Item('TRADING_ITEM_LETTER', 0xDB7F, mask=1 << 0),
+    Item('TRADING_ITEM_BROOM', 0xDB7F, mask=1 << 1),
+    Item('TRADING_ITEM_FISHING_HOOK', 0xDB7F, mask=1 << 2),
+    Item('TRADING_ITEM_NECKLACE', 0xDB7F, mask=1 << 3),
+    Item('TRADING_ITEM_SCALE', 0xDB7F, mask=1 << 4),
+    Item('TRADING_ITEM_MAGNIFYING_GLASS', 0xDB7F, mask=1 << 5),
     Item('SONG1', 0xDB49, mask=1 << 2),
     Item('SONG2', 0xDB49, mask=1 << 1),
     Item('SONG3', 0xDB49, mask=1 << 0),
@@ -82,11 +82,6 @@ items = [
 ]
 
 dungeonKeyDoors = [
-    { # D0
-        0xDDE5: 0x02,
-        0xDDE9: 0x04,
-        0xDDF0: 0x04,
-    },
     { # D1
         0xD907: 0x04,
         0xD909: 0x40,
@@ -140,6 +135,11 @@ dungeonKeyDoors = [
         0xDA49: 0x40,
         0xDA4A: 0x01
     },
+    { # D0(9)
+        0xDDE5: 0x02,
+        0xDDE9: 0x04,
+        0xDDF0: 0x04,
+    },
 ]
 
 dungeonItemAddresses = [
@@ -171,14 +171,12 @@ for i in range(len(dungeonItemAddresses)):
 
 itemDict = {item.id: item for item in items}
 
-def readItems(gb):
+def readItems(gb, extraItems):
     missingItems = {x for x in items if x.address == None}
-
-    extraItems = {}
     
     # Add keys for opened key doors
     for i in range(len(dungeonKeyDoors)):
-        item = f'KEY{i}'
+        item = f'KEY{i + 1}'
         extraItems[item] = 0
 
         for address, mask in dungeonKeyDoors[i].items():

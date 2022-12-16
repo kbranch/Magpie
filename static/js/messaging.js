@@ -101,6 +101,7 @@ function processMessage(messageText) {
             break;
         case 'refresh':
             refreshCheckList();
+            break;
         default:
             console.log(`Unrecognized message category: ${message.category}`)
             break;
