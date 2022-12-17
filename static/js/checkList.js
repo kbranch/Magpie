@@ -100,8 +100,17 @@ function moveCheckToChecked(element, doLinked=false) {
     let destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
     let sourceArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
 
-    if (doLinked && metadata.linkedItem) {
-        if (!metadata.vanillaLink || isVanilla) {
+    if (doLinked) {
+        let contents = getCheckContents(checkId);
+
+        if (contents) {
+            addItem(contents, 1, wrap=false, refresh=false);
+            itemsChanged = true;
+        }
+
+        if (metadata.linkedItem
+            && (!metadata.vanillaLink 
+                || isVanilla)) {
             addItem(metadata.linkedItem, 1, wrap=false, refresh=false);
             itemsChanged = true;
         }
@@ -148,8 +157,17 @@ function moveCheckFromChecked(element, doLinked=false) {
     let destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
     let sourceArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
 
-    if (doLinked && metadata.linkedItem) {
-        if (!metadata.vanillaLink || isVanilla) {
+    if (doLinked) {
+        let contents = getCheckContents(checkId);
+
+        if (contents) {
+            addItem(contents, -1, wrap=false, refresh=false);
+            itemsChanged = true;
+        }
+
+        if (metadata.linkedItem
+            && (!metadata.vanillaLink 
+                || isVanilla)) {
             addItem(metadata.linkedItem, -1, wrap=false, refresh=false);
             itemsChanged = true;
         }

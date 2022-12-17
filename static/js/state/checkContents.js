@@ -33,3 +33,11 @@ function setCheckContents(checkId, contents) {
     saveCheckContents();
     drawActiveTab();
 }
+
+function getCheckContents(checkId) {
+    if (checkId in checkContents) {
+        return checkContents[checkId];
+    }
+
+    return null;
+}
