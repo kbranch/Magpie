@@ -58,13 +58,19 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    z-index: 10;
+    position: absolute;
 }
 
 .node-item-overlay {
+    position: absolute;
+    left: 15%;
+    top: 15%;
     max-height: 70%;
     min-height: 70%;
     user-select: none;
     pointer-events: none;
+    z-index: 5;
 }
 
 .full {
