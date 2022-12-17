@@ -280,12 +280,11 @@ img {
     top: 0px;
     width: 90%;
     height: 90%;
-    margin-left: 5%;
-    margin-top: 5%;
     background-image: url('/static/images/key.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    transform: translate(5%, 5%);
 }
 
 .check-graphic {
@@ -344,13 +343,14 @@ img {
     background-image: url('/static/images/owl.svg');
     z-index: 3;
     position: absolute;
-    left: 15%;
-    top: 20%;
+    left: 50%;
+    top: 50%;
     width: 70%;
     height: 70%;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    transform: translate(-50%, -45%);
 }
 
 .entrance-only.unmapped-entrance:before {
@@ -359,15 +359,16 @@ img {
     background-image: url('/static/images/entrance.svg');
     z-index: 3;
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 50%;
+    top: 50%;
     width: 50%;
     height: 50%;
-    margin-left: 25%;
-    margin-top: 35%;
+    /* margin-left: 25%;
+    margin-top: 35%; */
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    transform: translate(-50%, -35%);
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-0 {

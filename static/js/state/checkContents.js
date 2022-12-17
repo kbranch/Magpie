@@ -2,7 +2,7 @@ function saveCheckContents() {
     localStorage.setItem('checkContents', JSON.stringify(checkContents));
 }
 
-function loadChecked() {
+function loadCheckContents() {
     try {
         checkContents = JSON.parse(localStorage.getItem('checkContents'));
     }
