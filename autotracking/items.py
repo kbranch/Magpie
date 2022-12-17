@@ -83,62 +83,59 @@ items = [
 
 dungeonKeyDoors = [
     { # D1
-        0xD907: 0x04,
-        0xD909: 0x40,
-        0xD90F: 0x01,
+        0xD907: [0x04],
+        0xD909: [0x40],
+        0xD90F: [0x01],
     },
     { # D2
-        0xD921: 0x02,
-        0xD925: 0x01,
-        0xD931: 0x02,
-        0xD932: 0x08,
-        0xD935: 0x04,
+        0xD921: [0x02],
+        0xD925: [0x02],
+        0xD931: [0x02],
+        0xD932: [0x08],
+        0xD935: [0x04],
     },
     { # D3
-        0xD945: 0x40,
-        0xD946: 0x40,
-        0xD949: 0x40,
-        0xD94A: 0x40,
-        0xD956: 0x01,
-        0xD956: 0x02,
-        0xD956: 0x04,
-        0xD956: 0x08,
+        0xD945: [0x40],
+        0xD946: [0x40],
+        0xD949: [0x40],
+        0xD94A: [0x40],
+        0xD956: [0x01, 0x02, 0x04, 0x08],
     },
     { # D4
-        0xD969: 0x04,
-        0xD96A: 0x40,
-        0xD96E: 0x40,
-        0xD978: 0x01,
-        0xD979: 0x04,
+        0xD969: [0x04],
+        0xD96A: [0x40],
+        0xD96E: [0x40],
+        0xD978: [0x01],
+        0xD979: [0x04],
     },
     { # D5
-        0xD98C: 0x40,
-        0xD994: 0x40,
-        0xD99F: 0x04
+        0xD98C: [0x40],
+        0xD994: [0x40],
+        0xD99F: [0x04],
     },
     { # D6
-        0xD9C3: 0x40,
-        0xD9C6: 0x40,
-        0xD9D0: 0x04,
+        0xD9C3: [0x40],
+        0xD9C6: [0x40],
+        0xD9D0: [0x04],
     },
     { # D7
-        0xDA10: 0x02,
-        0xDA1E: 0x40,
-        0xDA21: 0x40
+        0xDA10: [0x04],
+        0xDA1E: [0x40],
+        0xDA21: [0x40],
     },
     { # D8
-        0xDA39: 0x04,
-        0xDA3B: 0x01,
-        0xDA42: 0x40,
-        0xDA43: 0x40,
-        0xDA44: 0x40,
-        0xDA49: 0x40,
-        0xDA4A: 0x01
+        0xDA39: [0x04],
+        0xDA3B: [0x01],
+        0xDA42: [0x40],
+        0xDA43: [0x40],
+        0xDA44: [0x40],
+        0xDA49: [0x40],
+        0xDA4A: [0x01],
     },
     { # D0(9)
-        0xDDE5: 0x02,
-        0xDDE9: 0x04,
-        0xDDF0: 0x04,
+        0xDDE5: [0x02],
+        0xDDE9: [0x04],
+        0xDDF0: [0x04],
     },
 ]
 
@@ -179,10 +176,11 @@ def readItems(gb, extraItems):
         item = f'KEY{i + 1}'
         extraItems[item] = 0
 
-        for address, mask in dungeonKeyDoors[i].items():
-            value = gb.readRamByte(address) & mask
-            if value > 0:
-                extraItems[item] += 1
+        for address, masks in dungeonKeyDoors[i].items():
+            for mask in masks:
+                value = gb.readRamByte(address) & mask
+                if value > 0:
+                    extraItems[item] += 1
 
     # Main inventory items
     for i in range(inventoryStartAddress, inventoryEndAddress):
@@ -190,11 +188,13 @@ def readItems(gb, extraItems):
 
         if value in inventoryItemIds:
             item = itemDict[inventoryItemIds[value]]
-            item.set(1, 0)
+            extra = extraItems[item.id] if item.id in extraItems else 0
+            item.set(1, extra)
             missingItems.remove(item)
     
     for item in missingItems:
-        item.set(0, 0)
+        extra = extraItems[item.id] if item.id in extraItems else 0
+        item.set(0, extra)
     
     # All other items
     for item in [x for x in items if x.address]:
