@@ -52,6 +52,8 @@ function modifyTooltipAllowList() {
     allowList.img.push('data-bs-title');
     allowList.img.push('data-bs-html');
     allowList.img.push('data-bs-custom-class');
+    allowList.img.push('data-node-item');
+    allowList.img.push('src');
     allowList.button = ['class', 'type', 'data-value', 'onclick', 'data-bs-toggle', 'aria-expanded'];
 }
 

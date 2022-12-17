@@ -8,6 +8,7 @@ function getUndoState() {
     state.checkedChecks = Object.assign({}, checkedChecks);
     state.entranceMap = Object.assign({}, entranceMap);
     state.connections = connections.map(x => x.clone());
+    state.checkContents = Object.assign({}, checkContents);
 
     return state;
 }
@@ -16,9 +17,11 @@ function applyUndoState(state) {
     checkedChecks = state.checkedChecks;
     entranceMap = state.entranceMap;
     connections = state.connections;
+    checkContents = state.checkContents;
 
     pruneEntranceMap();
     saveLocations();
+    saveCheckContents();
     refreshCheckList();
 }
 

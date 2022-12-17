@@ -39,6 +39,11 @@
     padding-left: 2px;
 }
 
+.node-overlay-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
 .node-overlay {
     width: 100%;
     height: 100%;
@@ -53,6 +58,13 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+}
+
+.node-item-overlay {
+    max-height: 70%;
+    min-height: 70%;
+    user-select: none;
+    pointer-events: none;
 }
 
 .full {
@@ -177,6 +189,7 @@ img {
     width: 21px;
     height: 21px;
     display: inline-block;
+    text-align: center;
 }
 
 .tooltip-area-card {
@@ -192,10 +205,41 @@ img {
     font-size: var(--bs-tooltip-font-size) !important;
 }
 
+.tooltip-check {
+    pointer-events: none;
+    background-color: var(--bs-tooltip-bg);
+    color: var(--bs-tooltip-color);
+    padding: 1px;
+    cursor: default;
+    border: none;
+    font-size: var(--bs-tooltip-font-size) !important;
+}
+
+.tooltip-item:hover .tooltip-check {
+    background-color: #444;
+    color: var(--bs-tooltip-color);
+    border-radius: 3px;
+}
+
 .tooltip-item:hover {
     background-color: #444;
     color: var(--bs-tooltip-color);
     border-radius: 3px;
+}
+
+.dropend {
+    display: flex;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.dropend .btn:first-child {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.dropdown-toggle-split {
+    flex-grow: 0 !important;
 }
 
 .tooltip-area-header {
@@ -287,18 +331,16 @@ img {
     pointer-events:none;
 }
 
-.owl:before {
+.owl:not(.difficulty-checked):before {
     content: '';
     border-style: none;
     background-image: url('/static/images/owl.svg');
     z-index: 3;
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 60%;
-    height: 60%;
-    margin-left: 20%;
-    margin-top: 25%;
+    left: 15%;
+    top: 20%;
+    width: 70%;
+    height: 70%;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -783,14 +825,6 @@ button.nav-link.active {
     left: -100%;
 }
 
-.dropend {
-    width: 100%;
-}
-
-.dropdown-toggle-split {
-    width: 30px !important;
-}
-
 .dropdown-menu {
     padding: 0.5rem;
     background-color: var(--bs-tooltip-bg);
@@ -864,4 +898,19 @@ button.nav-link.active {
     padding: 9px 16px 8px 16px;
     border-width: 1px 1px 0px 1px;
     color: #ccc;
+}
+
+.check-item-image-wrapper {
+    height: 24px;
+    width: 24px;
+}
+
+.check-item-image {
+    height: 24px;
+    display: block;
+    margin: auto;
+}
+
+.plando-item {
+    display: flex;
 }

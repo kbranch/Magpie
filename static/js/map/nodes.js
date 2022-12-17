@@ -12,7 +12,8 @@ function createCheck(checkElement, mapName) {
                      Number($(checkElement).attr('data-difficulty')),
                      coordDict[id].locations,
                      mapName,
-                     $(checkElement).attr('data-vanilla') == 'true'
+                     $(checkElement).attr('data-vanilla') == 'true',
+                     checkContents[id],
     );
 }
 
@@ -186,6 +187,7 @@ function drawNodes(mapName, animate=true) {
 
         node.updateAnimationClasses(classes, parent, animate);
         node.updateEntranceAttrs();
+        node.updateOverlay();
 
         $(node.graphic).attr({
             'class': classes.join(' '),

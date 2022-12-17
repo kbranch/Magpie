@@ -126,6 +126,7 @@ function getState() {
     state.checkedChecks = checkedChecks;
     state.entranceMap = entranceMap;
     state.connections = connections;
+    state.checkContents = checkContents;
 
     return state;
 }
@@ -149,6 +150,8 @@ async function importState() {
                 checkedChecks = state.checkedChecks;
                 entranceMap = state.entranceMap;
                 connections = state.connections;
+                checkContents = state.checkContents;
+                saveCheckContents();
                 saveLocations();
                 saveInventory();
                 saveSettingsToStorage(state.args, state.settings);

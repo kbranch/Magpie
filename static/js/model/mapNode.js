@@ -5,6 +5,8 @@ class MapNode {
         this.location = location;
         this.scaling = scaling;
         this.hideMe = false;
+        this.item = null;
+        this.connectorLabel = null;
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
@@ -36,7 +38,8 @@ class MapNode {
 
     updateBehindKeys() {
         let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
-                                                      && !x.isChecked())
+                                                      && !x.isChecked()
+                                                      && (!x.isVanillaOwl() || this.checks.length == 1))
 
         this.behindKeys = uncheckedChecks.length > 0 
                           && uncheckedChecks.every(x => x.behindKeys);
@@ -46,7 +49,7 @@ class MapNode {
         this.difficulty = 'checked';
 
         for (const check of this.checks) {
-            if (!check.isChecked()) {
+            if (!check.isChecked() && (!check.isVanillaOwl() || this.checks.length == 1)) {
                 if ((check.difficulty < this.difficulty || this.difficulty == 'checked')) {
                     this.difficulty = check.difficulty;
                 }
@@ -64,8 +67,19 @@ class MapNode {
         this.isVanilla = (this.checks.length > 0
                           && this.checks.filter(x => x.difficulty == this.difficulty
                                                      && x.behindKeys == this.behindKeys
-                                                     && x.isChecked() == this.isChecked)
+                                                     && x.isChecked() == this.isChecked
+                                                     && (!x.isVanillaOwl() || this.checks.length == 1))
                                         .every(x => x.isVanilla));
+    }
+    
+    updateItem() {
+        this.item = null;
+
+        let itemedChecks = this.checks.filter(x => x.item);
+
+        if (itemedChecks.length > 0) {
+            this.item = itemedChecks[0].item;
+        }
     }
 
     update() {
@@ -73,6 +87,7 @@ class MapNode {
         this.updateBehindKeys();
         this.updateIsChecked();
         this.updateIsVanilla();
+        this.updateItem();
         this.sortChecks();
     }
 
@@ -223,7 +238,7 @@ class MapNode {
             if (entrance.isConnected()) {
                 let connection = entrance.mappedConnection();
                 $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
-                this.updateOverlay(connection.label);
+                this.connectorLabel = connection.label;
             }
             else {
                 $(this.graphic).removeAttr('data-connected-to');
@@ -271,17 +286,36 @@ class MapNode {
         }
     }
 
-    updateOverlay(text) {
-        let overlay = $('<p>', {
-            'class': "node-overlay",
-            'data-connector-label': text,
-            css: {
-                'font-size': `${localSettings.checkSize * 0.72}px`,
-            },
-            onmousedown: "preventDoubleClick(event)"
+    updateOverlay() {
+        let overlay = $('<div>', {
+            'class': 'node-overlay-wrapper',
         });
 
-        $(overlay).append(text);
+        if (this.item) {
+            let itemOverlay = $('<img>', {
+                'src': `static/images/${this.item}_1.png`,
+                'class': "node-item-overlay",
+                'data-node-item': this.item,
+                onmousedown: "preventDoubleClick(event)"
+            });
+
+            $(overlay).append(itemOverlay);
+        }
+
+        if (this.connectorLabel) {
+            let connectorOverlay = $('<p>', {
+                'class': "node-overlay",
+                'data-connector-label': this.connectorLabel,
+                css: {
+                    'font-size': `${localSettings.checkSize * 0.72}px`,
+                },
+                onmousedown: "preventDoubleClick(event)"
+            });
+
+            $(connectorOverlay).append(this.connectorLabel);
+            $(overlay).append(connectorOverlay);
+        }
+
         $(this.graphic).empty();
         $(this.graphic).append(overlay);
     }
@@ -291,6 +325,7 @@ class MapNode {
 
         this.graphic = $('<div>', {
             'data-node-id': this.id(),
+            'data-item': this.item,
             'draggable': false,
             css: {
                 'top': coords.y,
