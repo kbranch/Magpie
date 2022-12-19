@@ -87,7 +87,16 @@ function connectToAutotracker() {
 }
 
 function processMessage(messageText) {
-    message = JSON.parse(messageText);
+    let message;
+
+    try {
+        message = JSON.parse(messageText);
+    }
+    catch(err) {
+        console.log(`Invalid message JSON: ${err}`);
+        console.log(messageText);
+        return;
+    }
     
     switch (message.category) {
         case 'item':
