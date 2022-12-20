@@ -66,8 +66,8 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    max-height: 55%;
-    min-height: 55%;
+    max-height: 60%;
+    min-height: 60%;
     user-select: none;
     pointer-events: none;
     z-index: 5;
