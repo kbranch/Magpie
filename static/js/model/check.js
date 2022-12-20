@@ -37,7 +37,7 @@ class Check {
     shouldDraw() {
         if ((this.difficulty == 9
               && !localSettings.showOutOfLogic)
-            || (this.vanilla
+            || (this.isVanilla
                 && localSettings.hideVanilla)) {
 
             return false;
