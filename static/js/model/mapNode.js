@@ -76,8 +76,12 @@ class MapNode {
         this.item = null;
 
         let itemedChecks = this.checks.filter(x => x.item);
+        let uncheckedItems = itemedChecks.filter(x => !x.isChecked());
 
-        if (itemedChecks.length > 0) {
+        if (uncheckedItems.length > 0) {
+            this.item = uncheckedItems[0].item;
+        }
+        else if (itemedChecks.length == 1 && this.checks.length == 1) {
             this.item = itemedChecks[0].item;
         }
     }
