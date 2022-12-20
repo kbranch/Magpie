@@ -13,7 +13,7 @@ function checkGraphicMouseEnter(element) {
 
     if($(element).hasClass('connector')
        && $(element).is('[data-connected-to')) {
-        let child = $(element).children()[0];
+        let child = $(element).find('[data-connector-label]')[0];
         let label = $(child).attr('data-connector-label');
         let selector = `[data-connector-label="${label}"]`;
         $(selector).connections({ class: 'entrance-to connector-line' });
