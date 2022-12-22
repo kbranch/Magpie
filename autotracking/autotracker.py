@@ -57,6 +57,11 @@ async def socketLoop(socket, path):
             readItems(gb, extraItems)
             readEntrances(gb)
 
+            # Make sure we didn't reset in the middle of reading
+            gameState = gb.readRamByte(gameStateAddress)
+            if gameState not in validGameStates:
+                continue
+
             handshook = await processMessages(socket) or handshook
             
             if handshook:

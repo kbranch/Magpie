@@ -1,5 +1,5 @@
 function drawActiveTab() {
-    drawNodes(getMapNameFromButton($('.tab-button.active button')), true);
+    drawNodes(getMapNameFromButton($('#mapContainer .tab-button.active button')), true);
 }
 
 function getMapNameFromButton(button) {
@@ -13,10 +13,10 @@ function drawTab(button, clear=false) {
     }
 
     let mapName = getMapNameFromButton(button);
-    $('.tab.active').removeClass('active');
-    $('.tab-button.active').removeClass('active');
-    $(`.tab-button[data-mapname=${mapName}]`).addClass('active');
-    $(`.tab [data-mapname=${mapName}]`).closest('.map-container').addClass('active');
+    $('#mapContainer .tab.active').removeClass('active');
+    $('#mapContainer .tab-button.active').removeClass('active');
+    $(`#mapContainer .tab-button[data-mapname=${mapName}]`).addClass('active');
+    $(`#mapContainer .tab [data-mapname=${mapName}]`).closest('.map-container').addClass('active');
 
     drawNodes(mapName, false);
 }

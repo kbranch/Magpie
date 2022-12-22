@@ -6,6 +6,7 @@ import jsonpickle
 from flaskwebgui import FlaskUI
 from flask import Flask, render_template, request
 from jinja2 import Template
+from datetime import datetime
 
 from ladxrInterface import *
 
@@ -135,13 +136,15 @@ def renderCheckList():
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
-        return render_template("checklist.html", checkAccessibility=accessibility.checks,
+        result = render_template("checklist.html", checkAccessibility=accessibility.checks,
                                                  entranceAccessibility=jsonpickle.encode(accessibility.entrances),
                                                  logics=logics,
                                                  checkCount=len(allChecks),
                                                  entrances=jsonpickle.encode(entrances),
                                                  startLocations=jsonpickle.encode(getStartLocations(args)),
                                                  )
+
+        return result
     except:
         return renderTraceback()
 

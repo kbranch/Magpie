@@ -6,7 +6,10 @@
     <div id="mapContainer" class="col-xs-12 col-md">
         {% include 'map.html' %}
     </div>
-    <div id="itemContainer" class="col-xs col-md-auto item-container"></div>
+    <div class="col-xs col-md-auto item-container">
+        <div id="itemContainer"></div>
+        {% include 'quicksettings.html' %}
+    </div>
 </div>
 <div class="row">
     <div id="checkList" class="col"></div>

@@ -17,6 +17,8 @@
                 "run",
                 "--host",
                 "0.0.0.0",
+                "--port",
+                "25230"
             ],
             "jinja": true
             // "program": "spriteExtractor.py",

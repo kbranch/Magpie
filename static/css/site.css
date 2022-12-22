@@ -890,6 +890,20 @@ button.nav-link.active {
     display: none;
 }
 
+.quicktab-button.active .quicktab-link {
+    border-color: #fff;
+    color: #fff;
+    background-color: #6c757d;
+}
+
+.quicktab-button:not(.active) .quicktab-link:hover {
+    border-color: #ccc;
+}
+
+.quicktab-link {
+    border-radius: 0px 0px 5px 5px;
+}
+
 .tab-button.active .tab-link {
     border-color: #fff;
     border-radius: 5px 5px 0px 0px;
@@ -901,11 +915,22 @@ button.nav-link.active {
     border-radius: 5px 5px 0px 0px;
 }
 
+.quicktab-link {
+    border-color: transparent;
+    padding: 9px 16px 8px 16px;
+    border-width: 0px 1px 1px 1px;
+    color: #ccc;
+}
+
 .tab-link {
     border-color: transparent;
     padding: 9px 16px 8px 16px;
     border-width: 1px 1px 0px 1px;
     color: #ccc;
+}
+
+.quicktab-button:not(.active) .quicksetting-icon {
+    filter: invert(1);
 }
 
 .check-item-image-wrapper {
