@@ -4,26 +4,16 @@ function hasAttr(element, attrName) {
     return typeof attr !== 'undefined' && attr !== false;
 }
 
-async function getFile(types=null) {
-    if (types == null) {
-        types = [
-            {
-                description: 'Magpie state (*.json)',
-                accept: {
-                    'application/json': ['.json']
-                }
-            },
-        ];
+async function getFile(element, callback, types=null) {
+    if (element.files.length == 0) {
+        return;
     }
 
-    const pickerOpts = {
-        types: types,
-        excludeAcceptAllOption: true,
-        multiple: false
-    };
+    let file = element.files[0];
+    let reader = new FileReader();
 
-    [handle] = await window.showOpenFilePicker(pickerOpts);
-    let file = await handle.getFile();
+    reader.onload = () => callback(reader.result);
+    reader.readAsText(file);
 
     return await file.text();
 }
@@ -93,5 +83,14 @@ function applySettings() {
     if (!args.rooster) {
         inventory['ROOSTER'] = 0;
         saveInventory();
+    }
+
+    if (!localSettings.enableAutotracking) {
+        $('#romRow').hide();
+        if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
+            autotrackerSocket.close();
+        }
+
+        updateAutotrackerStatus("Disabled")
     }
 }

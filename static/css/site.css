@@ -104,11 +104,7 @@
     text-align: right;
 }
 
-.rom-input {
-    max-width: 250px;
-}
-
-.rom-label, .rom-input {
+.rom-label {
     display: block;
 }
 
@@ -950,6 +946,10 @@ button.nav-link.active {
 }
 
 .quicktab-button .quicksetting-icon {
+    filter: invert(1);
+}
+
+.invert {
     filter: invert(1);
 }
 

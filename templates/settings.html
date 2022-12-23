@@ -344,7 +344,8 @@
                     </select>
                 </div>
                 <div class="row pt-2">
-                    <button type="button" class="btn btn-secondary" onclick="pickCustomItemsPath()">Pick Custom</button>
+                    <input type="file" accept=".html,.htm" class="hidden" id="customItemsInput" onchange="getFile(this, pickCustomItemsPath);" />
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('customItemsInput').click();">Pick Custom</button>
                 </div>
             </div>
             <div class="col col-auto mx-2">
@@ -357,14 +358,16 @@
                     </select>
                 </div>
                 <div class="row pt-2">
-                    <button type="button" class="btn btn-secondary" onclick="pickCustomDungeonItemsPath()">Pick Custom</button>
+                    <input type="file" accept=".html,.htm" class="hidden" id="customDungeonItemInput" onchange="getFile(this, pickCustomDungeonItemsPath);" />
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('customDungeonItemInput').click();">Pick Custom</button>
                 </div>
             </div>
         </div>
         <div class="row justify-content-end pt-4">
             <div class="col-auto">
                 <button type="button" class="btn btn-secondary" onclick="exportState()"  data-bs-toggle="tooltip" data-bs-title="Export Tracker State" data-bs-trigger="hover"><img src="static/images/upload.svg"></button>
-                <button type="button" class="btn btn-secondary" onclick="importState()"  data-bs-toggle="tooltip" data-bs-title="Import Tracker State" data-bs-trigger="hover"><img src="static/images/download.svg"></button>
+                <input type="file" accept=".json" class="hidden" id="stateInput" onchange="getFile(this, importState);" />
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('stateInput').click();"  data-bs-toggle="tooltip" data-bs-title="Import Tracker State" data-bs-trigger="hover"><img src="static/images/download.svg"></button>
             </div>
         </div>
     </div>

@@ -155,11 +155,10 @@ function exportState() {
     download(`Magpie-state-${(new Date()).toISOString()}.json`, JSON.stringify(state));
 }
 
-async function importState() {
+function importState(data) {
     let errorMessage = "The selected file does not appear to be a valid Magpie state file";
 
     try {
-        let data = await getFile();
         let state = JSON.parse(data);
 
         if ('BOMB' in state.inventory
@@ -187,34 +186,14 @@ async function importState() {
     }
 }
 
-async function pickCustomItemsPath() {
-    types = [
-        {
-            description: 'Layout templates (*.html)',
-            accept: {
-                'text/html': ['.html', '.htm']
-            }
-        },
-    ];
-
-    let data = await getFile(types);
+function pickCustomItemsPath(data) {
     localSettings.customItems = data;
     localSettings.itemsTemplate = "custom";
     saveSettings();
     applySettings();
 }
 
-async function pickCustomDungeonItemsPath() {
-    types = [
-        {
-            description: 'Layout templates (*.html)',
-            accept: {
-                'text/html': ['.html', '.htm']
-            }
-        },
-    ];
-
-    let data = await getFile(types);
+function pickCustomDungeonItemsPath(data) {
     localSettings.customDungeonItems = data;
     localSettings.dungeonItemsTemplate = "custom";
     saveSettings();

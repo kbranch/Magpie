@@ -77,13 +77,14 @@ function connectToAutotracker() {
     }
 
     if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
+        updateAutotrackerStatus('Connecting');
         autotrackerSocket = new WebSocket("ws://127.0.0.1:17026/");
 
         autotrackerSocket.onopen = autotrackerConnected;
         autotrackerSocket.onmessage = (event) => processMessage(event.data);
         autotrackerSocket.onerror = (event) => console.log(event);
         autotrackerSocket.onclose = (event) => {
-            updateAutotrackerStatus('Disconnected');
+            updateAutotrackerStatus(localSettings.enableAutotracking ? 'Disconnected' : 'Disabled');
             console.log(event);
         };
     }
@@ -91,6 +92,9 @@ function connectToAutotracker() {
 
 function updateAutotrackerStatus(status) {
     $('#autotracker-status').html(status);
+    if (status != 'ROM Requested') {
+        $('#romRow').removeClass('animate__flash')
+    }
 }
 
 function processMessage(messageText) {
@@ -127,6 +131,10 @@ function processMessage(messageText) {
 
             $('#romInput')[0].value = null;
             $('#romRow').show();
+            $('#romRow').removeClass('hidden');
+            $('#romRow').addClass('animate__animated')
+            $('#romRow').addClass('animate__flash')
+            quickSettingsTab($('#autotrackerTab'))
 
             break;
         default:
@@ -169,6 +177,5 @@ function reloadFromAutotracker() {
 
 function autotrackerConnected(event) {
     console.log("Connected to autotracker");
-    updateAutotrackerStatus('Connecting');
     reloadFromAutotracker();
 }

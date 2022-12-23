@@ -36,14 +36,15 @@
                 <div class="col">
                     <div class="row py-2 hidden" id="romRow">
                         <div class="col rom-col">
-                            <label for="romInput" class="form-label rom-label">Select ROM File</label>
-                            <input type="file" class="rom-input" id="romInput" onchange="loadRom(this)" />
+                            <label for="romInput" class="form-label rom-label">Select ROM File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="The autotracker requires a copy of the ROM file before entrances can be tracked"></label>
+                            <input type="file" class="hidden" id="romInput" onchange="loadRom(this)" />
+                            <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('romInput').click();" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-auto">
                             <input id="enableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
-                            <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
+                            <label for="enableAutotracking" class="form-label">Enable</label>
                         </div>
                         <div class="col right-text">
                             <p id="autotracker-status">Disconnected</p>
