@@ -1,31 +1,52 @@
-import evilemu
+import sys
+from EvilGameboy import EvilGameboy
+from RetroGameboy import RetroGameboy
 
 class Gameboy:
     def __init__(self):
         self.emulator = None
+        self.wramSnapshot = None
+        self.hramSnapshot = None
+    
+    def canReadRom(self):
+        return self.emulator != None and self.emulator.canReadRom
+    
+    def snapshot(self):
+        #WRAM actually starts at 0xC000, but we only care about 0xD800 and up for now
+        self.wramSnapshot = self.emulator.readRam(0xD800, 0x800)
+        self.hramSnapshot = self.emulator.readRam(0xFF80, 0x80)
     
     def findEmulator(self):
-        self.emulator = None
+        if sys.platform == "win32":
+            client = EvilGameboy()
+            if client.findEmulator():
+                self.emulator = client
+                return True
 
-        for emulator in evilemu.find_gameboy_emulators():
-            self.emulator = emulator
+        if self.emulator != None and self.emulator.isConnected():
             return True
-        
+
+        client = RetroGameboy()
+        if client.findEmulator():
+            self.emulator = client
+            return True
+
         return False
 
     def readRamByte(self, address):
         if address < 0xE000:
-            return self.emulator.read_ram8(address - 0xC000)
+            return self.wramSnapshot[address - 0xD800]
         elif address >= 0xFF80 and address <= 0xFFFF:
-            return self.emulator.read_hram8(address - 0xFF80)
+            return self.hramSnapshot[address - 0xFF80]
         
         return 0
     
     def readRomByte(self, address):
-        return self.emulator.read_rom8(address)
+        assert(self.emulator.canReadRom)
+
+        return self.emulator.readRomByte(address)
     
-    def search(self, bytes):
-        process = self.emulator._Emulator__process
-        for match in process.search(bytes, all_memory=True):
-            pass
-        pass
+    def readRom(self, address, size):
+        assert(self.emulator.canReadRom)
+
+        return self.emulator.readRom(address, size)

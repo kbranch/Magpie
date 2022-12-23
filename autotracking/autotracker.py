@@ -1,6 +1,9 @@
 import asyncio
 import websockets
 import time
+import json
+import base64
+import traceback
 from gameboy import Gameboy
 from items import *
 from checks import *
@@ -10,13 +13,21 @@ gb = Gameboy()
 
 async def processMessages(socket):
     handshook = False
+    entrancesLoaded = False
 
     while socket.messages:
-        message = await socket.recv()
+        messageText = await socket.recv()
+        message = None
 
-        print(f'Received: {message}')
+        try:
+            message = json.loads(messageText)
+        except Exception as e:
+            print(f'Error parsing message: {traceback.format_exc()}')
+            print(f'Message text: {messageText}')
 
-        if message == 'sendFull':
+        if message['type'] == 'sendFull':
+            print("Received request to send everything")
+
             await sendItems(items, socket, diff=False, refresh=False)
             await sendChecks(checks, socket, diff=False, refresh=False)
             await sendEntrances([x for x in entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
@@ -24,47 +35,82 @@ async def processMessages(socket):
             await Message('refresh', 'refresh').send(socket)
 
             handshook = True
+        elif message['type'] == 'rom':
+            print("Received ROM")
+
+            romData = base64.b64decode(message['rom'])
+            loadEntrances(romData)
+
+            await sendRomAck(socket)
+
+            entrancesLoaded = True
     
-    return handshook
+    return handshook, entrancesLoaded
+
+async def sendRomRequest(socket):
+    newMessage = Message('romRequest', 'romRequest', False)
+    print(f'Sending request for ROM')
+    
+    await newMessage.send(socket)
+
+async def sendRomAck(socket):
+    newMessage = Message('romAck', 'romAck', False)
+    print(f'Sending ROM ack')
+    
+    await newMessage.send(socket)
 
 async def socketLoop(socket, path):
     print('Connected to tracker')
 
     handshook = False
+    entrancesLoaded = False
     visitedEntrancesRead = False
+    romRequested = False
 
     while True:
         await asyncio.sleep(0.4)
 
         if not gb.findEmulator():
+            handshook = False
             continue
 
-        if not handshook:
-            loadEntrances(gb)
+        if not entrancesLoaded and gb.canReadRom():
+            romData = gb.readRom(0, 1024 * 1024)
+
+            loadEntrances(romData)
+            await sendRomAck(socket)
+
+            entrancesLoaded = True
 
         extraItems = {}
 
         try:
+            gb.snapshot()
+
             gameState = gb.readRamByte(gameStateAddress)
             if gameState not in validGameStates:
                 continue
 
-            if not visitedEntrancesRead:
+            if entrancesLoaded and not visitedEntrancesRead:
                 readVisitedEntrances(gb)
                 visitedEntrancesRead = True
 
             readChecks(gb, extraItems)
             readItems(gb, extraItems)
-            readEntrances(gb)
 
-            # Make sure we didn't reset in the middle of reading
-            gameState = gb.readRamByte(gameStateAddress)
-            if gameState not in validGameStates:
-                continue
+            if entrancesLoaded:
+                readEntrances(gb)
 
-            handshook = await processMessages(socket) or handshook
+            gotHandshake, gotEntrances = await processMessages(socket)
+
+            handshook |= gotHandshake
+            entrancesLoaded |= gotEntrances
             
             if handshook:
+                if not gb.canReadRom() and not romRequested:
+                    await sendRomRequest(socket)
+                    romRequested = True
+
                 await sendItems([x for x in items if x.diff != 0], socket)
                 await sendChecks([x for x in checks if x.diff != 0], socket)
                 await sendEntrances([x for x in entrancesByName.values() if x.changed], socket)
@@ -73,7 +119,7 @@ async def socketLoop(socket, path):
 
 async def main():
     loadChecks()
-    async with websockets.serve(socketLoop, '127.0.0.1', 17026):
+    async with websockets.serve(socketLoop, '127.0.0.1', 17026, max_size=1024*1024*10):
         await asyncio.Future()
 
 asyncio.run(main())

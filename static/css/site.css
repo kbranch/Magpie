@@ -96,6 +96,22 @@
     margin: 0 auto;
 }
 
+.center-text {
+    text-align: center;
+}
+
+.right-text {
+    text-align: right;
+}
+
+.rom-input {
+    max-width: 250px;
+}
+
+.rom-label, .rom-input {
+    display: block;
+}
+
 img {
     -khtml-user-select: none;
     -o-user-select: none;
@@ -893,7 +909,7 @@ button.nav-link.active {
 .quicktab-button.active .quicktab-link {
     border-color: #fff;
     color: #fff;
-    background-color: #6c757d;
+    /* background-color: #6c757d; */
 }
 
 .quicktab-button:not(.active) .quicktab-link:hover {
@@ -929,7 +945,11 @@ button.nav-link.active {
     color: #ccc;
 }
 
-.quicktab-button:not(.active) .quicksetting-icon {
+.autotracker-button {
+    width: 100%;
+}
+
+.quicktab-button .quicksetting-icon {
     filter: invert(1);
 }
 

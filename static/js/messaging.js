@@ -82,8 +82,15 @@ function connectToAutotracker() {
         autotrackerSocket.onopen = autotrackerConnected;
         autotrackerSocket.onmessage = (event) => processMessage(event.data);
         autotrackerSocket.onerror = (event) => console.log(event);
-        autotrackerSocket.onclose = (event) => console.log(event);
+        autotrackerSocket.onclose = (event) => {
+            updateAutotrackerStatus('Disconnected');
+            console.log(event);
+        };
     }
+}
+
+function updateAutotrackerStatus(status) {
+    $('#autotracker-status').html(status);
 }
 
 function processMessage(messageText) {
@@ -111,20 +118,57 @@ function processMessage(messageText) {
         case 'refresh':
             refreshCheckList();
             break;
+        case 'romAck':
+            romRequested = false;
+            break;
+        case 'romRequest':
+            romRequested = true;
+            console.log('Autotracker requested a copy of the ROM');
+
+            $('#romInput')[0].value = null;
+            $('#romRow').show();
+
+            break;
         default:
             console.log(`Unrecognized message category: ${message.category}`)
             break;
     }
+
+    updateAutotrackerStatus(romRequested ? 'ROM Requested' : 'Connected');
+}
+
+function loadRom(element) {
+    if (element.files.length == 0) {
+        return;
+    }
+
+    let file = element.files[0];
+    let reader = new FileReader();
+
+    reader.onload = () => sendRom(reader.result);
+    reader.readAsBinaryString(file);
+
+    $('#romRow').hide();
+}
+
+function sendRom(bytes) {
+    let message = {}
+    message.type = 'rom';
+    message.rom = btoa(bytes);
+    messageText = JSON.stringify(message);
+
+    autotrackerSocket.send(messageText);
 }
 
 function reloadFromAutotracker() {
     if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
         console.log('Sent request to send full autotracker inventory');
-        autotrackerSocket.send("sendFull");
+        autotrackerSocket.send(JSON.stringify({ type: 'sendFull' }));
     }
 }
 
 function autotrackerConnected(event) {
     console.log("Connected to autotracker");
+    updateAutotrackerStatus('Connecting');
     reloadFromAutotracker();
 }

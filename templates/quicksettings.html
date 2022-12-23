@@ -1,29 +1,29 @@
-<div class="fill-box py-2">
+<div class="fill-box py-2" id="quicksettings">
     <div class="tabs h-100" id="quickTabContents">
         <div class="tab h-100 active" id="quicksettingsTabContent">
             <div class="row h-100 align-items-end" data-tabname="quicksettings">
                 <div class="col">
                     <div class="row">
                         <div class="col">
-                            <input id="showOutOfLogicQuick" data-setting="showOutOfLogic" type="checkbox" class="form-check-input" onchange="saveSettings(quick=true)">
+                            <input id="showOutOfLogicQuick" data-setting="showOutOfLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
                             <label for="showOutOfLogicQuick" class="form-label">Show out of logic</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input id="ignoreHigherLogicQuick" data-setting="ignoreHigherLogic" type="checkbox" class="form-check-input" onchange="saveSettings(quick=true)">
+                            <input id="ignoreHigherLogicQuick" data-setting="ignoreHigherLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
                             <label for="ignoreHigherLogicQuick" class="form-label">Ignore higher logic levels</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input id="hideCheckedQuick" data-setting="hideChecked" type="checkbox" class="form-check-input" onchange="saveSettings(quick=true)">
+                            <input id="hideCheckedQuick" data-setting="hideChecked" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
                             <label for="hideCheckedQuick" class="form-label">Hide checked locations</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input id="hideVanillaQuick" data-setting="hideVanilla" type="checkbox" class="form-check-input" onchange="saveSettings(quick=true)">
+                            <input id="hideVanillaQuick" data-setting="hideVanilla" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
                             <label for="hideVanillaQuick" class="form-label">Hide vanilla checks</label>
                         </div>
                     </div>
@@ -32,27 +32,42 @@
         </div>
 
         <div class="tab h-100" id="autotrackerTabContent">
-            <div class="row h-100 justify-content-center align-items-end" data-tabname="autotracker">
-                <div class="col-auto">
-                    <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Reload items from autotracker" onclick="reloadFromAutotracker()" type="button">
-                        <img src="static/images/arrow-clockwise.svg">
-                    </button>
-                    <a href="https://magpietracker.us/static/magpie-autotracker.exe" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download autotracker" role="button">
-                        <img src="static/images/file-arrow-down.svg">
-                    </a>
-                    <a href="https://bgb.bircd.org/bgb.zip" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download compatible emulator (bgb)" role="button">
-                        <img src="static/images/dpad.svg">
-                    </a>
+            <div class="row h-100 justify-content-center align-items-end">
+                <div class="col">
+                    <div class="row py-2 hidden" id="romRow">
+                        <div class="col rom-col">
+                            <label for="romInput" class="form-label rom-label">Select ROM File</label>
+                            <input type="file" class="rom-input" id="romInput" onchange="loadRom(this)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <input id="enableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
+                        </div>
+                        <div class="col right-text">
+                            <p id="autotracker-status">Disconnected</p>
+                        </div>
+                    </div>
+                    <div class="row" data-tabname="autotracker">
+                        <div class="col px-1">
+                            <button class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Reload items from autotracker" onclick="reloadFromAutotracker()" type="button">
+                                <img src="static/images/arrow-clockwise.svg">
+                            </button>
+                        </div>
+                        <div class="col px-1">
+                            <a href="https://magpietracker.us/static/magpie-autotracker.exe" class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download autotracker" role="button">
+                                <img src="static/images/file-arrow-down.svg">
+                            </a>
+                        </div>
+                        <div class="col px-1">
+                            <a href="https://bgb.bircd.org/bgb.zip" class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download compatible emulator (bgb)" role="button">
+                                <img src="static/images/dpad.svg">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- <div class="row py-2">
-                <div class="col-auto">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-auto">
-                </div>
-            </div> -->
         </div>
 
         <div class="tab h-100" id="spoilersTabContent">
@@ -60,25 +75,16 @@
             </div>
         </div>
     </div>
-    <!-- <div class="row justify-content-center align-items-end h-100 pt-4 pb-2">
-        <div class="col-auto">
-{% if not local %}
-            <button class="btn btn-secondary bottom" alt="Make a suggestion or report a bug" data-bs-toggle="modal" data-bs-target="#suggestionModal" type="button">
-                <img src="static/images/envelope.svg">/<img src="static/images/bug.svg">
-            </button>
-{% endif %}
-        </div>
-    </div> -->
 </div>
 
 <ul class="nav" id="quickTabs">
-    <li class="quicktab-button active" data-bs-toggle="tooltip" data-tabname="quicksettings" data-bs-title="Quick Settings" data-bs-trigger="hover">
+    <li class="quicktab-button active" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="quicksettings" data-bs-title="Quick Settings" data-bs-trigger="hover">
         <button class="btn quicktab-link" id="quicksettingsTab" data-tabname="quicksettings" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/ui-checks.svg"></button>
     </li>
-    <li class="quicktab-button" data-bs-toggle="tooltip" data-tabname="autotracker" data-bs-title="Autotracking" data-bs-trigger="hover">
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="autotracker" data-bs-title="Autotracking" data-bs-trigger="hover">
         <button class="btn quicktab-link" id="autotrackerTab" data-tabname="autotracker" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/cpu.svg"></button>
     </li>
-    <li class="quicktab-button" data-bs-toggle="tooltip" data-tabname="spoilers" data-bs-title="Spoilers" data-bs-trigger="hover">
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="spoilers" data-bs-title="Spoilers" data-bs-trigger="hover">
         <button class="btn quicktab-link" id="spoilersTab" data-tabname="spoilers" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/eye.svg"></button>
     </li>
 </ul>

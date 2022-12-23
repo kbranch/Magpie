@@ -3,7 +3,7 @@ function saveSettingsToStorage(args, localSettings) {
     localStorage.setItem('settings', JSON.stringify(localSettings));
 }
 
-function getInputValues(dataAttrName, values, quick=false) {
+function getInputValues(dataAttrName, values) {
     for (const input of document.querySelectorAll(`[data-${dataAttrName}]`)) {
         let name = input.dataset[dataAttrName];
         let value = input.value;
@@ -15,17 +15,15 @@ function getInputValues(dataAttrName, values, quick=false) {
         values[name] = value;
     }
 
-    if (quick) {
-        for (const input of document.querySelectorAll(`#quickTabContents [data-${dataAttrName}]`)) {
-            let name = input.dataset[dataAttrName];
-            let value = input.value;
+    for (const input of document.querySelectorAll(`#quicksettings [data-${dataAttrName}]`)) {
+        let name = input.dataset[dataAttrName];
+        let value = input.value;
 
-            if (input.type == 'checkbox') {
-                value = input.checked;
-            }
-
-            values[name] = value;
+        if (input.type == 'checkbox') {
+            value = input.checked;
         }
+
+        values[name] = value;
     }
 
     return values;
@@ -46,9 +44,17 @@ function setInputValues(dataAttrName, values) {
     }
 }
 
-function saveSettings(quick=false) {
+function saveQuickSettings() {
+    localSettings = getInputValues('setting', localSettings);
+    saveSettingsToStorage(args, localSettings);
+    applySettings();
+    skipNextAnimation = true;
+    drawActiveTab();
+}
+
+function saveSettings() {
     args = getInputValues('flag', args);
-    localSettings = getInputValues('setting', localSettings, quick);
+    localSettings = getInputValues('setting', localSettings);
 
     resetUndoRedo()
 

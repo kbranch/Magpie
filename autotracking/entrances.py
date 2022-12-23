@@ -72,7 +72,7 @@ async def sendEntrances(entrances, socket, diff=True, refresh=True):
     
     await newMessage.send(socket)
 
-def loadEntrances(gb):
+def loadEntrances(romData):
     global reverseEntranceMap, entrancesByTarget
 
     addressOverrides = {
@@ -86,8 +86,6 @@ def loadEntrances(gb):
         entrance = Entrance(info.room, info.target, name, alternateAddress)
         entrancesByTarget[info.target] = entrance
         entrancesByName[name] = entrance
-    
-    romData = gb.emulator.read_rom(0, 1024 * 1024)
 
     # Super janky, I need to make an LADXR pull request
     with open('rom', 'wb') as file:
