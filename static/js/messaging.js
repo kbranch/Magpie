@@ -137,6 +137,10 @@ function processMessage(messageText) {
             quickSettingsTab($('#autotrackerTab'))
 
             break;
+        case 'settings':
+            $("#shortString")[0].value = message.settings;
+            loadShortString(saveOnLoad=true)
+            break;
         default:
             console.log(`Unrecognized message category: ${message.category}`)
             break;

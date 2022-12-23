@@ -86,14 +86,8 @@ def loadEntrances(romData):
         entrance = Entrance(info.room, info.target, name, alternateAddress)
         entrancesByTarget[info.target] = entrance
         entrancesByName[name] = entrance
-
-    # Super janky, I need to make an LADXR pull request
-    with open('rom', 'wb') as file:
-        file.write(romData)
     
-    rom = ROMWithTables('rom')
-
-    os.remove('rom')
+    rom = ROMWithTables(data=romData)
 
     world = WorldSetup()
     world.loadFromRom(rom)

@@ -103,7 +103,7 @@
         });
     }
 
-    function loadShortString() {
+    function loadShortString(saveOnLoad=false) {
         let shortString = $("#shortString")[0].value;
 
         $.ajax({
@@ -116,6 +116,10 @@
                 newArgs = JSON.parse(response);
                 fixArgs(newArgs);
                 setInputValues('flag', newArgs);
+
+                if (saveOnLoad) {
+                    saveSettings();
+                }
             }
         });
     }

@@ -8,6 +8,7 @@ from gameboy import Gameboy
 from items import *
 from checks import *
 from entrances import *
+from rom import ROM
 
 gb = Gameboy()
 
@@ -42,6 +43,7 @@ async def processMessages(socket):
             loadEntrances(romData)
 
             await sendRomAck(socket)
+            await sendSettings(socket, romData)
 
             entrancesLoaded = True
     
@@ -56,6 +58,21 @@ async def sendRomRequest(socket):
 async def sendRomAck(socket):
     newMessage = Message('romAck', 'romAck', False)
     print(f'Sending ROM ack')
+    
+    await newMessage.send(socket)
+
+async def sendSettings(socket, romData):
+    rom = ROM(data=romData)
+    settings = rom.readShortSettings()
+
+    if len(settings) == 0:
+        print(f'Settings not found in ROM')
+        return
+
+    print(f'Sending settings string: {settings}')
+
+    newMessage = Message('settings', 'settings', False)
+    newMessage.settings = settings
     
     await newMessage.send(socket)
 
@@ -79,6 +96,7 @@ async def socketLoop(socket, path):
 
             loadEntrances(romData)
             await sendRomAck(socket)
+            await sendSettings(socket, romData)
 
             entrancesLoaded = True
 
