@@ -193,11 +193,17 @@ class NodeTooltip {
         let items = '';
         let imageTemplate = `<img class="check-item-image" src="static/images/{item}_1.png">`;
         let itemTemplate = `<li><button class="dropdown-item tooltip-item plando-item" type="button" data-item="{item}" onclick="setCheckContents('${checkId}', '{item}');"><div class="check-item-image-wrapper me-2">{image}</div>{name}</button></li>`;
+        let spoilerTemplate = `<li><button class="dropdown-item tooltip-item plando-item" type="button" data-item="" onclick="spoilLocation('${checkId}');"><div class="check-item-image-wrapper me-2">{image}</div>{name}</button></li>`
 
         if (pinned) {
             items += itemTemplate.replaceAll('{image}', '')
                 .replaceAll('{item}', '')
                 .replaceAll('{name}', 'Unknown');
+
+            if (checkId in itemsByLocation) {
+                items += spoilerTemplate.replaceAll('{image}', '')
+                    .replaceAll('{name}', 'Load from spoiler log');
+            }
 
             for (const item of itemList) {
                 items += itemTemplate.replaceAll('{image}', imageTemplate)

@@ -4,7 +4,7 @@ function hasAttr(element, attrName) {
     return typeof attr !== 'undefined' && attr !== false;
 }
 
-async function getFile(element, callback, types=null) {
+function getFile(element, callback) {
     if (element.files.length == 0) {
         return;
     }
@@ -14,8 +14,18 @@ async function getFile(element, callback, types=null) {
 
     reader.onload = () => callback(reader.result);
     reader.readAsText(file);
+}
 
-    return await file.text();
+function getBinaryFile(element, callback) {
+    if (element.files.length == 0) {
+        return;
+    }
+
+    let file = element.files[0];
+    let reader = new FileReader();
+
+    reader.onload = () => callback(reader.result);
+    reader.readAsBinaryString(file);
 }
 
 function download(filename, text) {

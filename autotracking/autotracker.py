@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+import os
 import time
 import json
 import base64
@@ -8,7 +9,11 @@ from gameboy import Gameboy
 from items import *
 from checks import *
 from entrances import *
+from SpoilerArgs import SpoilerArgs
 from rom import ROM
+from romTables import ROMWithTables
+from settings import Settings
+from spoilerLog import SpoilerLog
 
 gb = Gameboy()
 
@@ -44,6 +49,7 @@ async def processMessages(socket):
 
             await sendRomAck(socket)
             await sendSettings(socket, romData)
+            await sendSpoilerLog(socket, romData)
 
             entrancesLoaded = True
     
@@ -76,6 +82,23 @@ async def sendSettings(socket, romData):
     
     await newMessage.send(socket)
 
+async def sendSpoilerLog(socket, romData):
+    rom = ROMWithTables(data=romData)
+    args = SpoilerArgs()
+    settings = Settings()
+    settings.loadShortString(rom.readShortSettings())
+    log = SpoilerLog(settings, args, [rom])
+    
+    filename = 'log.json'
+    log.outputJson(filename)
+    logJson = open(filename, 'r').read()
+    os.remove(filename)
+
+    newMessage = Message('spoiler', 'spoiler', False)
+    newMessage.log = logJson
+
+    await newMessage.send(socket)
+
 async def socketLoop(socket, path):
     print('Connected to tracker')
 
@@ -97,6 +120,7 @@ async def socketLoop(socket, path):
             loadEntrances(romData)
             await sendRomAck(socket)
             await sendSettings(socket, romData)
+            await sendSpoilerLog(socket, romData)
 
             entrancesLoaded = True
 

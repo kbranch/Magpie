@@ -37,7 +37,7 @@
                     <div class="row py-2 hidden" id="romRow">
                         <div class="col rom-col">
                             <label for="romInput" class="form-label rom-label">Select ROM File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="The autotracker requires a copy of the ROM file before entrances can be tracked"></label>
-                            <input type="file" class="hidden" id="romInput" onchange="loadRom(this)" />
+                            <input type="file" accept=".gbc" class="hidden" id="romInput" onchange="loadRom(this)" />
                             <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('romInput').click();" />
                         </div>
                     </div>
@@ -72,7 +72,12 @@
         </div>
 
         <div class="tab h-100" id="spoilersTabContent">
-            <div class="" data-tabname="spoilers">
+            <div class="row h-100 align-items-end" data-tabname="spoilers">
+                <div class="col rom-col">
+                    <label for="spoilerInput" class="form-label rom-label">Select Spoiler File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
+                    <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
+                    <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
+                </div>
             </div>
         </div>
     </div>

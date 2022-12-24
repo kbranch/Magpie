@@ -124,6 +124,8 @@ function processMessage(messageText) {
             break;
         case 'romAck':
             romRequested = false;
+            $('#romRow').hide();
+
             break;
         case 'romRequest':
             romRequested = true;
@@ -140,6 +142,9 @@ function processMessage(messageText) {
         case 'settings':
             $("#shortString")[0].value = message.settings;
             loadShortString(saveOnLoad=true)
+            break;
+        case 'spoiler':
+            loadLogContents(message.log);
             break;
         default:
             console.log(`Unrecognized message category: ${message.category}`)
@@ -159,8 +164,6 @@ function loadRom(element) {
 
     reader.onload = () => sendRom(reader.result);
     reader.readAsBinaryString(file);
-
-    $('#romRow').hide();
 }
 
 function sendRom(bytes) {
