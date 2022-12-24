@@ -89,6 +89,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="tab h-100" id="plandoTabContent">
+            <div class="row h-100 align-items-end" data-tabname="plando">
+                <div class="col rom-col">
+                    <input type="button" class="btn btn-secondary" value="Export as Plan" onclick="exportPlando()" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -101,6 +109,9 @@
     </li>
     <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="spoilers" data-bs-title="Spoilers" data-bs-trigger="hover">
         <button class="btn quicktab-link" id="spoilersTab" data-tabname="spoilers" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/eye.svg"></button>
+    </li>
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="plando" data-bs-title="Plandomizer" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="plandoTab" data-tabname="plando" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/gift.svg"></button>
     </li>
 </ul>
 
