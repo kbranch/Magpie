@@ -5,6 +5,7 @@ import random
 import argparse
 from xmlrpc.client import boolean
 import jsonpickle
+from autotracking.spoilers import *
 
 sys.path.append(os.path.abspath('LADXR/'))
 
@@ -14,6 +15,7 @@ import logic
 from worldSetup import WorldSetup, start_locations
 from LADXR.settings import *
 from checkMetadata import checkMetadataTable
+from romTables import ROMWithTables
 
 allChecks = {}
 
@@ -341,3 +343,6 @@ def getDungeonItemCount(args):
         del itemCount[i]
     
     return itemCount
+
+def loadSpoilerLog(romData):
+    return getSpoilerLog(romData)

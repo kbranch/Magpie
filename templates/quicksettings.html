@@ -74,9 +74,18 @@
         <div class="tab h-100" id="spoilersTabContent">
             <div class="row h-100 align-items-end" data-tabname="spoilers">
                 <div class="col rom-col">
-                    <label for="spoilerInput" class="form-label rom-label">Select Spoiler File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
-                    <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
-                    <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
+                    <div class="row">
+                        <div class="col">
+                            <p id="spoilerSeed"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="spoilerInput" class="form-label rom-label">Select Spoiler File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
+                            <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
+                            <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

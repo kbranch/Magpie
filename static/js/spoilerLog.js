@@ -13,11 +13,7 @@ function loadLogFile(element) {
         return;
     }
 
-    getBinaryFile(element, loadLogFromRom);
-}
-
-function loadLogFromRom(romData) {
-    // TODO: add this endpoint
+    getBinaryFile(element, loadSpoilerLog);
 }
 
 function loadLogContents(logText) {
@@ -35,6 +31,8 @@ function loadLogContents(logText) {
         dict[x.id] = x.itemName;
         return dict;
     });
+
+    $('#spoilerSeed').html(`Spoiler log loaded for seed ${log.seed}`);
 }
 
 function spoilLocation(checkId) {

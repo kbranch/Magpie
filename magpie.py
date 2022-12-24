@@ -1,4 +1,5 @@
 import os
+import base64
 import argparse
 import datetime
 import traceback
@@ -109,6 +110,14 @@ def parseShortString():
         settings = getArgsFromShortString(shortString)
 
         return jsonpickle.encode(settings)
+    except:
+        return renderTraceback()
+
+@app.route("/spoilerLog", methods=['POST'])
+def getSpoilerLog():
+    try:
+        romData = base64.b64decode(request.form['romData'])
+        return loadSpoilerLog(romData)
     except:
         return renderTraceback()
 

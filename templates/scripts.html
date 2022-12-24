@@ -125,6 +125,19 @@
         });
     }
 
+    function loadSpoilerLog(romData) {
+        $.ajax({
+            type: "POST",
+            url: "/spoilerLog",
+            data: {
+                romData: btoa(romData),
+            },
+            success: function(response) {
+                loadLogContents(response);
+            }
+        });
+    }
+
     function init() {
         modifyTooltipAllowList();
         initKnownItems();
