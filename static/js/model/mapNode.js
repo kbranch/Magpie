@@ -160,8 +160,8 @@ class MapNode {
 
         let items = this.checks.filter(x => x.item)
                                .map(x => x.item);
-        let hoveredItems = items.filter(x => hoveredItems.includes(x));
-        if (hoveredItems.length > 0) {
+        let hoverItems = items.filter(x => hoveredItems.includes(x));
+        if (hoverItems.length > 0) {
             classes.push('spoiler-highlight');
         }
 
