@@ -35,10 +35,10 @@
             <div class="row h-100 justify-content-center align-items-end">
                 <div class="col">
                     <div class="row py-2 hidden" id="romRow">
-                        <div class="col rom-col">
-                            <label for="romInput" class="form-label rom-label">Select ROM File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="The autotracker requires a copy of the ROM file before entrances can be tracked"></label>
+                        <div class="col even-col">
+                            <label for="romInput" class="form-label">Select ROM File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="The autotracker requires a copy of the ROM file before entrances can be tracked"></label>
                             <input type="file" accept=".gbc" class="hidden" id="romInput" onchange="loadRom(this)" />
-                            <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('romInput').click();" />
+                            <input type="button" id="romButton" class="btn btn-secondary" value="Browse..." onclick="document.getElementById('romInput').click();" />
                         </div>
                     </div>
                     <div class="row">
@@ -83,11 +83,14 @@
                     </div>
                     <div class="row pb-2">
                         <div class="col">
-                            <input type="button" id="spoilAllButton" class="btn btn-secondary hidden" value="Spoil All Locations" onclick="spoilAll();" />
+                            <input type="button" id="spoilAllButton" class="btn btn-secondary hidden" value="Spoil Everything" onclick="spoilAll();" />
+                        </div>
+                        <div class="col-auto">
+                            <input type="button" id="clearSpoilersButton" class="btn btn-secondary" value="Clear" onclick="resetCheckContents();drawActiveTab();" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col even-col">
                             <label for="spoilerInput" class="form-label pe-2">Select Spoiler File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
                             <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
                             <input type="button" class="btn btn-secondary spoiler-browse" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
@@ -100,7 +103,7 @@
         <div class="tab h-100" id="plandoTabContent">
             <div class="row h-100 align-items-end" data-tabname="plando">
                 <div class="col rom-col">
-                    <input type="button" class="btn btn-secondary" value="Export as Plan" onclick="exportPlando()" />
+                    <input type="button" id="plandoButton" class="btn btn-secondary" value="Export as Plan" onclick="exportPlando()" />
                 </div>
             </div>
         </div>

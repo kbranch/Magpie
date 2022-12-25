@@ -142,6 +142,7 @@ img {
 
 .hidden {
     display: none;
+    width: 0px;
     z-index: -50;
 }
 
@@ -235,8 +236,14 @@ img {
     font-size: var(--bs-tooltip-font-size) !important;
 }
 
-.spoiler-browse {
-    float: right;
+.even-col {
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+#plandoButton {
+    width: 100%;
 }
 
 .tooltip-check {
