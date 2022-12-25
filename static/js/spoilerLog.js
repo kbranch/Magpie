@@ -32,9 +32,22 @@ function loadLogContents(logText) {
         return dict;
     });
 
-    $('#spoilerSeed').html(`Spoiler log loaded for seed ${log.seed}`);
+    $('#spoilerSeed').html(`Loaded seed: ${log.seed}`);
+    $('#spoilAllButton').show();
 }
 
-function spoilLocation(checkId) {
-    setCheckContents(checkId, itemsByLocation[checkId]);
+function spoilAll() {
+    pushUndoState();
+
+    for (const checkId in coordDict) {
+        if (checkId in itemsByLocation) {
+            spoilLocation(checkId, housekeeping=false);
+        }
+    }
+
+    drawActiveTab();
+}
+
+function spoilLocation(checkId, housekeeping=true) {
+    setCheckContents(checkId, itemsByLocation[checkId], housekeeping);
 }

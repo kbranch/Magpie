@@ -77,23 +77,34 @@ function connectToAutotracker() {
     }
 
     if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
-        updateAutotrackerStatus('Connecting');
+        addAutotrackerMessage('Connecting...');
         autotrackerSocket = new WebSocket("ws://127.0.0.1:17026/");
 
         autotrackerSocket.onopen = autotrackerConnected;
         autotrackerSocket.onmessage = (event) => processMessage(event.data);
         autotrackerSocket.onerror = (event) => console.log(event);
         autotrackerSocket.onclose = (event) => {
-            updateAutotrackerStatus(localSettings.enableAutotracking ? 'Disconnected' : 'Disabled');
+            if (localSettings.enableAutotracking) {
+                addAutotrackerMessage('Disconnected');
+            }
+
             console.log(event);
         };
     }
 }
 
-function updateAutotrackerStatus(status) {
-    $('#autotracker-status').html(status);
+function addAutotrackerMessage(status) {
+    // I cannot believe the state of vanilla javascript date formatting
+    let now = new Date();
+    let hours = now.getHours().toString(10).padStart(2, '0');
+    let minutes = now.getMinutes().toString(10).padStart(2, '0');
+    let seconds = now.getSeconds().toString(10).padStart(2, '0');
+    let textArea = $('#autotrackerMessages');
+    textArea.append(`\n${hours}:${minutes}:${seconds}: ` + status);
+    textArea.scrollTop(textArea[0].scrollHeight);
+
     if (status != 'ROM Requested') {
-        $('#romRow').removeClass('animate__flash')
+        $('#romRow').removeClass('animate__flash');
     }
 }
 
@@ -126,6 +137,8 @@ function processMessage(messageText) {
             romRequested = false;
             $('#romRow').hide();
 
+            addAutotrackerMessage('ROM Received');
+
             break;
         case 'romRequest':
             romRequested = true;
@@ -137,6 +150,8 @@ function processMessage(messageText) {
             $('#romRow').addClass('animate__animated')
             $('#romRow').addClass('animate__flash')
             quickSettingsTab($('#autotrackerTab'))
+
+            addAutotrackerMessage('ROM Requested');
 
             break;
         case 'settings':
@@ -150,8 +165,6 @@ function processMessage(messageText) {
             console.log(`Unrecognized message category: ${message.category}`)
             break;
     }
-
-    updateAutotrackerStatus(romRequested ? 'ROM Requested' : 'Connected');
 }
 
 function loadRom(element) {
@@ -184,5 +197,6 @@ function reloadFromAutotracker() {
 
 function autotrackerConnected(event) {
     console.log("Connected to autotracker");
+    addAutotrackerMessage('Connected');
     reloadFromAutotracker();
 }

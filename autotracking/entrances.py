@@ -1,4 +1,5 @@
 import os
+import io
 import sys
 from message import Message
 from entrance import Entrance
@@ -87,7 +88,7 @@ def loadEntrances(romData):
         entrancesByTarget[info.target] = entrance
         entrancesByName[name] = entrance
     
-    rom = ROMWithTables(data=romData)
+    rom = ROMWithTables(io.BytesIO(romData))
 
     world = WorldSetup()
     world.loadFromRom(rom)

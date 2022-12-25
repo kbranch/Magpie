@@ -65,7 +65,7 @@ async def sendRomAck(socket):
     await newMessage.send(socket)
 
 async def sendSettings(socket, romData):
-    rom = ROM(data=romData)
+    rom = ROM(io.BytesIO(romData))
     settings = rom.readShortSettings()
 
     if len(settings) == 0:

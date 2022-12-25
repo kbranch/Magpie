@@ -101,6 +101,6 @@ function applySettings() {
             autotrackerSocket.close();
         }
 
-        updateAutotrackerStatus("Disabled")
+        addAutotrackerMessage("Disabled")
     }
 }

@@ -1,3 +1,4 @@
+import io
 import os
 import sys
 import uuid
@@ -21,7 +22,7 @@ class SpoilerArgs:
         self.spoilerformat = 'json'
 
 def getSpoilerLog(romData):
-    rom = ROMWithTables(data=romData)
+    rom = ROMWithTables(io.BytesIO(romData))
     args = SpoilerArgs()
     settings = Settings()
     settings.loadShortString(rom.readShortSettings())

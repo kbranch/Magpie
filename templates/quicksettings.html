@@ -42,12 +42,14 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col">
+                            <textarea id="autotrackerMessages" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-auto">
                             <input id="enableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
-                            <label for="enableAutotracking" class="form-label">Enable</label>
-                        </div>
-                        <div class="col right-text">
-                            <p id="autotracker-status">Disconnected</p>
+                            <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
                         </div>
                     </div>
                     <div class="row" data-tabname="autotracker">
@@ -79,11 +81,16 @@
                             <p id="spoilerSeed"></p>
                         </div>
                     </div>
+                    <div class="row pb-2">
+                        <div class="col">
+                            <input type="button" id="spoilAllButton" class="btn btn-secondary hidden" value="Spoil All Locations" onclick="spoilAll();" />
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col">
-                            <label for="spoilerInput" class="form-label rom-label">Select Spoiler File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
+                            <label for="spoilerInput" class="form-label pe-2">Select Spoiler File <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
                             <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
-                            <input type="button" class="btn btn-secondary rom-button" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
+                            <input type="button" class="btn btn-secondary spoiler-browse" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
                         </div>
                     </div>
                 </div>

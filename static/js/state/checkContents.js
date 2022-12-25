@@ -20,8 +20,10 @@ function resetCheckContents() {
     saveCheckContents();
 }
 
-function setCheckContents(checkId, contents) {
-    pushUndoState();
+function setCheckContents(checkId, contents, housekeeping=true) {
+    if (housekeeping) {
+        pushUndoState();
+    }
 
     if (contents == '') {
         delete checkContents[checkId];
@@ -31,7 +33,10 @@ function setCheckContents(checkId, contents) {
     }
 
     saveCheckContents();
-    drawActiveTab();
+
+    if (housekeeping) {
+        drawActiveTab();
+    }
 }
 
 function getCheckContents(checkId) {
