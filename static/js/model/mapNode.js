@@ -158,6 +158,13 @@ class MapNode {
             classes.push('owl');
         }
 
+        let items = this.checks.filter(x => x.item)
+                               .map(x => x.item);
+        let hoveredItems = items.filter(x => hoveredItems.includes(x));
+        if (hoveredItems.length > 0) {
+            classes.push('spoiler-highlight');
+        }
+
         if (this.entrance != null) {
             if (this.entrance.isMapped()) {
                 let mappedEntrance = new Entrance(this.entrance.connectedTo());

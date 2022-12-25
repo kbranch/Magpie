@@ -113,6 +113,36 @@ function refreshImages() {
     }
 }
 
+let spoilerTimeout = null;
+
+function itemMouseEnter(element) {
+    let parent = $(element).parent();
+
+    items = [$(parent).attr('data-primary')];
+
+    let secondary = $(parent).attr('data-secondary');
+    if (secondary) {
+        items.push(secondary);
+    }
+
+    spoilerTimeout = setTimeout(setHighlightedItems, 500, items);
+}
+
+function itemMouseLeave(element) {
+    clearTimeout(spoilerTimeout);
+    setHighlightedItems([]);
+}
+
+function setHighlightedItems(items) {
+    if (hoveredItems.length == 0 && items.length == 0) {
+        return;
+    }
+
+    hoveredItems = [].concat(items);
+
+    drawActiveTab();
+}
+
 // Composite item logic
 function jumpSrc() {
     feather = inventory['FEATHER'] > 0;

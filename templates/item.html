@@ -36,7 +36,7 @@
     {% set width = 'style="width: ' + width + ';"' %}
 
     <div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{secondaryMax}} {{max_image}} class="{{classes}}">
-        <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}">
+        <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" {{width|safe}} class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}

@@ -317,7 +317,7 @@ img {
     position: absolute;
 }
 
-.check-graphic:hover {
+.check-graphic:hover, .spoiler-highlight {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 

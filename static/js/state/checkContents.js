@@ -1,5 +1,6 @@
 function saveCheckContents() {
     localStorage.setItem('checkContents', JSON.stringify(checkContents));
+    updateItemLocations();
 }
 
 function loadCheckContents() {
@@ -11,6 +12,22 @@ function loadCheckContents() {
 
     if (checkContents == null) {
         checkContents = {};
+    }
+
+    updateItemLocations();
+}
+
+function updateItemLocations() {
+    itemLocations = {};
+
+    for (checkId in checkContents) {
+        let item = checkContents[checkId];
+
+        if (!(item in itemLocations)) {
+            itemLocations[item] = [];
+        }
+
+        itemLocations[item].push(checkId);
     }
 }
 
