@@ -1,7 +1,6 @@
 import os
 import base64
 import argparse
-import datetime
 import traceback
 import jsonpickle
 from flaskwebgui import FlaskUI
@@ -191,10 +190,10 @@ def suggestion():
         alternative.attach(html)
 
         attachment = MIMEText(state)
-        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.datetime.now()}-magpie-state.json')
+        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.now()}-magpie-state.json')
 
         htmlFile = MIMEText(body)
-        htmlFile.add_header('Content-Disposition', 'attachment', filename=f'{datetime.datetime.now()}-magpie-suggestion.html')
+        htmlFile.add_header('Content-Disposition', 'attachment', filename=f'{datetime.now()}-magpie-suggestion.html')
 
         msg = MIMEMultipart('mixed')
         msg.attach(alternative)
