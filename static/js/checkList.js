@@ -101,6 +101,10 @@ function moveCheckToChecked(element, doLinked=false) {
     let destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
     let sourceArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
 
+    if (localSettings.spoilOnCollect) {
+        spoilLocation(checkId, doLinked);
+    }
+
     if (doLinked) {
         let contents = getCheckContents(checkId);
 
@@ -115,10 +119,6 @@ function moveCheckToChecked(element, doLinked=false) {
             addItem(metadata.linkedItem, 1, wrap=false, refresh=false);
             itemsChanged = true;
         }
-    }
-
-    if (localSettings.spoilOnCollect) {
-        spoilLocation(checkId, doLinked);
     }
 
     if (destArea.length == 0) {
