@@ -10,9 +10,13 @@ Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/QhAKagk84
 Special thanks to:
  - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is essentially a port of, and for help with the design
  - [Daid](https://github.com/daid) for creating [LADXR](https://daid.github.io/LADXR/) and keeping it open
+ - [Artemis251](http://artemis251.fobby.net/zelda/index.php) for the great map resources and screenshots
 
 ## Setup
-### Downloading
+### Releases
+The latest version of the compiled local version is always available at [https://magpietracker.us/static/Magpie-local.zip](https://magpietracker.us/static/Magpie-local.zip). This should always match the [main site](https://magpietracker.us/).
+### From Source
+#### Downloading
 Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/Magpie.git`.
 
 If you're not familiar with Git, you can download Magpie as zip files:
@@ -21,11 +25,11 @@ If you're not familiar with Git, you can download Magpie as zip files:
  - Extract both zip files to separate folders (e.g. `Magpie-master` and `LADXR-master`
  - Copy everything from inside the `LADXR-master` folder into `Magpie-master/LADXR`
 
-### Linux (and Mac?)
+#### Linux (and Mac?)
  - Run `setup.sh` to create a python virtual environment and install the required packages
  - Run `startLocal.sh` to start as a local application - a browser window should open, and the application will exit when it is closed
  
-### Windows
+#### Windows
  - Install [Python3](https://www.python.org/downloads/)
    - Make sure you check the checkbox to `Add Python 3.x to PATH`
  - Run `setup.bat`
@@ -50,6 +54,26 @@ If new locations were added to the randomizer since Magpie was last updated, the
 Flags can be changed by clicking the gear icon in the upper right. These are passed to the randomizer and help determine which locations and items are shown as well as which locations are in logic.
 
 Flags that were added to the randomizer after Magpie was last updated will appear in the list. Because flags can do a lot of different things, these may or may not be relevant or functional without an update to Magpie.
+
+### Autotracker
+Magpie uses a separate autotracker program that runs locally and communicates with the wite via websockets. The latest compiled autotracker is always availabe at [https://magpietracker.us/static/magpie-autotracker.exe](https://magpietracker.us/static/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
+
+No setup should be required beyond enabling autotracking in Magpie - just start the autotracker and a compatible emulator.
+
+Settings are available in the main Magpie UI to control what data gets pulled from the autotracker.
+
+#### Compatibility
+Currently, [BGB](https://bgb.bircd.org/) and [RetroArch](https://www.retroarch.com/) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux.
+
+The autotracker requires a copy of the ROM for some features to work. When it is not able to pull the ROM directly from the emulator, it will request a copy from the user in the main Magpie UI.
+
+### Spoiler Log
+
+The spoiler log minitab allows you to upload either a JSON spoiler log or a ROM itself. Once loaded, individual checks and entrances can be spoiled by right clicking on them. Hovering over an item in the item tracker will highlight its location on the map if it has been marked(/spoiled)
+ 
+The `Spoil collected items` setting will mark checks with the item they contain as you check them off. Those items are automatically added to your inventory so you never have to interact with the item tracker. Similarly, manually spoiling visited entrances can reduce the time required to track entrances.
+
+For a more comprehensive spoiler log tool, check out the [spoiler log viewer](https://kabarakh.github.io/ladxr-spoiler-interface/) by [Kabarakh](https://github.com/kabarakh).
 
 ## Contributing layouts
 Most of the layout definition happens in [Jinja templates](https://jinja.palletsprojects.com/en/3.1.x/). Simple changes can be done purely in the templates, but more complicated changes may involve Javascript or the item macro. Improvements and updates are always welcome.
