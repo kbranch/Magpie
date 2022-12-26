@@ -79,6 +79,7 @@ items = [
     Item('SONG3', 0xDB49, mask=1 << 0),
     Item('RED_TUNIC', 0xDB6D, mask=1 << 0),
     Item('BLUE_TUNIC', 0xDB6D, mask=1 << 1),
+    Item('GREAT_FAIRY', 0xDDE1, mask=1 << 4),
 ]
 
 dungeonKeyDoors = [
