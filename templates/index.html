@@ -64,7 +64,7 @@
     function sendSuggestion() {
         $.ajax({
             type: "POST",
-            url: "/suggestion",
+            url: "https://magpietracker.us/suggestion",
             data: {
                 email: $('#suggestionEmail')[0].value,
                 body: $('#bodyTextArea').summernote('code'),

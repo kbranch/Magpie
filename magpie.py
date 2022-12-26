@@ -208,7 +208,15 @@ def suggestion():
     except:
         pass
 
-    return "thx"
+    response = app.response_class(
+        response="thx",
+        status=200,
+        mimetype='application/json'
+    )
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 def parseArgs(argsString):
     args = jsonpickle.decode(argsString)
