@@ -206,7 +206,7 @@ def suggestion():
         p = Popen(["/usr/sbin/sendmail", "-t", "-oi"], stdin=PIPE)
         p.communicate(msg.as_bytes())
     except:
-        pass
+        print(traceback.format_exc())
 
     response = app.response_class(
         response="thx",
