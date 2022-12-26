@@ -191,7 +191,7 @@ function sendRom(bytes) {
 function reloadFromAutotracker() {
     if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
         console.log('Sent request to send full autotracker inventory');
-        autotrackerSocket.send(JSON.stringify({ type: 'sendFull' }));
+        autotrackerSocket.send(JSON.stringify({ type: 'handshake', features: autotrackerFeatures }));
     }
 }
 

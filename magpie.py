@@ -46,6 +46,12 @@ class LocalSettings:
         self.showItemsOnly = False
         self.highlightItemsOnHover = True
         self.enableAutotracking = False
+        self.autotrackItems = True
+        self.autotrackChecks = True
+        self.autotrackEntrances = True
+        self.autotrackSettings = True
+        self.autotrackSpoilers = True
+        self.spoilOnCollect = False
 
 @app.route("/")
 def home():

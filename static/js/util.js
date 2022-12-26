@@ -103,4 +103,21 @@ function applySettings() {
 
         addAutotrackerMessage("Disabled")
     }
+
+    autotrackerFeatures = [];
+    if (localSettings.autotrackItems) {
+        autotrackerFeatures.push('items');
+    }
+    if (localSettings.autotrackChecks) {
+        autotrackerFeatures.push('checks');
+    }
+    if (localSettings.autotrackEntrances) {
+        autotrackerFeatures.push('entrances');
+    }
+    if (localSettings.autotrackSpoilers) {
+        autotrackerFeatures.push('spoilers');
+    }
+    if (localSettings.autotrackSettings) {
+        autotrackerFeatures.push('settings');
+    }
 }
