@@ -88,6 +88,8 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
         }
     }
 
+    closeAllCheckTooltips();
+
     return itemsChanged;
 }
 
