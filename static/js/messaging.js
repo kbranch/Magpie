@@ -52,6 +52,8 @@ function processEntranceMessage(message) {
         // resetEntrances();
     }
 
+    pushUndoState();
+
     for (const outdoor in message.entranceMap) {
         if (outdoor in entranceMap) {
             continue;

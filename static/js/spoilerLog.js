@@ -45,9 +45,36 @@ function spoilAll() {
         }
     }
 
+    for (entranceId in spoilerLog.entrances) {
+        spoilEntrance(entranceId, housekeeping=false);
+    }
+
     drawActiveTab();
+    refreshCheckList();
 }
 
 function spoilLocation(checkId, housekeeping=true) {
     setCheckContents(checkId, itemsByLocation[checkId], housekeeping);
+}
+
+function spoilEntrance(entranceId, housekeeping=true) {
+    if (!(entranceId in spoilerLog.entrances)) {
+        return;
+    }
+
+    if (Entrance.isConnector(entranceId)) {
+        connectOneEndConnector(entranceId, spoilerLog.entrances[entranceId], housekeeping);
+    }
+    else {
+        entranceMap[entranceId] = spoilerLog.entrances[entranceId];
+
+        saveEntrances();
+
+        if (housekeeping) {
+            closeAllCheckTooltips();
+            refreshCheckList();
+        }
+    }
+
+    updateReverseMap();
 }

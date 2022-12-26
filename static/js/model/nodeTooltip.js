@@ -359,6 +359,13 @@ class NodeTooltip {
             }
         }
 
+        if (spoilerLog) {
+                pinnedHtml += menuItemTemplate.replace('{action}', `spoilEntrance('${entrance.id}')`)
+                                              .replace('{text}', 'Spoil entrance')
+                                              .replace('{classes}', '')
+                                              .replace('{attributes}', '');
+        }
+
         if (entrance.isMapped()) {
             pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping('${entrance.id}')`)
                                           .replace('{text}', 'Clear Mapping')

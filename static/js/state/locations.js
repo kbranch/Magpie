@@ -142,7 +142,9 @@ function connectOneEndConnector(outdoors, indoors, refresh=true) {
 }
 
 function connectEntrances(from, to, refresh=true) {
-    pushUndoState();
+    if (refresh) {
+        pushUndoState();
+    }
 
     console.assert(to != 'clear');
     // if (to == 'clear') {
@@ -239,7 +241,9 @@ function mapToLandfill(entranceId) {
 }
 
 function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
-    pushUndoState();
+    if (refresh) {
+        pushUndoState();
+    }
 
     let connector = Connection.findConnector({ interior: fromInterior });
     let connection = Connection.existingConnection(connector);
