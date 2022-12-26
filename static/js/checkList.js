@@ -67,6 +67,7 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
             };
 
             checkedChecks[key] = check;
+
             itemsChanged = moveCheckToChecked(element, doLinked=true);
         }
         else {
@@ -114,6 +115,10 @@ function moveCheckToChecked(element, doLinked=false) {
             addItem(metadata.linkedItem, 1, wrap=false, refresh=false);
             itemsChanged = true;
         }
+    }
+
+    if (localSettings.spoilOnCollect) {
+        spoilLocation(checkId, doLinked);
     }
 
     if (destArea.length == 0) {
