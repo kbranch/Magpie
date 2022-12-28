@@ -14,7 +14,7 @@ from rom import ROM
 
 gb = Gameboy()
 
-class Flags:
+class State:
     def __init__(self):
         self.handshook = False
         self.entrancesLoaded = False
@@ -23,10 +23,22 @@ class Flags:
         self.features = set()
         self.sendFull = False
 
+        self.items = []
+        self.itemDict = {}
+
+        self.checks = []
+
+        self.lastRoom = None
+        self.lastIndoors = None
+
+        self.reverseEntranceMap = {}
+        self.entrancesByTarget = {}
+        self.entrancesByName = {}
+
     def needsRom(self):
         return 'entrances' in self.features or 'settings' in self.features or 'spoilers' in self.features
 
-async def processMessages(socket, flags):
+async def processMessages(socket, state):
     while socket.messages:
         messageText = await socket.recv()
         message = None
@@ -39,37 +51,37 @@ async def processMessages(socket, flags):
 
         if message['type'] == 'handshake':
             print("Received handshake request")
-            flags.features = set(message['features'])
-            flags.sendFull = True
+            state.features = set(message['features'])
+            state.sendFull = True
 
-            flags.handshook = True
+            state.handshook = True
         elif message['type'] == 'rom':
             print("Received ROM")
 
             romData = base64.b64decode(message['rom'])
-            await parseRom(socket, romData, flags)
+            await parseRom(socket, romData, state)
 
-            flags.entrancesLoaded = True
+            state.entrancesLoaded = True
 
-async def sendTrackables(socket, flags):
-    if flags.sendFull:
-        if 'items' in flags.features:
-            await sendItems(items, socket, diff=False, refresh=False)
-        if 'checks' in flags.features:
-            await sendChecks(checks, socket, diff=False, refresh=False)
-        if 'entrances' in flags.features:
-            await sendEntrances([x for x in entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
+async def sendTrackables(socket, state):
+    if state.sendFull:
+        if 'items' in state.features:
+            await sendItems(state.items, socket, diff=False, refresh=False)
+        if 'checks' in state.features:
+            await sendChecks(state.checks, socket, diff=False, refresh=False)
+        if 'entrances' in state.features:
+            await sendEntrances([x for x in state.entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
 
         await Message('refresh', 'refresh').send(socket)
 
-        flags.sendFull = False
+        state.sendFull = False
     else:
-        if 'items' in flags.features:
-            await sendItems([x for x in items if x.diff != 0], socket)
-        if 'checks' in flags.features:
-            await sendChecks([x for x in checks if x.diff != 0], socket)
-        if 'entrances' in flags.features:
-            await sendEntrances([x for x in entrancesByName.values() if x.changed], socket)
+        if 'items' in state.features:
+            await sendItems([x for x in state.items if x.diff != 0], socket)
+        if 'checks' in state.features:
+            await sendChecks([x for x in state.checks if x.diff != 0], socket)
+        if 'entrances' in state.features:
+            await sendEntrances([x for x in state.entrancesByName.values() if x.changed], socket)
 
 async def sendRomRequest(socket):
     newMessage = Message('romRequest', 'romRequest', False)
@@ -108,38 +120,40 @@ async def sendSpoilerLog(socket, romData):
 
     await newMessage.send(socket)
 
-async def parseRom(socket, romData, flags):
-    if 'entrances' in flags.features:
-        loadEntrances(romData)
+async def parseRom(socket, romData, state):
+    if 'entrances' in state.features:
+        loadEntrances(state, romData)
 
     await sendRomAck(socket)
 
-    if 'settings' in flags.features:
+    if 'settings' in state.features:
         await sendSettings(socket, romData)
-    if 'spoilers' in flags.features:
+    if 'spoilers' in state.features:
         await sendSpoilerLog(socket, romData)
 
 async def socketLoop(socket, path):
     print('Connected to tracker')
 
-    flags = Flags()
+    state = State()
+    loadItems(state)
+    loadChecks(state)
 
     while True:
         await asyncio.sleep(0.4)
 
         if not gb.findEmulator():
-            flags.handshook = False
+            state.handshook = False
             continue
 
-        if not flags.entrancesLoaded and gb.canReadRom() and flags.needsRom():
+        if not state.entrancesLoaded and gb.canReadRom() and state.needsRom():
             romData = gb.readRom(0, 1024 * 1024)
-            await parseRom(socket, romData)
-            flags.entrancesLoaded = True
+            await parseRom(socket, romData, state)
+            state.entrancesLoaded = True
 
         extraItems = {}
 
         try:
-            await processMessages(socket, flags)
+            await processMessages(socket, state)
 
             gb.snapshot()
 
@@ -147,29 +161,28 @@ async def socketLoop(socket, path):
             if gameState not in validGameStates:
                 continue
 
-            if flags.entrancesLoaded and not flags.visitedEntrancesRead and 'entrances' in flags.features:
-                readVisitedEntrances(gb)
-                flags.visitedEntrancesRead = True
+            if state.entrancesLoaded and not state.visitedEntrancesRead and 'entrances' in state.features:
+                readVisitedEntrances(gb, state)
+                state.visitedEntrancesRead = True
 
-            if 'checks' in flags.features:
-                readChecks(gb, extraItems)
-            if 'items' in flags.features:
-                readItems(gb, extraItems)
+            if 'checks' in state.features:
+                readChecks(gb, state, extraItems)
+            if 'items' in state.features:
+                readItems(gb, state, extraItems)
 
-            if flags.entrancesLoaded and 'entrances' in flags.features:
-                readEntrances(gb)
+            if state.entrancesLoaded and 'entrances' in state.features:
+                readEntrances(gb, state)
             
-            if flags.handshook:
-                if not gb.canReadRom() and not flags.romRequested and flags.needsRom():
+            if state.handshook:
+                if not gb.canReadRom() and not state.romRequested and state.needsRom():
                     await sendRomRequest(socket)
-                    flags.romRequested = True
+                    state.romRequested = True
 
-                await sendTrackables(socket, flags)
+                await sendTrackables(socket, state)
         except IOError:
             pass
 
 async def main():
-    loadChecks()
     async with websockets.serve(socketLoop, '127.0.0.1', 17026, max_size=1024*1024*10):
         await asyncio.Future()
 

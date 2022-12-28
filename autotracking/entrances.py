@@ -53,13 +53,6 @@ mapIdAddress = 0xFFF7
 indoorFlagAddress = 0xDBA5
 entranceRoomOffset = 0xD800
 
-lastRoom = None
-lastIndoors = None
-
-reverseEntranceMap = {}
-entrancesByTarget = {}
-entrancesByName = {}
-
 async def sendEntrances(entrances, socket, diff=True, refresh=True):
     if not entrances: return
 
@@ -73,47 +66,43 @@ async def sendEntrances(entrances, socket, diff=True, refresh=True):
     
     await newMessage.send(socket)
 
-def loadEntrances(romData):
-    global reverseEntranceMap, entrancesByTarget
-
+def loadEntrances(state, romData):
     addressOverrides = {
         0x312: 0xDDF2,
     }
 
-    entrancesByTarget = {} 
+    state.entrancesByTarget = {} 
 
     for name, info in ENTRANCE_INFO.items():
         alternateAddress = addressOverrides[info.target] if info.target in addressOverrides else None
         entrance = Entrance(info.room, info.target, name, alternateAddress)
-        entrancesByTarget[info.target] = entrance
-        entrancesByName[name] = entrance
+        state.entrancesByTarget[info.target] = entrance
+        state.entrancesByName[name] = entrance
     
     rom = ROMWithTables(io.BytesIO(romData))
 
     world = WorldSetup()
     world.loadFromRom(rom)
 
-    reverseEntranceMap = {value: key for key, value in world.entrance_mapping.items()}
+    state.reverseEntranceMap = {value: key for key, value in world.entrance_mapping.items()}
 
-def readVisitedEntrances(gb):
-    for entrance in entrancesByTarget.values():
-        if entrance.name not in reverseEntranceMap:
+def readVisitedEntrances(gb, state):
+    for entrance in state.entrancesByTarget.values():
+        if entrance.name not in state.reverseEntranceMap:
             continue
 
-        outdoorName = reverseEntranceMap[entrance.name]
-        outdoorEntrance = entrancesByName[outdoorName]
+        outdoorName = state.reverseEntranceMap[entrance.name]
+        outdoorEntrance = state.entrancesByName[outdoorName]
 
         indoorAddress = entrance.indoorAddress or (entrance.indoorMap + entranceRoomOffset)
 
         indoorVisited = gb.readRamByte(indoorAddress) & 0x80
         outdoorVisited = gb.readRamByte(outdoorEntrance.outdoorRoom + entranceRoomOffset) & 0x80
 
-        if indoorVisited and outdoorVisited and entrance.name in reverseEntranceMap:
+        if indoorVisited and outdoorVisited and entrance.name in state.reverseEntranceMap:
             outdoorEntrance.map(entrance.name)
 
-def readEntrances(gb):
-    global lastIndoors, lastRoom
-
+def readEntrances(gb, state):
     indoors = gb.readRamByte(indoorFlagAddress)
 
     mapId = gb.readRamByte(mapIdAddress)
@@ -124,14 +113,14 @@ def readEntrances(gb):
     mapDigit = mapMap[mapId] << 8 if indoors else 0
     room = gb.readRamByte(roomAddress) + mapDigit
 
-    if indoors != lastIndoors and lastIndoors != None:
-        indoorRoom = room if indoors else lastRoom
+    if indoors != state.lastIndoors and state.lastIndoors != None:
+        indoorRoom = room if indoors else state.lastRoom
 
-        if indoorRoom in entrancesByTarget:
-            entrance = entrancesByTarget[indoorRoom]
-            if entrance.name in reverseEntranceMap:
-                outdoorEntranceName = reverseEntranceMap[entrance.name]
-                entrancesByName[outdoorEntranceName].map(entrance.name)
+        if indoorRoom in state.entrancesByTarget:
+            entrance = state.entrancesByTarget[indoorRoom]
+            if entrance.name in state.reverseEntranceMap:
+                outdoorEntranceName = state.reverseEntranceMap[entrance.name]
+                state.entrancesByName[outdoorEntranceName].map(entrance.name)
 
-    lastRoom = room
-    lastIndoors = indoors
+    state.lastRoom = room
+    state.lastIndoors = indoors

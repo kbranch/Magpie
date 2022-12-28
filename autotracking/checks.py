@@ -12,11 +12,7 @@ else:
 
 from checkMetadata import checkMetadataTable
 
-checks = []
-
-def loadChecks():
-    checks.clear()
-
+def loadChecks(state):
     maskOverrides = {
         '0x106': 0x20,
         '0x12B': 0x20,
@@ -96,10 +92,10 @@ def loadChecks():
         if check in maskOverrides:
             mask = maskOverrides[check]
         
-        checks.append(Check(check, address, mask, alternateAddresses[check] if check in alternateAddresses else None, linkedItem))
+        state.checks.append(Check(check, address, mask, alternateAddresses[check] if check in alternateAddresses else None, linkedItem))
 
-def readChecks(gb, extraItems):
-    for check in checks:
+def readChecks(gb, state, extraItems):
+    for check in state.checks:
         bytes = [gb.readRamByte(check.address)]
 
         if check.alternateAddress != None:
