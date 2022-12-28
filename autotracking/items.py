@@ -202,22 +202,3 @@ def readItems(gb, state, extraItems):
     for item in [x for x in state.items if x.address]:
         extra = extraItems[item.id] if item.id in extraItems else 0
         item.set(gb.readRamByte(item.address), extra)
-
-async def sendItems(items, socket, diff=True, refresh=True):
-    if not items: return
-
-    newMessage = Message('add' if diff else 'set', 'item', refresh)
-    for item in items:
-        value = item.diff if diff else item.value
-
-        newMessage.items.append(
-            {
-                'id': item.id,
-                'qty': value,
-            }
-        )
-
-        print(f'Sending {item.id}: {"+" if value > 0 and diff else ""}{item.diff}')
-        item.diff = 0
-    
-    await newMessage.send(socket)

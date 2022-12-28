@@ -105,22 +105,3 @@ def readChecks(gb, state, extraItems):
 
         if check.value and check.linkedItem:
             extraItems[check.linkedItem['item']] = check.linkedItem['qty']
-
-async def sendChecks(checks, socket, diff=True, refresh=True):
-    if not checks: return
-
-    newMessage = Message('add' if diff else 'set', 'check', refresh)
-    for check in checks:
-        value = check.diff if diff else check.value
-        
-        newMessage.items.append(
-            {
-                'id': check.id,
-                'qty': value,
-            }
-        )
-
-        print(f'Sending {check.id}: {"+" if value > 0 and diff else ""}{value}')
-        check.diff = 0
-    
-    await newMessage.send(socket)

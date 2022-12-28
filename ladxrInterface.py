@@ -5,7 +5,7 @@ import random
 import argparse
 from xmlrpc.client import boolean
 import jsonpickle
-from autotracking.spoilers import *
+from autotracking.romContents import *
 
 sys.path.append(os.path.abspath('LADXR/'))
 

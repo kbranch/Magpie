@@ -11,6 +11,7 @@ else:
     sys.path.append(os.path.abspath('LADXR/'))
     sys.path.append(os.path.abspath('../LADXR/'))
 
+from rom import ROM
 from romTables import ROMWithTables
 from settings import Settings
 from spoilerLog import SpoilerLog
@@ -34,3 +35,7 @@ def getSpoilerLog(romData):
     os.remove(filename)
 
     return logJson
+
+def getSettings(romData):
+    rom = ROM(io.BytesIO(romData))
+    return rom.readShortSettings()

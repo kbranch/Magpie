@@ -1,10 +1,7 @@
 import os
 import io
 import sys
-from message import Message
 from entrance import Entrance
-from romTables import ROMWithTables
-from worldSetup import WorldSetup
 
 # Deal with how pyinstaller's --onefile option packs things
 if hasattr(sys, '_MEIPASS'):
@@ -14,6 +11,8 @@ else:
     sys.path.append(os.path.abspath('../LADXR/'))
 
 from entranceInfo import ENTRANCE_INFO
+from romTables import ROMWithTables
+from worldSetup import WorldSetup
 
 mapMap = {
     0x00: 0x01,
@@ -52,19 +51,6 @@ roomAddress = 0xFFF6
 mapIdAddress = 0xFFF7
 indoorFlagAddress = 0xDBA5
 entranceRoomOffset = 0xD800
-
-async def sendEntrances(entrances, socket, diff=True, refresh=True):
-    if not entrances: return
-
-    newMessage = Message('add' if diff else 'set', 'entrance', refresh)
-    newMessage.entranceMap = {}
-    for entrance in entrances:
-        newMessage.entranceMap[entrance.name] = entrance.mappedIndoor
-        entrance.changed = False
-
-        print(f'Sending entrance {entrance.name}: {entrance.mappedIndoor}')
-    
-    await newMessage.send(socket)
 
 def loadEntrances(state, romData):
     addressOverrides = {
