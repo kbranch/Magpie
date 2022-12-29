@@ -1,4 +1,5 @@
 import asyncio
+import traceback
 import websockets
 from gameboy import Gameboy
 from items import *
@@ -29,8 +30,6 @@ async def socketLoop(socket, path):
             await state.parseRom(socket, romData)
             state.entrancesLoaded = True
 
-        extraItems = {}
-
         try:
             await state.processMessages(socket)
 
@@ -40,17 +39,7 @@ async def socketLoop(socket, path):
             if gameState not in validGameStates:
                 continue
 
-            if state.entrancesLoaded and not state.visitedEntrancesRead and 'entrances' in state.features:
-                readVisitedEntrances(gb, state)
-                state.visitedEntrancesRead = True
-
-            if 'checks' in state.features:
-                readChecks(gb, state, extraItems)
-            if 'items' in state.features:
-                readItems(gb, state, extraItems)
-
-            if state.entrancesLoaded and 'entrances' in state.features:
-                readEntrances(gb, state)
+            state.readTrackables(gb)
             
             if state.handshook:
                 if not gb.canReadRom() and not state.romRequested and state.needsRom():
@@ -58,8 +47,8 @@ async def socketLoop(socket, path):
                     state.romRequested = True
 
                 await state.sendTrackables(socket)
-        except IOError:
-            pass
+        except Exception as e:
+            print(f'Error: {traceback.format_exc()}')
 
 async def main():
     async with websockets.serve(socketLoop, '127.0.0.1', 17026, max_size=1024*1024*10):

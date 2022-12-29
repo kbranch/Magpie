@@ -51,6 +51,7 @@ roomAddress = 0xFFF6
 mapIdAddress = 0xFFF7
 indoorFlagAddress = 0xDBA5
 entranceRoomOffset = 0xD800
+screenCoordAddress = 0xFFFA
 
 def loadEntrances(state, romData):
     addressOverrides = {
@@ -88,8 +89,13 @@ def readVisitedEntrances(gb, state):
         if indoorVisited and outdoorVisited and entrance.name in state.reverseEntranceMap:
             outdoorEntrance.map(entrance.name)
 
-def readEntrances(gb, state):
+def readLocation(gb, state):
     indoors = gb.readRamByte(indoorFlagAddress)
+
+    if indoors != state.indoors and state.indoors != None:
+        state.indoorsChanged = True
+    
+    state.indoors = indoors
 
     mapId = gb.readRamByte(mapIdAddress)
     if mapId not in mapMap:
@@ -97,16 +103,27 @@ def readEntrances(gb, state):
         return
 
     mapDigit = mapMap[mapId] << 8 if indoors else 0
-    room = gb.readRamByte(roomAddress) + mapDigit
+    state.lastRoom = state.room
+    state.room = gb.readRamByte(roomAddress) + mapDigit
 
-    if indoors != state.lastIndoors and state.lastIndoors != None:
-        indoorRoom = room if indoors else state.lastRoom
+    oldX = state.screenX
+    oldY = state.screenY
+
+    coords = gb.readRamByte(screenCoordAddress)
+    state.screenX = coords & 0x0F
+    state.screenY = (coords & 0xF0) >> 4
+
+    if (state.room != state.lastRoom):
+        state.locationChanged = True
+
+def readEntrances(gb, state):
+    if state.indoorsChanged:
+        indoorRoom = state.room if state.indoors else state.lastRoom
 
         if indoorRoom in state.entrancesByTarget:
             entrance = state.entrancesByTarget[indoorRoom]
             if entrance.name in state.reverseEntranceMap:
                 outdoorEntranceName = state.reverseEntranceMap[entrance.name]
                 state.entrancesByName[outdoorEntranceName].map(entrance.name)
-
-    state.lastRoom = room
-    state.lastIndoors = indoors
+        
+        state.indoorsChanged = False

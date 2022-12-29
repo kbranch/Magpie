@@ -50,6 +50,7 @@ class LocalSettings:
         self.autotrackEntrances = True
         self.autotrackSettings = True
         self.autotrackSpoilers = True
+        self.gps = True
         self.spoilOnCollect = False
 
 @app.route("/")

@@ -38,3 +38,43 @@ function getMapScaling(map) {
 
     return scaling;
 }
+
+function drawLocation() {
+    if (currentRoom == null || currentRoom.length != 4) {
+        $('#linkFace').remove();
+        return;
+    }
+
+    let map = $('#overworldTabContent');
+    let scaling = getMapScaling(map);
+    let coords = currentRoom.split('0x')[1];
+    let roomX = Number('0x' + coords[1]) * 160;
+    let roomY = Number('0x' + coords[0]) * 128;
+
+    // Why these magic numbers? Trial and error!
+    let mapX = roomX + 94;
+    let mapY = roomY + 70;
+
+    let linkFace = $('#linkFace');
+
+    if (linkFace.length == 0) {
+        linkFace = $('<img>', {
+            'id': 'linkFace',
+            'src': 'static/images/linkface.png',
+            'draggable': false,
+        });
+
+        map.append(linkFace);
+    }
+
+    linkFace.css({
+                'top': Math.round(mapY * scaling.y + scaling.offset.y),
+                'left': Math.round(mapX * scaling.x + scaling.offset.x),
+                'width': localSettings.checkSize,
+                'max-width': localSettings.checkSize,
+                'min-width': localSettings.checkSize,
+                'height': localSettings.checkSize,
+                'max-height': localSettings.checkSize,
+                'min-height': localSettings.checkSize,
+            });
+}

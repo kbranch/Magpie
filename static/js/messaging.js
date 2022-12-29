@@ -73,6 +73,14 @@ function processEntranceMessage(message) {
     }
 }
 
+function processLocationMessage(message) {
+    currentRoom = message.room;
+    currentX = message.x;
+    currentY = message.y;
+
+    drawLocation();
+}
+
 function connectToAutotracker() {
     if (!localSettings.enableAutotracking) {
         return;
@@ -89,6 +97,12 @@ function connectToAutotracker() {
             if (localSettings.enableAutotracking) {
                 addAutotrackerMessage('Disconnected');
             }
+
+            currentRoom = null;
+            currentX = null;
+            currentY = null;
+
+            drawLocation();
 
             console.log(event);
         };
@@ -134,6 +148,9 @@ function processMessage(messageText) {
             break;
         case 'refresh':
             refreshCheckList();
+            break;
+        case 'location':
+            processLocationMessage(message);
             break;
         case 'romAck':
             romRequested = false;

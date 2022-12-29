@@ -3,6 +3,7 @@ var nodes = {};
 function removeNodes() {
     removeNodeTooltips();
     $('.check-graphic').remove();
+    $('#linkFace').remove();
 }
 
 function createCheck(checkElement, mapName) {
@@ -196,6 +197,8 @@ function drawNodes(mapName, animate=true) {
 
         updateTooltip(node.graphic);
     }
+
+    drawLocation();
 
     removeOldNodes();
 }

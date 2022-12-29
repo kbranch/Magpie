@@ -87,3 +87,14 @@ async def sendEntrances(entrances, socket, diff=True, refresh=True):
         print(f'Sending entrance {entrance.name}: {entrance.mappedIndoor}')
     
     await newMessage.send(socket)
+
+async def sendLocation(state, socket):
+    if state.room is None:
+        return
+
+    newMessage = Message('set', 'location', refresh=True)
+    newMessage.room = hex(state.room)
+    newMessage.x = state.screenX
+    newMessage.y = state.screenY
+    
+    await newMessage.send(socket)

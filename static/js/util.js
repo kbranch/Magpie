@@ -120,4 +120,7 @@ function applySettings() {
     if (localSettings.autotrackSettings) {
         autotrackerFeatures.push('settings');
     }
+    if (localSettings.gps) {
+        autotrackerFeatures.push('gps');
+    }
 }

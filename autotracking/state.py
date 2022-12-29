@@ -1,6 +1,8 @@
 import json
 import base64
 import traceback
+from items import *
+from checks import *
 from entrances import *
 from messages import *
 
@@ -12,14 +14,20 @@ class State:
         self.romRequested = False
         self.features = set()
         self.sendFull = False
+        self.locationChanged = False
 
         self.items = []
         self.itemDict = {}
 
         self.checks = []
 
+        self.room = None
+        self.indoors = None
+        self.indoorsChanged = False
         self.lastRoom = None
-        self.lastIndoors = None
+        self.screenX = None
+        self.screenY = None
+        self.locationChanged = False
 
         self.reverseEntranceMap = {}
         self.entrancesByTarget = {}
@@ -72,6 +80,8 @@ class State:
                 await sendChecks(self.checks, socket, diff=False, refresh=False)
             if 'entrances' in self.features:
                 await sendEntrances([x for x in self.entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
+            if 'gps' in self.features:
+                await sendLocation(self, socket)
 
             await Message('refresh', 'refresh').send(socket)
 
@@ -83,3 +93,24 @@ class State:
                 await sendChecks([x for x in self.checks if x.diff != 0], socket)
             if 'entrances' in self.features:
                 await sendEntrances([x for x in self.entrancesByName.values() if x.changed], socket)
+            if 'gps' in self.features and self.locationChanged:
+                await sendLocation(self, socket)
+
+        self.locationChanged = False
+
+    def readTrackables(self, gb):
+        if self.entrancesLoaded and not self.visitedEntrancesRead and 'entrances' in self.features:
+            readVisitedEntrances(gb, self)
+            self.visitedEntrancesRead = True
+
+        extraItems = {}
+
+        if 'checks' in self.features:
+            readChecks(gb, self, extraItems)
+        if 'items' in self.features:
+            readItems(gb, self, extraItems)
+        
+        readLocation(gb, self)
+
+        if self.entrancesLoaded and 'entrances' in self.features:
+            readEntrances(gb, self)
