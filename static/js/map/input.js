@@ -138,3 +138,20 @@ function keyDown(e) {
         endGraphicalConnection();
     }
 }
+
+function mapFromRoom(room) {
+    if (room?.length == 4) {
+        return 'overworld';
+    }
+
+    if (room in roomDict) {
+        return roomDict[room].map;
+    }
+
+    return null;
+}
+
+function openTab(map) {
+    let button = getButtonFromMapName(map);
+    button.click();
+}

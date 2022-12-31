@@ -93,7 +93,7 @@ async def sendLocation(state, socket):
         return
 
     newMessage = Message('set', 'location', refresh=True)
-    newMessage.room = hex(state.room)
+    newMessage.room = f'0x{state.room:02X}'
     newMessage.x = state.screenX
     newMessage.y = state.screenY
     

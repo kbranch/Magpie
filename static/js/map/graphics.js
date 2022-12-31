@@ -1,9 +1,17 @@
 function drawActiveTab() {
-    drawNodes(getMapNameFromButton($('#mapContainer .tab-button.active button')), true);
+    drawNodes(getActiveMap(), true);
+}
+
+function getActiveMap() {
+    return getMapNameFromButton($('#mapContainer .tab-button.active button'));
 }
 
 function getMapNameFromButton(button) {
     return $(button).parent('li').attr('data-mapname')
+}
+
+function getButtonFromMapName(map) {
+    return $(`li[data-mapname=${map}] button`)[0];
 }
 
 function drawTab(button, clear=false) {
@@ -40,20 +48,33 @@ function getMapScaling(map) {
 }
 
 function drawLocation() {
-    if (currentRoom == null || currentRoom.length != 4) {
+    let roomMap = mapFromRoom(currentRoom);
+    let activeMap = getActiveMap();
+
+    if ((roomMap != activeMap
+         && (activeMap != 'overworld'
+             || overworldRoom == null))
+        || !localSettings.linkFace) {
         $('#linkFace').remove();
         return;
     }
 
-    let map = $('#overworldTabContent');
-    let scaling = getMapScaling(map);
-    let coords = currentRoom.split('0x')[1];
-    let roomX = Number('0x' + coords[1]) * 160;
-    let roomY = Number('0x' + coords[0]) * 128;
+    let mapContainer = $(`img[data-mapname=${activeMap}]`).closest('.map-container');
+    let scaling = getMapScaling(mapContainer);
 
-    // Why these magic numbers? Trial and error!
-    let mapX = roomX + 94;
-    let mapY = roomY + 70;
+    let roomX;
+    let roomY;
+
+    if (activeMap == 'overworld') {
+        let coords = overworldRoom.split('0x')[1];
+        roomX = Number('0x' + coords[1]) * 162 + 72;
+        roomY = Number('0x' + coords[0]) * 130 + 58;
+    }
+    else {
+        let room = roomDict[currentRoom];
+        roomX = room.x * 160 + 72;
+        roomY = room.y * 128 + 58;
+    }
 
     let linkFace = $('#linkFace');
 
@@ -64,12 +85,12 @@ function drawLocation() {
             'draggable': false,
         });
 
-        map.append(linkFace);
+        $(mapContainer).find('div.map-wrapper').append(linkFace);
     }
 
     linkFace.css({
-                'top': Math.round(mapY * scaling.y + scaling.offset.y),
-                'left': Math.round(mapX * scaling.x + scaling.offset.x),
+                'top': Math.round(roomY * scaling.y + scaling.offset.y),
+                'left': Math.round(roomX * scaling.x + scaling.offset.x),
                 'width': localSettings.checkSize,
                 'max-width': localSettings.checkSize,
                 'min-width': localSettings.checkSize,

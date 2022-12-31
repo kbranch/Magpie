@@ -60,7 +60,7 @@ function createNodes(map, mapName) {
             else {
                 let node = nodes[coordString];
 
-                if (node.entrance && !node.entrance.isMapped()) {
+                if (node.entrance && !node.entrance.isFound()) {
                     continue;
                 }
             }

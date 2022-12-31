@@ -74,7 +74,22 @@ function processEntranceMessage(message) {
 }
 
 function processLocationMessage(message) {
-    currentRoom = message.room;
+    let room = message.room;
+    let oldMap = mapFromRoom(currentRoom);
+    let newMap = mapFromRoom(room);
+
+    if (newMap != oldMap 
+        && newMap != null
+        && oldMap != null
+        && localSettings.followMap) {
+        openTab(newMap);
+    }
+
+    if (newMap == 'overworld') {
+        overworldRoom = room;
+    }
+
+    currentRoom = room;
     currentX = message.x;
     currentY = message.y;
 

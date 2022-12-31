@@ -51,6 +51,8 @@ class LocalSettings:
         self.autotrackSettings = True
         self.autotrackSpoilers = True
         self.gps = True
+        self.followMap = True
+        self.linkFace = True
         self.spoilOnCollect = False
 
 @app.route("/")
