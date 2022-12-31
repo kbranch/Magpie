@@ -57,6 +57,13 @@ function createNodes(map, mapName) {
             if (!(coordString in nodes)) {
                 nodes[coordString] = new MapNode(coord, scaling);
             }
+            else {
+                let node = nodes[coordString];
+
+                if (node.entrance && !node.entrance.isMapped()) {
+                    continue;
+                }
+            }
 
             nodes[coordString].checks.push(check);
         }

@@ -224,7 +224,7 @@ class MapNode {
                 }
             }
             else {
-                classes.push(`difficulty-${this.difficulty}`);
+                classes.push(`difficulty-${this.entrance.difficulty}`);
             }
         }
         else {
