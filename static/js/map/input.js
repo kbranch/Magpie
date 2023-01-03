@@ -40,19 +40,26 @@ function entranceClicked(element) {
     }
 }
 
-function nodePrimary(element) { 
-    if (graphicalMapSource != null) {
+function nodePrimary(element, event) { 
+    if (pickingEntrances()) {
         entranceClicked(element);
         return;
     }
 
-    toggleNode(element);
+    let node = nodeFromElement(element);
+    if (event.ctrlKey && node.isDungeon(pickingEntrances())) {
+        let tabName = node.dungeonName().toLowerCase();
+        openTab(tabName);
+    }
+    else {
+        toggleNode(node);
+    }
 }
 
 function nodeSecondary(element) {
     closeOtherTooltips(element);
 
-    if (graphicalMapSource != null) {
+    if (pickingEntrances()) {
         entranceClicked(element);
         return;
     }
@@ -69,7 +76,8 @@ function nodeSecondary(element) {
 
 }
 
-function checkGraphicLeftClick(element) {
+function checkGraphicLeftClick(event) {
+    let element = event.currentTarget;
     if ($(element).hasClass('animate__fadeOut')) {
         return;
     }
@@ -78,17 +86,18 @@ function checkGraphicLeftClick(element) {
         nodeSecondary(element);
     }
     else {
-        nodePrimary(element);
+        nodePrimary(element, event);
     }
 }
 
-function checkGraphicRightClick(element) {
+function checkGraphicRightClick(event) {
+    let element = event.currentTarget;
     if ($(element).hasClass('animate__fadeOut')) {
         return;
     }
 
     if (localSettings.swapMouseButtons) {
-        nodePrimary(element);
+        nodePrimary(element, event);
     }
     else {
         nodeSecondary(element);
@@ -134,7 +143,7 @@ function keyDown(e) {
              || (e.ctrlKey && e.key == 'y')) {
         redo();
     }
-    else if (e.key == 'Escape' && graphicalMapSource != null) {
+    else if (e.key == 'Escape' && pickingEntrances()) {
         endGraphicalConnection();
     }
 }

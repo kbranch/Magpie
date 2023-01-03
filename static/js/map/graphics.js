@@ -14,6 +14,10 @@ function getButtonFromMapName(map) {
     return $(`li[data-mapname=${map}] button`)[0];
 }
 
+function pickingEntrances() {
+    return graphicalMapSource != null;
+}
+
 function drawTab(button, clear=false) {
     if (clear) {
         removeNodes();

@@ -162,10 +162,9 @@ class MapNode {
     }
 
     iconClasses() {
-        let pickingEntrance = graphicalMapSource != null;
         let classes = ['check-graphic', 'animate__animated'];
 
-        if (pickingEntrance)
+        if (pickingEntrances())
         {
             return ['check-graphic', 'entrance-only'];
         }
@@ -376,11 +375,12 @@ class MapNode {
                 'width': localSettings.checkSize,
                 'height': localSettings.checkSize,
             },
-            onclick: 'checkGraphicLeftClick(this);',
-            oncontextmenu: 'checkGraphicRightClick(this); return false;',
-            onmouseenter: 'checkGraphicMouseEnter(this)',
-            onmouseleave: 'checkGraphicMouseLeave(this)',
         });
+
+        this.graphic.on('click', (e) => { checkGraphicLeftClick(e); });
+        this.graphic.on('contextmenu', (e) => { checkGraphicRightClick(e); return false; });
+        this.graphic.on('mouseenter', (e) => { checkGraphicMouseEnter(e.currentTarget); });
+        this.graphic.on('mouseleave', (e) => { checkGraphicMouseLeave(e.currentTarget); });
     }
 
     static nodeId(location, scaling) {

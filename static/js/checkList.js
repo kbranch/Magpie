@@ -2,8 +2,7 @@ function getCheckedKey(area, name) {
     return `${area}-${name}`;
 }
 
-function toggleNode(nodeGraphic) {
-    let node = nodes[$(nodeGraphic).attr('data-node-id')];
+function toggleNode(node) {
     let toggleList = new Set(node.checks.filter(x => (x.difficulty == node.difficulty
                                                       && x.behindKeys == node.behindKeys
                                                       && !x.isChecked())
@@ -104,7 +103,7 @@ function moveCheckToChecked(element, doLinked=false) {
     let sourceArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
 
     if (localSettings.spoilOnCollect) {
-        spoilLocation(checkId, doLinked);
+        spoilLocation(checkId, false);
     }
 
     if (doLinked) {

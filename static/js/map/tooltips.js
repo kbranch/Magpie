@@ -26,7 +26,7 @@ function closeAllCheckTooltips() {
         updateTooltip(node);
     }
 
-    if (graphicalMapSource != null) {
+    if (pickingEntrances()) {
         endGraphicalConnection();
     }
 }
@@ -53,7 +53,7 @@ function updateTooltip(checkGraphic) {
 
     let connectionType = 'none';
 
-    if (graphicalMapSource != null) {
+    if (pickingEntrances()) {
         if (Entrance.isConnector(graphicalMapSource)) {
             connectionType = 'connector';
         }

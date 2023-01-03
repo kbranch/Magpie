@@ -24,7 +24,7 @@ function createNodes(map, mapName) {
     let scaling = getMapScaling(map);
 
     // We're in the special entrance connecting mode
-    if (graphicalMapSource != null) {
+    if (pickingEntrances()) {
         createEntranceNodes(graphicalMapChoices, scaling, true);
         return;
     }
@@ -222,4 +222,8 @@ function removeOldNodes() {
         $(node).removeClass('animate__bounceInDown');
         $(node).addClass('animate__fadeOut');
     }
+}
+
+function nodeFromElement(element) {
+    return nodes[$(element).attr('data-node-id')];
 }
