@@ -36,6 +36,30 @@ class MapNode {
         this.checks.sort((a, b) => a.metadata.index - b.metadata.index);
     }
 
+    isDungeon(pickingEntrance) {
+        if (pickingEntrance) {
+            return this.entrance?.isDungeon();
+        }
+
+        return this.entrance?.isMappedToDungeon()
+               || (this.checks.length > 0
+                   && this.checks[0].metadata.locations.some(x => x.map != 'overworld'));
+    }
+
+    dungeonName(pickingEntrance) {
+        if (pickingEntrance) {
+            return this.entrance.id.toUpperCase();
+        }
+
+        if (this.entrance?.isMappedToDungeon()) {
+            return this.entrance.connectedTo().toUpperCase();
+        }
+
+        return this.checks[0].metadata.locations
+            .filter(x => x.map != 'overworld')[0]
+            .map.toUpperCase();
+    }
+
     updateBehindKeys() {
         let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
                                                       && !x.isChecked()
@@ -297,7 +321,7 @@ class MapNode {
         }
     }
 
-    updateOverlay() {
+    updateOverlay(activeMap, pickingEntrance) {
         let overlay = $('<div>', {
             'class': 'node-overlay-wrapper',
         });
@@ -313,7 +337,9 @@ class MapNode {
             $(overlay).append(itemOverlay);
         }
 
-        if (this.connectorLabel) {
+        if (this.connectorLabel
+            || (this.isDungeon(pickingEntrance)
+                && activeMap == 'overworld')) {
             let connectorOverlay = $('<p>', {
                 'class': "node-overlay",
                 'data-connector-label': this.connectorLabel,
@@ -323,7 +349,13 @@ class MapNode {
                 onmousedown: "preventDoubleClick(event)"
             });
 
-            $(connectorOverlay).append(this.connectorLabel);
+            if (this.connectorLabel) {
+                $(connectorOverlay).append(this.connectorLabel);
+            }
+            else {
+                $(connectorOverlay).append(this.dungeonName(pickingEntrance));
+            }
+
             $(overlay).append(connectorOverlay);
         }
 

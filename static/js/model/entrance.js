@@ -26,6 +26,10 @@ class Entrance {
         return Entrance.isDungeon(this.id);
     }
 
+    isMappedToDungeon() {
+        return Entrance.isDungeon(this.connectedTo());
+    }
+
     isConnector() {
         return Entrance.isConnector(this.id);
     }
@@ -110,7 +114,8 @@ class Entrance {
     }
 
     static isDungeon(id) {
-        return id.startsWith('d')
+        return id
+               && id.startsWith('d')
                && id.length == 2;
     }
 

@@ -192,10 +192,11 @@ function drawNodes(mapName, animate=true) {
     for (const nodeId in nodes) {
         let node = nodes[nodeId];
         let classes = node.iconClasses();
+        let activeMap = getActiveMap();
 
         node.updateAnimationClasses(classes, parent, animate);
         node.updateEntranceAttrs();
-        node.updateOverlay();
+        node.updateOverlay(activeMap, graphicalMapSource != null);
 
         $(node.graphic).attr({
             'class': classes.join(' '),
