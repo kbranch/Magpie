@@ -377,10 +377,24 @@ class MapNode {
             },
         });
 
-        this.graphic.on('click', (e) => { checkGraphicLeftClick(e); });
-        this.graphic.on('contextmenu', (e) => { checkGraphicRightClick(e); return false; });
-        this.graphic.on('mouseenter', (e) => { checkGraphicMouseEnter(e.currentTarget); });
-        this.graphic.on('mouseleave', (e) => { checkGraphicMouseLeave(e.currentTarget); });
+        this.graphic.on('click', (e) => { 
+            checkGraphicLeftClick(e);
+        });
+        this.graphic.on('auxclick', (e) => { 
+            if (e.button == 1) {
+                nodeMiddle(e.currentTarget);
+            }
+        });
+        this.graphic.on('contextmenu', (e) => { 
+            checkGraphicRightClick(e);
+            return false;
+        });
+        this.graphic.on('mouseenter', (e) => {
+            checkGraphicMouseEnter(e.currentTarget);
+        });
+        this.graphic.on('mouseleave', (e) => {
+            checkGraphicMouseLeave(e.currentTarget);
+        });
     }
 
     static nodeId(location, scaling) {

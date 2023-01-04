@@ -76,6 +76,14 @@ function nodeSecondary(element) {
 
 }
 
+function nodeMiddle(element) {
+    let node = nodeFromElement(element);
+    if (node.isDungeon(pickingEntrances())) {
+        let tabName = node.dungeonName().toLowerCase();
+        openTab(tabName);
+    }
+}
+
 function checkGraphicLeftClick(event) {
     let element = event.currentTarget;
     if ($(element).hasClass('animate__fadeOut')) {

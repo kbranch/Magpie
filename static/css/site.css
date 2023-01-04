@@ -704,6 +704,13 @@ button.nav-link.active {
     background-position: center center;
 }
 
+.middle-click {
+    background-image: url('/static/images/middle-click.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
 .right-click {
     background-image: url('/static/images/left-click.svg');
     background-repeat: no-repeat;
