@@ -162,6 +162,8 @@
             setInterval(connectToAutotracker, 3 * 1000);
         });
 
+        $('#connectorModal').on('hide.bs.modal', () => { endGraphicalConnection(); });
+
         {% if local %}
         async function getRequest(url='') {
             const response = await fetch(url, {
