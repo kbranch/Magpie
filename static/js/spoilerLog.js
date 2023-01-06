@@ -39,6 +39,9 @@ function loadLogContents(logText) {
 function spoilAll() {
     pushUndoState();
 
+    // Everything gets confused if we try to connect entrances that are already connected
+    resetEntrances();
+
     for (const checkId in coordDict) {
         if (checkId in itemsByLocation) {
             spoilLocation(checkId, housekeeping=false);
@@ -61,6 +64,8 @@ function spoilEntrance(entranceId, housekeeping=true) {
     if (!(entranceId in spoilerLog.entrances)) {
         return;
     }
+
+    clearEntranceMapping(entranceId, housekeeping=false);
 
     if (Entrance.isConnector(entranceId)) {
         connectOneEndConnector(entranceId, spoilerLog.entrances[entranceId], housekeeping);

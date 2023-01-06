@@ -193,8 +193,10 @@ function setStartLocation(entranceId) {
     refreshCheckList();
 }
 
-function clearEntranceMapping(entranceId) {
-    pushUndoState();
+function clearEntranceMapping(entranceId, housekeeping=true) {
+    if (housekeeping) {
+        pushUndoState();
+    }
 
     if (args.entranceshuffle == 'none'
         && entranceMap[entranceId] == startHouse) {
@@ -211,9 +213,11 @@ function clearEntranceMapping(entranceId) {
     Connection.disconnect(entranceId);
     delete entranceMap[entranceId];
 
-    saveEntrances();
-    closeAllCheckTooltips();
-    refreshCheckList();
+    if (housekeeping) {
+        saveEntrances();
+        closeAllCheckTooltips();
+        refreshCheckList();
+    }
 }
 
 function mapToLandfill(entranceId) {
