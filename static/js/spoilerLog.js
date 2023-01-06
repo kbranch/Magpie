@@ -25,6 +25,11 @@ function loadLogContents(logText) {
 
     spoilerLog = log;
 
+    missingEntrances = randomizedEntrances.filter(x => !(x in log.entrances));
+    for (const entrance of missingEntrances) {
+        spoilerLog.entrances[entrance] = entrance;
+    }
+
     items = [...log.accessibleItems].concat(log.inaccessibleItems);
 
     itemsByLocation = items.reduce((dict, x) => {
