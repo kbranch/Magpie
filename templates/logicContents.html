@@ -18,17 +18,30 @@
             {% set vanilla = " data-vanilla=true" %}
         {% endif %}
 
-        <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-check-id="{{check.id}}" data-difficulty="{{check.difficulty}}"{{vanilla}} onclick="toggleCheck(event, $(this))">
-            {% if check.behindKeys %}
-            <div class="key-indicator-wrapper pe-2">
-                <img class="key-indicator" src="static/images/keyLocked.png">
-            </div>
-            {% endif %}
+        <div class="row">
+            <div class="col pe-0">
+                <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-check-id="{{check.id}}" data-difficulty="{{check.difficulty}}"{{vanilla}} onclick="toggleCheck(event, $(this))">
+                    <div id="text-item-{{check.id}}" class="col-auto px-0 text-item-wrapper">
+                    </div>
+                    {% if check.behindKeys %}
+                    <div class="key-indicator-wrapper pe-2">
+                        <img class="key-indicator" src="static/images/keyLocked.png">
+                    </div>
+                    {% endif %}
 
-            <div class="check-name">
-                {{check.name}}
+                    <div class="check-name">
+                        {{check.name}}
+                    </div>
+                </li>
             </div>
-        </li>
+            <div class="col-auto ps-2 pe-0">
+                <div class="btn-group dropend">
+                    <button type="button" class="btn hidden"></button>
+                    <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-check-id="{{check.id}}" onmousedown="populateCheckOptions(this)" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                    <ul id="text-{{check.id}}" class="dropdown-menu text-dropdown"></ul>
+                </div>
+            </div>
+        </div>
 
         {% set ns.area = check.area %}
     {% endfor %}

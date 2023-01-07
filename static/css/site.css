@@ -1000,3 +1000,21 @@ button.nav-link.active {
 .plando-item {
     display: flex;
 }
+
+.text-dropdown {
+    background-color: #000;
+}
+
+.text-item {
+    display: block;
+    margin: auto;
+    height: 20px;
+}
+
+.text-item-wrapper {
+    float: left;
+}
+
+.text-buffer {
+    width: 20px;
+}

@@ -217,3 +217,9 @@ function refreshChecked() {
         }
     }
 }
+
+function populateCheckOptions(button) {
+    let checkId = $(button).attr('data-check-id');
+    let ul = $(`#text-${checkId}`);
+    ul.html(NodeTooltip.getItemList(checkId));
+}

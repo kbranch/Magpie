@@ -1,5 +1,19 @@
 {
     "python.analysis.extraPaths": [
         "./LADXR"
+    ],
+    "cSpell.words": [
+        "checkarea",
+        "checkname",
+        "dropend",
+        "dungeonshuffle",
+        "entranceshuffle",
+        "Hookshot",
+        "Manbo's",
+        "plando",
+        "Stalfos",
+        "taltal",
+        "Windfish",
+        "Yoshi"
     ]
 }
