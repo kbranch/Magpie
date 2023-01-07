@@ -32,10 +32,10 @@ function loadLogContents(logText) {
 
     items = [...log.accessibleItems].concat(log.inaccessibleItems);
 
-    itemsByLocation = items.reduce((dict, x) => {
-        dict[x.id] = x.itemName;
-        return dict;
-    });
+    itemsByLocation = {};
+    for (const location of items) {
+        itemsByLocation[location.id] = location.itemName;
+    }
 
     $('#spoilerSeed').html(`Loaded seed: ${log.seed}`);
     $('#spoilAllButton').show();
