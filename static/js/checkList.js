@@ -127,7 +127,7 @@ function moveCheckToChecked(element, doLinked=false) {
         let accordionItem = $(destLogic).closest('.accordion-item');
         let newCard = $(sourceArea).clone();
 
-        ul = $(newCard).find('ul');
+        let ul = $(newCard).find('ul');
         $(ul).html('');
 
         $(accordionItem).removeClass('hidden');
@@ -136,8 +136,11 @@ function moveCheckToChecked(element, doLinked=false) {
         destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
     }
 
-    ul = $(destArea).find('ul');
-    $(ul).append(element);
+    let ul = $(destArea).find('ul')[0];
+    var fragment = document.createDocumentFragment();
+    let wrapper = $(element).closest('.check-wrapper')[0];
+    fragment.appendChild(wrapper);
+    ul.appendChild(fragment);
 
     if ($(sourceArea).find('ul').children().length == 0) {
         $(sourceArea).remove();
@@ -184,7 +187,7 @@ function moveCheckFromChecked(element, doLinked=false) {
         let accordionItem = $(destLogic).closest('.accordion-item');
         let newCard = $(sourceArea).clone();
 
-        ul = $(newCard).find('ul');
+        let ul = $(newCard).find('ul');
         $(ul).html('');
 
         $(accordionItem).removeClass('hidden');
@@ -193,8 +196,11 @@ function moveCheckFromChecked(element, doLinked=false) {
         destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
     }
 
-    ul = $(destArea).find('ul');
-    $(ul).append(element);
+    let ul = $(destArea).find('ul')[0];
+    var fragment = document.createDocumentFragment();
+    let wrapper = $(element).closest('.check-wrapper')[0];
+    fragment.appendChild(wrapper);
+    ul.appendChild(fragment);
 
     if ($(sourceArea).find('ul').children().length == 0) {
         $(sourceArea).remove();

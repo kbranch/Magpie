@@ -18,7 +18,7 @@
             {% set vanilla = " data-vanilla=true" %}
         {% endif %}
 
-        <div class="row">
+        <div class="row check-wrapper">
             <div class="col pe-0">
                 <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-check-id="{{check.id}}" data-difficulty="{{check.difficulty}}"{{vanilla}} onclick="toggleCheck(event, $(this))">
                     <div id="text-item-{{check.id}}" class="col-auto px-0 text-item-wrapper">
