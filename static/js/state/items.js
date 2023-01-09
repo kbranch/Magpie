@@ -15,19 +15,21 @@ function loadInventory() {
     }
 }
 
-function addItem(item, qty, wrap=true, refresh=true) {
+function addItem(item, qty, wrap=true, refresh=true, respectMax=true) {
     if (!(item in inventory) || typeof inventory[item] != 'number') {
         inventory[item] = 0;
     }
 
     inventory[item] += qty;
 
-    if (inventory[item] > maxInventory[item]) {
-        inventory[item] = wrap ? 0 : maxInventory[item];
-    }
+    if (respectMax) {
+        if (inventory[item] > maxInventory[item]) {
+            inventory[item] = wrap ? 0 : maxInventory[item];
+        }
 
-    if (inventory[item] < 0) {
-        inventory[item] = wrap ? maxInventory[item] : 0;
+        if (inventory[item] < 0) {
+            inventory[item] = wrap ? maxInventory[item] : 0;
+        }
     }
 
     console.log(`${item}: ${inventory[item]}`);

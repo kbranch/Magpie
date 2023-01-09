@@ -82,9 +82,9 @@ class MapNode {
     }
 
     updateIsChecked() {
-        this.isChecked = (this.checks.length > 0
-                          && this.checks.filter(x => !x.isVanillaOwl())
-                                        .every(x => x.isChecked()))
+        let checks = this.checks.filter(x => !x.isVanillaOwl());
+        this.isChecked = (checks.length > 0
+                          && checks.every(x => x.isChecked()))
                          || this.entranceConnectedTo() == 'landfill';
     }
 

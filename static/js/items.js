@@ -184,10 +184,15 @@ function tunicSrc()
 
 function calculateDungeonChecks() {
     let checks = {};
+    let foundIds = new Set();
     $('li[data-logic]').toArray()
                        .map(x => createCheck(x))
-                       .filter(x => x.isDungeon())
+                       .filter(x => x.isDungeon() && !x.isVanillaOwl())
                        .map(x => {
+                            if (foundIds.has(x.id)) {
+                                return;
+                            }
+
                             let dNum = x.dungeonNumber();
 
                             if (!(dNum in checks)) {
@@ -195,6 +200,7 @@ function calculateDungeonChecks() {
                             }
 
                             checks[x.dungeonNumber()].push(x);
+                            foundIds.add(x.id);
                         });
     
     for (let i = 0; i < 9; i++) {
