@@ -46,6 +46,13 @@ function addItem(item, qty, wrap=true, refresh=true) {
 function updateLinkedItemChecks(item) {
     if (item in linkedChecks) {
         for (const check of linkedChecks[item]) {
+            let element = $(`li[data-check-id=${check.id}]`);
+            let isVanilla = $(element).attr('data-vanilla');
+
+            if (check.vanillaLink && !isVanilla) {
+                continue;
+            }
+
             checkKey = getCheckedKey(check.area, check.name);
             checkValue = {
                 name: check.name,
