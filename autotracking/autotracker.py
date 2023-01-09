@@ -51,7 +51,7 @@ async def socketLoop(socket, path):
             print(f'Error: {traceback.format_exc()}')
 
 async def main():
-    async with websockets.serve(socketLoop, '127.0.0.1', 17026, max_size=1024*1024*10):
+    async with websockets.serve(socketLoop, host=None, port=17026, max_size=1024*1024*10):
         await asyncio.Future()
 
 asyncio.run(main())

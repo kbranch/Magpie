@@ -50,6 +50,7 @@ class LocalSettings:
         self.autotrackEntrances = True
         self.autotrackSettings = True
         self.autotrackSpoilers = True
+        self.autotrackerAddress = ''
         self.gps = True
         self.followMap = True
         self.linkFace = True

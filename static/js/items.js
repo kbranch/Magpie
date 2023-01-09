@@ -219,7 +219,7 @@ function calculateDungeonChecks() {
             newQty -= inventory[`INSTRUMENT${d}`] ?? 0;
         }
 
-        addItem(item, newQty - inventory[item], wrap=false, refresh=false);
+        addItem(item, newQty - (inventory[item] ?? 0), wrap=false, refresh=false);
     }
 }
 

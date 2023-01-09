@@ -16,7 +16,7 @@ function loadInventory() {
 }
 
 function addItem(item, qty, wrap=true, refresh=true) {
-    if (!(item in inventory)) {
+    if (!(item in inventory) || typeof inventory[item] != 'number') {
         inventory[item] = 0;
     }
 
