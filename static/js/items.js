@@ -230,7 +230,7 @@ function calculateDungeonChecks() {
 }
 
 function updateDungeonItems() {
-    if (localSettings.autotrackItems) {
+    if (localSettings.autotrackItems && localSettings.enableAutotracking) {
         calculateDungeonChecks();
     }
 }
