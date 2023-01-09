@@ -6,8 +6,20 @@ function removeNodes() {
     $('#linkFace').remove();
 }
 
-function createCheck(checkElement, mapName) {
+function createCheck(checkElement, mapName=null) {
     let id = $(checkElement).attr('data-check-id');
+
+    if (mapName == null) {
+        dungeonMaps = coordDict[id].locations.map(x => x.map)
+                                             .filter(x => x != 'overworld');
+        if (dungeonMaps.length == 0) {
+            mapName = 'overworld';
+        }
+        else {
+            mapName = dungeonMaps[0];
+        }
+    }
+
     return new Check(id,
                      $(checkElement).attr('data-behind_keys') == 'True',
                      Number($(checkElement).attr('data-difficulty')),

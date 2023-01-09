@@ -87,12 +87,13 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
         }
     }
 
-    closeAllCheckTooltips();
+    // Not sure why I added this - might be important
+    // closeAllCheckTooltips();
 
     return itemsChanged;
 }
 
-function moveCheckToChecked(element, doLinked=false) {
+function moveCheckToChecked(element, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
     let logic = $(element).attr('data-logic');
     let area = $(element).attr('data-checkarea');
@@ -104,6 +105,10 @@ function moveCheckToChecked(element, doLinked=false) {
 
     if (localSettings.spoilOnCollect) {
         spoilLocation(checkId, false);
+    }
+
+    if (updateDungeonCount) {
+        updateDungeonItems();
     }
 
     if (doLinked) {
@@ -156,7 +161,7 @@ function moveCheckToChecked(element, doLinked=false) {
     return itemsChanged;
 }
 
-function moveCheckFromChecked(element, doLinked=false) {
+function moveCheckFromChecked(element, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
     let logic = $(element).attr('data-logic');
     let area = $(element).attr('data-checkarea');
@@ -165,6 +170,10 @@ function moveCheckFromChecked(element, doLinked=false) {
     let metadata = coordDict[checkId];
     let destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
     let sourceArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
+
+    if (updateDungeonCount) {
+        updateDungeonItems();
+    }
 
     if (doLinked) {
         let contents = getCheckContents(checkId);
@@ -215,12 +224,19 @@ function moveCheckFromChecked(element, doLinked=false) {
 }
 
 function refreshChecked() {
+    let updateDungeons = false;
+
     for (let key in checkedChecks) {
         let check = checkedChecks[key];
         element = $(`li[data-checkarea="${check.area}"][data-checkname="${check.name}"]`);
         if (element.length > 0) {
-            moveCheckToChecked(element[0]);
+            moveCheckToChecked(element[0], doLinked=false, updateDungeonCount=false);
+            updateDungeons = true;
         }
+    }
+
+    if (updateDungeons) {
+        updateDungeonItems();
     }
 }
 

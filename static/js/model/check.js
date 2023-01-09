@@ -24,6 +24,14 @@ class Check {
         return Check.isChecked(this.fullName());
     }
 
+    isDungeon() {
+        return this.mapName != 'overworld';
+    }
+
+    dungeonNumber() {
+        return Number(this.mapName[1]);
+    }
+
     isVanillaOwl() {
         let isOverworld = this.id.includes('0x0');
         let isOwl = this.id.includes('Owl');

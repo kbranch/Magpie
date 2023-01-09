@@ -181,3 +181,50 @@ function tunicSrc()
     
     return 'static/images/BLUERED_TUNIC.png';
 }
+
+function calculateDungeonChecks() {
+    let checks = {};
+    $('li[data-logic]').toArray()
+                       .map(x => createCheck(x))
+                       .filter(x => x.isDungeon())
+                       .map(x => {
+                            let dNum = x.dungeonNumber();
+
+                            if (!(dNum in checks)) {
+                                checks[dNum] = [];
+                            }
+
+                            checks[x.dungeonNumber()].push(x);
+                        });
+    
+    for (let i = 0; i < 9; i++) {
+        let d = i == 0 ? 9 : i;
+        let item = `ITEM${d}`;
+        let checked = checks[i].filter(x => x.isChecked()).length;
+
+        let newQty = checked;
+
+        if (['', 'localkeys'].includes(args.dungeon_items)) {
+            newQty -= inventory[`KEY${d}`] ?? 0;
+        }
+        if (['', 'smallkeys', 'keysy'].includes(args.dungeon_items)) {
+            newQty -= inventory[`MAP${d}`] ?? 0;
+            newQty -= inventory[`COMPASS${d}`] ?? 0;
+            newQty -= inventory[`STONE_BEAK${d}`] ?? 0;
+        }
+        if (['', 'smallkeys', 'localkeys', 'nightmarekey'].includes(args.dungeon_items)) {
+            newQty -= inventory[`NIGHTMARE_KEY${d}`] ?? 0;
+        }
+        if (!args.instruments && `INSTRUMENT${d}` in maxInventory) {
+            newQty -= inventory[`INSTRUMENT${d}`] ?? 0;
+        }
+
+        addItem(item, newQty - inventory[item], wrap=false, refresh=false);
+    }
+}
+
+function updateDungeonItems() {
+    if (localSettings.autotrackItems) {
+        calculateDungeonChecks();
+    }
+}
