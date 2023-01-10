@@ -353,7 +353,7 @@ class MapNode {
                 $(connectorOverlay).append(this.connectorLabel);
             }
             else {
-                $(connectorOverlay).append(this.dungeonName(pickingEntrance));
+                $(connectorOverlay).append(this.dungeonName(pickingEntrance)[1]);
             }
 
             $(overlay).append(connectorOverlay);
