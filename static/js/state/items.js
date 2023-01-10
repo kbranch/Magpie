@@ -15,14 +15,14 @@ function loadInventory() {
     }
 }
 
-function addItem(item, qty, wrap=true, refresh=true, respectMax=true) {
+function addItem(item, qty, wrap=true, refresh=true) {
     if (!(item in inventory) || typeof inventory[item] != 'number') {
         inventory[item] = 0;
     }
 
     inventory[item] += qty;
 
-    if (respectMax) {
+    if (maxInventory[item] != 0) {
         if (inventory[item] > maxInventory[item]) {
             inventory[item] = wrap ? 0 : maxInventory[item];
         }

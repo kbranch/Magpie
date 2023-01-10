@@ -38,7 +38,7 @@ function processItemMessage(message) {
     }
 
     for (const item of message.items) {
-        addItem(item.id, item.qty, wrap=false, refresh=false, respectMax=false);
+        addItem(item.id, item.qty, wrap=false, refresh=false);
     }
 
     if (message.refresh) {
