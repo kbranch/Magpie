@@ -379,7 +379,6 @@ img {
     content: '';
     border-style: none;
     background-image: url('/static/images/owl.svg');
-    z-index: 3;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -577,6 +576,7 @@ img {
 
 .difficulty-0.vanilla {
     background-image: url('/static/images/difficulty-0-vanilla.svg');
+    z-index: 0;
 }
 
 .difficulty-1 {
@@ -590,6 +590,7 @@ img {
 
 .difficulty-1.vanilla {
     background-image: url('/static/images/difficulty-1-vanilla.svg');
+    z-index: 0;
 }
 
 .difficulty-2 {
@@ -603,6 +604,7 @@ img {
 
 .difficulty-2.vanilla {
     background-image: url('/static/images/difficulty-2-vanilla.svg');
+    z-index: 0;
 }
 
 .difficulty-3 {
@@ -616,6 +618,7 @@ img {
 
 .difficulty-3.vanilla {
     background-image: url('/static/images/difficulty-3-vanilla.svg');
+    z-index: 0;
 }
 
 .difficulty-4 {
@@ -629,6 +632,7 @@ img {
 
 .difficulty-4.vanilla {
     background-image: url('/static/images/difficulty-3-vanilla.svg');
+    z-index: 0;
 }
 
 .difficulty-9 {
@@ -642,6 +646,7 @@ img {
 
 .difficulty-9.vanilla {
     background-image: url('/static/images/difficulty-9-vanilla.svg');
+    z-index: 0;
 }
 
 button.nav-link {
