@@ -175,7 +175,7 @@ function distributeChecks() {
     }
 
     for (const node of remappedNodes) {
-        node.checks = checksByEntrance[node.entrance.connectedTo()];
+        node.checks = checksByEntrance[node.entrance.connectedTo()] ?? [];
     }
 }
 
