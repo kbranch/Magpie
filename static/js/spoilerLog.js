@@ -39,6 +39,11 @@ function loadLogContents(logText) {
 
     $('#spoilerSeed').html(`Loaded seed: ${log.seed}`);
     $('#spoilAllButton').show();
+
+    if ('shortSettings' in spoilerLog) {
+        $("#shortString")[0].value = spoilerLog.shortSettings;
+        loadShortString(true);
+    }
 }
 
 function spoilAll() {

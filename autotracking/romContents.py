@@ -2,6 +2,7 @@ import io
 import os
 import sys
 import uuid
+import json
 
 # Deal with how pyinstaller's --onefile option packs things
 if hasattr(sys, '_MEIPASS'):
@@ -25,16 +26,19 @@ class SpoilerArgs:
 def getSpoilerLog(romData):
     rom = ROMWithTables(io.BytesIO(romData))
     args = SpoilerArgs()
+    shortSettings = rom.readShortSettings()
     settings = Settings()
-    settings.loadShortString(rom.readShortSettings())
+    settings.loadShortString(shortSettings)
     log = SpoilerLog(settings, args, [rom])
     
     filename = f'log-{uuid.uuid4()}.json'
     log.outputJson(filename)
-    logJson = open(filename, 'r').read()
+    logJson = json.loads(open(filename, 'r').read())
     os.remove(filename)
 
-    return logJson
+    logJson['shortSettings'] = shortSettings
+
+    return json.dumps(logJson)
 
 def getSettings(romData):
     rom = ROM(io.BytesIO(romData))
