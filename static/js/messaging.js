@@ -196,7 +196,7 @@ function processMessage(messageText) {
             loadShortString(saveOnLoad=true)
             break;
         case 'spoiler':
-            loadLogContents(message.log);
+            loadLogContents(message.log, false);
             break;
         default:
             console.log(`Unrecognized message category: ${message.category}`)

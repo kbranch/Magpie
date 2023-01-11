@@ -16,7 +16,7 @@ function loadLogFile(element) {
     getBinaryFile(element, loadSpoilerLog);
 }
 
-function loadLogContents(logText) {
+function loadLogContents(logText, loadSettings=true) {
     log = JSON.parse(logText);
 
     if (!log.seed) {
@@ -25,10 +25,7 @@ function loadLogContents(logText) {
 
     spoilerLog = log;
 
-    missingEntrances = randomizedEntrances.filter(x => !(x in log.entrances));
-    for (const entrance of missingEntrances) {
-        spoilerLog.entrances[entrance] = entrance;
-    }
+    fillVanillaLogEntrances();
 
     items = [...log.accessibleItems].concat(log.inaccessibleItems);
 
@@ -40,9 +37,20 @@ function loadLogContents(logText) {
     $('#spoilerSeed').html(`Loaded seed: ${log.seed}`);
     $('#spoilAllButton').show();
 
-    if ('shortSettings' in spoilerLog) {
+    if ('shortSettings' in spoilerLog && loadSettings) {
         $("#shortString")[0].value = spoilerLog.shortSettings;
         loadShortString(true);
+    }
+}
+
+function fillVanillaLogEntrances() {
+    if (!spoilerLog) {
+        return;
+    }
+
+    missingEntrances = randomizedEntrances.filter(x => !(x in spoilerLog.entrances));
+    for (const entrance of missingEntrances) {
+        spoilerLog.entrances[entrance] = entrance;
     }
 }
 
