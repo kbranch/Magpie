@@ -43,7 +43,17 @@ class Entrance {
     }
 
     isMappedToSelf() {
+        if (args.randomstartlocation
+            && args.entranceshuffle == 'none'
+            && 'start_house' in entranceMap
+            && !(this.id in reverseEntranceMap)
+            && !(this.id in entranceMap))
+        {
+            return true;
+        }
+
         return this.connectedTo() == this.id;
+
     }
 
     isRemapped() {
@@ -110,6 +120,13 @@ class Entrance {
     }
 
     static isFound(id) {
+        if (args.randomstartlocation
+            && args.entranceshuffle == 'none'
+            && 'start_house' in entranceMap)
+        {
+            return true;
+        }
+
         return id in reverseEntranceMap;
     }
 

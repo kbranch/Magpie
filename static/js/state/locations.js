@@ -189,6 +189,7 @@ function setStartLocation(entranceId) {
     }
 
     saveEntrances();
+    updateReverseMap();
     closeAllCheckTooltips();
     refreshCheckList();
 }
