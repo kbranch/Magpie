@@ -1,4 +1,5 @@
 import os
+import bdb
 import sys
 import copy
 import random
@@ -16,6 +17,12 @@ from worldSetup import WorldSetup, start_locations
 from LADXR.settings import *
 from checkMetadata import checkMetadataTable
 from romTables import ROMWithTables
+
+class Debug(bdb.Bdb):
+    def user_line(self, frame):
+        for k, v in frame.f_locals.items():
+            if isinstance(v, logic.Location) and k not in {"self", "location", "                                                                                                             other", "connection"}:
+                v.local_name = k
 
 allChecks = {}
 
@@ -182,6 +189,11 @@ def getLogics(args, entranceMap):
             logics.append(log)
 
     args.logic = originalLogic
+
+    log = Debug().runcall(logic.Logic, args, world_setup=worldSetup)
+    log.name = 'tracker'
+    logics.append(log)
+
     args.owlstatues = originalOwls
     
     return logics
