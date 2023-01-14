@@ -235,12 +235,21 @@ def parseLocalSettings(settingsString):
     return localSettings
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
-    checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
-    entranceAccessibility = getEntranceAccessibility(allEntrances, logics, inventory)
+    normalLogics = []
+    trackerLogic = None
+
+    for log in logics:
+        if log.name == 'tracker':
+            trackerLogic = log
+        else:
+            normalLogics.append(log)
+
+    checkAccessibility = getCheckAccessibility(allChecks, normalLogics, trackerLogic, inventory)
+    entranceAccessibility = getEntranceAccessibility(allEntrances, normalLogics, inventory)
 
     return Accessibility(checkAccessibility, entranceAccessibility)
 
-def getCheckAccessibility(allChecks, logics, inventory):
+def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
     accessibility = {}
 
     outOfLogic = set(allChecks)
@@ -250,12 +259,17 @@ def getCheckAccessibility(allChecks, logics, inventory):
         logic = logics[i]
         
         accessibility[logic] = set(loadChecks(logic, inventory))
-        outOfLogic = outOfLogic.difference(accessibility[logics[i]])
+        outOfLogic = outOfLogic.difference(accessibility[logic])
+
+    accessibility[trackerLogic] = set(loadChecks(trackerLogic, inventory))
+    outOfLogic = outOfLogic.difference(accessibility[trackerLogic])
     
     # Remove duplicate checks from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
+
+    accessibility[trackerLogic] = accessibility[trackerLogic].difference(accessibility[logics[0]])
         
     inventory['KEY1'] = 9
     inventory['KEY2'] = 9
@@ -287,6 +301,12 @@ def getCheckAccessibility(allChecks, logics, inventory):
         logics[i].difficulty = i
         for check in level:
             check.difficulty = i
+
+    for check in accessibility[trackerLogic]:
+        check.difficulty = 8
+
+    trackerLogic.difficulty = 8
+    trackerLogic.friendlyName = 'In tracker logic'
 
     outOfLogic = outOfLogic.difference(alreadyInKeyLogic)
     outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))

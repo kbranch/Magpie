@@ -480,7 +480,7 @@ img {
     z-index: 1;
 }
 
-.difficulty-0 {
+.difficulty-0, .difficulty-8 {
     border-style: none;
     background-image: url('/static/images/difficulty-0.svg');
     background-size: contain;
@@ -489,7 +489,19 @@ img {
     z-index: 2;
 }
 
-.difficulty-0.vanilla {
+.difficulty-8:before {
+    content: '';
+    background-image: url('/static/images/exclamation-mark.svg');
+    background-size: cover;
+    height: 80%;
+    width: 80%;
+    position: absolute;
+    left: 55%;
+    top: 48%;
+    transform: translate(-50%, -50%);
+}
+
+.difficulty-0.vanilla, .difficulty-8.vanilla {
     background-image: url('/static/images/difficulty-0-vanilla.svg');
     z-index: 0;
 }
