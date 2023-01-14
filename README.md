@@ -63,7 +63,7 @@ No setup should be required beyond enabling autotracking in Magpie - just start 
 Settings are available in the main Magpie UI to control what data gets pulled from the autotracker.
 
 #### Compatibility
-Currently, [BGB](https://bgb.bircd.org/) and [RetroArch](https://www.retroarch.com/) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux.
+Currently, [BGB](https://bgb.bircd.org/) and [RetroArch](https://www.retroarch.com/) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on.
 
 The autotracker requires a copy of the ROM for some features to work. When it is not able to pull the ROM directly from the emulator, it will request a copy from the user in the main Magpie UI.
 
