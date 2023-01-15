@@ -12,7 +12,7 @@ class Check {
             setCheckContents(this.id, this.metadata.vanillaItem, false);
         }
 
-        if (localSettings.ignoreHigherLogic && difficulty > 0) {
+        if (localSettings.ignoreHigherLogic && difficulty > 0 && difficulty != 8) {
             difficulty = 9;
         }
 
