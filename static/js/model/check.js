@@ -3,10 +3,14 @@ class Check {
         this.id = id;
         this.metadata = coordDict[this.id];
         this.behindKeys = behindKeys;
-        this.isVanilla = vanilla;
+        this.isVanilla = vanilla || (this.metadata.vanilla ?? false);
         this.locations = locations.filter(x => x.map == mapName);
         this.mapName = mapName
         this.item = item;
+
+        if (this.isVanilla && this.metadata.vanillaItem) {
+            setCheckContents(this.id, this.metadata.vanillaItem, false);
+        }
 
         if (localSettings.ignoreHigherLogic && difficulty > 0) {
             difficulty = 9;
@@ -36,6 +40,12 @@ class Check {
         let isOverworld = this.id.includes('0x0');
         let isOwl = this.id.includes('Owl');
         return isOwl && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
+    }
+
+    isOwnedVanillaPickup() {
+        let vanillaItem = this.metadata.vanillaItem;
+
+        return inventory[vanillaItem] ?? false
     }
 
     fullName() {

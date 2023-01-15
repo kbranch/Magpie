@@ -90,11 +90,16 @@ function drawActiveTab() {
 }
 
 function drawTab(button) {
+    let mapName = getMapNameFromButton(button);
+    $('#mapContainer .tab.active').removeClass('active');
+    $('#mapContainer .tab-button.active').removeClass('active');
+    $(`#mapContainer .tab-button[data-mapname=${mapName}]`).addClass('active');
+    $(`#mapContainer .tab [data-mapname=${mapName}]`).closest('.map-container').addClass('active');
+
     if (activeCheck == null) {
         return;
     }
 
-    let mapName = getMapNameFromButton(button);
     let mapImg = $(`.map[data-mapname="${mapName}"`);
     let map = $(mapImg).closest('div.tab-pane');
     let parent = $(map).find('div.map-wrapper');
@@ -139,6 +144,7 @@ function mapClick(img, event) {
         y: info.y,
     }
 
+    console.log(location);
     activeCheck.locations.push(location);
 
     refreshLocationList();
@@ -216,11 +222,12 @@ function drawCursor(event, element, window) {
 }
 
 function getMapNameFromButton(button) {
-    let target = $(button).attr('data-bs-target');
-    let img = $(`${target} img.map`);
-    let mapName = $(img).attr('data-mapname');
+    return $(button).parent('li').attr('data-mapname')
+    // let target = $(button).attr('data-bs-target');
+    // let img = $(`${target} img.map`);
+    // let mapName = $(img).attr('data-mapname');
 
-    return mapName;
+    // return mapName;
 }
 
 function copyChecks() {

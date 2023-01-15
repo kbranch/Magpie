@@ -489,7 +489,7 @@ img {
     z-index: 2;
 }
 
-.difficulty-8:before {
+.difficulty-8:not(.vanilla):before {
     content: '';
     background-image: url('/static/images/exclamation-mark.svg');
     background-size: cover;

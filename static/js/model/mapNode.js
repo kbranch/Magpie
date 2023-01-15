@@ -100,10 +100,12 @@ class MapNode {
     updateItem() {
         this.item = null;
 
-        let itemedChecks = this.checks.filter(x => x.item);
+        let checks = this.checks.sort((a, b) => a.difficulty - b.difficulty || a.isVanilla - b.isVanilla);
+        let uncheckedChecks = checks.filter(x => !x.isChecked());
+        let itemedChecks = checks.filter(x => x.item);
         let uncheckedItems = itemedChecks.filter(x => !x.isChecked());
 
-        if (uncheckedItems.length > 0) {
+        if (uncheckedItems.length > 0 && (!uncheckedItems[0].isVanilla || uncheckedChecks[0].isVanilla)) {
             this.item = uncheckedItems[0].item;
         }
         else if (itemedChecks.length == 1 && this.checks.length == 1) {

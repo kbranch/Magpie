@@ -55,6 +55,7 @@ class LocalSettings:
         self.followMap = True
         self.linkFace = True
         self.spoilOnCollect = False
+        self.showOwnedPickups = False
 
 @app.route("/")
 def home():

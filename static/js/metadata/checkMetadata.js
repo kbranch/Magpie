@@ -188,6 +188,21 @@ let coordDict = {
 	   ],
 	   "index":13,
 	},
+	"0x2A0":{
+	   "id":"0x2A0",
+	   "area":"Mabe Village",
+	   "name":"Trendy Powder",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":566,
+			 "y":1494
+		  }
+	   ],
+	   "index":13,
+	   "vanilla": true,
+	   "vanillaItem": 'MAGIC_POWDER',
+	},
 	"0x1E4":{
 	   "id":"0x1E4",
 	   "area":"Mabe Village",
@@ -462,7 +477,37 @@ let coordDict = {
 	   ],
 	   "index":32,
 	},
-	"0x08F-Owl":{
+	"0x07F":{
+	   "id":"0x07F",
+	   "area":"Rapids Ride",
+	   "name":"Raft Powder",
+	   "locations":[
+		   {
+			   "map": "overworld",
+			   "x": 2218,
+			   "y": 876,
+		   },
+		   {
+			   "map": "overworld",
+			   "x": 2510,
+			   "y": 974
+		   },
+		   {
+			   "map": "overworld",
+			   "x": 2218,
+			   "y": 746
+		   },
+		   {
+			   "map": "overworld",
+			   "x": 1960,
+			   "y": 714
+		   },
+		],
+		"index": 31,
+		"vanilla": true,
+		"vanillaItem": "MAGIC_POWDER"
+	},
+	"0x08F-Owl": {
 	   "id":"0x08F-Owl",
 	   "area":"Southern Face Shrine",
 	   "name":"Outside Owl",
@@ -1468,6 +1513,26 @@ let coordDict = {
 	   ],
 	   "index":4,
 	},
+	"0x30E":{
+	   "id":"0x30E",
+	   "area":"Color Dungeon",
+	   "name":"Pot Powder",
+	   "locations":[
+		  {
+			  "map": "d0",
+			  "x": 176,
+			  "y": 400
+		  },
+		  {
+			 "map":"overworld",
+			 "x":1246,
+			 "y":926
+		  }
+	   ],
+	   "index":0,
+	   "vanilla": true,
+	   "vanillaItem": "MAGIC_POWDER"
+	},
 	"0x230":{
 	   "id":"0x230",
 	   "area":"Turtle Rock",
@@ -1673,6 +1738,26 @@ let coordDict = {
 	   ],
 	   "index":21,
 	},
+	"0x2352":{
+	   "id":"0x2352",
+	   "area":"Turtle Rock",
+	   "name":"Lava Ledge Flying Powder",
+	   "locations":[
+		  {
+			 "map": "d8",
+			 "x": 752,
+			 "y": 160
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130
+		  }
+	   ],
+	   "index":21,
+	   "vanilla": true,
+	   "vanillaItem": "MAGIC_POWDER",
+	},
 	"0x23E":{
 	   "id":"0x23E",
 	   "area":"Turtle Rock",
@@ -1690,6 +1775,26 @@ let coordDict = {
 		  }
 	   ],
 	   "index":18,
+	},
+	"0x23E2":{
+	   "id":"0x23E2",
+	   "area":"Turtle Rock",
+	   "name":"Cracked Floor Flying Powder",
+	   "locations":[
+		  {
+			 "map": "d8",
+			 "x": 1040,
+			 "y": 288
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130
+		  }
+	   ],
+	   "index":18,
+	   "vanilla": true,
+	   "vanillaItem": "MAGIC_POWDER",
 	},
 	"0x245-Owl":{
 	   "id":"0x245-Owl",
@@ -1762,6 +1867,26 @@ let coordDict = {
 		  }
 	   ],
 	   "index":6,
+	},
+	"0x258":{
+	   "id":"0x258",
+	   "area":"Turtle Rock",
+	   "name":"Pot Flying Powder",
+	   "locations":[
+		  {
+			 "map": "d8",
+			 "x": 720,
+			 "y": 832
+		  },
+		  {
+			 "map":"overworld",
+			 "x":80,
+			 "y":130
+		  }
+	   ],
+	   "index":6,
+	   "vanilla": true,
+	   "vanillaItem": "MAGIC_POWDER",
 	},
 	"0x253-Owl":{
 	   "id":"0x253-Owl",
@@ -3667,6 +3792,26 @@ let coordDict = {
 	   ],
 	   "index":226,
 	},
+	"0x1212":{
+	   "id":"0x1212",
+	   "area":"Bottle Grotto",
+	   "name":"Outside Boo Buddies Flying Powder",
+	   "locations":[
+		  {
+			 "map": "d2",
+			 "x": 240,
+			 "y": 32
+		  },
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276
+		  }
+	   ],
+	   "index":226,
+	   "vanilla": true,
+	   "vanillaItem": "MAGIC_POWDER",
+	},
 	"0x126":{
 	   "id":"0x126",
 	   "area":"Bottle Grotto",
@@ -3720,6 +3865,26 @@ let coordDict = {
 		  }
 	   ],
 	   "index":222,
+	},
+	"0x1392":{
+	   "id":"0x1392",
+	   "area":"Bottle Grotto",
+	   "name":"Pit Flying Powder",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":696,
+			 "y":276
+		  },
+		  {
+			 "map": "d2",
+			 "x": 720,
+			 "y": 832
+		  },
+	   ],
+	   "index":222,
+	   "vanilla": true,
+	   "vanillaItem": "MAGIC_POWDER",
 	},
 	"0x138":{
 	   "id":"0x138",
@@ -4152,6 +4317,21 @@ let coordDict = {
 		  }
 	   ],
 	   "index":250,
+	},
+	"0x2A22":{
+	   "id":"0x2A22",
+	   "area":"Koholint Prairie",
+	   "name":"Witch Powder",
+	   "locations":[
+		  {
+			 "map":"overworld",
+			 "x":874,
+			 "y":812
+		  }
+	   ],
+	   "index": 250,
+	   "vanilla": true,
+	   "vanillaItem": 'MAGIC_POWDER',
 	},
 	"0x301-1":{
 	   "id":"0x301-1",

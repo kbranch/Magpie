@@ -55,6 +55,11 @@ function createNodes(map, mapName) {
                     .filter(x => x.shouldDraw());
 
     for (const check of checks) {
+        if (!localSettings.showOwnedPickups
+            && check.isOwnedVanillaPickup()) {
+            continue;
+        }
+
         for (const coord of check.locations) {
             if ((['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
                  && coord.indirect)

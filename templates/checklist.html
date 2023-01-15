@@ -1,7 +1,7 @@
 
 {% from 'logicContents.html' import logicContents %}
 
-<div class="d-flex flex-wrap">
+<div class="d-flex flex-wrap py-1">
     <div id="legend" class="flex-grow-1 d-flex flex-wrap justify-content-center">
         {% for i in range(logics | length - 1) %}
         <div class="col-auto px-2">
@@ -9,6 +9,9 @@
             <div class="legend-text align-middle">: {{logics[i].name | title}}</div>
         </div>
         {% endfor %}
+        <div class="col-auto px-2">
+            <div class="tooltip-check-graphic difficulty-8 align-middle"></div>: Tracker <img id="trackerLogicHelp" class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Probably accessible, but not technically in logic">
+        </div>
         <div class="col-auto px-2">
             <div class="tooltip-check-graphic difficulty-0 vanilla align-middle"></div>: Vanilla
         </div>
@@ -19,13 +22,13 @@
             <div class="tooltip-check-graphic difficulty-checked align-middle"></div>: Checked
         </div> -->
         <div class="col-auto px-2">
-            <div class="tooltip-check-graphic left-click align-middle"></div>: Toggle checks
+            <div class="tooltip-check-graphic left-click align-middle"></div>: Toggle
         </div>
         <div class="col-auto px-2">
-            <div class="tooltip-check-graphic right-click align-middle"></div>: Pin tooltip
+            <div class="tooltip-check-graphic right-click align-middle"></div>: Pin
         </div>
         <div class="col-auto px-2">
-            Ctrl+Z to undo
+            Ctrl+Z: Undo
         </div>
         <div class="col-auto px-2">
             <div class="tooltip-check-graphic middle-click align-middle"></div> or Ctrl+<div class="tooltip-check-graphic left-click align-middle"></div>: View Dungeon
@@ -99,4 +102,6 @@
 
     var mapTooltipTriggerList = document.querySelectorAll('li.nav-item[data-bs-toggle="tooltip"]');
     var mapTooltipList = [...mapTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+    new bootstrap.Tooltip(document.getElementById("trackerLogicHelp"));
 </script>

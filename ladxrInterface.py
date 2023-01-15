@@ -281,6 +281,8 @@ def initChecks(args):
     if not args.instruments and args.goal == 'seashells':
         vanillaIds -= vanillaBySetting['instruments']
 
+    trackerLogic.updateMetadata(checkMetadataTable)
+
     for id in checkMetadataTable:
         isOverworld = '0x0' in id
         isOwl = 'Owl' in id
