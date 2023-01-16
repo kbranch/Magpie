@@ -55,19 +55,27 @@ Flags can be changed by clicking the gear icon in the upper right. These are pas
 
 Flags that were added to the randomizer after Magpie was last updated will appear in the list. Because flags can do a lot of different things, these may or may not be relevant or functional without an update to Magpie.
 
-### Autotracker
-Magpie uses a separate autotracker program that runs locally and communicates with the wite via websockets. The latest compiled autotracker is always availabe at [https://magpietracker.us/static/magpie-autotracker.exe](https://magpietracker.us/static/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
+## Autotracker
+Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest compiled autotracker is always availabe at [https://magpietracker.us/static/magpie-autotracker.exe](https://magpietracker.us/static/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
 
 No setup should be required beyond enabling autotracking in Magpie - just start the autotracker and a compatible emulator.
 
 Settings are available in the main Magpie UI to control what data gets pulled from the autotracker.
 
-#### Compatibility
+### Linux (and Mac?)
+Autotracking should work on any vaguely recent version of Linux that can also run a [compatible emulator](#emulator-compatibility). Mac support is untested but probably similar.
+
+Setup is similar to the local version of Magpie:
+ - [Download the source](#downloading)
+ - Run [autotracker/setup.sh](https://github.com/kbranch/Magpie/blob/master/autotracking/setup.sh) to set up the environment
+ - Run [autotracker/start.sh](https://github.com/kbranch/Magpie/blob/master/autotracking/start.sh) to start the autotracker
+
+### Emulator Compatibility
 Currently, [BGB](https://bgb.bircd.org/) and [RetroArch](https://www.retroarch.com/) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on.
 
 The autotracker requires a copy of the ROM for some features to work. When it is not able to pull the ROM directly from the emulator, it will request a copy from the user in the main Magpie UI.
 
-### Spoiler Log
+## Spoiler Log
 
 The spoiler log minitab allows you to upload either a JSON spoiler log or a ROM itself. Once loaded, individual checks and entrances can be spoiled by right clicking on them. Hovering over an item in the item tracker will highlight its location on the map if it has been marked(/spoiled)
  
@@ -82,4 +90,4 @@ The item layouts are defined in [templates/mainitems](templates/mainitems) and [
 
 [templates/item.html](templates/item.html) contains a macro that abstracts away most of the details.
 
-Check locations for the map are stored in [static/js/checkMetadata.js](static/js/checkMetadata.js), entrances are in [static/js/entranceMetadata.js](static/js/entranceMetadata.js), and connectors are in [static/js/connectorMetadata.js](static/js/connectorMetadata.js). There is an interface at the [/mapCoords](https://magpietracker.us/mapCoords) route to help manage locations without manual JSON editing, although it's often broken - I generally tweak it to do exactly what I need at the time.
+Check locations for the map are stored in [static/js/metadata/checkMetadata.js](static/js/metadata/checkMetadata.js), entrances are in [static/js/metadata/entranceMetadata.js](static/js/metadata/entranceMetadata.js), and connectors are in [static/js/metadata/connectorMetadata.js](static/js/metadata/connectorMetadata.js). There is an interface at the [/mapCoords](https://magpietracker.us/mapCoords) route to help manage locations without manual JSON editing, although it's often broken - I generally tweak it to do exactly what I need at the time.
