@@ -426,6 +426,28 @@ def getGraphicsPacks():
     
     # return options
 
+if sys.platform.lower().startswith('win'):
+    import ctypes
+
+    def hideConsole():
+        """
+        Hides the console window in GUI mode. Necessary for frozen application, because
+        this application support both, command line processing AND GUI mode and theirfor
+        cannot be run via pythonw.exe.
+        """
+
+        whnd = ctypes.windll.kernel32.GetConsoleWindow()
+        if whnd != 0:
+            ctypes.windll.user32.ShowWindow(whnd, 0)
+            # if you wanted to close the handles...
+            #ctypes.windll.kernel32.CloseHandle(whnd)
+
+    def showConsole():
+        """Unhides console window"""
+        whnd = ctypes.windll.kernel32.GetConsoleWindow()
+        if whnd != 0:
+            ctypes.windll.user32.ShowWindow(whnd, 1)
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
@@ -436,6 +458,11 @@ if __name__ == "__main__":
     local = args.local
 
     if args.local:
+        # hide console window, but only under Windows and only if app is frozen
+        if sys.platform.lower().startswith('win'):
+            if getattr(sys, 'frozen', False):
+                hideConsole()
+
         chromePaths = ['%ProgramFiles%\Google\Chrome\Application\chrome.exe',
                        '%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe',
                        '%LocalAppData%\Google\Chrome\Application\chrome.exe']
@@ -450,5 +477,9 @@ if __name__ == "__main__":
         
         ui = FlaskUI(app, port=16114, width=args.width, height=args.height, browser_path=browserPath)
         ui.run()
+
+        if sys.platform.lower().startswith('win'):
+            if getattr(sys, 'frozen', False):
+                showConsole()
     else:
         app.run()
