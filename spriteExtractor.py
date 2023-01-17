@@ -143,7 +143,7 @@ def getIcon(source, sprite):
         if sprite.mirror:
             icon = ImageOps.mirror(icon)
             icon.paste(tile, (x, y))
-    
+
     if len(sprite.palettes) > 1:
         for x in range(0, icon.width):
             for y in range(8, icon.height):
@@ -158,10 +158,57 @@ def getIcon(source, sprite):
         subPalette[2] = 0
         subPalette[3] = 0
         palette += subPalette
+    
+    palette += [255, 255, 255, 255]
 
     icon.putpalette(palette, rawmode='RGBA')
 
+    if sprite.item in ['SWORD_1', 'SWORD_2', 'SEASHELL_1', 'MAGIC_POWDER_1', 'PEGASUS_BOOTS_1', 'HOOKSHOT_1', 'FACE_KEY_1', 'MAGIC_ROD_1', 'SLIME_KEY_1', 'TRADING_ITEM_STICK_1']:
+        for y in range(icon.height):
+            for x in range(icon.width):
+                pixel = icon.getpixel((x, y))
+                if pixel == 0:
+                    count = countTransparentAround(icon, x, y)
+                    if count >= 4:
+                        icon.putpixel((x, y), int(len(palette) / 4) - 1)
+
     return icon.resize((48, 48))
+
+def countTransparentAround(icon, x, y):
+    count = 0
+
+    for i in range(x + 1, icon.width):
+        if icon.getpixel((i, y)) != 0:
+            count += 1
+            break
+
+    for i in range(0, x):
+        if icon.getpixel((i, y)) != 0:
+            count += 1
+            break
+
+    for j in range(y + 1, icon.height):
+        if icon.getpixel((x, j)) != 0:
+            count += 1
+            break
+
+    for j in range(0, y):
+        if icon.getpixel((x, j)) != 0:
+            count += 1
+            break
+
+
+    # for i in range(x - 1, x + 2):
+    #     if i < 0 or i >= icon.width:
+    #         continue
+    #     for j in range(y - 1, y + 2):
+    #         if j < 0 or j >= icon.height or (i != x and j != y):
+    #             continue
+
+    #         if icon.getpixel((i, j)) != 0:
+    #             count += 1
+
+    return count
 
 def deactivateIcon(icon):
     icon = icon.convert('LA') # greyscale with alpha - ImageOps.greyscale() removes the alpha
