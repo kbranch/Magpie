@@ -163,7 +163,9 @@ function distributeChecks() {
         if (!node.entrance.isMapped()) {
             if (args.entranceshuffle != 'none'
                 || (node.entrance.canBeStart()
-                    && !Entrance.isFound(startHouse))) {
+                    && !Entrance.isFound(startHouse))
+                || (args.dungeonshuffle
+                    && node.entrance.isDungeon())) {
                 node.checks = [];
             }
         }
