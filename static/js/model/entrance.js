@@ -122,6 +122,7 @@ class Entrance {
     static isFound(id) {
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
+            && (args.dungeonshuffle && !Entrance.isDungeon(id))
             && 'start_house' in entranceMap)
         {
             return true;

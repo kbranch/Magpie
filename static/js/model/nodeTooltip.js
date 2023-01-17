@@ -185,7 +185,7 @@ class NodeTooltip {
             
             options = sortByKey(options, x => [x[0]]);
 
-            let action = `startGraphicalConnection("${entrance.id}")`;
+            let action = `startGraphicalConnection('${entrance.id}')`;
             let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
 
             pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', action, options, optionAction);
