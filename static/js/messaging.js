@@ -211,6 +211,8 @@ function setGraphicsPack(gfx) {
     localSettings.graphicsPack = '/' + gfx;
     setInputValues('setting', localSettings);
     saveSettingsToStorage();
+    // refreshItems();
+    refreshImages();
     drawActiveTab();
 }
 
