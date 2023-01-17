@@ -46,28 +46,28 @@ def getSettings(romData):
     return rom.readShortSettings()
 
 gfxDict = {
-   "97ffafcf5d69d954237c24bcb110ca46f6fe11bd":"Subrosian",
-   "a64e194f2da62e43cf237479c79c0732c3ad4bdf":"Mario",
-   "15813695f4f29e1ca230da72a695b294c50e9432":"Rooster",
-   "c7ac387f3012b3586e8b7ae64f15c7b7be5ec7c0":"Rosa",
-   "20c1c983afd0ac79db8f88084b00c6e1c2b66e13":"Kirby",
-   "2dcf7df2ea40dfe10c66448c1e5f1f4b0f4bcb2d":"Martha",
-   "08b9e4bfd8365ecb8926cc0a793a7d10d6302719":"Meme",
-   "7ed541f907ee16f2747552815eb64300e2cc4833":"Bunny",
-   "1c2dc985e1173098829ad72f03b846e71cb4ae8d":"Matty_LA",
-   "f49d99d98c6b540662d8e0aa870d2ade3ed96595":"Bowwow",
-   "cbd8bc8c24f401d81535548d9b6ffb5856c93f7b":"Luigi",
-   "a0e2cc91fce373c19f37c06645d41fb6a063801e":"Tarin",
-   "93e72284baf65946b9ae0aa0fc4019773c0fa9d7":"AgesGirl",
-   "d93deb2175e416141046d8aef243d4276939f7fc":"Marin",
-   "39987d5c51b3afe0bdb56c3d268d1393fd1ce956":"GrandmaUlrira",
-   "c536903f896dd7de7db8b870d8605ef1888acb01":"Richard",
-   "8e69926ed9fb30151c342c24119e18f9cc9d4c5e":"NESLink",
-   "913caca99f174f166e8faef77065ef3ca82e89c0":"MarinAlpha"
+   "71087f57d498acbf51c3831e8c9949d5d3828c0f":"Subrosian",
+   "0059dd3b44e740cb70a856717d70ebc4dafcb85a":"Mario",
+   "e8568e8cd6ba62260bb6224be4a8b0676ee46471":"Rooster",
+   "9f47a74c64a715bacabd66afab89f416d15c1237":"Rosa",
+   "b5aeb6e2cd88a03fbc284787adc098c56c85f337":"Kirby",
+   "6c3551c787354b971a6d2a505c5647fce7623d00":"Martha",
+   "558b53286213d607a517864fefab0b491426c253":"Meme",
+   "4a58f3432ad9cbc2011817c3abf4dcd5fa73be15":"Bunny",
+   "be9d86151f4ee2d4d8a8b9beb0096cea7661f304":"Matty_LA",
+   "fc1251ab1000673d224d2d0e3a6759f00ace2a86":"Bowwow",
+   "9bf7512f17bf7b632abfbbfacc97c0962770dbbe":"Luigi",
+   "8ec67c1b492ed9439df04bdddd1f2f5a4bbf6661":"Tarin",
+   "3cfa04f141127bfa4c23591bbe6b23af09b26b34":"AgesGirl",
+   "2726558c2a536f305e32ba01a074071ca148f2e3":"Marin",
+   "2e7ef7ef064ae9116631debd0fbd5f892faa462a":"GrandmaUlrira",
+   "938a4fabaa34eb8323b2912b7dda78d88a0674b2":"Richard",
+   "b4b1f305eef4c9979495ce71e69c923dfe2f1cf8":"NESLink",
+   "ae96c94db9ec82e08d9f7ab1f4efc9072e0b72ed":"MarinAlpha"
 }
 
-def getGfx(romData):
-    gfxHash = hashlib.sha1(romData[0x30000:0x30100]).hexdigest()
+def getGfx(gfxData):
+    gfxHash = hashlib.sha1(gfxData).hexdigest()
 
     if gfxHash in gfxDict:
         return gfxDict[gfxHash]

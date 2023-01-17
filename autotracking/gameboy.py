@@ -7,6 +7,7 @@ class Gameboy:
         self.emulator = None
         self.wramSnapshot = None
         self.hramSnapshot = None
+        self.gfxSnapshot = None
     
     def canReadRom(self):
         return self.emulator != None and self.emulator.canReadRom
@@ -15,6 +16,9 @@ class Gameboy:
         #WRAM actually starts at 0xC000, but we only care about 0xD800 and up for now
         self.wramSnapshot = self.emulator.readRam(0xD800, 0x800)
         self.hramSnapshot = self.emulator.readRam(0xFF80, 0x80)
+
+        if self.canReadRom():
+            self.gfxSnapshot = self.emulator.readRom(0xB0000, 0x040)
     
     def findEmulator(self):
         if sys.platform == "win32":

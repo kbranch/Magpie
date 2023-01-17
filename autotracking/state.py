@@ -15,6 +15,8 @@ class State:
         self.features = set()
         self.sendFull = False
         self.locationChanged = False
+        self.gfx = None
+        self.gfxChanged = False
 
         self.items = []
         self.itemDict = {}
@@ -47,7 +49,9 @@ class State:
         if 'spoilers' in self.features:
             await sendSpoilerLog(socket, romData)
         if 'gfx' in self.features:
-            await sendGfx(socket, romData)
+            self.gfx = getGfx(romData[0xB0000:0xB0040])
+            self.gfxChanged = True
+            await sendGfx(socket, self)
 
     async def processMessages(self, socket):
         while socket.messages:
@@ -84,6 +88,8 @@ class State:
                 await sendEntrances([x for x in self.entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
             if 'gps' in self.features:
                 await sendLocation(self, socket)
+            if 'gfx' in self.features:
+                await sendGfx(socket, self)
 
             await Message('refresh', 'refresh').send(socket)
 
@@ -97,6 +103,8 @@ class State:
                 await sendEntrances([x for x in self.entrancesByName.values() if x.changed], socket)
             if 'gps' in self.features and self.locationChanged:
                 await sendLocation(self, socket)
+            if 'gfx' in self.features and self.gfxChanged:
+                await sendGfx(socket, self)
 
         self.locationChanged = False
 
@@ -111,6 +119,11 @@ class State:
             readChecks(gb, self, extraItems)
         if 'items' in self.features:
             readItems(gb, self, extraItems)
+        if 'gfx' in self.features:
+            newGfx = getGfx(gb.gfxSnapshot)
+            if newGfx != self.gfx:
+                self.gfx = newGfx
+                self.gfxChanged = True
         
         readLocation(gb, self)
 

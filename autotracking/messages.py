@@ -37,11 +37,9 @@ async def sendSpoilerLog(socket, romData):
 
     await newMessage.send(socket)
 
-async def sendGfx(socket, romData):
-    gfx = getGfx(romData)
-
+async def sendGfx(socket, state):
     newMessage = Message('gfx', 'gfx', False)
-    newMessage.gfx = gfx
+    newMessage.gfx = state.gfx
 
     await newMessage.send(socket)
 

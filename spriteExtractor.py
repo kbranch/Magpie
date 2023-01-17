@@ -336,7 +336,7 @@ def main():
 
                 with open(entry.path, 'rb') as iFile:
                     data = bytearray(iFile.read(256))
-                    hashes[hashlib.sha1(data[:256]).hexdigest()] = entry.name[:-4]
+                    hashes[hashlib.sha1(data[:64]).hexdigest()] = entry.name[:-4]
     
     print(hashes)
 
