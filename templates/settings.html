@@ -374,6 +374,12 @@
                     </div>
                     <div class="row">
                         <div class="col">
+                            <input id="autotrackGraphicsPack" data-setting="autotrackGraphicsPack" type="checkbox" class="form-check-input">
+                            <label for="autotrackGraphicsPack" class="form-label">Graphics pack</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
                             <input id="linkFaceSetting" data-setting="linkFace" type="checkbox" class="form-check-input">
                             <label for="linkFaceSetting" class="form-label"> <img src="static/images/linkface.png"></label>
                         </div>
@@ -419,6 +425,17 @@
                 <div class="row pt-2">
                     <input type="file" accept=".html,.htm" class="hidden" id="customDungeonItemInput" onchange="getFile(this, pickCustomDungeonItemsPath);" />
                     <button type="button" class="btn btn-secondary" onclick="document.getElementById('customDungeonItemInput').click();">Pick Custom</button>
+                </div>
+            </div>
+            <div class="col col-auto mx-2">
+                <div class="row">
+                    <label for="graphicsPack" class="form-label">Graphics pack</label>
+                    <select id="graphicsPack" class="form-select" data-setting="graphicsPack" aria-label="graphicsPack">
+                        <option value="">Default</option>
+                    {% for option in graphicsOptions|sort %}
+                        <option value="/{{option}}">{{option}}</option>
+                    {% endfor %}
+                    </select>
                 </div>
             </div>
         </div>

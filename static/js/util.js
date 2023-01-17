@@ -123,4 +123,7 @@ function applySettings() {
     if (localSettings.gps) {
         autotrackerFeatures.push('gps');
     }
+    if (localSettings.autotrackGraphicsPack) {
+        autotrackerFeatures.push('gfx');
+    }
 }

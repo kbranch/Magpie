@@ -46,6 +46,8 @@ class State:
             await sendSettings(socket, romData)
         if 'spoilers' in self.features:
             await sendSpoilerLog(socket, romData)
+        if 'gfx' in self.features:
+            await sendGfx(socket, romData)
 
     async def processMessages(self, socket):
         while socket.messages:

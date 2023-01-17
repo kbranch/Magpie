@@ -3,6 +3,7 @@ function setImgSrc(img, item) {
         inventory[item] = 0;
     }
 
+    let applyGfx = ($(img).closest('.inventory-item').attr('data-gfx') == 'True') && ($(img).hasClass('primary'));
     let number = $(img).attr('data-invert_count') != '' ? inventory[item] : maxInventory[item] - inventory[item];
 
     if (hasAttr(img, 'data-src')) {
@@ -15,7 +16,8 @@ function setImgSrc(img, item) {
             max = $(img).attr('data-max_image');
         }
 
-        $(img).attr('src', `static/images/${item}_${Math.min(number, max)}.png`);
+        let gfx = applyGfx ? localSettings.graphicsPack : '';
+        $(img).attr('src', `static/images${gfx}/${item}_${Math.min(number, max)}.png`);
     }
 
     if (number > 0) {
@@ -149,16 +151,16 @@ function jumpSrc() {
     rooster = inventory['ROOSTER'] > 0;
 
     if (!feather && !rooster) {
-        return 'static/images/NO_JUMP.png';
+        return `static/images${localSettings.graphicsPack}/NO_JUMP.png`;
     }
     if (!feather && rooster) {
-        return 'static/images/ROOSTER.png';
+        return `static/images${localSettings.graphicsPack}/ROOSTER.png`;
     }
     if (feather && !rooster) {
-        return 'static/images/FEATHER.png';
+        return `static/images${localSettings.graphicsPack}/FEATHER.png`;
     }
 
-    return 'static/images/BOTH_JUMP.png';
+    return `static/images${localSettings.graphicsPack}/BOTH_JUMP.png`;
 }
 
 function tunicSrc()

@@ -85,12 +85,13 @@ function drawLocation() {
     if (linkFace.length == 0) {
         linkFace = $('<img>', {
             'id': 'linkFace',
-            'src': 'static/images/linkface.png',
             'draggable': false,
         });
 
         $(mapContainer).find('div.map-wrapper').append(linkFace);
     }
+
+    linkFace.attr('src', `static/images${localSettings.graphicsPack}/linkface.png`);
 
     linkFace.css({
                 'top': Math.round(roomY * scaling.y + scaling.offset.y),

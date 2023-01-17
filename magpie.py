@@ -50,12 +50,14 @@ class LocalSettings:
         self.autotrackEntrances = True
         self.autotrackSettings = True
         self.autotrackSpoilers = True
+        self.autotrackGraphicsPack = True
         self.autotrackerAddress = ''
         self.gps = True
         self.followMap = True
         self.linkFace = True
         self.spoilOnCollect = False
         self.showOwnedPickups = False
+        self.graphicsPack = ''
 
 @app.route("/")
 def home():
@@ -70,6 +72,7 @@ def home():
                                          jsonArgs=jsonpickle.encode(args),
                                          jsonSettings=jsonpickle.encode(defaultSettings),
                                          local=local,
+                                         graphicsOptions=getGraphicsPacks(),
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -107,7 +110,8 @@ def renderItems():
                                                localSettings=localSettings,
                                                customItems=customItems,
                                                customDungeonItems=customDungeonItems,
-                                               local=local)
+                                               local=local,
+                                               )
 
         return result
     except:
@@ -408,6 +412,18 @@ def cleanUpEntranceMap(entranceMap, entrances, args):
             del entranceMap['start_house']
         if 'start_house' in reverseMap:
             del entranceMap[reverseMap['start_house']]
+
+def getGraphicsPacks():
+    gfxPath = 'LADXR/gfx/'
+
+    options = []
+
+    with os.scandir(gfxPath) as ls:
+        for entry in ls:
+            if entry.name.endswith('.bin') and entry.is_file():
+                options.append(entry.name[:-4])
+    
+    return options
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

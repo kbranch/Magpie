@@ -198,10 +198,20 @@ function processMessage(messageText) {
         case 'spoiler':
             loadLogContents(message.log, false);
             break;
+        case 'gfx':
+            setGraphicsPack(message.gfx);
+            break;
         default:
             console.log(`Unrecognized message category: ${message.category}`)
             break;
     }
+}
+
+function setGraphicsPack(gfx) {
+    localSettings.graphicsPack = '/' + gfx;
+    setInputValues('setting', localSettings);
+    saveSettingsToStorage();
+    drawActiveTab();
 }
 
 function loadRom(element) {

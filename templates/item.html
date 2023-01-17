@@ -1,11 +1,11 @@
-{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', overlay_count='', invert_count='', allItems=None, hideIfZero=False, condition=True) %}
+{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', overlay_count='', invert_count='', allItems=None, hideIfZero=False, condition=True, gfx=True) %}
 {% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
 
     {% if secondary != '' %}
-        {% set secondary_tag = 'data-secondary=' + secondary %}
+        {% set secondaryTag = 'data-secondary=' + secondary %}
         {% set oncontextmenu = "addItem('" + secondary + "', 1);return false;" %}
     {% else %}
-        {% set secondary_tag= "" %}
+        {% set secondaryTag= "" %}
         {% set oncontextmenu = "addItem('" + primary + "', -1);return false;" %}
     {% endif %}
 
@@ -35,12 +35,12 @@
 
     {% set width = 'style="width: ' + width + ';"' %}
 
-    <div data-primary="{{primary}}" {{secondary_tag}} {{max}} {{secondaryMax}} {{max_image}} class="{{classes}}">
+    <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{classes}}">
         <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" {{width|safe}} class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}
-            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} {{invert_count}} class="itemImage" src="static/images/{{primary}}_0.png" draggable="false">
+            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} {{invert_count}} class="itemImage primary" src="static/images/{{primary}}_0.png" draggable="false">
         {% if overlay_count != '' %}
             <span data-overlay_count="{{overlay_count}}" {{invert_count}} class="overlay" onmousedown="preventDoubleClick(event)">0</span>
         {% endif %}

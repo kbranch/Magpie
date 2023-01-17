@@ -37,6 +37,14 @@ async def sendSpoilerLog(socket, romData):
 
     await newMessage.send(socket)
 
+async def sendGfx(socket, romData):
+    gfx = getGfx(romData)
+
+    newMessage = Message('gfx', 'gfx', False)
+    newMessage.gfx = gfx
+
+    await newMessage.send(socket)
+
 async def sendItems(items, socket, diff=True, refresh=True):
     if not items: return
 
