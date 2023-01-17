@@ -414,16 +414,17 @@ def cleanUpEntranceMap(entranceMap, entrances, args):
             del entranceMap[reverseMap['start_house']]
 
 def getGraphicsPacks():
-    gfxPath = 'LADXR/gfx/'
+    return ["Subrosian", "Mario", "Rooster", "Rosa", "Kirby", "Martha", "Meme", "Bunny", "Matty_LA", "Bowwow", "Luigi", "Tarin", "AgesGirl", "Marin", "GrandmaUlrira", "Richard", "NESLink", "MarinAlpha"]
+    # gfxPath = 'LADXR/gfx/'
 
-    options = []
+    # options = []
 
-    with os.scandir(gfxPath) as ls:
-        for entry in ls:
-            if entry.name.endswith('.bin') and entry.is_file():
-                options.append(entry.name[:-4])
+    # with os.scandir(gfxPath) as ls:
+    #     for entry in ls:
+    #         if entry.name.endswith('.bin') and entry.is_file():
+    #             options.append(entry.name[:-4])
     
-    return options
+    # return options
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
