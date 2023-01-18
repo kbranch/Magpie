@@ -213,6 +213,7 @@ function clearEntranceMapping(entranceId, housekeeping=true) {
 
     Connection.disconnect(entranceId);
     delete entranceMap[entranceId];
+    updateReverseMap();
 
     if (housekeeping) {
         saveEntrances();
