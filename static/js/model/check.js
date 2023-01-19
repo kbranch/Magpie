@@ -38,8 +38,11 @@ class Check {
 
     isVanillaOwl() {
         let isOverworld = this.id.includes('0x0');
-        let isOwl = this.id.includes('Owl');
-        return isOwl && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
+        return this.isOwl() && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
+    }
+
+    isOwl() {
+        return this.id.includes('Owl');
     }
 
     isOwnedVanillaPickup() {

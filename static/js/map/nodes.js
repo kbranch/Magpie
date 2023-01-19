@@ -212,10 +212,11 @@ function drawNodes(mapName, animate=true) {
         let node = nodes[nodeId];
         let classes = node.iconClasses();
         let activeMap = getActiveMap();
+        let difficulty = classes.includes('unmapped-entrance') ? node.entrance.difficulty : node.difficulty;
 
         node.updateAnimationClasses(classes, parent, animate);
         node.updateEntranceAttrs();
-        node.updateOverlay(activeMap, graphicalMapSource != null);
+        node.updateOverlay(activeMap, graphicalMapSource != null, difficulty);
 
         $(node.graphic).attr({
             'class': classes.join(' '),

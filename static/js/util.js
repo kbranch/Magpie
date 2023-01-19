@@ -43,6 +43,8 @@ function download(filename, text) {
 
 function modifyTooltipAllowList() {
     const allowList = bootstrap.Tooltip.Default.allowList
+    allowList.svg = [];
+    allowList.use = ['xlink:href'];
     allowList.div.push('data-check-id');
     allowList.div.push('data-entrance-id');
     allowList.div.push('onclick');

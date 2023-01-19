@@ -282,7 +282,7 @@ class NodeTooltip {
 
     checkGraphicHtml(id) {
         let checks = this.node.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{behind-keys}{vanilla}'>{overlay}</div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla}'><div class='tooltip-check-graphic icon-wrapper{behind-keys}{owl}'><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg></div>{overlay}</div>";
         let overlayTemplate = '<img class="node-item-overlay" data-node-item="{item}" src="static/images/{item}_1.png" onmousedown="preventDoubleClick(event)">';
         let textItemTemplate = '<img class="text-item pe-1" data-node-item="{item}" src="static/images/{item}_1.png" onmousedown="preventDoubleClick(event)">';
         let graphic = '';
@@ -291,6 +291,8 @@ class NodeTooltip {
             let difficulty = check.isChecked() ? 'checked' : check.difficulty;
             let behindKeys = check.behindKeys ? ' behind-keys' : '';
             let vanilla = check.isVanilla ? ' vanilla' : '';
+            let owl = check.isOwl() ? ' owl' : '';
+            let iconVanilla = check.isVanilla ? '-vanilla' : '';
             let overlay = '';
 
             if (check.item) {
@@ -301,10 +303,12 @@ class NodeTooltip {
                 $(`#text-item-${check.id}`).html('');
             }
 
-            graphic += graphicTemplate.replace('{difficulty}', difficulty)
-                                      .replace('{behind-keys}', behindKeys)
-                                      .replace('{vanilla}', vanilla)
-                                      .replace('{overlay}', overlay);
+            graphic += graphicTemplate.replaceAll('{difficulty}', difficulty)
+                                      .replaceAll('{behind-keys}', behindKeys)
+                                      .replaceAll('{owl}', owl)
+                                      .replaceAll('{vanilla}', vanilla)
+                                      .replaceAll('{iconVanilla}', iconVanilla)
+                                      .replaceAll('{overlay}', overlay);
         }
 
         return graphic;

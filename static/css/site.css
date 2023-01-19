@@ -318,6 +318,7 @@ img {
     background-position: center center;
     background-size: cover;
     transform: translate(5%, 5%);
+    z-index: 10;
 }
 
 .check-graphic {
@@ -388,6 +389,7 @@ img {
     background-position: center center;
     background-size: cover;
     transform: translate(-50%, -45%);
+    z-index: 9;
 }
 
 .entrance-only.unmapped-entrance:before {
@@ -472,107 +474,90 @@ img {
 }
 
 .difficulty-checked {
-    border-style: none;
-    background-image: url('/static/images/checked.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 1;
 }
 
 .difficulty-0, .difficulty-8 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-0.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .difficulty-8:not(.vanilla):before {
     content: '';
     background-image: url('/static/images/exclamation-mark.svg');
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     height: 80%;
     width: 80%;
     position: absolute;
     left: 55%;
     top: 48%;
     transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.icon-wrapper {
+    float: left;
+}
+
+#difficulty-0 {
+    fill: #06f;
+}
+
+#difficulty-0-vanilla {
+    fill: #fff;
 }
 
 .difficulty-0.vanilla, .difficulty-8.vanilla {
-    background-image: url('/static/images/difficulty-0-vanilla.svg');
     z-index: 0;
 }
 
+.svg-map-icon {
+    fill-opacity: 1;
+    stroke: #000000;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: none;
+    stroke-opacity: 1;
+}
+
 .difficulty-1 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-1.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .difficulty-1.vanilla {
-    background-image: url('/static/images/difficulty-1-vanilla.svg');
     z-index: 0;
 }
 
 .difficulty-2 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-2.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .difficulty-2.vanilla {
-    background-image: url('/static/images/difficulty-2-vanilla.svg');
     z-index: 0;
 }
 
 .difficulty-3 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-3.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .difficulty-3.vanilla {
-    background-image: url('/static/images/difficulty-3-vanilla.svg');
     z-index: 0;
 }
 
 .difficulty-4 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-3.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .difficulty-4.vanilla {
-    background-image: url('/static/images/difficulty-3-vanilla.svg');
     z-index: 0;
 }
 
 .difficulty-9 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-9.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 0;
 }
 
 .difficulty-9.vanilla {
-    background-image: url('/static/images/difficulty-9-vanilla.svg');
     z-index: 0;
 }
 

@@ -323,10 +323,37 @@ class MapNode {
         }
     }
 
-    updateOverlay(activeMap, pickingEntrance) {
+    updateOverlay(activeMap, pickingEntrance, difficulty) {
         let overlay = $('<div>', {
             'class': 'node-overlay-wrapper',
         });
+
+        if (!pickingEntrance && !this.entrance?.isMapped()) {
+            let vanilla = this.isVanilla && this.difficulty != 'checked' ? '-vanilla' : '';
+
+            let iconWrapper = $('<div>', {
+                'class': `icon-wrapper icon-difficulty-${difficulty}`,
+                css: {
+                    'width': localSettings.checkSize,
+                    'height': localSettings.checkSize,
+                },
+            });
+            let svg = $('<svg>', {
+                'class': 'icon',
+                css: {
+                    'width': localSettings.checkSize,
+                    'height': localSettings.checkSize,
+                },
+            })
+            let use = $('<use>', {
+                'xlink:href': `#difficulty-${difficulty}${vanilla}`,
+            });
+
+            svg.append(use);
+            iconWrapper.append(svg);
+            $(iconWrapper).html($(iconWrapper).html());
+            overlay.append(iconWrapper);
+        }
 
         if (this.item) {
             let itemOverlay = $('<img>', {

@@ -5,22 +5,19 @@
     <div id="legend" class="flex-grow-1 d-flex flex-wrap justify-content-center">
         {% for i in range(logics | length - 1) %}
         <div class="col-auto px-2">
-            <div class="tooltip-check-graphic difficulty-{{i}} align-middle"></div>
-            <div class="legend-text align-middle">: {{logics[i].name | title}}</div>
+            <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-{{i}}"></use></svg>: {{logics[i].name | title}}
         </div>
         {% endfor %}
         <div class="col-auto px-2">
-            <div class="tooltip-check-graphic difficulty-8 align-middle"></div>: Tracker <img id="trackerLogicHelp" class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Probably accessible, but not technically in logic">
+            <div class="difficulty-8" style="width: 21px; height: 21px; position: relative; display: inline-block;"><svg class="icon" style="width: 21px; height: 21px;"><use xlink:href="#difficulty-0"></use></svg></div>: Tracker
+            <img id="trackerLogicHelp" class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Probably accessible, but not technically in logic">
         </div>
         <div class="col-auto px-2">
-            <div class="tooltip-check-graphic difficulty-0 vanilla align-middle"></div>: Vanilla
+            <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-0-vanilla"></use></svg>: Vanilla
         </div>
         <div class="col-auto px-2">
-            <div class="tooltip-check-graphic difficulty-9 align-middle"></div>: Out of logic
+            <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-9"></use></svg>: Out of logic
         </div>
-        <!-- <div class="col-auto px-2">
-            <div class="tooltip-check-graphic difficulty-checked align-middle"></div>: Checked
-        </div> -->
         <div class="col-auto px-2">
             <div class="tooltip-check-graphic left-click align-middle"></div>: Toggle
         </div>
@@ -47,7 +44,9 @@
     <div class="accordion-item {{hidden}}">
         <h2 id="heading-{{safeLogic}}" class="accordion-header">
             <button class="accordion-button{{ns.collapsed}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{safeLogic}}" aria-expanded="{{ns.expanded}}" aria-controls="collapse-{{safeLogic}}">
-                <div class="tooltip-check-graphic difficulty-{{logic.difficulty}} align-middle"></div>
+                <div class="tooltip-check-graphic difficulty-{{logic.difficulty}} align-middle">
+                    <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-{{logic.difficulty}}"></use></svg>
+                </div>
                 <span class="ps-2">{{ logic.friendlyName }}</span>
             </button>
         </h2>
@@ -69,7 +68,9 @@
     <div class="accordion-item hidden">
         <h2 id="heading-Checked" class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Checked" aria-expanded="false" aria-controls="collapse-Checked">
-                <div class="tooltip-check-graphic difficulty-checked align-middle"></div>
+                <div class="tooltip-check-graphic difficulty-checked align-middle">
+                    <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-checked"></use></svg>
+                </div>
                 <span class="ps-2">Checked</span>
             </button>
         </h2>
