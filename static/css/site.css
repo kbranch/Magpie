@@ -470,14 +470,6 @@ img {
     float: left;
 }
 
-/* #difficulty-0 {
-    fill: #06f;
-}
-
-#difficulty-0-vanilla {
-    fill: #fff;
-} */
-
 .difficulty-0.vanilla, .difficulty-8.vanilla {
     z-index: 0;
 }
@@ -489,6 +481,37 @@ img {
     stroke-linejoin: round;
     stroke-dasharray: none;
     stroke-opacity: 1;
+}
+
+.static-difficulty-wrapper {
+    width: 21px;
+    height: 21px;
+    position: relative;
+    display: inline-block;
+}
+
+.static-difficulty {
+    width: 21px;
+    height: 21px;
+}
+
+.color-block {
+    display: inline-block;
+    padding: 0;
+    position: relative;
+    height: 21px;
+    line-height: 21px;
+}
+
+.color-picker {
+    width: 25px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.color-label {
+    position: relative;
+    top: -4px;
 }
 
 .difficulty-1 {

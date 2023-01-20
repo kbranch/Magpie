@@ -128,4 +128,20 @@ function applySettings() {
     if (localSettings.autotrackGraphicsPack) {
         autotrackerFeatures.push('gfx');
     }
+
+    iconStyles.replaceSync(`
+        #difficulty-0 { fill: ${localSettings.diff0Color}; }
+        #difficulty-0-vanilla { fill: ${localSettings.diff0VColor}; }
+        #difficulty-1 { fill: ${localSettings.diff1Color}; }
+        #difficulty-1-vanilla { fill: ${localSettings.diff1VColor}; }
+        #difficulty-2 { fill: ${localSettings.diff2Color}; }
+        #difficulty-2-vanilla { fill: ${localSettings.diff2VColor}; }
+        #difficulty-3 { fill: ${localSettings.diff3Color}; }
+        #difficulty-3-vanilla { fill: ${localSettings.diff3VColor}; }
+        #difficulty-8 { fill: ${localSettings.diff8Color}; }
+        #difficulty-8-vanilla { fill: ${localSettings.diff8VColor}; }
+        #difficulty-9 { fill: ${localSettings.diff9Color}; }
+        #difficulty-9-vanilla { fill: ${localSettings.diff9VColor}; }
+        #difficulty-checked { fill: ${localSettings.diffCheckedColor}; }
+    `);
 }

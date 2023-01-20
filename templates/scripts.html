@@ -57,6 +57,8 @@
     var currentX = null;
     var currentY = null;
     var overworldRoom = null;
+    var iconStyles = new CSSStyleSheet();
+
     const startHouse = 'start_house';
 
     function refreshItems() {
@@ -156,6 +158,8 @@
         loadSettings();
         loadLocations();
         loadCheckContents();
+
+        document.adoptedStyleSheets = [iconStyles];
 
         $(document).keydown(keyDown);
 

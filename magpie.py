@@ -59,6 +59,20 @@ class LocalSettings:
         self.showOwnedPickups = False
         self.graphicsPack = ''
 
+        self.diff0Color = '#0066ff'
+        self.diff0VColor = '#ffffff'
+        self.diff1Color = '#ffff00'
+        self.diff1VColor = '#ffffff'
+        self.diff2Color = '#ff8800'
+        self.diff2VColor = '#ffffff'
+        self.diff3Color = '#ff0000'
+        self.diff3VColor = '#ffffff'
+        self.diff8Color = '#0066ff'
+        self.diff8VColor = '#ffffff'
+        self.diff9Color = '#444444'
+        self.diff9VColor = '#aaaaaa'
+        self.diffCheckedColor = '#00ff00'
+
 @app.route("/")
 def home():
     args = getArgs()

@@ -199,3 +199,21 @@ function pickCustomDungeonItemsPath(data) {
     saveSettings();
     applySettings();
 }
+
+function resetColors() {
+    setInputValues('setting', {
+        "diff0Color": "#0066ff",
+        "diff0VColor": "#ffffff",
+        "diff1Color": "#ffff00",
+        "diff1VColor": "#ffffff",
+        "diff2Color": "#ff8800",
+        "diff2VColor": "#ffffff",
+        "diff3Color": "#ff0000",
+        "diff3VColor": "#ffffff",
+        "diff8Color": "#0066ff",
+        "diff8VColor": "#ffffff",
+        "diff9Color": "#444444",
+        "diff9VColor": "#aaaaaa",
+        "diffCheckedColor": "#00ff00",
+    });
+}
