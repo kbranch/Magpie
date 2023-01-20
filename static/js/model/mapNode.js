@@ -328,7 +328,18 @@ class MapNode {
             'class': 'node-overlay-wrapper',
         });
 
-        if (!pickingEntrance && !this.entrance?.isMapped()) {
+        let hideDifficulty = pickingEntrance;
+        hideDifficulty |= this.checks.length == 0
+                          && this.entrance?.isMapped();
+        hideDifficulty |= localSettings.hideChecked
+                          && difficulty == 'checked';
+        hideDifficulty |= args.randomstartlocation
+                          && !Entrance.isFound('start_house');
+        hideDifficulty |= args.randomstartlocation
+                          && this.entrance?.connectedTo() == 'start_house'
+                          && this.difficulty == 'checked';
+
+        if (!hideDifficulty) {
             let vanilla = this.isVanilla && this.difficulty != 'checked' ? '-vanilla' : '';
 
             let iconWrapper = $('<div>', {

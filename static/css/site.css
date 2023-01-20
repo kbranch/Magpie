@@ -411,56 +411,26 @@ img {
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-0 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-0.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-1 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-1.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-2 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-2.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-3 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-3.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-4 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-3.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
 .entrance-only.unmapped-entrance.entrance-difficulty-9 {
-    border-style: none;
-    background-image: url('/static/images/difficulty-9.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     z-index: 2;
 }
 
@@ -500,13 +470,13 @@ img {
     float: left;
 }
 
-#difficulty-0 {
+/* #difficulty-0 {
     fill: #06f;
 }
 
 #difficulty-0-vanilla {
     fill: #fff;
-}
+} */
 
 .difficulty-0.vanilla, .difficulty-8.vanilla {
     z-index: 0;
