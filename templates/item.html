@@ -1,14 +1,39 @@
 {% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', overlay_count='', invert_count='', allItems=None, hideIfZero=False, condition=True, gfx=True) %}
 {% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
+    {% set altNames = {
+        'SONG1': 'Ballad of the Wind Fish',
+        'SONG2': "Manbo's Mambo",
+        'SONG3': "Frog's Song of Soul",
+        'INSTRUMENT1': 'D1: Full Moon Cello',
+        'INSTRUMENT2': 'D2: Conch Horn',
+        'INSTRUMENT3': "D3: Sea Lily's Bell",
+        'INSTRUMENT4': "D4: Surf Harp",
+        'INSTRUMENT5': "D5: Wind Marimba",
+        'INSTRUMENT6': "D6: Coral Triangle",
+        'INSTRUMENT7': "D7: Organ of Evening Calm",
+        'INSTRUMENT8': "D8: Thunder Drum",
+    } %}
+
+    {% if primary in altNames %}
+        {% set primaryName = altNames[primary] %}
+    {% else %}
+        {% set primaryName = primary %}
+    {% endif %}
+
+    {% if secondary in altNames %}
+        {% set secondaryName = altNames[secondary] %}
+    {% else %}
+        {% set secondaryName = secondary %}
+    {% endif %}
 
     {% if secondary != '' %}
         {% set secondaryTag = 'data-secondary=' + secondary %}
         {% set oncontextmenu = "addItem('" + secondary + "', 1);return false;" %}
-        {% set tooltip = primary.replace('_', ' ')|title + ' | ' + secondary.replace('_', ' ')|title %}
+        {% set tooltip = primaryName.replace('_', ' ').replace('TRADING_ITEM_', '')|title + ' | ' + secondaryName.replace('_', ' ')|title %}
     {% else %}
         {% set secondaryTag= "" %}
         {% set oncontextmenu = "addItem('" + primary + "', -1);return false;" %}
-        {% set tooltip = primary.replace('_', ' ')|title %}
+        {% set tooltip = primaryName.replace('_', ' ').replace('TRADING ITEM ', '')|title %}
     {% endif %}
 
     {% if classes == '"' %}
