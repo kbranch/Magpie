@@ -119,7 +119,7 @@ class State:
             readChecks(gb, self, extraItems)
         if 'items' in self.features:
             readItems(gb, self, extraItems)
-        if 'gfx' in self.features:
+        if 'gfx' in self.features and gb.canReadRom():
             newGfx = getGfx(gb.gfxSnapshot)
             if newGfx != self.gfx:
                 self.gfx = newGfx
