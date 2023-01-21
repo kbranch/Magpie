@@ -88,7 +88,7 @@ class State:
                 await sendEntrances([x for x in self.entrancesByName.values() if x.mappedIndoor != None], socket, diff=False, refresh=False)
             if 'gps' in self.features:
                 await sendLocation(self, socket)
-            if 'gfx' in self.features:
+            if 'gfx' in self.features and self.gfx != None:
                 await sendGfx(socket, self)
 
             await Message('refresh', 'refresh').send(socket)
