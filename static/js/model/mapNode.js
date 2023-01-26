@@ -330,7 +330,8 @@ class MapNode {
 
         let hideDifficulty = pickingEntrance;
         hideDifficulty |= this.checks.length == 0
-                          && this.entrance?.isMapped();
+                          && this.entrance?.isMapped()
+                          && this.entrance?.connectedTo() != 'landfill';
         hideDifficulty |= localSettings.hideChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation
