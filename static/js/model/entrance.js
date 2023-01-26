@@ -4,6 +4,10 @@ class Entrance {
         this.metadata = entranceDict[id];
         this.type = this.metadata.type;
         this.difficulty = entranceAccessibility[id]?.difficulty ?? -1
+
+        if (localSettings.ignoreHigherLogic && this.difficulty > 0 && this.difficulty != 8) {
+            this.difficulty = 9;
+        }
     }
 
     connectedTo() {
