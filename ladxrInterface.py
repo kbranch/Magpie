@@ -4,6 +4,7 @@ import copy
 import random
 from xmlrpc.client import boolean
 from autotracking.romContents import *
+from trackerLogic import buildLogic
 import trackerLogic
 
 sys.path.append(os.path.abspath('LADXR/'))
@@ -11,6 +12,7 @@ sys.path.append(os.path.abspath('LADXR/'))
 import explorer
 import itempool
 import logic
+import locations
 from worldSetup import WorldSetup, start_locations
 from LADXR.settings import *
 from checkMetadata import checkMetadataTable
@@ -142,7 +144,7 @@ def getLogicWithoutER(realArgs):
     worldSetup = WorldSetup()
     worldSetup.randomize(args, random.Random())
 
-    log = logic.Logic(args, world_setup=worldSetup)
+    log = buildLogic(args, worldSetup)
     log.name = 'noER'
     
     return log
@@ -176,7 +178,8 @@ def getLogics(args, entranceMap):
 
         if foundTarget:
             args.logic = choice
-            log = logic.Logic(args, world_setup=worldSetup)
+            log = buildLogic(args, worldSetup)
+
             log.name = 'normal' if choice == '' else choice
             logics.append(log)
 

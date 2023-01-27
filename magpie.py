@@ -159,7 +159,7 @@ def renderCheckList():
         args = getArgs(values=argValues)
         initChecks(args)
 
-        addStartingItems(inventory, args, entranceMap)
+        addStartingItems(inventory, args)
 
         entrances = getEntrancePool(args)
         if args.randomstartlocation and args.entranceshuffle == 'none':
@@ -377,20 +377,8 @@ def getEntranceAccessibility(allEntrances, logics, inventory):
 
     return entrances
 
-def addStartingItems(inventory, args, entranceMap):
-    reverseMap = {value: key for (key, value) in entranceMap.items()}
-
+def addStartingItems(inventory, args):
     inventory['RUPEES_500'] = 10
-    inventory['ANGLER_KEYHOLE'] = 1
-
-    if args.entranceshuffle not in ('insanity', 'expert') or 'crazy_tracy' in reverseMap:
-        inventory['MEDICINE2'] = 1
-
-    if 'castle_main_entrance' in reverseMap:
-        inventory['CASTLE_BUTTON'] = 1
-
-    if args.entranceshuffle != 'insanity' or 'raft_house' in reverseMap:
-        inventory['RAFT'] = 1
 
     if args.bowwow != 'normal':
         inventory['SWORD'] = inventory['SWORD'] + 1

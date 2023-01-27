@@ -38,7 +38,7 @@ def build(args, worldSetup):
     # Bomb as bush breaker
     r.bush = OR(SWORD, MAGIC_POWDER, MAGIC_ROD, POWER_BRACELET, BOOMERANG, BOMB)
 
-    log = logic.Logic(args, world_setup=worldSetup, requirements_settings=r)
+    log = buildLogic(args, worldSetup, r)
     log.name = 'tracker'
 
     locs = {}
@@ -82,3 +82,12 @@ def updateMetadata(table):
     table['0x258'] = CheckMetadata('Pot Flying Powder', 'Turtle Rock')
     table['0x23E2'] = CheckMetadata('Cracked Floor Flying Powder', 'Turtle Rock')
     table['0x2352'] = CheckMetadata('Lava Ledge Flying Powder', 'Turtle Rock')
+
+def buildLogic(args, worldSetup, requirements=None):
+    log = logic.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
+
+    for loc in log.location_list:
+        for ii in [x for x in loc.items if len(x.OPTIONS) == 1]:
+            ii.item = ii.OPTIONS[0]
+    
+    return log
