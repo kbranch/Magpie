@@ -62,6 +62,8 @@ No setup should be required beyond enabling autotracking in Magpie - just start 
 
 Settings are available in the main Magpie UI to control what data gets pulled from the autotracker.
 
+Check out the [API](https://github.com/kbranch/Magpie/wiki/Autotracker-API) for 3rd party tools.
+
 ### Linux (and Mac?)
 Autotracking should work on any vaguely recent version of Linux that can also run a [compatible emulator](#emulator-compatibility). Mac support is untested but probably similar.
 
