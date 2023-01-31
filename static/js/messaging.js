@@ -1,20 +1,20 @@
 function processCheckMessage(message) {
-    if (message.type == 'set') {
+    if (!message.diff) {
         console.log('Receiving full autotracker checks');
         resetChecks();
     }
 
-    for (const check of message.items) {
+    for (const check of message.checks) {
         let metadata = coordDict[check.id];
         let key = getCheckedKey(metadata.area, metadata.name);
 
-        if (check.qty > 0) {
+        if (check.checked) {
             checkedChecks[key] = {
                 name: metadata.name,
                 area: metadata.area,
             };
         }
-        else if (check.qty < 0) {
+        else {
             delete checkedChecks[key];
         }
     }
@@ -32,7 +32,7 @@ function processItemMessage(message) {
         return;
     }
 
-    if (message.type == 'set') {
+    if (!message.diff) {
         console.log('Receiving full autotracker inventory');
         resetInventory();
     }
@@ -47,7 +47,7 @@ function processItemMessage(message) {
 }
 
 function processEntranceMessage(message) {
-    if (message.type == 'set') {
+    if (!message.diff) {
         console.log('Receiving full autotracker entrances');
         // resetEntrances();
     }
@@ -154,7 +154,7 @@ function processMessage(messageText) {
         return;
     }
     
-    switch (message.category) {
+    switch (message.type) {
         case 'item':
             processItemMessage(message);
             break;
@@ -202,7 +202,7 @@ function processMessage(messageText) {
             setGraphicsPack(message.gfx);
             break;
         default:
-            console.log(`Unrecognized message category: ${message.category}`)
+            console.log(`Unrecognized message type: ${message.type}`)
             break;
     }
 }
@@ -229,8 +229,7 @@ function loadRom(element) {
 }
 
 function sendRom(bytes) {
-    let message = {}
-    message.type = 'rom';
+    let message = buildMessage('rom');
     message.rom = btoa(bytes);
     messageText = JSON.stringify(message);
 
@@ -239,9 +238,17 @@ function sendRom(bytes) {
 
 function reloadFromAutotracker() {
     if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
+        let message = buildMessage('handshake');
+        message.features = autotrackerFeatures;
+
+        autotrackerSocket.send(JSON.stringify(message));
+
         console.log('Sent request to send full autotracker inventory');
-        autotrackerSocket.send(JSON.stringify({ type: 'handshake', features: autotrackerFeatures }));
     }
+}
+
+function buildMessage(type) {
+    return { type: type, version: "1.0" };
 }
 
 function autotrackerConnected(event) {

@@ -91,7 +91,7 @@ class State:
             if 'gfx' in self.features and self.gfx != None:
                 await sendGfx(socket, self)
 
-            await Message('refresh', 'refresh').send(socket)
+            await Message('refresh').send(socket)
 
             self.sendFull = False
         else:

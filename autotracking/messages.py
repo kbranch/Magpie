@@ -2,13 +2,13 @@ from message import Message
 from romContents import *
 
 async def sendRomRequest(socket):
-    newMessage = Message('romRequest', 'romRequest', False)
+    newMessage = Message('romRequest', False)
     print(f'Sending request for ROM')
     
     await newMessage.send(socket)
 
 async def sendRomAck(socket):
-    newMessage = Message('romAck', 'romAck', False)
+    newMessage = Message('romAck', False)
     print(f'Sending ROM ack')
     
     await newMessage.send(socket)
@@ -22,7 +22,7 @@ async def sendSettings(socket, romData):
 
     print(f'Sending settings string: {settings}')
 
-    newMessage = Message('settings', 'settings', False)
+    newMessage = Message('settings', False)
     newMessage.settings = settings
     
     await newMessage.send(socket)
@@ -32,13 +32,13 @@ async def sendSpoilerLog(socket, romData):
 
     print('Sending spoiler log')
 
-    newMessage = Message('spoiler', 'spoiler', False)
+    newMessage = Message('spoiler', False)
     newMessage.log = logJson
 
     await newMessage.send(socket)
 
 async def sendGfx(socket, state):
-    newMessage = Message('gfx', 'gfx', False)
+    newMessage = Message('gfx', False)
     newMessage.gfx = state.gfx
 
     await newMessage.send(socket)
@@ -46,7 +46,10 @@ async def sendGfx(socket, state):
 async def sendItems(items, socket, diff=True, refresh=True):
     if not items: return
 
-    newMessage = Message('add' if diff else 'set', 'item', refresh)
+    newMessage = Message('item', refresh)
+    newMessage.diff = diff
+    newMessage.items = []
+
     for item in items:
         value = item.diff if diff else item.value
 
@@ -65,14 +68,17 @@ async def sendItems(items, socket, diff=True, refresh=True):
 async def sendChecks(checks, socket, diff=True, refresh=True):
     if not checks: return
 
-    newMessage = Message('add' if diff else 'set', 'check', refresh)
+    newMessage = Message('check', refresh)
+    newMessage.diff = diff
+    newMessage.checks = []
+
     for check in checks:
         value = check.diff if diff else check.value
         
-        newMessage.items.append(
+        newMessage.checks.append(
             {
                 'id': check.id,
-                'qty': value,
+                'checked': value > 0,
             }
         )
 
@@ -84,7 +90,8 @@ async def sendChecks(checks, socket, diff=True, refresh=True):
 async def sendEntrances(entrances, socket, diff=True, refresh=True):
     if not entrances: return
 
-    newMessage = Message('add' if diff else 'set', 'entrance', refresh)
+    newMessage = Message('entrance', refresh)
+    newMessage.diff = diff
     newMessage.entranceMap = {}
     for entrance in entrances:
         newMessage.entranceMap[entrance.name] = entrance.mappedIndoor
@@ -98,7 +105,7 @@ async def sendLocation(state, socket):
     if state.room is None:
         return
 
-    newMessage = Message('set', 'location', refresh=True)
+    newMessage = Message('location', refresh=True)
     newMessage.room = f'0x{state.room:02X}'
     newMessage.x = state.screenX
     newMessage.y = state.screenY
