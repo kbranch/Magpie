@@ -144,4 +144,9 @@ function applySettings() {
         #difficulty-9-vanilla { fill: ${localSettings.diff9VColor}; }
         #difficulty-checked { fill: ${localSettings.diffCheckedColor}; }
     `);
+
+    for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
+        let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
+        $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
+    }
 }

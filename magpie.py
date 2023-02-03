@@ -72,6 +72,7 @@ class LocalSettings:
         self.diff9Color = '#444444'
         self.diff9VColor = '#aaaaaa'
         self.diffCheckedColor = '#00ff00'
+        self.colorAssistMaps = False
 
 @app.route("/")
 def home():
