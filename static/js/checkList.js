@@ -23,6 +23,10 @@ function toggleNode(node) {
     }
 
     drawActiveTab();
+
+    if (toggleList.has('0x07B-Trade')) {
+        refreshCheckList();
+    }
 }
 
 function toggleSingleNodeCheck(check) {

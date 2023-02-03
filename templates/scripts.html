@@ -95,12 +95,19 @@
     }
 
     function refreshCheckList() {
+        let tempInventory = structuredClone(inventory);
+
+        // Kiki is logically important since they open the bridge
+        if (Check.isChecked('Ukuku Prairie-Kiki')) {
+            tempInventory['TRADING_ITEM_BANANAS'] = 1;
+        }
+
         $.ajax({
             type: "POST",
             url: "/checkList",
             data: {
                 args: JSON.stringify(args),
-                inventory: JSON.stringify(inventory),
+                inventory: JSON.stringify(tempInventory),
                 entranceMap: JSON.stringify(entranceMap),
             },
             success: function(response) {
