@@ -147,6 +147,7 @@ function processMessage(messageText) {
 
     try {
         message = JSON.parse(messageText);
+        console.log(`Received a '${message.type}' message`);
     }
     catch(err) {
         console.log(`Invalid message JSON: ${err}`);
@@ -201,6 +202,10 @@ function processMessage(messageText) {
         case 'gfx':
             setGraphicsPack(message.gfx);
             break;
+        case 'handshAck':
+            loadFromAutotracker();
+            console.log('Sent request to send full autotracker inventory');
+            break;
         default:
             console.log(`Unrecognized message type: ${message.type}`)
             break;
@@ -229,30 +234,35 @@ function loadRom(element) {
 }
 
 function sendRom(bytes) {
-    let message = buildMessage('rom');
-    message.rom = btoa(bytes);
-    messageText = JSON.stringify(message);
-
-    autotrackerSocket.send(messageText);
+    sendMessage({
+        'type': 'rom',
+        'rom': btoa(bytes),
+    });
 }
 
-function reloadFromAutotracker() {
+function sendHandshake() {
+        sendMessage({
+            'type': 'handshake',
+            'version': '1.1',
+            'features': autotrackerFeatures,
+        });
+}
+
+function loadFromAutotracker() {
+    sendMessage({
+        'type': 'sendFull',
+    });
+}
+
+function sendMessage(message) {
     if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
-        let message = buildMessage('handshake');
-        message.features = autotrackerFeatures;
-
-        autotrackerSocket.send(JSON.stringify(message));
-
-        console.log('Sent request to send full autotracker inventory');
+        let messageText = JSON.stringify(message);
+        autotrackerSocket.send(messageText);
     }
-}
-
-function buildMessage(type) {
-    return { type: type, version: "1.0" };
 }
 
 function autotrackerConnected(event) {
     console.log("Connected to autotracker");
     addAutotrackerMessage('Connected');
-    reloadFromAutotracker();
+    sendHandshake();
 }

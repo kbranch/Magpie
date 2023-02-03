@@ -17,6 +17,7 @@ class State:
         self.locationChanged = False
         self.gfx = None
         self.gfxChanged = False
+        self.firstRead = True
 
         self.items = []
         self.itemDict = {}
@@ -67,7 +68,11 @@ class State:
             if message['type'] == 'handshake':
                 print("Received handshake request")
                 self.features = set(message['features'])
-                self.sendFull = True
+
+                await sendMessage({
+                    'type': 'handshAck',
+                    'version': '1.1',
+                }, socket)
 
                 self.handshook = True
             elif message['type'] == 'rom':
@@ -77,6 +82,8 @@ class State:
                 await self.parseRom(socket, romData)
 
                 self.entrancesLoaded = True
+            elif message['type'] == 'sendFull':
+                self.sendFull = True
 
     async def sendTrackables(self, socket):
         if self.sendFull:
@@ -91,7 +98,9 @@ class State:
             if 'gfx' in self.features and self.gfx != None:
                 await sendGfx(socket, self)
 
-            await Message('refresh').send(socket)
+            await sendMessage({
+                'type': 'refresh',
+            }, socket)
 
             self.sendFull = False
         else:

@@ -1,4 +1,3 @@
-from message import Message
 from item import Item
 
 gameStateAddress = 0xDB95
@@ -202,3 +201,9 @@ def readItems(gb, state, extraItems):
     for item in [x for x in state.items if x.address]:
         extra = extraItems[item.id] if item.id in extraItems else 0
         item.set(gb.readRamByte(item.address), extra)
+
+    if state.firstRead:
+        for item in state.items:
+            item.diff = 0
+    
+    state.firstRead = False

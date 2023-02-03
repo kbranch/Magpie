@@ -1,6 +1,5 @@
 import os
 import sys
-from message import Message
 from check import Check
 
 # Deal with how pyinstaller's --onefile option packs things
@@ -105,3 +104,8 @@ def readChecks(gb, state, extraItems):
 
         if check.value and check.linkedItem:
             extraItems[check.linkedItem['item']] = check.linkedItem['qty']
+
+        if state.firstRead:
+            check.diff = 0
+    
+    state.firstRead = False
