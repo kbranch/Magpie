@@ -105,6 +105,54 @@ function loadSettings() {
         }
     }
 
+    if (Object.keys(settingsOverrides).length > 0) {
+        for (let key in settingsOverrides) {
+            let value = settingsOverrides[key];
+
+            switch (value) {
+                case 'true':
+                    value = true;
+                    break;
+                case 'false':
+                    value = false;
+                    break;
+                case 'null':
+                    value = null;
+                    break;
+            }
+
+            localSettings[key] = value;
+        }
+
+        settingsOverrides = {};
+    }
+
+    if (Object.keys(argsOverrides).length > 0) {
+        for (let key in argsOverrides) {
+            let value = argsOverrides[key];
+
+            switch (value) {
+                case 'true':
+                    value = true;
+                    break;
+                case 'false':
+                    value = false;
+                    break;
+                case 'null':
+                    value = null;
+                    break;
+            }
+
+            args[key] = value;
+        }
+
+        argsOverrides = {};
+    }
+
+    window.history.replaceState(null, null, window.location.pathname);
+
+    saveSettingsToStorage(args, localSettings);
+
     fixArgs(args);
 
     setInputValues('flag', args);

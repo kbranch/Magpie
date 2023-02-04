@@ -81,11 +81,26 @@ def home():
 
     flags = args.flags
     args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+
+    if request.args.get('enable_autotracking'):
+        settingsOverrides['enableAutotracking'] = True
+    
+    settingsPrefix = 'setting_'
+    argsPrefix = 'flag_'
+    for arg, value in request.args.items():
+        if arg.startswith(settingsPrefix):
+            settingsOverrides[arg[len(settingsPrefix):]] = value
+        if arg.startswith(argsPrefix):
+            argsOverrides[arg[len(argsPrefix):]] = value
 
     return render_template("index.html", flags=flags, args=args,
                                          defaultSettings=defaultSettings,
                                          jsonArgs=jsonpickle.encode(args),
                                          jsonSettings=jsonpickle.encode(defaultSettings),
+                                         jsonSettingsOverrides=jsonpickle.encode(settingsOverrides),
+                                         jsonArgsOverrides=jsonpickle.encode(argsOverrides),
                                          local=local,
                                          graphicsOptions=getGraphicsPacks(),
                                          )

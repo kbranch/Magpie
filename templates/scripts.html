@@ -32,6 +32,8 @@
 <script type="application/javascript">
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
+    let settingsOverrides = JSON.parse('{{jsonSettingsOverrides|safe}}')
+    let argsOverrides = JSON.parse('{{jsonArgsOverrides|safe}}')
     var startLocations = [];
     var randomizedEntrances = null;
     var localSettings = null;
