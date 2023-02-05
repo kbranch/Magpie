@@ -86,6 +86,12 @@ def home():
 
     if request.args.get('enable_autotracking'):
         settingsOverrides['enableAutotracking'] = True
+
+    shortString = request.args.get('shortString') 
+    if shortString:
+        tempArgs = getArgsFromShortString(shortString)
+        del tempArgs.flags
+        argsOverrides = tempArgs.__dict__
     
     settingsPrefix = 'setting_'
     argsPrefix = 'flag_'
