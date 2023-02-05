@@ -16,7 +16,7 @@ else:
 from rom import ROM
 from romTables import ROMWithTables
 from settings import Settings
-from spoilerLog import SpoilerLog
+from spoilerLog import SpoilerLog, RaceRomException
 
 class SpoilerArgs:
     def __init__(self):
@@ -30,12 +30,17 @@ def getSpoilerLog(romData):
     shortSettings = rom.readShortSettings()
     settings = Settings()
     settings.loadShortString(shortSettings)
-    log = SpoilerLog(settings, args, [rom])
     
     filename = f'log-{uuid.uuid4()}.json'
-    log.outputJson(filename)
-    logJson = json.loads(open(filename, 'r').read())
-    os.remove(filename)
+    logJson = {}
+
+    try:
+        log = SpoilerLog(settings, args, [rom])
+        log.outputJson(filename)
+        logJson = json.loads(open(filename, 'r').read())
+        os.remove(filename)
+    except RaceRomException:
+        logJson['raceRom'] = True
 
     logJson['shortSettings'] = shortSettings
 

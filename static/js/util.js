@@ -14,6 +14,7 @@ function getFile(element, callback) {
 
     reader.onload = () => callback(reader.result);
     reader.readAsText(file);
+    element.value = null;
 }
 
 function getBinaryFile(element, callback) {
@@ -26,6 +27,7 @@ function getBinaryFile(element, callback) {
 
     reader.onload = () => callback(reader.result);
     reader.readAsBinaryString(file);
+    element.value = null;
 }
 
 function download(filename, text) {

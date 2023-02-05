@@ -16,10 +16,20 @@ function loadLogFile(element) {
     getBinaryFile(element, loadSpoilerLog);
 }
 
+function setSpoilerLabel(text) {
+    $('#spoilerSeed').html(text);
+}
+
 function loadLogContents(logText, loadSettings=true) {
     log = JSON.parse(logText);
 
+    if (log.raceRom) {
+        setSpoilerLabel("Can't spoil race ROMs");
+        return;
+    }
+
     if (!log.seed) {
+        setSpoilerLabel('Invalid spoiler file');
         return;
     }
 
@@ -34,7 +44,7 @@ function loadLogContents(logText, loadSettings=true) {
         itemsByLocation[location.id] = location.itemName;
     }
 
-    $('#spoilerSeed').html(`Loaded seed: ${log.seed}`);
+    setSpoilerLabel(`Loaded seed: ${log.seed}`);
     $('#spoilAllButton').show();
 
     if ('shortSettings' in spoilerLog && loadSettings) {
