@@ -130,6 +130,7 @@ def getItems(args, trimDungeonItems=True):
                 pool[f'STONE_BEAK{n + 1}'] = 0
 
         pool[f'ITEM{n + 1}'] = 0
+        pool[f'REQ{n + 1}'] = 1
 
     return pool
 
