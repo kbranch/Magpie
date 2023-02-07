@@ -39,6 +39,7 @@ palettes = [
     [255, 0, 0, 0,          248, 216, 24, 255,  0, 120, 16, 255,    0, 0, 0, 255],
     [255, 0, 0, 0,          255, 255, 255, 255, 232, 8, 16, 255,    0, 0, 0, 255],
     [255, 0, 0, 0,          0, 0, 0, 255,       168, 120, 16, 255,  248, 248, 168, 255],
+    [255, 0, 0, 0,          240, 232, 24, 255,  152, 128, 0, 255,   0, 0, 0, 255],
 ]
 
 feather = Sprite('FEATHER_1', 1, 9, 1, 3)
@@ -58,6 +59,8 @@ sprites = [
     Sprite('POWER_BRACELET_1', 1, 1, 1, 1),
     Sprite('POWER_BRACELET_2', 1, 1, 1, 2),
     Sprite('PEGASUS_BOOTS_1', 1, 12, 1, 3),
+    Sprite('FEATHER_1', 1, 9, 1, 3),
+    Sprite('ROOSTER_1', 51, 42, 2, 10),
     Sprite('FLIPPERS_1', 1, 10, 1, 4),
     Sprite('HOOKSHOT_1', 1, 5, 1, (1, 2)),
     Sprite('MAGIC_ROD_1', 1, 6, 1, (2, 1)),
@@ -76,7 +79,7 @@ sprites = [
     Sprite('TRADING_ITEM_YOSHI_DOLL_1', 1, 13, 2, 5),
     Sprite('TRADING_ITEM_RIBBON_1', 0, 32, 2, 2),
     Sprite('TRADING_ITEM_DOG_FOOD_1', 0, 34, 2, 1),
-    Sprite('TRADING_ITEM_BANANAS_1', 0, 36, 2, 6),
+    Sprite('TRADING_ITEM_BANANAS_1', 0, 36, 2, 19),
     Sprite('TRADING_ITEM_STICK_1', 0, 38, 2, 6),
     Sprite('TRADING_ITEM_HONEYCOMB_1', 0, 40, 2, 6),
     Sprite('TRADING_ITEM_PINEAPPLE_1', 0, 42, 2, 16),
@@ -163,13 +166,27 @@ def getIcon(source, sprite):
 
     icon.putpalette(palette, rawmode='RGBA')
 
-    if sprite.item in ['SWORD_1', 'SWORD_2', 'SEASHELL_1', 'MAGIC_POWDER_1', 'PEGASUS_BOOTS_1', 'HOOKSHOT_1', 'FACE_KEY_1', 'MAGIC_ROD_1', 'SLIME_KEY_1', 'TRADING_ITEM_STICK_1']:
+    fillSettings = {
+        'SWORD_1': 40,
+        'SWORD_2': 40,
+        'SEASHELL_1': 40,
+        'MAGIC_POWDER_1': 40,
+        'PEGASUS_BOOTS_1': 40,
+        'HOOKSHOT_1': 40,
+        'FACE_KEY_1': 40,
+        'MAGIC_ROD_1': 40,
+        'SLIME_KEY_1': 40,
+        'TRADING_ITEM_STICK_1': 40,
+        'TRADING_ITEM_NECKLACE_1': 44,
+    }
+
+    if sprite.item in fillSettings:
         for y in range(icon.height):
             for x in range(icon.width):
                 pixel = icon.getpixel((x, y))
                 if pixel == 0:
                     count = countTransparentAround(icon, x, y)
-                    if count >= 4:
+                    if count >= fillSettings[sprite.item]:
                         icon.putpixel((x, y), int(len(palette) / 4) - 1)
 
     return icon.resize((48, 48))
@@ -179,34 +196,34 @@ def countTransparentAround(icon, x, y):
 
     for i in range(x + 1, icon.width):
         if icon.getpixel((i, y)) != 0:
-            count += 1
+            count += 10
             break
 
     for i in range(0, x):
         if icon.getpixel((i, y)) != 0:
-            count += 1
+            count += 10
             break
 
     for j in range(y + 1, icon.height):
         if icon.getpixel((x, j)) != 0:
-            count += 1
+            count += 10
             break
 
     for j in range(0, y):
         if icon.getpixel((x, j)) != 0:
-            count += 1
+            count += 10
             break
 
 
-    # for i in range(x - 1, x + 2):
-    #     if i < 0 or i >= icon.width:
-    #         continue
-    #     for j in range(y - 1, y + 2):
-    #         if j < 0 or j >= icon.height or (i != x and j != y):
-    #             continue
+    for i in range(x - 1, x + 2):
+        if i < 0 or i >= icon.width:
+            continue
+        for j in range(y - 1, y + 2):
+            if j < 0 or j >= icon.height or (i != x and j != y):
+                continue
 
-    #         if icon.getpixel((i, j)) != 0:
-    #             count += 1
+            if icon.getpixel((i, j)) != 0:
+                count += 1
 
     return count
 
