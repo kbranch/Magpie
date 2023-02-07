@@ -7,6 +7,7 @@ class NodeTooltip {
         const titleTemplate = `<div class='tooltip-body'>
     {areas}
     {entrance}
+    {boss}
     {pinned}
 </div>`;
         const areaTemplate = `<div class='card tooltip-area-card'>
@@ -68,8 +69,11 @@ class NodeTooltip {
 
         let entranceHtml = this.getEntranceHtml(connectionType);
 
+        let bossHtml = this.getBossHtml(pinned);
+
         let title = titleTemplate.replace('{areas}', areaHtml)
                                  .replace('{entrance}', entranceHtml)
+                                 .replace('{boss}', bossHtml)
                                  .replace('{pinned}', pinnedHtml);
 
         return title;
@@ -89,6 +93,44 @@ class NodeTooltip {
             ${items}
         </ul>
       </div>`;
+    }
+
+    getBossHtml(pinned) {
+        if (!this.node.boss) {
+            return '';
+        }
+
+        let html = `<div class='tooltip-text align-middle p-2'>
+        ${bossDataDict[this.node.boss.mappedTo].name}
+    </div>`
+
+        if (pinned == 'true') {
+            let bossTemplate = `<li>
+                                    <button class="dropdown-item tooltip-item boss-item" type="button" onclick="{action}">
+                                        <div class="boss-menu-image-wrapper me-2">
+                                            <img class="boss-menu-image" src="static/images/{bossId}.png">
+                                        </div>
+                                        {name}
+                                    </button>
+                                </li>`
+            let bossList = '';
+
+            for (let boss of this.node.boss.mapOptions()) {
+                bossList += bossTemplate.replace('{action}', `mapBoss('${this.node.boss.id}', '${boss.id}')`)
+                                        .replace('{bossId}', boss.id)
+                                        .replace('{name}', boss.name);
+            }
+
+            html += `<div class="btn-group dropend">
+                        <button type="button" class="btn tooltip-item text-start p-0">Change</button>
+                        <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                        <ul class="dropdown-menu">
+                            ${bossList}
+                        </ul>
+                    </div>`;
+        }
+
+        return html;
     }
 
     getEntranceHtml(connectionType) {

@@ -1,5 +1,5 @@
 class MapNode {
-    constructor(location, scaling, entranceId=null) {
+    constructor(location, scaling, entranceId=null, bossMetadata=null) {
         this.x = Math.round(location.x * scaling.x + scaling.offset.x);
         this.y = Math.round(location.y * scaling.y + scaling.offset.y);
         this.location = location;
@@ -10,6 +10,7 @@ class MapNode {
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
+        this.boss = bossMetadata == null ? null : new Boss(bossMetadata);
     }
 
     id() {
@@ -58,6 +59,14 @@ class MapNode {
         return this.checks[0].metadata.locations
             .filter(x => x.map != 'overworld')[0]
             .map.toUpperCase();
+    }
+
+    isNightmare() {
+        return this.boss && this.boss.type == 'boss';
+    }
+
+    isMiniboss() {
+        return this.boss && this.boss.type == 'miniboss';
     }
 
     updateBehindKeys() {
@@ -170,6 +179,10 @@ class MapNode {
         if (pickingEntrances())
         {
             return ['check-graphic', 'entrance-only'];
+        }
+
+        if (this.boss) {
+            return ['check-graphic', this.boss.type];
         }
 
         if (this.behindKeys) {
@@ -339,6 +352,7 @@ class MapNode {
         hideDifficulty |= args.randomstartlocation
                           && this.entrance?.connectedTo() == 'start_house'
                           && this.difficulty == 'checked';
+        hideDifficulty |= this.boss != null;
 
         if (!hideDifficulty) {
             let vanilla = this.isVanilla && this.difficulty != 'checked' ? '-vanilla' : '';
@@ -365,6 +379,17 @@ class MapNode {
             iconWrapper.append(svg);
             $(iconWrapper).html($(iconWrapper).html());
             overlay.append(iconWrapper);
+        }
+
+        if (this.boss) {
+            let itemOverlay = $('<img>', {
+                'src': `static/images/${this.boss.mappedTo}.png`,
+                'class': "node-boss-overlay",
+                'data-node-item': this.item,
+                onmousedown: "preventDoubleClick(event)"
+            });
+
+            $(overlay).append(itemOverlay);
         }
 
         if (this.item) {
@@ -406,16 +431,27 @@ class MapNode {
 
     createGraphic() {
         let coords = MapNode.coordsFromId(this.id());
+        let size = Number(localSettings.checkSize);
+        let x = coords.x;
+        let y = coords.y;
+
+        if (this.boss) {
+            let extra = localSettings.checkSize * 0.5;
+            size += extra;
+            x -= extra / 2;
+            y -= extra / 2;
+        }
 
         this.graphic = $('<div>', {
             'data-node-id': this.id(),
             'data-item': this.item,
+            'data-boss': this.boss?.id,
             'draggable': false,
             css: {
-                'top': coords.y,
-                'left': coords.x,
-                'width': localSettings.checkSize,
-                'height': localSettings.checkSize,
+                'top': y,
+                'left': x,
+                'width': size,
+                'height': size,
             },
         });
 

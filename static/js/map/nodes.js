@@ -50,6 +50,8 @@ function createNodes(map, mapName) {
         }
     }
 
+    createBossNodes(scaling, mapName);
+
     let checks = $('li[data-logic]').toArray()
                     .map(x => createCheck(x, mapName))
                     .filter(x => x.shouldDraw());
@@ -115,6 +117,19 @@ function createEntranceNodes(entrances, scaling, update=false) {
             if (update) {
                 node.update();
             }
+        }
+    }
+}
+
+function createBossNodes(scaling, mapName) {
+    for (const boss of bosses.filter(x => x.locations[0].map == mapName)) {
+        for (const loc of boss.locations) {
+            let coordString = MapNode.nodeId(loc, scaling);
+            let node = new MapNode(loc, scaling, null, boss);
+
+            node.boss.mappedTo = bossMap[boss.id];
+
+            nodes[coordString] = node;
         }
     }
 }
@@ -241,6 +256,7 @@ function removeOldNodes() {
         $(node).tooltip('hide');
         $(node).removeClass('animate__bounceInDown');
         $(node).addClass('animate__fadeOut');
+        $(node).find('.node-overlay-wrapper').empty();
     }
 }
 

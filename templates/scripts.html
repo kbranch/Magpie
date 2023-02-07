@@ -9,6 +9,7 @@
 <script src="static/js/model/check.js"></script>
 <script src="static/js/model/entrance.js"></script>
 <script src="static/js/model/connection.js"></script>
+<script src="static/js/model/boss.js"></script>
 <script src="static/js/map/connectorDialog.js"></script>
 <script src="static/js/map/graphics.js"></script>
 <script src="static/js/map/input.js"></script>
@@ -17,12 +18,14 @@
 <script src="static/js/metadata/checkMetadata.js"></script>
 <script src="static/js/metadata/entranceMetadata.js"></script>
 <script src="static/js/metadata/connectorMetadata.js"></script>
+<script src="static/js/metadata/bossMetadata.js"></script>
 <script src="static/js/metadata/mapMetadata.js"></script>
 <script src="static/js/state/settings.js"></script>
 <script src="static/js/state/items.js"></script>
 <script src="static/js/state/locations.js"></script>
 <script src="static/js/state/undo.js"></script>
 <script src="static/js/state/checkContents.js"></script>
+<script src="static/js/state/bosses.js"></script>
 <script src="static/js/checkList.js"></script>
 <script src="static/js/items.js"></script>
 <script src="static/js/messaging.js"></script>
@@ -38,8 +41,9 @@
     var randomizedEntrances = null;
     var localSettings = null;
     var entranceMap = {};
-    var connections = [];
     var reverseEntranceMap = {};
+    var connections = [];
+    var bossMap = {};
     var checkedChecks = {};
     var checkContents = {};
     var itemLocations = {};
@@ -104,6 +108,9 @@
             tempInventory['TRADING_ITEM_BANANAS'] = 1;
         }
 
+        let bossList = getBossList();
+        let minibossMap = getMinibossMap();
+
         $.ajax({
             type: "POST",
             url: "/checkList",
@@ -111,6 +118,8 @@
                 args: JSON.stringify(args),
                 inventory: JSON.stringify(tempInventory),
                 entranceMap: JSON.stringify(entranceMap),
+                bossList: JSON.stringify(bossList),
+                minibossMap: JSON.stringify(minibossMap),
             },
             success: function(response) {
                 pruneEntranceMap();
@@ -167,6 +176,7 @@
         loadSettings();
         loadLocations();
         loadCheckContents();
+        loadBosses();
 
         document.adoptedStyleSheets = [iconStyles];
 

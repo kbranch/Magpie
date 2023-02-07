@@ -177,6 +177,13 @@ def renderCheckList():
         argValues = parseArgs(request.form['args'])
         inventory = jsonpickle.decode(request.form['inventory'])
         entranceMap = jsonpickle.decode(request.form['entranceMap'])
+        bossList = jsonpickle.decode(request.form['bossList'])
+        minibossMap = jsonpickle.decode(request.form['minibossMap'])
+
+        for key in list(minibossMap.keys()):
+            if key.isnumeric():
+                minibossMap[int(key)] = minibossMap[key]
+                del minibossMap[key]
 
         args = getArgs(values=argValues)
         initChecks(args)
@@ -191,7 +198,7 @@ def renderCheckList():
 
         entrances = list(entrances)
         allItems = getAllItems(args)
-        logics = getLogics(args, entranceMap)
+        logics = getLogics(args, entranceMap, bossList, minibossMap)
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 

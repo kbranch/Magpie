@@ -1558,16 +1558,16 @@ let coordDict = {
 	   "area":"Turtle Rock",
 	   "name":"Hot Head Heart Container",
 	   "locations":[
-		  {
-			 "map":"d8",
-			 "x":552,
-			 "y":176
-		  },
-		  {
-			 "map":"overworld",
-			 "x":80,
-			 "y":130
-		  }
+		{
+			"map": "d8",
+			"x": 552,
+			"y": 224
+		},
+		{
+			"map":"overworld",
+			"x":80,
+			"y":130
+		}
 	   ],
 	   "index":22,
 	},
@@ -2039,16 +2039,16 @@ let coordDict = {
 	   "area":"Eagle's Tower",
 	   "name":"Evil Eagle Heart Container",
 	   "locations":[
-		  {
-			 "map":"d7",
-			 "x":976,
-			 "y":256
-		  },
-		  {
-			 "map":"overworld",
-			 "x":2348,
-			 "y":32
-		  }
+		{
+			"map": "d7",
+			"x": 976,
+			"y": 288
+		},
+		{
+			"map":"overworld",
+			"x":2348,
+			"y":32
+		}
 	   ],
 	   "index":140,
 	},
@@ -2334,16 +2334,16 @@ let coordDict = {
 	   "area":"Face Shrine",
 	   "name":"Facade Heart Container",
 	   "locations":[
-		  {
-			 "map":"d6",
-			 "x":712,
-			 "y":312
-		  },
-		  {
-			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
-		  }
+		{
+			"map": "d6",
+			"x": 712,
+			"y": 352
+		},
+		{
+			"map":"overworld",
+			"x":1992,
+			"y":1080
+		}
 	   ],
 	   "index":159,
 	},
@@ -2683,16 +2683,16 @@ let coordDict = {
 	   "area":"Catfish's Maw",
 	   "name":"Slime Eel Heart Container",
 	   "locations":[
-		  {
-			 "map":"d5",
-			 "x":392,
-			 "y":184
-		  },
-		  {
-			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
-		  }
+		{
+			"map": "d5",
+			"x": 392,
+			"y": 224
+		},
+		{
+			"map":"overworld",
+			"x":1538,
+			"y":1738
+		}
 	   ],
 	   "index":175,
 	},
@@ -2978,16 +2978,16 @@ let coordDict = {
 	   "area":"Angler's Tunnel",
 	   "name":"Angler Fish Heart Container",
 	   "locations":[
-		  {
-			 "map":"d4",
-			 "x":64,
-			 "y":320
-		  },
-		  {
-			 "map":"overworld",
-			 "x":1846,
-			 "y":276
-		  }
+		{
+			"map": "d4",
+			"x": 72,
+			"y": 336
+		},
+		{
+			"map":"overworld",
+			"x":1846,
+			"y":276
+		}
 	   ],
 	   "index":191,
 	},
@@ -3273,16 +3273,16 @@ let coordDict = {
 	   "area":"Key Cavern",
 	   "name":"Slime Eye Heart Container",
 	   "locations":[
-		  {
-			 "map":"d3",
-			 "x":872,
-			 "y":816
-		  },
-		  {
-			 "map":"overworld",
-			 "x":906,
-			 "y":1446
-		  }
+		{
+			"map": "d3",
+			"x": 872,
+			"y": 848
+		},
+		{
+			"map":"overworld",
+			"x":906,
+			"y":1446
+		}
 	   ],
 	   "index":213,
 	},
@@ -4019,16 +4019,16 @@ let coordDict = {
 	   "area":"Tail Cave",
 	   "name":"Moldorm Heart Container",
 	   "locations":[
-		  {
-			 "map":"d1",
-			 "x":1008,
-			 "y":160
-		  },
-		  {
-			 "map":"overworld",
-			 "x":582,
-			 "y":1706
-		  }
+		{
+			"map": "d1",
+			"x": 1032,
+			"y": 200
+		},
+		{
+			"map":"overworld",
+			"x":582,
+			"y":1706
+		}
 	   ],
 	   "index":245,
 	},

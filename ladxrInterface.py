@@ -149,10 +149,15 @@ def getLogicWithoutER(realArgs):
     
     return log
 
-def getLogics(args, entranceMap):
+def getLogics(args, entranceMap, bossList, minibossMap):
     worldSetup = WorldSetup()
     worldSetup.goal = args.goal
-    # worldSetup.randomize(args, random.Random())
+
+    if len(bossList) == len(worldSetup.boss_mapping):
+        worldSetup.boss_mapping = bossList
+    
+    if len(minibossMap) == len(worldSetup.miniboss_mapping):
+        worldSetup.miniboss_mapping = minibossMap
 
     entrancePool = getEntrancePool(args)
 
