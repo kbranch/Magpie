@@ -154,10 +154,10 @@ def getLogics(args, entranceMap, bossList, minibossMap):
     worldSetup = WorldSetup()
     worldSetup.goal = args.goal
 
-    if len(bossList) == len(worldSetup.boss_mapping):
+    if bossList and len(bossList) == len(worldSetup.boss_mapping):
         worldSetup.boss_mapping = bossList
     
-    if len(minibossMap) == len(worldSetup.miniboss_mapping):
+    if minibossMap and len(minibossMap) == len(worldSetup.miniboss_mapping):
         worldSetup.miniboss_mapping = minibossMap
 
     entrancePool = getEntrancePool(args)

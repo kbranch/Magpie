@@ -122,7 +122,9 @@ function createEntranceNodes(entrances, scaling, update=false) {
 }
 
 function createBossNodes(scaling, mapName) {
-    for (const boss of bosses.filter(x => x.locations[0].map == mapName)) {
+    for (const boss of bosses.filter(x => x.locations[0].map == mapName
+                                          && ((args.boss != "default" && x.type == "boss")
+                                              || (args.miniboss != "default" && x.type == "miniboss")))) {
         for (const loc of boss.locations) {
             let coordString = MapNode.nodeId(loc, scaling);
             let node = new MapNode(loc, scaling, null, boss);
