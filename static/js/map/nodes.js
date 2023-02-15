@@ -73,7 +73,7 @@ function createNodes(map, mapName) {
         }
 
         for (const coord of check.locations) {
-            if ((['advanced', 'expert', 'insanity'].includes(args.entranceshuffle)
+            if ((['split', 'mixed'].includes(args.entranceshuffle)
                  && coord.indirect)
                 || (args.entranceshuffle == 'simple'
                     && coord.indirect
@@ -152,7 +152,7 @@ function distributeChecks() {
     let entrancesByConnector = {};
     let remappedNodes = [];
     let connectorsByCheckId = {};
-    let shuffleConnectors = ['advanced', 'expert', 'insanity'].includes(args.entranceshuffle);
+    let shuffleConnectors = ['split', 'mixed'].includes(args.entranceshuffle);
 
     connectors.map(connector => connector.checks.map(checkId => connectorsByCheckId[checkId] = connector));
 

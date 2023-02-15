@@ -108,30 +108,6 @@
                     </div>
                     <div class="row pb-3">
                         <div class="col">
-                            <input type="checkbox" id="arg-randomstartlocation" class="form-check-input" data-flag="randomstartlocation">
-                            <label class="form-check-label" for="arg-randomstartlocation">Random start location</label>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col">
-                            <input type="checkbox" id="arg-dungeonshuffle" class="form-check-input" data-flag="dungeonshuffle">
-                            <label class="form-check-label" for="arg-dungeonshuffle">Dungeon shuffle</label>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col">
-                            <label for="arg-entranceshuffle" class="form-label">Entrance randomizer</label>
-                            <select id="arg-entranceshuffle" class="form-select" data-flag="entranceshuffle" aria-label="entranceshuffle">
-                                <option value="none">Default</option>
-                                <option value="simple">Simple</option>
-                                <option value="advanced">Advanced</option>
-                                <option value="expert">Expert</option>
-                                <option value="insanity">Insanity</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col">
                             <label for="arg-boss" class="form-label">Boss shuffle</label>
                             <select id="arg-boss" class="form-select" data-flag="boss" aria-label="boss">
                                 <option value="default">Normal</option>
@@ -160,6 +136,53 @@
                                 <option value="bingo-full">Bingo-25!</option>
                                 <!-- <option value="raft">Raft</option> -->
                             </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <legend>Entrances</legend>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-entranceshuffle" class="form-label">Entrance randomizer</label>
+                            <select id="arg-entranceshuffle" class="form-select" data-flag="entranceshuffle" aria-label="entranceshuffle">
+                                <option value="none">Default</option>
+                                <option value="simple">Simple</option>
+                                <option value="split">Split</option>
+                                <option value="mixed">Mixed</option>
+                                <!-- <option value="insanity">Insanity</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-randomstartlocation" class="form-check-input" data-flag="randomstartlocation">
+                            <label class="form-check-label" for="arg-randomstartlocation">Random start location</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-dungeonshuffle" class="form-check-input" data-flag="dungeonshuffle">
+                            <label class="form-check-label" for="arg-dungeonshuffle">Dungeon shuffle</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-shufflejunk" class="form-check-input" data-flag="shufflejunk">
+                            <label class="form-check-label" for="arg-shufflejunk">Shuffle itemless entrances</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-shuffleannoying" class="form-check-input" data-flag="shuffleannoying">
+                            <label class="form-check-label" for="arg-shuffleannoying">Shuffle annoying entrances</label>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-shufflewater" class="form-check-input" data-flag="shufflewater">
+                            <label class="form-check-label" for="arg-shufflewater">Shuffle water entrances</label>
                         </div>
                     </div>
                 </fieldset>
@@ -207,7 +230,7 @@
                                  'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
                                  'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
                                  'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette', 'accessibility',
-                                 'hardmode'] %}
+                                 'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater'] %}
 
             {% for arg in flags if  arg.name not in knownFlags %}
                 {% if 'Other' != ns.group %}
