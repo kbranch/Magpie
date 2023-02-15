@@ -59,12 +59,14 @@ function processEntranceMessage(message) {
             continue;
         }
 
-        if (Entrance.isConnector(outdoor)) {
-            connectOneEndConnector(outdoor, message.entranceMap[outdoor], refresh=false);
+        let indoor = message.entranceMap[outdoor];
+
+        if (Entrance.isConnector(indoor)) {
+            connectOneEndConnector(outdoor, indoor, refresh=false);
             updateReverseMap();
         }
         else {
-            connectEntrances(outdoor, message.entranceMap[outdoor], refresh=false);
+            connectEntrances(outdoor, indoor, refresh=false);
         }
     }
 

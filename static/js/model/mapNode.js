@@ -224,7 +224,7 @@ class MapNode {
 
                     if (this.isChecked || this.checks.length == 0) {
                         if (connection?.isIncomplete()
-                            || (this.entrance.isConnector() && !this.entrance.isConnected())) {
+                            || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {
                             classes.push('partial-entrance');
                         }
                         else {
@@ -284,7 +284,7 @@ class MapNode {
     
         $(this.graphic).attr('data-entrance-id', entrance.id);
     
-        if (entrance.isConnector()) {
+        if (entrance.isConnectedToConnector()) {
             if (entrance.isConnected()) {
                 let connection = entrance.mappedConnection();
                 $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));

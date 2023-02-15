@@ -13,7 +13,7 @@ gb = Gameboy()
 
 async def socketLoop(socket, path):
     print('Connected to tracker')
-
+# C:\Users\hennk\
     state = State()
     loadItems(state)
     loadChecks(state)
