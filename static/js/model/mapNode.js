@@ -140,7 +140,7 @@ class MapNode {
             && this.isChecked
             && (this.entrance == null
                 || (this.entranceConnectedTo() != startHouse
-                    && (this.entrance.type != 'connector')
+                    && (!this.entrance.isConnectedToConnector())
                         || this.entrance.connectedTo() == 'landfill'))) {
             return true;
         }
@@ -253,7 +253,7 @@ class MapNode {
             else if (this.difficulty == 'checked') {
                 if (!args.randomstartlocation 
                     || Entrance.isFound(startHouse)
-                    || this.entrance.isConnector()) {
+                    || (args.entranceshuffle != 'mixed' && this.entrance.isConnector())) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
@@ -403,7 +403,7 @@ class MapNode {
             $(overlay).append(itemOverlay);
         }
 
-        if (this.connectorLabel
+        if ((this.connectorLabel && !pickingEntrance)
             || (this.isDungeon(pickingEntrance)
                 && activeMap == 'overworld')) {
 

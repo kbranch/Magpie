@@ -1,7 +1,8 @@
-function startGraphicalConnection(entranceId) {
+function startGraphicalConnection(entranceId, type) {
     closeAllCheckTooltips();
+    graphicalMapType = type;
     graphicalMapSource = entranceId;
-    graphicalMapChoices = new Set(Entrance.validConnections(entranceId).map(x => x[0]));
+    graphicalMapChoices = new Set(Entrance.validConnections(entranceId, type == "simple").map(x => x[0]));
     graphicalMapChoices.delete('bk_shop');
     $('#overworldTabContent').mousemove(connectorMouseMove);
     drawActiveTab();
@@ -30,6 +31,7 @@ function endGraphicalConnection(destId = null) {
 
 function openDeadEndDialog(entranceId) {
     closeAllCheckTooltips();
+    graphicalMapType = "connector";
     graphicalMapSource = entranceId;
     openConnectorDialog('deadEnd');
 }
