@@ -175,7 +175,7 @@ class NodeTooltip {
 
             if (entrance.isFound()
                 && !entrance.isMappedToSelf()
-                && !entrance.isConnector()
+                && !entrance.isConnectedToConnector()
                 && connectionType == 'none') {
                 let connection = entranceDict[entrance.connectedFrom()];
                 entranceHtml += connectionTemplate.replace('{connection}', `Found at ${connection.name}`);
@@ -227,40 +227,42 @@ class NodeTooltip {
             
             options = sortByKey(options, x => [x[0]]);
 
-            let action = `startGraphicalConnection('${entrance.id}')`;
+            let action = `startGraphicalConnection('${entrance.id}', 'simple')`;
             let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
 
             pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', action, options, optionAction);
         }
         else if (args.entranceshuffle != 'none') {
-            let options = Entrance.validConnections(entrance.id);
-            options = sortByKey(options, x => [x[1]]);
 
-            let action = `startGraphicalConnection('${entrance.id}')`;
+            let action = `startGraphicalConnection('${entrance.id}', '{type}')`;
 
-            if (entrance.type == "connector") {
-                let text = 'Connect to... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
-                pinnedHtml += menuItemTemplate.replace('{action}', action)
+            if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
+                let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
+                pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
                                               .replace('{text}', text)
                                               .replace('{classes}', '')
                                               .replace('{attributes}', '');
 
-                text = 'Connect one end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
                 pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
                                               .replace('{text}', text)
                                               .replace('{classes}', '')
                                               .replace('{attributes}', '');
             }
-            else {
+
+            if (entrance.type != "connector" || args.entranceshuffle == 'mixed') {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
-                let title = 'Connect to...';
+                let title = 'Connect to simple entrance...';
 
-                pinnedHtml += menuItemTemplate.replace('{action}', action)
-                                              .replace('{text}', "Connect using map...")
-                                              .replace('{classes}', '')
-                                              .replace('{attributes}', '');
+                // pinnedHtml += menuItemTemplate.replace('{action}', action)
+                //                               .replace('{text}', "Connect using map...")
+                //                               .replace('{classes}', '')
+                //                               .replace('{attributes}', '');
 
-                pinnedHtml += NodeTooltip.createEntranceDropdown(title, action, options, optionAction);
+                let options = Entrance.validConnections(entrance.id, true);
+                options = sortByKey(options, x => [x[1]]);
+
+                pinnedHtml += NodeTooltip.createEntranceDropdown(title, action.replace('{type}', 'simple'), options, optionAction);
             }
 
             if (entrance.connectedTo() != 'landfill') {

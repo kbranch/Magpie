@@ -54,12 +54,7 @@ function updateTooltip(checkGraphic) {
     let connectionType = 'none';
 
     if (pickingEntrances()) {
-        if (Entrance.isConnector(graphicalMapSource)) {
-            connectionType = 'connector';
-        }
-        else {
-            connectionType = 'simple';
-        }
+        connectionType = graphicalMapType;
     }
 
     let title = node.tooltipHtml(pinned, connectionType);
