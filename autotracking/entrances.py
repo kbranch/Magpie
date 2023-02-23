@@ -12,6 +12,7 @@ else:
 
 from entranceInfo import ENTRANCE_INFO
 from romTables import ROMWithTables
+import logic
 from worldSetup import WorldSetup
 
 mapMap = {

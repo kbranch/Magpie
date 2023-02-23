@@ -8,6 +8,5 @@ static/images/backup/
 static/images/entrances/backup/
 dist/
 build/
-*.spec
-deploy*.bat
+deploy/
 autotracking/rom
