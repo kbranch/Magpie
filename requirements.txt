@@ -1,3 +1,4 @@
+websockets
 Flask
 flaskwebgui==0.3.5
 jsonpickle

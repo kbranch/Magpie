@@ -14,7 +14,7 @@ Special thanks to:
 
 ## Setup
 ### Releases
-The latest version of the compiled local version is always available at [https://magpietracker.us/static/Magpie-local.zip](https://magpietracker.us/static/Magpie-local.zip). This should always match the [main site](https://magpietracker.us/).
+The latest version of the packaged local version is always available at [https://magpietracker.us/static/Magpie-local.zip](https://magpietracker.us/static/Magpie-local.zip). This should always match the [main site](https://magpietracker.us/).
 ### From Source
 #### Downloading
 Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/Magpie.git`.
@@ -56,7 +56,7 @@ Flags can be changed by clicking the gear icon in the upper right. These are pas
 Flags that were added to the randomizer after Magpie was last updated will appear in the list. Because flags can do a lot of different things, these may or may not be relevant or functional without an update to Magpie.
 
 ## Autotracker
-Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest compiled autotracker is always availabe at [https://magpietracker.us/static/magpie-autotracker.exe](https://magpietracker.us/static/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
+Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest packaged autotracker is always available at [https://magpietracker.us/static/magpie-autotracker.exe](https://magpietracker.us/static/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
 
 No setup should be required beyond enabling autotracking in Magpie - just start the autotracker and a compatible emulator.
 
