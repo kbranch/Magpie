@@ -272,7 +272,8 @@ def suggestion():
 
 def getVersion():
     try:
-        with open('version', 'r') as reader:
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'version')
+        with open(path, 'r') as reader:
             return reader.read()
     except:
         return 'unknown'
