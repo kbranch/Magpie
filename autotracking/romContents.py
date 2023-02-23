@@ -59,7 +59,7 @@ gfxDict = {
    "6c3551c787354b971a6d2a505c5647fce7623d00":"Martha",
    "558b53286213d607a517864fefab0b491426c253":"Meme",
    "4a58f3432ad9cbc2011817c3abf4dcd5fa73be15":"Bunny",
-   "be9d86151f4ee2d4d8a8b9beb0096cea7661f304":"Matty_LA",
+   "be9d86151f4ee2d4d8a8b9beb0096cea7661f304":"Matty",
    "fc1251ab1000673d224d2d0e3a6759f00ace2a86":"Bowwow",
    "9bf7512f17bf7b632abfbbfacc97c0962770dbbe":"Luigi",
    "8ec67c1b492ed9439df04bdddd1f2f5a4bbf6661":"Tarin",
