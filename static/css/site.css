@@ -959,3 +959,9 @@ button.nav-link.active {
 .text-buffer {
     width: 20px;
 }
+
+.version {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

@@ -109,6 +109,7 @@ def home():
                                          jsonArgsOverrides=jsonpickle.encode(argsOverrides),
                                          local=local,
                                          graphicsOptions=getGraphicsPacks(),
+                                         version=getVersion(),
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -268,6 +269,13 @@ def suggestion():
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
+
+def getVersion():
+    try:
+        with open('version', 'r') as reader:
+            return reader.read()
+    except:
+        return 'unknown'
 
 def parseArgs(argsString):
     args = jsonpickle.decode(argsString)
