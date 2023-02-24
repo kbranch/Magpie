@@ -131,6 +131,10 @@
     display: block;
 }
 
+.rom-col {
+    width: 270px;
+}
+
 img {
     -khtml-user-select: none;
     -o-user-select: none;
