@@ -1,6 +1,7 @@
 import os
 import base64
 import argparse
+import requests
 import traceback
 import jsonpickle
 from flaskwebgui import FlaskUI
@@ -100,6 +101,13 @@ def home():
             settingsOverrides[arg[len(settingsPrefix):]] = value
         if arg.startswith(argsPrefix):
             argsOverrides[arg[len(argsPrefix):]] = value
+    
+    remoteVersion = None
+
+    if local:
+        remoteVersion = getRemoteVersion()
+        if remoteVersion:
+            remoteVersion = remoteVersion['magpie']
 
     return render_template("index.html", flags=flags, args=args,
                                          defaultSettings=defaultSettings,
@@ -110,6 +118,7 @@ def home():
                                          local=local,
                                          graphicsOptions=getGraphicsPacks(),
                                          version=getVersion(),
+                                         remoteVersion=remoteVersion
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -289,6 +298,13 @@ def getVersion():
             return reader.read().strip()
     except:
         return 'unknown'
+
+def getRemoteVersion():
+    try:
+        request = requests.get('https://magpietracker.us/version')
+        return json.loads(request.text)
+    except:
+        return None
 
 def getAutotrackerVersion():
     try:
