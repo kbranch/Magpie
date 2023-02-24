@@ -8,7 +8,7 @@ a = Analysis(
     ['magpie.py'],
     pathex=[],
     binaries=[],
-    datas=[('LADXR', 'LADXR/'), ('templates', 'templates/'), ('static', 'static/')],
+    datas=[('LADXR', 'LADXR/'), ('templates', 'templates/'), ('static', 'static/'), ('version', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

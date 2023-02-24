@@ -28,6 +28,13 @@
             <span>Version: {{version}}</span>
         </div>
     </div>
+    {% if local and version != remoteVersion %}
+    <div class="col-auto">
+        <div class="version">
+            <span>Latest version: {{latestVersion}}</span>
+        </div>
+    </div>
+    {% endif %}
     <div class="col-auto">
         <button type="button" class="btn btn-secondary" onclick="hardReset();">Hard reset state</button>
     </div>

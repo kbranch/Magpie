@@ -10,3 +10,4 @@ docker run -v "$(pwd):/src/" kbranch/pyinstaller-w32
 docker run -v "$(pwd):/src/" kbranch/pyinstaller-l64
 
 rm a.spec
+rm autotracking/autotracker-version
