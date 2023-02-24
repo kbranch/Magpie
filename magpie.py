@@ -154,6 +154,18 @@ def renderItems():
     except:
         return renderTraceback()
 
+@app.route("/version", methods=['GET'])
+def serveVersion():
+    try:
+        version = {}
+        version['magpie'] = getVersion()
+        version['autotracker'] = getAutotrackerVersion()
+        version['api'] = '1.1'
+
+        return json.dumps(version)
+    except:
+        return renderTraceback()
+
 @app.route("/shortString", methods=['POST'])
 def parseShortString():
     try:
@@ -274,7 +286,15 @@ def getVersion():
     try:
         path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'version')
         with open(path, 'r') as reader:
-            return reader.read()
+            return reader.read().strip()
+    except:
+        return 'unknown'
+
+def getAutotrackerVersion():
+    try:
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static', 'new', 'autotracker-version')
+        with open(path, 'r') as reader:
+            return reader.read().strip()
     except:
         return 'unknown'
 
