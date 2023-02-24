@@ -1,5 +1,7 @@
 from romContents import *
 
+protocolVersion = "1.1"
+
 async def sendMessage(message, socket, refresh=True):
     message['refresh'] = refresh
     await socket.send(json.dumps(message))

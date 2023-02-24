@@ -1,4 +1,6 @@
+import os
 import asyncio
+import requests
 import traceback
 import websockets
 from gameboy import Gameboy
@@ -50,7 +52,35 @@ async def socketLoop(socket, path):
         except Exception as e:
             print(f'Error: {traceback.format_exc()}')
 
+def getRemoteVersion():
+    try:
+        request = requests.get('https://magpietracker.us/version')
+        return json.loads(request.text)
+    except:
+        return None
+
+def getVersion():
+    try:
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'autotracker-version')
+        with open(path, 'r') as reader:
+            return reader.read().strip()
+    except:
+        return 'unknown'
+
 async def main():
+    version = getVersion()
+    print(f'Autotracker version {version}, protocol {protocolVersion}')
+
+    remote = getRemoteVersion()
+    if remote:
+        if remote['autotracker'] != version or remote['api'] != protocolVersion:
+            print(f'Latest version is {remote["autotracker"]}, protocol {remote["api"]}')
+        else:
+            print("No update available")
+    else:
+        print("Unable to check for updates")
+
+    print('\nListening for tracker')
     async with websockets.serve(socketLoop, host=None, port=17026, max_size=1024*1024*10):
         await asyncio.Future()
 

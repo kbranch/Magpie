@@ -71,7 +71,7 @@ class State:
 
                 await sendMessage({
                     'type': 'handshAck',
-                    'version': '1.1',
+                    'version': protocolVersion,
                 }, socket)
 
                 self.handshook = True

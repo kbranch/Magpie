@@ -10,3 +10,5 @@ dist/
 build/
 deploy/
 autotracking/rom
+autotracking/autotracker-version
+version
