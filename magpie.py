@@ -490,7 +490,7 @@ def cleanUpEntranceMap(entranceMap, entrances, args):
             del entranceMap[reverseMap['start_house']]
 
 def getGraphicsPacks():
-    return ["Subrosian", "Mario", "Rooster", "Rosa", "Kirby", "Martha", "Meme", "Bunny", "Matty", "Bowwow", "Luigi", "Tarin", "AgesGirl", "Marin", "GrandmaUlrira", "Richard", "NESLink", "MarinAlpha"]
+    return ["Subrosian", "Mario", "Rooster", "Rosa", "Kirby", "Martha", "Meme", "Bunny", "Matty", "Bowwow", "Luigi", "Tarin", "AgesGirl", "Marin", "GrandmaUlrira", "Richard", "NESLink", "Ninten", "MarinAlpha"]
     # gfxPath = 'LADXR/gfx/'
 
     # options = []
