@@ -40,6 +40,10 @@ palettes = [
     [255, 0, 0, 0,          255, 255, 255, 255, 232, 8, 16, 255,    0, 0, 0, 255],
     [255, 0, 0, 0,          0, 0, 0, 255,       168, 120, 16, 255,  248, 248, 168, 255],
     [255, 0, 0, 0,          240, 232, 24, 255,  152, 128, 0, 255,   0, 0, 0, 255],
+    [0, 0, 0, 255,          0, 0, 0, 255,       232, 24, 48, 255,   255, 214, 173, 255],
+    [0, 0, 0, 255,        0, 0, 0, 255,       248, 24, 88, 255,   255, 255, 255, 255],
+    [0, 0, 0, 255,        0, 0, 0, 255,       0, 139, 255, 255,   255, 255, 255, 255],
+    [0, 0, 0, 255,        0, 0, 0, 255,       16, 168, 64, 255,   255, 255, 255, 255],
 ]
 
 feather = Sprite('FEATHER_1', 1, 9, 1, 3)
@@ -51,9 +55,10 @@ sprites = [
     Sprite('SHIELD_2', 1, 3, 1, 12),
     Sprite('SWORD_1', 1, 2, 1, 1),
     Sprite('SWORD_2', 1, 2, 1, 12),
-    Sprite('TOADSTOOL_1', 5, 6, 1, 12),
+    # Sprite('TOADSTOOL_1', 5, 6, 1, 12), # the inventory sprite
+    Sprite('TOADSTOOL_1', 52, 21, 1, 20, mirror=True), # possibly the forest floor sprite - there are two like this
     Sprite('MAGIC_POWDER_1', 1, 7, 1, 3),
-    Sprite('SHOVEL_1', 1, 11, 1, (3, 1)),
+    Sprite('SHOVEL_1', 1, 11, 1, (3, 3, 1, 1)),
     Sprite('BOMB_1', 1, 0, 1, 1),
     Sprite('BOW_1', 1, 4, 1, 3),
     Sprite('POWER_BRACELET_1', 1, 1, 1, 1),
@@ -62,8 +67,8 @@ sprites = [
     Sprite('FEATHER_1', 1, 9, 1, 3),
     Sprite('ROOSTER_1', 51, 42, 2, 10),
     Sprite('FLIPPERS_1', 1, 10, 1, 4),
-    Sprite('HOOKSHOT_1', 1, 5, 1, (1, 2)),
-    Sprite('MAGIC_ROD_1', 1, 6, 1, (2, 1)),
+    Sprite('HOOKSHOT_1', 1, 5, 1, (1, 1, 2, 2)),
+    Sprite('MAGIC_ROD_1', 1, 6, 1, (2, 2, 1, 1)),
     Sprite('OCARINA_1', 1, 8, 1, 2),
     Sprite('SONG1_1', 5, 12, 1, 9, mirror=True),
     Sprite('SONG2_1', 5, 13, 1, 10, mirror=True),
@@ -76,6 +81,10 @@ sprites = [
     Sprite('FACE_KEY_1', 1, 34, 1, 6),
     Sprite('BIRD_KEY_1', 1, 35, 1, 6),
     Sprite('SLIME_KEY_1', 5, 7, 1, 6),
+    Sprite('RED_TUNIC', 64, 0, 1, 21, mirror=True),
+    Sprite('BLUE_TUNIC', 64, 0, 1, 22, mirror=True),
+    Sprite('GREEN_TUNIC', 64, 0, 1, 23, mirror=True),
+    Sprite('BLUERED_TUNIC', 64, 0, 1, (22, 21, 22, 21), mirror=True),
     Sprite('TRADING_ITEM_YOSHI_DOLL_1', 1, 13, 2, 5),
     Sprite('TRADING_ITEM_RIBBON_1', 0, 32, 2, 2),
     Sprite('TRADING_ITEM_DOG_FOOD_1', 0, 34, 2, 1),
@@ -125,6 +134,9 @@ def getIcon(source, sprite):
         buffer = bytearray(b'\x00' * 16 * 8)
 
         for y in range(16):
+            if idx * 32 + y * 2 + 1 > len(data):
+                continue
+
             a = data[idx * 32 + y * 2]
             b = data[idx * 32 + y * 2 + 1]
 
@@ -148,9 +160,13 @@ def getIcon(source, sprite):
             icon.paste(tile, (x, y))
 
     if len(sprite.palettes) > 1:
-        for x in range(0, icon.width):
-            for y in range(8, icon.height):
-                icon.putpixel((x, y), icon.getpixel((x, y)) + 4)
+        for r in range(0, icon.height // 8):
+            for c in range(0, icon.width // 8):
+                for x in range(c * 8, c * 8 + 8):
+                    for y in range(r * 8, r * 8 + 8):
+                        color = icon.getpixel((x, y))
+                        if color != 0:
+                            icon.putpixel((x, y), color + ((r * (icon.height // 8 - 1)) * (icon.width // 8) + c) * 4)
 
     palette = []
     for index in sprite.palettes:
@@ -185,35 +201,58 @@ def getIcon(source, sprite):
             for x in range(icon.width):
                 pixel = icon.getpixel((x, y))
                 if pixel == 0:
-                    count = countTransparentAround(icon, x, y)
+                    count = countColorAround(icon, x, y)
                     if count >= fillSettings[sprite.item]:
                         icon.putpixel((x, y), int(len(palette) / 4) - 1)
 
+    fillSettings = {
+        'SONG1_1': 0,
+        'SONG2_1': 0,
+        'SONG3_1': 0,
+        'BLUE_TUNIC': 0,
+        'RED_TUNIC': 0,
+        'GREEN_TUNIC': 0,
+        'BLUERED_TUNIC': 0,
+    }
+
+    blacks = set([0])
+    for i in range(0, len(palette), 4):
+        if palette[i] == 0 and palette[i + 1] == 0 and palette[i + 2] == 0:
+            blacks.add(i // 4)
+
+    if sprite.item in fillSettings:
+        for y in range(icon.height):
+            for x in range(icon.width):
+                pixel = icon.getpixel((x, y))
+                if pixel in blacks:
+                    count = countColorAround(icon, x, y, blacks) % 10
+                    if count <= fillSettings[sprite.item]:
+                        icon.putpixel((x, y), 0)
+
     return icon.resize((48, 48))
 
-def countTransparentAround(icon, x, y):
+def countColorAround(icon, x, y, colors={0}):
     count = 0
 
     for i in range(x + 1, icon.width):
-        if icon.getpixel((i, y)) != 0:
+        if icon.getpixel((i, y)) not in colors:
             count += 10
             break
 
     for i in range(0, x):
-        if icon.getpixel((i, y)) != 0:
+        if icon.getpixel((i, y)) not in colors:
             count += 10
             break
 
     for j in range(y + 1, icon.height):
-        if icon.getpixel((x, j)) != 0:
+        if icon.getpixel((x, j)) not in colors:
             count += 10
             break
 
     for j in range(0, y):
-        if icon.getpixel((x, j)) != 0:
+        if icon.getpixel((x, j)) not in colors:
             count += 10
             break
-
 
     for i in range(x - 1, x + 2):
         if i < 0 or i >= icon.width:
@@ -222,7 +261,7 @@ def countTransparentAround(icon, x, y):
             if j < 0 or j >= icon.height or (i != x and j != y):
                 continue
 
-            if icon.getpixel((i, j)) != 0:
+            if icon.getpixel((i, j)) not in colors:
                 count += 1
 
     return count
