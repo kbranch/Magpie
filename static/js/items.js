@@ -165,23 +165,24 @@ function jumpSrc() {
 
 function tunicSrc()
 {
-    blue = inventory['BLUE_TUNIC'] > 0;
-    red = inventory['RED_TUNIC'] > 0;
+    let gfx = localSettings.graphicsPack;
+    let blue = inventory['BLUE_TUNIC'] > 0;
+    let red = inventory['RED_TUNIC'] > 0;
 
     if (!blue && !red)
     {
-        return 'static/images/GREEN_TUNIC.png';
+        return `static/images${gfx}/GREEN_TUNIC.png`;
     }
     if (blue && !red)
     {
-        return 'static/images/BLUE_TUNIC.png';
+        return `static/images${gfx}/BLUE_TUNIC.png`;
     }
     if (!blue && red)
     {
-        return 'static/images/RED_TUNIC.png';
+        return `static/images${gfx}/RED_TUNIC.png`;
     }
     
-    return 'static/images/BLUERED_TUNIC.png';
+    return `static/images${gfx}/BLUERED_TUNIC.png`;
 }
 
 function calculateDungeonChecks() {
