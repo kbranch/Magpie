@@ -28,10 +28,11 @@
             <span>Version: {{version}}</span>
         </div>
     </div>
-    {% if local and version != remoteVersion %}
+    {% if local and version != remoteVersion and remoteVersion %}
     <div class="col-auto">
         <div class="version">
-            <span>Latest version: {{latestVersion}}</span>
+            <span>Latest version: {{remoteVersion}}</span>
+            <a href="/fetchupdate" class="btn btn-secondary update-button ms-2" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download update" role="button"><img src="static/images/file-arrow-down.svg"></a>
         </div>
     </div>
     {% endif %}
