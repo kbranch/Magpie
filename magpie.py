@@ -2,8 +2,10 @@ import os
 import base64
 import argparse
 import requests
+import platform
 import traceback
 import jsonpickle
+import urllib.request
 from flaskwebgui import FlaskUI
 from flask import Flask, render_template, request
 from jinja2 import Template
@@ -163,7 +165,7 @@ def renderItems():
     except:
         return renderTraceback()
 
-@app.route("/version", methods=['GET'])
+@app.route("/version")
 def serveVersion():
     try:
         version = {}
@@ -172,6 +174,21 @@ def serveVersion():
         version['api'] = '1.1'
 
         return json.dumps(version)
+    except:
+        return renderTraceback()
+
+@app.route("/fetchupdate")
+def fetchUpdate():
+    if not local:
+        return "Not running local version", 401
+
+    try:
+        if platform.system().lower() == 'windows':
+            urllib.request.urlretrieve("https://magpietracker.us/static/builds/magpie-local.zip", "update.zip")
+        else:
+            urllib.request.urlretrieve("https://magpietracker.us/static/builds/magpie-local-linux.zip", "update.zip")
+
+        return "Update downloaded, restart Magpie to install"
     except:
         return renderTraceback()
 
@@ -301,7 +318,7 @@ def getVersion():
 
 def getRemoteVersion():
     try:
-        request = requests.get('https://magpietracker.us/version')
+        request = requests.get('https://dev.magpietracker.us/version')
         return json.loads(request.text)
     except:
         return None
