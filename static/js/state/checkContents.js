@@ -4,10 +4,13 @@ function saveCheckContents() {
 }
 
 function loadCheckContents() {
+    let errors = [];
+
     try {
         checkContents = JSON.parse(localStorage.getItem('checkContents'));
     }
     catch (err) {
+        errors.push(err);
     }
 
     if (checkContents == null) {
@@ -15,6 +18,8 @@ function loadCheckContents() {
     }
 
     updateItemLocations();
+
+    return errors
 }
 
 function updateItemLocations() {

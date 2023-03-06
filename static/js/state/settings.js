@@ -69,16 +69,20 @@ function saveSettings() {
 }
 
 function loadSettings() {
+    let errors = [];
+
     try {
         args = JSON.parse(localStorage.getItem('args'));
     }
     catch (err) {
+        errors.push(err);
     }
 
     try {
         localSettings = JSON.parse(localStorage.getItem('settings'));
     }
     catch (err) {
+        errors.push(err);
     }
 
     try {
@@ -87,6 +91,10 @@ function loadSettings() {
         }
     }
     catch (err) {
+        if (args != null) {
+            errors.push(err);
+        }
+
         args = defaultArgs;
     }
 
@@ -96,6 +104,10 @@ function loadSettings() {
         }
     }
     catch (err) {
+        if (localSettings != null) {
+            errors.push(err);
+        }
+
         localSettings = defaultSettings;
     }
 
@@ -161,6 +173,8 @@ function loadSettings() {
     applySettings();
 
     refreshItems();
+    
+    return errors;
 }
 
 function fixArgs(args) {

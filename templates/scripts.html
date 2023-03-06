@@ -173,9 +173,12 @@
     function init() {
         modifyTooltipAllowList();
         initKnownItems();
-        loadSettings();
-        loadLocations();
-        loadCheckContents();
+
+        let storage = { ...localStorage };
+        let settingsErrors = loadSettings();
+        let locationErrors = loadLocations();
+        let checkErrors = loadCheckContents();
+
         loadBosses();
 
         document.adoptedStyleSheets = [iconStyles];
@@ -217,7 +220,21 @@
             $('#bodyTextArea').summernote({
                 height: 320,
             });
+            $('#errorTextArea').summernote({
+                height: 200,
+            });
         });
+
+        if (settingsErrors.length || locationErrors.length || checkErrors.length) {
+            let payload = {
+                'settingsErrors': settingsErrors.map(x => x.toString()),
+                'locationErrors': locationErrors.map(x => x.toString()),
+                'checkErrors': checkErrors.map(x => x.toString()),
+                'storage': storage,
+            };
+
+            showErrorDialog("An error occurred while loading one or more types of data. Defaults will be loaded.", JSON.stringify(payload, null, 3));
+        }
     }
 
     init();

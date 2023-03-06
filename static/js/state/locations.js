@@ -13,18 +13,25 @@ function saveLocations() {
 }
 
 function loadLocations() {
-    loadChecked();
-    loadEntrances();
+    errors = [];
+
+    errors.concat(loadChecked());
+    errors.concat(loadEntrances());
 
     refreshChecked();
+
+    return errors;
 }
 
 function loadEntrances() {
+    let errors = [];
+
     try {
         entranceMap = JSON.parse(localStorage.getItem('entranceMap'));
         pruneEntranceMap();
     }
     catch (err) {
+        errors.push(err);
     }
 
     if (entranceMap == null) {
@@ -39,12 +46,14 @@ function loadEntrances() {
         }
     }
     catch (err) {
-
+        errors.push(err);
     }
 
     if (connections == null) {
         connections = [];
     }
+
+    return errors;
 }
 
 function loadChecked() {

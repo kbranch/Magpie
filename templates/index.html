@@ -37,7 +37,7 @@
     </div>
     {% endif %}
     <div class="col-auto">
-        <button type="button" class="btn btn-secondary" onclick="hardReset();">Hard reset state</button>
+        <button type="button" class="btn btn-secondary" onclick="hardReset();">Hard reset state and settings</button>
     </div>
 </div>
 
@@ -68,9 +68,38 @@
     </div>
 </div>
 
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="errorModalLabel">Error</h6>
+                <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 id="errorModalMessage"></h5>
+                <h6>Please report this error so it can be fixed!</h6>
+                <div class="mb-3">
+                    <label for="errorEmail" class="form-label">Email address (optional)</label>
+                    <input type="email" class="form-control" id="errorEmail" placeholder="Optional">
+                </div>
+
+                <div>
+                    <div id="errorTextArea" name="editordata"></div>
+                </div>
+
+                <p>Error details:</p>
+                <pre id="errorModalPayload"></pre>
+            </div>
+            <div class="modal-footer">
+                <button id="sendErrorButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="sendError()">Send Bug Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="application/javascript">
     function hardReset() {
-        if (confirm("Completely clear all tracker data?")) {
+        if (confirm("Completely clear all tracker data, including settings and trackable objects?")) {
             localStorage.clear();
             location.reload();
         }
@@ -86,6 +115,27 @@
                 state: JSON.stringify(getState()),
             },
         });
+    }
+
+    function sendError() {
+        let payload = JSON.parse($('#errorModalPayload').text());
+        payload['userComments'] = $('#errorTextArea').summernote('code');
+
+        $.ajax({
+            type: "POST",
+            url: "https://magpietracker.us/suggestion",
+            data: {
+                email: $('#errorEmail')[0].value,
+                body: '<pre>' + JSON.stringify(payload, null, 3) + '</pre>',
+                state: JSON.stringify(getState()),
+            },
+        });
+    }
+
+    function showErrorDialog(message, payload) {
+        $('#errorModalMessage').text(message);
+        $('#errorModalPayload').text(payload);
+        new bootstrap.Modal('#errorModal', null).show();
     }
 </script>
 
