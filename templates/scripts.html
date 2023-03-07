@@ -35,8 +35,9 @@
 <script type="application/javascript">
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
-    let settingsOverrides = JSON.parse('{{jsonSettingsOverrides|safe}}')
-    let argsOverrides = JSON.parse('{{jsonArgsOverrides|safe}}')
+    var settingsOverrides = JSON.parse('{{jsonSettingsOverrides|safe}}')
+    var argsOverrides = JSON.parse('{{jsonArgsOverrides|safe}}')
+    var diskSettings = JSON.parse('{{diskSettings|safe}}')
     var startLocations = [];
     var randomizedEntrances = null;
     var localSettings = null;
@@ -174,6 +175,14 @@
     function init() {
         modifyTooltipAllowList();
         initKnownItems();
+
+        if ('args' in diskSettings) {
+            localStorage.setItem('args', diskSettings['args'])
+        }
+
+        if ('localSettings' in diskSettings) {
+            localStorage.setItem('settings', diskSettings['localSettings'])
+        }
 
         let storage = { ...localStorage };
         let settingsErrors = loadSettings();

@@ -1,3 +1,4 @@
+import os
 import json
 
 class LocalSettings:
@@ -71,3 +72,38 @@ class LocalSettings:
         #             options.append(entry.name[:-4])
         
         # return options
+
+nested = False
+
+def settingsPath():
+    return 'settings.json' if not nested else os.path.join('..', 'settings.json')
+
+
+def updateSettings(argsText, settingsText):
+    settings = readSettings()
+
+    settings['args'] = argsText
+    settings['localSettings'] = settingsText
+
+    writeSettings(settings)
+
+def writeSettings(settings):
+    try:
+        with open(settingsPath(), 'w') as file:
+            file.write(json.dumps(settings))
+    except Exception as e:
+        print(f"Error writing settings: {e}")
+
+def readSettings():
+    try:
+        with open(settingsPath(), 'r') as file:
+            return json.loads(file.read())
+    except Exception as e:
+        print(f"Error reading settings, loading defaults: {e}")
+        return defaultSettings()
+
+def defaultSettings():
+    return {
+        'width': 1150,
+        'height': 720,
+    }

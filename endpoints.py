@@ -9,8 +9,7 @@ from flask import Flask, render_template, request
 
 from version import *
 from trackables import *
-from ladxrInterface import *
-from localSettings import LocalSettings
+from localSettings import LocalSettings, updateSettings
 from args import Args
 
 app = Flask(__name__)
@@ -18,9 +17,25 @@ app.jinja_options['trim_blocks'] = True
 app.jinja_options['lstrip_blocks'] = True
 
 local = False
+diskSettings = None
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
+
+def getDiskSettings():
+    global diskSettings
+
+    settings = {}
+
+    if 'args' in diskSettings:
+        settings['args'] = diskSettings['args']
+
+    if 'localSettings' in diskSettings:
+        settings['localSettings'] = diskSettings['localSettings']
+
+    diskSettings = None
+    
+    return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
 @app.route("/")
 def home():
@@ -65,14 +80,21 @@ def home():
                                          local=local,
                                          graphicsOptions=LocalSettings.graphicsPacks(),
                                          version=getVersion(),
-                                         remoteVersion=remoteVersion
+                                         remoteVersion=remoteVersion,
+                                         diskSettings=getDiskSettings(),
                                          )
 
 @app.route("/items", methods=['POST'])
 def renderItems():
     try:
-        args = Args.parse(request.form['args'])
-        localSettings = LocalSettings.parse(request.form['localSettings'])
+        argsText = request.form['args']
+        settingsText = request.form['localSettings']
+
+        if local:
+            updateSettings(argsText, settingsText)
+
+        args = Args.parse(argsText)
+        localSettings = LocalSettings.parse(settingsText)
         allItems = getItems(args)
 
         initChecks(args)

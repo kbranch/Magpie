@@ -13,7 +13,7 @@ If exist "magpie-data\update.zip" (
 )
 
 cd magpie-data
-start "Magpie" "magpie-data.exe" --local --width 650 --height 650
+start "Magpie" "magpie-data.exe" --local --nested
 
 exit /b
 
