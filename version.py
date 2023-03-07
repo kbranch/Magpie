@@ -19,7 +19,7 @@ def getRemoteVersion():
 
 def getAutotrackerVersion():
     try:
-        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static', 'new', 'autotracker-version')
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'autotracker-version')
         with open(path, 'r') as reader:
             return reader.read().strip()
     except:
