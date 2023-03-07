@@ -21,10 +21,11 @@ function setImgSrc(img, item) {
     }
 
     if (number > 0) {
-        $(img).addClass('owned-item');
+        $(img).addClass(`owned-item-${localSettings.ownedHighlight}`);
     }
     else {
-        $(img).removeClass('owned-item');
+        $(img).removeClass('owned-item-bar');
+        $(img).removeClass('owned-item-square');
     }
 }
 

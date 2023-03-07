@@ -217,11 +217,16 @@ img {
     --animate-duration: 0.3s;
 }
 
-/* .owned-item:not(.secondary) { */
-    /* background-color: #444;
-    border-radius: 3px; */
-    /* filter: drop-shadow(0px 0px 2px #ccc);
-} */
+.owned-item-bar:not(.secondary) {
+    border-bottom: 5px solid #444;
+    margin-bottom: -5px;
+    border-radius: 3px;
+}
+
+.owned-item-square:not(.secondary) {
+    background-color: #444;
+    border-radius: 3px;
+}
 
 .itemImage.glow:hover {
     filter: drop-shadow(0px 0px 5px #ccc);

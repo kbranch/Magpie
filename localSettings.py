@@ -19,6 +19,7 @@ class LocalSettings:
         self.showDungeonItemCount = False
         self.showItemsOnly = False
         self.highlightItemsOnHover = True
+        self.ownedHighlight = 'bar'
         self.enableAutotracking = False
         self.autotrackItems = True
         self.autotrackChecks = True
