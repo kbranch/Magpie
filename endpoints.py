@@ -27,6 +27,9 @@ def getDiskSettings():
 
     settings = {}
 
+    if diskSettings == None:
+        return settings
+
     if 'args' in diskSettings:
         settings['args'] = diskSettings['args']
 
