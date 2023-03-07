@@ -13,6 +13,7 @@ import explorer
 import itempool
 import logic
 import locations
+from args import Args
 from worldSetup import WorldSetup, start_locations
 from LADXR.settings import *
 from checkMetadata import checkMetadataTable
@@ -29,21 +30,6 @@ vanillaBySetting = {
     'witch': {'0x2A2', '0x050'},
     # 'rooster': {'0x1E4'},
 }
-
-class Flag():
-    def __init__(self, ladxrArg, value):
-        if isinstance(ladxrArg.default, boolean):
-            self.type = 'bool'
-        else:
-            self.type = 'string'
-        
-        self.default = ladxrArg.default
-        self.value = value
-        self.name = ladxrArg.key
-        self.choices = [x[0] for x in ladxrArg.options] if ladxrArg.options != None else None
-    
-    def __repr__(self) -> str:
-        return f'{self.group} {self.name}={self.value}, {self.type}, {self.default}, {self.choices}'
 
 class Check:
     def __init__(self, id, metadata, behindKeys=False, vanilla=False):
@@ -71,13 +57,6 @@ def getArgsFromShortString(shortString):
     return getArgs(ladxrFlags=settings, useCurrentValue=True)
 
 def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
-    class Args():
-        def __init__(self):
-            self.flags = []
-
-        def add(self, flag, value):
-            self.flags.append(Flag(flag, value))
-            setattr(self, flag.key, value)
 
     if ladxrFlags == None:
         ladxrFlags = [x for x in Settings()._Settings__all if not x.aesthetic and (x.options != None or isinstance(x.default, boolean))]
