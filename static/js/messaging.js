@@ -96,6 +96,23 @@ function processLocationMessage(message) {
     drawLocation();
 }
 
+function processHandshAckMessage(message) {
+    let remoteVersion = 'Unknown';
+
+    if ('version' in message) {
+        remoteVersion = message.version;
+    }
+
+    addAutotrackerMessage(`Local v${protocolVersion}, remote v${remoteVersion}`);
+
+    if (remoteVersion != protocolVersion) {
+        addAutotrackerMessage('Consider updating');
+    }
+
+    loadFromAutotracker();
+    console.log('Sent request to send full autotracker inventory');
+}
+
 function connectToAutotracker() {
     if (!localSettings.enableAutotracking) {
         return;
@@ -155,60 +172,65 @@ function processMessage(messageText) {
         return;
     }
     
-    switch (message.type) {
-        case 'item':
-            processItemMessage(message);
-            break;
-        case 'check':
-            processCheckMessage(message);
-            break;
-        case 'entrance':
-            processEntranceMessage(message);
-            break;
-        case 'refresh':
-            refreshCheckList();
-            break;
-        case 'location':
-            processLocationMessage(message);
-            break;
-        case 'romAck':
-            romRequested = false;
-            $('#romRow').hide();
+    try {
+        switch (message.type) {
+            case 'item':
+                processItemMessage(message);
+                break;
+            case 'check':
+                processCheckMessage(message);
+                break;
+            case 'entrance':
+                processEntranceMessage(message);
+                break;
+            case 'refresh':
+                refreshCheckList();
+                break;
+            case 'location':
+                processLocationMessage(message);
+                break;
+            case 'romAck':
+                romRequested = false;
+                $('#romRow').hide();
 
-            addAutotrackerMessage('ROM Received');
+                addAutotrackerMessage('ROM Received');
 
-            break;
-        case 'romRequest':
-            romRequested = true;
-            console.log('Autotracker requested a copy of the ROM');
+                break;
+            case 'romRequest':
+                romRequested = true;
+                console.log('Autotracker requested a copy of the ROM');
 
-            $('#romInput')[0].value = null;
-            $('#romRow').show();
-            $('#romRow').removeClass('hidden');
-            $('#romRow').addClass('animate__animated')
-            $('#romRow').addClass('animate__flash')
-            quickSettingsTab($('#autotrackerTab'))
+                $('#romInput')[0].value = null;
+                $('#romRow').show();
+                $('#romRow').removeClass('hidden');
+                $('#romRow').addClass('animate__animated')
+                $('#romRow').addClass('animate__flash')
+                quickSettingsTab($('#autotrackerTab'))
 
-            addAutotrackerMessage('ROM Requested');
+                addAutotrackerMessage('ROM Requested');
 
-            break;
-        case 'settings':
-            $("#shortString")[0].value = message.settings;
-            loadShortString(saveOnLoad=true)
-            break;
-        case 'spoiler':
-            loadLogContents(message.log, false);
-            break;
-        case 'gfx':
-            setGraphicsPack(message.gfx);
-            break;
-        case 'handshAck':
-            loadFromAutotracker();
-            console.log('Sent request to send full autotracker inventory');
-            break;
-        default:
-            console.log(`Unrecognized message type: ${message.type}`)
-            break;
+                break;
+            case 'settings':
+                $("#shortString")[0].value = message.settings;
+                loadShortString(saveOnLoad=true)
+                break;
+            case 'spoiler':
+                loadLogContents(message.log, false);
+                break;
+            case 'gfx':
+                setGraphicsPack(message.gfx);
+                break;
+            case 'handshAck':
+                processHandshAckMessage(message);
+                break;
+            default:
+                console.log(`Unrecognized message type: ${message.type}`)
+                break;
+        }
+    }
+    catch (err) {
+        addAutotrackerMessage('Error, see console');
+        console.log(err);
     }
 }
 
@@ -243,7 +265,7 @@ function sendRom(bytes) {
 function sendHandshake() {
         sendMessage({
             'type': 'handshake',
-            'version': '1.1',
+            'version': protocolVersion,
             'features': autotrackerFeatures,
         });
 }

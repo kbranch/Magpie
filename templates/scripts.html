@@ -33,6 +33,7 @@
 <script src="static/js/plando.js"></script>
 
 <script type="application/javascript">
+    const protocolVersion = '1.1';
     const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
     const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
     var settingsOverrides = JSON.parse('{{jsonSettingsOverrides|safe}}')
@@ -66,6 +67,7 @@
     var overworldRoom = null;
     var iconStyles = new CSSStyleSheet();
     var local = '{{local}}' == 'True'
+    var remoteProtocolVersion = null;
 
     const startHouse = 'start_house';
 
