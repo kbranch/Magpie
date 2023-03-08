@@ -19,7 +19,7 @@ class NodeTooltip {
     </ul>
 </div>`;
         const checkTemplate = `<li class="list-group-item tooltip-check">
-    <div class='text-start d-flex p-1 mb-0' data-check-id='{check-id}'{vanilla}>
+    <div class='text-start d-flex p-1 mb-0 align-items-center' data-check-id='{check-id}'{vanilla}>
         {graphic}
         <div class='tooltip-text ps-2'>
             <span class='tooltip-text-span'>{name}</span>
@@ -324,7 +324,7 @@ class NodeTooltip {
 
     checkGraphicHtml(id) {
         let checks = this.node.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla}'><div class='tooltip-check-graphic icon-wrapper{behind-keys}{owl}'><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg></div>{overlay}</div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind-keys}{owl}'><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg></div>{overlay}</div>";
         let overlayTemplate = '<img class="node-item-overlay" data-node-item="{item}" src="static/images/{item}_1.png" onmousedown="preventDoubleClick(event)">';
         let textItemTemplate = '<img class="text-item pe-1" data-node-item="{item}" src="static/images/{item}_1.png" onmousedown="preventDoubleClick(event)">';
         let graphic = '';
