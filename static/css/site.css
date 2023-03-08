@@ -974,3 +974,7 @@ button.nav-link.active {
 .update-button {
     width: 50px;
 }
+
+body {
+    overflow-y: scroll;
+}
