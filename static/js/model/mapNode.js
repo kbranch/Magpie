@@ -360,15 +360,15 @@ class MapNode {
             let iconWrapper = $('<div>', {
                 'class': `icon-wrapper icon-difficulty-${difficulty}`,
                 css: {
-                    'width': localSettings.checkSize,
-                    'height': localSettings.checkSize,
+                    'width': checkSize,
+                    'height': checkSize,
                 },
             });
             let svg = $('<svg>', {
                 'class': 'icon',
                 css: {
-                    'width': localSettings.checkSize,
-                    'height': localSettings.checkSize,
+                    'width': checkSize,
+                    'height': checkSize,
                 },
             })
             let use = $('<use>', {
@@ -406,21 +406,31 @@ class MapNode {
         if (this.connectorLabel
             || (this.isDungeon(pickingEntrance)
                 && activeMap == 'overworld')) {
+
+            let shadowSize = 1 / (localSettings.checkSize / checkSize);
+
             let connectorOverlay = $('<p>', {
                 'class': "node-overlay",
                 'data-connector-label': this.connectorLabel,
                 css: {
-                    'font-size': `${localSettings.checkSize * 0.72}px`,
+                    'font-size': `${checkSize * 0.72}px`,
+                    'text-shadow': `-${shadowSize}px -${shadowSize}px 0 black,  
+                                    ${shadowSize}px -${shadowSize}px 0 black,
+                                    -${shadowSize}px  ${shadowSize}px 0 black,
+                                    ${shadowSize}px  ${shadowSize}px 0 black`,
                 },
                 onmousedown: "preventDoubleClick(event)"
             });
 
+            let label;
             if (this.connectorLabel) {
-                $(connectorOverlay).append(this.connectorLabel);
+                label = this.connectorLabel;
             }
             else {
-                $(connectorOverlay).append(this.dungeonName(pickingEntrance)[1]);
+                label = this.dungeonName(pickingEntrance)[1];
             }
+
+            $(connectorOverlay).append(label);
 
             $(overlay).append(connectorOverlay);
         }
@@ -431,12 +441,12 @@ class MapNode {
 
     createGraphic() {
         let coords = MapNode.coordsFromId(this.id());
-        let size = Number(localSettings.checkSize);
+        let size = Number(checkSize);
         let x = coords.x;
         let y = coords.y;
 
         if (this.boss) {
-            let extra = localSettings.checkSize * 0.5;
+            let extra = checkSize * 0.5;
             size += extra;
             x -= extra / 2;
             y -= extra / 2;

@@ -68,6 +68,7 @@
     var iconStyles = new CSSStyleSheet();
     var local = '{{local}}' == 'True'
     var remoteProtocolVersion = null;
+    var checkSize = 16;
 
     const startHouse = 'start_house';
 
@@ -211,20 +212,19 @@
                 method: 'GET', 
                 cache: 'no-cache'
                 })
-                return response.json()
+                return response;
             }
 
             document.addEventListener('DOMContentLoaded', function() {
-                let url = document.location
-                let route = "/flaskwebgui-keep-server-alive"
-                let interval_request = 3 * 1000 //sec
+                let url = document.location;
+                let route = "/flaskwebgui-keep-server-alive";
+                let interval_request = 3 * 1000;
                 
                 function keep_alive_server(){
-                    getRequest(url + route)
-                    .then(data => console.log(data))
+                    getRequest(url + route);
                 }
                 
-                setInterval(keep_alive_server, interval_request)()
+                setInterval(keep_alive_server, interval_request);
             });
         }
 

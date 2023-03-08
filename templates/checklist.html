@@ -99,7 +99,8 @@
         timeoutId = setTimeout(drawActiveTab, 100);
     }
 
-    window.addEventListener("resize", resizeTimeout);
+    window.addEventListener("resize", resizeTimeout); // Window size
+    window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
 
     var mapTooltipTriggerList = document.querySelectorAll('li.nav-item[data-bs-toggle="tooltip"]');
     var mapTooltipList = [...mapTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));

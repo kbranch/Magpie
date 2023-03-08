@@ -45,8 +45,8 @@ function getMapScaling(map) {
 
     scaling.offset = {};
 
-    scaling.offset.x = (16 * scaling.x - localSettings.checkSize) / 2;
-    scaling.offset.y = (16 * scaling.y - localSettings.checkSize) / 2;
+    scaling.offset.x = (16 * scaling.x - checkSize) / 2;
+    scaling.offset.y = (16 * scaling.y - checkSize) / 2;
 
     return scaling;
 }
@@ -96,11 +96,11 @@ function drawLocation() {
     linkFace.css({
                 'top': Math.round(roomY * scaling.y + scaling.offset.y),
                 'left': Math.round(roomX * scaling.x + scaling.offset.x),
-                'width': localSettings.checkSize,
-                'max-width': localSettings.checkSize,
-                'min-width': localSettings.checkSize,
-                'height': localSettings.checkSize,
-                'max-height': localSettings.checkSize,
-                'min-height': localSettings.checkSize,
+                'width': checkSize,
+                'max-width': checkSize,
+                'min-width': checkSize,
+                'height': checkSize,
+                'max-height': checkSize,
+                'min-height': checkSize,
             });
 }

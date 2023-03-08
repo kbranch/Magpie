@@ -30,9 +30,14 @@ function createCheck(checkElement, mapName=null) {
     );
 }
 
+function updateCheckSize() {
+    checkSize = localSettings.checkSize / window.visualViewport.scale;
+}
+
 function createNodes(map, mapName) {
     nodes = {};
 
+    updateCheckSize();
     let scaling = getMapScaling(map);
 
     // We're in the special entrance connecting mode
