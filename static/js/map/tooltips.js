@@ -42,7 +42,7 @@ function removeNodeTooltips() {
     });
 }
 
-function updateTooltip(checkGraphic) {
+function updateTooltip(checkGraphic, reshow=false) {
     let node = nodes[$(checkGraphic).attr('data-node-id')]
 
     if (node == undefined) {
@@ -77,8 +77,12 @@ function updateTooltip(checkGraphic) {
     let tooltip;
 
     if (activated) {
-        tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
-        tooltip.setContent({'.tooltip-inner': title});
+        if (reshow) {
+            tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
+            tooltip._config.title = title;
+            tooltip.hide();
+            tooltip.show();
+        }
     }
     else {
         tooltip = new bootstrap.Tooltip(checkGraphic);

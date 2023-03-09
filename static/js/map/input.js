@@ -64,7 +64,6 @@ function nodeSecondary(element) {
         return;
     }
 
-
     if (hasAttr(element, 'data-pinned')) {
         $(element).removeAttr('data-pinned');
     }
@@ -72,7 +71,7 @@ function nodeSecondary(element) {
         $(element).attr('data-pinned', true);
     }
 
-    updateTooltip(element);
+    updateTooltip(element, true);
 
 }
 
