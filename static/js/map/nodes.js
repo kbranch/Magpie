@@ -1,6 +1,11 @@
 var nodes = {};
+var pinned = null;
 
 function removeNodes() {
+    if (pinned == null) {
+        pinned = $('[data-pinned]').attr('data-node-id');
+    }
+
     removeNodeTooltips();
     $('.check-graphic').remove();
     $('#linkFace').remove();
@@ -251,6 +256,16 @@ function drawNodes(mapName, animate=true) {
     drawLocation();
 
     removeOldNodes();
+
+    if (pinned != null){
+        let toPin = $(`[data-node-id="${pinned}"]`);
+
+        if (toPin) {
+            nodeSecondary(toPin[0]);
+        }
+
+        pinned = null;
+    }
 }
 
 function removeOldNodes() {
