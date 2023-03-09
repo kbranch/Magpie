@@ -85,11 +85,44 @@ function updateTooltip(checkGraphic, reshow=false) {
         }
     }
     else {
-        tooltip = new bootstrap.Tooltip(checkGraphic);
+        tooltip = new bootstrap.Tooltip(checkGraphic, {popperConfig:getPopperConfig});
         checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
             $('.tooltip').attr('oncontextmenu', 'return false;');
             const helpers = document.querySelectorAll('.helper');
             const helperTips = [...helpers].map(x => new bootstrap.Tooltip(x));
         })
     }
+}
+
+function getPopperConfig(config) {
+    config.onFirstUpdate = scaleTooltip;
+    config.modifiers.push({
+        name: 'eventListeners',
+        options: {
+            scroll: false,
+            resize: false,
+        }
+    });
+
+    return config;
+}
+
+function scaleTooltip(event) {
+    let transform = $(event.elements.popper).css('transform');
+    let arrowWidth = $(event.elements.arrow).width();
+    let arrowPos = event.modifiersData.arrow.x;
+    let yOrigin = event.placement == "top" ? "bottom" : "top";
+    let origin = `${arrowPos + arrowWidth / 2}px ${yOrigin}`;
+
+    if (['left', 'right'].includes(event.placement)) {
+        let arrowHeight = $(event.elements.arrow).height();
+        let arrowPos = event.modifiersData.arrow.y;
+        xOrigin = event.placement == "left" ? "right" : "left";
+        origin = `${xOrigin} ${arrowPos + arrowHeight / 2}px`;
+    }
+
+    transform = `${transform} scale(${1 / window.visualViewport.scale})`;
+
+    $(event.elements.popper).css('transform-origin', origin);
+    $(event.elements.popper).css('transform', transform);
 }
