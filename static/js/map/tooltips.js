@@ -77,9 +77,10 @@ function updateTooltip(checkGraphic, reshow=false) {
     let tooltip;
 
     if (activated) {
+        tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
+        tooltip._config.title = title;
+
         if (reshow) {
-            tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
-            tooltip._config.title = title;
             tooltip.hide();
             tooltip.show();
         }
