@@ -131,21 +131,25 @@ function applySettings() {
         autotrackerFeatures.push('gfx');
     }
 
-    iconStyles.replaceSync(`
-        #difficulty-0 { fill: ${localSettings.diff0Color}; }
-        #difficulty-0-vanilla { fill: ${localSettings.diff0VColor}; }
-        #difficulty-1 { fill: ${localSettings.diff1Color}; }
-        #difficulty-1-vanilla { fill: ${localSettings.diff1VColor}; }
-        #difficulty-2 { fill: ${localSettings.diff2Color}; }
-        #difficulty-2-vanilla { fill: ${localSettings.diff2VColor}; }
-        #difficulty-3 { fill: ${localSettings.diff3Color}; }
-        #difficulty-3-vanilla { fill: ${localSettings.diff3VColor}; }
-        #difficulty-8 { fill: ${localSettings.diff8Color}; }
-        #difficulty-8-vanilla { fill: ${localSettings.diff8VColor}; }
-        #difficulty-9 { fill: ${localSettings.diff9Color}; }
-        #difficulty-9-vanilla { fill: ${localSettings.diff9VColor}; }
-        #difficulty-checked { fill: ${localSettings.diffCheckedColor}; }
-    `);
+    styleTable = {
+        "#difficulty-0": localSettings.diff0Color,
+        "#difficulty-0-vanilla": localSettings.diff0VColor,
+        "#difficulty-1": localSettings.diff1Color,
+        "#difficulty-1-vanilla": localSettings.diff1VColor,
+        "#difficulty-2": localSettings.diff2Color,
+        "#difficulty-2-vanilla": localSettings.diff2VColor,
+        "#difficulty-3": localSettings.diff3Color,
+        "#difficulty-3-vanilla": localSettings.diff3VColor,
+        "#difficulty-8": localSettings.diff8Color,
+        "#difficulty-8-vanilla": localSettings.diff8VColor,
+        "#difficulty-9": localSettings.diff9Color,
+        "#difficulty-9-vanilla": localSettings.diff9VColor,
+        "#difficulty-checked": localSettings.diffCheckedColor,
+    }
+
+    for (const rule of iconStyles.cssRules) {
+        rule.style.fill = styleTable[rule.selectorText];
+    }
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;

@@ -65,7 +65,7 @@
     var currentX = null;
     var currentY = null;
     var overworldRoom = null;
-    var iconStyles = new CSSStyleSheet();
+    var iconStyles = $('link[href="/static/css/icons.css"]')[0].sheet;
     var local = '{{local}}' == 'True'
     var remoteProtocolVersion = null;
     var checkSize = 16;
@@ -193,8 +193,6 @@
         let checkErrors = loadCheckContents();
 
         loadBosses();
-
-        document.adoptedStyleSheets = [iconStyles];
 
         $(document).keydown(keyDown);
 
