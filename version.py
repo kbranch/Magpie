@@ -12,7 +12,7 @@ def getVersion():
 
 def getRemoteVersion():
     try:
-        request = requests.get('https://dev.magpietracker.us/version')
+        request = requests.get('https://magpietracker.us/version')
         return json.loads(request.text)
     except:
         return None
