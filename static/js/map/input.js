@@ -53,6 +53,8 @@ function nodePrimary(element, event) {
     }
     else {
         toggleNode(node);
+        let tooltip = bootstrap.Tooltip.getInstance(element);
+        tooltip.hide();
     }
 }
 
