@@ -71,8 +71,7 @@ function nodeSecondary(element) {
         $(element).attr('data-pinned', true);
     }
 
-    updateTooltip(element, true);
-
+    updateTooltip(element);
 }
 
 function nodeMiddle(element) {

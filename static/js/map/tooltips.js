@@ -42,7 +42,7 @@ function removeNodeTooltips() {
     });
 }
 
-function updateTooltip(checkGraphic, reshow=false) {
+function updateTooltip(checkGraphic) {
     let node = nodes[$(checkGraphic).attr('data-node-id')]
 
     if (node == undefined) {
@@ -75,7 +75,7 @@ function updateTooltip(checkGraphic, reshow=false) {
         tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
         tooltip._config.title = title;
 
-        if (reshow) {
+        if (tooltip._isShown()) {
             tooltip.hide();
             tooltip.show();
         }
