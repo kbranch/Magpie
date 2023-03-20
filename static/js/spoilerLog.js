@@ -95,7 +95,7 @@ function spoilEntrance(entranceId, housekeeping=true) {
 
     clearEntranceMapping(entranceId, false);
 
-    if (Entrance.isConnector(entranceId)) {
+    if (Entrance.isConnector(spoilerLog.entrances[entranceId])) {
         connectOneEndConnector(entranceId, spoilerLog.entrances[entranceId], housekeeping);
     }
     else {

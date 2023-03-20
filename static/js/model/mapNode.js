@@ -140,7 +140,7 @@ class MapNode {
             && this.isChecked
             && (this.entrance == null
                 || (this.entranceConnectedTo() != startHouse
-                    && (this.entrance.type != 'connector')
+                    && (!this.entrance.isConnectedToConnector())
                         || this.entrance.connectedTo() == 'landfill'))) {
             return true;
         }
@@ -224,7 +224,7 @@ class MapNode {
 
                     if (this.isChecked || this.checks.length == 0) {
                         if (connection?.isIncomplete()
-                            || (this.entrance.isConnector() && !this.entrance.isConnected())) {
+                            || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {
                             classes.push('partial-entrance');
                         }
                         else {
@@ -253,7 +253,7 @@ class MapNode {
             else if (this.difficulty == 'checked') {
                 if (!args.randomstartlocation 
                     || Entrance.isFound(startHouse)
-                    || this.entrance.isConnector()) {
+                    || (args.entranceshuffle != 'mixed' && this.entrance.isConnector())) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
@@ -284,7 +284,7 @@ class MapNode {
     
         $(this.graphic).attr('data-entrance-id', entrance.id);
     
-        if (entrance.isConnector()) {
+        if (entrance.isConnectedToConnector()) {
             if (entrance.isConnected()) {
                 let connection = entrance.mappedConnection();
                 $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
@@ -403,7 +403,7 @@ class MapNode {
             $(overlay).append(itemOverlay);
         }
 
-        if (this.connectorLabel
+        if ((this.connectorLabel && !pickingEntrance)
             || (this.isDungeon(pickingEntrance)
                 && activeMap == 'overworld')) {
 

@@ -32,7 +32,7 @@ function checkGraphicMouseLeave(element) {
 function entranceClicked(element) {
     let destId = $(element).attr('data-entrance-id');
 
-    if (entranceDict[graphicalMapSource].type == 'connector') {
+    if (graphicalMapType == 'connector') {
         openConnectorDialog(destId);
     }
     else {

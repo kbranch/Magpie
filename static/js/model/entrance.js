@@ -38,6 +38,10 @@ class Entrance {
         return Entrance.isConnector(this.id);
     }
 
+    isConnectedToConnector() {
+        return this.connectedTo() != null && Entrance.isConnector(this.connectedTo());
+    }
+
     isConnected() {
         return Entrance.isConnected(this.id);
     }
@@ -75,19 +79,20 @@ class Entrance {
     shouldDraw() {
         if (this.difficulty == 9
               && !localSettings.showOutOfLogic
-              && (!args.randomstartlocation || Entrance.isFound(startHouse) || this.isConnector())
+              && (!args.randomstartlocation || Entrance.isFound(startHouse) || (args.entranceshuffle != 'mixed' && this.isConnector()))
               && this.connectedTo() != startHouse
               && !this.isConnected()
-              && (args.entranceshuffle == 'none' || this.isConnector())) {
+              && (args.entranceshuffle == 'none' || (args.entranceshuffle != 'mixed' && this.isConnector()))) {
             return false;
         }
 
         return true;
     }
     
-    static validConnections(sourceId) {
+    static validConnections(sourceId, simpleOnly=false) {
         let entrance = entranceDict[sourceId];
-        let requireConnector = entrance.type == 'connector';
+        let requireConnector = args.entranceshuffle != 'mixed' && entrance.type == 'connector';
+        let requireSimple = simpleOnly || (args.entranceshuffle != 'mixed' && entrance.type != 'connector');
         let options = [];
         if (requireConnector) {
             options = randomizedEntrances.filter(x => entranceDict[x].type == 'connector'
@@ -98,15 +103,14 @@ class Entrance {
                                          .map(x => [x, entranceDict[x].name]);
         }
         else {
-            options = randomizedEntrances.filter(x => entranceDict[x].type != 'connector'
-                                                      && entranceDict[x].type != 'dummy'
+            options = randomizedEntrances.filter(x => (!requireSimple || entranceDict[x].type != 'connector')
+                                                      && ((!requireSimple && args.shufflejunk) || entranceDict[x].type != 'dummy')
                                                       && (['bingo', 'bingo-full'].includes(args.goal)
                                                           || entranceDict[x].type != 'bingo')
                                                       && (args.tradequest
                                                           || entranceDict[x].type != 'trade')
-                                                    //   && (args.logic == 'hell'
-                                                    //       || entranceDict[x].type != 'hell')
-                                                      && !Entrance.isFound(x))
+                                                      && ((requireSimple && !Entrance.isFound(x)
+                                                           || !requireSimple && !Entrance.isMapped(x))))
                                          .map(x => [x, entranceDict[x].name]);
 
             options.push(['bk_shop', entranceDict['bk_shop'].name])
@@ -146,7 +150,7 @@ class Entrance {
     }
 
     static isConnected(id) {
-        return Entrance.isConnector(id) && connections.some(x => x.containsEntrance(id));
+        return Entrance.connectedTo(id) != null && Entrance.isConnector(Entrance.connectedTo(id)) && connections.some(x => x.containsEntrance(id));
     }
 
     static mappedConnection(id) {
