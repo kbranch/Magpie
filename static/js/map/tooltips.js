@@ -31,9 +31,16 @@ function closeAllCheckTooltips() {
     }
 }
 
-// function closeAllTooltips() {
-//     $('.tooltip').tooltip('hide');
-// }
+function closeAllTooltips() {
+    closeAllCheckTooltips();
+
+    // Nuke everything else to be safe
+    let tooltipElements = $('[data-bs-toggle="tooltip"]');
+    for (const element of tooltipElements) {
+        let tooltip = bootstrap.Tooltip.getInstance(element);
+        tooltip.hide();
+    }
+}
 
 function removeNodeTooltips() {
     $('.check-graphic').each((i, e) => {

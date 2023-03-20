@@ -21,7 +21,7 @@ function pickingEntrances() {
 function drawTab(button, clear=false) {
     if (clear) {
         removeNodes();
-        closeAllCheckTooltips();
+        closeAllTooltips();
     }
 
     let mapName = getMapNameFromButton(button);

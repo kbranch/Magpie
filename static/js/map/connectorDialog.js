@@ -1,5 +1,5 @@
 function startGraphicalConnection(entranceId, type) {
-    closeAllCheckTooltips();
+    closeAllTooltips();
     graphicalMapType = type;
     graphicalMapSource = entranceId;
     graphicalMapChoices = new Set(Entrance.validConnections(entranceId, type == "simple").map(x => x[0]));
@@ -30,7 +30,7 @@ function endGraphicalConnection(destId = null) {
 }
 
 function openDeadEndDialog(entranceId) {
-    closeAllCheckTooltips();
+    closeAllTooltips();
     graphicalMapType = "connector";
     graphicalMapSource = entranceId;
     openConnectorDialog('deadEnd');

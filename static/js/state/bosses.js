@@ -24,7 +24,7 @@ function mapBoss(vanilla, actual) {
     bossMap[vanilla] = actual;
     saveBosses();
 
-    closeAllCheckTooltips();
+    closeAllTooltips();
     refreshCheckList();
 }
 

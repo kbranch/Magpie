@@ -166,7 +166,7 @@ function connectEntrances(from, to, refresh=true) {
     skipNextAnimation = true;
 
     saveEntrances();
-    closeAllCheckTooltips();
+    closeAllTooltips();
 
     if (refresh) {
         refreshCheckList();
@@ -199,7 +199,7 @@ function setStartLocation(entranceId) {
 
     saveEntrances();
     updateReverseMap();
-    closeAllCheckTooltips();
+    closeAllTooltips();
     refreshCheckList();
 }
 
@@ -226,7 +226,7 @@ function clearEntranceMapping(entranceId, housekeeping=true) {
 
     if (housekeeping) {
         saveEntrances();
-        closeAllCheckTooltips();
+        closeAllTooltips();
         refreshCheckList();
     }
 }
@@ -251,7 +251,7 @@ function mapToLandfill(entranceId) {
     }
 
     saveEntrances();
-    closeAllCheckTooltips();
+    closeAllTooltips();
     refreshCheckList();
 }
 
@@ -281,7 +281,7 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
     skipNextAnimation = true;
 
     saveEntrances();
-    closeAllCheckTooltips();
+    closeAllTooltips();
 
     if (refresh) {
         refreshCheckList();

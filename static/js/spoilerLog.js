@@ -104,7 +104,7 @@ function spoilEntrance(entranceId, housekeeping=true) {
         saveEntrances();
 
         if (housekeeping) {
-            closeAllCheckTooltips();
+            closeAllTooltips();
             refreshCheckList();
         }
     }
