@@ -31,6 +31,14 @@ function closeAllCheckTooltips() {
     }
 }
 
+function closeUnpinnedTooltips() {
+    let tooltipElements = $('[data-bs-toggle="tooltip"]:not([data-pinned])');
+    for (const element of tooltipElements) {
+        let tooltip = bootstrap.Tooltip.getInstance(element);
+        tooltip.hide();
+    }
+}
+
 function closeAllTooltips() {
     closeAllCheckTooltips();
 

@@ -1,4 +1,6 @@
 function checkGraphicMouseEnter(element) {
+    closeUnpinnedTooltips();
+
     if ($(element).hasClass('animate__fadeOut')) {
         return;
     }
@@ -27,6 +29,8 @@ function checkGraphicMouseLeave(element) {
         tooltip.hide();
         $('connection.connector-line').connections('remove');
     }
+
+    closeUnpinnedTooltips();
 }
 
 function entranceClicked(element) {
