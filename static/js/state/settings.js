@@ -45,11 +45,17 @@ function setInputValues(dataAttrName, values) {
 }
 
 function saveQuickSettings() {
+    $('#mainEnableAutotracking').prop('checked', $('#enableAutotracking').prop('checked'));
     localSettings = getInputValues('setting', localSettings);
     saveSettingsToStorage(args, localSettings);
     applySettings();
     skipNextAnimation = true;
     drawActiveTab();
+}
+
+function enableAutotrackerChanged() {
+    $('#enableAutotracking').prop('checked', $('#mainEnableAutotracking').prop('checked'));
+    saveQuickSettings();
 }
 
 function saveSettings() {

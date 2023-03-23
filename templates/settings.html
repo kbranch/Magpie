@@ -42,8 +42,8 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="col-auto">
+            <!-- </div>
+            <div class="col-auto"> -->
                 <fieldset class="form-group">
                     <legend>Items</legend>
                     <div class="row pb-3">
@@ -151,7 +151,6 @@
                                 <option value="simple">Simple</option>
                                 <option value="split">Split</option>
                                 <option value="mixed">Mixed</option>
-                                <!-- <option value="insanity">Insanity</option> -->
                             </select>
                         </div>
                     </div>
@@ -306,8 +305,8 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="col-auto">
+            <!-- </div>
+            <div class="col-auto"> -->
                 <div class="row">
                     <div class="col">
                         <input id="swapMouseButtons" data-setting="swapMouseButtons" type="checkbox" class="form-check-input">
@@ -370,6 +369,23 @@
                 <fieldset class="form-group">
                     <legend>Autotracker</legend>
                     <div class="row">
+                        <div class="col-auto">
+                            <input id="mainEnableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input" onchange="enableAutotrackerChanged()">
+                            <label for="mainEnableAutotracking" class="form-label">Enable Autotracker</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="autotrackerAddressSetting" class="form-label">Server <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026."></label>
+                            <input type="text" id="autotrackerAddressSetting" data-setting="autotrackerAddress" class="form-control" aria-label="Server" placeholder="127.0.0.1">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group">
+                    <!-- <legend>Features</legend> -->
+                    <div class="row">
                         <div class="col">
                             <input id="autotrackItems" data-setting="autotrackItems" type="checkbox" class="form-check-input">
                             <label for="autotrackItems" class="form-label">Track items</label>
@@ -415,12 +431,6 @@
                         <div class="col">
                             <input id="linkFaceSetting" data-setting="linkFace" type="checkbox" class="form-check-input">
                             <label for="linkFaceSetting" class="form-label"> <img src="static/images/linkface.png"></label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="autotrackerAddressSetting" class="form-label">Server <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026."></label>
-                            <input type="text" id="autotrackerAddressSetting" data-setting="autotrackerAddress" class="form-control" aria-label="Server">
                         </div>
                     </div>
                 </fieldset>
