@@ -16,23 +16,23 @@ Special thanks to:
 ### Releases
 Several packages are available:
 - Local, offline version that should always match the [main site](https://magpietracker.us/)
-  - [Windows](https://magpietracker.us/static/magpie-local.zip)
-  - [Linux](https://magpietracker.us/static/magpie-local-linux.zip)
-  - [Source](https://magpietracker.us/static/magpie-source.zip)
+  - [Windows](https://magpietracker.us/static/builds/magpie-local.zip)
+  - [Linux](https://magpietracker.us/static/builds/magpie-local-linux.zip)
+  - [Source](https://magpietracker.us/static/builds/magpie-source.zip)
 - Autotracker
-  - [Windows](https://magpietracker.us/static/magpie-autotracker.exe)
-  - [Linux](https://magpietracker.us/static/magpie-autotracker-linux)
+  - [Windows](https://magpietracker.us/static/builds/magpie-autotracker.exe)
+  - [Linux](https://magpietracker.us/static/builds/magpie-autotracker-linux)
 
 ### From Source
 #### Downloading
-The easiest option is to download the [source bundle](https://magpietracker.us/static/magpie-source.zip).
+The easiest option is to download the [source bundle](https://magpietracker.us/static/builds/magpie-local-linux.zip).
 
 If you're a developer or need a specific version of the source, the best option is Git. Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/Magpie.git`.
 
 If you're not familiar with Git, you can download Magpie as zip files:
  - Download the Magpie [zip file](https://github.com/kbranch/Magpie/archive/refs/heads/master.zip)
  - Download LADXR as a [separate zip](https://github.com/kbranch/LADXR/archive/refs/heads/master.zip)
-   - Note that it's hard to determine which branch of LADXR is required for any given version of Magpie. Use the [source bundle](https://magpietracker.us/static/magpie-source.zip) to avoid that issue.
+   - Note that it's hard to determine which branch of LADXR is required for any given version of Magpie. Use the [source bundle](https://magpietracker.us/static/builds/magpie-local-linux.zip) to avoid that issue.
  - Extract both zip files to separate folders (e.g. `Magpie-master` and `LADXR-master`
  - Copy everything from inside the `LADXR-master` folder into `Magpie-master/LADXR`
 
@@ -67,7 +67,7 @@ Flags can be changed by clicking the gear icon in the upper right. These are pas
 Flags that were added to the randomizer after Magpie was last updated will appear in the list. Because flags can do a lot of different things, these may or may not be relevant or functional without an update to Magpie.
 
 ## Autotracker
-Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest packaged autotracker is always available at [https://magpietracker.us/static/magpie-autotracker.exe](https://magpietracker.us/static/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
+Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest packaged autotracker is always available at [https://magpietracker.us/static/builds/magpie-autotracker.exe](https://magpietracker.us/static/builds/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
 
 No setup should be required beyond enabling autotracking in Magpie - just start the autotracker and a compatible emulator.
 
