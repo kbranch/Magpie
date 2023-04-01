@@ -50,7 +50,7 @@ def home():
     settingsOverrides = {}
     argsOverrides = {}
 
-    if request.args.get('enable_autotracking'):
+    if request.args.get('enable_autotracking') or request.args.get('enable_autotracker'):
         settingsOverrides['enableAutotracking'] = True
 
     shortString = request.args.get('shortString') 
