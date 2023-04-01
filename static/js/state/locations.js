@@ -137,6 +137,10 @@ function connectOneEndConnector(outdoors, indoors, refresh=true) {
         connectExteriors(outdoors, indoors, to, toInterior, refresh);
     }
     else {
+        if (connector == null) {
+            throw new Error(`Unable to map ${interior} to a connector`);
+        }
+
         let otherSide = connector.entrances.filter(x => Entrance.isFound(x))
                                             .map(x => Entrance.connectedFrom(x))[0] ?? null;
 
