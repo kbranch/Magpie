@@ -48,6 +48,9 @@ function closeAllTooltips() {
         let tooltip = bootstrap.Tooltip.getInstance(element);
         tooltip.hide();
     }
+
+    // No, really, everything
+    $('.tooltip').remove();
 }
 
 function removeNodeTooltips() {
@@ -91,6 +94,7 @@ function updateTooltip(checkGraphic) {
         tooltip._config.title = title;
 
         if (tooltip._isShown()) {
+            closeOtherTooltips(checkGraphic);
             tooltip.hide();
             tooltip.show();
         }
