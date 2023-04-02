@@ -275,7 +275,12 @@ function removeOldNodes() {
 
     for (const staleNodeId of oldNodeIds) {
         let node = $(`[data-node-id="${staleNodeId}"]`);
-        $(node).tooltip('hide');
+
+        tooltip = bootstrap.Tooltip.getInstance(node);
+        if (tooltip._isShown()) {
+            closeAllTooltips();
+        }
+
         $(node).removeClass('animate__bounceInDown');
         $(node).addClass('animate__fadeOut');
         $(node).find('.node-overlay-wrapper').empty();
