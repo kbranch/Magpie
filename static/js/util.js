@@ -131,7 +131,7 @@ function applySettings() {
         autotrackerFeatures.push('gfx');
     }
 
-    styleTable = {
+    iconStyleTable = {
         "#difficulty-0": localSettings.diff0Color,
         "#difficulty-0-vanilla": localSettings.diff0VColor,
         "#difficulty-1": localSettings.diff1Color,
@@ -148,8 +148,18 @@ function applySettings() {
     }
 
     for (const rule of iconStyles.cssRules) {
-        rule.style.fill = styleTable[rule.selectorText];
+        rule.style.fill = iconStyleTable[rule.selectorText];
     }
+
+    for(let i = 0; i < themeStyles.rules.length; i++) {
+        themeStyles.removeRule(0);
+    }
+
+    let themeRule = `.bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
+        background: ${localSettings.bgColor} !important;
+        color: ${localSettings.textColor} !important;
+    }`;
+    themeStyles.insertRule(themeRule, 0);
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;

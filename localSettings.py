@@ -49,6 +49,9 @@ class LocalSettings:
         self.diff9VColor = '#aaaaaa'
         self.diffCheckedColor = '#00ff00'
         self.colorAssistMaps = False
+
+        self.bgColor = '#212529'
+        self.textColor = '#f8f9fa'
     
     def parse(settingsString):
         localSettings = json.loads(settingsString)

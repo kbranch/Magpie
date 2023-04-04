@@ -232,6 +232,7 @@ function processMessage(messageText) {
     }
     catch (err) {
         addAutotrackerMessage('Error, see console');
+        console.log(`Message text: ${messageText}`);
         console.log(err);
     }
 }
