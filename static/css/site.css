@@ -180,6 +180,13 @@ img {
     max-width: 100%;
 }
 
+.map-overlay {
+    max-width: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
 .mapImage {
     max-width: 100%;
 }
