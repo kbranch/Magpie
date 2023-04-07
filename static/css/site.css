@@ -985,3 +985,9 @@ button.nav-link.active {
 body {
     overflow-y: scroll;
 }
+
+.settings-image {
+    max-width: 20px;
+    max-height: 20px;
+    margin-right: 0.25em;
+}
