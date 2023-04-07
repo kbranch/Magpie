@@ -342,7 +342,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":23,
-	   "image": "02BA",
+	   "image": "02BA-1",
 	},
 	"0x1E2":{
 	   "id":"0x1E2",
@@ -393,6 +393,7 @@ let coordDict = {
 		//   }
 	   ],
 	   "index":26,
+	   "image":"001D",
 	},
 	"0x2F2":{
 	   "id":"0x2F2",
@@ -631,6 +632,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":41,
+	   "image": "02E6",
 	},
 	"0x0CF-Owl":{
 	   "id":"0x0CF-Owl",
@@ -829,6 +831,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":55,
+	   "image":"00A8",
 	},
 	"0x0A8":{
 	   "id":"0x0A8",
@@ -842,6 +845,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":56,
+	   "image":"00A8",
 	},
 	"0x0F8":{
 	   "id":"0x0F8",
@@ -972,6 +976,7 @@ let coordDict = {
 		  }
 	   ],
 	   "index":66,
+	   "image": "02E5",
 	},
 	"0x2F4":{
 	   "id":"0x2F4",
