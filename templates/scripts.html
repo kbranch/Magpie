@@ -70,6 +70,7 @@
     var local = '{{local}}' == 'True'
     var remoteProtocolVersion = null;
     var checkSize = 16;
+    var skipSettingsSave = false;
 
     const startHouse = 'start_house';
 
@@ -246,6 +247,17 @@
 
             showErrorDialog("An error occurred while loading one or more types of data. Defaults will be loaded.", JSON.stringify(payload, null, 3));
         }
+
+        $("#argsOffcanvas").on("hide.bs.offcanvas", function() {
+            /*if(skipSettingsSave) {
+                skipSettingsSave = false;
+                console.log("skipping");
+                return;
+            }
+
+            console.log("saving");*/
+            saveSettings();
+        });
     }
 
     init();
