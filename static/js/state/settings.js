@@ -15,17 +15,6 @@ function getInputValues(dataAttrName, values) {
         values[name] = value;
     }
 
-    for (const input of document.querySelectorAll(`#quicksettings [data-${dataAttrName}]`)) {
-        let name = input.dataset[dataAttrName];
-        let value = input.value;
-
-        if (input.type == 'checkbox') {
-            value = input.checked;
-        }
-
-        values[name] = value;
-    }
-
     return values;
 }
 
@@ -45,7 +34,7 @@ function setInputValues(dataAttrName, values) {
 }
 
 function saveQuickSettings() {
-    $('#mainEnableAutotracking').prop('checked', $('#enableAutotracking').prop('checked'));
+    quickSettingsToSettings();
     localSettings = getInputValues('setting', localSettings);
     saveSettingsToStorage(args, localSettings);
     applySettings();
@@ -53,12 +42,27 @@ function saveQuickSettings() {
     drawActiveTab();
 }
 
-function enableAutotrackerChanged() {
+function quickSettingsToSettings() {
+    $('#mainEnableAutotracking').prop('checked', $('#enableAutotracking').prop('checked'));
+    $('#showOutOfLogic').prop('checked', $('#showOutOfLogicQuick').prop('checked'));
+    $('#showHigherLogic').prop('checked', $('#showHigherLogicQuick').prop('checked'));
+    $('#showChecked').prop('checked', $('#showCheckedQuick').prop('checked'));
+    $('#showVanilla').prop('checked', $('#showVanillaQuick').prop('checked'));
+    $('#showOwned').prop('checked', $('#showOwnedQuick').prop('checked'));
+}
+
+function settingsToQuickSettings() {
     $('#enableAutotracking').prop('checked', $('#mainEnableAutotracking').prop('checked'));
-    saveQuickSettings();
+    $('#showOutOfLogicQuick').prop('checked', $('#showOutOfLogic').prop('checked'));
+    $('#showHigherLogicQuick').prop('checked', $('#showHigherLogic').prop('checked'));
+    $('#showCheckedQuick').prop('checked', $('#showChecked').prop('checked'));
+    $('#showVanillaQuick').prop('checked', $('#showVanilla').prop('checked'));
+    $('#showOwnedQuick').prop('checked', $('#showOwned').prop('checked'));
 }
 
 function saveSettings() {
+    settingsToQuickSettings();
+
     args = getInputValues('flag', args);
     localSettings = getInputValues('setting', localSettings);
 
@@ -169,6 +173,8 @@ function loadSettings() {
 
     window.history.replaceState(null, null, window.location.pathname);
 
+    updateSettings();
+
     saveSettingsToStorage(args, localSettings);
 
     fixArgs(args);
@@ -181,6 +187,21 @@ function loadSettings() {
     refreshItems();
     
     return errors;
+}
+
+function updateSettings() {
+    if ('ignoreHigherLogic' in localSettings) {
+        localSettings.showHigherLogic = !localSettings.ignoreHigherLogic;
+        delete localSettings['ignoreHigherLogic'];
+    }
+    if ('hideChecked' in localSettings) {
+        localSettings.showChecked = !localSettings.hideChecked;
+        delete localSettings['hideChecked'];
+    }
+    if ('hideVanilla' in localSettings) {
+        localSettings.showVanilla = !localSettings.hideVanilla;
+        delete localSettings['hideVanilla'];
+    }
 }
 
 function fixArgs(args) {

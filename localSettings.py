@@ -9,9 +9,9 @@ class LocalSettings:
         self.animateChecks = True
         self.swapMouseButtons = False
         self.swapItemsAndMap = False
-        self.hideChecked = False
-        self.ignoreHigherLogic = False
-        self.hideVanilla = False
+        self.showChecked = True
+        self.showHigherLogic = True
+        self.showVanilla = True
         self.dungeonItemsTemplate = 'default.html'
         self.itemsTemplate = 'default.html'
         self.customDungeonItems = None

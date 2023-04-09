@@ -136,7 +136,7 @@ class MapNode {
             return true;
         }
 
-        if (localSettings.hideChecked
+        if (!localSettings.showChecked
             && this.isChecked
             && (this.entrance == null
                 || (this.entranceConnectedTo() != startHouse
@@ -345,7 +345,7 @@ class MapNode {
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
                           && this.entrance?.connectedTo() != 'landfill';
-        hideDifficulty |= localSettings.hideChecked
+        hideDifficulty |= !localSettings.showChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation
                           && !Entrance.isFound('start_house');

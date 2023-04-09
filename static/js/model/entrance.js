@@ -5,7 +5,7 @@ class Entrance {
         this.type = this.metadata.type;
         this.difficulty = entranceAccessibility[id]?.difficulty ?? -1
 
-        if (localSettings.ignoreHigherLogic && this.difficulty > 0 && this.difficulty != 8) {
+        if (!localSettings.showHigherLogic && this.difficulty > 0 && this.difficulty != 8) {
             this.difficulty = 9;
         }
     }
