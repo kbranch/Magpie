@@ -14,3 +14,4 @@ autotracking/autotracker-version
 version
 image-tools/
 deploy
+*.xcf

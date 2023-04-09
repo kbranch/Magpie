@@ -367,6 +367,59 @@
             </div>
             <div class="col-auto">
                 <fieldset class="form-group">
+                    <legend>Visibility</legend>
+                    <div class="row">
+                        <div class="col">
+                            <input id="showOutOfLogicQuick" data-setting="showOutOfLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showOutOfLogicQuick" class="form-label"><svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-9"></use></svg>Show out of logic</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input id="ignoreHigherLogicQuick" data-setting="ignoreHigherLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="ignoreHigherLogicQuick" class="form-label"><svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-2"></use></svg>Ignore higher logic levels</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input id="hideCheckedQuick" data-setting="hideChecked" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="hideCheckedQuick" class="form-label"><svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-checked"></use></svg>Hide checked locations</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input id="hideVanillaQuick" data-setting="hideVanilla" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="hideVanillaQuick" class="form-label"><svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-0-vanilla"></use></svg>Hide vanilla checks</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input id="showOwnedQuick" data-setting="showOwnedPickups" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showOwnedQuick" class="form-label" style="display: inline-block;">
+                                <div class="row">
+                                    <div class="col-auto pe-0">
+                                        <div class="quicksettings-wrapper">
+                                            <div class="node-overlay-wrapper">
+                                                <div class="icon-wrapper icon-difficulty-8">
+                                                    <svg class="icon" style="width: 100%; height: 100%;">
+                                                        <use xlink:href="#difficulty-8-vanilla"></use>
+                                                    </svg>
+                                                    <img src="static/images/MAGIC_POWDER_1.png" class="node-item-overlay" data-node-item="MAGIC_POWDER" onmousedown="preventDoubleClick(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto px-0">
+                                        Show owned vanilla pickups
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group pb-2">
                     <legend>Autotracker</legend>
                     <div class="row">
                         <div class="col-auto">
@@ -381,8 +434,8 @@
                         </div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="col-auto">
+            <!-- </div>
+            <div class="col-auto"> -->
                 <fieldset class="form-group">
                     <!-- <legend>Features</legend> -->
                     <div class="row">

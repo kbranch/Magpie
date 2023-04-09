@@ -78,6 +78,16 @@
     transform: translate(-50%, -50%);
 }
 
+.quicksettings-wrapper {
+    position: relative;
+    width: 21px;
+    height: 21px;
+}
+
+.quicksettings-col {
+    width: 290px;
+}
+
 .full {
     color: green;
 }
@@ -488,6 +498,8 @@ img {
 
 .icon-wrapper {
     float: left;
+    width: 100%;
+    height: 100%;
 }
 
 .icon {
