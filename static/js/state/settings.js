@@ -49,6 +49,7 @@ function quickSettingsToSettings() {
     $('#showChecked').prop('checked', $('#showCheckedQuick').prop('checked'));
     $('#showVanilla').prop('checked', $('#showVanillaQuick').prop('checked'));
     $('#showOwned').prop('checked', $('#showOwnedQuick').prop('checked'));
+    $('#showVanillaEntrances').prop('checked', $('#showVanillaEntrancesQuick').prop('checked'));
 }
 
 function settingsToQuickSettings() {
@@ -58,6 +59,7 @@ function settingsToQuickSettings() {
     $('#showCheckedQuick').prop('checked', $('#showChecked').prop('checked'));
     $('#showVanillaQuick').prop('checked', $('#showVanilla').prop('checked'));
     $('#showOwnedQuick').prop('checked', $('#showOwned').prop('checked'));
+    $('#showVanillaEntrancesQuick').prop('checked', $('#showVanillaEntrances').prop('checked'));
 }
 
 function saveSettings() {

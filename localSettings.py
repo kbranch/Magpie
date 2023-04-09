@@ -12,6 +12,7 @@ class LocalSettings:
         self.showChecked = True
         self.showHigherLogic = True
         self.showVanilla = True
+        self.showVanillaEntrances = True
         self.dungeonItemsTemplate = 'default.html'
         self.itemsTemplate = 'default.html'
         self.customDungeonItems = None

@@ -165,4 +165,11 @@ function applySettings() {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
         $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
     }
+
+    if (localSettings.showVanillaEntrances) {
+        $('.map-overlay').show();
+    }
+    else {
+        $('.map-overlay').hide();
+    }
 }
