@@ -1003,3 +1003,29 @@ body {
     max-height: 20px;
     margin-right: 0.25em;
 }
+
+.quicksettings-image {
+    max-width: 32px;
+    max-height: 32px;
+    margin-right: 0.25em;
+}
+
+.quicksettings-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    float: left;
+}
+
+.quicksettings-wrapper {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.settings-wrapper {
+    position: relative;
+    width: 21px;
+    height: 21px;
+}
