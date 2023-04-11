@@ -1,4 +1,9 @@
 function processCheckMessage(message) {
+    if (!autotrackerFeatures.includes('checks')) {
+        console.log("Checks feature disabled, ignoring")
+        return;
+    }
+
     if (!message.diff) {
         console.log('Receiving full autotracker checks');
         resetChecks();
@@ -28,7 +33,8 @@ function processCheckMessage(message) {
 }
 
 function processItemMessage(message) {
-    if (typeof maxInventory == 'undefined') {
+    if (!autotrackerFeatures.includes('items')) {
+        console.log("Items feature disabled, ignoring")
         return;
     }
 
@@ -47,6 +53,11 @@ function processItemMessage(message) {
 }
 
 function processEntranceMessage(message) {
+    if (!autotrackerFeatures.includes('entrances')) {
+        console.log("Entrances feature disabled, ignoring")
+        return;
+    }
+
     if (!message.diff) {
         console.log('Receiving full autotracker entrances');
         // resetEntrances();
@@ -76,6 +87,11 @@ function processEntranceMessage(message) {
 }
 
 function processLocationMessage(message) {
+    if (!autotrackerFeatures.includes('gps')) {
+        console.log("GPS feature disabled, ignoring")
+        return;
+    }
+
     let room = message.room;
     let oldMap = mapFromRoom(currentRoom);
     let newMap = mapFromRoom(room);
@@ -213,11 +229,21 @@ function processMessage(messageText) {
 
                 break;
             case 'settings':
-                $("#shortString")[0].value = message.settings;
-                loadShortString(saveOnLoad=true)
+                if (autotrackerFeatures.includes('settings')) {
+                    $("#shortString")[0].value = message.settings;
+                    loadShortString(saveOnLoad=true)
+                }
+                else {
+                    console.log("Settings feature disabled, ignoring")
+                }
                 break;
             case 'spoiler':
-                loadLogContents(message.log, false);
+                if (autotrackerFeatures.includes('spoilers')) {
+                    loadLogContents(message.log, false);
+                }
+                else {
+                    console.log("Spoilers feature disabled, ignoring")
+                }
                 break;
             case 'gfx':
                 setGraphicsPack(message.gfx);
@@ -238,6 +264,11 @@ function processMessage(messageText) {
 }
 
 function setGraphicsPack(gfx) {
+    if (!autotrackerFeatures.includes('gfx')) {
+        console.log("GFX feature disabled, ignoring")
+        return;
+    }
+
     localSettings.graphicsPack = '/' + gfx;
     setInputValues('setting', localSettings);
     saveSettingsToStorage();
