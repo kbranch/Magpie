@@ -116,7 +116,7 @@ function processHandshAckMessage(message) {
 }
 
 function connectToAutotracker() {
-    if (!localSettings.enableAutotracking) {
+    if (!localSettings.enableAutotracking || typeof maxInventory == 'undefined' || typeof randomizedEntrances == 'undefined') {
         return;
     }
 

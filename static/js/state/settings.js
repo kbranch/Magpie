@@ -1,6 +1,11 @@
 function saveSettingsToStorage(args, localSettings) {
-    localStorage.setItem('args', JSON.stringify(args));
-    localStorage.setItem('settings', JSON.stringify(localSettings));
+    if (argsAreValid(args)) {
+        localStorage.setItem('args', JSON.stringify(args));
+    }
+
+    if (settingsAreValid(localSettings)) {
+        localStorage.setItem('settings', JSON.stringify(localSettings));
+    }
 }
 
 function getInputValues(dataAttrName, values) {
@@ -80,6 +85,14 @@ function saveSettings() {
     refreshItems();
 }
 
+function argsAreValid(tempArgs) {
+    return tempArgs != null && typeof tempArgs != 'undefined' && 'logic' in tempArgs;
+}
+
+function settingsAreValid(tempSettings) {
+    return tempSettings != null && typeof tempSettings != 'undefined' && 'checkSize' in tempSettings;
+}
+
 function loadSettings() {
     let errors = [];
 
@@ -98,7 +111,7 @@ function loadSettings() {
     }
 
     try {
-        if (!('logic' in args)) {
+        if (!argsAreValid(args)) {
             args = defaultArgs;
         }
     }
@@ -111,7 +124,7 @@ function loadSettings() {
     }
 
     try {
-        if (!('checkSize' in localSettings)) {
+        if (!settingsAreValid(localSettings)) {
             localSettings = defaultSettings;
         }
     }
