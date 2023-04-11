@@ -83,6 +83,14 @@ function sortByKey(arr, key) {
     return arr.sort((a, b) => compare(key(a), key(b)))
 }
 
+function disconnectAutotracker() {
+    $('#romRow').hide();
+    if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
+        autotrackerSocket.close();
+        addAutotrackerMessage("Disconnecting...")
+    }
+}
+
 function applySettings() {
     let children = $('#firstRow').children()
     let firstElement = $(children)[0].id;
@@ -100,13 +108,10 @@ function applySettings() {
     }
 
     if (!localSettings.enableAutotracking) {
-        $('#romRow').hide();
-        if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
-            autotrackerSocket.close();
-        }
-
-        addAutotrackerMessage("Disabled")
+        disconnectAutotracker();
     }
+
+    let oldFeatures = [...autotrackerFeatures];
 
     autotrackerFeatures = [];
     if (localSettings.autotrackItems) {
@@ -129,6 +134,11 @@ function applySettings() {
     }
     if (localSettings.autotrackGraphicsPack) {
         autotrackerFeatures.push('gfx');
+    }
+
+    if (oldFeatures.length != autotrackerFeatures.length 
+        || !oldFeatures.every((x) => autotrackerFeatures.includes(x))) {
+        disconnectAutotracker();
     }
 
     iconStyleTable = {
