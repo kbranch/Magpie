@@ -171,6 +171,16 @@ function applySettings() {
     }`;
     themeStyles.insertRule(themeRule, 0);
 
+    let highlightRule = `.owned-item-square:not(.secondary) {
+        background-color: ${localSettings.highlightColor};
+    }`;
+    themeStyles.insertRule(highlightRule, 0);
+
+    highlightRule = `.owned-item-bar:not(.secondary) {
+        border-bottom-color: ${localSettings.highlightColor};
+    }`;
+    themeStyles.insertRule(highlightRule, 0);
+
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
         $(`img[data-mapname=${mapName}]`).attr('src', mapPath);

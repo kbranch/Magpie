@@ -319,7 +319,8 @@ function resetColors() {
         "diff9Color": "#444444",
         "diff9VColor": "#aaaaaa",
         "diffCheckedColor": "#00ff00",
-        'bgColor': "#212529",
-        'textColor': "#f8f9fa",
+        "bgColor": "#212529",
+        "textColor": "#f8f9fa",
+        "highlightColor": "#444444",
     });
 }
