@@ -87,12 +87,12 @@ let coordDict = {
 			 "x":1554,
 			 "y":162
 		  },
-		  {
-			 "map":"overworld",
-			 "x":1586,
-			 "y":178,
-			 "indirect":true
-		  }
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":1586,
+		// 	 "y":178,
+		// 	 "indirect":true
+		//   }
 	   ],
 	   "index":6,
 	},
@@ -380,12 +380,12 @@ let coordDict = {
 			 "x":2186,
 			 "y":146
 		  },
-		  {
-			 "map":"overworld",
-			 "x":2122,
-			 "y":162,
-			 "indirect":true
-		  },
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":2122,
+		// 	 "y":162,
+		// 	 "indirect":true
+		//   },
 		//   {
 		// 	 "map":"overworld",
 		// 	 "x":2218,
