@@ -240,7 +240,8 @@ class MapNode {
                 else if (this.checks.length > 0) {
                     classes.push(`difficulty-${this.difficulty}`);
                 }
-                else if (mappedEntrance.id == 'landfill') {
+                else if (mappedEntrance.id == 'landfill'
+                         || mappedEntrance.type == 'dummy') {
                     classes.push('difficulty-checked');
                 }
                 else if (mappedEntrance.id == 'bk_shop') {
@@ -344,7 +345,8 @@ class MapNode {
         let hideDifficulty = pickingEntrance;
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
-                          && this.entrance?.connectedTo() != 'landfill';
+                          && this.entrance?.connectedTo() != 'landfill'
+                          && !this.entrance?.connectedToDummy();
         hideDifficulty |= !localSettings.showChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation

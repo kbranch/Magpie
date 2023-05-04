@@ -14,6 +14,10 @@ class Entrance {
         return Entrance.connectedTo(this.id);
     }
 
+    connectedToDummy() {
+        return Entrance.connectedToDummy(this.id);
+    }
+
     connectedFrom() {
         return Entrance.connectedFrom(this.id);
     }
@@ -171,5 +175,10 @@ class Entrance {
         }
 
         return reverseEntranceMap[id];
+    }
+
+    static connectedToDummy(id) {
+        let entrance = Entrance.connectedTo(id);
+        return entranceDict[entrance].type == 'dummy';
     }
 }
