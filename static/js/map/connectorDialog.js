@@ -71,11 +71,11 @@ function openConnectorDialog(entranceId) {
 
     if (isDeadEnd) {
         $('#connectToWarning').hide();
-        $('.simple-connector').hide();
+        $('.simple-connector').addClass('d-none');
     }
     else {
         $('#connectToWarning').hide();
-        $('.simple-connector').show();
+        $('.simple-connector').removeClass('d-none');
     }
 
     if (!skipModal) {
@@ -268,6 +268,16 @@ function connectConnectors(simple=true) {
 
         connectOneEndConnector(source, checkedEntranceIds[0]);
     }
+
+    $('#modalClose').click();
+}
+
+function spoilConnectors() {
+    let source = graphicalMapSource;
+    let destination = $('#connectorModal').attr('data-destination');
+
+    spoilEntrance(source, false);
+    spoilEntrance(destination);
 
     $('#modalClose').click();
 }

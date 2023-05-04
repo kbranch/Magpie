@@ -46,6 +46,7 @@ function loadLogContents(logText, loadSettings=true) {
 
     setSpoilerLabel(`Loaded seed: ${log.seed}`);
     $('#spoilAllButton').show();
+    $('.spoil-connector').removeClass('d-none');
 
     if ('shortSettings' in spoilerLog && loadSettings) {
         $("#shortString")[0].value = spoilerLog.shortSettings;
