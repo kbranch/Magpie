@@ -58,17 +58,6 @@ class Connection {
         return this.entrances.filter(x => x != entranceId);
     }
 
-    thisSideBlocked(entranceId) {
-        let insideData = entranceDict[Entrance.connectedTo(entranceId)];
-        return insideData.oneWayBlocked ?? false;
-    }
-
-    otherSideBlocked(entranceId) {
-        let otherId = this.otherSide(entranceId);
-        let insideData = entranceDict[Entrance.connectedTo(otherId)];
-        return insideData?.oneWayBlocked ?? false;
-    }
-
     isIncomplete() {
         return this.entrances.length < this.connector?.entrances.length ?? 2;
     }
@@ -125,5 +114,18 @@ class Connection {
 
     static unmappedEntrances(connector) {
         return connector.entrances.filter(x => !Entrance.isFound(x));
+    }
+
+    static thisSideBlocked(entranceId) {
+        let insideData = entranceDict[Entrance.connectedTo(entranceId)];
+        return insideData.oneWayBlocked ?? false;
+    }
+
+    static otherSideBlocked(entranceId) {
+        let thisInsideData = entranceDict[Entrance.connectedTo(entranceId)];
+        let connector = Connection.findConnector({ exterior: null, interior: thisInsideData.id });
+        let otherId = connector.entrances[0] == thisInsideData.id ? connector.entrances[1] : connector.entrances[0];
+        let otherInsideData = entranceDict[otherId];
+        return otherInsideData?.oneWayBlocked ?? false;
     }
 }

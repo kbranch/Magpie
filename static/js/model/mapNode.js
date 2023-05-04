@@ -214,14 +214,14 @@ class MapNode {
                 }
 
                 if (mappedEntrance.type == 'connector') {
-                    let connection = this.entrance.mappedConnection();
-                    if (connection?.thisSideBlocked(this.entrance.id)) {
+                    if (Connection.thisSideBlocked(this.entrance.id)) {
                         classes.push('one-way-out');
                     }
-                    else if (connection?.otherSideBlocked(this.entrance.id)) {
+                    else if (Connection.otherSideBlocked(this.entrance.id)) {
                         classes.push('one-way-in');
                     }
 
+                    let connection = this.entrance.mappedConnection();
                     if (this.isChecked || this.checks.length == 0) {
                         if (connection?.isIncomplete()
                             || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {

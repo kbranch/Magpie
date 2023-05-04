@@ -111,6 +111,10 @@ function createNodes(map, mapName) {
 }
 
 function createEntranceNodes(entrances, scaling, update=false) {
+    if (!entrances) {
+        return;
+    }
+
     for (const entrance of entrances) {
         let entranceData = entranceDict[entrance];
         let coordString = MapNode.nodeId(entranceData.locations[0], scaling);
