@@ -90,12 +90,10 @@ function pruneEntranceMap() {
         return;
     }
 
-    let saveVanilla = vanillaConnectors();
-
     for (const entrance in entranceMap) {
         let mappedEntrance = entranceMap[entrance];
 
-        if (saveVanilla && Entrance.isConnector(entrance)) {
+        if (Entrance.isVanilla(entrance)) {
             continue;
         }
 
@@ -110,7 +108,7 @@ function pruneEntranceMap() {
     }
 
     for (const entrance in reverseEntranceMap) {
-        if (saveVanilla && Entrance.isConnector(entrance)) {
+        if (Entrance.isVanilla(entrance)) {
             continue;
         }
 
@@ -290,7 +288,7 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
         }
     }
 
-    Connection.createConnection([from, to], vanillaConnectors());
+    Connection.createConnection([from, to], Entrance.isVanilla(from));
 
     skipNextAnimation = true;
 

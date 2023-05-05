@@ -232,7 +232,7 @@ class NodeTooltip {
 
             pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', action, options, optionAction);
         }
-        else if (args.entranceshuffle != 'none') {
+        else if (args.entranceshuffle != 'none' && entrance.type != 'stairs') {
 
             let action = `startGraphicalConnection('${entrance.id}', '{type}')`;
 
@@ -280,7 +280,7 @@ class NodeTooltip {
                                               .replace('{attributes}', '');
         }
 
-        if (entrance.isMapped()) {
+        if (entrance.isMapped() && !entrance.isVanilla()) {
             pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping('${entrance.id}')`)
                                           .replace('{text}', 'Clear Mapping')
                                           .replace('{classes}', '')

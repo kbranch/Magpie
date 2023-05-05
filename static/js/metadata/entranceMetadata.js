@@ -1614,4 +1614,844 @@ let entranceDict = {
 		],
 		"interiorImage": "bk_shop",
 	},
+	"d1_feather_entrance": {
+		"id": "d1_feather_entrance",
+		"name": "To Feather",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d1",
+				"x": 288,
+				"y": 144
+			},
+		],
+		"interiorImage": "feather",
+	},
+	"d1_feather_exit": {
+		"id": "d1_feather_exit",
+		"name": "From Feather",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d1",
+				"x": 64,
+				"y": 592
+			},
+		],
+		"interiorImage": "feather",
+	},
+	"d2_to_miniboss": {
+		"id": "d2_to_miniboss",
+		"name": "To Miniboss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d2",
+				"x": 928,
+				"y": 528
+			}
+		],
+		"interiorImage": "d2_miniboss",
+	},
+	"d2_from_miniboss": {
+		"id": "d2_from_miniboss",
+		"name": "From Miniboss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d2",
+				"x": 112,
+				"y": 480
+			}
+		],
+		"interiorImage": "d2_miniboss",
+	},
+	"d2_to_enemy_order": {
+		"id": "d2_to_enemy_order",
+		"name": "To Enemy Order",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d2",
+				"x": 224,
+				"y": 320
+			}
+		],
+		"interiorImage": "d2_enemy_order",
+	},
+	"d2_from_enemy_order": {
+		"id": "d2_from_enemy_order",
+		"name": "From Enemy Order",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d2",
+				"x": 656,
+				"y": 144
+			}
+		],
+		"interiorImage": "d2_enemy_order",
+	},
+	"d2_to_boss": {
+		"id": "d2_to_boss",
+		"name": "To Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d2",
+				"x": 928,
+				"y": 16
+			}
+		],
+		"interiorImage": "d2_boss",
+	},
+	"d2_from_boss": {
+		"id": "d2_from_boss",
+		"name": "From Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d2",
+				"x": 928,
+				"y": 400
+			}
+		],
+		"interiorImage": "d2_boss",
+	},
+	"d3_to_crossroads": {
+		"id": "d3_to_crossroads",
+		"name": "To Crossroads",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d3",
+				"x": 256,
+				"y": 432
+			}
+		],
+	},
+	"d3_from_crossroads": {
+		"id": "d3_from_crossroads",
+		"name": "From Crossroads",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d3",
+				"x": 896,
+				"y": 432
+			}
+		],
+	},
+	"d3_to_zols": {
+		"id": "d3_to_zols",
+		"name": "To Zols",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d3",
+				"x": 1024,
+				"y": 464
+			}
+		],
+	},
+	"d3_from_zols": {
+		"id": "d3_from_zols",
+		"name": "From Zols",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d3",
+				"x": 384,
+				"y": 448
+			}
+		],
+	},
+	"d3_to_boss": {
+		"id": "d3_to_boss",
+		"name": "To Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d3",
+				"x": 336,
+				"y": 288
+			}
+		],
+		"interiorImage": "d3_boss",
+	},
+	"d3_from_boss": {
+		"id": "d3_from_boss",
+		"name": "From Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d3",
+				"x": 1088,
+				"y": 912
+			}
+		],
+		"interiorImage": "d3_boss",
+	},
+	"d4_to_nightmare_key": {
+		"id": "d4_to_nightmare_key",
+		"name": "To Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d4",
+				"x": 288,
+				"y": 272
+			}
+		],
+		"interiorImage": "d4_nightmare_key",
+	},
+	"d4_from_nightmare_key": {
+		"id": "d4_from_nightmare_key",
+		"name": "From Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d4",
+				"x": 192,
+				"y": 608
+			}
+		],
+		"interiorImage": "d4_nightmare_key",
+	},
+	"d4_to_boss": {
+		"id": "d4_to_boss",
+		"name": "To Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d4",
+				"x": 336,
+				"y": 400
+			}
+		],
+		"interiorImage": "d4_boss",
+	},
+	"d4_from_boss": {
+		"id": "d4_from_boss",
+		"name": "From Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d4",
+				"x": 176,
+				"y": 400
+			}
+		],
+		"interiorImage": "d4_boss",
+	},
+	"d5_to_ms_4": {
+		"id": "d5_to_ms_4",
+		"name": "To Master Stalfos Four",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 512,
+				"y": 928
+			}
+		],
+		"interiorImage": "d5_ms_4",
+	},
+	"d5_from_ms_4": {
+		"id": "d5_from_ms_4",
+		"name": "From Master Stalfos Four",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 288,
+				"y": 96
+			}
+		],
+		"interiorImage": "d5_ms_4",
+	},
+	"d5_to_nightmare_key": {
+		"id": "d5_to_nightmare_key",
+		"name": "To Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 720,
+				"y": 320
+			}
+		],
+		"interiorImage": "d5_nightmare_key",
+	},
+	"d5_from_nightmare_key": {
+		"id": "d5_from_nightmare_key",
+		"name": "From Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 608,
+				"y": 144
+			}
+		],
+		"interiorImage": "d5_nightmare_key",
+	},
+	"d5_to_boss": {
+		"id": "d5_to_boss",
+		"name": "To Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 592,
+				"y": 528
+			}
+		],
+		"interiorImage": "d5_boss",
+	},
+	"d5_from_boss": {
+		"id": "d5_from_boss",
+		"name": "From Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 592,
+				"y": 336
+			}
+		],
+		"interiorImage": "d5_boss",
+	},
+	"d5_to_owl": {
+		"id": "d5_to_owl",
+		"name": "To Owl",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 928,
+				"y": 576
+			}
+		],
+		"interiorImage": "d5_owl",
+	},
+	"d5_from_owl": {
+		"id": "d5_from_owl",
+		"name": "From Owl",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d5",
+				"x": 16,
+				"y": 272
+			}
+		],
+		"interiorImage": "d5_owl",
+	},
+	"d6_to_bracelet": {
+		"id": "d6_to_bracelet",
+		"name": "To Bracelet",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d6",
+				"x": 448,
+				"y": 400
+			}
+		],
+		"interiorImage": "d6_bracelet",
+	},
+	"d6_from_bracelet": {
+		"id": "d6_from_bracelet",
+		"name": "From Bracelet",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d6",
+				"x": 208,
+				"y": 832
+			}
+		],
+		"interiorImage": "d6_bracelet",
+	},
+	"d6_to_boss": {
+		"id": "d6_to_boss",
+		"name": "To Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d6",
+				"x": 832,
+				"y": 304
+			}
+		],
+		"interiorImage": "d6_boss",
+	},
+	"d6_from_boss": {
+		"id": "d6_from_boss",
+		"name": "From Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d6",
+				"x": 496,
+				"y": 400
+			}
+		],
+		"interiorImage": "d6_boss",
+	},
+	"d6_to_nightmare_key": {
+		"id": "d6_to_nightmare_key",
+		"name": "To Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d6",
+				"x": 208,
+				"y": 336
+			}
+		],
+		"interiorImage": "d6_nightmare_key",
+	},
+	"d6_from_nightmare_key": {
+		"id": "d6_from_nightmare_key",
+		"name": "From Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d6",
+				"x": 1248,
+				"y": 272
+			}
+		],
+		"interiorImage": "d6_nightmare_key",
+	},
+	"d7_to_ball": {
+		"id": "d7_to_ball",
+		"name": "To Ball",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 560,
+				"y": 768
+			}
+		],
+	},
+	"d7_from_ball": {
+		"id": "d7_from_ball",
+		"name": "From Ball",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 576,
+				"y": 288
+			}
+		],
+	},
+	"d7_to_pillar_1": {
+		"id": "d7_to_pillar_1",
+		"name": "To Pillar One",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 384,
+				"y": 544
+			}
+		],
+	},
+	"d7_from_pillar_1": {
+		"id": "d7_from_pillar_1",
+		"name": "From Pillar One",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 384,
+				"y": 32
+			}
+		],
+	},
+	"d7_to_three_of_a_kind": {
+		"id": "d7_to_three_of_a_kind",
+		"name": "To Three of a Kind",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 240,
+				"y": 544
+			}
+		],
+	},
+	"d7_from_three_of_a_kind": {
+		"id": "d7_from_three_of_a_kind",
+		"name": "From Three of a Kind",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 240,
+				"y": 32
+			}
+		],
+	},
+	"d7_to_hinox": {
+		"id": "d7_to_hinox",
+		"name": "To Hinox",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 112,
+				"y": 768
+			}
+		],
+	},
+	"d7_from_hinox": {
+		"id": "d7_from_hinox",
+		"name": "From Hinox",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 112,
+				"y": 256
+			}
+		],
+	},
+	"d7_to_top": {
+		"id": "d7_to_top",
+		"name": "To Top",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 432,
+				"y": 384
+			}
+		],
+	},
+	"d7_from_top": {
+		"id": "d7_from_top",
+		"name": "From Top",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 1088,
+				"y": 400
+			}
+		],
+	},
+	"d7_from_3f": {
+		"id": "d7_from_3f",
+		"name": "From Third Floor",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d7",
+				"x": 1088,
+				"y": 912
+			}
+		],
+	},
+	"d8_to_mimic": {
+		"id": "d8_to_mimic",
+		"name": "To Mimic",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 1136,
+				"y": 656
+			}
+		],
+		"interiorImage": "d8_mimic",
+	},
+	"d8_from_mimic": {
+		"id": "d8_from_mimic",
+		"name": "From Mimic",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 768,
+				"y": 912
+			}
+		],
+		"interiorImage": "d8_mimic",
+	},
+	"d8_to_nightmare_key": {
+		"id": "d8_to_nightmare_key",
+		"name": "To Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 752,
+				"y": 736
+			}
+		],
+		"interiorImage": "d8_nightmare_key",
+	},
+	"d8_from_nightmare_key": {
+		"id": "d8_from_nightmare_key",
+		"name": "From Nightmare Key",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 224,
+				"y": 272
+			}
+		],
+		"interiorImage": "d8_nightmare_key",
+	},
+	"d8_to_boss": {
+		"id": "d8_to_boss",
+		"name": "To Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 928,
+				"y": 656
+			}
+		],
+		"interiorImage": "d8_boss",
+	},
+	"d8_from_boss": {
+		"id": "d8_from_boss",
+		"name": "From Boss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 560,
+				"y": 304
+			}
+		],
+		"interiorImage": "d8_boss",
+	},
+	"d8_to_miniboss": {
+		"id": "d8_to_miniboss",
+		"name": "To Miniboss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 704,
+				"y": 480
+			}
+		],
+		"interiorImage": "d8_miniboss",
+	},
+	"d8_from_miniboss": {
+		"id": "d8_from_miniboss",
+		"name": "From Miniboss",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 1152,
+				"y": 192
+			}
+		],
+		"interiorImage": "d8_miniboss",
+	},
+	"d8_to_ropes": {
+		"id": "d8_to_ropes",
+		"name": "To Ropes",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 496,
+				"y": 608
+			}
+		],
+		"interiorImage": "d8_ropes",
+	},
+	"d8_from_ropes": {
+		"id": "d8_from_ropes",
+		"name": "From Ropes",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 1136,
+				"y": 992
+			}
+		],
+		"interiorImage": "d8_ropes",
+	},
+	"d8_to_back": {
+		"id": "d8_to_back",
+		"name": "To Back",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 400,
+				"y": 256
+			}
+		],
+		"interiorImage": "d8_back",
+	},
+	"d8_from_back": {
+		"id": "d8_from_back",
+		"name": "From Back",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 880,
+				"y": 256
+			}
+		],
+		"interiorImage": "d8_back",
+	},
+	"d8_to_pickups": {
+		"id": "d8_to_pickups",
+		"name": "To Pickups",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 1040,
+				"y": 576
+			}
+		],
+		"interiorImage": "d8_pickups",
+	},
+	"d8_from_pickups": {
+		"id": "d8_from_pickups",
+		"name": "From Pickups",
+		"index": 0,
+		"icon": "",
+		"type": "stairs",
+		"locations": [
+			{
+				"map": "d8",
+				"x": 752,
+				"y": 16
+			}
+		],
+		"interiorImage": "d8_pickups",
+	},
 }

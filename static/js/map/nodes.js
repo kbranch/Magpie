@@ -56,7 +56,9 @@ function createNodes(map, mapName) {
         entrances = entrances.concat(Object.keys(entranceMap));
     }
 
-    if (entrances.length > 0 && mapName == 'overworld') {
+    entrances = entrances.filter(x => entranceDict[x].locations.map(loc => loc.map).includes(mapName));
+
+    if (entrances.length > 0) {
         if (args.randomstartlocation && !Entrance.isFound(startHouse)) {
             createEntranceNodes(startLocations, scaling);
         }

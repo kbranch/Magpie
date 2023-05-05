@@ -126,14 +126,17 @@ function applySettings() {
     }
 
     removeVanillaConnectors();
-    if (vanillaConnectors()) {
-        for (const connectorId in connectorDict) {
-            let connector = connectorDict[connectorId];
-            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], refresh=false);
+    for (const connectorId in connectorDict) {
+        let connector = connectorDict[connectorId];
 
-            if (connector.entrances.length == 3) {
-                connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], refresh=false);
-            }
+        if (!Entrance.isVanilla(connector.entrances[0])) {
+            continue;
+        }
+
+        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], refresh=false);
+
+        if (connector.entrances.length == 3) {
+            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], refresh=false);
         }
     }
 

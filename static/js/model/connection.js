@@ -14,6 +14,8 @@ class Connection {
             this.connector = connector;
         }
 
+        this.map = this.connector.map;
+
         if (label == null) {
             // this.connector = connectors.filter(x => x.entrances.includes(fromInterior))[0] || null;
             // if (connector.entrances.length > 2) {
@@ -26,7 +28,7 @@ class Connection {
             //     }
             // }
 
-            let labelSet = new Set(connections.map(x => x.label));
+            let labelSet = new Set(connections.filter(x => x.map == this.map).map(x => x.label));
             for (let i = 0; i < 26; i++) {
                 let char = String.fromCharCode(65 + i);
 

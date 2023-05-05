@@ -213,7 +213,7 @@ class MapNode {
                     classes.push('start-location');
                 }
 
-                if (mappedEntrance.type == 'connector') {
+                if (mappedEntrance.type == 'connector' || mappedEntrance.type == 'stairs') {
                     if (Connection.thisSideBlocked(this.entrance.id)) {
                         classes.push('one-way-out');
                     }

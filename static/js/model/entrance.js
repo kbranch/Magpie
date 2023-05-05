@@ -42,6 +42,10 @@ class Entrance {
         return Entrance.isConnector(this.id);
     }
 
+    isVanilla() {
+        return Entrance.isVanilla(this.id);
+    }
+
     isConnectedToConnector() {
         return this.connectedTo() != null && Entrance.isConnector(this.connectedTo());
     }
@@ -150,7 +154,11 @@ class Entrance {
     }
 
     static isConnector(id) {
-        return entranceDict[id].type == 'connector';
+        return ['connector', 'stairs'].includes(entranceDict[id].type);
+    }
+
+    static isStairs(id) {
+        return entranceDict[id].type == 'stairs';
     }
 
     static isConnected(id) {
@@ -180,5 +188,9 @@ class Entrance {
     static connectedToDummy(id) {
         let entrance = Entrance.connectedTo(id);
         return entranceDict[entrance].type == 'dummy';
+    }
+
+    static isVanilla(id) {
+        return (vanillaConnectors() && Entrance.isConnector(id)) || Entrance.isStairs(id);
     }
 }
