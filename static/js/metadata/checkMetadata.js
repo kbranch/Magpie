@@ -809,13 +809,13 @@ let coordDict = {
 			 "x":1036,
 			 "y":1868
 		  },
-		  {
-			 "map":"overworld",
-			 "x":1570,
-			 "y":2014,
-			 "indirect":true,
-			 "inSimpleEntrance":true,
-		  }
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":1570,
+		// 	 "y":2014,
+		// 	 "indirect":true,
+		// 	 "inSimpleEntrance":true,
+		//   }
 	   ],
 	   "index":54,
 	},

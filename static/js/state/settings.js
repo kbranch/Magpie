@@ -324,3 +324,7 @@ function resetColors() {
         "highlightColor": "#444444",
     });
 }
+
+function vanillaConnectors() {
+    return !['split', 'mixed'].includes(args.entranceshuffle);
+}

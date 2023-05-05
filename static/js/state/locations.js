@@ -42,7 +42,7 @@ function loadEntrances() {
         dehydratedConnections = JSON.parse(localStorage.getItem('connections'));
         connections = [];
         for (const conn of dehydratedConnections) {
-            connections.push(new Connection(conn.entrances, null, conn.label));
+            connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla));
         }
     }
     catch (err) {
@@ -90,8 +90,14 @@ function pruneEntranceMap() {
         return;
     }
 
+    let saveVanilla = vanillaConnectors();
+
     for (const entrance in entranceMap) {
         let mappedEntrance = entranceMap[entrance];
+
+        if (saveVanilla && Entrance.isConnector(entrance)) {
+            continue;
+        }
 
         if (!randomizedEntrances.includes(entrance)) {
             Connection.disconnect(entrance);
@@ -104,6 +110,10 @@ function pruneEntranceMap() {
     }
 
     for (const entrance in reverseEntranceMap) {
+        if (saveVanilla && Entrance.isConnector(entrance)) {
+            continue;
+        }
+
         if (!['landfill', 'bk_shop'].includes(entrance) && !randomizedEntrances.includes(entrance)) {
             Connection.disconnect(reverseEntranceMap[entrance]);
             delete entranceMap[reverseEntranceMap[entrance]];
@@ -280,7 +290,7 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
         }
     }
 
-    Connection.createConnection([from, to]);
+    Connection.createConnection([from, to], vanillaConnectors());
 
     skipNextAnimation = true;
 

@@ -15,8 +15,14 @@ function closeOtherTooltips(element) {
 function closeAllCheckTooltips() {
     let secondaries = $('.helper');
     let nodes = $('.check-graphic');
-    $(secondaries).tooltip('hide');
-    $(nodes).tooltip('hide');
+
+    if (secondaries.length) {
+        $(secondaries).tooltip('hide');
+    }
+    if (nodes.length) {
+        $(nodes).tooltip('hide');
+    }
+
     $('connection.connector-line').connections('remove');
 
     let pinnedNodes = $('.check-graphic[data-pinned]');
@@ -35,7 +41,7 @@ function closeUnpinnedTooltips() {
     let tooltipElements = $('[data-bs-toggle="tooltip"]:not([data-pinned])');
     for (const element of tooltipElements) {
         let tooltip = bootstrap.Tooltip.getInstance(element);
-        tooltip.hide();
+        tooltip?.hide();
     }
 }
 
@@ -46,7 +52,7 @@ function closeAllTooltips() {
     let tooltipElements = $('[data-bs-toggle="tooltip"]');
     for (const element of tooltipElements) {
         let tooltip = bootstrap.Tooltip.getInstance(element);
-        tooltip.hide();
+        tooltip?.hide();
     }
 
     // No, really, everything

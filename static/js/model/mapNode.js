@@ -228,7 +228,12 @@ class MapNode {
                             classes.push('partial-entrance');
                         }
                         else {
-                            classes.push('entrance-only');
+                            if (connection.vanilla) {
+                                classes.push('vanilla-entrance-only');
+                            }
+                            else {
+                                classes.push('entrance-only');
+                            }
                         }
                     }
                     else {

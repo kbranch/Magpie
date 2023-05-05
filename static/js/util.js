@@ -91,6 +91,20 @@ function disconnectAutotracker() {
     }
 }
 
+function removeVanillaConnectors() {
+    for (const connection of [...connections]) {
+        if (connection.vanilla) {
+            for (const exterior of connection.entrances) {
+                clearEntranceMapping(exterior, false);
+            }
+        }
+    }
+
+    connections = connections.filter(x => !x.vanilla);
+
+    saveEntrances();
+}
+
 function applySettings() {
     let children = $('#firstRow').children()
     let firstElement = $(children)[0].id;
@@ -110,6 +124,20 @@ function applySettings() {
     if (!localSettings.enableAutotracking) {
         disconnectAutotracker();
     }
+
+    removeVanillaConnectors();
+    if (vanillaConnectors()) {
+        for (const connectorId in connectorDict) {
+            let connector = connectorDict[connectorId];
+            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], refresh=false);
+
+            if (connector.entrances.length == 3) {
+                connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], refresh=false);
+            }
+        }
+    }
+
+    saveEntrances();
 
     let oldFeatures = [...autotrackerFeatures];
 

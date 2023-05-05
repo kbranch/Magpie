@@ -381,6 +381,15 @@ img {
     z-index: 3;
 }
 
+.vanilla-entrance-only:not(.unmapped-entrance) {
+    border-style: none;
+    background-image: url('/static/images/vanilla-entrance.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 3;
+}
+
 .one-way-out:before {
     content: '';
     background-image: url('/static/images/one-way-out.svg');

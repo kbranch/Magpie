@@ -51,12 +51,17 @@ function createNodes(map, mapName) {
         return;
     }
 
-    if (randomizedEntrances.length > 0 && mapName == 'overworld') {
+    let entrances = [...randomizedEntrances];
+    if (localSettings.showVanillaEntrances) {
+        entrances = entrances.concat(Object.keys(entranceMap));
+    }
+
+    if (entrances.length > 0 && mapName == 'overworld') {
         if (args.randomstartlocation && !Entrance.isFound(startHouse)) {
             createEntranceNodes(startLocations, scaling);
         }
         else {
-            createEntranceNodes(randomizedEntrances, scaling);
+            createEntranceNodes(entrances, scaling);
         }
     }
 

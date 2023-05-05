@@ -1,9 +1,10 @@
 class Connection {
-    constructor(exteriors, connector, label=null) {
+    constructor(exteriors, connector, label=null, vanilla=false) {
         if (!exteriors) {
             return;
         }
 
+        this.vanilla = vanilla;
         this.entrances = exteriors;
 
         if (connector == null) {
@@ -94,7 +95,7 @@ class Connection {
         return connections.filter(x => x.connector == connector)[0] || null;
     }
 
-    static createConnection(entrances) {
+    static createConnection(entrances, vanilla=false) {
         let connector = Connection.findConnector({ exterior: entrances[0] });
 
         let connection = Connection.existingConnection(connector);
@@ -103,7 +104,7 @@ class Connection {
             return;
         }
 
-        connections.push(new Connection(entrances, connector));
+        connections.push(new Connection(entrances, connector, null, vanilla));
     }
 
     static isIncomplete({ exterior=null, interior=null }) {
