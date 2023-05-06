@@ -267,7 +267,7 @@ function mapToLandfill(entranceId) {
     refreshCheckList();
 }
 
-function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
+function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save=true) {
     if (refresh) {
         pushUndoState();
     }
@@ -292,8 +292,11 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true) {
 
     skipNextAnimation = true;
 
-    saveEntrances();
     closeAllTooltips();
+
+    if (save) {
+        saveEntrances();
+    }
 
     if (refresh) {
         refreshCheckList();

@@ -92,6 +92,10 @@ function disconnectAutotracker() {
 }
 
 function removeVanillaConnectors() {
+    if (connections.length == 0) {
+        return;
+    }
+
     for (const connection of [...connections]) {
         if (connection.vanilla) {
             for (const exterior of connection.entrances) {
@@ -133,14 +137,12 @@ function applySettings() {
             continue;
         }
 
-        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], refresh=false);
+        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], refresh=false, save=false);
 
         if (connector.entrances.length == 3) {
-            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], refresh=false);
+            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], refresh=false, save=false);
         }
     }
-
-    saveEntrances();
 
     let oldFeatures = [...autotrackerFeatures];
 
