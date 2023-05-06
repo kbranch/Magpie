@@ -328,3 +328,14 @@ function resetColors() {
 function vanillaConnectors() {
     return !['split', 'mixed'].includes(args.entranceshuffle);
 }
+
+function resetSession() {
+    resetInventory();
+    resetLocations();
+    resetCheckContents();
+    resetBosses();
+    applySettings();
+
+    refreshImages();
+    refreshCheckList();
+}
