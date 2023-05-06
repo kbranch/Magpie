@@ -351,6 +351,8 @@ class MapNode {
                           && this.entrance?.isMapped()
                           && this.entrance?.connectedTo() != 'landfill'
                           && !this.entrance?.connectedToDummy();
+        hideDifficulty |= difficulty == 'checked'
+                          && this.entrance?.isConnectedToConnector();
         hideDifficulty |= !localSettings.showChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation
