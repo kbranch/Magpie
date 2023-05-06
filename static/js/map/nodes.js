@@ -72,6 +72,7 @@ function createNodes(map, mapName) {
     let checks = $('li[data-logic]').toArray()
                     .map(x => createCheck(x, mapName))
                     .filter(x => x.shouldDraw());
+    let unclaimedChecks = {};
 
     for (const check of checks) {
         if (!localSettings.showOwnedPickups
@@ -97,6 +98,7 @@ function createNodes(map, mapName) {
                 let node = nodes[coordString];
 
                 if (node.entrance && !node.entrance.isFound()) {
+                    unclaimedChecks[check.id] = check;
                     continue;
                 }
             }
@@ -105,7 +107,7 @@ function createNodes(map, mapName) {
         }
     }
 
-    distributeChecks();
+    distributeChecks(unclaimedChecks);
 
     for (const key in nodes) {
         let node = nodes[key];
@@ -157,7 +159,7 @@ function createBossNodes(scaling, mapName) {
     }
 }
 
-function distributeChecks() {
+function distributeChecks(unclaimedChecks) {
     let checksByEntrance = {'landfill': [], 'bk_shop': []};
     let checksByConnector = {};
     let entrancesByConnector = {};
@@ -185,14 +187,21 @@ function distributeChecks() {
         let entranceId = node.entrance.id;
         if (shuffleConnectors
             && node.entrance.isConnector()) {
-            let connector = node.entrance.metadata.connector;
-            if (!(connector in checksByConnector)) {
-                checksByConnector[connector] = new Set();
-                entrancesByConnector[connector] = new Set();
+            let connectorId = node.entrance.metadata.connector;
+            let connector = connectorDict[connectorId];
+
+            if (!(connectorId in checksByConnector)) {
+                checksByConnector[connectorId] = new Set();
+                entrancesByConnector[connectorId] = new Set();
             }
 
-            node.checks.map(x => checksByConnector[connector].add(x));
-            entrancesByConnector[connector].add(entranceId);
+            if (node.entrance.isFound()) {
+                connector.checks.filter(x => x in unclaimedChecks)
+                                .map(x => checksByConnector[connectorId].add(unclaimedChecks[x]));
+            }
+
+            node.checks.map(x => checksByConnector[connectorId].add(x));
+            entrancesByConnector[connectorId].add(entranceId);
         }
         else {
             checksByEntrance[entranceId] = node.checks;

@@ -223,21 +223,20 @@ class MapNode {
 
                     let connection = this.entrance.mappedConnection();
                     if (this.isChecked || this.checks.length == 0) {
-                        if (connection?.isIncomplete()
-                            || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {
-                            classes.push('partial-entrance');
+                        if (connection?.vanilla) {
+                            classes.push('vanilla-entrance-only');
                         }
                         else {
-                            if (connection.vanilla) {
-                                classes.push('vanilla-entrance-only');
-                            }
-                            else {
-                                classes.push('entrance-only');
-                            }
+                            classes.push('entrance-only');
                         }
                     }
                     else {
                         classes.push(`difficulty-${this.difficulty}`);
+                    }
+
+                    if (connection?.isIncomplete()
+                        || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {
+                        classes.push('partial-entrance');
                     }
 
                     classes.push('connector');
