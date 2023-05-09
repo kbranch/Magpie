@@ -303,6 +303,39 @@ def dumpIcon(source, dest, sprite):
         icon = deactivateIcon(icon)
         icon.save(dest + name + '.png')
 
+def dumpRomForPhotos(path, output, palette):
+    with open(path, 'rb') as iFile:
+        data = bytearray(iFile.read())
+
+    icon = Image.new("P", (640, math.floor(len(data) / 128)))
+    for idx in range(0, math.floor(len(data) / 16) - 1):#4096*4):
+        buffer = bytearray(b'\x00' * 16 * 8)
+
+        for y in range(16):
+            a = data[idx * 16 + y * 2]
+            b = data[idx * 16 + y * 2 + 1]
+
+            for x in range(8):
+                v = 0
+                if a & (0x80 >> x):
+                    v |= 1
+                if b & (0x80 >> x):
+                    v |= 2
+                buffer[x+y*8] = v
+
+        tile = Image.frombytes('P', (8, 8), bytes(buffer))
+        x = (idx * 8) % 160 + (160 * (idx // 16392))
+        y = (math.floor((idx % 16392) / 20)) * 8
+
+        icon.paste(tile, (x, y))
+    
+    palette[0] = 255
+    palette[1] = 0
+    palette[2] = 0
+    palette[3] = 0
+    icon.putpalette(palette, rawmode='RGBA')
+    icon.save(output)
+
 def dumpSpriteSheet(path, output, palette):
     with open(path, 'rb') as iFile:
         data = bytearray(iFile.read())
@@ -376,29 +409,33 @@ def main():
 
     # print(palettes)
 
-    hashes = {}
-    with os.scandir(gfxPath) as ls:
-        for entry in ls:
-            if entry.name.endswith('.bin') and entry.is_file():
-                destPath = f'./static/images/{entry.name[:-4]}/'
+    dumpSprites = False
 
-                if not os.path.exists(destPath):
-                    os.makedirs(destPath)
+    if(dumpSprites):
+        hashes = {}
+        with os.scandir(gfxPath) as ls:
+            for entry in ls:
+                if entry.name.endswith('.bin') and entry.is_file():
+                    destPath = f'./static/images/{entry.name[:-4]}/'
 
-                for sprite in sprites:
-                    dumpIcon(entry.path, destPath, sprite)
-                
-                dumpJump(entry.path, destPath)
+                    if not os.path.exists(destPath):
+                        os.makedirs(destPath)
 
-                with open(entry.path, 'rb') as iFile:
-                    data = bytearray(iFile.read(256))
-                    hashes[hashlib.sha1(data[:64]).hexdigest()] = entry.name[:-4]
-    
-    print(hashes)
+                    for sprite in sprites:
+                        dumpIcon(entry.path, destPath, sprite)
+                    
+                    dumpJump(entry.path, destPath)
+
+                    with open(entry.path, 'rb') as iFile:
+                        data = bytearray(iFile.read(256))
+                        hashes[hashlib.sha1(data[:64]).hexdigest()] = entry.name[:-4]
+        
+        print(hashes)
+    else:
+        dumpRomForPhotos('/home/kbranch/Downloads/LADXR_D23D6DD7703CC3E6C121574CBFA1AF67 (9).gbc', f'./graphics/rom.png', palettes[0])
 
     # i = 0
     # for palette in palettes:
-    #     dumpSpriteSheet('./LADXR/gfx/AgesGirl.bin', f'./graphics/sheet-{i}.png', palette)
     #     i += 1
 
     # for room_index in list(range(0x100)) + ["Alt06", "Alt0E", "Alt1B", "Alt2B", "Alt79", "Alt8C"]:
