@@ -195,7 +195,7 @@ function distributeChecks(unclaimedChecks) {
                 entrancesByConnector[connectorId] = new Set();
             }
 
-            if (node.entrance.isFound()) {
+            if (connector && node.entrance.isFound()) {
                 connector.checks.filter(x => x in unclaimedChecks)
                                 .map(x => checksByConnector[connectorId].add(unclaimedChecks[x]));
             }
