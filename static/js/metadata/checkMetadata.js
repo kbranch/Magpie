@@ -330,11 +330,11 @@ let coordDict = {
 	   "area":"Tal Tal Mountains",
 	   "name":"Access Tunnel Bombable Heart Piece",
 	   "locations":[
-		  {
-			 "map":"overworld",
-			 "x":938,
-			 "y":178
-		  },
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":938,
+		// 	 "y":178
+		//   },
 		  {
 			 "map":"overworld",
 			 "x":1182,
@@ -566,16 +566,16 @@ let coordDict = {
 	   "area":"Tal Tal Mountains",
 	   "name":"Access Tunnel Interior",
 	   "locations":[
-		  {
-			 "map":"overworld",
-			 "x":1182,
-			 "y":162
-		  },
-		  {
-			 "map":"overworld",
-			 "x":1424,
-			 "y":130
-		  }
+			{
+				"map": "overworld",
+				"x": 1392,
+				"y": 130
+			},
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":1424,
+		// 	 "y":130
+		//   }
 	   ],
 	   "index":37,
 	   "image": "02BB",
@@ -1035,11 +1035,11 @@ let coordDict = {
 	   "area":"Koholint Prairie",
 	   "name":"Graveyard Connector",
 	   "locations":[
-		  {
-			 "map":"overworld",
-			 "x":858,
-			 "y":958
-		  },
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":858,
+		// 	 "y":958
+		//   },
 		  {
 			 "map":"overworld",
 			 "x":1068,
@@ -1069,7 +1069,7 @@ let coordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":152,
+			 "x":178,
 			 "y":292
 		  }
 	   ],
@@ -1096,7 +1096,7 @@ let coordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":152,
+			 "x":178,
 			 "y":292
 		  }
 	   ],
@@ -1121,11 +1121,11 @@ let coordDict = {
 	   "area":"Mysterious Woods",
 	   "name":"Cave Skull Heart Piece",
 	   "locations":[
-		  {
-			 "map":"overworld",
-			 "x":128,
-			 "y":682
-		  },
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":128,
+		// 	 "y":682
+		//   },
 		  {
 			 "map":"overworld",
 			 "x":436,
@@ -1145,11 +1145,11 @@ let coordDict = {
 			 "x":436,
 			 "y":828
 		  },
-		  {
-			 "map":"overworld",
-			 "x":128,
-			 "y":682
-		  }
+		//   {
+		// 	 "map":"overworld",
+		// 	 "x":128,
+		// 	 "y":682
+		//   }
 	   ],
 	   "index":78,
 	   "image": "02BD",

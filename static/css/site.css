@@ -494,6 +494,10 @@ img {
     z-index: 2;
 }
 
+.connector:not([data-difficulty="checked"]) {
+    z-index: 10;
+}
+
 .difficulty-8:not(.vanilla):before {
     content: '';
     background-image: url('/static/images/exclamation-mark.svg');
