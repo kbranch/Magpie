@@ -78,7 +78,7 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
 
 def getAllItems(args):
     logic = getLogicWithoutER(args)
-    pool = itempool.ItemPool(logic, args, random.Random()).toDict()
+    pool = itempool.ItemPool(logic, args, random.Random(), False).toDict()
 
     # No dungeons mode seems to not have bombs sometimes due to the rupee randomization
     # Force a bomb into the pool to fix it
