@@ -19,7 +19,7 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
             normalLogics.append(log)
 
     checkAccessibility = getCheckAccessibility(allChecks, normalLogics, trackerLogic, inventory)
-    entranceAccessibility = getEntranceAccessibility(allEntrances, normalLogics, inventory)
+    entranceAccessibility = getEntranceAccessibility(allEntrances, normalLogics, trackerLogic, inventory)
 
     return Accessibility(checkAccessibility, entranceAccessibility)
 
@@ -103,7 +103,7 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
 
     return accessibility
 
-def getEntranceAccessibility(allEntrances, logics, inventory):
+def getEntranceAccessibility(allEntrances, logics, trackerLogic, inventory):
     accessibility = {}
     entrances = {}
 
@@ -115,17 +115,25 @@ def getEntranceAccessibility(allEntrances, logics, inventory):
         
         accessibility[logic] = set(loadEntrances(logic, inventory))
         outOfLogic = outOfLogic.difference(accessibility[logics[i]])
+
+    accessibility[trackerLogic] = set(loadEntrances(trackerLogic, inventory))
+    outOfLogic = outOfLogic.difference(accessibility[trackerLogic])
     
     # Remove duplicate entrances from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
+
+    accessibility[trackerLogic] = accessibility[trackerLogic].difference(accessibility[logics[0]])
     
     # Convert the entrance IDs to Entrance objects
     for i in range(len(logics)):
         for name in accessibility[logics[i]]:
             entrance = Entrance(name, i)
             entrances[name] = entrance
+
+    for name in accessibility[trackerLogic]:
+        entrances[name] = Entrance(name, 8)
 
     for name in outOfLogic:
         entrances[name] = Entrance(name, 9)
