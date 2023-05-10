@@ -473,6 +473,10 @@ img {
     z-index: 2;
 }
 
+.entrance-only.unmapped-entrance.entrance-difficulty-8 {
+    z-index: 2;
+}
+
 .entrance-only.unmapped-entrance.entrance-difficulty-9 {
     z-index: 2;
 }
@@ -498,7 +502,7 @@ img {
     z-index: 10;
 }
 
-.difficulty-8:not(.vanilla):before {
+.difficulty-8:not(.vanilla) .node-overlay-wrapper:before, .entrance-difficulty-8:not(.vanilla) .node-overlay-wrapper:before, .difficulty-8.static-difficulty-wrapper:before {
     content: '';
     background-image: url('/static/images/exclamation-mark.svg');
     background-size: contain;
