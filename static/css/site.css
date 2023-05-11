@@ -284,14 +284,21 @@ img {
     font-size: var(--bs-tooltip-font-size) !important;
 }
 
-.tooltip-item:hover .tooltip-check {
-    background-color: #444;
+.tooltip-item .tooltip-check {
+    pointer-events: none;
+    background-color: rgba(255, 255, 255, 0);
+    color: var(--bs-tooltip-color);
+    border-radius: 3px;
+}
+
+.tooltip-body .tooltip-item:hover {
+    background-color: rgba(255, 255, 255, .2);
     color: var(--bs-tooltip-color);
     border-radius: 3px;
 }
 
 .tooltip-item:hover {
-    background-color: #444;
+    background-color: rgba(255, 255, 255, .1);
     color: var(--bs-tooltip-color);
     border-radius: 3px;
 }
@@ -330,8 +337,8 @@ img {
     cursor: default;
 }
 
-.text-check:hover {
-    background-color: #444;
+.text-check-col:hover {
+    background-color: rgba(255, 255, 255, .1);
     border-radius: 3px;
 }
 
@@ -857,7 +864,7 @@ button.nav-link.active {
 }
 
 .dropdown-item:focus {
-    background-color: #444;
+    background-color: rgba(255, 255, 255, .1);
     color: var(--bs-tooltip-color);
     border-radius: 3px;
 }
@@ -1052,4 +1059,12 @@ body {
     position: relative;
     width: 21px;
     height: 21px;
+}
+
+.card-header {
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.accordion-collapse {
+    transition: none !important;
 }

@@ -56,8 +56,10 @@
 
         <div id="collapse-{{safeLogic}}" class="accordion-collapse collapse{{ns.show}}" aria-labelledby="heading-{{safeLogic}}" data-bs-parent="#mapAccordion">
             <div class="accordion-body">
-                <div class="row" data-logic="{{logic.friendlyName}}" onclick="preventDoubleClick(event)">
-                    {{ logicContents(checkAccessibility[logic], logic.friendlyName) }}
+                <div class="container">
+                    <div class="row grid" data-logic="{{logic.friendlyName}}" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
+                        {{ logicContents(checkAccessibility[logic], logic.friendlyName) }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -109,4 +111,13 @@
     var mapTooltipList = [...mapTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
     new bootstrap.Tooltip(document.getElementById("trackerLogicHelp"));
+
+    function applyMasonry() {
+        $('.grid').masonry({
+            transitionDuration: 0,
+        });
+    }
+
+    applyMasonry();
+    $('.accordion-collapse').on('shown.bs.collapse', () => applyMasonry());
 </script>
