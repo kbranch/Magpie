@@ -239,6 +239,8 @@ function fixArgs(args) {
     if (args.owlstatues == 'none') {
         args.owlstatues = '';
     }
+
+    args.nagmessages = false;
 }
 
 function getState() {
