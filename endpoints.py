@@ -1,4 +1,5 @@
 import base64
+import socket
 import platform
 import traceback
 import jsonpickle
@@ -18,6 +19,7 @@ app.jinja_options['lstrip_blocks'] = True
 
 local = False
 diskSettings = None
+hostname = socket.gethostname()
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
@@ -85,6 +87,7 @@ def home():
                                          version=getVersion(),
                                          remoteVersion=remoteVersion,
                                          diskSettings=getDiskSettings(),
+                                         hostname=hostname,
                                          )
 
 @app.route("/items", methods=['POST'])
