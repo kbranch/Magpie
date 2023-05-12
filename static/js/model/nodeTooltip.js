@@ -26,8 +26,8 @@ class NodeTooltip {
         </div>
     </div>
 </li>`;
-        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
-        const helperTitleTemplate = `<img src="static/images/checks/{id}.png">`;
+        const helperTemplate = `<img class='helper' src='static/images/light-question-circle.svg'>`;
+        const helperTooltipTemplate = ` data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='<img src="static/images/checks/{id}.png">'`;
 
         let uniqueIds = this.node.uniqueCheckIds();
         let areaHtml = '';
@@ -40,10 +40,11 @@ class NodeTooltip {
             let metadata = coordDict[id];
             let graphic = this.checkGraphicHtml(id);
             let name = metadata.name;
+            let helperTooltipAttrs = "";
 
             if ('image' in metadata) {
-                let title = helperTitleTemplate.replace('{id}', metadata.image);
-                name += helperTemplate.replace('{title}', title);
+                helperTooltipAttrs = helperTooltipTemplate.replace('{id}', metadata.image);
+                name += helperTemplate;
             }
 
             if (!(metadata.area in areas)) {
@@ -55,7 +56,7 @@ class NodeTooltip {
                             .replace('{name}', name)
                             .replace('{vanilla}', isVanilla ? ' data-vanilla="true"' : '');
 
-            areas[metadata.area] += NodeTooltip.createCheckDropdown(line, "toggleSingleNodeCheck($(this).find('[data-check-id]'));", pinned, id);
+            areas[metadata.area] += NodeTooltip.createCheckDropdown(line, "toggleSingleNodeCheck($(this).find('[data-check-id]'));", pinned, id, helperTooltipAttrs);
         }
 
         for (const area of sortByKey(Object.keys(areas), x => [x])) {
@@ -79,7 +80,7 @@ class NodeTooltip {
         return title;
     }
 
-    static createCheckDropdown(title, action, pinned, checkId) {
+    static createCheckDropdown(title, action, pinned, checkId, helperTooltipAttrs="") {
         let items = '';
 
         if (pinned) {
@@ -87,7 +88,7 @@ class NodeTooltip {
         }
 
         return `<div class="btn-group dropend">
-        <button type="button" class="btn tooltip-item text-start p-0" onclick="${action}">${title}</button>
+        <button type="button" class="btn tooltip-item text-start p-0" onclick="${action}"${helperTooltipAttrs}>${title}</button>
         <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
         <ul class="dropdown-menu">
             ${items}

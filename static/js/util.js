@@ -58,7 +58,7 @@ function modifyTooltipAllowList() {
     allowList.img.push('data-bs-custom-class');
     allowList.img.push('data-node-item');
     allowList.img.push('src');
-    allowList.button = ['class', 'type', 'data-value', 'onclick', 'data-bs-toggle', 'aria-expanded'];
+    allowList.button = ['class', 'type', 'data-value', 'onclick', 'data-bs-toggle', 'aria-expanded', 'data-bs-custom-class', 'data-bs-html', 'data-bs-title'];
 }
 
 function preventDoubleClick(event) {
