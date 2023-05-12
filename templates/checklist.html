@@ -82,7 +82,9 @@
 
         <div id="collapse-Checked" class="accordion-collapse collapse" aria-labelledby="heading-Checked" data-bs-parent="#mapAccordion">
             <div class="accordion-body">
-                <div class="row" data-logic="Checked" onclick="preventDoubleClick(event)">
+                <div class="container">
+                    <div class="row grid" data-logic="Checked" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,11 +115,13 @@
     new bootstrap.Tooltip(document.getElementById("trackerLogicHelp"));
 
     function applyMasonry() {
-        $('.grid').masonry({
-            transitionDuration: 0,
-        });
+        $('.grid').masonry('reloadItems');
+        $('.grid').masonry('layout');
     }
 
-    applyMasonry();
+    $('.grid').masonry({
+        transitionDuration: 0,
+    });
+
     $('.accordion-collapse').on('shown.bs.collapse', () => applyMasonry());
 </script>

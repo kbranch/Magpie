@@ -162,6 +162,10 @@ function moveCheckToChecked(element, doLinked=false, updateDungeonCount=true) {
         }
     }
 
+    if (typeof applyMasonry === "function") {
+        applyMasonry();
+    }
+
     return itemsChanged;
 }
 
@@ -224,6 +228,10 @@ function moveCheckFromChecked(element, doLinked=false, updateDungeonCount=true) 
         $(sourceLogic).addClass('hidden');
     }
 
+    if (typeof applyMasonry === "function") {
+        applyMasonry();
+    }
+
     return itemsChanged;
 }
 
@@ -241,6 +249,10 @@ function refreshChecked() {
 
     if (updateDungeons) {
         updateDungeonItems();
+    }
+
+    if (typeof applyMasonry === "function") {
+        applyMasonry();
     }
 }
 
