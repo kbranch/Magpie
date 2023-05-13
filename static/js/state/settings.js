@@ -275,6 +275,7 @@ function importState(data) {
                 entranceMap = state.entranceMap;
                 connections = state.connections;
                 checkContents = state.checkContents;
+                updateState();
                 saveCheckContents();
                 saveLocations();
                 saveInventory();
@@ -340,4 +341,28 @@ function resetSession() {
 
     refreshImages();
     refreshCheckList();
+}
+
+function updateState() {
+    if (checkedChecks.constructor == Array) {
+        checkedChecks = new Set(checkedChecks);
+    }
+    else {
+        let keys = Object.keys(checkedChecks);
+        if (keys.length > 0 && keys[0].includes('-')) {
+            // We've got an old-style dictionary
+            let set = new Set();
+            for (const key in checkedChecks) {
+                let lastDash = key.indexOf('-');
+                let area = key.substring(0, lastDash);
+                let name = key.substring(lastDash + 1, key.length);
+
+                Object.keys(coordDict).filter(id => coordDict[id].area == area && coordDict[id].name == name)
+                                      .map(id => set.add(id));
+            }
+
+            checkedChecks = set;
+            saveChecked();
+        }
+    }
 }

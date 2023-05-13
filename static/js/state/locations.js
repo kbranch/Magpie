@@ -58,7 +58,7 @@ function loadEntrances() {
 
 function loadChecked() {
     try {
-        checkedChecks = new Set(JSON.parse(localStorage.getItem('checkedChecks')));
+        checkedChecks = JSON.parse(localStorage.getItem('checkedChecks'));
     }
     catch (err) {
     }
@@ -66,6 +66,8 @@ function loadChecked() {
     if (checkedChecks == null) {
         checkedChecks = new Set();
     }
+
+    updateState();
 }
 
 function resetLocations() {

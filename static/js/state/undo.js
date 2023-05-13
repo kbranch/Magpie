@@ -5,7 +5,7 @@ function resetUndoRedo() {
 
 function getUndoState() {
     let state = new Object();
-    state.checkedChecks = Object.assign({}, checkedChecks);
+    state.checkedChecks = new Set(checkedChecks);
     state.entranceMap = Object.assign({}, entranceMap);
     state.connections = connections.map(x => x.clone());
     state.checkContents = Object.assign({}, checkContents);
