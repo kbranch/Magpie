@@ -8,6 +8,7 @@ from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request
 
+import ladxrInterface
 from version import *
 from trackables import *
 from localSettings import LocalSettings, updateSettings
@@ -217,7 +218,8 @@ def renderCheckList():
         result = render_template("checklist.html", checkAccessibility=accessibility.checks,
                                                  entranceAccessibility=jsonpickle.encode(accessibility.entrances),
                                                  logics=logics,
-                                                 allChecks=allChecks,
+                                                 checkCount=len(allChecks),
+                                                 allChecks=ladxrInterface.allChecks.values(),
                                                  entrances=jsonpickle.encode(entrances),
                                                  startLocations=jsonpickle.encode(getStartLocations(args)),
                                                  )

@@ -69,7 +69,7 @@ function createNodes(map, mapName) {
 
     createBossNodes(scaling, mapName);
 
-    let checks = $('li[data-logic]').toArray()
+    let checks = $('li[data-logic]:not([data-logic="Checked"]').toArray()
                     .map(x => createCheck(x, mapName))
                     .filter(x => x.shouldDraw());
     let unclaimedChecks = {};

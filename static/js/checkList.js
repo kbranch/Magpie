@@ -33,8 +33,7 @@ function toggleNode(node) {
 
 function toggleSingleNodeCheck(check) {
     let id = $(check).attr('data-check-id');
-    let textCheck = $(`li[data-check-id="${id}"`);
-    toggleCheck(null, textCheck);
+    toggleCheck(null, id);
 }
 
 function toggleChecks(checkIds) {
@@ -43,45 +42,39 @@ function toggleChecks(checkIds) {
     pushUndoState();
 
     for (const id of checkIds) {
-        let textCheck = $(`li[data-check-id="${id}"`);
-        itemsChanged |= toggleCheck(null, textCheck, draw=false, pushUndo=false);
+        itemsChanged |= toggleCheck(null, id, draw=false, pushUndo=false);
     }
+
+    refreshChecked();
 
     if (itemsChanged) {
         refreshCheckList();
     }
 }
 
-function toggleCheck(event, elements, draw=true, pushUndo=true) {
+function toggleCheck(event, id, draw=true, pushUndo=true) {
     let itemsChanged = false;
 
     if (pushUndo) {
         pushUndoState();
     }
 
-    for (const element of elements) {
-        let area = $(element).attr('data-checkarea');
-        let name = $(element).attr('data-checkname');
-        let logic = $(element).closest(".row[data-logic]").attr('data-logic');
-        let key = getCheckedKey(area, name);
-        let id = $(element).attr('data-check-id');
-
-        if (logic != 'Checked') {
-            checkedChecks.add(id);
-
-            itemsChanged = moveCheckToChecked(element, doLinked=true);
-        }
-        else {
-            checkedChecks.delete(id);
-            itemsChanged = moveCheckFromChecked(element, doLinked=true);
-        }
-
-        saveChecked();
+    if (Check.isChecked(id)) {
+        checkedChecks.delete(id);
+        itemsChanged = moveCheckFromChecked(id, doLinked=true);
     }
+    else {
+        checkedChecks.add(id);
+        itemsChanged = moveCheckToChecked(id, doLinked=true);
+    }
+
+    saveChecked();
+    // }
 
     preventDoubleClick(event);
 
     if (draw) {
+        refreshChecked()
         drawActiveTab();
 
         if (itemsChanged) {
@@ -95,18 +88,13 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
     return itemsChanged;
 }
 
-function moveCheckToChecked(element, doLinked=false, updateDungeonCount=true) {
+function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
-    let logic = $(element).attr('data-logic');
-    let area = $(element).attr('data-checkarea');
-    let checkId = $(element).attr('data-check-id');
-    let isVanilla = $(element).attr('data-vanilla');
-    let metadata = coordDict[checkId];
-    let destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
-    let sourceArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
+    let isVanilla = $(`[data-check-id="${id}"][data-logic="Checked"]`).attr('data-vanilla');
+    let metadata = coordDict[id];
 
     if (localSettings.spoilOnCollect) {
-        spoilLocation(checkId, false);
+        spoilLocation(id, false);
     }
 
     if (updateDungeonCount) {
@@ -114,7 +102,7 @@ function moveCheckToChecked(element, doLinked=false, updateDungeonCount=true) {
     }
 
     if (doLinked) {
-        let contents = getCheckContents(checkId);
+        let contents = getCheckContents(id);
 
         if (contents) {
             addItem(contents, 1, wrap=false, refresh=false);
@@ -129,60 +117,20 @@ function moveCheckToChecked(element, doLinked=false, updateDungeonCount=true) {
         }
     }
 
-    if (destArea.length == 0) {
-        let destLogic = $('.row[data-logic=Checked]');
-        let accordionItem = $(destLogic).closest('.accordion-item');
-        let newCard = $(sourceArea).clone();
-
-        let ul = $(newCard).find('ul');
-        $(ul).html('');
-
-        $(accordionItem).removeClass('hidden');
-        $(destLogic).append(newCard);
-
-        destArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
-    }
-
-    let ul = $(destArea).find('ul')[0];
-    var fragment = document.createDocumentFragment();
-    let wrapper = $(element).closest('.check-wrapper')[0];
-    fragment.appendChild(wrapper);
-    ul.appendChild(fragment);
-
-    if ($(sourceArea).find('ul').children().length == 0) {
-        $(sourceArea).remove();
-    }
-
-    if (logic != 'In logic') {
-        let sourceLogic = $(`.row[data-logic="${logic}"]`).closest('.accordion-item');
-        if ($(sourceLogic).find('[data-area]').length == 0) {
-            $(sourceLogic).addClass('hidden');
-        }
-    }
-
-    if (typeof applyMasonry === "function") {
-        applyMasonry();
-    }
-
     return itemsChanged;
 }
 
-function moveCheckFromChecked(element, doLinked=false, updateDungeonCount=true) {
+function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
-    let logic = $(element).attr('data-logic');
-    let area = $(element).attr('data-checkarea');
-    let checkId = $(element).attr('data-check-id');
-    let isVanilla = $(element).attr('data-vanilla');
-    let metadata = coordDict[checkId];
-    let destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
-    let sourceArea = $(`[data-logic="Checked"] [data-area="${area}"]`)
+    let isVanilla = $(`[data-check-id="${id}"][data-logic="Checked"]`).attr('data-vanilla');
+    let metadata = coordDict[id];
 
     if (updateDungeonCount) {
         updateDungeonItems();
     }
 
     if (doLinked) {
-        let contents = getCheckContents(checkId);
+        let contents = getCheckContents(id);
 
         if (contents) {
             addItem(contents, -1, wrap=false, refresh=false);
@@ -197,60 +145,39 @@ function moveCheckFromChecked(element, doLinked=false, updateDungeonCount=true) 
         }
     }
 
-    if (destArea.length == 0) {
-        let destLogic = $(`.row[data-logic="${logic}"]`);
-        let accordionItem = $(destLogic).closest('.accordion-item');
-        let newCard = $(sourceArea).clone();
-
-        let ul = $(newCard).find('ul');
-        $(ul).html('');
-
-        $(accordionItem).removeClass('hidden');
-        $(destLogic).append(newCard);
-
-        destArea = $(`[data-logic="${logic}"] [data-area="${area}"]`);
-    }
-
-    let ul = $(destArea).find('ul')[0];
-    var fragment = document.createDocumentFragment();
-    let wrapper = $(element).closest('.check-wrapper')[0];
-    fragment.appendChild(wrapper);
-    ul.appendChild(fragment);
-
-    if ($(sourceArea).find('ul').children().length == 0) {
-        $(sourceArea).remove();
-    }
-
-    let sourceLogic = $(`.row[data-logic="Checked"]`).closest('.accordion-item');
-    if ($(sourceLogic).find('[data-area]').length == 0) {
-        $(sourceLogic).addClass('hidden');
-    }
-
-    if (typeof applyMasonry === "function") {
-        applyMasonry();
-    }
-
     return itemsChanged;
 }
 
 function refreshChecked() {
-    let updateDungeons = false;
+    $('.check-wrapper').removeClass('hidden')
+    $('[data-logic="Checked"] .check-wrapper').addClass('hidden')
 
     for (const id of checkedChecks) {
-        let check = coordDict[id];
-        element = $(`li[data-checkarea="${check.area}"][data-checkname="${check.name}"]`);
-        if (element.length > 0) {
-            moveCheckToChecked(element[0], doLinked=false, updateDungeonCount=false);
-            updateDungeons = true;
-        }
+        $(`[data-child-check-id="${id}"]`).addClass('hidden');
+        $(`[data-logic="Checked"] [data-child-check-id="${id}"]`).removeClass('hidden');
     }
 
-    if (updateDungeons) {
-        updateDungeonItems();
-    }
+    hideEmptyAreas();
+
+    updateDungeonItems();
 
     if (typeof applyMasonry === "function") {
         applyMasonry();
+    }
+}
+
+function hideEmptyAreas() {
+    let areas = $('[data-area]');
+
+    $(areas).removeClass('hidden');
+    let i = 0;
+
+    for (const area of areas) {
+        if ($(area).find('.check-wrapper:not(.hidden)').length == 0) {
+            $(area).addClass('hidden');
+        }
+
+        i++;
     }
 }
 

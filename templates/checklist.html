@@ -70,7 +70,7 @@
     {% set ns.collapsed = ' collapsed' %}
 {% endfor %}
 
-    <div class="accordion-item hidden">
+    <div class="accordion-item">
         <h2 id="heading-Checked" class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Checked" aria-expanded="false" aria-controls="collapse-Checked">
                 <div class="tooltip-check-graphic difficulty-checked align-middle">
@@ -84,7 +84,7 @@
             <div class="accordion-body">
                 <div class="container">
                     <div class="row grid" data-logic="Checked" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
-                        <!-- {{ logicContents(allChecks, 'Checked') }} -->
+                        {{ logicContents(allChecks, 'Checked') }}
                     </div>
                 </div>
             </div>
@@ -92,7 +92,7 @@
     </div>
 </div>
 
-<p>Total checks: {{ allChecks|length }}</p>
+<p>Total checks: {{ checkCount }}</p>
 
 <script type="application/javascript">
     randomizedEntrances = JSON.parse('{{entrances|safe}}');
