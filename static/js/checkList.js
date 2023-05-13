@@ -45,7 +45,7 @@ function toggleChecks(checkIds) {
         itemsChanged |= toggleCheck(null, id, draw=false, pushUndo=false);
     }
 
-    refreshChecked();
+    refreshTextChecks();
 
     if (itemsChanged) {
         refreshCheckList();
@@ -74,7 +74,7 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
     preventDoubleClick(event);
 
     if (draw) {
-        refreshChecked()
+        refreshTextChecks()
         drawActiveTab();
 
         if (itemsChanged) {
@@ -148,13 +148,20 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
     return itemsChanged;
 }
 
-function refreshChecked() {
+function refreshTextChecks() {
     $('.check-wrapper').removeClass('hidden')
     $('[data-logic="Checked"] .check-wrapper').addClass('hidden')
 
     for (const id of checkedChecks) {
         $(`[data-child-check-id="${id}"]`).addClass('hidden');
         $(`[data-logic="Checked"] [data-child-check-id="${id}"]`).removeClass('hidden');
+    }
+
+    if (localSettings.showVanilla) {
+        $('li[data-vanilla]').closest('.check-wrapper').removeClass('hidden')
+    }
+    else {
+        $('li[data-vanilla]').closest('.check-wrapper').addClass('hidden')
     }
 
     hideEmptyAreas();

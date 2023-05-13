@@ -18,7 +18,7 @@ function loadLocations() {
     errors.concat(loadChecked());
     errors.concat(loadEntrances());
 
-    refreshChecked();
+    refreshTextChecks();
 
     return errors;
 }

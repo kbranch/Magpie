@@ -21,7 +21,7 @@ function processCheckMessage(message) {
     saveChecked();
 
     if (message.refresh) {
-        refreshChecked();
+        refreshTextChecks();
         drawActiveTab();
     }
 }
