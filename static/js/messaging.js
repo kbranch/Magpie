@@ -10,17 +10,11 @@ function processCheckMessage(message) {
     }
 
     for (const check of message.checks) {
-        let metadata = coordDict[check.id];
-        let key = getCheckedKey(metadata.area, metadata.name);
-
         if (check.checked) {
-            checkedChecks[key] = {
-                name: metadata.name,
-                area: metadata.area,
-            };
+            checkedChecks.add(check.id);
         }
         else {
-            delete checkedChecks[key];
+            checkedChecks.delete(check.id);
         }
     }
 

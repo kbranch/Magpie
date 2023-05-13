@@ -64,19 +64,15 @@ function toggleCheck(event, elements, draw=true, pushUndo=true) {
         let name = $(element).attr('data-checkname');
         let logic = $(element).closest(".row[data-logic]").attr('data-logic');
         let key = getCheckedKey(area, name);
+        let id = $(element).attr('data-check-id');
 
         if (logic != 'Checked') {
-            check = {
-                name: name,
-                area: area,
-            };
-
-            checkedChecks[key] = check;
+            checkedChecks.add(id);
 
             itemsChanged = moveCheckToChecked(element, doLinked=true);
         }
         else {
-            delete checkedChecks[key];
+            checkedChecks.delete(id);
             itemsChanged = moveCheckFromChecked(element, doLinked=true);
         }
 
@@ -240,8 +236,8 @@ function moveCheckFromChecked(element, doLinked=false, updateDungeonCount=true) 
 function refreshChecked() {
     let updateDungeons = false;
 
-    for (let key in checkedChecks) {
-        let check = checkedChecks[key];
+    for (const id of checkedChecks) {
+        let check = coordDict[id];
         element = $(`li[data-checkarea="${check.area}"][data-checkname="${check.name}"]`);
         if (element.length > 0) {
             moveCheckToChecked(element[0], doLinked=false, updateDungeonCount=false);

@@ -16,7 +16,7 @@ class Check {
             difficulty = 9;
         }
 
-        if (this.fullName in checkedChecks) {
+        if (this.isChecked()) {
             this.difficulty = -1;
         }
         else {
@@ -25,7 +25,7 @@ class Check {
     }
 
     isChecked() {
-        return Check.isChecked(this.fullName());
+        return Check.isChecked(this.id);
     }
 
     isDungeon() {
@@ -71,7 +71,7 @@ class Check {
         return `${area}-${name}`;
     }
 
-    static isChecked(fullName) {
-        return fullName in checkedChecks;
+    static isChecked(id) {
+        return checkedChecks.has(id);
     }
 }

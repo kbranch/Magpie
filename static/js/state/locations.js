@@ -1,5 +1,5 @@
 function saveChecked() {
-    localStorage.setItem('checkedChecks', JSON.stringify(checkedChecks));
+    localStorage.setItem('checkedChecks', JSON.stringify([...checkedChecks]));
 }
 
 function saveEntrances() {
@@ -58,13 +58,13 @@ function loadEntrances() {
 
 function loadChecked() {
     try {
-        checkedChecks = JSON.parse(localStorage.getItem('checkedChecks'));
+        checkedChecks = new Set(JSON.parse(localStorage.getItem('checkedChecks')));
     }
     catch (err) {
     }
 
     if (checkedChecks == null) {
-        checkedChecks = {};
+        checkedChecks = new Set();
     }
 }
 
@@ -81,7 +81,7 @@ function resetEntrances() {
 }
 
 function resetChecks() {
-    checkedChecks = {};
+    checkedChecks = new Set();
     saveChecked();
 }
 

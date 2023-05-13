@@ -62,10 +62,10 @@ function updateLinkedItemChecks(item) {
             };
 
             if (inventory[item] > 0) {
-                checkedChecks[checkKey] = checkValue
+                checkedChecks.add(check.id);
             }
             else {
-                delete checkedChecks[checkKey];
+                checkedChecks.delete(check.id);
             }
         }
 

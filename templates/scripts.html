@@ -47,7 +47,7 @@
     var reverseEntranceMap = {};
     var connections = [];
     var bossMap = {};
-    var checkedChecks = {};
+    var checkedChecks = new Set();
     var checkContents = {};
     var itemLocations = {};
     var hoveredItems = [];
