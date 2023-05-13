@@ -69,10 +69,14 @@ class MapNode {
         return this.boss && this.boss.type == 'miniboss';
     }
 
+    isOnlyVanillaOwls() {
+        return this.checks.filter(x => x.isVanillaOwl()).length == this.checks.length;
+    }
+
     updateBehindKeys() {
         let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
                                                       && !x.isChecked()
-                                                      && (!x.isVanillaOwl() || this.checks.length == 1))
+                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
 
         this.behindKeys = uncheckedChecks.length > 0 
                           && uncheckedChecks.every(x => x.behindKeys);
@@ -92,6 +96,7 @@ class MapNode {
 
     updateIsChecked() {
         let checks = this.checks.filter(x => !x.isVanillaOwl());
+
         this.isChecked = (checks.length > 0
                           && checks.every(x => x.isChecked()))
                          || this.entranceConnectedTo() == 'landfill';

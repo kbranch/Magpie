@@ -217,7 +217,7 @@ def renderCheckList():
         result = render_template("checklist.html", checkAccessibility=accessibility.checks,
                                                  entranceAccessibility=jsonpickle.encode(accessibility.entrances),
                                                  logics=logics,
-                                                 checkCount=len(allChecks),
+                                                 allChecks=allChecks,
                                                  entrances=jsonpickle.encode(entrances),
                                                  startLocations=jsonpickle.encode(getStartLocations(args)),
                                                  )

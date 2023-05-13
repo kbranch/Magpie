@@ -5,7 +5,7 @@
         {% if check.area != ns.area %}
             {% if ns.area != '' %}</ul></div></div></div>{% endif %}
             <div class="col-xxl-2 col-lg-3 col-md-4 col-sm-6 col-12 px-1 py-1" data-area="{{check.area}}">
-                <div class="card text-bg-dark" onclick="preventDoubleClick(event)">
+                <div class="card text-bg-dark text-check-card" onclick="preventDoubleClick(event)">
                     <div class="card-header">
                         {{check.area}}
                     </div>
@@ -18,7 +18,7 @@
             {% set vanilla = " data-vanilla=true" %}
         {% endif %}
 
-        <div class="row check-wrapper">
+        <div class="row check-wrapper" data-child-check-id="{{check.id}}">
             <div class="text-check-col col pe-0">
                 <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-check-id="{{check.id}}" data-difficulty="{{check.difficulty}}"{{vanilla}} onclick="toggleCheck(event, $(this))">
                     <div id="text-item-{{check.id}}" class="col-auto px-0 text-item-wrapper">

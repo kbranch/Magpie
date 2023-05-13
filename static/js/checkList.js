@@ -5,8 +5,10 @@ function getCheckedKey(area, name) {
 function toggleNode(node) {
     let toggleList = new Set(node.checks.filter(x => (x.difficulty == node.difficulty
                                                       && x.behindKeys == node.behindKeys
-                                                      && !x.isChecked())
-                                                     || (x.isChecked() && node.isChecked))
+                                                      && !x.isChecked()
+                                                      && (!x.isVanillaOwl() || node.isOnlyVanillaOwls()))
+                                                     || (x.isChecked() && node.isChecked)
+                                                     )
                                         .map(x => x.id));
 
     if (toggleList.size == 0 

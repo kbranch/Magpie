@@ -84,6 +84,7 @@
             <div class="accordion-body">
                 <div class="container">
                     <div class="row grid" data-logic="Checked" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
+                        <!-- {{ logicContents(allChecks, 'Checked') }} -->
                     </div>
                 </div>
             </div>
@@ -91,7 +92,7 @@
     </div>
 </div>
 
-<p>Total checks: {{ checkCount }}</p>
+<p>Total checks: {{ allChecks|length }}</p>
 
 <script type="application/javascript">
     randomizedEntrances = JSON.parse('{{entrances|safe}}');
