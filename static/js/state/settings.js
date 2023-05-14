@@ -365,7 +365,11 @@ function updateState() {
             }
 
             checkedChecks = set;
-            saveChecked();
         }
+        else {
+            checkedChecks = new Set();
+        }
+
+        saveChecked();
     }
 }
