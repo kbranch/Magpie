@@ -1,3 +1,5 @@
+"use strict"
+
 function setImgSrc(img, item) {
     if (!(item in inventory)) {
         inventory[item] = 0;
@@ -10,7 +12,7 @@ function setImgSrc(img, item) {
         $(img).attr('src', eval($(img).attr('data-src')));
     }
     else {
-        max = 9999;
+        let max = 9999;
 
         if (hasAttr(img, 'data-max_image')) {
             max = $(img).attr('data-max_image');
@@ -33,7 +35,7 @@ function setItemImage(item) {
     let img = $(`img[data-item="${item}"]`);
 
     if (img.length == 0) {
-        col = $(`div[data-secondary="${item}"]`);
+        let col = $(`div[data-secondary="${item}"]`);
 
         if (col.length > 0) {
             img = $(col).children()[0].children[0];
@@ -103,7 +105,7 @@ function refreshImages() {
         updateOverlay(primary);
     }
 
-    inputs = $('input[data-item]')
+    let inputs = $('input[data-item]')
     for (const input of inputs) {
         let item = input.dataset.item;
 
@@ -120,10 +122,9 @@ let spoilerTimeout = null;
 
 function itemMouseEnter(element) {
     let parent = $(element).parent();
-
-    items = [$(parent).attr('data-primary')];
-
+    let items = [$(parent).attr('data-primary')];
     let secondary = $(parent).attr('data-secondary');
+
     if (secondary) {
         items.push(secondary);
     }
@@ -148,8 +149,8 @@ function setHighlightedItems(items) {
 
 // Composite item logic
 function jumpSrc() {
-    feather = inventory['FEATHER'] > 0;
-    rooster = inventory['ROOSTER'] > 0;
+    let feather = inventory['FEATHER'] > 0;
+    let rooster = inventory['ROOSTER'] > 0;
 
     if (!feather && !rooster) {
         return `static/images${localSettings.graphicsPack}/NO_JUMP.png`;
@@ -229,7 +230,7 @@ function calculateDungeonChecks() {
             newQty -= inventory[`INSTRUMENT${d}`] ?? 0;
         }
 
-        addItem(item, newQty - (inventory[item] ?? 0), wrap=false, refresh=false);
+        addItem(item, newQty - (inventory[item] ?? 0), false, false);
     }
 }
 

@@ -95,9 +95,11 @@
 <p>Total checks: {{ checkCount }}</p>
 
 <script type="application/javascript">
-    randomizedEntrances = JSON.parse('{{entrances|safe}}');
-    startLocations = JSON.parse('{{startLocations|safe}}');
-    entranceAccessibility = JSON.parse('{{entranceAccessibility|safe}}')
+    "use strict"
+
+    var randomizedEntrances = JSON.parse('{{entrances|safe}}');
+    var startLocations = JSON.parse('{{startLocations|safe}}');
+    var entranceAccessibility = JSON.parse('{{entranceAccessibility|safe}}')
 
     var timeoutId;
     function resizeTimeout() {

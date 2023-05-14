@@ -1,3 +1,5 @@
+"use strict"
+
 function startGraphicalConnection(entranceId, type) {
     closeAllTooltips();
     graphicalMapType = type;
@@ -47,8 +49,8 @@ function openConnectorDialog(entranceId) {
                     ?? Connection.findConnector({ exterior: graphicalMapSource });
 
         if (connector != null){
-            let unamppedEntrances = Connection.unmappedEntrances(connector);
-            if (unamppedEntrances.length == 1) {
+            let unmappedEntrances = Connection.unmappedEntrances(connector);
+            if (unmappedEntrances.length == 1) {
                 if (Entrance.isMapped(graphicalMapSource)) {
                     graphicalMapSource = entranceId;
                 }

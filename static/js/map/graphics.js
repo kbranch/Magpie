@@ -1,3 +1,5 @@
+"use strict"
+
 function drawActiveTab() {
     drawNodes(getActiveMap(), true);
 }

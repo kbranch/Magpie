@@ -1,3 +1,5 @@
+"use strict"
+
 var connectorDict = {
     "fire_cave": {
         "id": "fire_cave",

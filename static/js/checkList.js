@@ -1,3 +1,5 @@
+"use strict"
+
 function getCheckedKey(area, name) {
     return `${area}-${name}`;
 }
@@ -42,7 +44,7 @@ function toggleChecks(checkIds) {
     pushUndoState();
 
     for (const id of checkIds) {
-        itemsChanged |= toggleCheck(null, id, draw=false, pushUndo=false);
+        itemsChanged |= toggleCheck(null, id, false, false);
     }
 
     refreshTextChecks();
@@ -61,15 +63,14 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
 
     if (Check.isChecked(id)) {
         checkedChecks.delete(id);
-        itemsChanged = moveCheckFromChecked(id, doLinked=true);
+        itemsChanged = moveCheckFromChecked(id, true);
     }
     else {
         checkedChecks.add(id);
-        itemsChanged = moveCheckToChecked(id, doLinked=true);
+        itemsChanged = moveCheckToChecked(id, true);
     }
 
     saveChecked();
-    // }
 
     preventDoubleClick(event);
 
@@ -81,9 +82,6 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
             refreshCheckList();
         }
     }
-
-    // Not sure why I added this - might be important
-    // closeAllCheckTooltips();
 
     return itemsChanged;
 }
@@ -105,14 +103,14 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
         let contents = getCheckContents(id);
 
         if (contents) {
-            addItem(contents, 1, wrap=false, refresh=false);
+            addItem(contents, 1, false, false);
             itemsChanged = true;
         }
 
         if (metadata.linkedItem
             && (!metadata.vanillaLink 
                 || isVanilla)) {
-            addItem(metadata.linkedItem, 1, wrap=false, refresh=false);
+            addItem(metadata.linkedItem, 1, false, false);
             itemsChanged = true;
         }
     }
@@ -133,14 +131,14 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
         let contents = getCheckContents(id);
 
         if (contents) {
-            addItem(contents, -1, wrap=false, refresh=false);
+            addItem(contents, -1, false, false);
             itemsChanged = true;
         }
 
         if (metadata.linkedItem
             && (!metadata.vanillaLink 
                 || isVanilla)) {
-            addItem(metadata.linkedItem, -1, wrap=false, refresh=false);
+            addItem(metadata.linkedItem, -1, false, false);
             itemsChanged = true;
         }
     }

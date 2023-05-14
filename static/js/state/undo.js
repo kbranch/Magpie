@@ -1,3 +1,5 @@
+"use strict"
+
 function resetUndoRedo() {
     undoStack = [];
     redoStack = [];

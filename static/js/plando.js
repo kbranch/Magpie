@@ -1,3 +1,5 @@
+"use strict"
+
 function exportPlando() {
     let plan = '';
 

@@ -55,13 +55,15 @@
 </div>
 
 <script type="application/javascript">
+    "use strict"
+
     maxInventory = {{ allItems|safe }};
 
     //Activate the bootstrap tooltips and popovers
     var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]:not(.itemWrapper)')
     var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     var itemTooltips = document.querySelectorAll('.itemWrapper[data-bs-toggle="tooltip"]')
-    var tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {delay: { "show": 500, "hide": 000 }}))
+    var tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {delay: { "show": 500, "hide": 0 }}))
 
     var popoverTriggerList = document.querySelectorAll('button[data-bs-toggle="popover"]')
     var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))

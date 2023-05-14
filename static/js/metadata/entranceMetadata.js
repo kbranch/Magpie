@@ -1,3 +1,5 @@
+"use strict"
+
 let entranceDict = {
 	"d0": {
 		"id": "d0",
@@ -789,7 +791,7 @@ let entranceDict = {
 	},
 	"castle_jump_cave": {
 		"id": "castle_jump_cave",
-		"name": "Kanlet Jump Cave",
+		"name": "Kanalet Jump Cave",
 		"index": 0,
 		"icon": "",
 		"type": "single",

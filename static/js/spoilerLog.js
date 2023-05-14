@@ -1,3 +1,5 @@
+"use strict"
+
 let spoilerLog = null;
 let itemsByLocation = {};
 
@@ -21,7 +23,7 @@ function setSpoilerLabel(text) {
 }
 
 function loadLogContents(logText, loadSettings=true) {
-    log = JSON.parse(logText);
+    let log = JSON.parse(logText);
 
     if (log.raceRom) {
         setSpoilerLabel("Can't spoil race ROMs");
@@ -37,7 +39,7 @@ function loadLogContents(logText, loadSettings=true) {
 
     fillVanillaLogEntrances();
 
-    items = [...log.accessibleItems].concat(log.inaccessibleItems);
+    let items = [...log.accessibleItems].concat(log.inaccessibleItems);
 
     itemsByLocation = {};
     for (const location of items) {
@@ -59,7 +61,7 @@ function fillVanillaLogEntrances() {
         return;
     }
 
-    missingEntrances = randomizedEntrances.filter(x => !(x in spoilerLog.entrances));
+    let missingEntrances = randomizedEntrances.filter(x => !(x in spoilerLog.entrances));
     for (const entrance of missingEntrances) {
         spoilerLog.entrances[entrance] = entrance;
     }
@@ -73,12 +75,12 @@ function spoilAll() {
 
     for (const checkId in coordDict) {
         if (checkId in itemsByLocation) {
-            spoilLocation(checkId, housekeeping=false);
+            spoilLocation(checkId, false);
         }
     }
 
     for (entranceId in spoilerLog.entrances) {
-        spoilEntrance(entranceId, housekeeping=false);
+        spoilEntrance(entranceId, false);
     }
 
     drawActiveTab();

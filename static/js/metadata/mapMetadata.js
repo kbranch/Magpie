@@ -1,4 +1,6 @@
-roomDict = {
+"use strict"
+
+var roomDict = {
     '0x117': {
         map: 'd1',
         x: 3,

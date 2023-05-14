@@ -1,3 +1,5 @@
+"use strict"
+
 function saveBosses() {
     localStorage.setItem("bossMap", JSON.stringify(bossMap));
 }

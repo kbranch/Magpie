@@ -1,3 +1,5 @@
+"use strict"
+
 function saveSettingsToStorage(args, localSettings) {
     if (argsAreValid(args)) {
         localStorage.setItem('args', JSON.stringify(args));

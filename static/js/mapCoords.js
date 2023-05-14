@@ -1,3 +1,5 @@
+"use strict"
+
 var newChecks = [];
 var activeCheck = null;
 
@@ -10,9 +12,6 @@ function loadChecks() {
 }
 
 function checkClicked(element) {
-    // var elementId = element.id
-    // let id = $(`#${element.id}\\|id`).attr('value');
-    // activeCheck = newChecks.filter(x => x.id == id)[0];
     activeCheck = newChecks.filter(x => x.id == element.id)[0];
     $('.check-item.active').removeClass('active');
     $(element).addClass('active');

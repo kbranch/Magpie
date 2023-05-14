@@ -1,3 +1,5 @@
+"use strict"
+
 function saveCheckContents() {
     localStorage.setItem('checkContents', JSON.stringify(checkContents));
     updateItemLocations();
@@ -25,7 +27,7 @@ function loadCheckContents() {
 function updateItemLocations() {
     itemLocations = {};
 
-    for (checkId in checkContents) {
+    for (const checkId in checkContents) {
         let item = checkContents[checkId];
 
         if (!(item in itemLocations)) {

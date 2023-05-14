@@ -1,3 +1,5 @@
+"use strict"
+
 function resetInventory() {
     inventory = {};
     saveInventory();
@@ -54,12 +56,6 @@ function updateLinkedItemChecks(item) {
             if (check.vanillaLink && !isVanilla) {
                 continue;
             }
-
-            checkKey = getCheckedKey(check.area, check.name);
-            checkValue = {
-                name: check.name,
-                area: check.area,
-            };
 
             if (inventory[item] > 0) {
                 checkedChecks.add(check.id);

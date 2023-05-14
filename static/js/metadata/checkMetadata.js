@@ -1,3 +1,5 @@
+"use strict"
+
 let coordDict = {
 	"0x297-Trade":{
 	   "id":"0x297-Trade",
@@ -4404,7 +4406,7 @@ let coordDict = {
 	},
 }
 
-linkedChecks = {};
+let linkedChecks = {};
 
 Object.values(coordDict).filter(x => x.linkedItem).map(y => {
 	if (!linkedChecks[y.linkedItem]) {

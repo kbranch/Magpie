@@ -1,3 +1,5 @@
+"use strict"
+
 function hasAttr(element, attrName) {
     let attr = $(element).attr(attrName);
 
@@ -137,10 +139,10 @@ function applySettings() {
             continue;
         }
 
-        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], refresh=false, save=false);
+        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], false, false);
 
         if (connector.entrances.length == 3) {
-            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], refresh=false, save=false);
+            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], false, false);
         }
     }
 
@@ -174,7 +176,7 @@ function applySettings() {
         disconnectAutotracker();
     }
 
-    iconStyleTable = {
+    let iconStyleTable = {
         "#difficulty-0": localSettings.diff0Color,
         "#difficulty-0-vanilla": localSettings.diff0VColor,
         "#difficulty-1": localSettings.diff1Color,

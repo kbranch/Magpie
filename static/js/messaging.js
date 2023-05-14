@@ -1,3 +1,5 @@
+"use strict"
+
 function processCheckMessage(message) {
     if (!autotrackerFeatures.includes('checks')) {
         console.log("Checks feature disabled, ignoring")
@@ -38,7 +40,7 @@ function processItemMessage(message) {
     }
 
     for (const item of message.items) {
-        addItem(item.id, item.qty, wrap=false, refresh=false);
+        addItem(item.id, item.qty, false, false);
     }
 
     if (message.refresh) {
@@ -67,11 +69,11 @@ function processEntranceMessage(message) {
         let indoor = message.entranceMap[outdoor];
 
         if (Entrance.isConnector(indoor)) {
-            connectOneEndConnector(outdoor, indoor, refresh=false);
+            connectOneEndConnector(outdoor, indoor, false);
             updateReverseMap();
         }
         else {
-            connectEntrances(outdoor, indoor, refresh=false);
+            connectEntrances(outdoor, indoor, false);
         }
     }
 
@@ -225,7 +227,7 @@ function processMessage(messageText) {
             case 'settings':
                 if (autotrackerFeatures.includes('settings')) {
                     $("#shortString")[0].value = message.settings;
-                    loadShortString(saveOnLoad=true)
+                    loadShortString(true)
                 }
                 else {
                     console.log("Settings feature disabled, ignoring")

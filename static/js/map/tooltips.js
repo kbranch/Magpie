@@ -1,3 +1,5 @@
+"use strict"
+
 function closeOtherTooltips(element) {
     let id = $(element).attr('data-node-id');
     let nodes = $(`.check-graphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
@@ -144,7 +146,7 @@ function scaleTooltip(event) {
     if (['left', 'right'].includes(event.placement)) {
         let arrowHeight = $(event.elements.arrow).height();
         let arrowPos = event.modifiersData.arrow.y;
-        xOrigin = event.placement == "left" ? "right" : "left";
+        let xOrigin = event.placement == "left" ? "right" : "left";
         origin = `${xOrigin} ${arrowPos + arrowHeight / 2}px`;
     }
 

@@ -1,3 +1,5 @@
+"use strict"
+
 function saveChecked() {
     localStorage.setItem('checkedChecks', JSON.stringify([...checkedChecks]));
 }
@@ -13,7 +15,7 @@ function saveLocations() {
 }
 
 function loadLocations() {
-    errors = [];
+    let errors = [];
 
     errors.concat(loadChecked());
     errors.concat(loadEntrances());

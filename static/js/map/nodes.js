@@ -1,3 +1,5 @@
+"use strict"
+
 var nodes = {};
 var pinned = null;
 
@@ -295,8 +297,8 @@ function removeOldNodes() {
 
     for (const staleNodeId of oldNodeIds) {
         let node = $(`[data-node-id="${staleNodeId}"]`);
+        let tooltip = bootstrap.Tooltip.getInstance(node);
 
-        tooltip = bootstrap.Tooltip.getInstance(node);
         if (tooltip._isShown()) {
             closeAllTooltips();
         }
