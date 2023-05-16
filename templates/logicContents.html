@@ -4,7 +4,7 @@
     {% for check in checks %}
         {% if check.area != ns.area %}
             {% if ns.area != '' %}</ul></div></div></div>{% endif %}
-            <div class="col-xxl-2 col-lg-3 col-md-4 col-sm-6 col-12 px-1 py-1" data-area="{{check.area}}">
+            <div class="text-check-card-wrapper col-xxl-2 col-lg-3 col-md-4 col-sm-6 col-12 px-1 py-1" data-area="{{check.area}}">
                 <div class="card text-bg-dark text-check-card" onclick="preventDoubleClick(event)">
                     <div class="card-header">
                         {{check.area}}

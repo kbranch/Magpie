@@ -124,6 +124,7 @@
 
     $('.grid').masonry({
         transitionDuration: 0,
+        columnWidth: '.text-check-card-wrapper:not(.hidden)',
     });
 
     $('.accordion-collapse').on('shown.bs.collapse', () => applyMasonry());
