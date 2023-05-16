@@ -24,6 +24,10 @@ class Check {
         }
     }
 
+    nodeDifficulty() {
+        return this.difficulty == -1 ? 'checked' : this.difficulty;
+    }
+
     isChecked() {
         return Check.isChecked(this.id);
     }

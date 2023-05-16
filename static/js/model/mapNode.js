@@ -95,7 +95,7 @@ class MapNode {
     }
 
     updateIsChecked() {
-        let checks = this.checks.filter(x => !x.isVanillaOwl());
+        let checks = this.checks.filter(x => !x.isVanillaOwl() || this.isOnlyVanillaOwls());
 
         this.isChecked = (checks.length > 0
                           && checks.every(x => x.isChecked()))
