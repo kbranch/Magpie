@@ -23,13 +23,12 @@
                 <li class="text-check" data-checkname="{{check.name}}" data-checkarea="{{check.area}}" data-behind_keys="{{check.behindKeys}}" data-logic="{{logic}}" data-check-id="{{check.id}}" data-difficulty="{{check.difficulty}}"{{vanilla}} onclick="toggleCheck(event, '{{check.id}}')">
                     <div id="text-item-{{check.id}}" class="col-auto px-0 text-item-wrapper">
                     </div>
-                    {% if check.behindKeys %}
-                    <div class="key-indicator-wrapper pe-2">
-                        <img class="key-indicator" src="static/images/keyLocked.png">
-                    </div>
-                    {% endif %}
-
                     <div class="check-name">
+                    {% if check.behindKeys %}
+                        <div class="key-indicator-wrapper pe-2">
+                            <img class="key-indicator" src="static/images/keyLocked.png">
+                        </div>
+                    {% endif %}
                         {{check.name}}
                     </div>
                 </li>
