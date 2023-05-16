@@ -151,6 +151,10 @@ def serveVersion():
     except:
         return renderTraceback()
 
+@app.route("/health")
+def health():
+    return json.dumps("OK")
+
 @app.route("/fetchupdate")
 def fetchUpdate():
     if not local:
