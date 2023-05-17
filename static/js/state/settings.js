@@ -251,7 +251,7 @@ function getState() {
     state.inventory = inventory;
     state.settings = localSettings;
     state.args = args;
-    state.checkedChecks = checkedChecks;
+    state.checkedChecks = [...checkedChecks];
     state.entranceMap = entranceMap;
     state.connections = connections;
     state.checkContents = checkContents;

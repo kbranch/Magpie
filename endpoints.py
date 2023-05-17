@@ -153,7 +153,7 @@ def serveVersion():
 
 @app.route("/health")
 def health():
-    return json.dumps("OK")
+    return "OK"
 
 @app.route("/fetchupdate")
 def fetchUpdate():
