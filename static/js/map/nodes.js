@@ -109,7 +109,9 @@ function createNodes(map, mapName) {
         }
     }
 
-    distributeChecks(unclaimedChecks);
+    if (mapName == 'overworld') {
+        distributeChecks(unclaimedChecks);
+    }
 
     for (const key in nodes) {
         let node = nodes[key];
