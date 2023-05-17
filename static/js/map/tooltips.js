@@ -108,11 +108,11 @@ function updateTooltip(checkGraphic) {
         }
     }
     else {
-        tooltip = new bootstrap.Tooltip(checkGraphic, {popperConfig:getPopperConfig});
+        tooltip = new bootstrap.Tooltip(checkGraphic, {popperConfig:getPopperConfig, sanitize: false});
         checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
             $('.tooltip').attr('oncontextmenu', 'return false;');
             const helpers = document.querySelectorAll('.helper, button[data-bs-custom-class="secondary-tooltip"]');
-            const helperTips = [...helpers].map(x => new bootstrap.Tooltip(x, {popperConfig:getPopperConfig, animation:false}));
+            const helperTips = [...helpers].map(x => new bootstrap.Tooltip(x, {popperConfig:getPopperConfig, animation:false, sanitize: false}));
             // Janky fix for tooltips positioning themselves before the images load
             // Relies on animation being off
             for (const tip of helperTips) {

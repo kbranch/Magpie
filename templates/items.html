@@ -61,9 +61,9 @@
 
     //Activate the bootstrap tooltips and popovers
     var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]:not(.itemWrapper)')
-    var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {sanitize: false}))
     var itemTooltips = document.querySelectorAll('.itemWrapper[data-bs-toggle="tooltip"]')
-    var tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {delay: { "show": 500, "hide": 0 }}))
+    var tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {delay: { "show": 500, "hide": 0 }, sanitize: false}))
 
     var popoverTriggerList = document.querySelectorAll('button[data-bs-toggle="popover"]')
     var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
