@@ -17,8 +17,8 @@ function createCheck(checkElement, mapName=null) {
     let id = $(checkElement).attr('data-check-id');
 
     if (mapName == null) {
-        dungeonMaps = coordDict[id].locations.map(x => x.map)
-                                             .filter(x => x != 'overworld');
+        let dungeonMaps = coordDict[id].locations.map(x => x.map)
+                                                 .filter(x => x != 'overworld');
         if (dungeonMaps.length == 0) {
             mapName = 'overworld';
         }
