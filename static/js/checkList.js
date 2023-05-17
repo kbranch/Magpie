@@ -27,6 +27,7 @@ function toggleNode(node) {
     }
 
     drawActiveTab();
+    refreshTextChecks()
 
     if (toggleList.has('0x07B-Trade')) {
         refreshCheckList();
@@ -46,8 +47,6 @@ function toggleChecks(checkIds) {
     for (const id of checkIds) {
         itemsChanged |= toggleCheck(null, id, false, false);
     }
-
-    refreshTextChecks();
 
     if (itemsChanged) {
         refreshCheckList();
@@ -75,8 +74,8 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
     preventDoubleClick(event);
 
     if (draw) {
-        refreshTextChecks()
         drawActiveTab();
+        refreshTextChecks()
 
         if (itemsChanged) {
             refreshCheckList();
@@ -147,6 +146,12 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 }
 
 function refreshTextChecks() {
+    setTimeout(() => {
+        realRefreshTextChecks()
+    }, 0);
+}
+
+function realRefreshTextChecks() {
     let wrappers = document.querySelectorAll('div.text-check-wrapper');
 
     for (const element of wrappers) {

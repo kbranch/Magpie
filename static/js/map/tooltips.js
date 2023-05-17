@@ -68,7 +68,7 @@ function removeNodeTooltips() {
     });
 }
 
-function updateTooltip(checkGraphic) {
+function updateTooltip(checkGraphic, hoveredCheckId=null) {
     let node = nodes[$(checkGraphic).attr('data-node-id')]
 
     if (node == undefined) {
@@ -83,7 +83,7 @@ function updateTooltip(checkGraphic) {
         connectionType = graphicalMapType;
     }
 
-    let title = node.tooltipHtml(pinned, connectionType);
+    let title = node.tooltipHtml(pinned, connectionType, hoveredCheckId);
     let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
 
     $(checkGraphic).attr({
@@ -109,7 +109,7 @@ function updateTooltip(checkGraphic) {
     }
     else {
         tooltip = new bootstrap.Tooltip(checkGraphic, {popperConfig:getPopperConfig, sanitize: false});
-        checkGraphic[0].addEventListener('inserted.bs.tooltip', (x) => {
+        checkGraphic.addEventListener('inserted.bs.tooltip', (x) => {
             $('.tooltip').attr('oncontextmenu', 'return false;');
             const helpers = document.querySelectorAll('.helper, button[data-bs-custom-class="secondary-tooltip"]');
             const helperTips = [...helpers].map(x => new bootstrap.Tooltip(x, {popperConfig:getPopperConfig, animation:false, sanitize: false}));

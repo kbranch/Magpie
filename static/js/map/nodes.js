@@ -255,6 +255,7 @@ function drawNodes(mapName, animate=true) {
 
     updateReverseMap();
 
+    let activeMap = getActiveMap();
     let map = $(mapImg).closest('div.map-container');
     let parent = $(map).find('div.map-wrapper');
     createNodes(map, mapName);
@@ -262,7 +263,6 @@ function drawNodes(mapName, animate=true) {
     for (const nodeId in nodes) {
         let node = nodes[nodeId];
         let classes = node.iconClasses();
-        let activeMap = getActiveMap();
         let difficulty = classes.includes('unmapped-entrance') ? node.entrance.difficulty : node.difficulty;
 
         node.updateAnimationClasses(classes, parent, animate);

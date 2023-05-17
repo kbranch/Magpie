@@ -88,7 +88,9 @@ function spoilAll() {
 }
 
 function spoilLocation(checkId, housekeeping=true) {
-    setCheckContents(checkId, itemsByLocation[checkId], housekeeping);
+    if (itemsByLocation[checkId]) {
+        setCheckContents(checkId, itemsByLocation[checkId], housekeeping);
+    }
 }
 
 function spoilEntrance(entranceId, housekeeping=true) {

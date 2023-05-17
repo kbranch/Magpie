@@ -173,9 +173,9 @@ class MapNode {
         return false;
     }
 
-    tooltipHtml(pinned, connectionType) {
+    tooltipHtml(pinned, connectionType, hoveredCheckId=null) {
         let tooltip = new NodeTooltip(this);
-        return tooltip.tooltipHtml(pinned, connectionType);
+        return tooltip.tooltipHtml(pinned, connectionType, hoveredCheckId);
     }
 
     iconClasses() {
@@ -325,16 +325,16 @@ class MapNode {
     
     updateAnimationClasses(classes, parent, animate) {
         let animationClass = animate ? 'animate__bounceInDown' : '';
-        this.graphic = $(`[data-node-id="${this.id()}"]`);
+        this.graphic = document.querySelector(`div[data-node-id="${this.id()}"]`);
     
-        if (this.graphic.length > 0) {
-            let currentDiff = $(this.graphic).attr('data-difficulty');
+        if (this.graphic) {
+            let currentDiff = this.graphic.dataset.difficulty;
     
             if (currentDiff == "9" && this.difficulty >= 0 && this.difficulty < 9) {
                 classes.push(animationClass);
             }
             else {
-                $(this.graphic).removeClass('animate__bounceInDown');
+                this.graphic.classList.remove('animate__bounceInDown');
             }
         }
         else {
@@ -448,8 +448,8 @@ class MapNode {
             $(overlay).append(connectorOverlay);
         }
 
-        $(this.graphic).empty();
-        $(this.graphic).append(overlay);
+        this.graphic.innerHTML = '';
+        this.graphic.appendChild(overlay[0]);
     }
 
     createGraphic() {
@@ -476,24 +476,24 @@ class MapNode {
                 'width': size,
                 'height': size,
             },
-        });
+        })[0];
 
-        this.graphic.on('click', (e) => { 
+        $(this.graphic).on('click', (e) => { 
             checkGraphicLeftClick(e);
         });
-        this.graphic.on('auxclick', (e) => { 
+        $(this.graphic).on('auxclick', (e) => { 
             if (e.button == 1) {
                 nodeMiddle(e.currentTarget);
             }
         });
-        this.graphic.on('contextmenu', (e) => { 
+        $(this.graphic).on('contextmenu', (e) => { 
             checkGraphicRightClick(e);
             return false;
         });
-        this.graphic.on('mouseenter', (e) => {
+        $(this.graphic).on('mouseenter', (e) => {
             checkGraphicMouseEnter(e.currentTarget);
         });
-        this.graphic.on('mouseleave', (e) => {
+        $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);
         });
     }

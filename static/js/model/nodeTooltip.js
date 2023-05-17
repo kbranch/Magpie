@@ -3,7 +3,7 @@ class NodeTooltip {
         this.node = node;
     }
 
-    tooltipHtml(pinned, connectionType) {
+    tooltipHtml(pinned, connectionType, hoveredCheckId) {
         const titleTemplate = `<div class='tooltip-body'>
     {areas}
     {entrance}
@@ -56,7 +56,7 @@ class NodeTooltip {
                             .replace('{name}', name)
                             .replace('{vanilla}', isVanilla ? ' data-vanilla="true"' : '');
 
-            areas[metadata.area] += NodeTooltip.createCheckDropdown(line, "toggleSingleNodeCheck($(this).find('[data-check-id]'));", pinned, id, helperTooltipAttrs);
+            areas[metadata.area] += this.createCheckDropdown(line, "toggleSingleNodeCheck($(this).find('[data-check-id]'));", pinned, id, helperTooltipAttrs, hoveredCheckId);
         }
 
         for (const area of sortByKey(Object.keys(areas), x => [x])) {
@@ -80,16 +80,21 @@ class NodeTooltip {
         return title;
     }
 
-    static createCheckDropdown(title, action, pinned, checkId, helperTooltipAttrs="") {
+    createCheckDropdown(title, action, pinned, checkId, helperTooltipAttrs="", hoveredCheckId=null) {
         let items = '';
+        let onmouseover = `onmouseover="if (!document.querySelector('.dropdown-menu.show')) { updateTooltip(document.querySelector(\`div[data-node-id='\${this.dataset.parentNodeId}']\`), '${checkId}')}"`;
 
-        if (pinned) {
-            items = NodeTooltip.getItemList(checkId);
+        if (hoveredCheckId == checkId) {
+            if (pinned) {
+                items = NodeTooltip.getItemList(checkId);
+            }
+
+            onmouseover = '';
         }
 
         return `<div class="btn-group dropend">
         <button type="button" class="btn tooltip-item text-start p-0" onclick="${action}"${helperTooltipAttrs}>${title}</button>
-        <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
+        <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false" data-parent-node-id="${this.node.id()}"${onmouseover}></button>
         <ul class="dropdown-menu">
             ${items}
         </ul>
