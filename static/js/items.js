@@ -207,6 +207,10 @@ function calculateDungeonChecks() {
                             checks[x.dungeonNumber()].push(x);
                             foundIds.add(x.id);
                         });
+
+    if (Object.keys(checks).length == 0) {
+        return;
+    }
     
     for (let i = 0; i < 9; i++) {
         let d = i == 0 ? 9 : i;
