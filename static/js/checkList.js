@@ -147,19 +147,15 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 }
 
 function refreshTextChecks() {
-    $('.check-wrapper').removeClass('hidden')
-    $('[data-logic="Checked"] .check-wrapper').addClass('hidden')
+    let wrappers = document.querySelectorAll('div.text-check-wrapper');
 
-    for (const id of checkedChecks) {
-        $(`[data-child-check-id="${id}"]`).addClass('hidden');
-        $(`[data-logic="Checked"] [data-child-check-id="${id}"]`).removeClass('hidden');
-    }
+    for (const element of wrappers) {
+        let isChecked = checkedChecks.has(element.dataset.childCheckId);
+        let isInChecked = element.classList.contains('in-checked');
+        let isVanilla = element.classList.contains('vanilla-wrapper');
+        let hide = (isInChecked ^ isChecked) || (!localSettings.showVanilla && isVanilla);
 
-    if (localSettings.showVanilla) {
-        $('li[data-vanilla]').closest('.check-wrapper').removeClass('hidden')
-    }
-    else {
-        $('li[data-vanilla]').closest('.check-wrapper').addClass('hidden')
+        hide ? element.classList.add('hidden') : element.classList.remove('hidden');
     }
 
     hideEmptyAreas();
@@ -178,7 +174,7 @@ function hideEmptyAreas() {
     let i = 0;
 
     for (const area of areas) {
-        if ($(area).find('.check-wrapper:not(.hidden)').length == 0) {
+        if ($(area).find('div.text-check-wrapper:not(.hidden)').length == 0) {
             $(area).addClass('hidden');
         }
 
