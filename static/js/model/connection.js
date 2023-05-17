@@ -97,6 +97,10 @@ class Connection {
         return connections.filter(x => x.connector == connector)[0] || null;
     }
 
+    static existingConnectionByEntrance(entranceId) {
+        return connections.filter(x => x.entrances.includes(entranceId))[0] || null;
+    }
+
     static createConnection(entrances, vanilla=false) {
         let connector = Connection.findConnector({ exterior: entrances[0] });
 
