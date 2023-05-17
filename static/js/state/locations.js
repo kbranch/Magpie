@@ -15,14 +15,12 @@ function saveLocations() {
 }
 
 function loadLocations() {
-    let errors = [];
-
-    errors.concat(loadChecked());
-    errors.concat(loadEntrances());
+    let checkedErrors = loadChecked() ?? [];
+    let entranceErrors = loadEntrances() ?? [];
 
     refreshTextChecks();
 
-    return errors;
+    return checkedErrors.concat(entranceErrors);
 }
 
 function loadEntrances() {
@@ -41,7 +39,7 @@ function loadEntrances() {
     }
 
     try {
-        dehydratedConnections = JSON.parse(localStorage.getItem('connections'));
+        let dehydratedConnections = JSON.parse(localStorage.getItem('connections'));
         connections = [];
         for (const conn of dehydratedConnections) {
             connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla));
@@ -251,8 +249,8 @@ function mapToLandfill(entranceId) {
     pushUndoState();
 
     let otherSide = null;
-    let connector = Connection.findConnector({ exterior: entranceId });
-    let connection = Connection.existingConnection(connector);
+    // let connector = Connection.findConnector({ exterior: entranceId });
+    let connection = Connection.existingConnectionByEntrance(entranceId);
 
     if (connection != null && connection.entrances.length == 2) {
         otherSide = connection.otherSide(entranceId);
