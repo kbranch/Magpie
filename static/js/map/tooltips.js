@@ -69,13 +69,13 @@ function removeNodeTooltips() {
 }
 
 function updateTooltip(checkGraphic, hoveredCheckId=null) {
-    let node = nodes[$(checkGraphic).attr('data-node-id')]
+    let node = nodes[checkGraphic.dataset.nodeId]
 
     if (node == undefined) {
         return;
     }
 
-    let pinned = $(checkGraphic).attr('data-pinned');
+    let pinned = checkGraphic.dataset.pinned;
 
     let connectionType = 'none';
 
@@ -84,16 +84,9 @@ function updateTooltip(checkGraphic, hoveredCheckId=null) {
     }
 
     let title = node.tooltipHtml(pinned, connectionType, hoveredCheckId);
-    let activated = $(checkGraphic).attr('data-bs-toggle') == "tooltip";
+    let activated = checkGraphic.dataset.bsTitle != "";
 
-    $(checkGraphic).attr({
-        'data-bs-toggle': 'tooltip',
-        'data-bs-trigger': 'manual',
-        'data-bs-html': 'true',
-        'data-bs-title': title,
-        'data-bs-animation': 'false',
-        'data-bs-container': 'body',
-    });
+    checkGraphic.dataset.bsTitle = title;
 
     let tooltip;
 
@@ -109,16 +102,21 @@ function updateTooltip(checkGraphic, hoveredCheckId=null) {
     }
     else {
         tooltip = new bootstrap.Tooltip(checkGraphic, {popperConfig:getPopperConfig, sanitize: false});
-        checkGraphic.addEventListener('inserted.bs.tooltip', (x) => {
-            $('.tooltip').attr('oncontextmenu', 'return false;');
-            const helpers = document.querySelectorAll('.helper, button[data-bs-custom-class="secondary-tooltip"]');
-            const helperTips = [...helpers].map(x => new bootstrap.Tooltip(x, {popperConfig:getPopperConfig, animation:false, sanitize: false}));
-            // Janky fix for tooltips positioning themselves before the images load
-            // Relies on animation being off
-            for (const tip of helperTips) {
-                tip.show();
-                tip.hide();
-            }
+        checkGraphic.addEventListener('inserted.bs.tooltip', (e) => {
+            let tooltips = document.querySelectorAll('div.tooltip');
+            tooltips.forEach(tip => {
+                tip.addEventListener('contextmenu', () => { return false; });
+
+                const helpers = tip.querySelectorAll('.helper, button[data-bs-custom-class="secondary-tooltip"]');
+                [...helpers].forEach(helper => { 
+                    let helperTip = new bootstrap.Tooltip(helper, { popperConfig: getPopperConfig, animation: false, sanitize: false });
+
+                    // Janky fix for tooltips positioning themselves before the images load
+                    // Relies on animation being off
+                    helperTip.show();
+                    helperTip.hide();
+                })
+            });
         })
     }
 }

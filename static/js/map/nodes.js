@@ -71,9 +71,9 @@ function createNodes(map, mapName) {
 
     createBossNodes(scaling, mapName);
 
-    let checks = $('li[data-logic]:not([data-logic="Checked"]').toArray()
-                    .map(x => createCheck(x, mapName))
-                    .filter(x => x.shouldDraw());
+    let checks = [...document.querySelectorAll('li[data-logic]:not([data-logic="Checked"]')]
+                            .map(x => createCheck(x, mapName))
+                            .filter(x => x.shouldDraw());
     let unclaimedChecks = {};
 
     for (const check of checks) {
@@ -238,7 +238,7 @@ function distributeChecks(unclaimedChecks) {
 }
 
 function drawNodes(mapName, animate=true) {
-    let mapImg = $(`.map[data-mapname="${mapName}"`);
+    let mapImg = document.querySelector(`img[data-mapname="${mapName}"]`);
 
     if ($(mapImg).width() <= 100) {
         $(mapImg).on('load', function () { drawNodes(mapName, animate); });

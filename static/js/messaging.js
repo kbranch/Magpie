@@ -23,8 +23,8 @@ function processCheckMessage(message) {
     saveChecked();
 
     if (message.refresh) {
-        refreshTextChecks();
         drawActiveTab();
+        refreshTextChecks();
     }
 }
 

@@ -325,7 +325,7 @@ class MapNode {
     
     updateAnimationClasses(classes, parent, animate) {
         let animationClass = animate ? 'animate__bounceInDown' : '';
-        this.graphic = document.querySelector(`div[data-node-id="${this.id()}"]`);
+        this.graphic = document.getElementById(this.id());
     
         if (this.graphic) {
             let currentDiff = this.graphic.dataset.difficulty;
@@ -346,11 +346,24 @@ class MapNode {
         }
     }
 
-    updateOverlay(activeMap, pickingEntrance, difficulty) {
-        let overlay = createElement('div', {
-            class: 'node-overlay-wrapper'
-        });
+    shouldUpdateOverlay(hideDifficulty, vanilla, difficulty, pickingEntrance, activeMap) {
+        let data = this.graphic.querySelector('.node-overlay-wrapper')?.dataset;
+        if(!data) {
+            return true;
+        }
 
+        return data.checksize != String(checkSize)
+               || data.difficulty != difficulty
+               || data.hidedifficulty != String(hideDifficulty)
+               || data.vanilla != vanilla
+               || data.boss != (this.boss?.mappedTo ?? '')
+               || data.item != (this.item ?? '')
+               || data.connectorlabel != (this.connectorLabel ?? '')
+               || data.pickingentrance != String(pickingEntrance)
+               || data.activemap != activeMap
+    }
+
+    updateOverlay(activeMap, pickingEntrance, difficulty) {
         let hideDifficulty = pickingEntrance;
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
@@ -367,11 +380,28 @@ class MapNode {
                           && this.difficulty == 'checked';
         hideDifficulty |= this.boss != null;
 
-        if (!hideDifficulty) {
-            let vanilla = this.isVanilla && this.difficulty != 'checked' ? '-vanilla' : '';
+        let vanilla = this.isVanilla && this.difficulty != 'checked' ? '-vanilla' : '';
 
+        if (!this.shouldUpdateOverlay(hideDifficulty, vanilla, difficulty, pickingEntrance, activeMap)) {
+            return;
+        }
+
+        let overlay = createElement('div', {
+            class: 'node-overlay-wrapper',
+            'data-checkSize': checkSize,
+            'data-difficulty': difficulty,
+            'data-hideDifficulty': hideDifficulty,
+            'data-vanilla': vanilla,
+            'data-boss': this.boss?.mappedTo ?? '',
+            'data-item': this.item ?? '',
+            'data-connectorLabel': this.connectorLabel ?? '',
+            'data-pickingEntrance': pickingEntrance,
+            'data-activeMap': activeMap,
+        });
+
+        if (!hideDifficulty) {
             let iconWrapper = createElement('div', {
-                class: `icon-wrapper icon-difficulty-${difficulty}`,
+                class: `icon-wrapper icon-difficulty-${difficulty} check-size-${checkSize} check-vanilla-${vanilla}`,
                 css: `width: ${checkSize}px;
                       height: ${checkSize}px;`,
             });
@@ -393,7 +423,6 @@ class MapNode {
             let itemOverlay = createElement('img', {
                 src: `static/images/${this.boss.mappedTo}.png`,
                 class: "node-boss-overlay",
-                'data-node-item': this.item,
                 onmousedown: "preventDoubleClick(event)"
             });
 
@@ -437,7 +466,6 @@ class MapNode {
             }
 
             connectorOverlay.innerHTML = label;
-
             overlay.appendChild(connectorOverlay);
         }
 
@@ -459,8 +487,15 @@ class MapNode {
         }
 
         let options = {
-            'data-node-id': this.id(),
+            'id': this.id(),
             'draggable': false,
+            'data-node-id': this.id(),
+            'data-bs-toggle': 'tooltip',
+            'data-bs-trigger': 'manual',
+            'data-bs-html': 'true',
+            'data-bs-title': '',
+            'data-bs-animation': 'false',
+            'data-bs-container': 'body',
             css: `top: ${y}px;
                   left: ${x}px;
                   width: ${size}px;
