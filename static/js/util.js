@@ -228,3 +228,18 @@ function applySettings() {
         $('.map-overlay').hide();
     }
 }
+
+function createElement(type, attrs) {
+    let element = document.createElement(type);
+
+    for (const attr in attrs) {
+        if (attr == 'css') {
+            element.style.cssText = attrs[attr];
+        }
+        else {
+            element.setAttribute(attr, attrs[attr]);
+        }
+    }
+
+    return element;
+}

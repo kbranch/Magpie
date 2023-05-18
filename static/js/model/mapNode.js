@@ -347,8 +347,8 @@ class MapNode {
     }
 
     updateOverlay(activeMap, pickingEntrance, difficulty) {
-        let overlay = $('<div>', {
-            'class': 'node-overlay-wrapper',
+        let overlay = createElement('div', {
+            class: 'node-overlay-wrapper'
         });
 
         let hideDifficulty = pickingEntrance;
@@ -370,50 +370,45 @@ class MapNode {
         if (!hideDifficulty) {
             let vanilla = this.isVanilla && this.difficulty != 'checked' ? '-vanilla' : '';
 
-            let iconWrapper = $('<div>', {
-                'class': `icon-wrapper icon-difficulty-${difficulty}`,
-                css: {
-                    'width': checkSize,
-                    'height': checkSize,
-                },
+            let iconWrapper = createElement('div', {
+                class: `icon-wrapper icon-difficulty-${difficulty}`,
+                css: `width: ${checkSize}px;
+                      height: ${checkSize}px;`,
             });
-            let svg = $('<svg>', {
-                'class': 'icon',
-                css: {
-                    'width': checkSize,
-                    'height': checkSize,
-                },
-            })
-            let use = $('<use>', {
+            let svg = createElement('svg', {
+                class: 'icon',
+                css: `width: ${checkSize}px;
+                      height: ${checkSize}px;`,
+            });
+            let use = createElement('use', {
                 'xlink:href': `#difficulty-${difficulty}${vanilla}`,
             });
 
-            svg.append(use);
-            iconWrapper.append(svg);
-            $(iconWrapper).html($(iconWrapper).html());
-            overlay.append(iconWrapper);
+            svg.innerHTML = use.outerHTML;
+            iconWrapper.innerHTML = svg.outerHTML;
+            overlay.appendChild(iconWrapper);
         }
 
         if (this.boss) {
-            let itemOverlay = $('<img>', {
-                'src': `static/images/${this.boss.mappedTo}.png`,
-                'class': "node-boss-overlay",
+            let itemOverlay = createElement('img', {
+                src: `static/images/${this.boss.mappedTo}.png`,
+                class: "node-boss-overlay",
                 'data-node-item': this.item,
                 onmousedown: "preventDoubleClick(event)"
             });
 
-            $(overlay).append(itemOverlay);
+            overlay.appendChild(itemOverlay);
         }
 
         if (this.item) {
-            let itemOverlay = $('<img>', {
-                'src': `static/images/${this.item}_1.png`,
-                'class': "node-item-overlay",
+            let itemOverlay = createElement('img', {
+                src: `static/images/${this.item}_1.png`,
+                class: "node-item-overlay",
                 'data-node-item': this.item,
                 onmousedown: "preventDoubleClick(event)"
             });
 
-            $(overlay).append(itemOverlay);
+            overlay.appendChild(itemOverlay);
         }
 
         if ((this.connectorLabel && !pickingEntrance)
@@ -422,16 +417,14 @@ class MapNode {
 
             let shadowSize = 1 / (localSettings.checkSize / checkSize);
 
-            let connectorOverlay = $('<p>', {
-                'class': "node-overlay",
+            let connectorOverlay = createElement('p', {
+                class: "node-overlay",
                 'data-connector-label': this.connectorLabel,
-                css: {
-                    'font-size': `${checkSize * 0.72}px`,
-                    'text-shadow': `-${shadowSize}px -${shadowSize}px 0 black,  
+                css: `font-size: ${checkSize * 0.72}px;
+                      text-shadow: -${shadowSize}px -${shadowSize}px 0 black,  
                                     ${shadowSize}px -${shadowSize}px 0 black,
                                     -${shadowSize}px  ${shadowSize}px 0 black,
-                                    ${shadowSize}px  ${shadowSize}px 0 black`,
-                },
+                                    ${shadowSize}px  ${shadowSize}px 0 black;`,
                 onmousedown: "preventDoubleClick(event)"
             });
 
@@ -443,13 +436,13 @@ class MapNode {
                 label = this.dungeonName(pickingEntrance)[1];
             }
 
-            $(connectorOverlay).append(label);
+            connectorOverlay.innerHTML = label;
 
-            $(overlay).append(connectorOverlay);
+            overlay.appendChild(connectorOverlay);
         }
 
         this.graphic.innerHTML = '';
-        this.graphic.appendChild(overlay[0]);
+        this.graphic.appendChild(overlay);
     }
 
     createGraphic() {
@@ -465,18 +458,24 @@ class MapNode {
             y -= extra / 2;
         }
 
-        this.graphic = $('<div>', {
+        let options = {
             'data-node-id': this.id(),
-            'data-item': this.item,
-            'data-boss': this.boss?.id,
             'draggable': false,
-            css: {
-                'top': y,
-                'left': x,
-                'width': size,
-                'height': size,
-            },
-        })[0];
+            css: `top: ${y}px;
+                  left: ${x}px;
+                  width: ${size}px;
+                  height: ${size}px;`,
+        };
+
+        if (this.item) {
+            options['data-item'] = this.item;
+        }
+
+        if (this.boss) {
+            options['data-boss'] = this.boss?.id;
+        }
+
+        this.graphic = createElement('div', options);
 
         $(this.graphic).on('click', (e) => { 
             checkGraphicLeftClick(e);
