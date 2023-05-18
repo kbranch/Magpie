@@ -5,6 +5,7 @@
 .itemWrapper {
     position: relative;
     display: inline-block;
+    height: 32px;
 }
 
 .map-wrapper {
@@ -188,6 +189,8 @@ img {
 
 .map {
     max-width: 100%;
+    height: auto;
+    object-fit: scale-down;
 }
 
 .map-overlay {
@@ -958,6 +961,13 @@ button.nav-link.active {
 
 .quicktab-button .quicksetting-icon {
     filter: invert(1);
+    width: 16px;
+    height: 16px;
+}
+
+img.button-icon {
+    width: 16px;
+    height: 16px;
 }
 
 .invert {
