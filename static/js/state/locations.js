@@ -39,11 +39,17 @@ function loadEntrances() {
     }
 
     try {
-        let dehydratedConnections = JSON.parse(localStorage.getItem('connections'));
         connections = [];
-        for (const conn of dehydratedConnections) {
-            connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla));
+
+        let raw = localStorage.getItem('connections');
+
+        if (raw) {
+            let dehydratedConnections = JSON.parse(raw);
+            for (const conn of dehydratedConnections) {
+                connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla));
+            }
         }
+
     }
     catch (err) {
         errors.push(err);
