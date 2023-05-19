@@ -1,4 +1,4 @@
-{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', overlay_count='', invert_count='', allItems=None, hideIfZero=False, condition=True, gfx=True) %}
+{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', height='32px', overlay_count='', invert_count='', allItems=None, hideIfZero=False, condition=True, gfx=True) %}
 {% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
     {% set altNames = {
         'SONG1': 'Ballad of the Wind Fish',
@@ -68,14 +68,14 @@
         {% set invert_count = 'data-invert_count' %}
     {% endif %}
 
-    {% set width = 'style="width: ' + width + ';"' %}
+    {% set size = 'style="width: ' + width + '; height: ' + height + ';"' %}
 
     <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{classes}}">
-        <div class="itemWrapper" onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
+        <div class="itemWrapper" {{size|safe}} onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
         {% if secondary != '' and src == '' %}
-            <img data-item="{{secondary}}" {{width|safe}} class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
+            <img data-item="{{secondary}}" class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}
-            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{width|safe}} {{invert_count}} class="itemImage primary" src="static/images/{{primary}}_0.png" draggable="false">
+            <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{invert_count}} class="itemImage primary" src="static/images/{{primary}}_0.png" draggable="false">
         {% if overlay_count != '' %}
             <span data-overlay_count="{{overlay_count}}" {{invert_count}} class="overlay" onmousedown="preventDoubleClick(event)">0</span>
         {% endif %}
