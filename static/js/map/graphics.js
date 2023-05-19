@@ -1,9 +1,7 @@
 "use strict"
 
 function drawActiveTab() {
-    setTimeout(() => {
-        drawNodes(getActiveMap(), true);
-    }, 0);
+    drawNodes(getActiveMap(), true);
 }
 
 function getActiveMap() {

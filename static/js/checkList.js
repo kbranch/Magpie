@@ -146,12 +146,6 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 }
 
 function refreshTextChecks() {
-    setTimeout(() => {
-        realRefreshTextChecks()
-    }, 0);
-}
-
-function realRefreshTextChecks() {
     let wrappers = document.querySelectorAll('div.text-check-wrapper');
 
     for (const element of wrappers) {
