@@ -255,6 +255,7 @@ function getState() {
     state.entranceMap = entranceMap;
     state.connections = connections;
     state.checkContents = checkContents;
+    state.errorLog = errorLog;
 
     return state;
 }

@@ -76,6 +76,7 @@
     var checkSize = 16;
     var skipSettingsSave = false;
     var maxInventory = {};
+    var errorLog = [];
 
     const startHouse = 'start_house';
 
@@ -181,7 +182,20 @@
         });
     }
 
+    function errorHandler(e) {
+        errorLog.push({
+            col: e.colno,
+            line: e.lineno,
+            message: e.error.message,
+            stack: e.error.stack,
+            filename: e.filename,
+            time: e.timeStamp,
+        });
+    }
+
     function init() {
+        window.addEventListener('error', errorHandler);
+
         modifyTooltipAllowList();
         initKnownItems();
 
