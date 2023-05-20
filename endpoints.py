@@ -1,8 +1,8 @@
+import json
 import base64
 import socket
 import platform
 import traceback
-import jsonpickle
 import urllib.request
 from jinja2 import Template
 from datetime import datetime
@@ -79,10 +79,10 @@ def home():
 
     return render_template("index.html", flags=flags, args=args,
                                          defaultSettings=defaultSettings,
-                                         jsonArgs=jsonpickle.encode(args),
-                                         jsonSettings=jsonpickle.encode(defaultSettings),
-                                         jsonSettingsOverrides=jsonpickle.encode(settingsOverrides),
-                                         jsonArgsOverrides=jsonpickle.encode(argsOverrides),
+                                         jsonArgs=json.dumps(args.__dict__),
+                                         jsonSettings=json.dumps(defaultSettings.__dict__),
+                                         jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                         jsonArgsOverrides=json.dumps(argsOverrides),
                                          local=local,
                                          graphicsOptions=LocalSettings.graphicsPacks(),
                                          version=getVersion(),
@@ -176,7 +176,7 @@ def parseShortString():
         shortString = request.form['shortString']
         settings = getArgsFromShortString(shortString)
 
-        return jsonpickle.encode(settings)
+        return json.dumps(settings)
     except:
         return renderTraceback()
 
@@ -192,10 +192,10 @@ def getSpoilerLog():
 def renderCheckList():
     try:
         argValues = Args.parse(request.form['args'])
-        inventory = jsonpickle.decode(request.form['inventory'])
-        entranceMap = jsonpickle.decode(request.form['entranceMap'])
-        bossList = jsonpickle.decode(request.form['bossList'])
-        minibossMap = jsonpickle.decode(request.form['minibossMap'])
+        inventory = json.loads(request.form['inventory'])
+        entranceMap = json.loads(request.form['entranceMap'])
+        bossList = json.loads(request.form['bossList'])
+        minibossMap = json.loads(request.form['minibossMap'])
 
         for key in list(minibossMap.keys()):
             if key.isnumeric():
@@ -220,12 +220,12 @@ def renderCheckList():
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
         result = render_template("checklist.html", checkAccessibility=accessibility.checks,
-                                                 entranceAccessibility=jsonpickle.encode(accessibility.entrances),
+                                                 entranceAccessibility=json.dumps(accessibility.entrances, default=lambda x: x.__dict__),
                                                  logics=logics,
                                                  checkCount=len(allChecks),
                                                  allChecks=ladxrInterface.allChecks.values(),
-                                                 entrances=jsonpickle.encode(entrances),
-                                                 startLocations=jsonpickle.encode(getStartLocations(args)),
+                                                 entrances=json.dumps(entrances),
+                                                 startLocations=json.dumps(getStartLocations(args)),
                                                  )
 
         return result

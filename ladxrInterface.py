@@ -54,10 +54,11 @@ class Entrance:
 def getArgsFromShortString(shortString):
     settings = Settings()
     settings.loadShortString(shortString)
-    return getArgs(ladxrFlags=settings, useCurrentValue=True)
+    settings = getArgs(ladxrFlags=settings, useCurrentValue=True).__dict__
+    del settings['flags']
+    return settings
 
 def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
-
     if ladxrFlags == None:
         ladxrFlags = [x for x in Settings()._Settings__all if not x.aesthetic and (x.options != None or isinstance(x.default, boolean))]
 

@@ -2,4 +2,3 @@ requests
 websockets
 Flask
 flaskwebgui>1.0
-jsonpickle
