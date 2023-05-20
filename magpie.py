@@ -78,7 +78,7 @@ def main():
                     print(f'Found Chrome at {browserPath}')
                     break
             
-            ui = FlaskUI(endpoints.app, port=16114, width=width, height=height, browser_path=browserPath)
+            ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
             ui.run()
 
             if sys.platform.lower().startswith('win') and not args.debug:

@@ -1,5 +1,5 @@
 requests
 websockets
 Flask
-flaskwebgui==0.3.5
+flaskwebgui>1.0
 jsonpickle

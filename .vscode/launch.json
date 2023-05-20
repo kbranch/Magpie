@@ -8,6 +8,7 @@
             "name": "Python: Flask",
             "type": "python",
             "request": "launch",
+
             "module": "flask",
             "env": {
                 "FLASK_APP": "endpoints.py",
@@ -18,10 +19,18 @@
                 "--host",
                 "0.0.0.0",
                 "--port",
-                "25230"
+                "25230",
             ],
             "jinja": true
+
             // "program": "spriteExtractor.py",
+            // "console": "integratedTerminal",
+            // "justMyCode": true
+
+            // "program": "magpie.py",
+            // "args": [
+            //     "--local",
+            // ],
             // "console": "integratedTerminal",
             // "justMyCode": true
         }
