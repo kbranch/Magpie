@@ -347,10 +347,14 @@ class MapNode {
     }
 
     shouldUpdateOverlay(hideDifficulty, vanilla, difficulty, pickingEntrance, activeMap) {
-        let data = this.graphic.querySelector('.node-overlay-wrapper')?.dataset;
-        if(!data) {
+        let wrapper = this.graphic.querySelector('.node-overlay-wrapper');
+
+        if (!wrapper) {
             return true;
         }
+
+        let label = wrapper.querySelector('.node-overlay')?.innerHTML ?? '';
+        let data = wrapper.dataset;
 
         return data.checksize != String(checkSize)
                || data.difficulty != difficulty
@@ -358,9 +362,10 @@ class MapNode {
                || data.vanilla != vanilla
                || data.boss != (this.boss?.mappedTo ?? '')
                || data.item != (this.item ?? '')
-               || data.connectorlabel != (this.connectorLabel ?? '')
                || data.pickingentrance != String(pickingEntrance)
                || data.activemap != activeMap
+               || label != (this.isDungeon() ? this.dungeonName(pickingEntrance)[1]
+                                                           : (this.connectorLabel ?? ''))
     }
 
     updateOverlay(activeMap, pickingEntrance, difficulty) {
