@@ -116,7 +116,8 @@ class Connection {
     static isIncomplete({ exterior=null, interior=null }) {
         let connector = Connection.findConnector({ exterior: exterior, interior: interior });
         let connection = this.existingConnection(connector);
-        return connection?.isIncomplete() ?? false;
+        return (connection?.isIncomplete() ?? false)
+               || (connector && !connection);
     }
 
     static unmappedEntrances(connector) {

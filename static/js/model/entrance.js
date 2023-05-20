@@ -96,6 +96,11 @@ class Entrance {
 
         return true;
     }
+
+    isIncompleteConnection() {
+        return this.isMapped()
+               && Connection.isIncomplete({ interior: this.connectedTo() });
+    }
     
     static validConnections(sourceId, simpleOnly=false) {
         let entrance = entranceDict[sourceId];

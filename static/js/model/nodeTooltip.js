@@ -243,20 +243,25 @@ class NodeTooltip {
             let action = `startGraphicalConnection('${entrance.id}', '{type}')`;
 
             if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
-                let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
-                pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
-                                              .replace('{text}', text)
-                                              .replace('{classes}', '')
-                                              .replace('{attributes}', '');
+                if (!entrance.isMapped() || entrance.isIncompleteConnection()) {
+                    let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
+                                                .replace('{text}', text)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
+                }
 
-                text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
-                pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
-                                              .replace('{text}', text)
-                                              .replace('{classes}', '')
-                                              .replace('{attributes}', '');
+                if (!entrance.isMapped()) {
+                    let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                    pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
+                                                .replace('{text}', text)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
+                }
             }
 
-            if (entrance.type != "connector" || args.entranceshuffle == 'mixed') {
+            if ((entrance.type != "connector" || args.entranceshuffle == 'mixed')
+                && !entrance.isMapped()) {
                 let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
                 let title = 'Connect to simple entrance...';
 
