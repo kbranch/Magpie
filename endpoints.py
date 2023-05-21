@@ -2,8 +2,8 @@ import json
 import base64
 import socket
 import platform
+import requests
 import traceback
-import urllib.request
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request
@@ -161,10 +161,16 @@ def fetchUpdate():
         return "Not running local version", 401
 
     try:
-        if platform.system().lower() == 'windows':
-            urllib.request.urlretrieve("https://magpietracker.us/static/builds/magpie-local.zip", "update.zip")
-        else:
-            urllib.request.urlretrieve("https://magpietracker.us/static/builds/magpie-local-linux.zip", "update.zip")
+        headers = {'User-Agent': 'Magpie'}
+        url ="https://magpietracker.us/static/builds/magpie-local.zip"
+
+        if platform.system().lower() != 'windows':
+            url = "https://magpietracker.us/static/builds/magpie-local-linux.zip"
+
+        request = requests.get(url, headers=headers)
+
+        with open('update.zip', 'wb') as oFile:
+            oFile.write(request.content)
 
         return "Update downloaded, restart Magpie to install"
     except:
