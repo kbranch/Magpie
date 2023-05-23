@@ -94,7 +94,7 @@ def loadChecks(state):
         state.checks.append(Check(check, address, mask, alternateAddresses[check] if check in alternateAddresses else None, linkedItem))
 
 def readChecks(gb, state, extraItems):
-    for check in state.checks:
+    for check in [x for x in state.checks if 'checks' in state.features or x.linkedItem]:
         bytes = [gb.readRamByte(check.address)]
 
         if check.alternateAddress != None:

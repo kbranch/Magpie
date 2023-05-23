@@ -124,8 +124,9 @@ class State:
 
         extraItems = {}
 
-        if 'checks' in self.features:
-            readChecks(gb, self, extraItems)
+        # A small subset of checks still gets read when the checks feature is off
+        readChecks(gb, self, extraItems)
+
         if 'items' in self.features:
             readItems(gb, self, extraItems)
         if 'gfx' in self.features and gb.canReadRom():
