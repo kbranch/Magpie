@@ -4,6 +4,7 @@ import sys
 import uuid
 import json
 import hashlib
+import traceback
 
 # Deal with how pyinstaller's --onefile option packs things
 if hasattr(sys, '_MEIPASS'):
@@ -41,6 +42,10 @@ def getSpoilerLog(romData):
         os.remove(filename)
     except RaceRomException:
         logJson['raceRom'] = True
+    except Exception as e:
+        message = f'Error loading spoiler log: {traceback.format_exc()}'
+        logJson['error'] = message
+        print(message)
 
     logJson['shortSettings'] = shortSettings
 
