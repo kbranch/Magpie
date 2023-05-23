@@ -79,10 +79,11 @@ function spoilAll() {
         }
     }
 
-    for (entranceId in spoilerLog.entrances) {
+    for (const entranceId in spoilerLog.entrances) {
         spoilEntrance(entranceId, false);
     }
 
+    applySettings();
     drawActiveTab();
     refreshCheckList();
 }
