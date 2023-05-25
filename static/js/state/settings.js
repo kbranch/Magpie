@@ -223,7 +223,7 @@ function updateSettings() {
 }
 
 function fixArgs(args) {
-    if (['', 'undefined', 'null', '8'].includes(String(args.goal))) {
+    if (!['seashells', 'bingo', 'bingo-full'].includes(String(args.goal))) {
         args.goal = 'egg';
     }
 
