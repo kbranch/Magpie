@@ -111,6 +111,29 @@ function removeVanillaConnectors() {
     saveEntrances();
 }
 
+function updateEntrances() {
+    for (const entrance in entranceMap) {
+        if (!randomizedEntrances?.includes(entrance)) {
+            clearEntranceMapping(entrance, false);
+        }
+    }
+
+    removeVanillaConnectors();
+    for (const connectorId in connectorDict) {
+        let connector = connectorDict[connectorId];
+
+        if (!Entrance.isVanilla(connector.entrances[0])) {
+            continue;
+        }
+
+        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], false, false);
+
+        if (connector.entrances.length == 3) {
+            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], false, false);
+        }
+    }
+}
+
 function applySettings() {
     let children = $('#firstRow').children()
     let firstElement = $(children)[0].id;
@@ -129,21 +152,6 @@ function applySettings() {
 
     if (!localSettings.enableAutotracking) {
         disconnectAutotracker();
-    }
-
-    removeVanillaConnectors();
-    for (const connectorId in connectorDict) {
-        let connector = connectorDict[connectorId];
-
-        if (!Entrance.isVanilla(connector.entrances[0])) {
-            continue;
-        }
-
-        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], false, false);
-
-        if (connector.entrances.length == 3) {
-            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], false, false);
-        }
     }
 
     let oldFeatures = [...autotrackerFeatures];
