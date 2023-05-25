@@ -26,6 +26,8 @@ class Gameboy:
             if client.findEmulator():
                 self.emulator = client
                 return True
+            else:
+                self.emulator = None
 
         if self.emulator != None and self.emulator.isConnected():
             return True
