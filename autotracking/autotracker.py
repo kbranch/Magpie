@@ -25,7 +25,7 @@ async def socketLoop(socket, path):
         await asyncio.sleep(0.4)
 
         if not gb.findEmulator():
-            state.handshook = False
+            state.romRequested = False
             continue
 
         if gb.canReadRom() and state.features:
