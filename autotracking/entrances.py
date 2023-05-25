@@ -60,6 +60,7 @@ def loadEntrances(state, romData):
     }
 
     state.entrancesByTarget = {} 
+    state.entrancesByName = {} 
 
     for name, info in ENTRANCE_INFO.items():
         alternateAddress = addressOverrides[info.target] if info.target in addressOverrides else None

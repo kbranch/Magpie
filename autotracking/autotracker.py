@@ -19,6 +19,8 @@ async def socketLoop(socket, path):
     loadItems(state)
     loadChecks(state)
 
+    seed = None
+
     while True:
         await asyncio.sleep(0.4)
 
@@ -26,10 +28,15 @@ async def socketLoop(socket, path):
             state.handshook = False
             continue
 
-        if not state.entrancesLoaded and gb.canReadRom() and state.needsRom():
-            romData = gb.readRom(0, 1024 * 1024)
-            await state.parseRom(socket, romData)
-            state.entrancesLoaded = True
+        if gb.canReadRom():
+            newSeed = readSeed(gb)
+            if seed != newSeed:
+                print(f'Loading ROM for seed {newSeed}')
+                romData = gb.readRom(0, 1024 * 1024)
+                await state.parseRom(socket, romData)
+                state.entrancesLoaded = True
+            
+            seed = newSeed
 
         try:
             await state.processMessages(socket)

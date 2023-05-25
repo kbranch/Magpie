@@ -40,6 +40,8 @@ class State:
         return 'entrances' in self.features or 'settings' in self.features or 'spoilers' in self.features
 
     async def parseRom(self, socket, romData):
+        self.visitedEntrancesRead = False
+
         if 'entrances' in self.features:
             loadEntrances(self, romData)
 

@@ -84,3 +84,6 @@ def getGfx(gfxData):
         return gfxDict[gfxHash]
     
     return ''
+
+def readSeed(gb):
+    return gb.readRom(0xFAF00, 0x10).hex().upper()
