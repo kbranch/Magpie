@@ -158,6 +158,10 @@ function connectToAutotracker() {
     }
 }
 
+function autotrackerIsConnected() {
+    return autotrackerSocket?.readyState == 1;
+}
+
 function addAutotrackerMessage(status) {
     // I cannot believe the state of vanilla javascript date formatting
     let now = new Date();

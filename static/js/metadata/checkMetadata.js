@@ -13,6 +13,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":0,
+	   "linkedItem": "TRADING_ITEM_SCALE",
+	   "autotrackerLink": true,
 	},
 	"0x0C9-Trade":{
 	   "id":"0x0C9-Trade",
@@ -26,6 +28,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":1,
+	   "linkedItem": "TRADING_ITEM_NECKLACE",
+	   "autotrackerLink": true,
 	},
 	"0x2F5-Trade":{
 	   "id":"0x2F5-Trade",
@@ -39,6 +43,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":2,
+	   "linkedItem": "TRADING_ITEM_FISHING_HOOK",
+	   "autotrackerLink": true,
 	},
 	"0x0CD-Trade":{
 	   "id":"0x0CD-Trade",
@@ -52,6 +58,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":3,
+	   "linkedItem": "TRADING_ITEM_BROOM",
+	   "autotrackerLink": true,
 	},
 	"0x2A8-Trade":{
 	   "id":"0x2A8-Trade",
@@ -65,6 +73,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":4,
+	   "linkedItem": "TRADING_ITEM_LETTER",
+	   "autotrackerLink": true,
 	},
 	"0x2D9-Trade":{
 	   "id":"0x2D9-Trade",
@@ -78,6 +88,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":5,
+	   "linkedItem": "TRADING_ITEM_HIBISCUS",
+	   "autotrackerLink": true,
 	},
 	"0x019-Trade":{
 	   "id":"0x019-Trade",
@@ -97,6 +109,8 @@ let coordDict = {
 		//   }
 	   ],
 	   "index":6,
+	   "linkedItem": "TRADING_ITEM_PINEAPPLE",
+	   "autotrackerLink": true,
 	},
 	"0x2D7-Trade":{
 	   "id":"0x2D7-Trade",
@@ -110,6 +124,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":7,
+	   "linkedItem": "TRADING_ITEM_HONEYCOMB",
+	   "autotrackerLink": true,
 	},
 	"0x087-Trade":{
 	   "id":"0x087-Trade",
@@ -123,6 +139,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":8,
+	   "linkedItem": "TRADING_ITEM_STICK",
+	   "autotrackerLink": true,
 	},
 	"0x07B-Trade":{
 	   "id":"0x07B-Trade",
@@ -136,6 +154,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":9,
+	   "linkedItem": "TRADING_ITEM_BANANAS",
+	   "autotrackerLink": true,
 	},
 	"0x2FE-Trade":{
 	   "id":"0x2FE-Trade",
@@ -149,6 +169,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":10,
+	   "linkedItem": "TRADING_ITEM_DOG_FOOD",
+	   "autotrackerLink": true,
 	},
 	"0x2B2-Trade":{
 	   "id":"0x2B2-Trade",
@@ -162,6 +184,8 @@ let coordDict = {
 		  }
 	   ],
 	   "index":11,
+	   "linkedItem": "TRADING_ITEM_RIBBON",
+	   "autotrackerLink": true,
 	},
 	"0x2A6-Trade":{
 	   "id":"0x2A6-Trade",
@@ -176,6 +200,8 @@ let coordDict = {
 	   ],
 	   "index":12,
 	   "image": "02A6-Trade",
+	   "linkedItem": "TRADING_ITEM_YOSHI_DOLL",
+	   "autotrackerLink": true,
 	},
 	"0x2A0-Trade":{
 	   "id":"0x2A0-Trade",

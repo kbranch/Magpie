@@ -108,7 +108,9 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
 
         if (metadata.linkedItem
             && (!metadata.vanillaLink 
-                || isVanilla)) {
+                || isVanilla)
+            && (!metadata.autotrackerLink
+                || autotrackerIsConnected())) {
             addItem(metadata.linkedItem, 1, false, false);
             itemsChanged = true;
         }
@@ -136,7 +138,9 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 
         if (metadata.linkedItem
             && (!metadata.vanillaLink 
-                || isVanilla)) {
+                || isVanilla)
+            && (!metadata.autotrackerLink
+                || autotrackerIsConnected())) {
             addItem(metadata.linkedItem, -1, false, false);
             itemsChanged = true;
         }
