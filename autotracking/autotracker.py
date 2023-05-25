@@ -60,7 +60,8 @@ async def socketLoop(socket, path):
 
 def getRemoteVersion():
     try:
-        request = requests.get('https://magpietracker.us/version')
+        headers = {'User-Agent': 'Magpie'}
+        request = requests.get('https://magpietracker.us/version', headers=headers)
         return json.loads(request.text)
     except:
         return None
