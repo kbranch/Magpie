@@ -176,6 +176,11 @@ function addAutotrackerMessage(status) {
 function processMessage(messageText) {
     let message;
 
+    if (settingsPending) {
+        messageQueue.push(messageText);
+        return;
+    }
+
     try {
         message = JSON.parse(messageText);
         console.log(`Received a '${message.type}' message`);
@@ -227,7 +232,8 @@ function processMessage(messageText) {
             case 'settings':
                 if (autotrackerFeatures.includes('settings')) {
                     $("#shortString")[0].value = message.settings;
-                    loadShortString(true)
+                    settingsPending = true;
+                    loadShortString(true);
                 }
                 else {
                     console.log("Settings feature disabled, ignoring")

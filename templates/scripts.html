@@ -77,6 +77,8 @@
     var skipSettingsSave = false;
     var maxInventory = {};
     var errorLog = [];
+    var messageQueue = [];
+    var settingsPending = false;
 
     const startHouse = 'start_house';
 
@@ -165,6 +167,14 @@
                 if (saveOnLoad) {
                     saveSettings();
                 }
+
+                settingsPending = false;
+
+                for (const message of messageQueue) {
+                    processMessage(message);
+                }
+
+                messageQueue = [];
             }
         });
     }

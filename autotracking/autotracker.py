@@ -28,7 +28,7 @@ async def socketLoop(socket, path):
             state.handshook = False
             continue
 
-        if gb.canReadRom():
+        if gb.canReadRom() and state.features:
             newSeed = readSeed(gb)
             if seed != newSeed:
                 print(f'Loading ROM for seed {newSeed}')

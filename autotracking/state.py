@@ -71,6 +71,8 @@ class State:
                 print("Received handshake request")
                 self.features = set(message['features'])
 
+                print(f"Features: {self.features}")
+
                 await sendMessage({
                     'type': 'handshAck',
                     'version': protocolVersion,

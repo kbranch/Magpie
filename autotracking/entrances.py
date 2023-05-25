@@ -90,6 +90,7 @@ def readVisitedEntrances(gb, state):
 
         if indoorVisited and outdoorVisited and entrance.name in state.reverseEntranceMap:
             outdoorEntrance.map(entrance.name)
+            print(f"Found visited entrance: {outdoorEntrance.name} = {entrance.name}")
 
 def readLocation(gb, state):
     indoors = gb.readRamByte(indoorFlagAddress)
