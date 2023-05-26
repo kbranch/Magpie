@@ -1082,3 +1082,7 @@ body {
 .accordion-collapse {
     transition: none !important;
 }
+
+.animate__fadeOut {
+    pointer-events: none;
+}
