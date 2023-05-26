@@ -46,6 +46,7 @@ var connectorDict = {
         ],
         "checks": [
             "0x2BB",
+            "0x2BA",
         ],
         "map": "overworld",
     },
