@@ -63,9 +63,7 @@ def home():
 
     shortString = request.args.get('shortString') 
     if shortString:
-        tempArgs = getArgsFromShortString(shortString)
-        del tempArgs.flags
-        argsOverrides = tempArgs.__dict__
+        argsOverrides = getArgsFromShortString(shortString)
     
     settingsPrefix = 'setting_'
     argsPrefix = 'flag_'
