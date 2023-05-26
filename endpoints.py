@@ -15,7 +15,7 @@ from localSettings import LocalSettings, updateSettings
 from args import Args
 
 try:
-    import newrelic
+    import newrelic.agent
 except:
     pass
 
