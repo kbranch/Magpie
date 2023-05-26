@@ -14,6 +14,11 @@ from trackables import *
 from localSettings import LocalSettings, updateSettings
 from args import Args
 
+try:
+    import newrelic
+except:
+    pass
+
 app = Flask(__name__)
 app.jinja_options['trim_blocks'] = True
 app.jinja_options['lstrip_blocks'] = True
@@ -153,6 +158,9 @@ def serveVersion():
 
 @app.route("/health")
 def health():
+    if 'newrelic' in sys.modules:
+        newrelic.agent.ignore_transaction()
+
     return "OK"
 
 @app.route("/fetchupdate")
