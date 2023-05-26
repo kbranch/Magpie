@@ -1,1 +1,1 @@
-.venv\Scripts\python.exe magpie.py --local
+.winvenv\Scripts\python.exe magpie.py --local

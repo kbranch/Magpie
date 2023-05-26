@@ -1,0 +1,1 @@
+.winvenv\Scripts\python.exe autotracker.py

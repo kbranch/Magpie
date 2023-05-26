@@ -1,4 +1,5 @@
 .venv/
+.winvenv/
 __pycache__/
 ladx_maptracker_muffinjets_wolfman2000/
 graphics/
