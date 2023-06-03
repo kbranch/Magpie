@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ..
+
 rm -rf build dist
 
 rm a.spec
@@ -13,8 +15,8 @@ docker run -v "$(pwd):/src/" kbranch/pyinstaller-l64
 rm version
 rm a.spec
 
-cp magpie.bat dist/windows
-cp magpie.sh dist/linux
+cp scripts/magpie.bat dist/windows
+cp scripts/magpie.sh dist/linux
 cp settings.json dist/windows
 cp settings.json dist/linux
 

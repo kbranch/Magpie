@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd ..
 rm -rf build dist
 rm a.spec
 
