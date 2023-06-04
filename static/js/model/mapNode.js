@@ -158,7 +158,8 @@ class MapNode {
             && args.entranceshuffle == 'none'
             && Entrance.isFound(startHouse)
             && this.entrance.connectedTo() != startHouse
-            && this.checks.length == 0) {
+            && this.checks.length == 0
+            && !this.entrance.isVanilla()) {
 
             if (!args.dungeonshuffle) {
                 return true;
