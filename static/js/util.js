@@ -198,10 +198,29 @@ function applySettings() {
         "#difficulty-9": localSettings.diff9Color,
         "#difficulty-9-vanilla": localSettings.diff9VColor,
         "#difficulty-checked": localSettings.diffCheckedColor,
+
+        ".difficulty-0": localSettings.diff0Alpha,
+        ".difficulty-0.vanilla": localSettings.diff0VAlpha,
+        ".difficulty-1": localSettings.diff1Alpha,
+        ".difficulty-1.vanilla": localSettings.diff1VAlpha,
+        ".difficulty-2": localSettings.diff2Alpha,
+        ".difficulty-2.vanilla": localSettings.diff2VAlpha,
+        ".difficulty-3": localSettings.diff3Alpha,
+        ".difficulty-3.vanilla": localSettings.diff3VAlpha,
+        ".difficulty-8": localSettings.diff8Alpha,
+        ".difficulty-8.vanilla": localSettings.diff8VAlpha,
+        ".difficulty-9": localSettings.diff9Alpha,
+        ".difficulty-9.vanilla": localSettings.diff9VAlpha,
+        ".difficulty-checked": localSettings.diffCheckedAlpha,
     }
 
     for (const rule of iconStyles.cssRules) {
-        rule.style.fill = iconStyleTable[rule.selectorText];
+        if (rule.selectorText.startsWith('#')) {
+            rule.style.fill = iconStyleTable[rule.selectorText];
+        }
+        else {
+            rule.style.opacity = iconStyleTable[rule.selectorText];
+        }
     }
 
     for(let i = 0; i < themeStyles.rules.length; i++) {

@@ -49,6 +49,19 @@ class LocalSettings:
         self.diff9Color = '#444444'
         self.diff9VColor = '#aaaaaa'
         self.diffCheckedColor = '#00ff00'
+        self.diff0Alpha = 1
+        self.diff0VAlpha = 1
+        self.diff1Alpha = 1
+        self.diff1VAlpha = 1
+        self.diff2Alpha = 1
+        self.diff2VAlpha = 1
+        self.diff3Alpha = 1
+        self.diff3VAlpha = 1
+        self.diff8Alpha = 1
+        self.diff8VAlpha = 1
+        self.diff9Alpha = 1
+        self.diff9VAlpha = 1
+        self.diffCheckedAlpha = 1
         self.colorAssistMaps = False
 
         self.bgColor = '#212529'

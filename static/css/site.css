@@ -576,6 +576,10 @@ img {
     line-height: 21px;
 }
 
+.opacity-block {
+    display: inline-block;
+}
+
 .color-picker {
     width: 25px;
     height: 100%;
@@ -1085,4 +1089,8 @@ body {
 
 .animate__fadeOut {
     pointer-events: none;
+}
+
+.node-opacity-slider {
+    width: 100px;
 }
