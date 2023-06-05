@@ -1,11 +1,6 @@
 "use strict"
 
 function snapMap() {
-    // html2canvas(, { "allowTaint": true }).then(canvas => {
-    //     let data = canvas.toDataURL('image/png');
-
-    // });
-
     htmlToImage.toPng(document.querySelector(".map-container.active"))
         .then(function (dataUrl) {
             $.ajax({
@@ -26,7 +21,11 @@ function nodeFilter(node) {
 }
 
 function snapItems() {
-    htmlToImage.toPng(document.querySelector(".item-container"), { filter: nodeFilter })
+    // We don't want hover effects in the snapshot
+    let glows = document.querySelectorAll('.glow');
+    glows.forEach(x => x.classList.remove('glow'));
+
+    htmlToImage.toPng(document.querySelector("#itemContainer"), { filter: nodeFilter, style: {"pointer-events": "none"} })
         .then(function (dataUrl) {
             $.ajax({
                 type: "POST",
@@ -35,12 +34,10 @@ function snapItems() {
                     data: dataUrl,
                 },
             });
+
+            glows.forEach(x => x.classList.add('glow'));
         })
         .catch(function (error) {
             console.error('Error snapping item image', error);
         });
-    // html2canvas(document.querySelector("#itemContainer")).then(canvas => {
-    //     let data = canvas.toDataURL('image/png');
-
-    // });
 }

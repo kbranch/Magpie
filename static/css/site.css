@@ -138,7 +138,7 @@
 }
 
 .rom-col {
-    width: 270px;
+    width: 294px;
 }
 
 img {
@@ -155,11 +155,11 @@ img {
     -moz-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    width: 270px;
+    width: 294px;
 }
 
 #item-blank, #spoilerSeed {
-    width: 270px;
+    width: 294px;
 }
 
 .hidden {
@@ -1093,4 +1093,13 @@ body {
 
 .node-opacity-slider {
     width: 100px;
+}
+
+#items .row {
+    --bs-gutter-x: 0rem;
+}
+
+.px-2_5 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
 }
