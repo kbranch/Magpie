@@ -267,7 +267,7 @@ function drawNodes(mapName, animate=true) {
 
         node.updateAnimationClasses(classes, parent, animate);
         node.updateEntranceAttrs();
-        node.updateOverlay(activeMap, graphicalMapSource != null, difficulty);
+        node.updateOverlay(activeMap, graphicalMapSource != null, difficulty, classes);
 
         $(node.graphic).attr({
             'class': classes.join(' '),

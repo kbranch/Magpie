@@ -369,7 +369,7 @@ class MapNode {
                                                            : (this.connectorLabel ?? ''))
     }
 
-    updateOverlay(activeMap, pickingEntrance, difficulty) {
+    updateOverlay(activeMap, pickingEntrance, difficulty, classes) {
         let hideDifficulty = pickingEntrance;
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
@@ -473,6 +473,15 @@ class MapNode {
 
             connectorOverlay.innerHTML = label;
             overlay.appendChild(connectorOverlay);
+        }
+
+        let overlayClasses = ['behind-keys', 'one-way-out', 'one-way-in', 'owl', 'unmapped-entrance', 'possible-start-location', 'start-location', 'difficulty-8', 'entrance-difficulty-8', 'partial-entrance'];
+        for (const overlayClass of overlayClasses) {
+            let newOverlay = createElement('div', {
+                class: overlayClass + "-overlay",
+            });
+
+            overlay.appendChild(newOverlay);
         }
 
         this.graphic.innerHTML = '';

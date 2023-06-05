@@ -1,4 +1,4 @@
-.nowrap {
+nowrap {
     white-space: nowrap;
 }
 
@@ -348,8 +348,7 @@ img {
     border-radius: 3px;
 }
 
-.behind-keys:not(.difficulty-checked):before {
-    content: '';
+.behind-keys:not(.difficulty-checked) .behind-keys-overlay {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -360,7 +359,7 @@ img {
     background-position: center center;
     background-size: cover;
     transform: translate(5%, 5%);
-    z-index: 10;
+    z-index: 2;
 }
 
 .check-graphic {
@@ -376,8 +375,7 @@ img {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 
-.partial-entrance:after {
-    content: '';
+.partial-entrance .partial-entrance-overlay {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -408,8 +406,7 @@ img {
     z-index: 3;
 }
 
-.one-way-out:before {
-    content: '';
+.one-way-out .one-way-out-overlay {
     background-image: url('/static/images/one-way-out.svg');
     background-size: 100%;
     width: 140%;
@@ -420,8 +417,7 @@ img {
     pointer-events:none;
 }
 
-.one-way-in:before {
-    content: '';
+.one-way-in .one-way-in-overlay {
     background-image: url('/static/images/one-way-in.svg');
     background-size: 100%;
     width: 140%;
@@ -432,8 +428,7 @@ img {
     pointer-events:none;
 }
 
-.owl:not(.difficulty-checked):before {
-    content: '';
+.owl:not(.difficulty-checked) .owl-overlay {
     border-style: none;
     background-image: url('/static/images/owl.svg');
     position: absolute;
@@ -448,8 +443,7 @@ img {
     z-index: 9;
 }
 
-.entrance-only.unmapped-entrance:before {
-    content: '';
+.entrance-only.unmapped-entrance .unmapped-entrance-overlay {
     border-style: none;
     background-image: url('/static/images/entrance.svg');
     z-index: 3;
@@ -515,10 +509,10 @@ img {
     z-index: 10;
 }
 
-.difficulty-8 .node-overlay-wrapper:before,
-.entrance-difficulty-8:not(.vanilla) .node-overlay-wrapper:before,
-.difficulty-8.static-difficulty-wrapper:before, 
-.difficulty-8.tooltip-check-graphic:before {
+.difficulty-8 .difficulty-8-overlay,
+.entrance-difficulty-8:not(.vanilla) .entrance-difficulty-8-overlay,
+.difficulty-8.static-difficulty-wrapper .difficulty-8-overlay, 
+.difficulty-8.tooltip-check-graphic .difficulty-8-overlay {
     content: '';
     background-image: url('/static/images/exclamation-mark.svg');
     background-size: contain;
@@ -829,8 +823,7 @@ button.nav-link.active {
     z-index: 1;
 }
 
-.possible-start-location:before {
-    content: '';
+.possible-start-location .possible-start-location-overlay {
     border-style: none;
     background-image: url('/static/images/unmapped-entrance.svg');
     z-index: 3;
@@ -855,7 +848,7 @@ button.nav-link.active {
     z-index: 1;
 }
 
-.start-location:not(.difficulty-checked):before {
+.start-location:not(.difficulty-checked) .start-location-overlay {
     content: '';
     background-image: url('/static/images/house.svg');
     background-size: 100%;
