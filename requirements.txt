@@ -2,3 +2,6 @@ requests
 websockets
 Flask
 flaskwebgui>1.0
+opencv-python
+ndi-python
+numpy

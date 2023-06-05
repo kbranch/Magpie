@@ -85,6 +85,9 @@
         "randomstartlocation",
         "romdebugmode",
         "scandir",
+        "shuffleannoying",
+        "shufflejunk",
+        "shufflewater",
         "smallkeys",
         "spoilerformat",
         "Stalfos",
@@ -108,5 +111,9 @@
         "xlink",
         "Yarna",
         "Yoshi"
-    ]
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "python.formatting.provider": "none"
 }

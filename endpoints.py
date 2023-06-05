@@ -7,6 +7,7 @@ import traceback
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request
+from ndi import updateMapImage, updateItemsImage
 
 import ladxrInterface
 from version import *
@@ -298,3 +299,19 @@ def suggestion():
     response.headers.add('Access-Control-Allow-Origin', '*')
 
     return response
+
+@app.route("/mapNdi", methods=['POST'])
+def mapNdi():
+    data = request.form["data"]
+    pngBytes = base64.b64decode(data.split(',')[1])
+    updateMapImage(pngBytes)
+
+    return "OK"
+
+@app.route("/itemsNdi", methods=['POST'])
+def itemsNdi():
+    data = request.form["data"]
+    pngBytes = base64.b64decode(data.split(',')[1])
+    updateItemsImage(pngBytes)
+
+    return "OK"
