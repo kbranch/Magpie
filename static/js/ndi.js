@@ -1,6 +1,10 @@
 "use strict"
 
 function snapMap() {
+    // We don't want hover effects in the snapshot
+    let glows = document.querySelectorAll('.check-glow');
+    glows.forEach(x => x.classList.remove('check-glow'));
+
     htmlToImage.toPng(document.querySelector(".map-container.active"))
         .then(function (dataUrl) {
             $.ajax({
@@ -10,6 +14,8 @@ function snapMap() {
                     data: dataUrl,
                 },
             });
+
+            glows.forEach(x => x.classList.add('check-glow'));
         })
         .catch(function (error) {
             console.error('Error snapping map image', error);

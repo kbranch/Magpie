@@ -180,7 +180,7 @@ class MapNode {
     }
 
     iconClasses() {
-        let classes = ['check-graphic', 'animate__animated'];
+        let classes = ['check-graphic', 'animate__animated', 'check-glow'];
 
         if (pickingEntrances())
         {
@@ -475,7 +475,8 @@ class MapNode {
             overlay.appendChild(connectorOverlay);
         }
 
-        let overlayClasses = ['behind-keys', 'one-way-out', 'one-way-in', 'owl', 'unmapped-entrance', 'possible-start-location', 'start-location', 'difficulty-8', 'entrance-difficulty-8', 'partial-entrance'];
+        let overlayClasses = ['behind-keys', 'one-way-out', 'one-way-in', 'owl', 'unmapped-entrance', 'possible-start-location', 
+                              'start-location', 'difficulty-8', 'entrance-difficulty-8', 'partial-entrance'];
         for (const overlayClass of overlayClasses) {
             let newOverlay = createElement('div', {
                 class: overlayClass + "-overlay",

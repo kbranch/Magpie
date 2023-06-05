@@ -371,7 +371,7 @@ img {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 
-.check-graphic:hover, .spoiler-highlight {
+.check-graphic.check-glow:hover, .spoiler-highlight {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
 }
 
