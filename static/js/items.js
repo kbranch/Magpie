@@ -116,6 +116,8 @@ function refreshImages() {
             input.value = inventory[item];
         }
     }
+
+    refreshItemNdi();
 }
 
 let spoilerTimeout = null;
@@ -144,7 +146,7 @@ function setHighlightedItems(items) {
 
     hoveredItems = [].concat(items);
 
-    drawActiveTab();
+    drawActiveTab(false);
 }
 
 // Composite item logic

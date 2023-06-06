@@ -42,6 +42,8 @@ function addItem(item, qty, wrap=true, refresh=true) {
     updateOverlay(item);
     saveInventory();
 
+    refreshItemNdi();
+
     if (refresh) {
         refreshCheckList();
     }

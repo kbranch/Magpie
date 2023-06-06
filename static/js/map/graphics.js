@@ -1,7 +1,7 @@
 "use strict"
 
-function drawActiveTab() {
-    drawNodes(getActiveMap(), true);
+function drawActiveTab(updateNdi=true) {
+    drawNodes(getActiveMap(), true, updateNdi);
 }
 
 function getActiveMap() {

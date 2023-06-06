@@ -47,3 +47,21 @@ function snapItems() {
             console.error('Error snapping item image', error);
         });
 }
+
+var itemNdiTimeout = null;
+function refreshItemNdi() {
+    if (itemNdiTimeout) {
+        clearTimeout(itemNdiTimeout);
+    }
+
+    itemNdiTimeout = setTimeout(snapItems, 1000);
+}
+
+let mapNdiTimeout = null;
+function refreshMapNdi() {
+    if (mapNdiTimeout) {
+        clearTimeout(mapNdiTimeout);
+    }
+
+    mapNdiTimeout = setTimeout(snapMap, 1000);
+}

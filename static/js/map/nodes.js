@@ -237,7 +237,7 @@ function distributeChecks(unclaimedChecks) {
     }
 }
 
-function drawNodes(mapName, animate=true) {
+function drawNodes(mapName, animate=true, updateNdi=true) {
     let mapImg = document.querySelector(`img[data-mapname="${mapName}"]`);
 
     if ($(mapImg).width() <= 100) {
@@ -289,6 +289,10 @@ function drawNodes(mapName, animate=true) {
         }
 
         pinned = null;
+    }
+
+    if (!pickingEntrances() && updateNdi) {
+        refreshMapNdi();
     }
 }
 

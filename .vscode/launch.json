@@ -9,30 +9,30 @@
             "type": "python",
             "request": "launch",
 
-            "module": "flask",
-            "env": {
-                "FLASK_APP": "endpoints.py",
-                "FLASK_DEBUG": "1"
-            },
-            "args": [
-                "run",
-                "--host",
-                "0.0.0.0",
-                "--port",
-                "25230",
-            ],
-            "jinja": true
+            // "module": "flask",
+            // "env": {
+            //     "FLASK_APP": "endpoints.py",
+            //     "FLASK_DEBUG": "1"
+            // },
+            // "args": [
+            //     "run",
+            //     "--host",
+            //     "0.0.0.0",
+            //     "--port",
+            //     "25230",
+            // ],
+            // "jinja": true
 
             // "program": "spriteExtractor.py",
             // "console": "integratedTerminal",
             // "justMyCode": true
 
-            // "program": "magpie.py",
-            // "args": [
-            //     "--local",
-            // ],
-            // "console": "integratedTerminal",
-            // "justMyCode": true
+            "program": "magpie.py",
+            "args": [
+                "--local",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
