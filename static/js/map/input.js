@@ -134,7 +134,7 @@ function connectorMouseMove(event) {
             }
         });
 
-        $('#firstRow').append(mouseTracker);
+        $('#mapContainer').append(mouseTracker);
 
         let source = $(`[data-entrance-id="${graphicalMapSource}"]`);
         $(source).connections({ class: 'entrance-from', to: $(mouseTracker) });

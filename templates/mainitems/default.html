@@ -1,5 +1,5 @@
 <!-- Main items -->
-<div class="row">
+<div class="row item-width">
     {{ item('SHIELD', max="2") }}
     {{ item("SWORD", max="2") }}
     {{ item("TOADSTOOL") }}
@@ -31,7 +31,7 @@
 </div>
 
 {% if args.tradequest %}
-<div class="row pb-3 pt-1">
+<div class="row pb-3 pt-1 item-width">
     {{ item('TRADING_ITEM_YOSHI_DOLL', max="1") }}
     {{ item('TRADING_ITEM_RIBBON', max="1") }}
     {{ item('TRADING_ITEM_DOG_FOOD', max="1") }}

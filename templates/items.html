@@ -19,38 +19,44 @@
 ] %}
 
 <div class="d-flex justify-content-center">
-    <div id="items">
-        {% if localSettings.itemsTemplate == "custom" %}
-            {% include customItems %}
-        {% else %}
-            {% include "mainitems/" + localSettings.itemsTemplate %}
-        {% endif %}
-
-        {% if localSettings.dungeonItemsTemplate == "custom" %}
-            {% include customDungeonItems %}
-        {% else %}
-            {% include "dungeonitems/" + localSettings.dungeonItemsTemplate %}
-        {% endif %}
-
-        <!-- Unknown items -->
-        {% set unknownItems = allItems.keys() | reject("in", knownItems) | list %}
-
-        {% if unknownItems | length > 0 %}
-        <div class="row pt-2">
-            <h5>Other items:</h5>
-            {% for item in unknownItems %}
-                {% set max = allItems[item] %}
-                <div class="col nowrap">
-                    <label for="{{item}}">{{item}}:</label>
-                    {% if max == 1 %}
-                        <input type="checkbox" id="{{item}}" name="{{item}}" data-item="{{item}}" onchange="itemValueUpdated(this)">
-                    {% else %}
-                        <input type="number" id="{{item}}" name="{{item}}" data-item="{{item}}" min="0" max="{{max}}" value="0" onchange="itemValueUpdated(this)">
-                    {% endif %}
-                </div>
-            {% endfor %}
+    <div id="items" class="row">
+        <div class="col-auto align-self-center">
+            {% if localSettings.itemsTemplate == "custom" %}
+                {% include customItems %}
+            {% else %}
+                {% include "mainitems/" + localSettings.itemsTemplate %}
+            {% endif %}
         </div>
-        {% endif %}
+
+        <div class="col-auto align-self-center">
+            {% if localSettings.dungeonItemsTemplate == "custom" %}
+                {% include customDungeonItems %}
+            {% else %}
+                {% include "dungeonitems/" + localSettings.dungeonItemsTemplate %}
+            {% endif %}
+        </div>
+
+        <div class="col-auto">
+            <!-- Unknown items -->
+            {% set unknownItems = allItems.keys() | reject("in", knownItems) | list %}
+
+            {% if unknownItems | length > 0 %}
+            <div class="row pt-2">
+                <h5>Other items:</h5>
+                {% for item in unknownItems %}
+                    {% set max = allItems[item] %}
+                    <div class="col nowrap">
+                        <label for="{{item}}">{{item}}:</label>
+                        {% if max == 1 %}
+                            <input type="checkbox" id="{{item}}" name="{{item}}" data-item="{{item}}" onchange="itemValueUpdated(this)">
+                        {% else %}
+                            <input type="number" id="{{item}}" name="{{item}}" data-item="{{item}}" min="0" max="{{max}}" value="0" onchange="itemValueUpdated(this)">
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 

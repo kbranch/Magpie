@@ -134,13 +134,52 @@ function updateEntrances() {
     }
 }
 
+function moveChildren(source, dest) {
+    dest.append(...source.childNodes);
+}
+
 function applySettings() {
-    let children = $('#firstRow').children()
-    let firstElement = $(children)[0].id;
-    
-    if (localSettings.swapItemsAndMap && firstElement == 'mapContainer'
-        || !localSettings.swapItemsAndMap && firstElement != 'mapContainer') {
-            $(children[1]).insertBefore($(children[0]));
+    let stacked = document.getElementById('stackedContainer');
+    let unstacked = document.getElementById('unstackedContainer');
+    let container;
+
+    if (localSettings.stacked) {
+        container = stacked;
+
+        moveChildren(unstacked.querySelector('.navbar-slot'), stacked.querySelector('.navbar-slot'));
+        moveChildren(unstacked.querySelector('.map-slot'), stacked.querySelector('.map-slot'));
+        moveChildren(unstacked.querySelector('.items-slot'), stacked.querySelector('.items-slot'));
+        moveChildren(unstacked.querySelector('.quicksettings-slot'), stacked.querySelector('.quicksettings-slot'));
+
+        stacked.classList.remove('hidden');
+        unstacked.classList.add('hidden');
+    }
+    else {
+        container = unstacked;
+
+        moveChildren(stacked.querySelector('.navbar-slot'), unstacked.querySelector('.navbar-slot'));
+        moveChildren(stacked.querySelector('.map-slot'), unstacked.querySelector('.map-slot'));
+        moveChildren(stacked.querySelector('.items-slot'), unstacked.querySelector('.items-slot'));
+        moveChildren(stacked.querySelector('.quicksettings-slot'), unstacked.querySelector('.quicksettings-slot'));
+
+        unstacked.classList.remove('hidden');
+        stacked.classList.add('hidden');
+    }
+
+    let items = container.querySelector('.item-chunk');
+    let map = container.querySelector('.map-chunk');
+
+    if (localSettings.swapItemsAndMap) {
+        container.removeChild(items);
+        container.removeChild(map);
+        container.appendChild(items);
+        container.appendChild(map);
+    }
+    else {
+        container.removeChild(items);
+        container.removeChild(map);
+        container.appendChild(map);
+        container.appendChild(items);
     }
 
     $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);

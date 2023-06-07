@@ -36,6 +36,7 @@ class LocalSettings:
         self.showOwnedPickups = False
         self.graphicsPack = ''
         self.ndi = False
+        self.stacked = False
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'
