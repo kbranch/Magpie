@@ -79,8 +79,6 @@ def main():
                 print(f'Found Chrome at {browserPath}')
                 break
         
-        ndi.init()
-
         ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
         ui.run()
 

@@ -1,3 +1,4 @@
+import ndi
 import json
 import base64
 import socket
@@ -7,7 +8,6 @@ import traceback
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request
-from ndi import updateMapImage, updateItemsImage
 
 import ladxrInterface
 from version import *
@@ -304,7 +304,7 @@ def suggestion():
 def mapNdi():
     data = request.form["data"]
     pngBytes = base64.b64decode(data.split(',')[1])
-    updateMapImage(pngBytes)
+    ndi.updateMapImage(pngBytes)
 
     return "OK"
 
@@ -312,6 +312,18 @@ def mapNdi():
 def itemsNdi():
     data = request.form["data"]
     pngBytes = base64.b64decode(data.split(',')[1])
-    updateItemsImage(pngBytes)
+    ndi.updateItemsImage(pngBytes)
+
+    return "OK"
+
+@app.route("/ndiSettings", methods=['POST'])
+def ndiSettings():
+    enabled = request.form["enabled"] == 'true'
+
+    if local:
+        if enabled:
+            ndi.enableNdi()
+        else:
+            ndi.disableNdi()
 
     return "OK"

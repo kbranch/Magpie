@@ -254,6 +254,16 @@ function applySettings() {
     else {
         $('.map-overlay').hide();
     }
+
+    if (local) {
+        $.ajax({
+            type: "POST",
+            url: "/ndiSettings",
+            data: {
+                enabled: localSettings.ndi,
+            },
+        });
+    }
 }
 
 function createElement(type, attrs) {

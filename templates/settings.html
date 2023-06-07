@@ -363,6 +363,14 @@
                             </select>
                         </div>
                     </div>
+                    {% if local %}
+                    <div class="row">
+                        <div class="col">
+                            <input id="ndi" data-setting="ndi" type="checkbox" class="form-check-input">
+                            <label for="ndi" class="form-label">Enable NDI output</label>
+                        </div>
+                    </div>
+                    {% endif %}
                 </fieldset>
             </div>
             <div class="col-auto">

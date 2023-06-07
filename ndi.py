@@ -1,86 +1,101 @@
 import time
+import traceback
 import cv2 as cv
 import numpy as np
 import NDIlib as ndi
 from queue import Queue
 from threading import Thread
 
+class NdiStream:
+    def __init__(self, name):
+        self.name = name
+
+        self.image = None
+
+        self.settings = ndi.SendCreate()
+        self.settings.ndi_name = name
+        self.sender = ndi.send_create(self.settings)
+        self.frame = ndi.VideoFrameV2()
+        self.frame.FourCC = ndi.FOURCC_VIDEO_TYPE_RGBX
+    
+    def LoadImage(self, bytes):
+        data = np.fromstring(bytes, np.uint8)
+        cvImage = cv.imdecode(data, cv.IMREAD_COLOR)
+        self.image = cv.cvtColor(cvImage, cv.COLOR_BGR2RGBA)
+
+        self.frame.data = self.image
+    
+    def ReloadImage(self):
+        if self.Ready():
+            self.frame.data = self.image
+    
+    def Ready(self):
+        return not (self.image is None)
+
+    def Send(self):
+        if self.Ready():
+            ndi.send_send_video_v2(self.sender, self.frame)
+
+    def Destroy(self):
+        ndi.send_destroy(self.sender)
+
 mapFrames = Queue()
 itemFrames = Queue()
 streamThread = None
+enabled = False
 
-def init():
-    global streamThread
+def enableNdi():
+    global enabled, itemFrames, mapFrames, streamThread
 
     if not streamThread:
         streamThread = Thread(target=streamsTask, daemon=True)
         streamThread.start()
 
+    enabled = True
+    itemFrames = Queue()
+    mapFrames = Queue()
+
+def disableNdi():
+    global enabled, streamThread
+
+    enabled = False
+    streamThread = None
+
 def updateMapImage(pngBytes):
-    mapFrames.put(pngBytes)
+    if enabled:
+        mapFrames.put(pngBytes)
 
 def updateItemsImage(pngBytes):
-    itemFrames.put(pngBytes)
-
-def cvImageFromPng(pngBytes):
-    pngData = np.fromstring(pngBytes, np.uint8)
-
-    cvImage = cv.imdecode(pngData, cv.IMREAD_COLOR)
-    cvImage = cv.cvtColor(cvImage, cv.COLOR_BGR2RGBA)
-
-    return cvImage
-
-def createSender(name):
-    settings = ndi.SendCreate()
-    settings.ndi_name = name
-    return ndi.send_create(settings)
-
-def createFrame():
-    frame = ndi.VideoFrameV2()
-    frame.FourCC = ndi.FOURCC_VIDEO_TYPE_RGBX
-    return frame
+    if enabled:
+        itemFrames.put(pngBytes)
 
 def streamsTask():
-    global itemFrames, mapFrames
+    global enabled, itemFrames, mapFrames
 
-    mapReady = False
-    itemReady = False
+    ndi.initialize()
 
-    itemData = None
-    mapData = None
+    itemStream = NdiStream('Magpie-Items')
+    mapStream = NdiStream('Magpie-Map')
 
-    itemSender = createSender('Magpie-Items')
-    mapFrame = createFrame()
-
-    mapSender = createSender('Magpie-Map')
-    itemFrame = createFrame()
-
-    while True:
+    while enabled:
         try:
             if not itemFrames.empty():
-                itemBytes = itemFrames.get()
-                image = cvImageFromPng(itemBytes)
-                itemData = image
-
-                itemFrame.data = itemData
-                mapFrame.data = mapData if mapReady else mapFrame.data
-                itemReady = True
+                itemStream.LoadImage(itemFrames.get())
+                mapStream.ReloadImage()
 
             if not mapFrames.empty():
-                mapBytes = mapFrames.get()
-                image = cvImageFromPng(mapBytes)
-                mapData = image
+                mapStream.LoadImage(mapFrames.get())
+                itemStream.ReloadImage()
 
-                itemFrame.data = itemData if itemReady else itemFrame.data
-                mapFrame.data = mapData
-                mapReady = True
+            itemStream.Send()
+            mapStream.Send()
 
-            if itemReady:
-                ndi.send_send_video_v2(itemSender, itemFrame)
-
-            if mapReady:
-                ndi.send_send_video_v2(mapSender, mapFrame)
-
-            time.sleep(0.25)
         except Exception as e:
-            print(e)
+            print(f"Error in NDI stream: {e}, {traceback.format_exc()}")
+
+        time.sleep(0.25)
+    
+    itemStream.Destroy()
+    mapStream.Destroy()
+
+    ndi.destroy()
