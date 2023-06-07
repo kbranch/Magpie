@@ -9,7 +9,7 @@ ln -s magpie-data.spec a.spec
 
 git rev-list --count HEAD > version
 
-docker run -v "$(pwd):/src/" kbranch/pyinstaller-w32
+docker run -v "$(pwd):/src/" kbranch/pyinstaller-w64
 docker run -v "$(pwd):/src/" kbranch/pyinstaller-l64
 
 rm version
