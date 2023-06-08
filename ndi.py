@@ -16,11 +16,11 @@ class NdiStream:
         self.settings.ndi_name = name
         self.sender = ndi.send_create(self.settings)
         self.frame = ndi.VideoFrameV2()
-        self.frame.FourCC = ndi.FOURCC_VIDEO_TYPE_RGBX
+        self.frame.FourCC = ndi.FOURCC_VIDEO_TYPE_RGBA
     
     def LoadImage(self, bytes):
         data = np.fromstring(bytes, np.uint8)
-        cvImage = cv.imdecode(data, cv.IMREAD_COLOR)
+        cvImage = cv.imdecode(data, cv.IMREAD_UNCHANGED)
         self.image = cv.cvtColor(cvImage, cv.COLOR_BGR2RGBA)
 
         self.frame.data = self.image
@@ -42,53 +42,58 @@ class NdiStream:
 mapFrames = Queue()
 itemFrames = Queue()
 streamThread = None
-enabled = False
+itemsEnabled = False
+mapEnabled = False
 
-def enableNdi():
-    global enabled, itemFrames, mapFrames, streamThread
+def setNdiStatus(items, map):
+    global itemsEnabled, mapEnabled, itemFrames, mapFrames, streamThread
 
-    if not streamThread:
+    if items and not itemsEnabled:
+        itemFrames = Queue()
+    if map and not mapEnabled:
+        mapFrames = Queue()
+
+    itemsEnabled = items
+    mapEnabled = map
+
+    if (itemsEnabled or mapEnabled) and not streamThread:
         streamThread = Thread(target=streamsTask, daemon=True)
         streamThread.start()
-
-    enabled = True
-    itemFrames = Queue()
-    mapFrames = Queue()
-
-def disableNdi():
-    global enabled, streamThread
-
-    enabled = False
-    streamThread = None
+    
+    if not itemsEnabled and not mapEnabled:
+        streamThread = None
 
 def updateMapImage(pngBytes):
-    if enabled:
+    if mapEnabled:
         mapFrames.put(pngBytes)
 
 def updateItemsImage(pngBytes):
-    if enabled:
+    if itemsEnabled:
         itemFrames.put(pngBytes)
 
 def streamsTask():
-    global enabled, itemFrames, mapFrames
+    global itemsEnabled, mapEnabled, itemFrames, mapFrames
 
     ndi.initialize()
 
     itemStream = NdiStream('Magpie-Items')
     mapStream = NdiStream('Magpie-Map')
 
-    while enabled:
+    while itemsEnabled or mapEnabled:
         try:
-            if not itemFrames.empty():
-                itemStream.LoadImage(itemFrames.get())
-                mapStream.ReloadImage()
+            if itemsEnabled:
+                if not itemFrames.empty():
+                    itemStream.LoadImage(itemFrames.get())
+                    mapStream.ReloadImage()
 
-            if not mapFrames.empty():
-                mapStream.LoadImage(mapFrames.get())
-                itemStream.ReloadImage()
+                itemStream.Send()
 
-            itemStream.Send()
-            mapStream.Send()
+            if mapEnabled:
+                if not mapFrames.empty():
+                    mapStream.LoadImage(mapFrames.get())
+                    itemStream.ReloadImage()
+
+                mapStream.Send()
 
         except Exception as e:
             print(f"Error in NDI stream: {e}, {traceback.format_exc()}")

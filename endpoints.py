@@ -318,12 +318,10 @@ def itemsNdi():
 
 @app.route("/ndiSettings", methods=['POST'])
 def ndiSettings():
-    enabled = request.form["enabled"] == 'true'
+    itemsEnabled = request.form["itemsEnabled"] == 'true'
+    mapEnabled = request.form["mapEnabled"] == 'true'
 
     if local:
-        if enabled:
-            ndi.enableNdi()
-        else:
-            ndi.disableNdi()
+        ndi.setNdiStatus(itemsEnabled, mapEnabled)
 
     return "OK"

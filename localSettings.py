@@ -35,7 +35,8 @@ class LocalSettings:
         self.spoilOnCollect = False
         self.showOwnedPickups = False
         self.graphicsPack = ''
-        self.ndi = False
+        self.ndiItems = False
+        self.ndiMap = False
         self.stacked = False
 
         self.diff0Color = '#0066ff'

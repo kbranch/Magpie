@@ -299,7 +299,8 @@ function applySettings() {
             type: "POST",
             url: "/ndiSettings",
             data: {
-                enabled: localSettings.ndi,
+                itemsEnabled: localSettings.ndiItems,
+                mapEnabled: localSettings.ndiMap,
             },
         });
     }

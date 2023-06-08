@@ -48,7 +48,7 @@ async function sendItemFrame() {
 
 var itemNdiTimeout = null;
 function refreshItemNdi() {
-    if (!localSettings?.ndi) {
+    if (!localSettings?.ndiItems) {
         return;
     }
 
@@ -61,7 +61,7 @@ function refreshItemNdi() {
 
 let mapNdiTimeout = null;
 function refreshMapNdi() {
-    if (!localSettings?.ndi) {
+    if (!localSettings?.ndiMap) {
         return;
     }
 
