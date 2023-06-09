@@ -1,0 +1,5 @@
+sharingServer = ""
+sharingPort = ""
+sharingDb = ""
+sharingUsername = ""
+sharingPassword = ""

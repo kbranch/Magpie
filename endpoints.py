@@ -2,6 +2,7 @@ import ndi
 import json
 import base64
 import socket
+import sharing
 import platform
 import requests
 import traceback
@@ -20,13 +21,27 @@ try:
 except:
     pass
 
-app = Flask(__name__)
+def tryGetValue(dict, key):
+    if not key in dict:
+        return None
+    
+    return dict[key]
+
+app = Flask(__name__, instance_relative_config=True)
 app.jinja_options['trim_blocks'] = True
 app.jinja_options['lstrip_blocks'] = True
 
-local = False
+app.config['hostname'] = socket.gethostname()
+app.config['local'] = False
+app.config.from_pyfile('config.py')
+
+sharing.setDbInfo(tryGetValue(app.config, 'SHARING_SERVER'),
+                  tryGetValue(app.config, 'SHARING_PORT'),
+                  tryGetValue(app.config, 'SHARING_DB'),
+                  tryGetValue(app.config, 'SHARING_USERNAME'),
+                  tryGetValue(app.config, 'SHARING_PASSWORD'))
+
 diskSettings = None
-hostname = socket.gethostname()
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
@@ -76,7 +91,7 @@ def home():
     
     remoteVersion = None
 
-    if local:
+    if app.config['local']:
         remoteVersion = getRemoteVersion()
         if remoteVersion:
             remoteVersion = remoteVersion['magpie']
@@ -87,12 +102,12 @@ def home():
                                          jsonSettings=json.dumps(defaultSettings.__dict__),
                                          jsonSettingsOverrides=json.dumps(settingsOverrides),
                                          jsonArgsOverrides=json.dumps(argsOverrides),
-                                         local=local,
+                                         local=app.config['local'],
                                          graphicsOptions=LocalSettings.graphicsPacks(),
                                          version=getVersion(),
                                          remoteVersion=remoteVersion,
                                          diskSettings=getDiskSettings(),
-                                         hostname=hostname,
+                                         hostname=app.config['hostname'],
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -101,7 +116,7 @@ def renderItems():
         argsText = request.form['args']
         settingsText = request.form['localSettings']
 
-        if local:
+        if app.config['local']:
             updateSettings(argsText, settingsText)
 
         args = Args.parse(argsText)
@@ -136,7 +151,7 @@ def renderItems():
                                                localSettings=localSettings,
                                                customItems=customItems,
                                                customDungeonItems=customDungeonItems,
-                                               local=local,
+                                               local=app.config['local'],
                                                )
 
         return result
@@ -164,7 +179,7 @@ def health():
 
 @app.route("/fetchupdate")
 def fetchUpdate():
-    if not local:
+    if not app.config['local']:
         return "Not running local version", 401
 
     try:
@@ -321,7 +336,57 @@ def ndiSettings():
     itemsEnabled = request.form["itemsEnabled"] == 'true'
     mapEnabled = request.form["mapEnabled"] == 'true'
 
-    if local:
+    if app.config['local']:
         ndi.setNdiStatus(itemsEnabled, mapEnabled)
 
     return "OK"
+
+@app.route("/playerState", methods=['POST'])
+def playerStatePut():
+    json = request.json
+    if not validateJson(json, ['playerName', 'playerId', 'state']):
+        return "Invalid request", 400
+
+    timestamp = sharing.writeState(json['playerName']
+                                  ,json['playerId']
+                                  ,tryGetValue(json, 'eventName')
+                                  ,json['state'])
+
+    return str(timestamp)
+
+@app.route("/playerState", methods=['GET'])
+def playerStateGet():
+    playerName = request.args.get('playerName')
+    timestamp = request.args.get('timestamp', 0)
+    if not playerName:
+        return "playerName is required", 400
+
+    result = sharing.getState(playerName, timestamp)
+
+    return json.dumps(result)
+
+@app.route("/playerId", methods=['POST'])
+def playerId():
+    if 'playerName' not in request.form:
+        return "playerName is required", 400
+
+    id = sharing.getPlayerId(request.form['playerName'])
+
+    return str(id)
+
+@app.route("/event")
+def event():
+
+    return "OK"
+
+@app.route("/player")
+def player():
+
+    return "OK"
+
+def validateJson(json, keys):
+    for key in keys:
+        if not tryGetValue(json, key):
+            return False
+    
+    return True

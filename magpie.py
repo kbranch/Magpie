@@ -38,10 +38,10 @@ def main():
     parser.add_argument('--height', dest='height', action='store', type=int, help='Local application starting window height')
     args = parser.parse_args()
 
-    endpoints.local = args.local
+    endpoints.app.config['local'] = args.local
     localSettings.nested = args.nested
 
-    if endpoints.local:
+    if endpoints.app.config['local']:
         width = args.width
         height = args.height
 

@@ -5,3 +5,4 @@ flaskwebgui>1.0
 opencv-python
 ndi-python
 numpy
+psycopg2-binary
