@@ -38,6 +38,8 @@ class LocalSettings:
         self.ndiItems = False
         self.ndiMap = False
         self.stacked = False
+        self.playerName = None
+        self.eventName = None
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

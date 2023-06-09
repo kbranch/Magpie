@@ -42,6 +42,7 @@ function addItem(item, qty, wrap=true, refresh=true) {
     updateOverlay(item);
     saveInventory();
 
+    sharingLiveUpdate();
     refreshItemNdi();
 
     if (refresh) {

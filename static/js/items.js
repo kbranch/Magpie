@@ -117,6 +117,7 @@ function refreshImages() {
         }
     }
 
+    sharingLiveUpdate();
     refreshItemNdi();
 }
 

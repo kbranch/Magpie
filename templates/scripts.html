@@ -3,6 +3,8 @@
 <script src="static/lib/light-switch-bootstrap-0.1.3/switch.js"></script>
 <script src="static/lib/jquery.connections/jquery.connections.js"></script>
 <script src="static/lib/summernote/summernote-lite.js"></script>
+<script src="static/lib/masonry/masonry.pkgd.min.js"></script>
+<script src="static/lib/html-to-image/html-to-image.js"></script>
 <script src="static/js/util.js"></script>
 <script src="static/js/model/mapNode.js"></script>
 <script src="static/js/model/nodeTooltip.js"></script>
@@ -32,8 +34,7 @@
 <script src="static/js/spoilerLog.js"></script>
 <script src="static/js/plando.js"></script>
 <script src="static/js/ndi.js"></script>
-<script src="static/lib/masonry/masonry.pkgd.min.js"></script>
-<script src="static/lib/html-to-image/html-to-image.js"></script>
+<script src="static/js/sharing.js"></script>
 
 <script type="application/javascript">
     "use strict"
@@ -81,6 +82,7 @@
     var errorLog = [];
     var messageQueue = [];
     var settingsPending = false;
+    var liveUpdate = false;
 
     const startHouse = 'start_house';
 
@@ -112,7 +114,6 @@
                 }
 
 
-                refreshItemNdi();
                 initKnownItems();
                 refreshCheckList();
              }

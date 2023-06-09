@@ -23,7 +23,7 @@ def writeState(player, playerId, event, state):
     if not dbConfigured():
         return
 
-    timestamp = time.time()
+    timestamp = round(time.time(), 3)
 
     deleteQuery = """
         delete from sharing

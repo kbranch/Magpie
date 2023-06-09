@@ -343,14 +343,15 @@ def ndiSettings():
 
 @app.route("/playerState", methods=['POST'])
 def playerStatePut():
-    json = request.json
-    if not validateJson(json, ['playerName', 'playerId', 'state']):
+    state = request.json
+    if 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
         return "Invalid request", 400
 
-    timestamp = sharing.writeState(json['playerName']
-                                  ,json['playerId']
-                                  ,tryGetValue(json, 'eventName')
-                                  ,json['state'])
+    settings = state['settings']
+    timestamp = sharing.writeState(settings['playerName']
+                                  ,settings['playerId']
+                                  ,tryGetValue(settings, 'eventName')
+                                  ,json.dumps(state))
 
     return str(timestamp)
 

@@ -139,6 +139,10 @@ function moveChildren(source, dest) {
 }
 
 function applySettings() {
+    if (!localSettings.playerId) {
+        localSettings.playerId = crypto.randomUUID();
+    }
+
     let stacked = document.getElementById('stackedContainer');
     let unstacked = document.getElementById('unstackedContainer');
     let container;
