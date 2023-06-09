@@ -324,3 +324,12 @@ function createElement(type, attrs) {
 
     return element;
 }
+
+function setElementHidden(element, hidden) {
+    if (hidden) {
+        element.classList.add('hidden');
+    }
+    else {
+        element.classList.remove('hidden');
+    }
+}

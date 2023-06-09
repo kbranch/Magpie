@@ -11,6 +11,10 @@ function shareState() {
 }
 
 function sendState() {
+    if (!localSettings.playerName) {
+        return;
+    }
+
     let state = getState();
 
     delete state.errorLog;
@@ -33,10 +37,45 @@ function prepShareModal() {
     document.getElementById('playerName').value = localSettings.playerName;
     document.getElementById('eventName').value = localSettings.eventName;
 
+    setElementHidden(document.getElementById('playerIdWarning'), true);
+
     updateShareUrls();
 }
 
+function checkPlayerId() {
+    $.ajax({
+        type: "POST",
+        url: "/playerId",
+        data: {
+            'playerName': document.getElementById('playerName').value
+        },
+        success: (response) => {
+            setElementHidden(document.getElementById('playerIdWarning'),
+                             response == 'None' || response == localSettings.playerId);
+        }
+    });
+
+    playerIdTimeout = null;
+}
+
+var playerIdTimeout = null;
 function updateShareUrls() {
-    document.getElementById('playerUrl').href = `/player?playerName=${document.getElementById('playerName').value}`;
-    document.getElementById('eventUrl').href = `/event?eventName=${document.getElementById('eventName').value}`;
+    let playerUrl = document.getElementById('playerUrl');
+    let eventUrl = document.getElementById('eventUrl');
+    let playerName = document.getElementById('playerName').value;
+    let eventName = document.getElementById('eventName').value;
+
+    playerUrl.href = `/player?playerName=${playerName}`;
+    playerUrl.innerHTML = playerUrl.href;
+    eventUrl.href = `/event?eventName=${eventName}`;
+    eventUrl.innerHTML = eventUrl.href;
+
+    setElementHidden(document.getElementById('playerLink'), !playerName);
+    setElementHidden(document.getElementById('eventLink'), !eventName);
+
+    if (playerIdTimeout) {
+        clearTimeout(playerIdTimeout);
+    }
+
+    playerIdTimeout = setTimeout(checkPlayerId, 250);
 }

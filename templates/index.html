@@ -76,7 +76,7 @@
 </div>
 
 <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-md">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title" id="shareModalLabel">Share Tracker State</h6>
@@ -84,19 +84,24 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <label for="playerName" class="form-label">Player name</label>
-                    <input type="text" id="playerName" class="form-control" maxlength="80" oninput="updateShareUrls()" aria-label="Player Name">
-                    <label for="eventName" class="form-label pt-2">Event name</label>
-                    <input type="text" id="eventName" class="form-control mb-2" maxlength="80" oninput="updateShareUrls()" aria-label="Event Name">
-                    <input id="liveUpdate" type="checkbox" class="form-check-input">
-                    <label for="liveUpdate" class="form-label">Live update</label>
-                </div>
-                <div class="row pt-4">
-                    <div class="col-auto">
-                        <a id="playerUrl" href="/player">Player URL</a>
+                    <div>
+                        <label for="playerName" class="form-label">Player name</label>
+                        <input type="text" id="playerName" class="form-control" maxlength="80" oninput="updateShareUrls()" placeholder="Required" aria-label="Player Name">
+                        <div id="playerLink" class="pt-1">
+                            <span class="pe-2">Player link:</span><a id="playerUrl" href="/player">asdf</a>
+                        </div>
+                        <div id="playerIdWarning" class="alert alert-warning" role="alert">Warning: A player with this name already exists. Consider using another name.</div>
                     </div>
-                    <div class="col-auto">
-                        <a id="eventUrl" href="/event">Event URL</a>
+                    <div class="pt-3">
+                        <label for="eventName" class="form-label">Event name</label>
+                        <input type="text" id="eventName" class="form-control" maxlength="80" oninput="updateShareUrls()" placeholder="Optional" aria-label="Event Name">
+                        <div id="eventLink" class="pt-1">
+                            <span class="pe-2">Event link:</span><a id="eventUrl" href="/event">Event URL</a>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <input id="liveUpdate" type="checkbox" class="form-check-input">
+                        <label for="liveUpdate" class="form-label">Live update <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Inventory and check changes will be automatically shared for the rest of this session"></label>
                     </div>
                 </div>
             </div>
