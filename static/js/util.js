@@ -135,6 +135,10 @@ function updateEntrances() {
 }
 
 function moveChildren(source, dest) {
+    if (!source || !dest) {
+        return;
+    }
+
     dest.append(...source.childNodes);
 }
 
@@ -147,43 +151,47 @@ function applySettings() {
     let unstacked = document.getElementById('unstackedContainer');
     let container;
 
-    if (localSettings.stacked) {
-        container = stacked;
+    for (const player of players) {
+        if (localSettings.stacked) {
+            container = stacked;
 
-        moveChildren(unstacked.querySelector('.navbar-slot'), stacked.querySelector('.navbar-slot'));
-        moveChildren(unstacked.querySelector('.map-slot'), stacked.querySelector('.map-slot'));
-        moveChildren(unstacked.querySelector('.items-slot'), stacked.querySelector('.items-slot'));
-        moveChildren(unstacked.querySelector('.quicksettings-slot'), stacked.querySelector('.quicksettings-slot'));
+            moveChildren(unstacked.querySelector(`[data-player="${player}"] .navbar-slot`), stacked.querySelector(`[data-player="${player}"] .navbar-slot`));
+            moveChildren(unstacked.querySelector(`[data-player="${player}"] .map-slot`), stacked.querySelector(`[data-player="${player}"] .map-slot`));
+            moveChildren(unstacked.querySelector(`[data-player="${player}"] .items-slot`), stacked.querySelector(`[data-player="${player}"] .items-slot`));
+            moveChildren(unstacked.querySelector(`[data-player="${player}"] .quicksettings-slot`), stacked.querySelector(`[data-player="${player}"] .quicksettings-slot`));
 
-        stacked.classList.remove('hidden');
-        unstacked.classList.add('hidden');
-    }
-    else {
-        container = unstacked;
+            stacked.classList.remove('hidden');
+            unstacked.classList.add('hidden');
+        }
+        else {
+            container = unstacked;
 
-        moveChildren(stacked.querySelector('.navbar-slot'), unstacked.querySelector('.navbar-slot'));
-        moveChildren(stacked.querySelector('.map-slot'), unstacked.querySelector('.map-slot'));
-        moveChildren(stacked.querySelector('.items-slot'), unstacked.querySelector('.items-slot'));
-        moveChildren(stacked.querySelector('.quicksettings-slot'), unstacked.querySelector('.quicksettings-slot'));
+            moveChildren(stacked.querySelector(`[data-player="${player}"] .navbar-slot`), unstacked.querySelector(`[data-player="${player}"] .navbar-slot`));
+            moveChildren(stacked.querySelector(`[data-player="${player}"] .map-slot`), unstacked.querySelector(`[data-player="${player}"] .map-slot`));
+            moveChildren(stacked.querySelector(`[data-player="${player}"] .items-slot`), unstacked.querySelector(`[data-player="${player}"] .items-slot`));
+            moveChildren(stacked.querySelector(`[data-player="${player}"] .quicksettings-slot`), unstacked.querySelector(`[data-player="${player}"] .quicksettings-slot`));
 
-        unstacked.classList.remove('hidden');
-        stacked.classList.add('hidden');
+            unstacked.classList.remove('hidden');
+            stacked.classList.add('hidden');
+        }
     }
 
     let items = container.querySelector('.item-chunk');
     let map = container.querySelector('.map-chunk');
 
-    if (localSettings.swapItemsAndMap) {
-        container.removeChild(items);
-        container.removeChild(map);
-        container.appendChild(items);
-        container.appendChild(map);
-    }
-    else {
-        container.removeChild(items);
-        container.removeChild(map);
-        container.appendChild(map);
-        container.appendChild(items);
+    if (items && map) {
+        if (localSettings.swapItemsAndMap) {
+            container.removeChild(items);
+            container.removeChild(map);
+            container.appendChild(items);
+            container.appendChild(map);
+        }
+        else {
+            container.removeChild(items);
+            container.removeChild(map);
+            container.appendChild(map);
+            container.appendChild(items);
+        }
     }
 
     $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
@@ -332,4 +340,14 @@ function setElementHidden(element, hidden) {
     else {
         element.classList.remove('hidden');
     }
+}
+
+function setLocalStorage(key, value) {
+    let prefix = settingsPrefix ?? '';
+    localStorage.setItem(prefix + key, value);
+}
+
+function getLocalStorage(key) {
+    let prefix = settingsPrefix ?? '';
+    return localStorage.getItem(prefix + key);
 }

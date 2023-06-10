@@ -96,7 +96,8 @@ def home():
         if remoteVersion:
             remoteVersion = remoteVersion['magpie']
 
-    return render_template("index.html", flags=flags, args=args,
+    return render_template("index.html", flags=flags, 
+                                         args=args,
                                          defaultSettings=defaultSettings,
                                          jsonArgs=json.dumps(args.__dict__),
                                          jsonSettings=json.dumps(defaultSettings.__dict__),
@@ -108,6 +109,9 @@ def home():
                                          remoteVersion=remoteVersion,
                                          diskSettings=getDiskSettings(),
                                          hostname=app.config['hostname'],
+                                         allowAutotracking=True,
+                                         allowMap=True,
+                                         players=[''],
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -375,10 +379,39 @@ def playerId():
 
     return str(id)
 
-@app.route("/event")
+@app.route("/event", methods=['GET'])
 def event():
+    eventName = request.args.get('eventName')
 
-    return "OK"
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+
+    players = sharing.getEventPlayers(eventName)
+
+    return render_template("event.html", flags=flags, 
+                                         args=args,
+                                         defaultSettings=defaultSettings,
+                                         jsonArgs=json.dumps(args.__dict__),
+                                         jsonSettings=json.dumps(defaultSettings.__dict__),
+                                         jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                         jsonArgsOverrides=json.dumps(argsOverrides),
+                                         local=app.config['local'],
+                                         graphicsOptions=LocalSettings.graphicsPacks(),
+                                         version=getVersion(),
+                                         diskSettings=getDiskSettings(),
+                                         hostname=app.config['hostname'],
+                                         hideShare=True,
+                                         hideReset=True,
+                                         showTitle=True,
+                                         keepQueryArgs=True,
+                                         settingsPrefix='event_',
+                                         players=players,
+                                         )
 
 @app.route("/player")
 def player():

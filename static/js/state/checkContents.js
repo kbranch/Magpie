@@ -1,7 +1,7 @@
 "use strict"
 
 function saveCheckContents() {
-    localStorage.setItem('checkContents', JSON.stringify(checkContents));
+    setLocalStorage('checkContents', JSON.stringify(checkContents));
     updateItemLocations();
 }
 
@@ -9,7 +9,7 @@ function loadCheckContents() {
     let errors = [];
 
     try {
-        checkContents = JSON.parse(localStorage.getItem('checkContents'));
+        checkContents = JSON.parse(getLocalStorage('checkContents'));
     }
     catch (err) {
         errors.push(err);

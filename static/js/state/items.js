@@ -6,11 +6,11 @@ function resetInventory() {
 }
 
 function saveInventory() {
-    localStorage.setItem("inventory", JSON.stringify(inventory));
+    setLocalStorage("inventory", JSON.stringify(inventory));
 }
 
 function loadInventory() {
-    inventory = JSON.parse(localStorage.getItem("inventory"));
+    inventory = JSON.parse(getLocalStorage("inventory"));
 
     if (inventory == null) {
         resetInventory();

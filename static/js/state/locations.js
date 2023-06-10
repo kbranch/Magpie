@@ -1,12 +1,12 @@
 "use strict"
 
 function saveChecked() {
-    localStorage.setItem('checkedChecks', JSON.stringify([...checkedChecks]));
+    setLocalStorage('checkedChecks', JSON.stringify([...checkedChecks]));
 }
 
 function saveEntrances() {
-    localStorage.setItem('entranceMap', JSON.stringify(entranceMap));
-    localStorage.setItem('connections', JSON.stringify(connections));
+    setLocalStorage('entranceMap', JSON.stringify(entranceMap));
+    setLocalStorage('connections', JSON.stringify(connections));
 }
 
 function saveLocations() {
@@ -27,7 +27,7 @@ function loadEntrances() {
     let errors = [];
 
     try {
-        entranceMap = JSON.parse(localStorage.getItem('entranceMap'));
+        entranceMap = JSON.parse(getLocalStorage('entranceMap'));
         pruneEntranceMap();
     }
     catch (err) {
@@ -41,7 +41,7 @@ function loadEntrances() {
     try {
         connections = [];
 
-        let raw = localStorage.getItem('connections');
+        let raw = getLocalStorage('connections');
 
         if (raw) {
             let dehydratedConnections = JSON.parse(raw);
@@ -64,7 +64,7 @@ function loadEntrances() {
 
 function loadChecked() {
     try {
-        checkedChecks = JSON.parse(localStorage.getItem('checkedChecks'));
+        checkedChecks = JSON.parse(getLocalStorage('checkedChecks'));
     }
     catch (err) {
     }

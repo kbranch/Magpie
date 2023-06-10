@@ -39,12 +39,25 @@
 <script type="application/javascript">
     "use strict"
 
+    function tryParseJson(json) {
+        let obj = {};
+
+        try {
+            obj = JSON.parse(json);
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+        return obj;
+    }
+
     const protocolVersion = '1.1';
-    const defaultArgs = JSON.parse('{{jsonArgs|safe}}');
-    const defaultSettings = JSON.parse('{{jsonSettings|safe}}')
-    var settingsOverrides = JSON.parse('{{jsonSettingsOverrides|safe}}')
-    var argsOverrides = JSON.parse('{{jsonArgsOverrides|safe}}')
-    var diskSettings = JSON.parse('{{diskSettings|safe}}')
+    const defaultArgs = tryParseJson('{{jsonArgs|safe}}');
+    const defaultSettings = tryParseJson('{{jsonSettings|safe}}');
+    var settingsOverrides = tryParseJson('{{jsonSettingsOverrides|safe}}');
+    var argsOverrides = tryParseJson('{{jsonArgsOverrides|safe}}');
+    var diskSettings = tryParseJson('{{diskSettings|safe}}');
     var startLocations = [];
     var randomizedEntrances = null;
     var localSettings = null;
@@ -74,7 +87,7 @@
     var overworldRoom = null;
     var iconStyles = $('link[href="/static/css/icons.css"]')[0].sheet;
     var themeStyles = $('link[href="/static/css/theme.css"]')[0].sheet;
-    var local = '{{local}}' == 'True'
+    var local = '{{local}}' == 'True';
     var remoteProtocolVersion = null;
     var checkSize = 16;
     var skipSettingsSave = false;
@@ -83,6 +96,11 @@
     var messageQueue = [];
     var settingsPending = false;
     var liveUpdate = false;
+    var allowAutotracking = '{{allowAutotracking}}' == 'True';
+    var allowMap = '{{allowMap}}' == 'True';
+    var keepQueryArgs = '{{keepQueryArgs}}' == 'True';
+    var settingsPrefix = '{{settingsPrefix}}';
+    var players = {{players|safe}};
 
     const startHouse = 'start_house';
 
@@ -104,7 +122,9 @@
                     $('#mapContainer').show();
                 }
 
-                $('#itemContainer').html(response);
+                for (const player of players) {
+                    document.querySelector(`[data-player="${player}"] #itemContainer`).innerHTML = response;
+                }
 
                 if (localSettings.highlightItemsOnHover) {
                     $('.itemImage').addClass('glow');
@@ -121,6 +141,10 @@
     }
 
     function refreshCheckList() {
+        if (!allowMap) {
+            return;
+        }
+
         let tempInventory = structuredClone(inventory);
 
         // Kiki is logically important since they open the bridge
@@ -210,17 +234,21 @@
     }
 
     function init() {
+        if (!players) {
+            players = [''];
+        }
+
         window.addEventListener('error', errorHandler);
 
         modifyTooltipAllowList();
         initKnownItems();
 
         if ('args' in diskSettings) {
-            localStorage.setItem('args', diskSettings['args'])
+            setLocalStorage('args', diskSettings['args'])
         }
 
         if ('localSettings' in diskSettings) {
-            localStorage.setItem('settings', diskSettings['localSettings'])
+            setLocalStorage('settings', diskSettings['localSettings'])
         }
 
         let storage = { ...localStorage };
@@ -232,11 +260,13 @@
 
         $(document).keydown(keyDown);
 
-        document.addEventListener('DOMContentLoaded', function() {
-            connectToAutotracker();
+        if (allowAutotracking) {
+            document.addEventListener('DOMContentLoaded', function() {
+                connectToAutotracker();
 
-            setInterval(connectToAutotracker, 3 * 1000);
-        });
+                setInterval(connectToAutotracker, 3 * 1000);
+            });
+        }
 
         $('#connectorModal').on('hide.bs.modal', () => { endGraphicalConnection(); });
 
@@ -272,6 +302,9 @@
         });
 
         applySettings();
+
+        var popoverTriggerList = document.querySelectorAll('button[data-bs-toggle="popover"]')
+        var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
     }
 
     init();

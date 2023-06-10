@@ -1,6 +1,10 @@
 "use strict"
 
 function drawActiveTab(updateNdi=true) {
+    if (!allowMap) {
+        return;
+    }
+
     drawNodes(getActiveMap(), true, updateNdi);
 }
 

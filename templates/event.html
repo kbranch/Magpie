@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    {% include 'navbar.html' %}
+</div>
+
+<div id="unstackedContainer" class="row">
+    {% for player in players %}
+    <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mx-4 item-width">
+        <span>Player: {{player}}</span>
+        <div class="items-slot">
+            <div id="itemContainer" class="pb-2"></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div id="stackedContainer" class="hidden">
+    {% for player in players %}
+    <div id="stackedItems" data-player="{{player}}" class="row">
+        <span>Player: {{player}}</span>
+        <div class="col-xs col-md-auto items-slot">
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div id="settingsContainer">
+    {% include 'settings.html' %}
+</div>
+
+<div class="form-check form-switch">
+    <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
+</div>
+
+<div class="modal fade" id="suggestionModal" tabindex="-1" aria-labelledby="suggestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="suggestionModalLabel">Make a suggestion or report a bug</h6>
+                <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="suggestionEmail" class="form-label">Email address (optional)</label>
+                    <input type="email" class="form-control" id="suggestionEmail" placeholder="Optional">
+                </div>
+                <div>
+                    <div id="bodyTextArea" name="editordata"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="sendSuggestionButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="sendSuggestion()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="errorModalLabel">Error</h6>
+                <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 id="errorModalMessage"></h5>
+                <h6>Please report this error so it can be fixed!</h6>
+                <div class="mb-3">
+                    <label for="errorEmail" class="form-label">Email address (optional)</label>
+                    <input type="email" class="form-control" id="errorEmail" placeholder="Optional">
+                </div>
+
+                <div>
+                    <div id="errorTextArea" name="editordata"></div>
+                </div>
+
+                <p>Error details:</p>
+                <pre id="errorModalPayload"></pre>
+            </div>
+            <div class="modal-footer">
+                <button id="sendErrorButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="sendError()">Send Bug Report</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="static/js/report.js"></script>
+
+{% include 'scripts.html' %}
+
+{% endblock %}

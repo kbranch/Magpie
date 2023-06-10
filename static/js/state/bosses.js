@@ -1,11 +1,11 @@
 "use strict"
 
 function saveBosses() {
-    localStorage.setItem("bossMap", JSON.stringify(bossMap));
+    setLocalStorage("bossMap", JSON.stringify(bossMap));
 }
 
 function loadBosses() {
-    bossMap = JSON.parse(localStorage.getItem("bossMap"));
+    bossMap = JSON.parse(getLocalStorage("bossMap"));
 
     if (bossMap == null) {
         resetBosses();

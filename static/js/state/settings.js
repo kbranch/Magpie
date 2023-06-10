@@ -2,11 +2,11 @@
 
 function saveSettingsToStorage(args, localSettings) {
     if (argsAreValid(args)) {
-        localStorage.setItem('args', JSON.stringify(args));
+        setLocalStorage('args', JSON.stringify(args));
     }
 
     if (settingsAreValid(localSettings)) {
-        localStorage.setItem('settings', JSON.stringify(localSettings));
+        setLocalStorage('settings', JSON.stringify(localSettings));
     }
 }
 
@@ -100,14 +100,14 @@ function loadSettings() {
     let errors = [];
 
     try {
-        args = JSON.parse(localStorage.getItem('args'));
+        args = JSON.parse(getLocalStorage('args'));
     }
     catch (err) {
         errors.push(err);
     }
 
     try {
-        localSettings = JSON.parse(localStorage.getItem('settings'));
+        localSettings = JSON.parse(getLocalStorage('settings'));
     }
     catch (err) {
         errors.push(err);
@@ -189,7 +189,9 @@ function loadSettings() {
         argsOverrides = {};
     }
 
-    window.history.replaceState(null, null, window.location.pathname);
+    if (!keepQueryArgs) {
+        window.history.replaceState(null, null, window.location.pathname);
+    }
 
     updateSettings();
 

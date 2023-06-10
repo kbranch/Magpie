@@ -4,7 +4,7 @@
 
 {% include 'icons.html' %}
 
-<div id="unstackedContainer" class="row">
+<div id="unstackedContainer" class="row" data-player="">
     <div id="unstackedMap" class="col-xs-12 col-md map-slot map-chunk">
         <div id="mapContainer">
             {% include 'map.html' %}
@@ -22,7 +22,7 @@
         </div>
     </div>
 </div>
-<div id="stackedContainer" class="hidden">
+<div id="stackedContainer" class="hidden" data-player="">
     <div class="row">
         <div class="col navbar-slot">
         </div>
@@ -165,6 +165,7 @@
     </div>
 </div>
 
+<script src="static/js/report.js"></script>
 <script type="application/javascript">
     "use strict"
 
@@ -173,39 +174,6 @@
             localStorage.clear();
             location.reload();
         }
-    }
-
-    function sendSuggestion() {
-        $.ajax({
-            type: "POST",
-            url: "https://magpietracker.us/suggestion",
-            data: {
-                email: $('#suggestionEmail')[0].value,
-                body: $('#bodyTextArea').summernote('code'),
-                state: JSON.stringify(getState()),
-            },
-        });
-    }
-
-    function sendError() {
-        let payload = JSON.parse($('#errorModalPayload').text());
-        payload['userComments'] = $('#errorTextArea').summernote('code');
-
-        $.ajax({
-            type: "POST",
-            url: "https://magpietracker.us/suggestion",
-            data: {
-                email: $('#errorEmail')[0].value,
-                body: '<pre>' + JSON.stringify(payload, null, 3) + '</pre>',
-                state: JSON.stringify(getState()),
-            },
-        });
-    }
-
-    function showErrorDialog(message, payload) {
-        $('#errorModalMessage').text(message);
-        $('#errorModalPayload').text(payload);
-        new bootstrap.Modal('#errorModal', null).show();
     }
 </script>
 
