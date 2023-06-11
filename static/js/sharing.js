@@ -21,7 +21,7 @@ function sendState() {
 
     $.ajax({
         type: "POST",
-        url: "/playerState",
+        url: sharingUrlPrefix() + "/playerState",
         contentType: "application/json",
         data: JSON.stringify(state),
     });
@@ -50,7 +50,7 @@ function prepShareModal() {
 function checkPlayerId() {
     $.ajax({
         type: "POST",
-        url: "/playerId",
+        url: sharingUrlPrefix() + "/playerId",
         data: {
             'playerName': document.getElementById('playerName').value
         },
@@ -103,27 +103,29 @@ function updatePlayerInventories() {
 
     $.ajax({
         type: "GET",
-        url: "/playerState",
+        url: sharingUrlPrefix() + "/playerState",
         data: {
             players: JSON.stringify(data),
         },
         success: function(response) {
-            let responseObj = JSON.parse(response);
-
-            if (!responseObj) {
+            if (!response) {
                 return;
             }
 
-            for (const player in responseObj) {
-                if (!responseObj[player]) {
+            for (const player in response) {
+                if (!response[player]) {
                     continue;
                 }
 
-                playerInventories[player] = JSON.parse(responseObj[player].state).inventory;
-                playerInventories[player].timestamp = responseObj[player].timestamp;
+                playerInventories[player] = JSON.parse(response[player].state).inventory;
+                playerInventories[player].timestamp = response[player].timestamp;
             }
 
             refreshImages();
         }
     });
+}
+
+function sharingUrlPrefix() {
+    return local ? 'https://dev.magpietracker.us' : '';
 }

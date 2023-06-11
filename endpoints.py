@@ -37,13 +37,18 @@ app.jinja_options['lstrip_blocks'] = True
 
 app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
-app.config.from_pyfile('config.py')
 
-sharing.setDbInfo(tryGetValue(app.config, 'SHARING_SERVER'),
-                  tryGetValue(app.config, 'SHARING_PORT'),
-                  tryGetValue(app.config, 'SHARING_DB'),
-                  tryGetValue(app.config, 'SHARING_USERNAME'),
-                  tryGetValue(app.config, 'SHARING_PASSWORD'))
+try:
+    app.config.from_pyfile('config.py')
+    sharing.setDbInfo(tryGetValue(app.config, 'SHARING_SERVER'),
+                      tryGetValue(app.config, 'SHARING_PORT'),
+                      tryGetValue(app.config, 'SHARING_DB'),
+                      tryGetValue(app.config, 'SHARING_USERNAME'),
+                      tryGetValue(app.config, 'SHARING_PASSWORD'))
+
+    sharingEnabled = True
+except:
+    sharingEnabled = False
 
 diskSettings = None
 
@@ -350,86 +355,111 @@ if 'ndi' in sys.modules:
 
         return "OK"
 
-@app.route("/playerState", methods=['POST'])
-def playerStatePost():
-    state = request.json
-    if 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
-        return "Invalid request", 400
+if sharingEnabled:
+    @app.route("/playerState", methods=['POST'])
+    def playerStatePost():
+        state = request.json
+        if 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
+            return "Invalid request", 400
 
-    settings = state['settings']
-    timestamp = sharing.writeState(settings['playerName']
-                                  ,settings['playerId']
-                                  ,tryGetValue(settings, 'eventName')
-                                  ,json.dumps(state))
+        settings = state['settings']
+        timestamp = sharing.writeState(settings['playerName']
+                                    ,settings['playerId']
+                                    ,tryGetValue(settings, 'eventName')
+                                    ,json.dumps(state))
 
-    return str(timestamp)
+        response = app.response_class(
+            response=str(timestamp),
+            status=200,
+            mimetype='application/json'
+        )
 
-@app.route("/playerState", methods=['GET'])
-def playerStateGet():
-    playerJson = request.args.get('players')
+        response.headers.add('Access-Control-Allow-Origin', '*')
 
-    if not playerJson:
-        return "Player list is required", 400
+        return response
 
-    players = json.loads(playerJson)
-    result = {}
+    @app.route("/playerState", methods=['GET'])
+    def playerStateGet():
+        playerJson = request.args.get('players')
 
-    for playerName, timestamp in players.items():
-        playerResult = sharing.getState(playerName, timestamp)
-        result[playerName] = playerResult
+        if not playerJson:
+            return "Player list is required", 400
 
-    return json.dumps(result)
+        players = json.loads(playerJson)
+        result = {}
 
-@app.route("/playerId", methods=['POST'])
-def playerId():
-    if 'playerName' not in request.form:
-        return "playerName is required", 400
+        for playerName, timestamp in players.items():
+            playerResult = sharing.getState(playerName, timestamp)
+            result[playerName] = playerResult
 
-    id = sharing.getPlayerId(request.form['playerName'])
+        response = app.response_class(
+            response=json.dumps(result),
+            status=200,
+            mimetype='application/json'
+        )
 
-    return str(id)
+        response.headers.add('Access-Control-Allow-Origin', '*')
 
-@app.route("/event", methods=['GET'])
-def event():
-    eventName = request.args.get('eventName')
+        return response
 
-    args = getArgs()
-    defaultSettings = LocalSettings()
+    @app.route("/playerId", methods=['POST'])
+    def playerId():
+        if 'playerName' not in request.form:
+            return "playerName is required", 400
 
-    flags = args.flags
-    args.flags = []
-    settingsOverrides = {}
-    argsOverrides = {}
+        id = sharing.getPlayerId(request.form['playerName'])
 
-    players = sharing.getEventPlayers(eventName)
+        response = app.response_class(
+            response=str(id),
+            status=200,
+            mimetype='application/json'
+        )
 
-    return render_template("event.html", flags=flags, 
-                                         args=args,
-                                         defaultSettings=defaultSettings,
-                                         jsonArgs=json.dumps(args.__dict__),
-                                         jsonSettings=json.dumps(defaultSettings.__dict__),
-                                         jsonSettingsOverrides=json.dumps(settingsOverrides),
-                                         jsonArgsOverrides=json.dumps(argsOverrides),
-                                         local=app.config['local'],
-                                         graphicsOptions=LocalSettings.graphicsPacks(),
-                                         version=getVersion(),
-                                         diskSettings=getDiskSettings(),
-                                         hostname=app.config['hostname'],
-                                         hideShare=True,
-                                         showTitle=True,
-                                         keepQueryArgs=True,
-                                         settingsPrefix='event_',
-                                         players=players,
-                                         )
+        response.headers.add('Access-Control-Allow-Origin', '*')
 
-@app.route("/player")
-def player():
+        return response
 
-    return "OK"
+    @app.route("/event", methods=['GET'])
+    def event():
+        eventName = request.args.get('eventName')
 
-def validateJson(json, keys):
-    for key in keys:
-        if not tryGetValue(json, key):
-            return False
-    
-    return True
+        args = getArgs()
+        defaultSettings = LocalSettings()
+
+        flags = args.flags
+        args.flags = []
+        settingsOverrides = {}
+        argsOverrides = {}
+
+        players = sharing.getEventPlayers(eventName)
+
+        return render_template("event.html", flags=flags, 
+                                            args=args,
+                                            defaultSettings=defaultSettings,
+                                            jsonArgs=json.dumps(args.__dict__),
+                                            jsonSettings=json.dumps(defaultSettings.__dict__),
+                                            jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                            jsonArgsOverrides=json.dumps(argsOverrides),
+                                            local=app.config['local'],
+                                            graphicsOptions=LocalSettings.graphicsPacks(),
+                                            version=getVersion(),
+                                            diskSettings=getDiskSettings(),
+                                            hostname=app.config['hostname'],
+                                            hideShare=True,
+                                            showTitle=True,
+                                            keepQueryArgs=True,
+                                            settingsPrefix='event_',
+                                            players=players,
+                                            )
+
+    @app.route("/player")
+    def player():
+
+        return "OK"
+
+    def validateJson(json, keys):
+        for key in keys:
+            if not tryGetValue(json, key):
+                return False
+        
+        return True
