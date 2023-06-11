@@ -1,12 +1,24 @@
 "use strict"
 
-function setImgSrc(img, item) {
-    if (!(item in inventory)) {
-        inventory[item] = 0;
+function getPlayerInventory(player) {
+    let inv = inventory;
+
+    if (player) {
+        inv = playerInventories[player];
+    }
+
+    return inv;
+}
+
+function setImgSrc(img, item, player='') {
+    let inv = getPlayerInventory(player);
+
+    if (!(item in inv)) {
+        inv[item] = 0;
     }
 
     let applyGfx = ($(img).closest('.inventory-item').attr('data-gfx') == 'True') && ($(img).hasClass('primary'));
-    let number = $(img).attr('data-invert_count') != '' ? inventory[item] : maxInventory[item] - inventory[item];
+    let number = $(img).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
 
     if (hasAttr(img, 'data-src')) {
         $(img).attr('src', eval($(img).attr('data-src')));
@@ -31,29 +43,30 @@ function setImgSrc(img, item) {
     }
 }
 
-function setItemImage(item) {
-    let img = $(`img[data-item="${item}"]`);
+function setItemImage(item, player='') {
+    let img = $(`[data-player="${player}"] img[data-item="${item}"]`);
 
     if (img.length == 0) {
-        let col = $(`div[data-secondary="${item}"]`);
+        let col = $(`[data-player="${player}"] div[data-secondary="${item}"]`);
 
         if (col.length > 0) {
             img = $(col).children()[0].children[0];
         }
     }
 
-    setImgSrc(img, item);
+    setImgSrc(img, item, player);
 }
 
-function updateOverlay(item) {
-    let texts = $(`span[data-overlay_count=${item}]`);
+function updateOverlay(item, player) {
+    let inv = getPlayerInventory(player);
+    let texts = $(`[data-player="${player}"] span[data-overlay_count=${item}]`);
 
     if (texts.length == 0) {
         return;
     }
 
     for (const text of texts) {
-        let number = $(text).attr('data-invert_count') != '' ? inventory[item] : maxInventory[item] - inventory[item];
+        let number = $(text).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
 
         if (number == 0) {
             $(text).addClass('hidden');
@@ -91,29 +104,31 @@ function itemValueUpdated(element) {
 }
 
 function refreshImages() {
-    let columns = $('div[data-primary]');
+    for (const player of players) {
+        let columns = $(`[data-player="${player}"] div[data-primary]`);
 
-    for (const col of columns) {
-        let primary = $(col).attr('data-primary');
+        for (const col of columns) {
+            let primary = $(col).attr('data-primary');
 
-        setItemImage(primary);
+            setItemImage(primary, player);
 
-        if (hasAttr(col, 'data-secondary')) {
-            setItemImage($(col).attr('data-secondary'));
+            if (hasAttr(col, 'data-secondary')) {
+                setItemImage($(col).attr('data-secondary'), player);
+            }
+
+            updateOverlay(primary, player);
         }
 
-        updateOverlay(primary);
-    }
+        let inputs = $(`[data-player="${player}"] input[data-item]`)
+        for (const input of inputs) {
+            let item = input.dataset.item;
 
-    let inputs = $('input[data-item]')
-    for (const input of inputs) {
-        let item = input.dataset.item;
-
-        if (input.type == 'checkbox') {
-            input.checked = inventory[item] >= 1;
-        }
-        else {
-            input.value = inventory[item];
+            if (input.type == 'checkbox') {
+                input.checked = inventory[item] >= 1;
+            }
+            else {
+                input.value = inventory[item];
+            }
         }
     }
 
@@ -245,4 +260,8 @@ function updateDungeonItems() {
     if (localSettings.autotrackItems && localSettings.enableAutotracking) {
         calculateDungeonChecks();
     }
+}
+
+function updateMaxInventory(newMax) {
+    maxInventory = newMax;
 }

@@ -8,7 +8,7 @@
 
 <div id="unstackedContainer" class="row">
     {% for player in players %}
-    <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mx-4 item-width">
+    <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mt-2 mx-4 item-width">
         <span>Player: {{player}}</span>
         <div class="items-slot">
             <div id="itemContainer" class="pb-2"></div>
@@ -16,11 +16,13 @@
     </div>
     {% endfor %}
 </div>
-<div id="stackedContainer" class="hidden">
+<div id="stackedContainer" class="row hidden">
     {% for player in players %}
-    <div id="stackedItems" data-player="{{player}}" class="row">
+    <div id="stackedItems" data-player="{{player}}" class="col-auto mt-2 mx-4">
         <span>Player: {{player}}</span>
-        <div class="col-xs col-md-auto items-slot">
+        <div class="row">
+            <div class="col-xs col-md-auto items-slot">
+            </div>
         </div>
     </div>
     {% endfor %}

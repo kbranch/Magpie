@@ -101,6 +101,7 @@
     var keepQueryArgs = '{{keepQueryArgs}}' == 'True';
     var settingsPrefix = '{{settingsPrefix}}';
     var players = {{players|safe}};
+    var playerInventories = {};
 
     const startHouse = 'start_house';
 
@@ -123,7 +124,13 @@
                 }
 
                 for (const player of players) {
-                    document.querySelector(`[data-player="${player}"] #itemContainer`).innerHTML = response;
+                    let container = $(`[data-player="${player}"] #itemContainer`);
+                    container.html(response);
+
+                    let containerElement = container[0];
+                    for (const element of containerElement.querySelectorAll('[data-parent-player]')) {
+                        element.dataset.parentPlayer = player;
+                    }
                 }
 
                 if (localSettings.highlightItemsOnHover) {
@@ -236,6 +243,12 @@
     function init() {
         if (!players) {
             players = [''];
+        }
+
+        for (const player of players) {
+            if (player) {
+                playerInventories[player] = {};
+            }
         }
 
         window.addEventListener('error', errorHandler);

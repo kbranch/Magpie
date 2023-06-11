@@ -3,6 +3,10 @@
 function resetInventory() {
     inventory = {};
     saveInventory();
+
+    for (const player in playerInventories) {
+        playerInventories[player] = {};
+    }
 }
 
 function saveInventory() {
@@ -17,36 +21,44 @@ function loadInventory() {
     }
 }
 
-function addItem(item, qty, wrap=true, refresh=true) {
-    if (!(item in inventory) || typeof inventory[item] != 'number') {
-        inventory[item] = 0;
+function addItem(item, qty, wrap=true, refresh=true, player='') {
+    let inv = getPlayerInventory(player);
+
+    if (!(item in inv) || typeof inv[item] != 'number') {
+        inv[item] = 0;
     }
 
-    inventory[item] += qty;
+    inv[item] += qty;
 
     if (maxInventory[item] != 0) {
-        if (inventory[item] > maxInventory[item]) {
-            inventory[item] = wrap ? 0 : maxInventory[item];
+        if (inv[item] > maxInventory[item]) {
+            inv[item] = wrap ? 0 : maxInventory[item];
         }
 
-        if (inventory[item] < 0) {
-            inventory[item] = wrap ? maxInventory[item] : 0;
+        if (inv[item] < 0) {
+            inv[item] = wrap ? maxInventory[item] : 0;
         }
     }
 
-    console.log(`${item}: ${inventory[item]}`);
+    console.log(`${item}: ${inv[item]}`);
 
-    updateLinkedItemChecks(item);
+    if (player == '') {
+        updateLinkedItemChecks(item);
 
-    setItemImage(item);
-    updateOverlay(item);
-    saveInventory();
+        setItemImage(item);
+        updateOverlay(item);
+        saveInventory();
 
-    sharingLiveUpdate();
-    refreshItemNdi();
+        sharingLiveUpdate();
+        refreshItemNdi();
 
-    if (refresh) {
-        refreshCheckList();
+        if (refresh) {
+            refreshCheckList();
+        }
+    }
+    else {
+        setItemImage(item, player);
+        updateOverlay(item, player);
     }
 }
 

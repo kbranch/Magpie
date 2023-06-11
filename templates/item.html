@@ -36,11 +36,11 @@
 
     {% if secondary != '' %}
         {% set secondaryTag = 'data-secondary=' + secondary %}
-        {% set oncontextmenu = "addItem('" + secondary + "', 1);return false;" %}
+        {% set oncontextmenu = "addItem('" + secondary + "', 1, true, true, this.dataset.parentPlayer);return false;" %}
         {% set tooltip = primaryName.replace('_', ' ').replace('TRADING_ITEM_', '')|title + ' | ' + secondaryName.replace('_', ' ')|title %}
     {% else %}
         {% set secondaryTag= "" %}
-        {% set oncontextmenu = "addItem('" + primary + "', -1);return false;" %}
+        {% set oncontextmenu = "addItem('" + primary + "', -1, true, true, this.dataset.parentPlayer);return false;" %}
         {% set tooltip = primaryName.replace('_', ' ').replace('TRADING ITEM ', '')|title %}
     {% endif %}
 
@@ -71,7 +71,7 @@
     {% set size = 'style="width: ' + width + '; height: ' + height + ';"' %}
 
     <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{classes}}">
-        <div class="itemWrapper" {{size|safe}} onclick="addItem('{{primary}}', 1)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
+        <div class="itemWrapper" {{size|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}

@@ -406,7 +406,6 @@ def event():
                                          diskSettings=getDiskSettings(),
                                          hostname=app.config['hostname'],
                                          hideShare=True,
-                                         hideReset=True,
                                          showTitle=True,
                                          keepQueryArgs=True,
                                          settingsPrefix='event_',
