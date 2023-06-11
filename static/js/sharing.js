@@ -65,17 +65,17 @@ function checkPlayerId() {
 
 var playerIdTimeout = null;
 function updateShareUrls() {
-    let playerUrl = document.getElementById('playerUrl');
+    // let playerUrl = document.getElementById('playerUrl');
     let eventUrl = document.getElementById('eventUrl');
-    let playerName = document.getElementById('playerName').value;
+    // let playerName = document.getElementById('playerName').value;
     let eventName = document.getElementById('eventName').value;
 
-    playerUrl.href = `/player?playerName=${playerName}`;
-    playerUrl.innerHTML = playerUrl.href;
+    // playerUrl.href = `/player?playerName=${playerName}`;
+    // playerUrl.innerHTML = playerUrl.href;
     eventUrl.href = `/event?eventName=${eventName}`;
     eventUrl.innerHTML = eventUrl.href;
 
-    setElementHidden(document.getElementById('playerLink'), !playerName);
+    // setElementHidden(document.getElementById('playerLink'), !playerName);
     setElementHidden(document.getElementById('eventLink'), !eventName);
 
     if (playerIdTimeout) {
