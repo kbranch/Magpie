@@ -7,14 +7,14 @@
     {{ item("SHOVEL", max="1") }}
     {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE") }}
     {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE") }}
-    {{ item("FEATHER", max="1", secondary="ROOSTER", secondaryMax="1", src="jumpSrc()", condition=allItems['ROOSTER'] >= 1) }}
+    {{ item("FEATHER", max="1", secondary="ROOSTER", secondaryMax="1", src="jumpSrc('${player}')", condition=allItems['ROOSTER'] >= 1) }}
     {{ item("FEATHER", max="1", condition=allItems['ROOSTER'] == 0) }}
     {{ item("POWER_BRACELET", max="2") }}
     {{ item("PEGASUS_BOOTS", max="1") }}
     {{ item("FLIPPERS", max="1") }}
     {{ item("HOOKSHOT", max="1") }}
     {{ item("MAGIC_ROD", max="1") }}
-    {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc()") }}
+    {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc('${player}')") }}
     {{ item("OCARINA", max="1") }}
     {{ item("SONG1", max="1") }}
     {{ item("SONG2", max="1") }}

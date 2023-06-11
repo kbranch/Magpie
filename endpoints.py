@@ -346,7 +346,7 @@ def ndiSettings():
     return "OK"
 
 @app.route("/playerState", methods=['POST'])
-def playerStatePut():
+def playerStatePost():
     state = request.json
     if 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
         return "Invalid request", 400
@@ -361,12 +361,17 @@ def playerStatePut():
 
 @app.route("/playerState", methods=['GET'])
 def playerStateGet():
-    playerName = request.args.get('playerName')
-    timestamp = request.args.get('timestamp', 0)
-    if not playerName:
-        return "playerName is required", 400
+    playerJson = request.args.get('players')
 
-    result = sharing.getState(playerName, timestamp)
+    if not playerJson:
+        return "Player list is required", 400
+
+    players = json.loads(playerJson)
+    result = {}
+
+    for playerName, timestamp in players.items():
+        playerResult = sharing.getState(playerName, timestamp)
+        result[playerName] = playerResult
 
     return json.dumps(result)
 

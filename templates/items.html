@@ -64,10 +64,4 @@
     "use strict"
 
     updateMaxInventory({{ allItems|safe }});
-
-    //Activate the bootstrap tooltips
-    var tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]:not(.itemWrapper)')
-    var tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {sanitize: false}))
-    var itemTooltips = document.querySelectorAll('.itemWrapper[data-bs-toggle="tooltip"]')
-    var tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {delay: { "show": 500, "hide": 0 }, sanitize: false}))
 </script>

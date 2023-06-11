@@ -27,9 +27,14 @@ function sendState() {
     });
 }
 
+let shareTimeout = null;
 function sharingLiveUpdate() {
     if (liveUpdate) {
-        sendState();
+        if (shareTimeout) {
+            clearTimeout(shareTimeout);
+        }
+
+        shareTimeout = setTimeout(sendState, 250);
     }
 }
 
@@ -78,4 +83,47 @@ function updateShareUrls() {
     }
 
     playerIdTimeout = setTimeout(checkPlayerId, 250);
+}
+
+function liveUpdatePlayers() {
+    if (players && players[0] == '') {
+        return;
+    }
+
+    updatePlayerInventories();
+    setTimeout(liveUpdatePlayers, 1000);
+}
+
+function updatePlayerInventories() {
+    let data = {};
+
+    for (const player of players) {
+        data[player] = playerInventories[player].timestamp ?? 0;
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "/playerState",
+        data: {
+            players: JSON.stringify(data),
+        },
+        success: function(response) {
+            let responseObj = JSON.parse(response);
+
+            if (!responseObj) {
+                return;
+            }
+
+            for (const player in responseObj) {
+                if (!responseObj[player]) {
+                    continue;
+                }
+
+                playerInventories[player] = JSON.parse(responseObj[player].state).inventory;
+                playerInventories[player].timestamp = responseObj[player].timestamp;
+            }
+
+            refreshImages();
+        }
+    });
 }

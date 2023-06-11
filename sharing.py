@@ -1,11 +1,14 @@
 import time
 import psycopg2
+import threading
 
 server = None
 port = None
 db = None
 username = None
 password = None
+
+writeLock = threading.Lock()
 
 def setDbInfo(newServer, newPort, newDb, newUsername, newPassword):
     global server, port, db, username, password
@@ -34,23 +37,24 @@ def writeState(player, playerId, event, state):
         values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s)
     """
 
-    conn = getDbConnection()
-    cursor = conn.cursor()
+    with writeLock:
+        conn = getDbConnection()
+        cursor = conn.cursor()
 
-    cursor.execute(deleteQuery, { 'player': player })
+        cursor.execute(deleteQuery, { 'player': player })
 
-    cursor.execute(insertQuery, {
-        'player': player,
-        'id': playerId,
-        'event': event,
-        'state': state,
-        'timestamp': timestamp,
-    })
+        cursor.execute(insertQuery, {
+            'player': player,
+            'id': playerId,
+            'event': event,
+            'state': state,
+            'timestamp': timestamp,
+        })
 
-    conn.commit()
+        conn.commit()
 
-    cursor.close()
-    conn.close()
+        cursor.close()
+        conn.close()
 
     return timestamp
 
@@ -79,7 +83,7 @@ def getState(player, timestamp):
     cursor.close()
     conn.close()
 
-    return { 'state': result[0], 'timestamp': str(result[1]) }
+    return { 'state': result[0], 'timestamp': str(result[1]) } if result else None
 
 def getPlayerId(player):
     if not dbConfigured():

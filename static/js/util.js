@@ -144,7 +144,14 @@ function moveChildren(source, dest) {
 
 function applySettings() {
     if (!localSettings.playerId) {
-        localSettings.playerId = crypto.randomUUID();
+        try {
+            localSettings.playerId = crypto.randomUUID();
+        }
+        catch {
+            localSettings.playerId = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
     }
 
     let stacked = document.getElementById('stackedContainer');
@@ -350,4 +357,9 @@ function setLocalStorage(key, value) {
 function getLocalStorage(key) {
     let prefix = settingsPrefix ?? '';
     return localStorage.getItem(prefix + key);
+}
+
+function findPlayerFromElement(element) {
+    let playerParent = element.closest('[data-player]');
+    return playerParent.dataset.player;
 }

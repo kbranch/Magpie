@@ -21,7 +21,7 @@ function setImgSrc(img, item, player='') {
     let number = $(img).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
 
     if (hasAttr(img, 'data-src')) {
-        $(img).attr('src', eval($(img).attr('data-src')));
+        $(img).attr('src', eval($(img).attr('data-src').replace('${player}', player)));
     }
     else {
         let max = 9999;
@@ -34,12 +34,16 @@ function setImgSrc(img, item, player='') {
         $(img).attr('src', `static/images${gfx}/${item}_${Math.min(number, max)}.png`);
     }
 
-    if (number > 0) {
-        $(img).addClass(`owned-item-${localSettings.ownedHighlight}`);
-    }
-    else {
-        $(img).removeClass('owned-item-bar');
-        $(img).removeClass('owned-item-square');
+    let element = img.length == 1 ? img[0] : img;
+
+    if (element.dataset && element.dataset.item == item) {
+        if (number > 0) {
+            $(img).addClass(`owned-item-${localSettings.ownedHighlight}`);
+        }
+        else {
+            $(img).removeClass('owned-item-bar');
+            $(img).removeClass('owned-item-square');
+        }
     }
 }
 
@@ -57,7 +61,7 @@ function setItemImage(item, player='') {
     setImgSrc(img, item, player);
 }
 
-function updateOverlay(item, player) {
+function updateOverlay(item, player='') {
     let inv = getPlayerInventory(player);
     let texts = $(`[data-player="${player}"] span[data-overlay_count=${item}]`);
 
@@ -166,9 +170,10 @@ function setHighlightedItems(items) {
 }
 
 // Composite item logic
-function jumpSrc() {
-    let feather = inventory['FEATHER'] > 0;
-    let rooster = inventory['ROOSTER'] > 0;
+function jumpSrc(player) {
+    let inv = getPlayerInventory(player);
+    let feather = inv['FEATHER'] > 0;
+    let rooster = inv['ROOSTER'] > 0;
 
     if (!feather && !rooster) {
         return `static/images${localSettings.graphicsPack}/NO_JUMP.png`;
@@ -183,11 +188,12 @@ function jumpSrc() {
     return `static/images${localSettings.graphicsPack}/BOTH_JUMP.png`;
 }
 
-function tunicSrc()
+function tunicSrc(player)
 {
+    let inv = getPlayerInventory(player);
     let gfx = localSettings.graphicsPack;
-    let blue = inventory['BLUE_TUNIC'] > 0;
-    let red = inventory['RED_TUNIC'] > 0;
+    let blue = inv['BLUE_TUNIC'] > 0;
+    let red = inv['RED_TUNIC'] > 0;
 
     if (!blue && !red)
     {

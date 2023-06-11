@@ -133,13 +133,20 @@
                     }
                 }
 
+                if (players.length <= 1) {
+                    //Activate the bootstrap tooltips
+                    let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]:not(.itemWrapper)')
+                    let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }))
+                    let itemTooltips = document.querySelectorAll('.itemWrapper[data-bs-toggle="tooltip"]')
+                    tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { delay: { "show": 500, "hide": 0 }, sanitize: false }))
+                }
+
                 if (localSettings.highlightItemsOnHover) {
                     $('.itemImage').addClass('glow');
                 }
                 else {
                     $('.itemImage').removeClass('glow');
                 }
-
 
                 initKnownItems();
                 refreshCheckList();
@@ -245,10 +252,14 @@
             players = [''];
         }
 
+        players.sort();
+
         for (const player of players) {
-            if (player) {
-                playerInventories[player] = {};
+            if (!player) {
+                continue;
             }
+
+            playerInventories[player] = {};
         }
 
         window.addEventListener('error', errorHandler);
@@ -315,6 +326,8 @@
         });
 
         applySettings();
+
+        liveUpdatePlayers();
 
         var popoverTriggerList = document.querySelectorAll('button[data-bs-toggle="popover"]')
         var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
