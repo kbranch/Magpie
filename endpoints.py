@@ -1,4 +1,3 @@
-import ndi
 import json
 import base64
 import socket
@@ -18,6 +17,11 @@ from args import Args
 
 try:
     import newrelic.agent
+except:
+    pass
+
+try:
+    import ndi
 except:
     pass
 
@@ -319,31 +323,32 @@ def suggestion():
 
     return response
 
-@app.route("/mapNdi", methods=['POST'])
-def mapNdi():
-    data = request.form["data"]
-    pngBytes = base64.b64decode(data.split(',')[1])
-    ndi.updateMapImage(pngBytes)
+if 'ndi' in sys.modules:
+    @app.route("/mapNdi", methods=['POST'])
+    def mapNdi():
+        data = request.form["data"]
+        pngBytes = base64.b64decode(data.split(',')[1])
+        ndi.updateMapImage(pngBytes)
 
-    return "OK"
+        return "OK"
 
-@app.route("/itemsNdi", methods=['POST'])
-def itemsNdi():
-    data = request.form["data"]
-    pngBytes = base64.b64decode(data.split(',')[1])
-    ndi.updateItemsImage(pngBytes)
+    @app.route("/itemsNdi", methods=['POST'])
+    def itemsNdi():
+        data = request.form["data"]
+        pngBytes = base64.b64decode(data.split(',')[1])
+        ndi.updateItemsImage(pngBytes)
 
-    return "OK"
+        return "OK"
 
-@app.route("/ndiSettings", methods=['POST'])
-def ndiSettings():
-    itemsEnabled = request.form["itemsEnabled"] == 'true'
-    mapEnabled = request.form["mapEnabled"] == 'true'
+    @app.route("/ndiSettings", methods=['POST'])
+    def ndiSettings():
+        itemsEnabled = request.form["itemsEnabled"] == 'true'
+        mapEnabled = request.form["mapEnabled"] == 'true'
 
-    if app.config['local']:
-        ndi.setNdiStatus(itemsEnabled, mapEnabled)
+        if app.config['local']:
+            ndi.setNdiStatus(itemsEnabled, mapEnabled)
 
-    return "OK"
+        return "OK"
 
 @app.route("/playerState", methods=['POST'])
 def playerStatePost():
