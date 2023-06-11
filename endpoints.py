@@ -358,9 +358,19 @@ if 'ndi' in sys.modules:
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])
     def playerStatePost():
+        response = app.response_class(
+            status=200,
+            mimetype='application/json'
+        )
+
+        response.headers.add('Access-Control-Allow-Origin', '*')
+
         state = request.json
         if 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
-            return "Invalid request", 400
+            response.response = "Invalid request"
+            response.status = 400
+
+            return response
 
         settings = state['settings']
         timestamp = sharing.writeState(settings['playerName']
@@ -368,22 +378,25 @@ if sharingEnabled:
                                     ,tryGetValue(settings, 'eventName')
                                     ,json.dumps(state))
 
+        response.response=str(timestamp),
+
+        return response
+
+    @app.route("/playerState", methods=['GET'])
+    def playerStateGet():
         response = app.response_class(
-            response=str(timestamp),
             status=200,
             mimetype='application/json'
         )
 
         response.headers.add('Access-Control-Allow-Origin', '*')
 
-        return response
-
-    @app.route("/playerState", methods=['GET'])
-    def playerStateGet():
         playerJson = request.args.get('players')
-
         if not playerJson:
-            return "Player list is required", 400
+            response.response = "Player list is required"
+            response.status = 400
+
+            return response
 
         players = json.loads(playerJson)
         result = {}
@@ -392,30 +405,28 @@ if sharingEnabled:
             playerResult = sharing.getState(playerName, timestamp)
             result[playerName] = playerResult
 
-        response = app.response_class(
-            response=json.dumps(result),
-            status=200,
-            mimetype='application/json'
-        )
-
-        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.response=json.dumps(result),
 
         return response
 
     @app.route("/playerId", methods=['POST'])
     def playerId():
-        if 'playerName' not in request.form:
-            return "playerName is required", 400
-
-        id = sharing.getPlayerId(request.form['playerName'])
-
         response = app.response_class(
-            response=str(id),
             status=200,
             mimetype='application/json'
         )
 
         response.headers.add('Access-Control-Allow-Origin', '*')
+
+        if 'playerName' not in request.form:
+            response.response = "playerName is required"
+            response.status = 400
+
+            return response
+
+        id = sharing.getPlayerId(request.form['playerName'])
+        
+        response.response=str(id),
 
         return response
 
