@@ -131,7 +131,7 @@ def getEventPlayers(event):
     cursor.close()
     conn.close()
 
-    return [x[0] for x in result]
+    return sorted([x[0] for x in result], key=lambda x: x.lower())
 
 def getDbConnection():
     return psycopg2.connect(database=db,
