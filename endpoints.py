@@ -1,7 +1,6 @@
 import json
 import base64
 import socket
-import sharing
 import platform
 import requests
 import traceback
@@ -39,6 +38,8 @@ app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
 
 try:
+    import aslfwef
+    import sharing
     app.config.from_pyfile('config.py')
     sharing.setDbInfo(tryGetValue(app.config, 'SHARING_SERVER'),
                       tryGetValue(app.config, 'SHARING_PORT'),
