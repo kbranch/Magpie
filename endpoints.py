@@ -38,7 +38,6 @@ app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
 
 try:
-    import aslfwef
     import sharing
     app.config.from_pyfile('config.py')
     sharing.setDbInfo(tryGetValue(app.config, 'SHARING_SERVER'),

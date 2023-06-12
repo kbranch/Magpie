@@ -72,7 +72,7 @@ function updateShareUrls() {
 
     // playerUrl.href = `/player?playerName=${playerName}`;
     // playerUrl.innerHTML = playerUrl.href;
-    eventUrl.href = `/event?eventName=${eventName}`;
+    eventUrl.href = sharingUrlPrefix() + `/event?eventName=${eventName}`;
     eventUrl.innerHTML = eventUrl.href;
 
     // setElementHidden(document.getElementById('playerLink'), !playerName);

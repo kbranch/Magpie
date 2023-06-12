@@ -10,7 +10,7 @@
     {% for player in players %}
     <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mt-2 mx-4 item-width">
         <span>Player: {{player}}</span>
-        <div class="items-slot">
+        <div class="items-slot item-border">
             <div id="itemContainer" class="pb-2"></div>
         </div>
     </div>
@@ -20,8 +20,8 @@
     {% for player in players %}
     <div id="stackedItems" data-player="{{player}}" class="col-auto mt-2 mx-4">
         <span>Player: {{player}}</span>
-        <div class="row">
-            <div class="col-xs col-md-auto items-slot">
+        <div class="row item-border">
+            <div class="col-xs col-md-auto items-slot px-0">
             </div>
         </div>
     </div>

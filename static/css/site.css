@@ -1079,7 +1079,7 @@ body {
     width: 100px;
 }
 
-#items .row, #items.row {
+#items .row, #items.row, #unstackedContainer .row, #unstackedContainer.row {
     --bs-gutter-x: 0rem;
 }
 
@@ -1094,4 +1094,10 @@ body {
 
 .full-height {
     height: 100%;
+}
+
+.item-border {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ccc;
 }
