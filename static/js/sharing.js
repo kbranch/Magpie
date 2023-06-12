@@ -127,5 +127,5 @@ function updatePlayerInventories() {
 }
 
 function sharingUrlPrefix() {
-    return local ? 'https://dev.magpietracker.us' : '';
+    return local ? 'https://magpietracker.us' : '';
 }
