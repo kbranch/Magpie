@@ -73,6 +73,17 @@ def getDiskSettings():
     
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
+@app.after_request
+def beforeRequest(response):
+    if request.method.lower() == 'options':
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'content-type')
+    elif request.path in ('/playerState', '/playerId', '/suggestion'):
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.mimetype = 'application/json'
+
+    return response
+
 @app.route("/")
 def home():
     args = getArgs()
@@ -318,15 +329,7 @@ def suggestion():
     except:
         print(traceback.format_exc())
 
-    response = app.response_class(
-        response="thx",
-        status=200,
-        mimetype='application/json'
-    )
-
-    response.headers.add('Access-Control-Allow-Origin', '*')
-
-    return response
+    return 'thx'
 
 if 'ndi' in sys.modules:
     @app.route("/mapNdi", methods=['POST'])
@@ -358,23 +361,13 @@ if 'ndi' in sys.modules:
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])
     def playerStatePost():
-        response = app.response_class(
-            status=200,
-            mimetype='application/json'
-        )
-
-        response.headers.add('Access-Control-Allow-Origin', '*')
-
         try:
             state = request.json
         except:
             state = None
 
         if not state or 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
-            response.response = "Invalid request"
-            response.status = 400
-
-            return response
+            return "Invalid request", 400
 
         settings = state['settings']
         timestamp = sharing.writeState(settings['playerName']
@@ -382,25 +375,13 @@ if sharingEnabled:
                                     ,tryGetValue(settings, 'eventName')
                                     ,json.dumps(state))
 
-        response.response=str(timestamp),
-
-        return response
+        return str(timestamp)
 
     @app.route("/playerState", methods=['GET'])
     def playerStateGet():
-        response = app.response_class(
-            status=200,
-            mimetype='application/json'
-        )
-
-        response.headers.add('Access-Control-Allow-Origin', '*')
-
         playerJson = request.args.get('players')
         if not playerJson:
-            response.response = "Player list is required"
-            response.status = 400
-
-            return response
+            return "Player list is required", 400
 
         players = json.loads(playerJson)
         result = {}
@@ -409,30 +390,16 @@ if sharingEnabled:
             playerResult = sharing.getState(playerName, timestamp)
             result[playerName] = playerResult
 
-        response.response=json.dumps(result),
-
-        return response
+        return json.dumps(result)
 
     @app.route("/playerId", methods=['POST'])
     def playerId():
-        response = app.response_class(
-            status=200,
-            mimetype='application/json'
-        )
-
-        response.headers.add('Access-Control-Allow-Origin', '*')
-
         if 'playerName' not in request.form:
-            response.response = "playerName is required"
-            response.status = 400
-
-            return response
+            return "playerName is required", 400
 
         id = sharing.getPlayerId(request.form['playerName'])
-        
-        response.response=str(id),
 
-        return response
+        return str(id)
 
     @app.route("/event", methods=['GET'])
     def event():
