@@ -1,4 +1,5 @@
 import time
+import datetime
 import psycopg2
 import threading
 
@@ -113,10 +114,14 @@ def getEventPlayers(event):
     if not dbConfigured():
         return None
 
+    threshold = datetime.datetime.now() - datetime.timedelta(hours=2)
+    threshold = time.mktime(threshold.timetuple())
+
     query = """
         select sharing.player_name
         from sharing
         where sharing.event_name = %(event)s
+              and sharing.timestamp > %(threshold)s
     """
 
     conn = getDbConnection()
@@ -124,6 +129,7 @@ def getEventPlayers(event):
 
     cursor.execute(query, {
         'event': event,
+        'threshold': threshold,
     })
 
     result = cursor.fetchall()
