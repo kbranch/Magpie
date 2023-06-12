@@ -365,8 +365,12 @@ if sharingEnabled:
 
         response.headers.add('Access-Control-Allow-Origin', '*')
 
-        state = request.json
-        if 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
+        try:
+            state = request.json
+        except:
+            state = None
+
+        if not state or 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
             response.response = "Invalid request"
             response.status = 400
 
