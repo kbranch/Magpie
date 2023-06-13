@@ -119,9 +119,23 @@ def getEventPlayers(event):
 
     query = """
         select sharing.player_name
+              ,sharing.player_no
         from sharing
         where sharing.event_name = %(event)s
               and sharing.timestamp > %(threshold)s
+        order by sharing.player_no
+    """
+
+    purgeQuery = """
+        update sharing
+        set player_no = null
+        where timestamp <= %(threshold)s
+    """
+
+    updateQuery = """
+        update sharing
+        set player_no = %(playerNo)s
+        where player_name = %(playerName)s
     """
 
     conn = getDbConnection()
@@ -134,10 +148,32 @@ def getEventPlayers(event):
 
     result = cursor.fetchall()
 
+    cursor.execute(purgeQuery, {
+        'threshold': threshold
+    })
+
+    conn.commit()
+
+    players = [{ 'player': x[0], 'number': x[1] } for x in result]
+    maxNumber = max([x['number'] for x in players if x['number'] != None] or [0])
+    unNumberedPlayers = sorted([x for x in players if x['number'] == None], key=lambda x: x['player'].lower())
+
+    for player in unNumberedPlayers:
+        player['number'] = maxNumber + 1
+
+        cursor.execute(updateQuery, {
+            'playerName': player['player'],
+            'playerNo': player['number'],
+        })
+
+        maxNumber += 1
+
+    conn.commit()
+
     cursor.close()
     conn.close()
 
-    return sorted([x[0] for x in result], key=lambda x: x.lower())
+    return [x['player'] for x in sorted(players, key=lambda x: x['number'])]
 
 def getDbConnection():
     return psycopg2.connect(database=db,
