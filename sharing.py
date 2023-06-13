@@ -29,18 +29,30 @@ def writeState(player, playerId, event, state):
 
     timestamp = round(time.time(), 3)
 
+    playerNoQuery = """
+        select sharing.player_no
+        from sharing
+        where sharing.player_name = %(player)s
+    """
     deleteQuery = """
         delete from sharing
         where sharing.player_name = %(player)s
     """
     insertQuery = """
-        insert into sharing (player_name, player_id, event_name, state, timestamp)
-        values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s)
+        insert into sharing (player_name, player_id, event_name, state, timestamp, player_no)
+        values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s, %(playerNo)s)
     """
 
     with writeLock:
         conn = getDbConnection()
         cursor = conn.cursor()
+
+        playerNo = None
+        cursor.execute(playerNoQuery, { 'player': player })
+        result = cursor.fetchone()
+
+        if result:
+            playerNo = result[0]
 
         cursor.execute(deleteQuery, { 'player': player })
 
@@ -50,6 +62,7 @@ def writeState(player, playerId, event, state):
             'event': event,
             'state': state,
             'timestamp': timestamp,
+            'playerNo': playerNo,
         })
 
         conn.commit()
