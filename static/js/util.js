@@ -183,21 +183,23 @@ function applySettings() {
         }
     }
 
-    let items = container.querySelector('.item-chunk');
-    let map = container.querySelector('.map-chunk');
+    if (container) {
+        let items = container.querySelector('.item-chunk');
+        let map = container.querySelector('.map-chunk');
 
-    if (items && map) {
-        if (localSettings.swapItemsAndMap) {
-            container.removeChild(items);
-            container.removeChild(map);
-            container.appendChild(items);
-            container.appendChild(map);
-        }
-        else {
-            container.removeChild(items);
-            container.removeChild(map);
-            container.appendChild(map);
-            container.appendChild(items);
+        if (items && map) {
+            if (localSettings.swapItemsAndMap) {
+                container.removeChild(items);
+                container.removeChild(map);
+                container.appendChild(items);
+                container.appendChild(map);
+            }
+            else {
+                container.removeChild(items);
+                container.removeChild(map);
+                container.appendChild(map);
+                container.appendChild(items);
+            }
         }
     }
 

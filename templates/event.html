@@ -6,7 +6,7 @@
     {% include 'navbar.html' %}
 </div>
 
-<div id="unstackedContainer" class="row">
+<div id="unstackedContainer" class="row border-me">
     {% for player in players %}
     <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mt-2 mx-4 item-width">
         <span>Player: {{player}}</span>
