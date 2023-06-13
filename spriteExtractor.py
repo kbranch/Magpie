@@ -41,9 +41,11 @@ palettes = [
     [255, 0, 0, 0,          0, 0, 0, 255,       168, 120, 16, 255,  248, 248, 168, 255],
     [255, 0, 0, 0,          240, 232, 24, 255,  152, 128, 0, 255,   0, 0, 0, 255],
     [0, 0, 0, 255,          0, 0, 0, 255,       232, 24, 48, 255,   255, 214, 173, 255],
-    [0, 0, 0, 255,        0, 0, 0, 255,       248, 24, 88, 255,   255, 255, 255, 255],
-    [0, 0, 0, 255,        0, 0, 0, 255,       0, 139, 255, 255,   255, 255, 255, 255],
-    [0, 0, 0, 255,        0, 0, 0, 255,       16, 168, 64, 255,   255, 255, 255, 255],
+    [0, 0, 0, 255,          0, 0, 0, 255,       248, 24, 88, 255,   255, 255, 255, 255],
+    [0, 0, 0, 255,          0, 0, 0, 255,       0, 139, 255, 255,   255, 255, 255, 255],
+    [0, 0, 0, 255,          0, 0, 0, 255,       16, 168, 64, 255,   255, 255, 255, 255],
+    [248, 248, 168, 255,    226, 226, 250, 255, 60, 68, 100, 255,   0, 0, 0, 255],
+    [248, 248, 168, 255,    226, 226, 250, 255, 100, 108, 180, 255, 0, 0, 0, 255],
 ]
 
 feather = Sprite('FEATHER_1', 1, 9, 1, 3)
@@ -59,7 +61,7 @@ sprites = [
     Sprite('TOADSTOOL_1', 52, 21, 1, 20, mirror=True), # possibly the forest floor sprite - there are two like this
     Sprite('MAGIC_POWDER_1', 1, 7, 1, 3),
     Sprite('SHOVEL_1', 1, 11, 1, (3, 3, 1, 1)),
-    Sprite('BOMB_1', 1, 0, 1, 1),
+    Sprite('BOMB_1', 1, 0, 1, 24),
     Sprite('BOW_1', 1, 4, 1, 3),
     Sprite('POWER_BRACELET_1', 1, 1, 1, 1),
     Sprite('POWER_BRACELET_2', 1, 1, 1, 2),
@@ -95,7 +97,7 @@ sprites = [
     Sprite('TRADING_ITEM_HIBISCUS_1', 0, 44, 2, 12),
     Sprite('TRADING_ITEM_LETTER_1', 0, 46, 2, 17),
     Sprite('TRADING_ITEM_BROOM_1', 0, 48, 2, 6),
-    Sprite('TRADING_ITEM_FISHING_HOOK_1', 0, 50, 2, 1),
+    Sprite('TRADING_ITEM_FISHING_HOOK_1', 0, 50, 2, 25),
     Sprite('TRADING_ITEM_NECKLACE_1', 0, 52, 2, 2),
     Sprite('TRADING_ITEM_SCALE_1', 0, 54, 2, 2),
     Sprite('TRADING_ITEM_MAGNIFYING_GLASS_1', 0, 56, 2, 4),
@@ -409,7 +411,7 @@ def main():
 
     # print(palettes)
 
-    dumpSprites = False
+    dumpSprites = True
 
     if(dumpSprites):
         hashes = {}
