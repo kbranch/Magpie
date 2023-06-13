@@ -119,6 +119,12 @@ function updatePlayerInventories() {
 
                 playerInventories[player] = JSON.parse(response[player].state).inventory;
                 playerInventories[player].timestamp = response[player].timestamp;
+
+                let time = " - " + new Date(Number(playerInventories[player].timestamp) * 1000).toLocaleTimeString();
+                let elements = document.querySelectorAll(`[data-player="${player}"] .state-timestamp`);
+                for (const element of elements) {
+                    element.innerHTML = time;
+                }
             }
 
             refreshImages();
