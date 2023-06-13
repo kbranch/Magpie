@@ -401,6 +401,51 @@ if sharingEnabled:
 
         return str(id)
 
+    @app.route("/canJoinEvent", methods=['GET'])
+    def canJoinEvent():
+        eventName = request.args.get('eventName')
+        code = request.args.get('joinCode')
+        if not eventName or not code:
+            return "eventName and joinCode are required", 400
+
+        (join, view) = sharing.authenticateEvent(eventName, code)
+
+        return json.dumps(join)
+
+    @app.route("/canViewEvent", methods=['GET'])
+    def canViewEvent():
+        eventName = request.args.get('eventName')
+        code = request.args.get('viewCode')
+        if not eventName or not code:
+            return "eventName and viewCode are required", 400
+
+        (join, view) = sharing.authenticateEvent(eventName, code)
+
+        return json.dumps(view)
+
+    @app.route("/eventExists", methods=['GET'])
+    def eventExists():
+        eventName = request.args.get('eventName')
+        if not eventName:
+            return "eventName is required", 400
+
+        event = sharing.eventExists(eventName)
+
+        return json.dumps(event)
+
+    @app.route("/createEvent", methods=['POST'])
+    def createEvent():
+        eventName = request.form['eventName']
+        joinCode = request.form['joinCode']
+        viewCode = request.form['viewCode']
+
+        if (not eventName or not joinCode or not viewCode):
+            return "eventName, joinCode and viewCode are required", 400
+
+        success = sharing.createEvent(eventName, joinCode, viewCode)
+
+        return json.dumps(success)
+
     @app.route("/event", methods=['GET'])
     def event():
         eventName = request.args.get('eventName')

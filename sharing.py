@@ -22,6 +22,13 @@ def setDbInfo(newServer, newPort, newDb, newUsername, newPassword):
 
 def dbConfigured():
     return bool(server)
+
+def getDbConnection():
+    return psycopg2.connect(database=db,
+                            host=server,
+                            user=username,
+                            password=password,
+                            port=port)
     
 def writeState(player, playerId, event, state):
     if not dbConfigured():
@@ -151,46 +158,123 @@ def getEventPlayers(event):
         where player_name = %(playerName)s
     """
 
+    with writeLock:
+        conn = getDbConnection()
+        cursor = conn.cursor()
+
+        cursor.execute(query, {
+            'event': event,
+            'threshold': threshold,
+        })
+
+        result = cursor.fetchall()
+
+        cursor.execute(purgeQuery, {
+            'threshold': threshold
+        })
+
+        conn.commit()
+
+        players = [{ 'player': x[0], 'number': x[1] } for x in result]
+        maxNumber = max([x['number'] for x in players if x['number'] != None] or [0])
+        unNumberedPlayers = sorted([x for x in players if x['number'] == None], key=lambda x: x['player'].lower())
+
+        for player in unNumberedPlayers:
+            player['number'] = maxNumber + 1
+
+            cursor.execute(updateQuery, {
+                'playerName': player['player'],
+                'playerNo': player['number'],
+            })
+
+            maxNumber += 1
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    return [x['player'] for x in sorted(players, key=lambda x: x['number'])]
+
+def eventExists(eventName):
+    if not dbConfigured():
+        return
+
+    eventQuery = """
+        select 1
+        from events
+        where events.name = %(eventName)s
+
+        union
+
+        select 1
+        from sharing
+        where sharing.event_name = %(eventName)s
+    """
+    
     conn = getDbConnection()
     cursor = conn.cursor()
 
-    cursor.execute(query, {
-        'event': event,
-        'threshold': threshold,
-    })
-
-    result = cursor.fetchall()
-
-    cursor.execute(purgeQuery, {
-        'threshold': threshold
-    })
-
-    conn.commit()
-
-    players = [{ 'player': x[0], 'number': x[1] } for x in result]
-    maxNumber = max([x['number'] for x in players if x['number'] != None] or [0])
-    unNumberedPlayers = sorted([x for x in players if x['number'] == None], key=lambda x: x['player'].lower())
-
-    for player in unNumberedPlayers:
-        player['number'] = maxNumber + 1
-
-        cursor.execute(updateQuery, {
-            'playerName': player['player'],
-            'playerNo': player['number'],
-        })
-
-        maxNumber += 1
-
-    conn.commit()
+    cursor.execute(eventQuery, { 'eventName': eventName })
+    result = cursor.fetchone()
 
     cursor.close()
     conn.close()
 
-    return [x['player'] for x in sorted(players, key=lambda x: x['number'])]
+    return bool(result)
 
-def getDbConnection():
-    return psycopg2.connect(database=db,
-                            host=server,
-                            user=username,
-                            password=password,
-                            port=port)
+def authenticateEvent(eventName, code):
+    if not dbConfigured():
+        return
+
+    eventQuery = """
+        select events.join_code
+              ,events.view_code
+        from events
+        where events.name = %(eventName)s
+    """
+    
+    conn = getDbConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(eventQuery, { 'eventName': eventName })
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if result:
+        return (code == result[0], code == result[1])
+    
+    return None
+
+def createEvent(eventName, joinCode, viewCode):
+    if not dbConfigured():
+        return
+
+    query = """
+        insert into events (name, join_code, view_code)
+        values (%(eventName)s, %(joinCode)s, %(viewCode)s)
+    """
+
+    success = True
+
+    if eventExists(eventName):
+        success = False
+
+    if success:
+        conn = getDbConnection()
+        cursor = conn.cursor()
+
+        cursor.execute(query, {
+            'eventName': eventName,
+            'joinCode': joinCode,
+            'viewCode': viewCode,
+        })
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+    return success
