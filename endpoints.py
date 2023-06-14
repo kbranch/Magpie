@@ -78,7 +78,7 @@ def afterRequest(response):
     if request.method.lower() == 'options':
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'content-type')
-    elif request.path in ('/playerState', '/playerId', '/suggestion'):
+    elif request.path in ('/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event'):
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.mimetype = 'application/json'
 
