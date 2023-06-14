@@ -374,13 +374,16 @@ if sharingEnabled:
         if 'eventName' in settings:
             eventName = settings['eventName']
             code = tryGetValue(settings, 'joinCode')
-            (join, view) = sharing.authenticateEvent(eventName, code)
+            permissions = sharing.authenticateEvent(eventName, code)
 
-            if not join:
-                if code:
-                    return "Invalid joinCode", 403
+            if permissions:
+                (join, view) = permissions
 
-                return "A joinCode is required", 401
+                if not join:
+                    if code:
+                        return "Invalid joinCode", 403
+
+                    return "A joinCode is required", 401
 
         timestamp = sharing.writeState(settings['playerName']
                                     ,settings['playerId']
@@ -479,7 +482,11 @@ if sharingEnabled:
             eventInfo = sharing.eventInfo(eventName)
 
             if eventInfo:
-                (join, view) = sharing.authenticateEvent(eventName, viewCode)
+                view = True
+                permissions = sharing.authenticateEvent(eventName, viewCode)
+
+                if permissions:
+                    (join, view) = permissions
 
                 if eventInfo['privateView']:
                     codeFailed = not view
