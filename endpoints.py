@@ -74,7 +74,7 @@ def getDiskSettings():
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
 @app.after_request
-def beforeRequest(response):
+def afterRequest(response):
     if request.method.lower() == 'options':
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'content-type')
@@ -423,13 +423,13 @@ if sharingEnabled:
 
         return json.dumps(view)
 
-    @app.route("/eventExists", methods=['GET'])
-    def eventExists():
+    @app.route("/eventInfo", methods=['GET'])
+    def eventInfo():
         eventName = request.args.get('eventName')
         if not eventName:
             return "eventName is required", 400
 
-        event = sharing.eventExists(eventName)
+        event = sharing.eventInfo(eventName)
 
         return json.dumps(event)
 
@@ -449,6 +449,8 @@ if sharingEnabled:
     @app.route("/event", methods=['GET'])
     def event():
         eventName = request.args.get('eventName')
+        joinCode = request.args.get('joinCode')
+        viewCode = request.args.get('viewCode')
 
         args = getArgs()
         defaultSettings = LocalSettings()
@@ -458,7 +460,20 @@ if sharingEnabled:
         settingsOverrides = {}
         argsOverrides = {}
 
-        players = sharing.getEventPlayers(eventName)
+        players = []
+        codeFailed = False
+
+        if eventName:
+            eventInfo = sharing.eventInfo(eventName)
+
+            if eventInfo:
+                (join, view) = sharing.authenticateEvent(eventName, viewCode)
+
+                if eventInfo['privateView']:
+                    codeFailed = not view
+
+                if ((eventInfo['privateView'] and view) or not eventInfo['privateView']):
+                    players = sharing.getEventPlayers(eventName)
 
         return render_template("event.html", flags=flags, 
                                             args=args,
@@ -477,7 +492,11 @@ if sharingEnabled:
                                             keepQueryArgs=True,
                                             settingsPrefix='event_',
                                             players=players,
-                                            )
+                                            eventName=eventName,
+                                            viewCode=viewCode,
+                                            joinCode=joinCode,
+                                            codeFailed=codeFailed,
+                                        )
 
     @app.route("/player")
     def player():

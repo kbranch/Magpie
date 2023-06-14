@@ -6,6 +6,44 @@
     {% include 'navbar.html' %}
 </div>
 
+
+<div class="row">
+    <div class="col"></div>
+{% if eventName and not codeFailed %}
+    <div class="col-4">
+    <h2>Viewing event '{{eventName}}'</h2>
+
+    {% if players|length == 0 %}
+        <h6>No player data found, refresh to check again</h6>
+    {% endif %}
+    </div>
+{% else %}
+        <div class="col-4">
+            <label for="eventName" class="form-label">Event name</label>
+            <input type="text" class="form-control" id="eventName" oninput="eventNameInput()" value="{{eventName if eventName is not none else ''}}">
+
+            <div id="eventAlert" class="alert alert-primary my-2 py-2 hidden" role="alert">Event does not exist yet</div>
+
+            <label for="viewCode" class="form-label pt-2 hidden">View code</label>
+            <input type="text" class="form-control hidden" id="viewCode" oninput="viewCodeInput()" value="{{viewCode if viewCode is not none else ''}}">
+
+            <label for="joinCode" class="form-label pt-2 hidden">Join code</label>
+            <input type="text" class="form-control hidden" id="joinCode" value="{{joinCode if joinCode is not none else ''}}">
+
+            {% if codeFailed %}
+            <div id="codeFailedAlert" class="alert alert-danger my-2 py-2" role="alert">Incorrect view code</div>
+            {% endif %}
+
+            <div class="row pt-4">
+                <div class="col">
+                    <button id="eventActionButton" type="button" class="btn btn-secondary big-button" disabled onclick="eventAction()">Create Event</button>
+                </div>
+            </div>
+        </div>
+{% endif %}
+    <div class="col"></div>
+</div>
+
 <div id="unstackedContainer" class="row border-me">
     {% for player in players %}
     <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mt-2 mx-4 item-width">
@@ -93,5 +131,13 @@
 <script src="static/js/report.js"></script>
 
 {% include 'scripts.html' %}
+
+<script type="application/javascript">
+    "use strict"
+    
+    if (document.getElementById('eventName')) {
+        eventNameInput();
+    }
+</script>
 
 {% endblock %}

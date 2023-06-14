@@ -47,7 +47,11 @@ def writeState(player, playerId, event, state):
     """
     insertQuery = """
         insert into sharing (player_name, player_id, event_name, state, timestamp, player_no)
-        values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s, %(playerNo)s)
+        values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s, %(playerNo)s);
+
+        update events
+        set last_activity = current_timestamp
+        where events.name = %(event)s;
     """
 
     with writeLock:
@@ -222,6 +226,41 @@ def eventExists(eventName):
     conn.close()
 
     return bool(result)
+
+def eventInfo(eventName):
+    if not dbConfigured():
+        return
+
+    eventQuery = """
+        select events.name
+              ,not events.view_code is null as private_view
+              ,not events.join_code is null as private_join
+        from events
+        where events.name = %(eventName)s
+
+        union
+
+        select sharing.event_name
+              ,false as private_view
+              ,false as private_join
+        from sharing
+        where sharing.event_name = %(eventName)s
+    """
+    
+    conn = getDbConnection()
+    cursor = conn.cursor()
+
+    cursor.execute(eventQuery, { 'eventName': eventName })
+    result = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return {
+        'eventName': result[0],
+        'privateView': result[1],
+        'privateJoin': result[2],
+    } if result else None
 
 def authenticateEvent(eventName, code):
     if not dbConfigured():

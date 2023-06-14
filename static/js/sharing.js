@@ -95,6 +95,10 @@ function liveUpdatePlayers() {
 }
 
 function updatePlayerInventories() {
+    if (!players || !players.length) {
+        return;
+    }
+
     let data = {};
 
     for (const player of players) {
@@ -134,4 +138,160 @@ function updatePlayerInventories() {
 
 function sharingUrlPrefix() {
     return local ? 'https://magpietracker.us' : '';
+}
+
+function eventAction() {
+    let eventName = document.getElementById('eventName').value;
+    let viewCode = document.getElementById('viewCode').value;
+    let joinCode = document.getElementById('joinCode').value;
+    let buttonAction = document.getElementById('eventActionButton').getAttribute('data-action');
+
+    if (buttonAction == 'view') {
+        location.href = sharingUrlPrefix() + `/event?eventName=${encodeURIComponent(eventName)}&viewCode=${encodeURIComponent(viewCode)}`;
+    }
+    else if (buttonAction == 'create') {
+        $.ajax({
+            type: "POST",
+            url: sharingUrlPrefix() + "/createEvent",
+            data: {
+                'eventName': eventName,
+                'joinCode': joinCode,
+                'viewCode': viewCode,
+            },
+            success: (response) => {
+                location.href = sharingUrlPrefix() + `/event?eventName=${encodeURIComponent(eventName)}&viewCode=${encodeURIComponent(viewCode)}`;
+            },
+            error: (response, error, status) => {
+                eventAlert.innerHTML = `Error creating event: ${response}`;
+                setElementHidden(document.getElementById('eventAlert'), false);
+            },
+        });
+    }
+}
+
+let eventFormTimeout = null;
+function eventNameInput() {
+    if (eventFormTimeout) {
+        clearTimeout(eventFormTimeout);
+    }
+
+    if (!document.getElementById('eventName').value) {
+        updateEventForm();
+        return;
+    }
+
+    eventFormTimeout = setTimeout(() => {
+        let eventBox = document.getElementById('eventName');
+
+        $.ajax({
+            type: "GET",
+            url: sharingUrlPrefix() + "/eventInfo",
+            // contentType: "application/json",
+            data: {'eventName': eventBox.value },
+            success: (response) => {
+                let json = JSON.parse(response);
+                updateEventForm(json);
+            },
+            error: (request, error, status) => {
+                updateEventForm(null, request.responseText);
+            },
+        });
+    }, 500)
+}
+
+function viewCodeInput() {
+    let button = document.getElementById('eventActionButton');
+    button.classList.add('btn-primary');
+    button.classList.remove('btn-secondary');
+    button.removeAttribute('disabled');
+}
+
+function updateEventForm(eventInfo, error) {
+    let eventBox = document.getElementById('eventName');
+    let eventAlert = document.getElementById('eventAlert');
+    let codeFailedAlert = document.getElementById('codeFailedAlert');
+    let viewLabel = document.querySelector('[for="viewCode"]');
+    let viewBox = document.getElementById('viewCode');
+    let joinLabel = document.querySelector('[for="joinCode"]');
+    let joinBox = document.getElementById('joinCode');
+    let button = document.getElementById('eventActionButton');
+    let alertText = null;
+
+    if (error) {
+        alertText = `Error: ${error}`;
+    }
+    else if (!eventBox.value) {
+        setElementHidden(eventAlert, true);
+        setElementHidden(viewLabel, true);
+        setElementHidden(viewBox, true);
+        setElementHidden(joinLabel, true);
+        setElementHidden(joinBox, true);
+        button.setAttribute('disabled', '');
+        button.setAttribute('data-action', 'create');
+        button.innerHTML = 'Create Event';
+    }
+    else if(eventInfo) {
+        setElementHidden(joinLabel, true);
+        setElementHidden(joinBox, true);
+        
+        if (eventInfo.privateView) {
+            setElementHidden(viewBox, false);
+            setElementHidden(viewLabel, false);
+
+            alertText = "Event exists and requires a code to view";
+            button.innerHTML = "View Event";
+            button.setAttribute('data-action', 'view');
+            viewBox.setAttribute('placeholder', 'Required');
+
+            if (viewBox.value) {
+                button.removeAttribute('disabled');
+            }
+            else {
+                button.setAttribute('disabled', '');
+            }
+        }
+        else {
+            setElementHidden(viewBox, true);
+            setElementHidden(viewLabel, true);
+
+            alertText = "Event exists and does not require a code to view";
+            button.innerHTML = "View Event";
+            button.setAttribute('data-action', 'view');
+            button.removeAttribute('disabled');
+        }
+    }
+    else {
+        setElementHidden(viewBox, false);
+        setElementHidden(viewLabel, false);
+        setElementHidden(joinLabel, false);
+        setElementHidden(joinBox, false);
+        setElementHidden(joinBox, false);
+
+        if (codeFailedAlert) {
+            setElementHidden(codeFailedAlert, true);
+        }
+
+        alertText = "Event does not exist yet";
+        button.innerHTML = "Create Event";
+        button.removeAttribute('disabled');
+        viewBox.setAttribute('placeholder', 'Optional');
+        joinBox.setAttribute('placeholder', 'Optional');
+    }
+
+    if (alertText) {
+        setElementHidden(eventAlert, false);
+        eventAlert.innerHTML = alertText;
+    }
+    else {
+        setElementHidden(eventAlert, true);
+    }
+
+    if (button.hasAttribute('disabled')) {
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-secondary');
+    }
+    else {
+        button.classList.add('btn-primary');
+        button.classList.remove('btn-secondary');
+    }
 }
