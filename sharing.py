@@ -245,6 +245,8 @@ def eventInfo(eventName):
               ,false as private_join
         from sharing
         where sharing.event_name = %(eventName)s
+		
+		order by private_view desc, private_join desc
     """
     
     conn = getDbConnection()

@@ -8,10 +8,12 @@
 
 
 <div class="row">
-    <div class="col"></div>
+    <div class="col">
+        <a href="/event" class="btn btn-primary mt-4" role="button">New Event</a>
+    </div>
 {% if eventName and not codeFailed %}
     <div class="col-4">
-    <h2>Viewing event '{{eventName}}'</h2>
+        <h2>Viewing event '{{eventName}}'</h2>
 
     {% if players|length == 0 %}
         <h6>No player data found, refresh to check again</h6>
@@ -20,15 +22,15 @@
 {% else %}
         <div class="col-4">
             <label for="eventName" class="form-label">Event name</label>
-            <input type="text" class="form-control" id="eventName" oninput="eventNameInput()" value="{{eventName if eventName is not none else ''}}">
+            <input type="text" class="form-control" id="eventName" maxlength="80" oninput="eventNameInput()" value="{{eventName if eventName is not none else ''}}">
 
             <div id="eventAlert" class="alert alert-primary my-2 py-2 hidden" role="alert">Event does not exist yet</div>
 
             <label for="viewCode" class="form-label pt-2 hidden">View code</label>
-            <input type="text" class="form-control hidden" id="viewCode" oninput="viewCodeInput()" value="{{viewCode if viewCode is not none else ''}}">
+            <input type="text" class="form-control hidden" id="viewCode" maxlength="80" oninput="viewCodeInput()" value="{{viewCode if viewCode is not none else ''}}">
 
             <label for="joinCode" class="form-label pt-2 hidden">Join code</label>
-            <input type="text" class="form-control hidden" id="joinCode" value="{{joinCode if joinCode is not none else ''}}">
+            <input type="text" class="form-control hidden" id="joinCode" maxlength="80" value="{{joinCode if joinCode is not none else ''}}">
 
             {% if codeFailed %}
             <div id="codeFailedAlert" class="alert alert-danger my-2 py-2" role="alert">Incorrect view code</div>

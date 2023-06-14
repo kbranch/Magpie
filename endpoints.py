@@ -370,6 +370,18 @@ if sharingEnabled:
             return "Invalid request", 400
 
         settings = state['settings']
+
+        if 'eventName' in settings:
+            eventName = settings['eventName']
+            code = tryGetValue(settings, 'joinCode')
+            (join, view) = sharing.authenticateEvent(eventName, code)
+
+            if not join:
+                if code:
+                    return "Invalid joinCode", 403
+
+                return "A joinCode is required", 401
+
         timestamp = sharing.writeState(settings['playerName']
                                     ,settings['playerId']
                                     ,tryGetValue(settings, 'eventName')

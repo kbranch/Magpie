@@ -94,7 +94,15 @@
                     </div>
                     <div class="pt-3">
                         <label for="eventName" class="form-label">Event name</label>
-                        <input type="text" id="eventName" class="form-control" maxlength="80" oninput="updateShareUrls()" placeholder="Optional" aria-label="Event Name">
+                        <input type="text" id="eventName" class="form-control" maxlength="80" oninput="updateShareUrls()" aria-label="Event name">
+
+                        <div id="joinRequiredAlert" class="alert alert-primary py-2 my-2 hidden" role="alert">Event requires a join code</div>
+
+                        <label for="joinCode" class="form-label pt-2 hidden">Join code</label>
+                        <input type="text" id="joinCode" class="form-control hidden" maxlength="80" oninput="updateShareUrls()" aria-label="Join code">
+
+                        <div id="joinCodeAlert" class="alert alert-danger py-2 my-2 hidden" role="alert">Incorrect join code</div>
+
                         <div id="eventLink" class="pt-1">
                             <span class="pe-2">Event link:</span><a id="eventUrl" href="/event">Event URL</a>
                         </div>

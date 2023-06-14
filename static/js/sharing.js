@@ -4,6 +4,7 @@ function shareState() {
     liveUpdate = document.getElementById('liveUpdate').checked;
     localSettings.playerName = document.getElementById('playerName').value;
     localSettings.eventName = document.getElementById('eventName').value;
+    localSettings.joinCode = document.getElementById('joinCode').value;
 
     saveSettingsToStorage(args, localSettings);
 
@@ -64,6 +65,7 @@ function checkPlayerId() {
 }
 
 var playerIdTimeout = null;
+var eventInfoTimeout = null;
 function updateShareUrls() {
     // let playerUrl = document.getElementById('playerUrl');
     let eventUrl = document.getElementById('eventUrl');
@@ -72,7 +74,7 @@ function updateShareUrls() {
 
     // playerUrl.href = `/player?playerName=${playerName}`;
     // playerUrl.innerHTML = playerUrl.href;
-    eventUrl.href = sharingUrlPrefix() + `/event?eventName=${eventName}`;
+    eventUrl.href = sharingUrlPrefix() + `/event?eventName=${encodeURIComponent(eventName)}`;
     eventUrl.innerHTML = eventUrl.href;
 
     // setElementHidden(document.getElementById('playerLink'), !playerName);
@@ -82,7 +84,52 @@ function updateShareUrls() {
         clearTimeout(playerIdTimeout);
     }
 
-    playerIdTimeout = setTimeout(checkPlayerId, 250);
+    playerIdTimeout = setTimeout(checkPlayerId, 500);
+    
+    if (eventInfoTimeout) {
+        clearTimeout(eventInfoTimeout);
+    }
+
+    eventInfoTimeout = setTimeout(() => {
+        let eventBox = document.getElementById('eventName');
+
+        $.ajax({
+            type: "GET",
+            url: sharingUrlPrefix() + "/eventInfo",
+            data: { 'eventName': eventBox.value },
+            success: (response) => {
+                let json = JSON.parse(response);
+                updateEventType(json);
+
+                eventInfoTimeout = null;
+            },
+            error: (request, error, status) => {
+                console.log(`Error getting event info: ${request.requestText}`);
+                // updateEventType(null, request.responseText);
+                eventInfoTimeout = null;
+            },
+        });
+    }, 500)
+}
+
+function updateEventType(eventInfo, error) {
+    let joinCode = document.getElementById('joinCode');
+    let joinLabel = document.querySelector('[for="joinCode"]');
+    let joinAlert = document.getElementById('joinCodeAlert');
+    let joinRequiredAlert = document.getElementById('joinRequiredAlert');
+
+    if (!eventInfo || !eventInfo['privateJoin']) {
+        setElementHidden(joinCode, true);
+        setElementHidden(joinLabel, true);
+        setElementHidden(joinAlert, true);
+        setElementHidden(joinRequiredAlert, true);
+    }
+    else {
+        setElementHidden(joinCode, false);
+        setElementHidden(joinLabel, false);
+        setElementHidden(joinRequiredAlert, false);
+        setElementHidden(joinAlert, true);
+    }
 }
 
 function liveUpdatePlayers() {
