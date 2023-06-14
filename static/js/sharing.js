@@ -42,7 +42,7 @@ function sharingLiveUpdate() {
 function prepShareModal() {
     document.getElementById('playerName').value = localSettings.playerName;
     document.getElementById('eventName').value = localSettings.eventName;
-    document.getElementById('joinCode').value = localSettings.joinCode;
+    document.getElementById('joinCode').value = localSettings.joinCode ?? '';
 
     setElementHidden(document.getElementById('playerIdWarning'), true);
 
