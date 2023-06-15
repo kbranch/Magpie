@@ -94,6 +94,10 @@ function updateShareUrls() {
     eventInfoTimeout = setTimeout(() => {
         let eventBox = document.getElementById('eventName');
 
+        if (!eventBox.value) {
+            return;
+        }
+
         $.ajax({
             type: "GET",
             url: sharingUrlPrefix() + "/eventInfo",
