@@ -1101,3 +1101,19 @@ body {
     border-width: 2px;
     border-color: #ccc;
 }
+
+img[data-status="off"] {
+    display: none;
+}
+
+img[data-status="on"] {
+    background-color: #0b0;
+    border-radius: 5px;
+    margin-left: 12px;
+}
+
+img[data-status="error"] {
+    background-color: #b00;
+    border-radius: 5px;
+    margin-left: 12px;
+}

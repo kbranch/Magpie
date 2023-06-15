@@ -106,6 +106,8 @@
                         <div id="eventLink" class="pt-1">
                             <span class="pe-2">Event link:</span><a id="eventUrl" href="/event">Event URL</a>
                         </div>
+
+                        <div id="shareErrorAlert" class="alert alert-danger py-2 my-2 hidden" role="alert"></div>
                     </div>
                     <div class="pt-3">
                         <input id="liveUpdate" type="checkbox" class="form-check-input">
@@ -113,9 +115,17 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="shareState()">Share</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <div class="modal-footer justify-content-between">
+                {% if local %}
+                <a href="https://magpietracker.us/event" class="mr-auto">Create a private event</a>
+                {% else %}
+                <a href="/event" class="mr-auto">Create a private event</a>
+                {% endif %}
+
+                <div>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="shareState()">Share</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
             </div>
         </div>
     </div>

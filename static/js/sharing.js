@@ -25,6 +25,14 @@ function sendState() {
         url: sharingUrlPrefix() + "/playerState",
         contentType: "application/json",
         data: JSON.stringify(state),
+        success: () => {
+            let status = liveUpdate ? 'on' : 'off';
+            document.getElementById('liveUpdateIcon').setAttribute('data-status', status);
+        },
+        error: (request) => {
+            document.getElementById('liveUpdateIcon').setAttribute('data-status', 'error');
+            console.log(request.responseText);
+        }
     });
 }
 
@@ -36,6 +44,9 @@ function sharingLiveUpdate() {
         }
 
         shareTimeout = setTimeout(sendState, 250);
+    }
+    else {
+        document.getElementById('liveUpdateIcon').setAttribute('data-status', 'off');
     }
 }
 
@@ -95,6 +106,7 @@ function updateShareUrls() {
         let eventBox = document.getElementById('eventName');
 
         if (!eventBox.value) {
+            updateEventType();
             return;
         }
 
@@ -108,8 +120,8 @@ function updateShareUrls() {
                 eventInfoTimeout = null;
             },
             error: (request, error, status) => {
-                console.log(`Error getting event info: ${request.requestText}`);
-                // updateEventType(null, request.responseText);
+                console.log(`Error getting event info: ${request.responseText}`);
+                updateEventType(null, request.responseText);
                 eventInfoTimeout = null;
             },
         });
@@ -121,6 +133,17 @@ function updateEventType(eventInfo, error) {
     let joinLabel = document.querySelector('[for="joinCode"]');
     let joinAlert = document.getElementById('joinCodeAlert');
     let joinRequiredAlert = document.getElementById('joinRequiredAlert');
+    let errorAlert = document.getElementById('shareErrorAlert');
+
+    if (error) {
+        errorAlert.innerHTML = error;
+        setElementHidden(errorAlert, false);
+        return;
+    }
+    else {
+        errorAlert.innerHTML = '';
+        setElementHidden(errorAlert, true);
+    }
 
     if (!eventInfo || !eventInfo['privateJoin']) {
         setElementHidden(joinCode, true);
