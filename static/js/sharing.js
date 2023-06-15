@@ -99,8 +99,7 @@ function updateShareUrls() {
             url: sharingUrlPrefix() + "/eventInfo",
             data: { 'eventName': eventBox.value },
             success: (response) => {
-                let json = JSON.parse(response);
-                updateEventType(json);
+                updateEventType(response);
 
                 eventInfoTimeout = null;
             },

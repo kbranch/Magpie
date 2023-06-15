@@ -73,13 +73,18 @@ def getDiskSettings():
     
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
+
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'content-type')
-    elif request.path in ('/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event'):
+    elif request.path in corsEndpoints:
         response.headers.add('Access-Control-Allow-Origin', '*')
+    
+    if request.path in jsonEndpoints:
         response.mimetype = 'application/json'
 
     return response
