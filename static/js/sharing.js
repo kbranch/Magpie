@@ -38,16 +38,11 @@ function sendState() {
 
 let shareTimeout = null;
 function sharingLiveUpdate() {
-    if (liveUpdate) {
-        if (shareTimeout) {
-            clearTimeout(shareTimeout);
-        }
+    if (shareTimeout) {
+        clearTimeout(shareTimeout);
+    }
 
-        shareTimeout = setTimeout(sendState, 250);
-    }
-    else {
-        document.getElementById('liveUpdateIcon').setAttribute('data-status', 'off');
-    }
+    shareTimeout = setTimeout(sendState, 250);
 }
 
 function prepShareModal() {
