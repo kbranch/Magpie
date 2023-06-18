@@ -3,6 +3,7 @@ import os
 import sys
 import uuid
 import json
+import consts
 import hashlib
 import traceback
 
@@ -86,4 +87,4 @@ def getGfx(gfxData):
     return ''
 
 def readSeed(gb):
-    return gb.readRom(0xFAF00, 0x10).hex().upper()
+    return gb.readRom(consts.seed, consts.seedSize).hex().upper()

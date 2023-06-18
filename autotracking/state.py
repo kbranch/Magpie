@@ -52,7 +52,7 @@ class State:
         if 'spoilers' in self.features:
             await sendSpoilerLog(socket, romData)
         if 'gfx' in self.features:
-            self.gfx = getGfx(romData[0xB0000:0xB0040])
+            self.gfx = getGfx(romData[consts.gfxStart:consts.gfxStart + consts.gfxHashSize])
             self.gfxChanged = True
             await sendGfx(socket, self)
 

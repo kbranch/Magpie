@@ -43,8 +43,8 @@ async def socketLoop(socket, path):
 
             gb.snapshot()
 
-            gameState = gb.readRamByte(gameStateAddress)
-            if gameState not in validGameStates:
+            gameState = gb.readRamByte(consts.gameStateAddress)
+            if gameState not in consts.validGameStates:
                 continue
 
             state.readTrackables(gb)

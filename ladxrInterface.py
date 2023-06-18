@@ -3,7 +3,6 @@ import sys
 import copy
 import random
 from xmlrpc.client import boolean
-from autotracking.romContents import *
 from trackerLogic import buildLogic
 import trackerLogic
 
@@ -18,6 +17,10 @@ from worldSetup import WorldSetup, start_locations
 from LADXR.settings import *
 from checkMetadata import checkMetadataTable
 from romTables import ROMWithTables
+
+
+sys.path.append(os.path.abspath('autotracking/'))
+from romContents import *
 
 allChecks = {}
 

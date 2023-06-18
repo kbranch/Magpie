@@ -1,24 +1,36 @@
 import sys
+import consts
 from EvilGameboy import EvilGameboy
 from RetroGameboy import RetroGameboy
 
 class Gameboy:
     def __init__(self):
         self.emulator = None
-        self.wramSnapshot = None
-        self.hramSnapshot = None
+        # self.wramSnapshot = None
+        # self.hramSnapshot = None
+        self.ramSnapshot = None
         self.gfxSnapshot = None
+        # self.wramLowSnapshot = None
     
     def canReadRom(self):
         return self.emulator != None and self.emulator.canReadRom
     
     def snapshot(self):
-        #WRAM actually starts at 0xC000, but we only care about 0xD800 and up for now
-        self.wramSnapshot = self.emulator.readRam(0xD800, 0x800)
-        self.hramSnapshot = self.emulator.readRam(0xFF80, 0x80)
+        # (wramLow, wram, hram) = self.readSnapshot()
+        # (self.wramLowSnapshot, self.wramSnapshot, self.hramSnapshot) = self.readSnapshot()
+
+        # # Keep reading until we get two consecutive snapshots that are the same
+        # while (wramLow != self.wramLowSnapshot
+        #        or wram != self.wramSnapshot
+        #        or hram != self.hramSnapshot):
+        #     (wramLow, wram, hram) = (self.wramLowSnapshot, self.wramSnapshot, self.hramSnapshot)
+        #     (self.wramLowSnapshot, self.wramSnapshot, self.hramSnapshot) = self.readSnapshot()
+
+        #     print (f'{wramLow == self.wramLowSnapshot}, {wram == self.wramSnapshot}, {hram == self.hramSnapshot}')
+        self.ramSnapshot = self.emulator.readSnapshot()
 
         if self.canReadRom():
-            self.gfxSnapshot = self.emulator.readRom(0xB0000, 0x040)
+            self.gfxSnapshot = self.emulator.readRom(consts.gfxStart, consts.gfxHashSize)
     
     def findEmulator(self):
         if sys.platform == "win32":
@@ -42,12 +54,7 @@ class Gameboy:
         return False
 
     def readRamByte(self, address):
-        if address < 0xE000:
-            return self.wramSnapshot[address - 0xD800]
-        elif address >= 0xFF80 and address <= 0xFFFF:
-            return self.hramSnapshot[address - 0xFF80]
-        
-        return 0
+        return self.ramSnapshot[address - consts.wram]
     
     def readRomByte(self, address):
         assert(self.emulator.canReadRom)
