@@ -101,6 +101,8 @@ function processLocationMessage(message) {
 
     if (newMap == 'overworld') {
         overworldRoom = room;
+        overworldX = message.x;
+        overworldY = message.y;
     }
 
     currentRoom = room;
