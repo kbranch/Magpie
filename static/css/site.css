@@ -360,6 +360,7 @@ img {
 #linkFace {
     position: absolute;
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
+    transition: all .5s linear;
 }
 
 .check-graphic.check-glow:hover, .spoiler-highlight {
