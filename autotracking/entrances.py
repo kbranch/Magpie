@@ -57,9 +57,13 @@ def readLocation(gb, state):
     transitionTargetY = gb.readRamByte(consts.transitionTargetY)
     transitionScrollX = gb.readRamByte(consts.transitionScrollX)
     transitionScrollY = gb.readRamByte(consts.transitionScrollY)
+    transitionSequence = gb.readRamByte(consts.transitionSequence)
+    motionState = gb.readRamByte(consts.linkMotionState)
     if (transitionState != 0
         or transitionTargetX != transitionScrollX
-        or transitionTargetY != transitionScrollY):
+        or transitionTargetY != transitionScrollY
+        or motionState not in [0, 1]
+        or transitionSequence != 0x04):
         return
 
     indoors = gb.readRamByte(consts.indoorFlag)

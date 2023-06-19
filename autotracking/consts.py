@@ -4,7 +4,7 @@ from item import Item
 wram = 0xC000
 wramSize = 0x2000
 wramLow = 0xC100
-wramLowSize = 0x30
+wramLowSize = 0x100
 # WRAM actually starts at 0xC000, but we mostly care about 0xD800 and up
 wramHigh = 0xD800
 wramHighSize = 0x800
@@ -33,6 +33,8 @@ transitionTargetX = 0xC12C
 transitionTargetY = 0xC12D
 transitionScrollX = 0xFF96
 transitionScrollY = 0xFF97
+linkMotionState = 0xC11C
+transitionSequence = 0xC16B 
 screenCoord = 0xFFFA
 
 entranceAddressOverrides = {
