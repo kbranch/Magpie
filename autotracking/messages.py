@@ -1,6 +1,6 @@
 from romContents import *
 
-protocolVersion = "1.1"
+protocolVersion = "1.11"
 
 async def sendMessage(message, socket, refresh=True):
     message['refresh'] = refresh
@@ -126,4 +126,5 @@ async def sendLocation(state, socket):
         'room': f'0x{state.room:02X}',
         'x': state.screenX,
         'y': state.screenY,
+        'drawFine': True
     }, socket)

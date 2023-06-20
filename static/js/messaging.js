@@ -99,6 +99,11 @@ function processLocationMessage(message) {
         openTab(newMap);
     }
 
+    if (!message.drawFine) {
+        message.x = 4.5;
+        message.y = 3.625;
+    }
+
     if (newMap == 'overworld') {
         overworldRoom = room;
         overworldX = message.x;
