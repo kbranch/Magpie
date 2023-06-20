@@ -42,6 +42,10 @@ function sharingLiveUpdate() {
         clearTimeout(shareTimeout);
     }
 
+    if (!liveUpdate) {
+        return;
+    }
+
     shareTimeout = setTimeout(sendState, 250);
 }
 
