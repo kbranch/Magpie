@@ -505,7 +505,6 @@ img {
 .entrance-difficulty-8:not(.vanilla) .entrance-difficulty-8-overlay,
 .difficulty-8.static-difficulty-wrapper .difficulty-8-overlay, 
 .difficulty-8.tooltip-check-graphic .difficulty-8-overlay {
-    content: '';
     background-image: url('/static/images/exclamation-mark.svg');
     background-size: contain;
     background-repeat: no-repeat;
