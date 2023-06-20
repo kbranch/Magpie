@@ -1,4 +1,4 @@
-from item import Item
+from .item import Item
 
 # General RAM layout
 wram = 0xC000

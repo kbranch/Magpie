@@ -3,7 +3,7 @@ import os
 import sys
 import uuid
 import json
-import consts
+from . import consts
 import hashlib
 import traceback
 
