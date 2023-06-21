@@ -73,9 +73,8 @@ def getDiskSettings():
     
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
-
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event'}
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -276,16 +275,33 @@ def renderCheckList():
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
-        result = render_template("checklist.html", checkAccessibility=accessibility.checks,
-                                                 entranceAccessibility=json.dumps(accessibility.entrances, default=lambda x: x.__dict__),
-                                                 logics=logics,
-                                                 checkCount=len(allChecks),
-                                                 allChecks=ladxrInterface.allChecks.values(),
-                                                 entrances=json.dumps(entrances),
-                                                 startLocations=json.dumps(getStartLocations(args)),
-                                                 )
+        result = {
+            'accessibility': {
+                'checks': [],
+                'entrances': accessibility.entrances,
+            },
+            'logics': [{
+                'difficulty': x.difficulty,
+                'friendlyName': x.friendlyName,
+                'name': x.name,
+            } for x in logics],
+            'randomizedEntrances': entrances,
+            'startLocations': getStartLocations(args),
+        }
 
-        return result
+        for logic in accessibility.checks:
+            result['accessibility']['checks'] += list(accessibility.checks[logic])
+
+        # result = render_template("checklist.html", checkAccessibility=accessibility.checks,
+        #                                          entranceAccessibility=json.dumps(accessibility.entrances, default=lambda x: x.__dict__),
+        #                                          logics=logics,
+        #                                          checkCount=len(allChecks),
+        #                                          allChecks=ladxrInterface.allChecks.values(),
+        #                                          entrances=json.dumps(entrances),
+        #                                          startLocations=json.dumps(getStartLocations(args)),
+        #                                          )
+
+        return json.dumps(result, default=lambda x: x.__dict__) 
     except:
         return renderTraceback()
 
