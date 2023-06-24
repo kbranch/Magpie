@@ -104,26 +104,10 @@
     var startLocations = JSON.parse('{{startLocations|safe}}');
     var entranceAccessibility = JSON.parse('{{entranceAccessibility|safe}}')
 
-    var timeoutId;
-    function resizeTimeout() {
-        removeNodes();
-        clearTimeout(timeoutId);
-        skipNextAnimation = true;
-        timeoutId = setTimeout(drawActiveTab, 100);
-    }
-
-    window.addEventListener("resize", resizeTimeout); // Window size
-    window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
-
     var mapTooltipTriggerList = document.querySelectorAll('li.nav-item[data-bs-toggle="tooltip"]');
     var mapTooltipList = [...mapTooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, {sanitize: false}));
 
     new bootstrap.Tooltip(document.getElementById("trackerLogicHelp"), {sanitize: false});
-
-    function applyMasonry() {
-        $('.grid').masonry('reloadItems');
-        $('.grid').masonry('layout');
-    }
 
     $('.grid').masonry({
         transitionDuration: 0,

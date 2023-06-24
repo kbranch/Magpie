@@ -190,3 +190,8 @@ function populateCheckOptions(button) {
     let ul = $(`#text-${checkId}`);
     ul.html(NodeTooltip.getItemList(checkId));
 }
+
+function applyMasonry() {
+    $('.grid').masonry('reloadItems');
+    $('.grid').masonry('layout');
+}

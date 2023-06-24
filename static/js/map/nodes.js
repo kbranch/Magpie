@@ -13,11 +13,9 @@ function removeNodes() {
     $('#linkFace').remove();
 }
 
-function createCheck(checkElement, mapName=null) {
-    let id = $(checkElement).attr('data-check-id');
-
+function createCheck(checkObj, mapName=null) {
     if (mapName == null) {
-        let dungeonMaps = coordDict[id].locations.map(x => x.map)
+        let dungeonMaps = coordDict[checkObj.id].locations.map(x => x.map)
                                                  .filter(x => x != 'overworld');
         if (dungeonMaps.length == 0) {
             mapName = 'overworld';
@@ -27,13 +25,13 @@ function createCheck(checkElement, mapName=null) {
         }
     }
 
-    return new Check(id,
-                     $(checkElement).attr('data-behind_keys') == 'True',
-                     Number($(checkElement).attr('data-difficulty')),
-                     coordDict[id].locations,
+    return new Check(checkObj.id,
+                     checkObj.behindKeys,
+                     Number(checkObj.difficulty),
+                     coordDict[checkObj.id].locations,
                      mapName,
-                     $(checkElement).attr('data-vanilla') == 'true',
-                     checkContents[id],
+                     checkObj.vanilla,
+                     checkContents[checkObj.id],
     );
 }
 
@@ -71,9 +69,8 @@ function createNodes(map, mapName) {
 
     createBossNodes(scaling, mapName);
 
-    let checks = [...document.querySelectorAll('li[data-logic]:not([data-logic="Checked"]')]
-                            .map(x => createCheck(x, mapName))
-                            .filter(x => x.shouldDraw());
+    let checks = checkAccessibility.map(x => createCheck(x, mapName))
+                                   .filter(x => x.shouldDraw());
     let unclaimedChecks = {};
 
     for (const check of checks) {
