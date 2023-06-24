@@ -1,3 +1,4 @@
 #!/bin/bash
 
-magpie-data/magpie-data --local --nested
+cd magpie-data
+./magpie-data --local --nested
