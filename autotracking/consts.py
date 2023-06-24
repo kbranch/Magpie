@@ -1,4 +1,7 @@
-from .item import Item
+try:
+    from .item import Item
+except:
+    from item import Item
 
 # General RAM layout
 wram = 0xC000

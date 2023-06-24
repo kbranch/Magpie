@@ -3,9 +3,13 @@ import os
 import sys
 import uuid
 import json
-from . import consts
 import hashlib
 import traceback
+
+try:
+    from . import consts
+except:
+    import consts
 
 # Deal with how pyinstaller's --onefile option packs things
 if hasattr(sys, '_MEIPASS'):
