@@ -192,6 +192,21 @@
                 entranceAccessibility = response.accessibility.entrances;
                 checkAccessibility = response.accessibility.checks;
 
+                document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
+
+                for (const logic of response.logics) {
+                    let name = document.getElementById(`legendDifficultyName${logic.difficulty}`);
+
+                    if (!name) {
+                        continue;
+                    }
+
+                    name.innerHTML = `: ${logic.name}`;
+
+                    let wrapper = document.getElementById(`legendDifficulty${logic.difficulty}`);
+                    wrapper.classList.remove('hidden');
+                }
+
                 pruneEntranceMap();
                 fillVanillaLogEntrances();
                 updateEntrances();

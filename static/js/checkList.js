@@ -150,6 +150,7 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 }
 
 function refreshTextChecks() {
+    return;
     let wrappers = document.querySelectorAll('div.text-check-wrapper');
 
     for (const element of wrappers) {
