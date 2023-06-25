@@ -86,7 +86,7 @@
     <div id="mapAccordion" class="accordion">
         {% set ns = namespace(expanded='true', show=' show', collapsed='', hidden='', name='In Logic') %}
         {% for i in range(5) %}
-            <div id="difficulty{{i}}Accordion" class="accordion-item{{ns.hidden}}">
+            <div id="difficulty{{i}}Accordion" data-difficulty="{{i}}" class="accordion-item{{ns.hidden}}">
                 <h2 id="heading-{{i}}" class="accordion-header">
                     <button class="accordion-button{{ns.collapsed}}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{i}}" aria-expanded="{{ns.expanded}}" aria-controls="collapse-{{i}}">
                         <div class="tooltip-check-graphic difficulty-{{i}} align-middle">
@@ -113,7 +113,7 @@
             {% set ns.name = '' %}
         {% endfor %}
 
-            <div id="difficulty8Accordion" class="accordion-item hidden">
+            <div id="difficulty8Accordion" data-difficulty="8" class="accordion-item hidden">
                 <h2 id="heading-8" class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8" aria-expanded="false" aria-controls="collapse-8">
                         <div class="tooltip-check-graphic difficulty-8 align-middle">
@@ -134,7 +134,7 @@
                 </div>
             </div>
 
-            <div id="difficulty9Accordion" class="accordion-item hidden">
+            <div id="difficulty9Accordion" data-difficulty="9" class="accordion-item hidden">
                 <h2 id="heading-9" class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-9" aria-expanded="false" aria-controls="collapse-9">
                         <div class="tooltip-check-graphic difficulty-9 align-middle">
@@ -154,7 +154,7 @@
                 </div>
             </div>
         
-            <div id="difficultyCheckedAccordion" class="accordion-item hidden">
+            <div id="difficultyCheckedAccordion" data-difficulty="checked" class="accordion-item hidden">
                 <h2 id="heading-Checked" class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Checked" aria-expanded="false" aria-controls="collapse-Checked">
                         <div class="tooltip-check-graphic difficulty-checked align-middle">

@@ -150,21 +150,45 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 }
 
 function refreshTextChecks() {
-    return;
-    let wrappers = document.querySelectorAll('div.text-check-wrapper');
-
-    for (const element of wrappers) {
-        let isChecked = checkedChecks.has(element.dataset.childCheckId);
-        let isInChecked = element.classList.contains('in-checked');
-        let isVanilla = element.classList.contains('vanilla-wrapper');
-        let hide = (isInChecked ^ isChecked) || (!localSettings.showVanilla && isVanilla);
-
-        hide ? element.classList.add('hidden') : element.classList.remove('hidden');
+    if (!checkAccessibility) {
+        return;
     }
 
-    hideEmptyAreas();
+    let checks = sortByKey(checkAccessibility, x => coordDict[x.id].area)
+    for (const element of document.querySelectorAll('.row.grid[data-difficulty]')) {
+        let difficulty = element.dataset.difficulty;
+        element.innerHTML = '';
 
-    updateDungeonItems();
+        let lastArea = null;
+        let areaList = null;
+        let areas = [];
+        let logicChecks = checks.filter(x => x.difficulty == difficulty);
+
+        let accordion = document.getElementById(`difficulty${difficulty == 'checked' ? 'Checked' : difficulty}Accordion`);
+        setElementHidden(accordion, logicChecks.length == 0);
+
+        for (const check of logicChecks) {
+            let checkArea = coordDict[check.id].area;
+            if (checkArea != lastArea) {
+                let areaElement = createGroup(checkArea);
+                areas.push(areaElement);
+
+                areaList = areaElement.querySelector('ul.list-group')
+                lastArea = checkArea;
+            }
+
+            areaList.appendChild(createTextCheck(check));
+        }
+
+        for (const area of areas) {
+            element.appendChild(area);
+        }
+    }
+
+    $('.grid').masonry({
+        transitionDuration: 0,
+        columnWidth: '.text-check-card-wrapper:not(.hidden)',
+    });
 
     if (typeof applyMasonry === "function") {
         applyMasonry();
@@ -195,4 +219,50 @@ function populateCheckOptions(button) {
 function applyMasonry() {
     $('.grid').masonry('reloadItems');
     $('.grid').masonry('layout');
+}
+
+function createGroup(name) {
+    return parseHtml(
+`<div class="text-check-card-wrapper col-xxl-2 col-lg-3 col-md-4 col-sm-6 col-12 px-1 py-1" data-area="${name}">
+    <div class="card text-bg-dark text-check-card" onclick="preventDoubleClick(event)">
+        <div class="card-header">
+            ${name}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush px-2" data-area="${name}">
+            </ul>
+        </div>
+    </div>
+</div>`);
+}
+
+function createTextCheck(check) {
+    let checked = checkedChecks.has(check.id) ? ' in-checked' : '';
+    let vanillaWrapper = check.vanilla ? ' vanilla-wrapper' : '';
+    let vanilla = check.vanilla ? ' data-vanilla=true' : '';
+    let metadata = coordDict[check.id];
+    let keyWrapper = check.behindKeys ? `<div class="key-indicator-wrapper pe-2">
+    <img class="key-indicator" src="static/images/keyLocked.png">
+</div>` : '';
+
+    return parseHtml(
+`<div class="row text-check-wrapper${checked}${vanillaWrapper}" data-child-check-id="${check.id}">
+    <div class="text-check-col col pe-0">
+        <li class="text-check" data-checkname="${metadata.name}" data-checkarea="${metadata.area}" data-behind_keys="${check.behindKeys}" data-logic="{{logic}}" data-check-id="${check.id}" data-difficulty="${check.difficulty}"${vanilla} onclick="toggleCheck(event, '${check.id}')">
+            <div id="text-item-${check.id}" class="col-auto px-0 text-item-wrapper">
+            </div>
+            <div class="check-name">
+                ${keyWrapper}
+                ${metadata.name}
+            </div>
+        </li>
+    </div>
+    <div class="col-auto ps-2 pe-0">
+        <div class="btn-group dropend">
+            <button type="button" class="btn hidden"></button>
+            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-check-id="${check.id}" onmousedown="populateCheckOptions(this)" data-bs-toggle="dropdown" aria-expanded="false"></button>
+            <ul id="text-${check.id}" class="dropdown-menu text-dropdown"></ul>
+        </div>
+    </div>
+</div>`);
 }

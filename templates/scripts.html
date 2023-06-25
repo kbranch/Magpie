@@ -205,14 +205,18 @@
 
                     let wrapper = document.getElementById(`legendDifficulty${logic.difficulty}`);
                     wrapper.classList.remove('hidden');
+
+                    if (!isNaN(logic.difficulty) && logic.difficulty > 0 && logic.difficulty < 8) {
+                        document.getElementById(`difficulty${logic.difficulty}AccordionName`).innerHTML = logic.friendlyName;
+                    }
                 }
 
                 pruneEntranceMap();
                 fillVanillaLogEntrances();
                 updateEntrances();
 
-                drawActiveTab();
-                refreshTextChecks();
+                setTimeout(drawActiveTab);
+                setTimeout(refreshTextChecks);
             }
         });
     }
@@ -286,6 +290,13 @@
         }
 
         window.addEventListener('error', errorHandler);
+
+        $('.grid').masonry({
+            transitionDuration: 0,
+            columnWidth: '.text-check-card-wrapper:not(.hidden)',
+        });
+    
+        $('.accordion-collapse').on('shown.bs.collapse', () => applyMasonry());
 
         modifyTooltipAllowList();
         initKnownItems();
@@ -365,6 +376,7 @@
 
         window.addEventListener("resize", resizeTimeout); // Window size
         window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
+        new bootstrap.Tooltip(document.getElementById("trackerLogicHelp"), {sanitize: false});
     }
 
     init();
