@@ -238,6 +238,7 @@ function createTextCheck(check) {
     <div class="text-check-col col pe-0">
         <li class="text-check" data-checkname="${metadata.name}" data-checkarea="${metadata.area}" data-behind_keys="${check.behindKeys}" data-logic="{{logic}}" data-check-id="${check.id}" data-difficulty="${check.difficulty}"${vanilla} onclick="toggleCheck(event, '${check.id}')">
             <div id="text-item-${check.id}" class="col-auto px-0 text-item-wrapper">
+            ${check.itemTextImage()}
             </div>
             <div class="check-name">
                 ${keyWrapper}

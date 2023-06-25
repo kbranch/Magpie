@@ -58,6 +58,10 @@ function setCheckContents(checkId, contents, housekeeping=true) {
 
     saveCheckContents();
 
+    if (checksById[checkId]) {
+        checksById[checkId].item = contents;
+    }
+
     if (housekeeping) {
         drawActiveTab();
     }

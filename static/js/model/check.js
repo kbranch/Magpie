@@ -91,6 +91,24 @@ class Check {
         return this.locations.filter(x => x.map == mapName);
     }
 
+    itemOverlay() {
+        if (!this.item) {
+            return '';
+        }
+
+        const  overlayTemplate = '<img class="node-item-overlay" data-node-item="{item}" src="static/images/{item}_1.png" onmousedown="preventDoubleClick(event)">';
+        return overlayTemplate.replaceAll('{item}', this.item);
+    }
+
+    itemTextImage() {
+        if (!this.item) {
+            return '';
+        }
+
+        const  textItemTemplate = '<img class="text-item pe-1" data-node-item="{item}" src="static/images/{item}_1.png" onmousedown="preventDoubleClick(event)">';
+        return textItemTemplate.replaceAll('{item}', this.item);
+    }
+
     static fullName(area, name) {
         return `${area}-${name}`;
     }
