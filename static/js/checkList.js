@@ -154,7 +154,8 @@ function refreshTextChecks() {
         return;
     }
 
-    let checks = sortByKey(checkAccessibility, x => coordDict[x.id].area)
+    let checks = sortByKey(checkAccessibility, x => x.metadata.area)
+                 .filter(x => (x.shouldDraw() || x.difficulty == 9));
     for (const element of document.querySelectorAll('.row.grid[data-difficulty]')) {
         let difficulty = element.dataset.difficulty;
         element.innerHTML = '';
@@ -162,7 +163,7 @@ function refreshTextChecks() {
         let lastArea = null;
         let areaList = null;
         let areas = [];
-        let logicChecks = checks.filter(x => x.difficulty == difficulty);
+        let logicChecks = checks.filter(x => ((x.isChecked() ? 'checked' : x.difficulty) == difficulty));
 
         let accordion = document.getElementById(`difficulty${difficulty == 'checked' ? 'Checked' : difficulty}Accordion`);
         setElementHidden(accordion, logicChecks.length == 0);

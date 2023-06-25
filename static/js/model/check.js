@@ -1,17 +1,26 @@
 class Check {
-    constructor(id, behindKeys, difficulty, locations, mapName, vanilla=false, item) {
-        this.id = id;
+    constructor(checkInfo) {
+        this.id = checkInfo.id;
         this.metadata = coordDict[this.id];
-        this.behindKeys = behindKeys;
-        this.isVanilla = vanilla || (this.metadata.vanilla ?? false);
-        this.locations = locations.filter(x => x.map == mapName);
-        this.mapName = mapName
-        this.item = item;
+        this.behindKeys = checkInfo.behindKeys;
+        this.isVanilla = checkInfo.vanilla || (this.metadata.vanilla ?? false);
+        this.locations = this.metadata.locations;
+        this.item = checkContents[this.id];
+
+        let dungeonMaps = this.locations.map(x => x.map)
+                                        .filter(x => x != 'overworld');
+        if (dungeonMaps.length == 0) {
+            this.mapName = 'overworld';
+        }
+        else {
+            this.mapName = dungeonMaps[0];
+        }
 
         if (this.isVanilla && this.metadata.vanillaItem) {
             setCheckContents(this.id, this.metadata.vanillaItem, false);
         }
 
+        let difficulty = Number(checkInfo.difficulty);
         if (!localSettings.showHigherLogic && difficulty > 0 && difficulty != 8) {
             difficulty = 9;
         }
@@ -63,12 +72,18 @@ class Check {
         if ((this.difficulty == 9
               && !localSettings.showOutOfLogic)
             || (this.isVanilla
-                && !localSettings.showVanilla)) {
+                && !localSettings.showVanilla)
+            || (this.isOwnedVanillaPickup()
+                && !localSettings.showOwnedPickups)) {
 
             return false;
         }
 
         return true;
+    }
+
+    mapLocations(mapName) {
+        return this.locations.filter(x => x.map == mapName);
     }
 
     static fullName(area, name) {

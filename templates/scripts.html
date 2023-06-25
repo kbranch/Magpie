@@ -190,7 +190,7 @@
                 randomizedEntrances = response.randomizedEntrances;
                 startLocations = response.startLocations;
                 entranceAccessibility = response.accessibility.entrances;
-                checkAccessibility = response.accessibility.checks;
+                checkAccessibility = response.accessibility.checks.map(x => new Check(x));
 
                 document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
 
@@ -376,7 +376,6 @@
 
         window.addEventListener("resize", resizeTimeout); // Window size
         window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
-        new bootstrap.Tooltip(document.getElementById("trackerLogicHelp"), {sanitize: false});
     }
 
     init();

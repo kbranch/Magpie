@@ -13,28 +13,6 @@ function removeNodes() {
     $('#linkFace').remove();
 }
 
-function createCheck(checkObj, mapName=null) {
-    if (mapName == null) {
-        let dungeonMaps = coordDict[checkObj.id].locations.map(x => x.map)
-                                                 .filter(x => x != 'overworld');
-        if (dungeonMaps.length == 0) {
-            mapName = 'overworld';
-        }
-        else {
-            mapName = dungeonMaps[0];
-        }
-    }
-
-    return new Check(checkObj.id,
-                     checkObj.behindKeys,
-                     Number(checkObj.difficulty),
-                     coordDict[checkObj.id].locations,
-                     mapName,
-                     checkObj.vanilla,
-                     checkContents[checkObj.id],
-    );
-}
-
 function updateCheckSize() {
     checkSize = localSettings.checkSize / window.visualViewport.scale;
 }
@@ -69,8 +47,7 @@ function createNodes(map, mapName) {
 
     createBossNodes(scaling, mapName);
 
-    let checks = checkAccessibility.map(x => createCheck(x, mapName))
-                                   .filter(x => x.shouldDraw());
+    let checks = checkAccessibility.filter(x => x.shouldDraw());
     let unclaimedChecks = {};
 
     for (const check of checks) {
@@ -79,7 +56,7 @@ function createNodes(map, mapName) {
             continue;
         }
 
-        for (const coord of check.locations) {
+        for (const coord of check.mapLocations(mapName)) {
             if ((['split', 'mixed'].includes(args.entranceshuffle)
                  && coord.indirect)
                 || (args.entranceshuffle == 'simple'

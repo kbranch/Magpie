@@ -214,23 +214,21 @@ function tunicSrc(player)
 function calculateDungeonChecks() {
     let checks = {};
     let foundIds = new Set();
-    $('li[data-logic]').toArray()
-                       .map(x => createCheck(x))
-                       .filter(x => x.isDungeon() && !x.isVanillaOwl())
-                       .map(x => {
-                            if (foundIds.has(x.id)) {
-                                return;
-                            }
+    checkAccessibility.filter(x => x.isDungeon() && !x.isVanillaOwl())
+                      .map(x => {
+                          if (foundIds.has(x.id)) {
+                              return;
+                          }
 
-                            let dNum = x.dungeonNumber();
+                          let dNum = x.dungeonNumber();
 
-                            if (!(dNum in checks)) {
-                                checks[dNum] = [];
-                            }
+                          if (!(dNum in checks)) {
+                              checks[dNum] = [];
+                          }
 
-                            checks[x.dungeonNumber()].push(x);
-                            foundIds.add(x.id);
-                        });
+                          checks[x.dungeonNumber()].push(x);
+                          foundIds.add(x.id);
+                      });
 
     if (Object.keys(checks).length == 0) {
         return;
