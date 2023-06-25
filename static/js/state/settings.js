@@ -258,6 +258,7 @@ function getState() {
     state.connections = connections;
     state.checkContents = checkContents;
     state.errorLog = errorLog;
+    state.version = document.querySelector('.version span')?.innerHTML.replace('Version: ', '');
 
     return state;
 }
