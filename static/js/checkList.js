@@ -71,6 +71,8 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
 
     saveChecked();
 
+    checksById[id].updateChecked();
+
     preventDoubleClick(event);
 
     if (draw) {
@@ -87,7 +89,7 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
 
 function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
-    let isVanilla = $(`[data-check-id="${id}"][data-logic="Checked"]`).attr('data-vanilla');
+    let isVanilla = checksById[id].vanilla;
     let metadata = coordDict[id];
 
     if (localSettings.spoilOnCollect) {
@@ -121,7 +123,7 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
 
 function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
-    let isVanilla = $(`[data-check-id="${id}"][data-logic="Checked"]`).attr('data-vanilla');
+    let isVanilla = checksById[id].vanilla;
     let metadata = coordDict[id];
 
     if (updateDungeonCount) {
@@ -154,7 +156,7 @@ function refreshTextChecks() {
         return;
     }
 
-    let checks = sortByKey(checkAccessibility, x => x.metadata.area)
+    let checks = sortByKey(checkAccessibility, x => [x.metadata.area, x.metadata.index, x.metadata.name])
                  .filter(x => (x.shouldDraw() || x.difficulty == 9));
     for (const element of document.querySelectorAll('.row.grid[data-difficulty]')) {
         let difficulty = element.dataset.difficulty;
@@ -193,21 +195,6 @@ function refreshTextChecks() {
 
     if (typeof applyMasonry === "function") {
         applyMasonry();
-    }
-}
-
-function hideEmptyAreas() {
-    let areas = $('[data-area]');
-
-    $(areas).removeClass('hidden');
-    let i = 0;
-
-    for (const area of areas) {
-        if ($(area).find('div.text-check-wrapper:not(.hidden)').length == 0) {
-            $(area).addClass('hidden');
-        }
-
-        i++;
     }
 }
 

@@ -62,6 +62,7 @@
     var randomizedEntrances = null;
     var entranceAccessibility = null;
     var checkAccessibility = null;
+    var checksById = {};
     var localSettings = null;
     var entranceMap = {};
     var reverseEntranceMap = {};
@@ -190,7 +191,12 @@
                 randomizedEntrances = response.randomizedEntrances;
                 startLocations = response.startLocations;
                 entranceAccessibility = response.accessibility.entrances;
-                checkAccessibility = response.accessibility.checks.map(x => new Check(x));
+                checksById = {};
+                checkAccessibility = response.accessibility.checks.map(x => {
+                    let check = new Check(x);
+                    checksById[x.id] = check;
+                    return check;
+                });
 
                 document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
 

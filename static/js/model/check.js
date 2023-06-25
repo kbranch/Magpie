@@ -6,6 +6,7 @@ class Check {
         this.isVanilla = checkInfo.vanilla || (this.metadata.vanilla ?? false);
         this.locations = this.metadata.locations;
         this.item = checkContents[this.id];
+        this.baseDifficulty = checkInfo.difficulty;
 
         let dungeonMaps = this.locations.map(x => x.map)
                                         .filter(x => x != 'overworld');
@@ -20,7 +21,19 @@ class Check {
             setCheckContents(this.id, this.metadata.vanillaItem, false);
         }
 
-        let difficulty = Number(checkInfo.difficulty);
+        this.updateChecked();
+    }
+
+    nodeDifficulty() {
+        return this.difficulty == -1 ? 'checked' : this.difficulty;
+    }
+
+    isChecked() {
+        return Check.isChecked(this.id);
+    }
+
+    updateChecked() {
+        let difficulty = Number(this.baseDifficulty);
         if (!localSettings.showHigherLogic && difficulty > 0 && difficulty != 8) {
             difficulty = 9;
         }
@@ -31,14 +44,6 @@ class Check {
         else {
             this.difficulty = difficulty;
         }
-    }
-
-    nodeDifficulty() {
-        return this.difficulty == -1 ? 'checked' : this.difficulty;
-    }
-
-    isChecked() {
-        return Check.isChecked(this.id);
     }
 
     isDungeon() {
