@@ -156,7 +156,7 @@ function refreshTextChecks() {
         return;
     }
 
-    let checks = sortByKey(checkAccessibility, x => [x.metadata.area, x.metadata.index, x.metadata.name])
+    let checks = sortByKey(checkAccessibility, x => [x.metadata.area, x.metadata.name])
                  .filter(x => (x.shouldDraw() || x.difficulty == 9));
     for (const element of document.querySelectorAll('.row.grid[data-difficulty]')) {
         let difficulty = element.dataset.difficulty;
