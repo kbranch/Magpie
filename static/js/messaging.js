@@ -21,6 +21,7 @@ function processCheckMessage(message) {
     }
 
     saveChecked();
+    updateDungeonItems();
 
     if (message.refresh) {
         drawActiveTab();
