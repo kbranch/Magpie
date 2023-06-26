@@ -21,7 +21,7 @@ function loadInventory() {
     }
 }
 
-function addItem(item, qty, wrap=true, refresh=true, player='') {
+function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
     let inv = getPlayerInventory(player);
 
     if (!(item in inv) || typeof inv[item] != 'number') {
@@ -43,7 +43,9 @@ function addItem(item, qty, wrap=true, refresh=true, player='') {
     console.log(`${item}: ${inv[item]}`);
 
     if (player == '') {
-        updateLinkedItemChecks(item);
+        if (doLinked) {
+            updateLinkedItemChecks(item);
+        }
 
         setItemImage(item);
         updateOverlay(item);
