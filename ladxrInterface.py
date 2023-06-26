@@ -32,19 +32,16 @@ vanillaBySetting = {
 }
 
 class Check:
-    def __init__(self, id, metadata, behindKeys=False, vanilla=False):
+    def __init__(self, id, behindKeys=False, vanilla=False):
         self.id = id
-        self.name = metadata.name
-        self.area = metadata.area
-        self.metadata = metadata
         self.behindKeys = behindKeys
         self.vanilla = vanilla
     
     def cloneBehindKeys(self):
-        return Check(self.id, self.metadata, behindKeys=True, vanilla=self.vanilla)
+        return Check(self.id, behindKeys=True, vanilla=self.vanilla)
     
     def __repr__(self) -> str:
-        return f'{self.id}: {self.area} - {self.name}'
+        return f'{self.id}: {self.difficulty}'
 
 class Entrance:
     def __init__(self, id, difficulty=0):
@@ -256,7 +253,7 @@ def loadChecks(logic, inventory):
                 if name in nameOverrides:
                     checks.append(allChecks[nameOverrides[name]])
     
-    checks.sort(key=lambda x: (x.area, x.name))
+    # checks.sort(key=lambda x: (x.area, x.name))
 
     return checks
 
@@ -278,7 +275,7 @@ def initChecks(args):
         isVanillaOwl = isOwl and (args.owlstatues == '' or (args.owlstatues == 'dungeon' and isOverworld) or (args.owlstatues == 'overworld' and not isOverworld))
 
         if id != 'None':
-            allChecks[id] = Check(id, checkMetadataTable[id], vanilla=id in vanillaIds or isVanillaOwl)
+            allChecks[id] = Check(id, vanilla=id in vanillaIds or isVanillaOwl)
 
 def getEntrancePool(args):
     entrances = set(WorldSetup.getEntrancePool(None, args))

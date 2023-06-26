@@ -1117,3 +1117,7 @@ img[data-status="error"] {
     border-radius: 5px;
     margin-left: 12px;
 }
+
+span.logic-name {
+    text-transform: capitalize;
+}

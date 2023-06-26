@@ -83,9 +83,9 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
     trackerLogic.friendlyName = 'In tracker logic'
 
     outOfLogic = outOfLogic.difference(alreadyInKeyLogic)
-    outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
+    # outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
 
-    accessibility[logics[0]] = sorted(accessibility[logics[0]], key=lambda x: (x.area, x.name))
+    # accessibility[logics[0]] = sorted(accessibility[logics[0]], key=lambda x: (x.area, x.name))
     logics[0].friendlyName = 'In logic'
 
     for check in outOfLogic:
@@ -94,7 +94,7 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
     for i in range(1, len(logics)):
         logics[i].friendlyName = f'In {logics[i].name} logic'
 
-        accessibility[logics[i]] = sorted(accessibility[logics[i]], key=lambda x: (x.area, x.name))
+        # accessibility[logics[i]] = sorted(accessibility[logics[i]], key=lambda x: (x.area, x.name))
     
     oolLogic = FakeLogic()
     oolLogic.friendlyName = 'Out of logic'

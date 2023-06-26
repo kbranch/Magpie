@@ -60,6 +60,9 @@
     var diskSettings = tryParseJson('{{diskSettings|safe}}');
     var startLocations = [];
     var randomizedEntrances = null;
+    var entranceAccessibility = null;
+    var checkAccessibility = null;
+    var checksById = {};
     var localSettings = null;
     var entranceMap = {};
     var reverseEntranceMap = {};
@@ -182,16 +185,44 @@
                 minibossMap: JSON.stringify(minibossMap),
             },
             success: function(response) {
+                response = JSON.parse(response);
                 pruneEntranceMap();
 
-                $('#checkList').html(response);
+                randomizedEntrances = response.randomizedEntrances;
+                startLocations = response.startLocations;
+                entranceAccessibility = response.accessibility.entrances;
+                checksById = {};
+                checkAccessibility = response.accessibility.checks.map(x => {
+                    let check = new Check(x);
+                    checksById[x.id] = check;
+                    return check;
+                });
+
+                document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
+
+                for (const logic of response.logics) {
+                    let name = document.getElementById(`legendDifficultyName${logic.difficulty}`);
+
+                    if (!name) {
+                        continue;
+                    }
+
+                    name.innerHTML = `: ${logic.name}`;
+
+                    let wrapper = document.getElementById(`legendDifficulty${logic.difficulty}`);
+                    wrapper.classList.remove('hidden');
+
+                    if (!isNaN(logic.difficulty) && logic.difficulty > 0 && logic.difficulty < 8) {
+                        document.getElementById(`difficulty${logic.difficulty}AccordionName`).innerHTML = logic.friendlyName;
+                    }
+                }
 
                 pruneEntranceMap();
                 fillVanillaLogEntrances();
                 updateEntrances();
 
-                drawActiveTab();
-                refreshTextChecks();
+                setTimeout(drawActiveTab);
+                setTimeout(refreshTextChecks);
             }
         });
     }
@@ -266,6 +297,13 @@
 
         window.addEventListener('error', errorHandler);
 
+        $('.grid').masonry({
+            transitionDuration: 0,
+            columnWidth: '.text-check-card-wrapper:not(.hidden)',
+        });
+    
+        $('.accordion-collapse').on('shown.bs.collapse', () => applyMasonry());
+
         modifyTooltipAllowList();
         initKnownItems();
 
@@ -333,6 +371,17 @@
 
         var popoverTriggerList = document.querySelectorAll('button[data-bs-toggle="popover"]')
         var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+        var timeoutId;
+        function resizeTimeout() {
+            removeNodes();
+            clearTimeout(timeoutId);
+            skipNextAnimation = true;
+            timeoutId = setTimeout(drawActiveTab, 100);
+        }
+
+        window.addEventListener("resize", resizeTimeout); // Window size
+        window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
     }
 
     init();

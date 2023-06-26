@@ -365,3 +365,9 @@ function findPlayerFromElement(element) {
     let playerParent = element.closest('[data-player]');
     return playerParent.dataset.player;
 }
+
+function parseHtml(outerHtml) {
+    let element = document.createElement('div');
+    element.innerHTML = outerHtml;
+    return element.firstChild;
+}
