@@ -212,6 +212,10 @@ function tunicSrc(player)
 }
 
 function calculateDungeonChecks() {
+    if (!checkAccessibility) {
+        return;
+    }
+
     let checks = {};
     let foundIds = new Set();
     checkAccessibility.filter(x => x.isDungeon() && !x.isVanillaOwl())

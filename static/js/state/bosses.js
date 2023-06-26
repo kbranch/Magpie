@@ -31,6 +31,10 @@ function mapBoss(vanilla, actual) {
 }
 
 function getBossList() {
+    if (!bossDataDict) {
+        return;
+    }
+
     let nightmares = sortByKey(bosses.filter(x => x.type == "boss"), x => x.value);
     let bossList = nightmares.map(x => bossDataDict[bossMap[x.id]].value);
 
@@ -38,6 +42,10 @@ function getBossList() {
 }
 
 function getMinibossMap() {
+    if (!bossDataDict) {
+        return;
+    }
+
     let minibosses = bosses.filter(x => x.type == "miniboss");
     let minibossMap = {};
 
