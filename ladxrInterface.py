@@ -307,6 +307,9 @@ def getDungeonItemCount(args):
     allItems = getItems(args, trimDungeonItems=False)
 
     checks = loadChecks(getLogicWithoutER(args), allItems)
+    for check in checks:
+        check.area = checkMetadataTable[check.id].area
+
     checks = [x for x in checks if not x.vanilla and x.area in dungeonList]
 
     for check in checks:
