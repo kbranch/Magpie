@@ -337,7 +337,7 @@ class NodeTooltip {
 
     checkGraphicHtml(id) {
         let checks = this.node.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind-keys}{owl}'><div class='behind-keys-overlay'></div><div class='difficulty-8-overlay'></div><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg></div>{overlay}</div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind-keys}{owl}'><div class='behind-keys-overlay'></div><div class='difficulty-8-overlay'></div><div class='owl-overlay'></div><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg></div>{overlay}</div>";
         let graphic = '';
 
         for (const check of checks) {
