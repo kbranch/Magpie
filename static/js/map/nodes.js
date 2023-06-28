@@ -36,6 +36,16 @@ function createNodes(map, mapName) {
 
     entrances = entrances.filter(x => entranceDict[x].locations.map(loc => loc.map).includes(mapName));
 
+    if (args.randomstartlocation && args.entranceshuffle == 'none' && Entrance.isFound(startHouse)) {
+        if (!Entrance.connectedTo(startHouse)) {
+            connectEntrances(startHouse, Entrance.connectedFrom(startHouse), false);
+        }
+
+        entrances = entrances.filter(x => !startLocations.includes(x));
+        entrances.push(Entrance.connectedFrom(startHouse));
+        entrances.push(startHouse);
+    }
+
     if (entrances.length > 0) {
         if (args.randomstartlocation && !Entrance.isFound(startHouse)) {
             createEntranceNodes(startLocations, scaling);
