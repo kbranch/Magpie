@@ -176,12 +176,8 @@ function connectEntrances(from, to, refresh=true) {
     }
 
     console.assert(to != 'clear');
-    // if (to == 'clear') {
-    //     delete entranceMap[from];
-    // }
-    // else {
+
     entranceMap[from] = to;
-    // }
 
     skipNextAnimation = true;
 

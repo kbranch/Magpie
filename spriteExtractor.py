@@ -305,6 +305,16 @@ def dumpIcon(source, dest, sprite):
         icon = deactivateIcon(icon)
         icon.save(dest + name + '.png')
 
+def dumpChecked(source, dest, sprites):
+    check = Image.open('static/images/checked-item.png')
+    blank = Image.open('static/images/blank.png')
+
+    for sprite in sprites:
+        icon = getIcon(source, sprite).convert('RGBA')
+        icon.paste(check, (0, 0), check)
+        icon.save(dest + sprite.item[:-2] + '_CHECKED_1.png')
+        blank.save(dest + sprite.item[:-2] + '_CHECKED_0.png')
+
 def dumpRomForPhotos(path, output, palette):
     with open(path, 'rb') as iFile:
         data = bytearray(iFile.read())
@@ -427,6 +437,7 @@ def main():
                         dumpIcon(entry.path, destPath, sprite)
                     
                     dumpJump(entry.path, destPath)
+                    dumpChecked(entry.path, destPath, [x for x in sprites if x.item.startswith('TRADING_ITEM')])
 
                     with open(entry.path, 'rb') as iFile:
                         data = bytearray(iFile.read(256))

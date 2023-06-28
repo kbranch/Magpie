@@ -110,9 +110,7 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
 
         if (metadata.linkedItem
             && (!metadata.vanillaLink 
-                || isVanilla)
-            && (!metadata.autotrackerLink
-                || autotrackerIsConnected())) {
+                || isVanilla)) {
             addItem(metadata.linkedItem, 1, false, false, '', false);
             itemsChanged = true;
         }
@@ -140,9 +138,7 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 
         if (metadata.linkedItem
             && (!metadata.vanillaLink 
-                || isVanilla)
-            && (!metadata.autotrackerLink
-                || autotrackerIsConnected())) {
+                || isVanilla)) {
             addItem(metadata.linkedItem, -1, false, false, '', false);
             itemsChanged = true;
         }

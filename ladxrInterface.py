@@ -83,6 +83,9 @@ def getAllItems(args):
     if 'BOMB' not in pool:
         pool['BOMB'] = 1
 
+    for item in [x for x in pool if x.startswith('TRADING_ITEM')]:
+        pool[item + '_CHECKED'] = 1
+
     return pool
 
 def getItems(args, trimDungeonItems=True):

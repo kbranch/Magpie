@@ -17,7 +17,7 @@ function setImgSrc(img, item, player='') {
         inv[item] = 0;
     }
 
-    let applyGfx = ($(img).closest('.inventory-item').attr('data-gfx') == 'True') && ($(img).hasClass('primary'));
+    let applyGfx = ($(img).closest('.inventory-item').attr('data-gfx') == 'True') && ($(img).hasClass('primary') || item.includes ('CHECKED'));
     let number = $(img).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
 
     if (hasAttr(img, 'data-src')) {

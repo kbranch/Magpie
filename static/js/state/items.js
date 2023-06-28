@@ -70,8 +70,7 @@ function updateLinkedItemChecks(item) {
             let element = $(`li[data-check-id=${check.id}]`);
             let isVanilla = $(element).attr('data-vanilla');
 
-            if ((check.vanillaLink && !isVanilla)
-                || check.autotrackerLink) {
+            if ((check.vanillaLink && !isVanilla)) {
                 continue;
             }
 
