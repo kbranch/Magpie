@@ -223,7 +223,7 @@ img {
     --animate-duration: 0.3s;
 }
 
-.owned-item-bar:not(.secondary), .owned-item-bar.highlight-owned-secondary {
+.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
     border-bottom: 5px solid;
     margin-bottom: -5px;
     border-radius: 3px;

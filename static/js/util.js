@@ -298,7 +298,7 @@ function applySettings() {
     }`;
     themeStyles.insertRule(highlightRule, 0);
 
-    highlightRule = `.owned-item-bar:not(.secondary), .owned-item-bar.highlight-owned-secondary {
+    highlightRule = `.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
         border-bottom-color: ${localSettings.highlightColor};
     }`;
     themeStyles.insertRule(highlightRule, 0);

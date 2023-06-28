@@ -35,15 +35,20 @@ function setImgSrc(img, item, player='') {
     }
 
     let element = img.length == 1 ? img[0] : img;
+    let parent = element.closest('div.inventory-item');
+    let wrapper = element.parentElement;
+    let primary = parent.dataset?.primary;
+    let secondary = parent.dataset?.secondary;
+    // Below is not safe for use with invert_count
+    let slotOwned = inv[primary] > 0 || (inv[secondary] > 0 && parent.classList.contains('highlight-owned-secondary'));
 
-    if (element.dataset?.item == item
-        || element.closest('div.inventory-item').dataset?.secondary == item) {
-        if (number > 0) {
-            $(img).addClass(`owned-item-${localSettings.ownedHighlight}`);
+    if (element.dataset?.item == item || secondary == item) {
+        if (slotOwned) {
+            wrapper.classList.add(`owned-item-${localSettings.ownedHighlight}`);
         }
         else {
-            $(img).removeClass('owned-item-bar');
-            $(img).removeClass('owned-item-square');
+            wrapper.classList.remove('owned-item-bar');
+            wrapper.classList.remove('owned-item-square');
         }
     }
 }
