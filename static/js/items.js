@@ -36,7 +36,8 @@ function setImgSrc(img, item, player='') {
 
     let element = img.length == 1 ? img[0] : img;
 
-    if (element.dataset && element.dataset.item == item) {
+    if (element.dataset?.item == item
+        || element.closest('div.inventory-item').dataset?.secondary == item) {
         if (number > 0) {
             $(img).addClass(`owned-item-${localSettings.ownedHighlight}`);
         }

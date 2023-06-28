@@ -223,13 +223,13 @@ img {
     --animate-duration: 0.3s;
 }
 
-.owned-item-bar:not(.secondary) {
+.owned-item-bar:not(.secondary), .owned-item-bar.highlight-owned-secondary {
     border-bottom: 5px solid;
     margin-bottom: -5px;
     border-radius: 3px;
 }
 
-.owned-item-square:not(.secondary) {
+.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
     border-radius: 3px;
 }
 

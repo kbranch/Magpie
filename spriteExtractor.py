@@ -437,7 +437,7 @@ def main():
                         dumpIcon(entry.path, destPath, sprite)
                     
                     dumpJump(entry.path, destPath)
-                    dumpChecked(entry.path, destPath, [x for x in sprites if x.item.startswith('TRADING_ITEM')])
+                    dumpChecked(entry.path, destPath, [x for x in sprites if x.item.startswith('TRADING_ITEM') or x.item in ['TOADSTOOL_1']])
 
                     with open(entry.path, 'rb') as iFile:
                         data = bytearray(iFile.read(256))

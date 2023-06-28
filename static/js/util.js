@@ -293,12 +293,12 @@ function applySettings() {
     }`;
     themeStyles.insertRule(themeRule, 0);
 
-    let highlightRule = `.owned-item-square:not(.secondary) {
+    let highlightRule = `.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
         background-color: ${localSettings.highlightColor};
     }`;
     themeStyles.insertRule(highlightRule, 0);
 
-    highlightRule = `.owned-item-bar:not(.secondary) {
+    highlightRule = `.owned-item-bar:not(.secondary), .owned-item-bar.highlight-owned-secondary {
         border-bottom-color: ${localSettings.highlightColor};
     }`;
     themeStyles.insertRule(highlightRule, 0);

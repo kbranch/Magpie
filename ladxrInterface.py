@@ -86,6 +86,8 @@ def getAllItems(args):
     for item in [x for x in pool if x.startswith('TRADING_ITEM')]:
         pool[item + '_CHECKED'] = 1
 
+    pool['TOADSTOOL_CHECKED'] = 1
+
     return pool
 
 def getItems(args, trimDungeonItems=True):
