@@ -168,13 +168,16 @@ function liveUpdatePlayers() {
 }
 
 function updatePlayerInventories() {
-    if (!players || !players.length) {
+    let activePlayers = [...document.querySelectorAll('input[data-player]:checked')]
+                                    .map(x => x.dataset.player);
+
+    if (!activePlayers || !activePlayers.length) {
         return;
     }
 
     let data = {};
 
-    for (const player of players) {
+    for (const player of activePlayers) {
         data[player] = playerInventories[player].timestamp ?? 0;
     }
 
