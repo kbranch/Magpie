@@ -49,12 +49,16 @@
 <div id="unstackedContainer" class="row border-me">
     {% for player in players %}
     <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mt-2 mx-4 item-width">
-        <div>
-            <label for="delayPlayer{{player}}" class="form-label">Update delay (seconds)</label>
-            <input id="delayPlayer{{player}}" data-player="{{player}}" type="number" min="0" max="7200" value="0" class="form-control delay-input">
+        <div class="row">
+            <div class="col-auto pe-2">
+                <label for="unstackedDelayPlayer{{player}}" class="form-label">Update delay (seconds)</label>
+                <input id="unstackedDelayPlayer{{player}}" data-player="{{player}}" type="number" min="0" max="7200" value="0" class="form-control delay-input">
+            </div>
 
-            <input id="refreshPlayer{{player}}" data-player="{{player}}" type="checkbox" class="form-check-input mt-2 update-input" checked>
-            <label for="refreshPlayer{{player}}" class="form-label mt-1">Live update</label>
+            <div class="col-auto">
+                <input id="unstackedRefreshPlayer{{player}}" data-player="{{player}}" type="checkbox" class="form-check-input mt-2 update-input" checked>
+                <label for="unstackedRefreshPlayer{{player}}" class="form-label mt-1">Live update</label>
+            </div>
         </div>
 
         <span>Player: {{player}}</span>
@@ -69,8 +73,21 @@
 <div id="stackedContainer" class="row hidden">
     {% for player in players %}
     <div id="stackedItems" data-player="{{player}}" class="col-auto mt-2 mx-4">
+        <div class="row">
+            <div class="col-auto pe-2">
+                <label for="stackedDelayPlayer{{player}}" class="form-label">Update delay (seconds)</label>
+                <input id="stackedDelayPlayer{{player}}" data-player="{{player}}" type="number" min="0" max="7200" value="0" class="form-control delay-input">
+            </div>
+
+            <div class="col-auto">
+                <input id="stackedRefreshPlayer{{player}}" data-player="{{player}}" type="checkbox" class="form-check-input mt-2 update-input" checked>
+                <label for="stackedRefreshPlayer{{player}}" class="form-label mt-1">Live update</label>
+            </div>
+        </div>
+
         <span>Player: {{player}}</span>
         <span class="state-timestamp"></span>
+
         <div class="row item-border">
             <div class="col-xs col-md-auto items-slot px-0">
             </div>

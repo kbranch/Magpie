@@ -169,6 +169,7 @@ function liveUpdatePlayers() {
 
 function updatePlayerInventories() {
     let activePlayers = [...document.querySelectorAll('input[data-player].update-input:checked')]
+                                    .filter(x => x.offsetParent)
                                     .map(x => x.dataset.player);
 
     if (!activePlayers || !activePlayers.length) {
@@ -178,7 +179,8 @@ function updatePlayerInventories() {
     let data = {};
 
     for (const player of activePlayers) {
-        let delaySeconds = document.querySelector(`input[data-player="${player}"].delay-input`)?.value;
+        let delaySeconds = [...document.querySelectorAll(`input[data-player="${player}"].delay-input`)]
+                                       .filter(x => x.offsetParent)[0].value;
         data[player] = { 
             'timestamp': playerInventories[player].timestamp ?? 0 ,
             'delaySeconds': delaySeconds ?? 10,
