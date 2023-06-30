@@ -40,11 +40,13 @@ def writeState(player, playerId, event, state):
         select sharing.player_no
         from sharing
         where sharing.player_name = %(player)s
+	    order by sharing.timestamp desc
+		limit 1
     """
-    deleteQuery = """
-        delete from sharing
-        where sharing.player_name = %(player)s
-    """
+    # deleteQuery = """
+    #     delete from sharing
+    #     where sharing.player_name = %(player)s
+    # """
     insertQuery = """
         insert into sharing (player_name, player_id, event_name, state, timestamp, player_no)
         values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s, %(playerNo)s);
@@ -65,7 +67,7 @@ def writeState(player, playerId, event, state):
         if result:
             playerNo = result[0]
 
-        cursor.execute(deleteQuery, { 'player': player })
+        # cursor.execute(deleteQuery, { 'player': player })
 
         cursor.execute(insertQuery, {
             'player': player,
@@ -83,7 +85,7 @@ def writeState(player, playerId, event, state):
 
     return timestamp
 
-def getState(player, timestamp):
+def getState(player, timestamp, delaySeconds=0):
     if not dbConfigured():
         return None
 
@@ -93,6 +95,9 @@ def getState(player, timestamp):
         from sharing
         where sharing.player_name = %(player)s
               and sharing.timestamp > %(timestamp)s
+              and (%(delaySeconds)s = 0 or sharing.creation_time <= (current_timestamp - interval '1 second' * %(delaySeconds)s))
+	    order by sharing.timestamp desc
+		limit 1
     """
 
     conn = getDbConnection()
@@ -101,6 +106,7 @@ def getState(player, timestamp):
     cursor.execute(query, {
         'player': player,
         'timestamp': timestamp,
+        'delaySeconds': delaySeconds,
     })
 
     result = cursor.fetchone()
@@ -118,6 +124,8 @@ def getPlayerId(player):
         select sharing.player_id
         from sharing
         where sharing.player_name = %(player)s
+	    order by sharing.timestamp desc
+		limit 1
     """
 
     conn = getDbConnection()
@@ -143,11 +151,12 @@ def getEventPlayers(event):
 
     query = """
         select sharing.player_name
-              ,sharing.player_no
+              ,max(sharing.player_no)
         from sharing
         where sharing.event_name = %(event)s
               and sharing.timestamp > %(threshold)s
-        order by sharing.player_no
+		group by sharing.player_name
+        order by max(sharing.player_no)
     """
 
     purgeQuery = """

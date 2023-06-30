@@ -168,7 +168,7 @@ function liveUpdatePlayers() {
 }
 
 function updatePlayerInventories() {
-    let activePlayers = [...document.querySelectorAll('input[data-player]:checked')]
+    let activePlayers = [...document.querySelectorAll('input[data-player].update-input:checked')]
                                     .map(x => x.dataset.player);
 
     if (!activePlayers || !activePlayers.length) {
@@ -178,7 +178,11 @@ function updatePlayerInventories() {
     let data = {};
 
     for (const player of activePlayers) {
-        data[player] = playerInventories[player].timestamp ?? 0;
+        let delaySeconds = document.querySelector(`input[data-player="${player}"].delay-input`)?.value;
+        data[player] = { 
+            'timestamp': playerInventories[player].timestamp ?? 0 ,
+            'delaySeconds': delaySeconds ?? 10,
+        };
     }
 
     $.ajax({
@@ -265,8 +269,7 @@ function eventNameInput() {
             // contentType: "application/json",
             data: {'eventName': eventBox.value },
             success: (response) => {
-                let json = JSON.parse(response);
-                updateEventForm(json);
+                updateEventForm(response);
             },
             error: (request, error, status) => {
                 updateEventForm(null, request.responseText);

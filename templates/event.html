@@ -49,13 +49,16 @@
 <div id="unstackedContainer" class="row border-me">
     {% for player in players %}
     <div id="unstackedItems" data-player="{{player}}" class="col-xs col-md-auto mt-2 mx-4 item-width">
+        <div>
+            <label for="delayPlayer{{player}}" class="form-label">Update delay (seconds)</label>
+            <input id="delayPlayer{{player}}" data-player="{{player}}" type="number" min="0" max="7200" value="0" class="form-control delay-input">
+
+            <input id="refreshPlayer{{player}}" data-player="{{player}}" type="checkbox" class="form-check-input mt-2 update-input" checked>
+            <label for="refreshPlayer{{player}}" class="form-label mt-1">Live update</label>
+        </div>
+
         <span>Player: {{player}}</span>
         <span class="state-timestamp"></span>
-
-        <div>
-            <input id="refreshPlayer{{player}}" data-player="{{player}}" type="checkbox" class="form-check-input" checked>
-            <label for="refreshPlayer{{player}}" class="form-label">Live update</label>
-        </div>
 
         <div class="items-slot item-border">
             <div id="itemContainer" class="pb-2"></div>

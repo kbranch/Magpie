@@ -422,8 +422,8 @@ if sharingEnabled:
         players = json.loads(playerJson)
         result = {}
 
-        for playerName, timestamp in players.items():
-            playerResult = sharing.getState(playerName, timestamp)
+        for playerName, data in players.items():
+            playerResult = sharing.getState(playerName, data['timestamp'], data['delaySeconds'])
             result[playerName] = playerResult
 
         return json.dumps(result)
