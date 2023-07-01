@@ -14,7 +14,7 @@ class LocalSettings:
         self.showVanilla = True
         self.showVanillaEntrances = True
         self.dungeonItemsTemplate = 'default.html'
-        self.itemsTemplate = 'default.html'
+        self.itemsTemplate = 'sevenbysix.html'
         self.customDungeonItems = None
         self.customItems = None
         self.showDungeonItemCount = False
