@@ -36,7 +36,7 @@ d8_lava_ledge = '0x235'
 def build(args, worldSetup):
     r = RequirementsSettings(args)
     # Bomb as bush breaker
-    r.bush = OR(SWORD, MAGIC_POWDER, MAGIC_ROD, POWER_BRACELET, BOOMERANG, BOMB)
+    r.bush._OR__items.append(BOMB)
 
     log = buildLogic(args, worldSetup, r)
     log.name = 'tracker'
