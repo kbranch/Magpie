@@ -39,6 +39,9 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
             inv[item] = wrap ? maxInventory[item] : 0;
         }
     }
+    else if (inv[item] < 0) {
+        inv[item] = 0;
+    }
 
     console.log(`${item}: ${inv[item]}`);
 
