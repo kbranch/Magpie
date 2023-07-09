@@ -294,7 +294,8 @@ def authenticateEvent(eventName, code):
     conn.close()
 
     if result:
-        return (code == result[0], code == result[1])
+        return (code == result[0] or result[0] == None,
+                code == result[1] or result[1] == None)
     
     return None
 
@@ -313,6 +314,11 @@ def createEvent(eventName, joinCode, viewCode):
         success = False
 
     if success:
+        if joinCode == '':
+            joinCode = None
+        if viewCode == '':
+            viewCode = None
+
         conn = getDbConnection()
         cursor = conn.cursor()
 

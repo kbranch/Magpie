@@ -244,7 +244,7 @@ function eventAction() {
                 location.href = sharingUrlPrefix() + `/event?eventName=${encodeURIComponent(eventName)}&viewCode=${encodeURIComponent(viewCode)}`;
             },
             error: (response, error, status) => {
-                eventAlert.innerHTML = `Error creating event: ${response}`;
+                eventAlert.innerHTML = `Error creating event: ${response.responseText}`;
                 setElementHidden(document.getElementById('eventAlert'), false);
             },
         });

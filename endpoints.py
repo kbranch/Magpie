@@ -475,8 +475,8 @@ if sharingEnabled:
         joinCode = request.form['joinCode']
         viewCode = request.form['viewCode']
 
-        if (not eventName or not joinCode or not viewCode):
-            return "eventName, joinCode and viewCode are required", 400
+        if (not eventName):
+            return "eventName is required", 400
 
         success = sharing.createEvent(eventName, joinCode, viewCode)
 
