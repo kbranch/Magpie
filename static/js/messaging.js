@@ -311,11 +311,12 @@ function sendRom(bytes) {
 }
 
 function sendHandshake() {
-        sendMessage({
-            'type': 'handshake',
-            'version': protocolVersion,
-            'features': autotrackerFeatures,
-        });
+    sendMessage({
+        'type': 'handshake',
+        'version': protocolVersion,
+        'features': autotrackerFeatures,
+        'flags': args,
+    });
 }
 
 function loadFromAutotracker() {

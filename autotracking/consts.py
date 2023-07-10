@@ -283,8 +283,11 @@ alternateCheckAddresses = {
 
 checkBlacklist = {'None', '0x2A1-2'}
 
+def seashellCondition(flags):
+    return 'goal' not in flags or flags['goal'] != 'seashells'
+
 linkedCheckItems = {
-    '0x2E9': {'item': 'SEASHELL', 'qty': 20},
+    '0x2E9': {'item': 'SEASHELL', 'qty': 20, 'condition': seashellCondition},
     '0x2A2': {'item': 'TOADSTOOL', 'qty': 1},
     '0x2A6-Trade': {'item': 'TRADING_ITEM_YOSHI_DOLL', 'qty': 1},
     '0x2B2-Trade': {'item': 'TRADING_ITEM_RIBBON', 'qty': 1},

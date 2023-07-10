@@ -41,7 +41,9 @@ def readChecks(gb, state, extraItems):
         check.set(bytes)
 
         if check.value and check.linkedItem:
-            extraItems[check.linkedItem['item']] = check.linkedItem['qty']
+            linkedItem = check.linkedItem
+            if 'condition' not in linkedItem or linkedItem['condition'](state.flags):
+                extraItems[check.linkedItem['item']] = check.linkedItem['qty']
 
         if state.firstRead:
             check.diff = 0

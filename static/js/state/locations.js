@@ -94,7 +94,7 @@ function resetChecks() {
 }
 
 function pruneEntranceMap() {
-    if (randomizedEntrances == null) {
+    if (!randomizedEntrances) {
         return;
     }
 

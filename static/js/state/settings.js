@@ -86,6 +86,8 @@ function saveSettings() {
     skipNextAnimation = true;
 
     refreshItems();
+
+    sendHandshake();
 }
 
 function argsAreValid(tempArgs) {

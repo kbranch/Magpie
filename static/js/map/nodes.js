@@ -229,6 +229,10 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
         return;
     }
 
+    if (typeof randomizedEntrances == 'undefined') {
+        return;
+    }
+
     animate = animate
               && localSettings.animateChecks
               && !skipNextAnimation;

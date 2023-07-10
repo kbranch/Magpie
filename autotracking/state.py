@@ -70,6 +70,10 @@ class State:
             if message['type'] == 'handshake':
                 print("Received handshake request")
                 self.features = set(message['features'])
+                if 'flags' in message:
+                    self.flags = message['flags']
+                else:
+                    self.flags = {}
 
                 print(f"Features: {self.features}")
 
