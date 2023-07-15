@@ -57,6 +57,7 @@ async def socketLoop(socket, path):
                 await state.sendTrackables(socket)
         except Exception as e:
             print(f'Error: {traceback.format_exc()}')
+            return
 
 def getRemoteVersion():
     try:
