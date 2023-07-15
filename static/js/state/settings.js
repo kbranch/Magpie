@@ -73,6 +73,7 @@ function settingsToQuickSettings() {
 function saveSettings() {
     settingsToQuickSettings();
 
+    let oldArgs = structuredClone(args);
     args = getInputValues('flag', args);
     localSettings = getInputValues('setting', localSettings);
 
@@ -81,13 +82,11 @@ function saveSettings() {
     fixArgs(args);
     saveSettingsToStorage(args, localSettings);
 
-    applySettings();
+    applySettings(oldArgs);
 
     skipNextAnimation = true;
 
     refreshItems();
-
-    sendHandshake();
 }
 
 function argsAreValid(tempArgs) {

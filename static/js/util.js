@@ -142,7 +142,7 @@ function moveChildren(source, dest) {
     dest.append(...source.childNodes);
 }
 
-function applySettings() {
+function applySettings(oldArgs=null) {
     if (!localSettings.playerId) {
         try {
             localSettings.playerId = crypto.randomUUID();
@@ -239,8 +239,11 @@ function applySettings() {
         autotrackerFeatures.push('gfx');
     }
 
-    if (oldFeatures.length != autotrackerFeatures.length 
-        || !oldFeatures.every((x) => autotrackerFeatures.includes(x))) {
+    let reconnectAutotracker = oldFeatures.length != autotrackerFeatures.length 
+                               || !oldFeatures.every((x) => autotrackerFeatures.includes(x))
+                               || (oldArgs && oldArgs.goal != args.goal);
+
+    if (reconnectAutotracker) {
         disconnectAutotracker();
     }
 
