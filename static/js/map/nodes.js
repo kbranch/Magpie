@@ -36,7 +36,10 @@ function createNodes(map, mapName) {
 
     entrances = entrances.filter(x => entranceDict[x].locations.map(loc => loc.map).includes(mapName));
 
-    if (args.randomstartlocation && args.entranceshuffle == 'none' && Entrance.isFound(startHouse)) {
+    if (args.randomstartlocation
+        && args.entranceshuffle == 'none'
+        && Entrance.isFound(startHouse)
+        && mapName == "overworld") {
         if (!Entrance.connectedTo(startHouse)) {
             connectEntrances(startHouse, Entrance.connectedFrom(startHouse), false);
         }
