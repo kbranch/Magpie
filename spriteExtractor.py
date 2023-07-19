@@ -306,7 +306,7 @@ def dumpIcon(source, dest, sprite):
         icon.save(dest + name + '.png')
 
 def dumpChecked(source, dest, sprites):
-    check = Image.open('static/images/checked-item.png')
+    check = Image.open('static/images/checked-item.png').convert('RGBA')
     blank = Image.open('static/images/blank.png')
 
     for sprite in sprites:
