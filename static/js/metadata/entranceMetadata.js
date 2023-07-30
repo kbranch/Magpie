@@ -14,6 +14,13 @@ let entranceDict = {
 				"y": 926
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1214,
+				"y": 990
+			}
+		],
 		"interiorImage": "0312",
 	},
 	"d1": {
@@ -27,6 +34,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 582,
 				"y": 1706
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 558,
+				"y": 1802
 			}
 		],
 		"interiorImage": "0117",
@@ -44,6 +58,13 @@ let entranceDict = {
 				"y": 276
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 558,
+				"y": 372
+			}
+		],
 		"interiorImage": "0136",
 	},
 	"d3": {
@@ -59,6 +80,13 @@ let entranceDict = {
 				"y": 1446
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 882,
+			"y": 1542
+		}
+		],
 		"interiorImage": "0152",
 	},
 	"d4": {
@@ -72,6 +100,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 1846,
 				"y": 276
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1854,
+				"y": 372
 			}
 		],
 		"interiorImage": "017A",
@@ -89,6 +124,13 @@ let entranceDict = {
 				"y": 1738
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1530,
+				"y": 1802
+			}
+		],
 		"interiorImage": "01A1",
 	},
 	"d6": {
@@ -104,6 +146,13 @@ let entranceDict = {
 				"y": 1080
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2016,
+			"y": 1120
+		}
+		],
 		"interiorImage": "01D4",
 	},
 	"d7": {
@@ -117,6 +166,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 2348,
 				"y": 32
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 2178,
+				"y": 112
 			}
 		],
 		"interiorImage": "020E",
@@ -134,6 +190,13 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 72,
+				"y": 242
+			}
+		],
 		"interiorImage": "025D",
 	},
 	"phone_d8": {
@@ -149,6 +212,13 @@ let entranceDict = {
 				"y": 162
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 234,
+				"y": 242
+			}
+		],
 	},
 	"fire_cave_exit": {
 		"id": "fire_cave_exit",
@@ -160,6 +230,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 550,
 				"y": 64
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 502,
+				"y": 48
 			}
 		],
 		"connector": "fire_cave",
@@ -178,6 +255,13 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 590,
+				"y": 242
+			}
+		],
 		"connector": "fire_cave",
 		"interiorImage": "01FE",
 	},
@@ -194,6 +278,13 @@ let entranceDict = {
 				"y": 96
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 776,
+				"y": 226
+			}
+		],
 		"interiorImage": "01E2",
 	},
 	"left_taltal_entrance": {
@@ -207,6 +298,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 938,
 				"y": 178
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 720,
+				"y": 372
 			}
 		],
 		"connector": "west_taltal",
@@ -226,6 +324,13 @@ let entranceDict = {
 				"y": 162
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1206,
+				"y": 372
+			}
+		],
 		"connector": "mountain_access",
 		"interiorImage": "02B6",
 	},
@@ -240,6 +345,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 1182,
 				"y": 64
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 922,
+				"y": 32
 			}
 		],
 		"connector": "west_taltal",
@@ -258,6 +370,13 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1206,
+				"y": 242
+			}
+		],
 		"connector": "mountain_access",
 		"interiorImage": "02BB",
 	},
@@ -272,6 +391,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 1424,
 				"y": 130
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1336,
+				"y": 242
 			}
 		],
 		"connector": "mountain_access",
@@ -290,6 +416,13 @@ let entranceDict = {
 				"y": 178
 			}
 		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 1514,
+				"y": 502
+			}
+		],
 		"connector": "papahl",
 		"interiorImage": "0289",
 	},
@@ -305,6 +438,13 @@ let entranceDict = {
 				"x": 1636,
 				"y": 96
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1530,
+			"y": 242
+		}
 		],
 		"connector": "papahl",
 		"interiorImage": "028B",
@@ -322,6 +462,13 @@ let entranceDict = {
 				"y": 16
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1692,
+			"y": 112
+		}
+		],
 	},
 	"bird_cave": {
 		"id": "bird_cave",
@@ -335,6 +482,13 @@ let entranceDict = {
 				"x": 1732,
 				"y": 96
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1708,
+			"y": 242
+		}
 		],
 		"interiorImage": "027E",
 	},
@@ -350,6 +504,13 @@ let entranceDict = {
 				"x": 2122,
 				"y": 162
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1806,
+			"y": 242
+		}
 		],
 		"connector": "multichest",
 		"interiorImage": "02F9",
@@ -367,6 +528,13 @@ let entranceDict = {
 				"y": 194
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2048,
+			"y": 242
+		}
+		],
 		"connector": "multichest",
 		"interiorImage": "02FA",
 	},
@@ -382,6 +550,13 @@ let entranceDict = {
 				"x": 2122,
 				"y": 96
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2016,
+			"y": 112
+		}
 		],
 		"connector": "multichest",
 		"interiorImage": "02F2",
@@ -399,6 +574,13 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2130,
+			"y": 242
+		}
+		],
 		"connector": "outer_rainbow",
 		"interiorImage": "0280-1",
 	},
@@ -414,6 +596,13 @@ let entranceDict = {
 				"x": 2462,
 				"y": 130
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2372,
+			"y": 242
+		}
 		],
 		"connector": "outer_rainbow",
 		"interiorImage": "0282",
@@ -431,6 +620,13 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2226,
+			"y": 242
+		}
+		],
 		"connector": "inner_rainbow",
 		"interiorImage": "0280-2",
 	},
@@ -446,6 +642,13 @@ let entranceDict = {
 				"x": 2510,
 				"y": 178
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2518,
+			"y": 242
+		}
 		],
 		"connector": "inner_rainbow",
 		"oneWayBlocked": true,
@@ -464,6 +667,13 @@ let entranceDict = {
 				"y": 130
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2518,
+			"y": 112
+		}
+		],
 		"connector": "to_d7",
 		"interiorImage": "028C",
 	},
@@ -480,6 +690,13 @@ let entranceDict = {
 				"y": 64
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2372,
+			"y": 112
+		}
+		],
 		"connector": "to_d7",
 		"interiorImage": "028E",
 	},
@@ -495,7 +712,14 @@ let entranceDict = {
 				"x": 2478,
 				"y": 194
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2502,
+			"y": 372
+		}
+		],
 	},
 	"writes_cave_left": {
 		"id": "writes_cave_left",
@@ -509,6 +733,13 @@ let entranceDict = {
 				"x": 128,
 				"y": 292
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 72,
+			"y": 372
+		}
 		],
 		"connector": "write",
 		"interiorImage": "02AE",
@@ -526,6 +757,13 @@ let entranceDict = {
 				"y": 292
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 234,
+			"y": 372
+		}
+		],
 		"connector": "write",
 		"interiorImage": "02AF",
 	},
@@ -542,6 +780,13 @@ let entranceDict = {
 				"y": 422
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 72,
+			"y": 502
+		}
+		],
 		"interiorImage": "02A8",
 	},
 	"writes_phone": {
@@ -556,7 +801,14 @@ let entranceDict = {
 				"x": 258,
 				"y": 454
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 234,
+			"y": 502
+		}
+		],
 	},
 	"moblin_cave": {
 		"id": "moblin_cave",
@@ -570,6 +822,13 @@ let entranceDict = {
 				"x": 906,
 				"y": 454
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 882,
+			"y": 502
+		}
 		],
 		"interiorImage": "02F0",
 	},
@@ -585,7 +844,14 @@ let entranceDict = {
 				"x": 1198,
 				"y": 438
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1206,
+			"y": 502
+		}
+		],
 	},
 	"mambo": {
 		"id": "mambo",
@@ -600,7 +866,14 @@ let entranceDict = {
 				"y": 292
 			}
 		],
-	    "interiorImage":"02FD",
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1620,
+			"y": 316
+		}
+		],
+		"interiorImage": "02FD",
 	},
 	"heartpiece_swim_cave": {
 		"id": "heartpiece_swim_cave",
@@ -614,6 +887,13 @@ let entranceDict = {
 				"x": 2348,
 				"y": 276
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2332,
+			"y": 372
+		}
 		],
 		"interiorImage": "01F2",
 	},
@@ -629,6 +909,13 @@ let entranceDict = {
 				"x": 2446,
 				"y": 356
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2494,
+			"y": 650
+		}
 		],
 		"connector": "raft_return",
 		"oneWayBlocked": true,
@@ -647,6 +934,13 @@ let entranceDict = {
 				"y": 406
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2502,
+			"y": 502
+		}
+		],
 		"interiorImage": "02B0",
 	},
 	"raft_return_enter": {
@@ -661,6 +955,13 @@ let entranceDict = {
 				"x": 2430,
 				"y": 1056
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2558,
+			"y": 860
+		}
 		],
 		"connector": "raft_return",
 		"interiorImage": "01F7",
@@ -678,6 +979,13 @@ let entranceDict = {
 				"y": 568
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 396,
+			"y": 632
+		}
+		],
 		"interiorImage": "02B3",
 	},
 	"toadstool_exit": {
@@ -692,6 +1000,13 @@ let entranceDict = {
 				"x": 128,
 				"y": 682
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 72,
+			"y": 762
+		}
 		],
 		"connector": "log_cave",
 		"interiorImage": "02AB",
@@ -709,6 +1024,13 @@ let entranceDict = {
 				"y": 682
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 452,
+			"y": 714
+		}
+		],
 		"interiorImage": "01E1",
 	},
 	"toadstool_entrance": {
@@ -723,6 +1045,13 @@ let entranceDict = {
 				"x": 436,
 				"y": 828
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 396,
+			"y": 892
+		}
 		],
 		"connector": "log_cave",
 		"interiorImage": "02BD",
@@ -740,6 +1069,13 @@ let entranceDict = {
 				"y": 568
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 882,
+			"y": 632
+		}
+		],
 		"interiorImage": "02AD",
 	},
 	"witch": {
@@ -755,6 +1091,13 @@ let entranceDict = {
 				"y": 812
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 882,
+			"y": 892
+		}
+		],
 		"interiorImage": "02A2",
 	},
 	"graveyard_cave_left": {
@@ -769,6 +1112,13 @@ let entranceDict = {
 				"x": 858,
 				"y": 958
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 858,
+			"y": 958
+		}
 		],
 		"connector": "graveyard",
 		"interiorImage": "02DE",
@@ -786,6 +1136,13 @@ let entranceDict = {
 				"y": 958
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1020,
+			"y": 942
+		}
+		],
 		"connector": "graveyard",
 		"interiorImage": "02DF",
 	},
@@ -802,6 +1159,13 @@ let entranceDict = {
 				"y": 1006
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1376,
+			"y": 974
+		}
+		],
 		"interiorImage": "01FD",
 	},
 	"castle_main_entrance": {
@@ -816,6 +1180,13 @@ let entranceDict = {
 				"x": 1538,
 				"y": 828
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1692,
+			"y": 1022
+		}
 		],
 		"connector": "castle",
 		"interiorImage": "02D3",
@@ -833,6 +1204,13 @@ let entranceDict = {
 				"y": 682
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1368,
+			"y": 762
+		}
+		],
 		"connector": "castle",
 		"interiorImage": "02D6",
 	},
@@ -849,6 +1227,13 @@ let entranceDict = {
 				"y": 698
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1530,
+			"y": 762
+		}
+		],
 		"interiorImage": "02D5",
 	},
 	"castle_secret_exit": {
@@ -863,6 +1248,13 @@ let entranceDict = {
 				"x": 1554,
 				"y": 584
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1636,
+			"y": 552
+		}
 		],
 		"connector": "secret_tunnel",
 		"interiorImage": "01EB",
@@ -880,6 +1272,13 @@ let entranceDict = {
 				"y": 552
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1878,
+			"y": 552
+		}
+		],
 		"connector": "secret_tunnel",
 		"interiorImage": "01EC",
 	},
@@ -895,7 +1294,14 @@ let entranceDict = {
 				"x": 1846,
 				"y": 536
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1854,
+			"y": 762
+		}
+		],
 	},
 	"papahl_house_left": {
 		"id": "papahl_house_left",
@@ -909,6 +1315,13 @@ let entranceDict = {
 				"x": 404,
 				"y": 1104
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 234,
+			"y": 1152
+		}
 		],
 		"connector": "quadruplets",
 		"interiorImage": "02A5",
@@ -926,6 +1339,13 @@ let entranceDict = {
 				"y": 1104
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 396,
+			"y": 1152
+		}
+		],
 		"connector": "quadruplets",
 		"interiorImage": "02A6",
 	},
@@ -942,6 +1362,13 @@ let entranceDict = {
 				"y": 1088
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 558,
+			"y": 1152
+		}
+		],
 		"interiorImage": "02AA",
 	},
 	"rooster_grave": {
@@ -956,6 +1383,13 @@ let entranceDict = {
 				"x": 404,
 				"y": 1234
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 404,
+			"y": 1266
+		}
 		],
 		"interiorImage": "01E4",
 	},
@@ -972,6 +1406,13 @@ let entranceDict = {
 				"y": 1250
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 558,
+			"y": 1282
+		}
+		],
 		"interiorImage": "02A1",
 	},
 	"madambowwow": {
@@ -986,7 +1427,14 @@ let entranceDict = {
 				"x": 210,
 				"y": 1348
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 234,
+			"y": 1412
+		}
+		],
 	},
 	"kennel": {
 		"id": "kennel",
@@ -1000,6 +1448,13 @@ let entranceDict = {
 				"x": 242,
 				"y": 1348
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 234,
+			"y": 1282
+		}
 		],
 		"interiorImage": "02B2",
 	},
@@ -1015,7 +1470,14 @@ let entranceDict = {
 				"x": 404,
 				"y": 1364
 			}
-		]
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 396,
+				"y": 1412
+			}
+		],
 	},
 	"library": {
 		"id": "library",
@@ -1029,7 +1491,14 @@ let entranceDict = {
 				"x": 48,
 				"y": 1462
 			}
-		]
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 72,
+				"y": 1542
+			}
+		],
 	},
 	"ulrira": {
 		"id": "ulrira",
@@ -1043,7 +1512,14 @@ let entranceDict = {
 				"x": 226,
 				"y": 1510
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 234,
+			"y": 1542
+		}
+		],
 	},
 	"mabe_phone": {
 		"id": "mabe_phone",
@@ -1057,7 +1533,14 @@ let entranceDict = {
 				"x": 404,
 				"y": 1494
 			}
-		]
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 396,
+				"y": 1542
+			}
+		],
 	},
 	"trendy_shop": {
 		"id": "trendy_shop",
@@ -1071,6 +1554,13 @@ let entranceDict = {
 				"x": 566,
 				"y": 1494
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 558,
+			"y": 1542
+		}
 		],
 		"interiorImage": "02A0",
 	},
@@ -1086,7 +1576,14 @@ let entranceDict = {
 				"x": 696,
 				"y": 1348
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 720,
+			"y": 1412
+		}
+		],
 	},
 	"prairie_left_cave1": {
 		"id": "prairie_left_cave1",
@@ -1099,6 +1596,13 @@ let entranceDict = {
 				"map": "overworld",
 				"x": 792,
 				"y": 1120
+			}
+		],
+		"underworldLocations": [
+			{
+				"map": "underworld",
+				"x": 720,
+				"y": 1152
 			}
 		],
 		"interiorImage": "02CD",
@@ -1116,6 +1620,13 @@ let entranceDict = {
 				"y": 1088
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 866,
+			"y": 1282
+		}
+		],
 		"interiorImage": "02F4",
 	},
 	"prairie_left_fairy": {
@@ -1130,7 +1641,14 @@ let entranceDict = {
 				"x": 1166,
 				"y": 1040
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1206,
+			"y": 1152
+		}
+		],
 	},
 	"mamu": {
 		"id": "mamu",
@@ -1145,7 +1663,14 @@ let entranceDict = {
 				"y": 1722
 			}
 		],
-	    "interiorImage":"02FB",
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 776,
+			"y": 1786
+		}
+		],
+		"interiorImage": "02FB",
 	},
 	"prairie_right_phone": {
 		"id": "prairie_right_phone",
@@ -1159,7 +1684,14 @@ let entranceDict = {
 				"x": 1376,
 				"y": 1104
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1368,
+			"y": 1152
+		}
+		],
 	},
 	"seashell_mansion": {
 		"id": "seashell_mansion",
@@ -1173,6 +1705,13 @@ let entranceDict = {
 				"x": 1700,
 				"y": 1088
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1620,
+			"y": 1136
+		}
 		],
 		"interiorImage": "02E9",
 	},
@@ -1188,6 +1727,13 @@ let entranceDict = {
 				"x": 1408,
 				"y": 1510
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1498,
+			"y": 1542
+		}
 		],
 		"connector": "bay_cliff",
 		"interiorImage": "0292",
@@ -1205,6 +1751,13 @@ let entranceDict = {
 				"y": 1624
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1336,
+			"y": 1672
+		}
+		],
 		"connector": "bay_cliff",
 		"interiorImage": "0293",
 	},
@@ -1220,6 +1773,13 @@ let entranceDict = {
 				"x": 1376,
 				"y": 1462
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1400,
+			"y": 1412
+		}
 		],
 		"connector": "bay_cliff",
 		"interiorImage": "0295",
@@ -1237,6 +1797,13 @@ let entranceDict = {
 				"y": 1364
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1652,
+			"y": 1348
+		}
+		],
 		"connector": "under_river",
 		"interiorImage": "02D0",
 	},
@@ -1252,6 +1819,13 @@ let entranceDict = {
 				"x": 1894,
 				"y": 1364
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1894,
+			"y": 1348
+		}
 		],
 		"connector": "under_river",
 		"interiorImage": "02D1",
@@ -1269,6 +1843,13 @@ let entranceDict = {
 				"y": 1170
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1992,
+			"y": 1202
+		}
+		],
 		"connector": "d6",
 		"interiorImage": "01F0",
 	},
@@ -1285,6 +1866,13 @@ let entranceDict = {
 				"y": 1202
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2234,
+			"y": 1250
+		}
+		],
 		"connector": "d6",
 		"interiorImage": "01F1",
 	},
@@ -1300,7 +1888,14 @@ let entranceDict = {
 				"x": 2154,
 				"y": 1056
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2178,
+			"y": 1152
+		}
+		],
 	},
 	"armos_maze_cave": {
 		"id": "armos_maze_cave",
@@ -1314,6 +1909,13 @@ let entranceDict = {
 				"x": 2332,
 				"y": 1380
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2526,
+			"y": 1380
+		}
 		],
 		"interiorImage": "02FC",
 	},
@@ -1330,6 +1932,13 @@ let entranceDict = {
 				"y": 1348
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2016,
+			"y": 1542
+		}
+		],
 		"interiorImage": "028F",
 	},
 	"boomerang_cave": {
@@ -1344,6 +1953,13 @@ let entranceDict = {
 				"x": 664,
 				"y": 1966
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 712,
+			"y": 2062
+		}
 		],
 		"interiorImage": "01F5",
 	},
@@ -1360,7 +1976,14 @@ let entranceDict = {
 				"y": 1852
 			}
 		],
-	    "interiorImage": "02FE",
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 558,
+			"y": 1932
+		}
+		],
+		"interiorImage": "02FE",
 	},
 	"ghost_house": {
 		"id": "ghost_house",
@@ -1374,6 +1997,13 @@ let entranceDict = {
 				"x": 1052,
 				"y": 1998
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1044,
+			"y": 2062
+		}
 		],
 		"interiorImage": "01E3",
 	},
@@ -1389,6 +2019,13 @@ let entranceDict = {
 				"x": 1036,
 				"y": 1754
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1044,
+			"y": 1802
+		}
 		],
 		"connector": "richard",
 		"interiorImage": "02C7",
@@ -1406,6 +2043,13 @@ let entranceDict = {
 				"y": 1624
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1092,
+			"y": 1412
+		}
+		],
 		"connector": "richard",
 		"interiorImage": "02C8",
 	},
@@ -1421,7 +2065,14 @@ let entranceDict = {
 				"x": 1344,
 				"y": 1900
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1368,
+			"y": 1932
+		}
+		],
 	},
 	"prairie_madbatter_connector_entrance": {
 		"id": "prairie_madbatter_connector_entrance",
@@ -1435,6 +2086,13 @@ let entranceDict = {
 				"x": 1570,
 				"y": 2014
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1586,
+			"y": 2046
+		}
 		],
 		"connector": "bay_batter",
 		"interiorImage": "01F6",
@@ -1452,6 +2110,13 @@ let entranceDict = {
 				"y": 1836
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1166,
+			"y": 1852
+		}
+		],
 		"connector": "bay_batter",
 		"interiorImage": "01E5",
 	},
@@ -1468,6 +2133,13 @@ let entranceDict = {
 				"y": 1868
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1100,
+			"y": 1884
+		}
+		],
 		"interiorImage": "01E0",
 	},
 	"animal_phone": {
@@ -1482,7 +2154,14 @@ let entranceDict = {
 				"x": 1894,
 				"y": 1754
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1854,
+			"y": 1802
+		}
+		],
 	},
 	"animal_house1": {
 		"id": "animal_house1",
@@ -1496,7 +2175,14 @@ let entranceDict = {
 				"x": 1976,
 				"y": 1624
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 1854,
+			"y": 1672
+		}
+		],
 	},
 	"animal_house2": {
 		"id": "animal_house2",
@@ -1510,7 +2196,14 @@ let entranceDict = {
 				"x": 2056,
 				"y": 1624
 			}
-		]
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2016,
+			"y": 1672
+		}
+		],
 	},
 	"animal_house3": {
 		"id": "animal_house3",
@@ -1524,6 +2217,13 @@ let entranceDict = {
 				"x": 2138,
 				"y": 1624
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2178,
+			"y": 1672
+		}
 		],
 		"interiorImage": "02D9",
 	},
@@ -1540,6 +2240,13 @@ let entranceDict = {
 				"y": 1624
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2340,
+			"y": 1672
+		}
+		],
 		"interiorImage": "02DA",
 	},
 	"animal_house5": {
@@ -1554,6 +2261,13 @@ let entranceDict = {
 				"x": 2186,
 				"y": 1738
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2178,
+			"y": 1802
+		}
 		],
 		"interiorImage": "02D7",
 	},
@@ -1570,6 +2284,13 @@ let entranceDict = {
 				"y": 1576
 			}
 		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2356,
+			"y": 1542
+		}
+		],
 		"interiorImage": "02F7",
 	},
 	"desert_cave": {
@@ -1584,6 +2305,13 @@ let entranceDict = {
 				"x": 2510,
 				"y": 1560
 			}
+		],
+		"underworldLocations":  [
+		{
+			"map": "underworld",
+			"x": 2542,
+			"y": 1900
+		}
 		],
 		"interiorImage": "01F9",
 	},
@@ -2456,4 +3184,18 @@ let entranceDict = {
 		],
 		"interiorImage": "d8_pickups",
 	},
+}
+
+for (const entrance of Object.keys(entranceDict)) {
+	if (entranceDict[entrance].type == 'stairs') {
+		continue;
+	}
+
+	let inside = entrance + ':inside';
+	entranceDict[inside] = structuredClone(entranceDict[entrance]);
+	entranceDict[inside].id = inside;
+
+	if (entranceDict[inside].underworldLocations) {
+		entranceDict[inside].locations = entranceDict[inside].underworldLocations;
+	}
 }

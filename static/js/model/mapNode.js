@@ -264,7 +264,7 @@ class MapNode {
             else if (this.difficulty == 'checked') {
                 if (!args.randomstartlocation 
                     || Entrance.isFound(startHouse)
-                    || (args.entranceshuffle != 'mixed' && this.entrance.isConnector())) {
+                    || (this.entrance.isMixedConnector())) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);

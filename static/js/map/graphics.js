@@ -12,6 +12,10 @@ function getActiveMap() {
     return getMapNameFromButton($('#mapContainer .tab-button.active button'));
 }
 
+function underworldActive() {
+    return getActiveMap() == 'underworld';
+}
+
 function getMapNameFromButton(button) {
     return $(button).parent('li').attr('data-mapname')
 }

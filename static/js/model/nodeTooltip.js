@@ -163,20 +163,20 @@ class NodeTooltip {
                                             .replace('{graphic}', graphic)
                                             .replace('{name}', entrance.metadata.name);
             if (entrance.isRemapped() && connectionType == 'none') {
-                let connectionName = entranceDict[entrance.connectedTo()].name;
+                let connection = entranceDict[entrance.connectedTo()];
 
                 if (entrance.isConnected()) {
                     let connection = entrance.mappedConnection();
-                    connectionName = connection.otherSides(entrance.id)
+                    connection.name = connection.otherSides(entrance.id)
                                                .map(x => entranceDict[x].name)
                                                .join(', ');
 
                     if (!connection.isSimple()) {
-                        connectionName += ` via ${connection.connector.name}`;
+                        connection.name += ` via ${connection.connector.name}`;
                     }
                 }
 
-                entranceHtml += connectionTemplate.replace('{connection}', `To ${connectionName}`);
+                entranceHtml += connectionTemplate.replace('{connection}', `To ${Entrance.isInside(connection.id) ? 'inside' : 'outside'} ${connection.name}`);
             }
 
             if (entrance.isFound()
@@ -184,19 +184,19 @@ class NodeTooltip {
                 && !entrance.isConnectedToConnector()
                 && connectionType == 'none') {
                 let connection = entranceDict[entrance.connectedFrom()];
-                if (connection) {
+                if (connection && inOutEntrances() && coupledEntrances()) {
                     entranceHtml += connectionTemplate.replace('{connection}', `Found at ${connection.name}`);
                 }
             }
 
-            if (connectionType == 'simple' && entrance.metadata.interiorImage) {
+            if (connectionType == 'simple' && entrance.metadata.interiorImage && entrance.isInside()) {
                 entranceHtml += interiorImageTemplate.replace('{image}', entrance.metadata.interiorImage);
             }
             else if(connectionType == 'none'
                     && entrance.isMapped()
                     && !['right_taltal_connector1', 'right_taltal_connector2', 'landfill'].includes(entrance.connectedTo())) {
                 let connection = entranceDict[entrance.connectedTo()];
-                if (connection.interiorImage) {
+                if (connection.interiorImage && Entrance.isInside(connection.id)) {
                     entranceHtml += interiorImageTemplate.replace('{image}', connection.interiorImage);
                 }
             }
@@ -240,49 +240,70 @@ class NodeTooltip {
 
             pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', action, options, optionAction);
         }
-        else if (args.entranceshuffle != 'none' && entrance.type != 'stairs') {
-
+        else if (args.entranceshuffle != 'none'
+                 && entrance.type != 'stairs') {
             let action = `startGraphicalConnection('${entrance.id}', '{type}')`;
 
-            if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
-                if (!entrance.isMapped() || entrance.isIncompleteConnection()) {
-                    let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
-                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
-                                                .replace('{text}', text)
-                                                .replace('{classes}', '')
-                                                .replace('{attributes}', '');
+            if (coupledEntrances() && inOutEntrances()) {
+                if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
+                    if (!entrance.isMapped() || entrance.isIncompleteConnection()) {
+                        let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
+                        pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
+                                                    .replace('{text}', text)
+                                                    .replace('{classes}', '')
+                                                    .replace('{attributes}', '');
+                    }
+
+                    if (!entrance.isMapped()) {
+                        let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                        pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
+                                                    .replace('{text}', text)
+                                                    .replace('{classes}', '')
+                                                    .replace('{attributes}', '');
+                    }
                 }
 
-                if (!entrance.isMapped()) {
-                    let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
-                    pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
-                                                .replace('{text}', text)
-                                                .replace('{classes}', '')
-                                                .replace('{attributes}', '');
+                if ((entrance.type != "connector" || args.entranceshuffle == 'mixed')
+                    && !entrance.isMapped()) {
+                    let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
+                    let title = 'Connect to simple entrance...';
+
+                    let options = Entrance.validConnections(entrance.id, "simple");
+                    options = sortByKey(options, x => [x[1]]);
+
+                    pinnedHtml += NodeTooltip.createEntranceDropdown(title, action.replace('{type}', 'simple'), options, optionAction);
                 }
             }
+            else if (!entrance.isMapped()) {
+                if (inOutEntrances()) {
+                    let target = entrance.isInside() ? 'overworld' : 'underworld';
+                    let text = 'Connect to {target}...';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', target))
+                                                .replace('{text}', text)
+                                                .replace('{target}', target)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
+                }
+                else {
+                    let text = 'Connect to overworld...';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'overworld'))
+                                                .replace('{text}', text)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
 
-            if ((entrance.type != "connector" || args.entranceshuffle == 'mixed')
-                && !entrance.isMapped()) {
-                let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
-                let title = 'Connect to simple entrance...';
-
-                // pinnedHtml += menuItemTemplate.replace('{action}', action)
-                //                               .replace('{text}', "Connect using map...")
-                //                               .replace('{classes}', '')
-                //                               .replace('{attributes}', '');
-
-                let options = Entrance.validConnections(entrance.id, true);
-                options = sortByKey(options, x => [x[1]]);
-
-                pinnedHtml += NodeTooltip.createEntranceDropdown(title, action.replace('{type}', 'simple'), options, optionAction);
+                    text = 'Connect to underworld...';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'underworld'))
+                                                .replace('{text}', text)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
+                }
             }
 
             if (entrance.connectedTo() != 'landfill') {
                 pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill('${entrance.id}')`)
-                                              .replace('{text}', 'Mark as useless')
-                                              .replace('{classes}', '')
-                                              .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+                                            .replace('{text}', 'Mark as useless')
+                                            .replace('{classes}', '')
+                                            .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
             }
         }
 

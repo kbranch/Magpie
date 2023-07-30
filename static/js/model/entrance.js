@@ -87,10 +87,10 @@ class Entrance {
     shouldDraw() {
         if (this.difficulty == 9
               && !localSettings.showOutOfLogic
-              && (!args.randomstartlocation || Entrance.isFound(startHouse) || (args.entranceshuffle != 'mixed' && this.isConnector()))
+              && (!args.randomstartlocation || Entrance.isFound(startHouse) || this.isMixedConnector())
               && this.connectedTo() != startHouse
               && !this.isConnected()
-              && (args.entranceshuffle == 'none' || (args.entranceshuffle != 'mixed' && this.isConnector()))) {
+              && (args.entranceshuffle == 'none' || (this.isConnector() && !this.isMixedConnector()))) {
             return false;
         }
 
@@ -101,17 +101,30 @@ class Entrance {
         return this.isMapped()
                && Connection.isIncomplete({ interior: this.connectedTo() });
     }
+
+    isMixedConnector() {
+        return Entrance.isMixedConnector(this.id);
+    }
+
+    isShuffledConnector() {
+        return Entrance.isShuffledConnector(this.id);
+    }
+
+    isInside() {
+        return Entrance.isInside(this.id);
+    }
     
-    static validConnections(sourceId, simpleOnly=false) {
-        let entrance = entranceDict[sourceId];
-        let requireConnector = args.entranceshuffle != 'mixed' && entrance.type == 'connector';
-        let requireSimple = simpleOnly || (args.entranceshuffle != 'mixed' && entrance.type != 'connector');
+    static validConnections(sourceId, type) {
+        let requireConnector = !connectorsMixed() && Entrance.isConnector(sourceId);
+        let isUnderworld = type == "underworld";
+        let requireSimple = type == "simple" || (!connectorsMixed() && !Entrance.isConnector(sourceId));
         let options = [];
         if (requireConnector) {
             options = randomizedEntrances.filter(x => entranceDict[x].type == 'connector'
                                                       && (!Entrance.isConnected(x)
                                                           || Connection.isIncomplete({ exterior: x }))
                                                       && Entrance.connectedTo(x) != 'landfill'
+                                                      && Entrance.isInside(x) == isUnderworld
                                                       && x != sourceId)
                                          .map(x => [x, entranceDict[x].name]);
         }
@@ -122,6 +135,7 @@ class Entrance {
                                                           || entranceDict[x].type != 'bingo')
                                                       && (args.tradequest
                                                           || entranceDict[x].type != 'trade')
+                                                      && Entrance.isInside(x) == isUnderworld
                                                       && ((requireSimple && !Entrance.isFound(x)
                                                            || !requireSimple && !Entrance.isMapped(x))))
                                          .map(x => [x, entranceDict[x].name]);
@@ -130,6 +144,14 @@ class Entrance {
         }
 
         return options;
+    }
+
+    static isShuffledConnector(id) {
+        return ['split', 'mixed', 'chaos', 'insane'].includes(args.entranceshuffle) && Entrance.isConnector(id);
+    }
+
+    static isMixedConnector(id) {
+        return ['mixed', 'chaos', 'insane'].includes(args.entranceshuffle) && Entrance.isConnector(id);
     }
 
     static usefulConnectors() {
@@ -197,5 +219,21 @@ class Entrance {
 
     static isVanilla(id) {
         return (vanillaConnectors() && Entrance.isConnector(id)) || Entrance.isStairs(id);
+    }
+
+    static isInside(id) {
+        return id.endsWith(':inside');
+    }
+
+    static getInsideOut(id) {
+        if (Entrance.isInside(id)) {
+            return id.replace(':inside', '');
+        }
+
+        return id + ':inside';
+    }
+
+    static getOutside(id) {
+        return id?.replace(':inside', '');
     }
 }

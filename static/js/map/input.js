@@ -42,6 +42,16 @@ function entranceClicked(element) {
         openConnectorDialog(destId);
     }
     else {
+        let targetInside = true;
+
+        if (graphicalMapType == 'overworld') {
+            targetInside = false;
+        }
+
+        if (Entrance.isInside(destId) != targetInside) {
+            destId = Entrance.getInsideOut(destId);
+        }
+
         connectEntrances(graphicalMapSource, destId);
     }
 }

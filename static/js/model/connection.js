@@ -62,7 +62,7 @@ class Connection {
     }
 
     isIncomplete() {
-        return this.entrances.length < this.connector?.entrances.length ?? 2;
+        return this.entrances.length / 2 < this.connector?.entrances.length ?? 2;
     }
 
     isSimple() {
@@ -78,8 +78,8 @@ class Connection {
         if (connection.length > 0) {
             connection = connection[0];
 
-            if (connection.entrances.length > 2) {
-                connection.entrances = connection.entrances.filter(x => x != entranceId);
+            if (connection.entrances.length > 4) {
+                connection.entrances = connection.entrances.filter(x => x != entranceId && (!coupledEntrances() || x != entranceMap[entranceId]));
             }
             else {
                 connections = connections.filter(x => x != connection);
@@ -89,6 +89,7 @@ class Connection {
 
     static findConnector({ exterior=null, interior=null }) {
         let id = interior != null ? interior : Entrance.connectedTo(exterior);
+        id = Entrance.getOutside(id);
 
         return connectors.filter(x => x.entrances.includes(id))[0];
     }
@@ -132,6 +133,12 @@ class Connection {
     static otherSideBlocked(entranceId) {
         let thisInsideData = entranceDict[Entrance.connectedTo(entranceId)];
         let connector = Connection.findConnector({ exterior: null, interior: thisInsideData.id });
+
+        // TODO: actually do this
+        if (!connector) {
+            return false;
+        }
+
         let otherId = connector.entrances[0] == thisInsideData.id ? connector.entrances[1] : connector.entrances[0];
         let otherInsideData = entranceDict[otherId];
         return otherInsideData?.oneWayBlocked ?? false;

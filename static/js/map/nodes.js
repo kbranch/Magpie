@@ -70,7 +70,7 @@ function createNodes(map, mapName) {
         }
 
         for (const coord of check.mapLocations(mapName)) {
-            if ((['split', 'mixed'].includes(args.entranceshuffle)
+            if ((!vanillaConnectors()
                  && coord.indirect)
                 || (args.entranceshuffle == 'simple'
                     && coord.indirect
@@ -156,7 +156,6 @@ function distributeChecks(unclaimedChecks) {
     let entrancesByConnector = {};
     let remappedNodes = [];
     let connectorsByCheckId = {};
-    let shuffleConnectors = ['split', 'mixed'].includes(args.entranceshuffle);
 
     connectors.map(connector => connector.checks.map(checkId => connectorsByCheckId[checkId] = connector));
 
@@ -164,7 +163,7 @@ function distributeChecks(unclaimedChecks) {
         let node = nodes[key];
 
         if(node.entrance == null 
-           && shuffleConnectors
+           && !vanillaConnectors()
            && node.checks.some(x => x.id in connectorsByCheckId)) {
             let connector = connectorsByCheckId[node.checks[0].id];
             node.entrance = new Entrance(connector.entrances[0]);
@@ -176,7 +175,7 @@ function distributeChecks(unclaimedChecks) {
         }
 
         let entranceId = node.entrance.id;
-        if (shuffleConnectors
+        if (!vanillaConnectors()
             && node.entrance.isConnector()) {
             let connectorId = node.entrance.metadata.connector;
             let connector = connectorDict[connectorId];

@@ -350,7 +350,19 @@ function resetColors() {
 }
 
 function vanillaConnectors() {
-    return !['split', 'mixed'].includes(args.entranceshuffle);
+    return !['split', 'mixed', 'wild', 'chaos', 'insane'].includes(args.entranceshuffle);
+}
+
+function connectorsMixed() {
+    return ['mixed', 'wild', 'chaos', 'insane'].includes(args.entranceshuffle);
+}
+
+function coupledEntrances() {
+    return ['none', 'simple', 'split', 'wild'].includes(args.entranceshuffle);
+}
+
+function inOutEntrances() {
+    return ['none', 'simple', 'split', 'chaos'].includes(args.entranceshuffle);
 }
 
 function resetSession() {

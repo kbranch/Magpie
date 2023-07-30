@@ -148,7 +148,7 @@ def getLogics(args, entranceMap, bossList, minibossMap):
         if entrance in entranceMap:
             worldSetup.entrance_mapping[entrance] = entranceMap[entrance]
         elif entrance in entrancePool:
-            worldSetup.entrance_mapping[entrance] = 'rooster_house'
+            worldSetup.entrance_mapping[entrance] = 'rooster_house:inside'
 
     if args.overworld == "dungeondive":
         worldSetup.entrance_mapping = {"d%d" % (n): "d%d" % (n) for n in range(9)}
@@ -210,7 +210,7 @@ def loadEntrances(logic, inventory):
     e.visit(logic.start)
 
     entrances = {}
-    for name,exterior in logic.world.overworld_entrance.items():
+    for name,exterior in logic.world.entrances.items():
         if not testEntrance(exterior, inventory):
             continue
 

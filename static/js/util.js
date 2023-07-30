@@ -311,13 +311,6 @@ function applySettings(oldArgs=null) {
         $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
     }
 
-    if (localSettings.showVanillaEntrances) {
-        $('.map-overlay').show();
-    }
-    else {
-        $('.map-overlay').hide();
-    }
-
     if (local) {
         $.ajax({
             type: "POST",
