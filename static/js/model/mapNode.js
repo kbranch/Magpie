@@ -251,7 +251,8 @@ class MapNode {
                     classes.push(`difficulty-${this.difficulty}`);
                 }
                 else if (mappedEntrance.id == 'landfill'
-                         || mappedEntrance.type == 'dummy') {
+                         || (mappedEntrance.type == 'dummy'
+                             && mappedEntrance.isInside())) {
                     classes.push('difficulty-checked');
                 }
                 else if (mappedEntrance.id == 'bk_shop') {
@@ -376,7 +377,10 @@ class MapNode {
                           && this.entrance?.connectedTo() != 'landfill'
                           && !this.entrance?.connectedToDummy();
         hideDifficulty |= difficulty == 'checked'
-                          && this.entrance?.isConnectedToConnector();
+                          && this.entrance
+                          && (this.entrance.isConnectedToConnector()
+                              || !inOutEntrances()
+                              || !coupledEntrances());
         hideDifficulty |= !localSettings.showChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation

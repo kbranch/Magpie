@@ -164,6 +164,8 @@ function distributeChecks(unclaimedChecks) {
 
         if(node.entrance == null 
            && !vanillaConnectors()
+           && inOutEntrances()
+           && coupledEntrances()
            && node.checks.some(x => x.id in connectorsByCheckId)) {
             let connector = connectorsByCheckId[node.checks[0].id];
             node.entrance = new Entrance(connector.entrances[0]);
@@ -176,6 +178,8 @@ function distributeChecks(unclaimedChecks) {
 
         let entranceId = node.entrance.id;
         if (!vanillaConnectors()
+            && inOutEntrances()
+            && coupledEntrances()
             && node.entrance.isConnector()) {
             let connectorId = node.entrance.metadata.connector;
             let connector = connectorDict[connectorId];
@@ -194,7 +198,13 @@ function distributeChecks(unclaimedChecks) {
             entrancesByConnector[connectorId].add(entranceId);
         }
         else {
-            checksByEntrance[entranceId] = node.checks;
+            let id = entranceId;
+
+            if (!Entrance.isInside(id)) {
+                id = Entrance.getInsideOut(id);
+            }
+
+            checksByEntrance[id] = node.checks;
         }
 
         if (!node.entrance.isMapped()) {

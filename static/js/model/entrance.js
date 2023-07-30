@@ -47,7 +47,7 @@ class Entrance {
     }
 
     isConnectedToConnector() {
-        return this.connectedTo() != null && Entrance.isConnector(this.connectedTo());
+        return this.connectedTo() != null && inOutEntrances() && coupledEntrances() && Entrance.isConnector(this.connectedTo());
     }
 
     isConnected() {
@@ -169,6 +169,10 @@ class Entrance {
             && 'start_house' in entranceMap)
         {
             return true;
+        }
+
+        if (!Entrance.isInside(id)) {
+            id = Entrance.getInsideOut(id);
         }
 
         return id in reverseEntranceMap;
