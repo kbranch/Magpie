@@ -159,7 +159,7 @@ def addStartingItems(inventory, args):
 def cleanUpEntranceMap(entranceMap, entrances, args):
     for source, dest in entranceMap.items():
         if dest in {'landfill', 'bk_shop'}:
-            entranceMap[source] = 'rooster_house'
+            entranceMap[source] = 'rooster_house:inside'
 
     for entrance in list(entranceMap.keys()):
         if entrance not in entrances:

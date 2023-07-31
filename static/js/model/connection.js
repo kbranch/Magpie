@@ -126,21 +126,19 @@ class Connection {
     }
 
     static thisSideBlocked(entranceId) {
-        let insideData = entranceDict[Entrance.connectedTo(entranceId)];
-        return insideData.oneWayBlocked ?? false;
+        let connectedTo = Entrance.connectedTo(entranceId);
+        let insideData = entranceDict[connectedTo];
+        return Entrance.isInside(connectedTo) && (insideData.oneWayBlocked ?? false);
     }
 
     static otherSideBlocked(entranceId) {
-        let thisInsideData = entranceDict[Entrance.connectedTo(entranceId)];
+        let connectedTo = Entrance.connectedTo(entranceId);
+        let thisInsideData = entranceDict[connectedTo];
         let connector = Connection.findConnector({ exterior: null, interior: thisInsideData.id });
-
-        // TODO: actually do this
-        if (!connector) {
-            return false;
-        }
 
         let otherId = connector.entrances[0] == thisInsideData.id ? connector.entrances[1] : connector.entrances[0];
         let otherInsideData = entranceDict[otherId];
-        return otherInsideData?.oneWayBlocked ?? false;
+
+        return Entrance.isInside(connectedTo) && (otherInsideData?.oneWayBlocked ?? false);
     }
 }

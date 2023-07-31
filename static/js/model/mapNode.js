@@ -141,12 +141,14 @@ class MapNode {
             return true;
         }
 
+        let connectedTo = this.entranceConnectedTo();
+
         if (!localSettings.showChecked
             && this.isChecked
             && (this.entrance == null
-                || (this.entranceConnectedTo() != startHouse
-                    && (!this.entrance.isConnectedToConnector())
-                        || this.entrance.connectedTo() == 'landfill'))) {
+                || (connectedTo != startHouse
+                    && (!Entrance.isConnector(connectedTo))
+                        || connectedTo == 'landfill'))) {
             return true;
         }
 
