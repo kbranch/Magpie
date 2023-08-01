@@ -44,7 +44,7 @@ class MapNode {
 
         return this.entrance?.isMappedToDungeon()
                || (this.checks.length > 0
-                   && this.checks[0].metadata.locations.some(x => x.map != 'overworld'));
+                   && this.checks[0].metadata.locations.some(x => !['overworld', 'underworld'].includes(x.map)));
     }
 
     dungeonName(pickingEntrance) {
@@ -57,7 +57,7 @@ class MapNode {
         }
 
         return this.checks[0].metadata.locations
-            .filter(x => x.map != 'overworld')[0]
+            .filter(x => !['overworld', 'underworld'].includes(x.map))[0]
             .map.toUpperCase();
     }
 
@@ -221,7 +221,10 @@ class MapNode {
                     classes.push('start-location');
                 }
 
-                if (mappedEntrance.type == 'connector' || mappedEntrance.type == 'stairs') {
+                if (mappedEntrance.type == 'connector'
+                    || mappedEntrance.type == 'stairs'
+                    || !inOutEntrances()
+                    || !coupledEntrances()) {
                     if (Connection.thisSideBlocked(this.entrance.id)) {
                         classes.push('one-way-out');
                     }
@@ -298,7 +301,9 @@ class MapNode {
     
         $(this.graphic).attr('data-entrance-id', entrance.id);
     
-        if (entrance.isConnectedToConnector()) {
+        if (entrance.isConnectedToConnector()
+            || !inOutEntrances()
+            || !coupledEntrances()) {
             if (entrance.isConnected()) {
                 let connection = entrance.mappedConnection();
                 $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));

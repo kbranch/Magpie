@@ -193,7 +193,11 @@ class Entrance {
     }
 
     static isConnected(id) {
-        return Entrance.connectedTo(id) != null && Entrance.isConnector(Entrance.connectedTo(id)) && connections.some(x => x.containsEntrance(id));
+        return Entrance.connectedTo(id) != null
+               && (Entrance.isConnector(Entrance.connectedTo(id))
+                   || !inOutEntrances()
+                   || !coupledEntrances())
+               && connections.some(x => x.containsEntrance(id));
     }
 
     static mappedConnection(id) {

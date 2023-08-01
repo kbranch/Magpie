@@ -1,5 +1,5 @@
 class Connection {
-    constructor(exteriors, connector, label=null, vanilla=false) {
+    constructor(exteriors, connector, label=null, vanilla=false, map=null) {
         if (!exteriors) {
             return;
         }
@@ -14,7 +14,7 @@ class Connection {
             this.connector = connector;
         }
 
-        this.map = this.connector.map;
+        this.map = map ?? this.connector.map;
 
         if (label == null) {
             // this.connector = connectors.filter(x => x.entrances.includes(fromInterior))[0] || null;
@@ -28,12 +28,15 @@ class Connection {
             //     }
             // }
 
-            let labelSet = new Set(connections.filter(x => x.map == this.map).map(x => x.label));
-            for (let i = 0; i < 26; i++) {
-                let char = String.fromCharCode(65 + i);
+            let labelSet = new Set(connections.filter(x => x.map == this.map 
+                                                      || (['overworld', 'underworld'].includes(x.map)
+                                                          && ['overworld', 'underworld'].includes(this.map)))
+                                              .map(x => x.label));
+            for (let i = 0; i < 26 * 26; i++) {
+                let label = `${String.fromCharCode(65 + i % 26)}${i > 25 ? String.fromCharCode(65 + Math.floor(i / 26)) : ''}`;
 
-                if (!labelSet.has(char)) {
-                    this.label = char;
+                if (!labelSet.has(label)) {
+                    this.label = label;
                     break;
                 }
             }
@@ -62,7 +65,9 @@ class Connection {
     }
 
     isIncomplete() {
-        return this.entrances.length / 2 < this.connector?.entrances.length ?? 2;
+        return inOutEntrances()
+               && coupledEntrances()
+               && (this.entrances.length / 2 < this.connector?.entrances.length ?? 2);
     }
 
     isSimple() {
@@ -102,19 +107,27 @@ class Connection {
         return connections.filter(x => x.entrances.includes(entranceId))[0] || null;
     }
 
-    static createConnection(entrances, vanilla=false) {
-        let connector = Connection.findConnector({ exterior: entrances[0] });
+    static createConnection(entrances, vanilla=false, map=null) {
+        let connector = null;
 
-        let connection = Connection.existingConnection(connector);
-        if (connection != null && connector.id != 'outer_rainbow') {
-            connection.entrances.push(entrances.filter(x => !connection.entrances.includes(x))[0]);
-            return;
+        if (coupledEntrances() && inOutEntrances()) {
+            connector = Connection.findConnector({ exterior: entrances[0] });
+
+            let connection = Connection.existingConnection(connector);
+            if (connection != null && connector.id != 'outer_rainbow') {
+                connection.entrances.push(entrances.filter(x => !connection.entrances.includes(x))[0]);
+                return;
+            }
         }
 
-        connections.push(new Connection(entrances, connector, null, vanilla));
+        connections.push(new Connection(entrances, connector, null, vanilla, map));
     }
 
     static isIncomplete({ exterior=null, interior=null }) {
+        if (!inOutEntrances() || !coupledEntrances()) {
+            return false;
+        }
+
         let connector = Connection.findConnector({ exterior: exterior, interior: interior });
         let connection = this.existingConnection(connector);
         return (connection?.isIncomplete() ?? false)
@@ -126,6 +139,10 @@ class Connection {
     }
 
     static thisSideBlocked(entranceId) {
+        if (!inOutEntrances() || !coupledEntrances()) {
+            return false;
+        }
+
         let connectedTo = Entrance.connectedTo(entranceId);
         let insideData = entranceDict[connectedTo];
         return Entrance.isInside(connectedTo) && (insideData.oneWayBlocked ?? false);
@@ -135,6 +152,10 @@ class Connection {
         let connectedTo = Entrance.connectedTo(entranceId);
         let thisInsideData = entranceDict[connectedTo];
         let connector = Connection.findConnector({ exterior: null, interior: thisInsideData.id });
+
+        if (!connector) {
+            return false;
+        }
 
         let otherId = connector.entrances[0] == thisInsideData.id ? connector.entrances[1] : connector.entrances[0];
         let otherInsideData = entranceDict[otherId];

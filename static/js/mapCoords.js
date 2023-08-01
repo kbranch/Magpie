@@ -151,11 +151,9 @@ function mapClick(img, event) {
         y: info.y,
     }
 
-    let coord = `
-"underworldLocations":  [
-${JSON.stringify(location, null, 4)}
-],`
-    console.log(coord);
+    let coord = `,
+${JSON.stringify(location, null, 4)}`
+    console.log(location);
     navigator.clipboard.writeText(coord);
     activeCheck?.locations.push(location);
 

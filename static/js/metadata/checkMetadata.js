@@ -10,6 +10,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1554,
 			 "y":1852
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1530,
+			  "y": 1828
 		  }
 	   ],
 	   "index":0,
@@ -38,6 +43,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1716,
 			 "y":1852
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1684,
+			  "y": 1868
 		  }
 	   ],
 	   "index":2,
@@ -66,6 +76,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":112,
 			 "y":422
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 72,
+			  "y": 438
 		  }
 	   ],
 	   "index":4,
@@ -80,6 +95,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2138,
 			 "y":1624
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2210,
+			  "y": 1624
 		  }
 	   ],
 	   "index":5,
@@ -114,6 +134,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2186,
 			 "y":1738
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2194,
+			  "y": 1730
 		  }
 	   ],
 	   "index":7,
@@ -156,6 +181,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":550,
 			 "y":1852
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 606,
+			  "y": 1876
 		  }
 	   ],
 	   "index":10,
@@ -184,6 +214,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":436,
 			 "y":1104
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 356,
+			  "y": 1088
 		  }
 	   ],
 	   "index":12,
@@ -199,6 +234,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":566,
 			 "y":1494
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 566,
+			  "y": 1478
 		  }
 	   ],
 	   "index":13,
@@ -212,6 +252,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":566,
 			 "y":1494
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 582,
+			  "y": 1462
 		  }
 	   ],
 	   "index":13,
@@ -227,6 +272,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":404,
 			 "y":1234
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 396,
+			  "y": 1178
 		  }
 	   ],
 	   "index":14,
@@ -240,6 +290,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":776,
 			 "y":1722
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 720,
+			  "y": 1722
 		  }
 	   ],
 	   "index":15,
@@ -284,6 +339,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1732,
 			 "y":96
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1628,
+			  "y": 210
 		  }
 	   ],
 	   "index":18,
@@ -297,6 +357,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2024,
 			 "y":1348
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2008,
+			  "y": 1348
 		  }
 	   ],
 	   "index":19,
@@ -354,6 +419,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1182,
 			 "y":64
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1020,
+			  "y": 178
 		  }
 	   ],
 	   "index":23,
@@ -368,6 +438,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":744,
 			 "y":96
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 712,
+			  "y": 178
 		  }
 	   ],
 	   "index":24,
@@ -545,6 +620,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2332,
 			 "y":1380
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2494,
+			  "y": 1348
 		  }
 	   ],
 	   "index":34,
@@ -558,6 +638,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2348,
 			 "y":276
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2348,
+			  "y": 332
 		  }
 	   ],
 	   "index":35,
@@ -572,6 +657,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1586,
 			 "y":178
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1506,
+			  "y": 80
 		  }
 	   ],
 	   "index":36,
@@ -586,6 +676,11 @@ let coordDict = {
 				"x": 1392,
 				"y": 130
 			},
+			{
+				"map": "underworld",
+				"x": 1262,
+				"y": 162
+			}
 		//   {
 		// 	 "map":"overworld",
 		// 	 "x":1424,
@@ -630,6 +725,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2510,
 			 "y":1560
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2332,
+			  "y": 1706
 		  }
 	   ],
 	   "index":40,
@@ -644,6 +744,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":2234,
 			 "y":1576
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 2154,
+			  "y": 1316
 		  }
 	   ],
 	   "index":41,
@@ -697,6 +802,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1538,
 			 "y":698
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1538,
+			  "y": 552
 		  }
 	   ],
 	   "index":45,
@@ -711,6 +821,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1538,
 			 "y":828
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1328,
+			  "y": 568
 		  }
 	   ],
 	   "index":46,
@@ -725,6 +840,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1538,
 			 "y":828
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1490,
+			  "y": 942
 		  }
 	   ],
 	   "index":47,
@@ -783,6 +903,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1036,
 			 "y":1754
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1004,
+			  "y": 1462
 		  }
 	   ],
 	   "index":51,
@@ -824,6 +949,11 @@ let coordDict = {
 			 "x":1036,
 			 "y":1868
 		  },
+		  {
+			  "map": "underworld",
+			  "x": 1036,
+			  "y": 1868
+		  }
 		//   {
 		// 	 "map":"overworld",
 		// 	 "x":1570,
@@ -910,6 +1040,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1328,
 			 "y":1006
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1360,
+			  "y": 942
 		  }
 	   ],
 	   "index":60,
@@ -923,6 +1058,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1700,
 			 "y":1088
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1692,
+			  "y": 1136
 		  }
 	   ],
 	   "index":61,
@@ -988,6 +1128,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":988,
 			 "y":1088
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1052,
+			  "y": 1104
 		  }
 	   ],
 	   "index":66,
@@ -1002,6 +1147,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":988,
 			 "y":1088
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 938,
+			  "y": 1234
 		  }
 	   ],
 	   "index":67,
@@ -1015,6 +1165,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":792,
 			 "y":1120
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 712,
+			  "y": 1072
 		  }
 	   ],
 	   "index":68,
@@ -1028,6 +1183,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":906,
 			 "y":454
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 834,
+			  "y": 398
 		  }
 	   ],
 	   "index":69,
@@ -1059,6 +1219,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1068,
 			 "y":958
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1068,
+			  "y": 926
 		  }
 	   ],
 	   "index":71,
@@ -1086,6 +1251,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":178,
 			 "y":292
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 258,
+			  "y": 292
 		  }
 	   ],
 	   "index":73,
@@ -1113,6 +1283,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":178,
 			 "y":292
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 112,
+			  "y": 276
 		  }
 	   ],
 	   "index":75,
@@ -1127,6 +1302,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":372,
 			 "y":568
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 340,
+			  "y": 536
 		  }
 	   ],
 	   "index":76,
@@ -1145,6 +1325,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":436,
 			 "y":828
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 48,
+			  "y": 698
 		  }
 	   ],
 	   "index":77,
@@ -1160,6 +1345,11 @@ let coordDict = {
 			 "x":436,
 			 "y":828
 		  },
+		  {
+			  "map": "underworld",
+			  "x": 388,
+			  "y": 828
+		  }
 		//   {
 		// 	 "map":"overworld",
 		// 	 "x":128,
@@ -1204,6 +1394,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":436,
 			 "y":682
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 388,
+			  "y": 698
 		  }
 	   ],
 	   "index":81,
@@ -1243,6 +1438,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":1052,
 			 "y":1998
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 1100,
+			  "y": 2046
 		  }
 	   ],
 	   "index":84,
@@ -1283,6 +1483,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":242,
 			 "y":1348
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 258,
+			  "y": 1266
 		  }
 	   ],
 	   "index":87,
@@ -1323,6 +1528,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":80,
 			 "y":1380
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 64,
+			  "y": 1364
 		  }
 	   ],
 	   "index":90,
@@ -1336,6 +1546,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":518,
 			 "y":1088
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 614,
+			  "y": 876
 		  }
 	   ],
 	   "index":91,
@@ -1349,6 +1564,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":518,
 			 "y":1088
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 664,
+			  "y": 876
 		  }
 	   ],
 	   "index":92,
@@ -4308,6 +4528,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":550,
 			 "y":1250
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 510,
+			  "y": 1202
 		  }
 	   ],
 	   "index":248,
@@ -4321,6 +4546,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":550,
 			 "y":1250
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 510,
+			  "y": 1202
 		  }
 	   ],
 	   "index":249,
@@ -4334,6 +4564,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":874,
 			 "y":812
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 874,
+			  "y": 844
 		  }
 	   ],
 	   "index":250,
@@ -4347,6 +4582,16 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":874,
 			 "y":812
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 842,
+			  "y": 828
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 922,
+			  "y": 828
 		  }
 	   ],
 	   "index": 250,
@@ -4400,6 +4645,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":404,
 			 "y":1364
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 436,
+			  "y": 1364
 		  }
 	   ],
 	   "index":253,
@@ -4413,6 +4663,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":664,
 			 "y":1966
+		  },
+		  {
+			  "map": "underworld",
+			  "x": 720,
+			  "y": 1966
 		  }
 	   ],
 	   "index":254,

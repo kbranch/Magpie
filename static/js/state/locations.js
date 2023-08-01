@@ -46,7 +46,7 @@ function loadEntrances() {
         if (raw) {
             let dehydratedConnections = JSON.parse(raw);
             for (const conn of dehydratedConnections) {
-                connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla));
+                connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
             }
         }
 
@@ -179,7 +179,7 @@ function connectEntrances(from, to, refresh=true) {
 
     entranceMap[from] = to;
 
-    if (!['chaos', 'insane'].includes(args.entranceshuffle)) {
+    if (coupledEntrances()) {
         entranceMap[to] = from;
     }
 

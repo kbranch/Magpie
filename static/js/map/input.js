@@ -52,7 +52,14 @@ function entranceClicked(element) {
             destId = Entrance.getInsideOut(destId);
         }
 
+        let entrances = [graphicalMapSource, destId];
+
         connectEntrances(graphicalMapSource, destId);
+
+        if ((!coupledEntrances() || !inOutEntrances())
+            && ['overworld', 'underworld'].includes(graphicalMapType)) {
+            Connection.createConnection(entrances, false, graphicalMapType);
+        }
     }
 }
 
