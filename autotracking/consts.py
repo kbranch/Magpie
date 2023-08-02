@@ -148,7 +148,7 @@ dungeonKeyDoors = [
         0xDA49: [0x40],
         0xDA4A: [0x01],
     },
-    { # D0(9)
+    { # D0
         0xDDE5: [0x02],
         0xDDE9: [0x04],
         0xDDF0: [0x04],

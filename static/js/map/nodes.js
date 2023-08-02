@@ -38,7 +38,7 @@ function createNodes(map, mapName) {
 
     if (args.randomstartlocation
         && args.entranceshuffle == 'none'
-        && Entrance.isFound(startHouse)
+        && Entrance.isMapped(startHouse)
         && mapName == "overworld") {
         if (!Entrance.connectedTo(startHouse)) {
             connectEntrances(startHouse, Entrance.connectedFrom(startHouse), false);
@@ -50,8 +50,8 @@ function createNodes(map, mapName) {
     }
 
     if (entrances.length > 0) {
-        if (args.randomstartlocation && !Entrance.isFound(startHouse)) {
-            createEntranceNodes(startLocations, scaling);
+        if (args.randomstartlocation && !Entrance.isMapped(startHouse)) {
+            createEntranceNodes(startLocations.filter(x => entranceDict[x].locations[0].map == mapName), scaling);
         }
         else {
             createEntranceNodes(entrances, scaling);
@@ -210,7 +210,7 @@ function distributeChecks(unclaimedChecks) {
         if (!node.entrance.isMapped()) {
             if (args.entranceshuffle != 'none'
                 || (node.entrance.canBeStart()
-                    && !Entrance.isFound(startHouse))
+                    && !Entrance.isMapped(startHouse))
                 || (args.dungeonshuffle
                     && node.entrance.isDungeon())) {
                 node.checks = [];

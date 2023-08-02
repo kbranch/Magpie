@@ -46,6 +46,30 @@ class Connection {
         }
     }
 
+    addEntrance(entranceId) {
+        this.entrances.push(entranceId);
+
+        let newEntrances = [];
+        let head = this.entrances[0];
+        let i = 0;
+        while (head in reverseEntranceMap && i < this.entrances.length) {
+            head = reverseEntranceMap[head];
+            i++;
+        }
+
+        i = 0;
+        while (head in entranceMap && i < this.entrances.length) {
+            newEntrances.push(head);
+
+            head = entranceMap[head];
+            i++;
+        }
+
+        newEntrances.push(head);
+
+        this.entrances = newEntrances;
+    }
+
     clone() {
         let copy = Object.assign(new Connection(), this);
         copy.entrances = [...this.entrances];
@@ -121,6 +145,33 @@ class Connection {
         }
 
         connections.push(new Connection(entrances, connector, null, vanilla, map));
+    }
+
+    static advancedErConnection(entrances, map) {
+        if (!coupledEntrances()) {
+            let sourceChain = Connection.existingConnectionByEntrance(entrances[0]);
+            let destChain = Connection.existingConnectionByEntrance(entrances[1]);
+
+            if (!sourceChain && !destChain) {
+                Connection.createConnection(entrances, false, map);
+            }
+            else if (sourceChain && destChain) {
+                for (const id of destChain.entrances) {
+                    sourceChain.addEntrance(id);
+                }
+
+                connections = connections.filter(x => x !== destChain);
+            }
+            else if (sourceChain) {
+                sourceChain.addEntrance(entrances[1]);
+            }
+            else {
+                destChain.addEntrance(entrances[0]);
+            }
+        }
+        else if (!inOutEntrances()) {
+            Connection.createConnection(entrances, false, map);
+        }
     }
 
     static isIncomplete({ exterior=null, interior=null }) {

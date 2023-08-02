@@ -56,9 +56,8 @@ function entranceClicked(element) {
 
         connectEntrances(graphicalMapSource, destId);
 
-        if ((!coupledEntrances() || !inOutEntrances())
-            && ['overworld', 'underworld'].includes(graphicalMapType)) {
-            Connection.createConnection(entrances, false, graphicalMapType);
+        if (['overworld', 'underworld'].includes(graphicalMapType)) {
+            Connection.advancedErConnection(entrances, graphicalMapType);
         }
     }
 }

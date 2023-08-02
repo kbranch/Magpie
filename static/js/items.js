@@ -245,7 +245,7 @@ function calculateDungeonChecks() {
     }
     
     for (let i = 0; i < 9; i++) {
-        let d = i == 0 ? 9 : i;
+        let d = i;// == 0 ? 9 : i;
         let item = `ITEM${d}`;
         let checked = checks[i].filter(x => x.isChecked()).length;
 

@@ -208,13 +208,19 @@ function setStartLocation(entranceId) {
         entranceMap[startHouse] = entranceId;
     }
     else {
-        for (const start of startLocations) {
-            if (entranceMap[start] == startHouse) {
-                delete entranceMap[start];
-            }
+        if (startHouse in entranceMap) {
+            clearEntranceMapping(startHouse, false);
         }
 
-        entranceMap[entranceId] = startHouse;
+        connectEntrances(startHouse, entranceId);
+        Connection.advancedErConnection([startHouse, entranceId], entranceDict[entranceId].locations[0].map);
+        // for (const start of startLocations) {
+        //     if (entranceMap[start] == startHouse) {
+        //         delete entranceMap[start];
+        //     }
+        // }
+
+        // entranceMap[entranceId] = startHouse;
     }
 
     saveEntrances();

@@ -35,7 +35,7 @@ class Entrance {
     }
 
     isMappedToDungeon() {
-        return Entrance.isDungeon(this.connectedTo());
+        return Entrance.isDungeon(this.connectedTo()) && this.isInside();
     }
 
     isConnector() {
@@ -61,7 +61,7 @@ class Entrance {
     isMappedToSelf() {
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
-            && 'start_house' in entranceMap
+            && startHouse in entranceMap
             && !(this.id in reverseEntranceMap)
             && !(this.id in entranceMap))
         {
@@ -87,7 +87,7 @@ class Entrance {
     shouldDraw() {
         if (this.difficulty == 9
               && !localSettings.showOutOfLogic
-              && (!args.randomstartlocation || Entrance.isFound(startHouse) || this.isMixedConnector())
+              && (!args.randomstartlocation || Entrance.isMapped(startHouse) || this.isMixedConnector())
               && this.connectedTo() != startHouse
               && !this.isConnected()
               && (args.entranceshuffle == 'none' || (this.isConnector() && !this.isMixedConnector()))) {
@@ -132,12 +132,19 @@ class Entrance {
             options = randomizedEntrances.filter(x => (!requireSimple || entranceDict[x].type != 'connector')
                                                       && ((!requireSimple && args.shufflejunk) || entranceDict[x].type != 'dummy')
                                                       && (['bingo', 'bingo-full'].includes(args.goal)
+                                                          || args.shufflejunk
                                                           || entranceDict[x].type != 'bingo')
                                                       && (args.tradequest
+                                                          || args.shufflejunk
                                                           || entranceDict[x].type != 'trade')
                                                       && Entrance.isInside(x) == isUnderworld
-                                                      && ((requireSimple && !Entrance.isFound(x)
-                                                           || !requireSimple && !Entrance.isMapped(x))))
+                                                      && ((coupledEntrances()
+                                                           && ((requireSimple && !Entrance.isFound(x)
+                                                               || !requireSimple && !Entrance.isMapped(x))))
+                                                          || (!coupledEntrances()
+                                                              && !Entrance.isFound(x)
+                                                              && !Entrance.isMapped(x)))
+                                                )
                                          .map(x => [x, entranceDict[x].name]);
 
             options.push(['bk_shop', entranceDict['bk_shop'].name])
@@ -166,12 +173,12 @@ class Entrance {
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
             && (args.dungeonshuffle && !Entrance.isDungeon(id))
-            && 'start_house' in entranceMap)
+            && startHouse in entranceMap)
         {
             return true;
         }
 
-        if (!Entrance.isInside(id)) {
+        if (coupledEntrances() && !Entrance.isInside(id)) {
             id = Entrance.getInsideOut(id);
         }
 
@@ -193,10 +200,10 @@ class Entrance {
     }
 
     static isConnected(id) {
-        return Entrance.connectedTo(id) != null
-               && (Entrance.isConnector(Entrance.connectedTo(id))
-                   || !inOutEntrances()
-                   || !coupledEntrances())
+        return ((!coupledEntrances() && !Entrance.isStairs(id))
+                || (Entrance.connectedTo(id) != null
+                    && (Entrance.isConnector(Entrance.connectedTo(id))
+                        || !inOutEntrances())))
                && connections.some(x => x.containsEntrance(id));
     }
 

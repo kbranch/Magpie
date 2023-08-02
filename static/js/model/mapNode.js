@@ -147,7 +147,7 @@ class MapNode {
             && this.isChecked
             && (this.entrance == null
                 || (connectedTo != startHouse
-                    && (!Entrance.isConnector(connectedTo))
+                    && ((!Entrance.isConnector(connectedTo) && coupledEntrances()))
                         || connectedTo == 'landfill'))) {
             return true;
         }
@@ -158,7 +158,7 @@ class MapNode {
 
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
-            && Entrance.isFound(startHouse)
+            && Entrance.isMapped(startHouse)
             && this.entrance.connectedTo() != startHouse
             && this.checks.length == 0
             && !this.entrance.isVanilla()) {
@@ -269,8 +269,8 @@ class MapNode {
             }
             else if (this.difficulty == 'checked') {
                 if (!args.randomstartlocation 
-                    || Entrance.isFound(startHouse)
-                    || (this.entrance.isMixedConnector())) {
+                    || Entrance.isMapped(startHouse)
+                    || (!connectorsMixed() && this.entrance.isConnector())) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
@@ -391,9 +391,9 @@ class MapNode {
         hideDifficulty |= !localSettings.showChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation
-                          && !Entrance.isFound('start_house');
+                          && !Entrance.isMapped(startHouse);
         hideDifficulty |= args.randomstartlocation
-                          && this.entrance?.connectedTo() == 'start_house'
+                          && this.entrance?.connectedTo() == startHouse
                           && this.difficulty == 'checked';
         hideDifficulty |= this.boss != null;
 
@@ -462,10 +462,18 @@ class MapNode {
                 && activeMap == 'overworld')) {
 
             let shadowSize = 1 / (localSettings.checkSize / checkSize);
+            let connectorLabel = this.connectorLabel;
+
+            if (!coupledEntrances()) {
+                let connection = Connection.existingConnectionByEntrance(this.entrance.id);
+                if (connection) {
+                    connectorLabel += (connection.entrances.indexOf(this.entrance.id) + 1).toString();
+                }
+            }
 
             let connectorOverlay = createElement('p', {
                 class: "node-overlay",
-                'data-connector-label': this.connectorLabel,
+                'data-connector-label': connectorLabel,
                 css: `font-size: ${checkSize * 0.72}px;
                       text-shadow: -${shadowSize}px -${shadowSize}px 0 black,  
                                     ${shadowSize}px -${shadowSize}px 0 black,
@@ -476,7 +484,7 @@ class MapNode {
 
             let label;
             if (this.connectorLabel) {
-                label = this.connectorLabel;
+                label = connectorLabel;
             }
             else {
                 label = this.dungeonName(pickingEntrance)[1];

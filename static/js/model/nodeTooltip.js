@@ -218,7 +218,7 @@ class NodeTooltip {
 
         if (entrance.canBeStart()
             && !entrance.isMapped()
-            && !Entrance.isFound(startHouse)) {
+            && !Entrance.isMapped(startHouse)) {
             pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation('${entrance.id}');`)
                                           .replace('{text}', 'Set as start location')
                                           .replace('{classes}', '')
@@ -465,7 +465,7 @@ class NodeTooltip {
             ['KEY6', 'D6 Small Key'],
             ['KEY7', 'D7 Small Key'],
             ['KEY8', 'D8 Small Key'],
-            ['KEY9', 'D0 Small Key'],
+            ['KEY0', 'D0 Small Key'],
             ['NIGHTMARE_KEY1', 'D1 Nightmare Key'],
             ['NIGHTMARE_KEY2', 'D2 Nightmare Key'],
             ['NIGHTMARE_KEY3', 'D3 Nightmare Key'],
@@ -474,7 +474,7 @@ class NodeTooltip {
             ['NIGHTMARE_KEY6', 'D6 Nightmare Key'],
             ['NIGHTMARE_KEY7', 'D7 Nightmare Key'],
             ['NIGHTMARE_KEY8', 'D8 Nightmare Key'],
-            ['NIGHTMARE_KEY9', 'D0 Nightmare Key'],
+            ['NIGHTMARE_KEY0', 'D0 Nightmare Key'],
             ['MAP1', 'D1 Map'],
             ['MAP2', 'D2 Map'],
             ['MAP3', 'D3 Map'],
@@ -483,7 +483,7 @@ class NodeTooltip {
             ['MAP6', 'D6 Map'],
             ['MAP7', 'D7 Map'],
             ['MAP8', 'D8 Map'],
-            ['MAP9', 'D0 Map'],
+            ['MAP0', 'D0 Map'],
             ['COMPASS1', 'D1 Compass'],
             ['COMPASS2', 'D2 Compass'],
             ['COMPASS3', 'D3 Compass'],
@@ -492,7 +492,7 @@ class NodeTooltip {
             ['COMPASS6', 'D6 Compass'],
             ['COMPASS7', 'D7 Compass'],
             ['COMPASS8', 'D8 Compass'],
-            ['COMPASS9', 'D0 Compass'],
+            ['COMPASS0', 'D0 Compass'],
             ['STONE_BEAK1', 'D1 Stone Beak'],
             ['STONE_BEAK2', 'D2 Stone Beak'],
             ['STONE_BEAK3', 'D3 Stone Beak'],
@@ -501,7 +501,7 @@ class NodeTooltip {
             ['STONE_BEAK6', 'D6 Stone Beak'],
             ['STONE_BEAK7', 'D7 Stone Beak'],
             ['STONE_BEAK8', 'D8 Stone Beak'],
-            ['STONE_BEAK9', 'D0 Stone Beak'],
+            ['STONE_BEAK0', 'D0 Stone Beak'],
             ['MEDICINE', 'Medicine'],
             ['SINGLE_ARROW', '1 Arrow'],
             ['ARROWS_10', '10 Arrows'],

@@ -45,6 +45,7 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
 
     accessibility[trackerLogic] = accessibility[trackerLogic].difference(accessibility[logics[0]])
         
+    inventory['KEY0'] = 9
     inventory['KEY1'] = 9
     inventory['KEY2'] = 9
     inventory['KEY3'] = 9
@@ -53,7 +54,6 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
     inventory['KEY6'] = 9
     inventory['KEY7'] = 9
     inventory['KEY8'] = 9
-    inventory['KEY9'] = 9
 
     # Find more checks that are behind small keys
     alreadyInKeyLogic = set()
