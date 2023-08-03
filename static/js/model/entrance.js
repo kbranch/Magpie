@@ -143,7 +143,7 @@ class Entrance {
                                                                || !requireSimple && !Entrance.isMapped(x))))
                                                           || (!coupledEntrances()
                                                               && !Entrance.isFound(x)
-                                                              && !Entrance.isMapped(x)))
+                                                              /*&& !Entrance.isMapped(x)*/))
                                                 )
                                          .map(x => [x, entranceDict[x].name]);
 

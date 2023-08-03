@@ -465,7 +465,7 @@ class MapNode {
             let connectorLabel = this.connectorLabel;
 
             if (!coupledEntrances()) {
-                let connection = Connection.existingConnectionByEntrance(this.entrance.id);
+                let connection = Connection.existingConnectionByEntrance(this.entrance?.id);
                 if (connection) {
                     connectorLabel += (connection.entrances.indexOf(this.entrance.id) + 1).toString();
                 }

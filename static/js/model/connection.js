@@ -47,7 +47,9 @@ class Connection {
     }
 
     addEntrance(entranceId) {
-        this.entrances.push(entranceId);
+        if (!this.entrances.includes(entranceId)) {
+            this.entrances.push(entranceId);
+        }
 
         let newEntrances = [];
         let head = this.entrances[0];
@@ -58,7 +60,7 @@ class Connection {
         }
 
         i = 0;
-        while (head in entranceMap && i < this.entrances.length) {
+        while (head in entranceMap && i < this.entrances.length - 1) {
             newEntrances.push(head);
 
             head = entranceMap[head];
@@ -160,7 +162,9 @@ class Connection {
                     sourceChain.addEntrance(id);
                 }
 
-                connections = connections.filter(x => x !== destChain);
+                if (sourceChain != destChain) {
+                    connections = connections.filter(x => x !== destChain);
+                }
             }
             else if (sourceChain) {
                 sourceChain.addEntrance(entrances[1]);
