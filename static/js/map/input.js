@@ -17,17 +17,19 @@ function checkGraphicMouseEnter(element) {
 
     let node = nodes[element.id];
     let connection = node.entrance?.mappedConnection();
-    if (connection && (!coupledEntrances() || !inOutEntrances())) {
+    if (connection && !coupledEntrances()) {
         let connectionNodes = sortByKey(Object.values(nodes).filter(x => connection.entrances.includes(x.entrance?.id)),
                                         x => connection.entrances.indexOf(x.entrance?.id));
 
         for (let i = 0; i < connectionNodes.length - 1; i++) {
-            let selector = `.check-graphic[data-entrance-id="${connectionNodes[i].entrance.id}"], .check-graphic[data-entrance-id="${connectionNodes[i + 1].entrance.id}"]`;
-            $(selector).connections({ class: 'entrance-to connector-line' });
+            let current = connectionNodes[i];
+            let next = connectionNodes[i + 1];
+            let selector = `.check-graphic[data-entrance-id="${current.entrance.id}"], .check-graphic[data-entrance-id="${next.entrance.id}"]`;
+            $(selector).connections({ class: `${current == node || next == node ? 'entrance-from' : 'entrance-to'} connector-line` });
             $(selector).connections({ class: 'outer-entrance-connection connector-line' });
         }
     }
-    else if($(element).hasClass('connector')
+    else if(($(element).hasClass('connector') || !inOutEntrances())
        && $(element).is('[data-connected-to')) {
         let child = $(element).find('[data-connector-label]')[0];
         let label = $(child).attr('data-connector-label');

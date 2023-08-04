@@ -33,7 +33,11 @@ class Connection {
                                                           && ['overworld', 'underworld'].includes(this.map)))
                                               .map(x => x.label));
             for (let i = 0; i < 26 * 26; i++) {
-                let label = `${String.fromCharCode(65 + i % 26)}${i > 25 ? String.fromCharCode(65 + Math.floor(i / 26)) : ''}`;
+                let label = `${String.fromCharCode(65 + i)}`;
+
+                if (i > 25) {
+                    label = `${String.fromCharCode(65 + Math.floor(i / 26) - 1)}${String.fromCharCode(65 + i % 26)}`;
+                }
 
                 if (!labelSet.has(label)) {
                     this.label = label;

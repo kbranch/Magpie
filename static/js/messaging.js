@@ -50,7 +50,8 @@ function processItemMessage(message) {
 }
 
 function processEntranceMessage(message) {
-    if (!autotrackerFeatures.includes('entrances')) {
+    // Temporarily disable entrance tracking for the monthly
+    if (true || !autotrackerFeatures.includes('entrances')) {
         console.log("Entrances feature disabled, ignoring")
         return;
     }

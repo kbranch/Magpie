@@ -42,10 +42,10 @@ function endGraphicalConnection(destId = null) {
         refreshCheckList();
     }
 
-    if (graphicalMapOriginalMap != getActiveMap()) {
-        openTab(graphicalMapOriginalMap);
-        graphicalMapOriginalMap = null;
-    }
+    // if (graphicalMapOriginalMap != getActiveMap()) {
+    //     openTab(graphicalMapOriginalMap);
+    //     graphicalMapOriginalMap = null;
+    // }
 
     drawActiveTab();
 }

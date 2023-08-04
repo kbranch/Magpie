@@ -181,10 +181,10 @@ class NodeTooltip {
 
             if (entrance.isFound()
                 && !entrance.isMappedToSelf()
-                && !entrance.isConnectedToConnector()
+                && (!entrance.isConnectedToConnector() || !coupledEntrances())
                 && connectionType == 'none') {
                 let connection = entranceDict[entrance.connectedFrom()];
-                if (connection && inOutEntrances() && coupledEntrances()) {
+                if (connection && (inOutEntrances() || !coupledEntrances())) {
                     entranceHtml += connectionTemplate.replace('{connection}', `Found at ${connection.name}`);
                 }
             }
