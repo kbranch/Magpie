@@ -314,7 +314,7 @@ class NodeTooltip {
                                               .replace('{attributes}', '');
         }
 
-        if (entrance.isMapped() && !entrance.isVanilla()) {
+        if ((entrance.isMapped() || (!coupledEntrances() && entrance.isFound())) && !entrance.isVanilla()) {
             pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping('${entrance.id}')`)
                                           .replace('{text}', 'Clear Mapping')
                                           .replace('{classes}', '')

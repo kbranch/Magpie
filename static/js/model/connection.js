@@ -109,11 +109,44 @@ class Connection {
         if (connection.length > 0) {
             connection = connection[0];
 
-            if (connection.entrances.length > 4) {
-                connection.entrances = connection.entrances.filter(x => x != entranceId && (!coupledEntrances() || x != entranceMap[entranceId]));
+            if (!coupledEntrances()) {
+                if (connection.entrances.length <= 2) {
+                    connections = connections.filter(x => x != connection);
+                    return;
+                }
+
+                let linkIndex = connection.entrances.indexOf(entranceId);
+
+                if (linkIndex == 0 || linkIndex == connection.entrances.length - 1) {
+                    connection.entrances = connection.entrances.filter(x => x != entranceId);
+                    return;
+                }
+
+                let newChain = [];
+                for (let i = linkIndex + 1; i < connection.entrances.length; i++) {
+                    newChain.push(connection.entrances[i]);
+                }
+
+                connection.entrances = connection.entrances.filter(x => !newChain.includes(x));
+
+                if (connection.entrances.length <= 1) {
+                    connections = connections.filter(x => x != connection);
+                }
+
+                if (newChain.length > 1) {
+                    Connection.createConnection(newChain, false, 'overworld');
+                }
+            }
+            else if(!inOutEntrances()) {
+                connections = connections.filter(x => x != connection);
             }
             else {
-                connections = connections.filter(x => x != connection);
+                if (connection.entrances.length > 4) {
+                    connection.entrances = connection.entrances.filter(x => x != entranceId && x != entranceMap[entranceId]);
+                }
+                else {
+                    connections = connections.filter(x => x != connection);
+                }
             }
         }
     }

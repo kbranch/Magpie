@@ -241,10 +241,8 @@ function clearEntranceMapping(entranceId, housekeeping=true) {
 
     if (Entrance.isConnected(entranceId)) {
         let conn = Entrance.mappedConnection(entranceId);
-        if (conn.entrances.length == 4) {
-            if (coupledEntrances()) {
-                delete entranceMap[entranceMap[conn.otherSide(entranceId)]];
-            }
+        if (coupledEntrances() && conn.entrances.length == 4) {
+            delete entranceMap[entranceMap[conn.otherSide(entranceId)]];
             delete entranceMap[conn.otherSide(entranceId)];
         }
     }
