@@ -27,6 +27,11 @@ class State:
         self.room = None
         self.indoors = None
         self.indoorsChanged = False
+        self.spawnRoom = None
+        self.spawnMap = None
+        self.spawnX = None
+        self.spawnY = None
+        self.spawnChanged = False
         self.lastRoom = None
         self.screenX = None
         self.screenY = None

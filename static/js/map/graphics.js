@@ -78,16 +78,25 @@ function drawLocation() {
 
     let roomX;
     let roomY;
-
+    
     if (activeMap == 'overworld') {
         let coords = overworldRoom.split('0x')[1];
         roomX = Number('0x' + coords[1]) * 162 + overworldX * 16;// + 72;
         roomY = Number('0x' + coords[0]) * 130 + overworldY * 16;// + 58;
     }
     else {
+        if (!(currentRoom in roomDict)) {
+            return;
+        }
+
         let room = roomDict[currentRoom];
         roomX = room.x * 160 + currentX * 16;// + 72;
         roomY = room.y * 128 + currentY * 16;// + 58;
+
+        if (activeMap == 'underworld') {
+            roomX += 2 + room.x * 2;
+            roomY += 2 + room.y * 2;
+        }
     }
 
     let linkFace = $('#linkFace');

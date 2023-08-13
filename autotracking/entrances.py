@@ -24,8 +24,12 @@ def loadEntrances(state, romData):
     for name, info in ENTRANCE_INFO.items():
         alternateAddress = consts.entranceAddressOverrides[info.target] if info.target in consts.entranceAddressOverrides else None
         entrance = Entrance(info.room, info.target, name, alternateAddress)
-        state.entrancesByTarget[info.target] = entrance
+        state.entrancesByTarget[info.room] = entrance
         state.entrancesByName[name] = entrance
+
+        insideEntrance = Entrance(info.target, info.room, f"{name}:inside", alternateAddress)
+        state.entrancesByTarget[info.target] = insideEntrance
+        state.entrancesByName[f"{name}:inside"] = insideEntrance
     
     rom = ROMWithTables(io.BytesIO(romData))
 
@@ -70,8 +74,25 @@ def readLocation(gb, state):
 
     if indoors != state.indoors and state.indoors != None:
         state.indoorsChanged = True
-    
+
     state.indoors = indoors
+    
+    spawnMap = gb.readRamByte(consts.spawnMap)
+    mapDigit = consts.mapMap[spawnMap] << 8 if state.spawnMap else 0
+    spawnRoom = gb.readRamByte(consts.spawnRoom) + mapDigit
+    spawnX = gb.readRamByte(consts.spawnX)
+    spawnY = gb.readRamByte(consts.spawnY)
+
+    if ((spawnRoom != state.spawnRoom and state.spawnRoom != None)
+        or (spawnMap != state.spawnMap and state.spawnMap != None)
+        or (spawnX != state.spawnX and state.spawnX != None)
+        or (spawnY != state.spawnY and state.spawnY != None)):
+        state.spawnChanged = True
+    
+    state.spawnMap = spawnMap
+    state.spawnRoom = spawnRoom
+    state.spawnX = spawnX
+    state.spawnY = spawnY
 
     mapId = gb.readRamByte(consts.mapId)
     if mapId not in consts.mapMap:
@@ -94,13 +115,13 @@ def readLocation(gb, state):
         state.locationChanged = True
 
 def readEntrances(gb, state):
-    if state.indoorsChanged:
-        indoorRoom = state.room if state.indoors else state.lastRoom
+    if state.spawnChanged:
+        # indoorRoom = state.room if state.indoors else state.lastRoom
 
-        if indoorRoom in state.entrancesByTarget:
-            entrance = state.entrancesByTarget[indoorRoom]
+        if state.spawnRoom in state.entrancesByTarget:
+            entrance = state.entrancesByTarget[state.spawnRoom]
             if entrance.name in state.reverseEntranceMap:
                 outdoorEntranceName = state.reverseEntranceMap[entrance.name]
                 state.entrancesByName[outdoorEntranceName].map(entrance.name)
         
-        state.indoorsChanged = False
+        state.spawnChanged = False

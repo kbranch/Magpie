@@ -200,6 +200,11 @@ let coordDict = {
 			 "map":"overworld",
 			 "x":242,
 			 "y":1348
+		  },
+		  {
+			"map": "underworld",
+			"x": 210,
+			"y": 1250
 		  }
 	   ],
 	   "index":11,

@@ -224,8 +224,7 @@ function applySettings(oldArgs=null) {
         autotrackerFeatures.push('checks');
     }
     if (localSettings.autotrackEntrances) {
-        // Temporarily disable entrances for the monthly
-        // autotrackerFeatures.push('entrances');
+        autotrackerFeatures.push('entrances');
     }
     if (localSettings.autotrackSpoilers) {
         autotrackerFeatures.push('spoilers');

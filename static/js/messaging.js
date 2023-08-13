@@ -50,8 +50,7 @@ function processItemMessage(message) {
 }
 
 function processEntranceMessage(message) {
-    // Temporarily disable entrance tracking for the monthly
-    if (true || !autotrackerFeatures.includes('entrances')) {
+    if (!autotrackerFeatures.includes('entrances')) {
         console.log("Entrances feature disabled, ignoring")
         return;
     }
@@ -70,12 +69,15 @@ function processEntranceMessage(message) {
 
         let indoor = message.entranceMap[outdoor];
 
-        if (Entrance.isConnector(indoor)) {
+        if (coupledEntrances() && inOutEntrances() && Entrance.isConnector(indoor)) {
             connectOneEndConnector(outdoor, indoor, false);
             updateReverseMap();
         }
         else {
             connectEntrances(outdoor, indoor, false);
+            if (!coupledEntrances() || !inOutEntrances()) {
+                Connection.advancedErConnection([outdoor, indoor], 'overworld');
+            }
         }
     }
 
