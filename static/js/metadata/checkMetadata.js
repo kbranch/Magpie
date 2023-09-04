@@ -4336,6 +4336,7 @@ let coordDict = {
 			 "y":812
 		  }
 	   ],
+	   "linkedItem": "TOADSTOOL_CHECKED",
 	   "index":250,
 	},
 	"0x2A22":{
