@@ -200,7 +200,7 @@ function distributeChecks(unclaimedChecks) {
         else {
             let id = entranceId;
 
-            if (!Entrance.isInside(id)) {
+            if (id in randomizedEntrances && !Entrance.isInside(id)) {
                 id = Entrance.getInsideOut(id);
             }
 
@@ -229,7 +229,13 @@ function distributeChecks(unclaimedChecks) {
     }
 
     for (const node of remappedNodes) {
-        node.checks = checksByEntrance[node.entrance.connectedTo()] ?? [];
+        let id = node.entrance.connectedTo();
+
+        if (coupledEntrances() && Entrance.isInside(id)) {
+            id = Entrance.getInsideOut(id);
+        }
+
+        node.checks = checksByEntrance[id] ?? [];
     }
 }
 

@@ -178,7 +178,13 @@ class Connection {
 
             let connection = Connection.existingConnection(connector);
             if (connection != null && connector.id != 'outer_rainbow') {
-                connection.entrances.push(entrances.filter(x => !connection.entrances.includes(x))[0]);
+                let newEntrance = entrances.filter(x => !connection.entrances.includes(x))[0];
+                connection.entrances.push(newEntrance);
+
+                if (coupledEntrances()) {
+                    connection.entrances.push(entranceMap[newEntrance]);
+                }
+
                 return;
             }
         }

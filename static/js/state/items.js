@@ -70,8 +70,7 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
 function updateLinkedItemChecks(item) {
     if (item in linkedChecks) {
         for (const check of linkedChecks[item]) {
-            let element = $(`li[data-check-id=${check.id}]`);
-            let isVanilla = $(element).attr('data-vanilla');
+            let isVanilla = checksById[check.id].isVanilla;
 
             if ((check.vanillaLink && !isVanilla)) {
                 continue;
