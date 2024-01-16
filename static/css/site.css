@@ -503,7 +503,7 @@ img {
     z-index: 10;
 }
 
-.difficulty-8 .difficulty-8-overlay,
+.difficulty-8 .node-overlay-wrapper:not([data-hidedifficulty="1"]) .difficulty-8-overlay,
 .entrance-difficulty-8:not(.vanilla) .entrance-difficulty-8-overlay,
 .difficulty-8.static-difficulty-wrapper .difficulty-8-overlay, 
 .difficulty-8.tooltip-check-graphic .difficulty-8-overlay {
