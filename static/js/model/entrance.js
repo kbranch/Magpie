@@ -182,7 +182,9 @@ class Entrance {
             return true;
         }
 
-        if (coupledEntrances() && !Entrance.isInside(id)) {
+        if (coupledEntrances()
+            && args.entranceshuffle != 'none'
+            && !Entrance.isInside(id)) {
             id = Entrance.getInsideOut(id);
         }
 

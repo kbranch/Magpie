@@ -247,6 +247,13 @@ function fixArgs(args) {
     }
 
     args.nagmessages = false;
+
+    if (args.entranceshuffle == 'none') {
+        startHouse = 'start_house';
+    }
+    else {
+        startHouse = 'start_house:inside';
+    }
 }
 
 function getState() {
