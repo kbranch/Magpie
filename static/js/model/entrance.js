@@ -139,7 +139,8 @@ class Entrance {
                                                           || entranceDict[x].type != 'trade')
                                                       && Entrance.isInside(x) == isUnderworld
                                                       && ((coupledEntrances()
-                                                           && ((requireSimple && !Entrance.isFound(x)
+                                                           && ((requireSimple && ((Entrance.isInside(sourceId) && !Entrance.isMapped(x))
+                                                                                  || (!Entrance.isInside(sourceId) && !Entrance.isFound(x)))
                                                                || !requireSimple && !Entrance.isMapped(x))))
                                                           || (!coupledEntrances()
                                                               && !Entrance.isFound(x)

@@ -58,7 +58,8 @@ function entranceClicked(element) {
     else {
         let targetInside = true;
 
-        if (graphicalMapType == 'overworld') {
+        if (graphicalMapType == 'overworld'
+            || (graphicalMapType == 'simple' && Entrance.isInside(graphicalMapSource))) {
             targetInside = false;
         }
 

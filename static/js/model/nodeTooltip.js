@@ -189,7 +189,7 @@ class NodeTooltip {
                 }
             }
 
-            if (connectionType == 'simple' && entrance.metadata.interiorImage && entrance.isInside()) {
+            if (connectionType == 'simple' && entrance.metadata.interiorImage/* && entrance.isInside() why is this here?*/) {
                 entranceHtml += interiorImageTemplate.replace('{image}', entrance.metadata.interiorImage);
             }
             else if(connectionType == 'none'
@@ -236,9 +236,9 @@ class NodeTooltip {
             options = sortByKey(options, x => [x[0]]);
 
             let action = `startGraphicalConnection('${entrance.id}', 'simple')`;
-            let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
+            // let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
 
-            pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', action, options, optionAction);
+            pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', entrance.id, action, options);
         }
         else if (args.entranceshuffle != 'none'
                  && entrance.type != 'stairs') {
@@ -265,13 +265,13 @@ class NodeTooltip {
 
                 if ((entrance.type != "connector" || args.entranceshuffle == 'mixed')
                     && !entrance.isMapped()) {
-                    let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
+                    // let optionAction = `connectEntrances('${entrance.id}', Entrance.getInsideOut($(this).attr('data-value')))`;
                     let title = 'Connect to simple entrance...';
 
                     let options = Entrance.validConnections(entrance.id, "simple");
                     options = sortByKey(options, x => [x[1]]);
 
-                    pinnedHtml += NodeTooltip.createEntranceDropdown(title, action.replace('{type}', 'simple'), options, optionAction);
+                    pinnedHtml += NodeTooltip.createEntranceDropdown(title, entrance.id, action.replace('{type}', 'simple'), options);
                 }
             }
             else if (!entrance.isMapped()) {
@@ -328,10 +328,10 @@ class NodeTooltip {
         return pinnedHtml;
     }
 
-    static createEntranceDropdown(title, action, options, optionAction) {
+    static createEntranceDropdown(title, sourceId, action, options) {
         const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
         const helperTitleTemplate = `<img src="static/images/entrances/{id}.png">`;
-        let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="${optionAction}">{name}</button></li>`;
+        let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="{action}">{name}</button></li>`;
         let items = '';
 
         for (const option of options) {
@@ -346,7 +346,8 @@ class NodeTooltip {
             }
 
             items += itemTemplate.replace('{value}', option[0])
-                                 .replace('{name}', name);
+                                 .replace('{name}', name)
+                                 .replace('{action}', `connectEntrances('${sourceId}', '${Entrance.isInside(sourceId) ? option[0] : Entrance.getInsideOut(option[0])}')`);
         }
 
         return `<div class="btn-group dropend">

@@ -148,7 +148,7 @@ def getLogics(args, entranceMap, bossList, minibossMap):
         if entrance in entranceMap:
             worldSetup.entrance_mapping[entrance] = entranceMap[entrance]
         elif entrance in entrancePool:
-            worldSetup.entrance_mapping[entrance] = 'rooster_house:inside'
+            worldSetup.entrance_mapping[entrance] = 'start_house:inside'
 
     if args.overworld == "dungeondive":
         worldSetup.entrance_mapping = {"d%d" % (n): "d%d" % (n) for n in range(9)}

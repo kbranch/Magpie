@@ -10,6 +10,10 @@ function startGraphicalConnection(entranceId, type) {
         openTab(type);
     }
 
+    if (type == 'simple') {
+        openTab('overworld');
+    }
+
     graphicalMapType = type;
     graphicalMapSource = entranceId;
     graphicalMapChoices = new Set(Entrance.validConnections(entranceId, type).map(x => x[0]));
@@ -29,6 +33,8 @@ function endGraphicalConnection(destId = null) {
     $('#mouseTracker').connections('remove');
     $('#underworldTabContent').off('mousemove');
     $('#mouseTracker').remove();
+    $('#overworldTabContent').off('mousemove');
+    $('#underworldTabContent').off('mousemove');
 
     if (destId != null) {
         if (inOutEntrances()) {
