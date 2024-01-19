@@ -229,7 +229,7 @@ function connectorDetail(connectorId) {
     }
     else if (hideEntrances) {
         if (isDeadEnd && unmappedEntrances.length == 1) {
-            $(`.connector-item[data-id="${unmappedEntrances[0]}"]`).addClass('checked');
+            $(`#deadEndConnectorDetailGrid .connector-item[data-id="${Entrance.getInsideOut(unmappedEntrances[0])}"]`).addClass('checked');
         }
 
         $(`.connector-item[data-type="check"]`).addClass('checked');

@@ -35,7 +35,7 @@ class Entrance {
     }
 
     isMappedToDungeon() {
-        return Entrance.isDungeon(this.connectedTo()) && this.isInside();
+        return Entrance.isDungeon(this.connectedTo()) && Entrance.isInside(this.connectedTo());
     }
 
     isConnector() {
@@ -184,7 +184,7 @@ class Entrance {
         }
 
         if (coupledEntrances()
-            && args.entranceshuffle != 'none'
+            && (args.entranceshuffle != 'none' || args.dungeonshuffle)
             && !Entrance.isInside(id)) {
             id = Entrance.getInsideOut(id);
         }
@@ -193,6 +193,10 @@ class Entrance {
     }
 
     static isDungeon(id) {
+        if (id && Entrance.isInside(id)) {
+            id = Entrance.getInsideOut(id);
+        }
+
         return id
                && id.startsWith('d')
                && id.length == 2;

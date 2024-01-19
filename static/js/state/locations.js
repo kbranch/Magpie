@@ -158,7 +158,7 @@ function connectOneEndConnector(outdoors, indoors, refresh=true) {
         }
 
         let otherSide = connector.entrances.filter(x => Entrance.isFound(x))
-                                            .map(x => Entrance.connectedFrom(x))[0] ?? null;
+                                            .map(x => Entrance.connectedFrom(Entrance.getInsideOut(x)))[0] ?? null;
 
         if (otherSide != null) {
             let otherInterior = Entrance.connectedTo(otherSide);
