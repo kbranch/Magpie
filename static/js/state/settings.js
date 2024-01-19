@@ -365,11 +365,11 @@ function connectorsMixed() {
 }
 
 function coupledEntrances() {
-    return ['none', 'simple', 'split', 'wild'].includes(args.entranceshuffle);
+    return ['none', 'simple', 'split', 'mixed', 'wild'].includes(args.entranceshuffle);
 }
 
 function inOutEntrances() {
-    return ['none', 'simple', 'split', 'chaos'].includes(args.entranceshuffle);
+    return ['none', 'simple', 'split', 'mixed', 'chaos'].includes(args.entranceshuffle);
 }
 
 function resetSession() {
