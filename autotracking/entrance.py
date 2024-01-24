@@ -12,3 +12,16 @@ class Entrance:
             self.changed = True
         
         self.mappedIndoor = indoor
+
+class EntranceCoord:
+    def __init__(self, name, room, x, y):
+        self.name = name
+        self.room = room
+        self.x = x
+        self.y = y
+    
+    def __repr__(self):
+        return EntranceCoord.coordString(self.room, self.x, self.y)
+    
+    def coordString(room, x, y):
+        return f"{room:#05x}, {x}, {y}"

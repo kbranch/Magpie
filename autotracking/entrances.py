@@ -1,8 +1,9 @@
 import os
 import io
 import sys
+import time
 import consts
-from entrance import Entrance
+from entrance import Entrance, EntranceCoord
 
 # Deal with how pyinstaller's --onefile option packs things
 if hasattr(sys, '_MEIPASS'):
@@ -37,6 +38,7 @@ def loadEntrances(state, romData):
     world.loadFromRom(rom)
 
     state.reverseEntranceMap = {value: key for key, value in world.entrance_mapping.items()}
+    state.entranceMap = world.entrance_mapping
 
 def readVisitedEntrances(gb, state):
     for entrance in state.entrancesByTarget.values():
@@ -66,7 +68,6 @@ def readLocation(gb, state):
     if (transitionState != 0
         or transitionTargetX != transitionScrollX
         or transitionTargetY != transitionScrollY
-        or motionState not in [0, 1]
         or transitionSequence != 0x04):
         return
 
@@ -88,6 +89,9 @@ def readLocation(gb, state):
         or (spawnX != state.spawnX and state.spawnX != None)
         or (spawnY != state.spawnY and state.spawnY != None)):
         state.spawnChanged = True
+        state.spawnSameFor = 0
+    else:
+        state.spawnSameFor += 1
     
     state.spawnMap = spawnMap
     state.spawnRoom = spawnRoom
@@ -101,27 +105,68 @@ def readLocation(gb, state):
 
     mapDigit = consts.mapMap[mapId] << 8 if indoors else 0
     state.lastRoom = state.room
-    oldX = state.screenX
-    oldY = state.screenY
     state.room = gb.readRamByte(consts.room) + mapDigit
 
-    coords = gb.readRamByte(consts.screenCoord)
-    state.screenX = coords & 0x0F
-    state.screenY = (coords & 0xF0) >> 4
+    if state.lastRoom != state.room:
+        state.roomSameFor = 0
+        state.roomChanged = True
+        state.lastDifferentRoom = state.lastRoom
+    else:
+        state.roomSameFor += 1
 
-    if (state.room != state.lastRoom
-        or oldX != state.screenX
-        or oldY != state.screenY):
-        state.locationChanged = True
+    if motionState in [0, 1]:
+        oldX = state.screenX
+        oldY = state.screenY
+
+        coords = gb.readRamByte(consts.screenCoord)
+        state.screenX = coords & 0x0F
+        state.screenY = (coords & 0xF0) >> 4
+
+        if (state.room != state.lastRoom
+            or oldX != state.screenX
+            or oldY != state.screenY):
+            state.locationChanged = True
 
 def readEntrances(gb, state):
-    if state.spawnChanged:
-        # indoorRoom = state.room if state.indoors else state.lastRoom
+    if not state.lastDifferentRoom:
+        return
 
-        if state.spawnRoom in state.entrancesByTarget:
-            entrance = state.entrancesByTarget[state.spawnRoom]
-            if entrance.name in state.reverseEntranceMap:
-                outdoorEntranceName = state.reverseEntranceMap[entrance.name]
-                state.entrancesByName[outdoorEntranceName].map(entrance.name)
+    if state.spawnChanged and state.spawnSameFor > 0 and state.roomSameFor > 0:
+        spawnCoord = EntranceCoord(None, state.spawnRoom, state.spawnX, state.spawnY)
+        if str(spawnCoord) in consts.entranceLookup:
+            validSources = {x.name for x in consts.entranceCoords if x.room == state.lastDifferentRoom}
+            destEntrance = consts.entranceLookup[str(spawnCoord)].name
+            sourceEntrance = [x for x in state.entranceMap if state.entranceMap[x] == destEntrance and x in validSources]
+
+            if sourceEntrance:
+                state.entrancesByName[sourceEntrance[0]].map(destEntrance)
+
+        print(f'{time.time()} {hex(state.spawnRoom)} {state.spawnX}, {state.spawnY}\n')
         
         state.spawnChanged = False
+    elif state.roomChanged and state.roomSameFor > 0:
+        print(f'{time.time()} {hex(state.room)}, {hex(state.lastDifferentRoom)}\n')
+
+        # Check for the stupid sidescroller rooms that don't set your spawn point
+
+        if state.lastDifferentRoom in consts.sidescrollerRooms:
+            sourceEntrance = consts.sidescrollerRooms[state.lastDifferentRoom]
+            destEntrance = state.entranceMap[sourceEntrance]
+
+            expectedRoom = state.entrancesByName[destEntrance].outdoorRoom
+            if destEntrance.endswith(":indoor"):
+                expectedRoom = state.entrancesByName[destEntrance].indoorMap
+            
+            if expectedRoom == state.room:
+                state.entrancesByName[sourceEntrance].map(destEntrance)
+
+        if state.room in consts.sidescrollerRooms:
+            validSources = {x.name for x in consts.entranceCoords if x.room == state.lastDifferentRoom}
+            destEntrance = consts.sidescrollerRooms[state.room]
+            sourceEntrance = [x for x in state.entranceMap if state.entranceMap[x] == destEntrance and x in validSources]
+
+            if sourceEntrance:
+                state.entrancesByName[sourceEntrance[0]].map(destEntrance)
+        
+        state.roomChanged = False
+

@@ -25,6 +25,8 @@ class State:
         self.checks = []
 
         self.room = None
+        self.roomChanged = False
+        self.roomSameFor = 0
         self.indoors = None
         self.indoorsChanged = False
         self.spawnRoom = None
@@ -32,7 +34,9 @@ class State:
         self.spawnX = None
         self.spawnY = None
         self.spawnChanged = False
+        self.spawnSameFor = 0
         self.lastRoom = None
+        self.lastDifferentRoom = None
         self.screenX = None
         self.screenY = None
         self.locationChanged = False
@@ -40,6 +44,24 @@ class State:
         self.reverseEntranceMap = {}
         self.entrancesByTarget = {}
         self.entrancesByName = {}
+
+    def saveAndQuit(self):
+        self.room = None
+        self.roomChanged = False
+        self.roomSameFor = 0
+        self.indoors = None
+        self.indoorsChanged = False
+        self.spawnRoom = None
+        self.spawnMap = None
+        self.spawnX = None
+        self.spawnY = None
+        self.spawnChanged = False
+        self.spawnSameFor = 0
+        self.lastRoom = None
+        self.lastDifferentRoom = None
+        self.screenX = None
+        self.screenY = None
+        self.locationChanged = False
 
     def needsRom(self):
         return 'entrances' in self.features or 'settings' in self.features or 'spoilers' in self.features
@@ -131,9 +153,9 @@ class State:
         self.locationChanged = False
 
     def readTrackables(self, gb):
-        if self.entrancesLoaded and not self.visitedEntrancesRead and 'entrances' in self.features:
-            readVisitedEntrances(gb, self)
-            self.visitedEntrancesRead = True
+        # if self.entrancesLoaded and not self.visitedEntrancesRead and 'entrances' in self.features:
+        #     readVisitedEntrances(gb, self)
+        #     self.visitedEntrancesRead = True
 
         extraItems = {}
 
