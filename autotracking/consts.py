@@ -318,7 +318,7 @@ entranceCoords = [
     EntranceCoord("papahl_house_right:inside", 0x2a6, 80, 124),
     EntranceCoord("papahl_house_right", 0x82, 120, 82),
     EntranceCoord("papahl_house_left:inside", 0x2a5, 80, 124),
-    EntranceCoord("papahl_house_right", 0x82, 88, 82),
+    EntranceCoord("papahl_house_left", 0x82, 88, 82),
     EntranceCoord("d2:inside", 0x136, 80, 124),
     EntranceCoord("shop", 0x93, 72, 98),
     EntranceCoord("armos_maze_cave:inside", 0x2fc, 104, 96),
