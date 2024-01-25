@@ -1463,7 +1463,7 @@ let entranceDict = {
 		"name": "Marin and Tarin's House",
 		"index": 0,
 		"icon": "",
-		"type": "dummy",
+		"type": "start",
 		"locations": [
 			{
 				"map": "overworld",

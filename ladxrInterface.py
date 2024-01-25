@@ -298,15 +298,18 @@ def getStartLocations(args):
         return WorldSetup.getEntrancePool(None, args)
 
 def getDungeonItemCount(args):
-    dungeonList = ["Tail Cave",
-                   "Bottle Grotto",
-                   "Key Cavern",
-                   "Angler's Tunnel",
-                   "Catfish's Maw",
-                   "Face Shrine",
-                   "Eagle's Tower",
-                   "Turtle Rock",
-                   "Color Dungeon"]
+    dungeonList = [
+        "Color Dungeon",
+        "Tail Cave",
+        "Bottle Grotto",
+        "Key Cavern",
+        "Angler's Tunnel",
+        "Catfish's Maw",
+        "Face Shrine",
+        "Eagle's Tower",
+        "Turtle Rock",
+    ]
+
     itemCount = {}
 
     allItems = getItems(args, trimDungeonItems=False)
@@ -326,18 +329,18 @@ def getDungeonItemCount(args):
     
     for i in range(len(dungeonList)):
         if args.dungeon_items in ('', 'localkeys'):
-            itemCount[i] -= allItems[f'KEY{i + 1}']
+            itemCount[i] -= allItems[f'KEY{i}']
         if args.dungeon_items in ('', 'smallkeys', 'keysy'):
-            itemCount[i] -= allItems[f'MAP{i + 1}']
-            itemCount[i] -= allItems[f'COMPASS{i + 1}']
-            itemCount[i] -= allItems[f'STONE_BEAK{i + 1}']
+            itemCount[i] -= allItems[f'MAP{i}']
+            itemCount[i] -= allItems[f'COMPASS{i}']
+            itemCount[i] -= allItems[f'STONE_BEAK{i}']
         if args.dungeon_items in ('', 'smallkeys', 'localkeys', 'nightmarekey'):
-            itemCount[i] -= allItems[f'NIGHTMARE_KEY{i + 1}']
-        if not args.instruments and f'INSTRUMENT{i + 1}' in allItems:
-            itemCount[i] -= allItems[f'INSTRUMENT{i + 1}']
+            itemCount[i] -= allItems[f'NIGHTMARE_KEY{i}']
+        if not args.instruments and f'INSTRUMENT{i}' in allItems:
+            itemCount[i] -= allItems[f'INSTRUMENT{i}']
     
     for i in range(len(dungeonList)):
-        itemCount[f'ITEM{i + 1}'] = itemCount[i]
+        itemCount[f'ITEM{i}'] = itemCount[i]
         del itemCount[i]
     
     return itemCount
