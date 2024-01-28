@@ -329,9 +329,20 @@ function applySettings(oldArgs=null) {
     coordDict = vanillaCoordDict;
 
     if (args.overworld == 'alttp') {
-        coordDict = alttpCoordDict;
+        Object.keys(alttpCoordDict).map(x => {
+            let alttp = alttpCoordDict[x];
+            let alttpLocs = alttp.locations.filter(y => y.map == "overworld");
+            let vanilla = coordDict[x];
+
+            vanilla.locations = vanilla.locations.filter(y => y.map != "overworld");
+            alttpLocs.map(y => vanilla.locations.push(y));
+
+            vanilla.name = alttp.name;
+            vanilla.area = alttp.area;
+        });
     }
 
+    linkedChecks = {};
     Object.values(coordDict).filter(x => x.linkedItem).map(y => {
         if (!linkedChecks[y.linkedItem]) {
             linkedChecks[y.linkedItem] = [];
