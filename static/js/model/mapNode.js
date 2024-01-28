@@ -44,7 +44,7 @@ class MapNode {
 
         return this.entrance?.isMappedToDungeon()
                || (this.checks.length > 0
-                   && this.checks[0].metadata.locations.some(x => !['overworld', 'underworld'].includes(x.map)));
+                   && this.checks[0].metadata.locations.some(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x.map)));
     }
 
     dungeonName(pickingEntrance) {
@@ -57,7 +57,7 @@ class MapNode {
         }
 
         return this.checks[0].metadata.locations
-            .filter(x => !['overworld', 'underworld'].includes(x.map))[0]
+            .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x.map))[0]
             .map.toUpperCase();
     }
 

@@ -9,7 +9,7 @@ class Check {
         this.baseDifficulty = checkInfo.difficulty;
 
         let dungeonMaps = this.locations.map(x => x.map)
-                                        .filter(x => x != 'overworld');
+                                        .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x));
         if (dungeonMaps.length == 0) {
             this.mapName = 'overworld';
         }
