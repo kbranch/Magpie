@@ -200,7 +200,7 @@ function distributeChecks(unclaimedChecks) {
         else {
             let id = entranceId;
 
-            if (id in randomizedEntrances && !Entrance.isInside(id)) {
+            if (randomizedEntrances.includes(id) && !Entrance.isInside(id)) {
                 id = Entrance.getInsideOut(id);
             }
 

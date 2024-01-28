@@ -2025,8 +2025,8 @@ var roomDict = {
     },
     '0x2B3': {
         map: 'underworld',
-        x: 15,
-        y: 3,
+        x: 2,
+        y: 4,
         entrances: ['hookshot_cave'],
     },
     '0x2AB': {
