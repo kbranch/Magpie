@@ -328,6 +328,9 @@ def getDungeonItemCount(args):
         itemCount[index] += 1
     
     for i in range(len(dungeonList)):
+        if i not in itemCount:
+            continue
+
         if args.dungeon_items in ('', 'localkeys'):
             itemCount[i] -= allItems[f'KEY{i}']
         if args.dungeon_items in ('', 'smallkeys', 'keysy'):
@@ -340,6 +343,9 @@ def getDungeonItemCount(args):
             itemCount[i] -= allItems[f'INSTRUMENT{i}']
     
     for i in range(len(dungeonList)):
+        if i not in itemCount:
+            continue
+
         itemCount[f'ITEM{i}'] = itemCount[i]
         del itemCount[i]
     
