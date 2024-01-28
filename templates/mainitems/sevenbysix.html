@@ -13,7 +13,11 @@
     {{ item("FLIPPERS", max="1") }}
     {{ item("HOOKSHOT", max="1") }}
     {{ item("MAGIC_ROD", max="1") }}
-    {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc('${player}')", highlightOwnedSecondary=True) }}
+    {% if args.overworld == 'alttp' %}
+        {{ item("HAMMER", max="1") }}
+    {% else %}
+        {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc('${player}')", highlightOwnedSecondary=True) }}
+    {% endif %}
     {{ item("ROOSTER", max="1", condition=allItems['ROOSTER'] >= 1) }}
     {{ item("OCARINA", max="1") }}
     {{ item("SONG1", max="1") }}

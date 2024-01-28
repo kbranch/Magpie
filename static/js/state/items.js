@@ -70,6 +70,10 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
 function updateLinkedItemChecks(item) {
     if (item in linkedChecks) {
         for (const check of linkedChecks[item]) {
+            if (!checksById[check.id]) {
+                continue;
+            }
+
             let isVanilla = checksById[check.id].isVanilla;
 
             if ((check.vanillaLink && !isVanilla)) {

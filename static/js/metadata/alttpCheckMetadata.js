@@ -1,6 +1,6 @@
 "use strict"
 
-let vanillaCoordDict = {
+let alttpCoordDict = {
 	"0x297-Trade":{
 	   "id":"0x297-Trade",
 	   "area":"Martha's Bay",
@@ -8,13 +8,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1554,
-			 "y":1852
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1530,
-			  "y": 1828
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":0,
@@ -27,8 +22,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1570,
-			 "y":1624
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":1,
@@ -41,13 +36,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1716,
-			 "y":1852
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1684,
-			  "y": 1868
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":2,
@@ -60,8 +50,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2202,
-			 "y":1640
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":3,
@@ -69,18 +59,13 @@ let vanillaCoordDict = {
 	},
 	"0x2A8-Trade":{
 	   "id":"0x2A8-Trade",
-	   "area":"Goponga Swamp",
-	   "name":"MrWrite",
+	   "area":"Kakariko Village",
+	   "name":"Mr. Write",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":112,
-			 "y":422
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 72,
-			  "y": 438
+			 "x":226,
+			 "y":1085
 		  }
 	   ],
 	   "index":4,
@@ -88,18 +73,13 @@ let vanillaCoordDict = {
 	},
 	"0x2D9-Trade":{
 	   "id":"0x2D9-Trade",
-	   "area":"Animal Village",
+	   "area":"Kakariko Village",
 	   "name":"Goat",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2138,
-			 "y":1624
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2210,
-			  "y": 1624
+			 "x":547,
+			 "y":965
 		  }
 	   ],
 	   "index":5,
@@ -112,8 +92,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1554,
-			 "y":162
+			 "x":2800,
+			 "y":2800
 		  },
 		//   {
 		// 	 "map":"overworld",
@@ -127,18 +107,13 @@ let vanillaCoordDict = {
 	},
 	"0x2D7-Trade":{
 	   "id":"0x2D7-Trade",
-	   "area":"Animal Village",
+	   "area":"Kakariko Village",
 	   "name":"Bear Cook",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2186,
-			 "y":1738
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2194,
-			  "y": 1730
+			 "x":81,
+			 "y":955
 		  }
 	   ],
 	   "index":7,
@@ -151,8 +126,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1206,
-			 "y":1088
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":8,
@@ -165,8 +140,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":990
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":9,
@@ -174,18 +149,13 @@ let vanillaCoordDict = {
 	},
 	"0x2FE-Trade":{
 	   "id":"0x2FE-Trade",
-	   "area":"Toronbo Shores",
+	   "area":"Lake Hylia",
 	   "name":"Banana Sale",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":550,
-			 "y":1852
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 606,
-			  "y": 1876
+			 "x":1642,
+			 "y":1625
 		  }
 	   ],
 	   "index":10,
@@ -193,18 +163,13 @@ let vanillaCoordDict = {
 	},
 	"0x2B2-Trade":{
 	   "id":"0x2B2-Trade",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"YipYip",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":242,
-			 "y":1348
-		  },
-		  {
-			"map": "underworld",
-			"x": 210,
-			"y": 1250
+			 "x":400,
+			 "y":850
 		  }
 	   ],
 	   "index":11,
@@ -212,18 +177,13 @@ let vanillaCoordDict = {
 	},
 	"0x2A6-Trade":{
 	   "id":"0x2A6-Trade",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Papahl's Wife",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":436,
-			 "y":1104
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 356,
-			  "y": 1088
+			 "x":337,
+			 "y":1450
 		  }
 	   ],
 	   "index":12,
@@ -232,36 +192,26 @@ let vanillaCoordDict = {
 	},
 	"0x2A0-Trade":{
 	   "id":"0x2A0-Trade",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Trendy Game",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":566,
-			 "y":1494
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 566,
-			  "y": 1478
+			 "x":403,
+			 "y":1315
 		  }
 	   ],
 	   "index":13,
 	},
 	"0x2A0":{
 	   "id":"0x2A0",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Trendy Powder",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":566,
-			 "y":1494
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 582,
-			  "y": 1462
+			 "x":403,
+			 "y":1315
 		  }
 	   ],
 	   "index":13,
@@ -275,31 +225,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":404,
-			 "y":1234
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 396,
-			  "y": 1178
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":14,
 	},
 	"0x2FB":{
 	   "id":"0x2FB",
-	   "area":"Ukuku Prairie",
+	   "area":"Death Mountain",
 	   "name":"Mamu",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":776,
-			 "y":1722
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 720,
-			  "y": 1722
+			 "x":1287,
+			 "y":172
 		  }
 	   ],
 	   "index":15,
@@ -311,26 +251,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1716,
-			 "y":292
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":16,
 	},
 	"0x092":{
 	   "id":"0x092",
-	   "area":"Mabe Village",
+	   "area":"Stumpy Forest",
 	   "name":"Ballad of the Wind Fish",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2024,
-			 "y":1738
-		  },
-		  {
-			 "map":"overworld",
-			 "x":356,
-			 "y":1234
+			 "x":867,
+			 "y":1355
 		  }
 	   ],
 	   "index":17,
@@ -342,31 +277,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1732,
-			 "y":96
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1628,
-			  "y": 210
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":18,
 	},
 	"0x27F":{
 	   "id":"0x27F",
-	   "area":"Southern Face Shrine",
+	   "area":"Eastern Palace",
 	   "name":"Armos Knight",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2024,
-			 "y":1348
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2008,
-			  "y": 1348
+			 "x":2045,
+			 "y":910
 		  }
 	   ],
 	   "index":19,
@@ -378,22 +303,22 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2340,
-			 "y":1616
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":20,
 	},
 	"0x050":{
 	   "id":"0x050",
-	   "area":"Mysterious Woods",
+	   "area":"Lost Woods",
 	   "name":"Toadstool",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":32,
-			 "y":698
-		  }
+			 "x":260,
+			 "y":175
+			 }
 	   ],
 	   "index":21,
 	},
@@ -404,31 +329,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":404,
-			 "y":2030
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":22,
 	},
 	"0x2BA":{
 	   "id":"0x2BA",
-	   "area":"Tal Tal Mountains",
+	   "area":"Death Mountain",
 	   "name":"Access Tunnel Bombable Heart Piece",
 	   "locations":[
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":938,
-		// 	 "y":178
-		//   },
 		  {
 			 "map":"overworld",
-			 "x":1182,
-			 "y":64
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1020,
-			  "y": 178
+			 "x":2028,
+			 "y":177
 		  }
 	   ],
 	   "index":23,
@@ -436,18 +351,13 @@ let vanillaCoordDict = {
 	},
 	"0x1E2":{
 	   "id":"0x1E2",
-	   "area":"Tal Tal Mountains",
+	   "area":"Lost Woods",
 	   "name":"Mad Batter",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":744,
-			 "y":96
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 712,
-			  "y": 178
+			 "x":855,
+			 "y":30
 		  }
 	   ],
 	   "index":24,
@@ -459,33 +369,22 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":728,
-			 "y":64
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":25,
 	},
 	"0x01D":{
 	   "id":"0x01D",
-	   "area":"Tal Tal Mountains",
+	   "area":"Death Mountain",
 	   "name":"Outside Five Chest Game",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2186,
-			 "y":146
+			 "x":853,
+			 "y":290
 		  },
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":2122,
-		// 	 "y":162,
-		// 	 "indirect":true
-		//   },
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":2218,
-		// 	 "y":194
-		//   }
 	   ],
 	   "index":26,
 	   "image":"001D",
@@ -497,26 +396,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2122,
-			 "y":162
+			 "x":2800,
+			 "y":2800
 		  },
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":2218,
-		// 	 "y":194
-		//   }
 	   ],
 	   "index":27,
 	},
 	"0x00C":{
 	   "id":"0x00C",
-	   "area":"Tal Tal Mountains",
-	   "name":"Bridge Rock",
+	   "area":"Swamp",
+	   "name":"Teleporter Rock",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2072,
-			 "y":32
+			 "x":1175,
+			 "y":1575
 		  }
 	   ],
 	   "index":28,
@@ -528,8 +422,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2284,
-			 "y":194
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":29,
@@ -541,8 +435,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2170,
-			 "y":666
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":30,
@@ -554,8 +448,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2202,
-			 "y":666
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":31,
@@ -567,8 +461,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2008,
-			 "y":682
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":32,
@@ -580,23 +474,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		   {
 			   "map": "overworld",
-			   "x": 2218,
-			   "y": 876,
-		   },
-		   {
-			   "map": "overworld",
-			   "x": 2510,
-			   "y": 974
-		   },
-		   {
-			   "map": "overworld",
-			   "x": 2218,
-			   "y": 746
-		   },
-		   {
-			   "map": "overworld",
-			   "x": 1960,
-			   "y": 714
+			   "x": 2800,
+			   "y": 2800,
 		   },
 		],
 		"index": 31,
@@ -610,8 +489,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2542,
-			 "y":1104
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":33,
@@ -623,13 +502,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2332,
-			 "y":1380
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2494,
-			  "y": 1348
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":34,
@@ -641,35 +515,26 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":276
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2348,
-			  "y": 332
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":35,
 	   "image":"01F2",
 	},
 	"0x28A":{
-	   "id":"0x28A",
-	   "area":"Tal Tal Mountains",
-	   "name":"Paphl Cave",
+	   "id":"0x1F2",
+	   "area":"Death Mountain",
+	   "name":"Paradox Cave Bottom",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1586,
-			 "y":178
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1506,
-			  "y": 80
+			 "x":2220,
+			 "y":445
 		  }
 	   ],
 	   "index":36,
+	   "image":"01F2",
 	},
 	"0x2BB":{
 	   "id":"0x2BB",
@@ -678,45 +543,35 @@ let vanillaCoordDict = {
 	   "locations":[
 			{
 				"map": "overworld",
-				"x": 1392,
-				"y": 130
+				"x": 2800,
+				"y": 2800
 			},
-			{
-				"map": "underworld",
-				"x": 1262,
-				"y": 162
-			}
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":1424,
-		// 	 "y":130
-		//   }
 	   ],
 	   "index":37,
 	   "image": "02BB",
 	},
 	"0x018":{
 	   "id":"0x018",
-	   "area":"Tal Tal Mountains",
-	   "name":"Access Tunnel Exterior",
+	   "area":"Kakariko Village",
+	   "name":"Teleporter Rock",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1360,
-			 "y":146
+			 "x":211,
+			 "y":710
 		  }
 	   ],
 	   "index":38,
 	},
 	"0x0FF":{
 	   "id":"0x0FF",
-	   "area":"Yarna Desert",
-	   "name":"Rock Seashell",
+	   "area":"Eastern Palace",
+	   "name":"Teleporter Rock",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2510,
-			 "y":1998
+			 "x":2464,
+			 "y":1485
 		  }
 	   ],
 	   "index":39,
@@ -728,13 +583,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2510,
-			 "y":1560
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2332,
-			  "y": 1706
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":40,
@@ -742,18 +592,13 @@ let vanillaCoordDict = {
 	},
 	"0x2E6":{
 	   "id":"0x2E6",
-	   "area":"Yarna Desert",
+	   "area":"Death Mountain",
 	   "name":"Bomb Arrow Cave",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2234,
-			 "y":1576
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 2154,
-			  "y": 1316
+			 "x":2125,
+			 "y":192
 		  }
 	   ],
 	   "index":41,
@@ -766,8 +611,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":2478,
-			 "y":1576
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":42,
@@ -779,8 +624,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1692,
-			 "y":1738
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":43,
@@ -792,26 +637,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1660,
-			 "y":1738
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":44,
 	},
 	"0x2C6":{
 	   "id":"0x2C6",
-	   "area":"Kanalet Castle",
-	   "name":"Ball and Chain Darknut Leaf",
+	   "area":"Hyrule Castle",
+	   "name":"Ball and Chain Guard",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":698
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1538,
-			  "y": 552
+			 "x":1350,
+			 "y":790
 		  }
 	   ],
 	   "index":45,
@@ -819,18 +659,18 @@ let vanillaCoordDict = {
 	},
 	"0x2C5":{
 	   "id":"0x2C5",
-	   "area":"Kanalet Castle",
-	   "name":"Bombable Darknut Leaf",
+	   "area":"Hyrule Castle",
+	   "name":"Bombable Darknut",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":828
+			 "x":1223,
+			 "y":920
 		  },
 		  {
-			  "map": "underworld",
-			  "x": 1328,
-			  "y": 568
+			 "map":"overworld",
+			 "x":1091,
+			 "y":790
 		  }
 	   ],
 	   "index":46,
@@ -838,18 +678,18 @@ let vanillaCoordDict = {
 	},
 	"0x2D2":{
 	   "id":"0x2D2",
-	   "area":"Kanalet Castle",
-	   "name":"Darknut, Zol, Bubble Leaf",
+	   "area":"Hyrule Castle",
+	   "name":"Darknut, Zol, Bubble",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":828
+			 "x":1223,
+			 "y":920
 		  },
 		  {
-			  "map": "underworld",
-			  "x": 1490,
-			  "y": 942
+			 "map":"overworld",
+			 "x":1091,
+			 "y":790
 		  }
 	   ],
 	   "index":47,
@@ -862,8 +702,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1360,
-			 "y":666
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":48,
@@ -875,8 +715,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1700,
-			 "y":714
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":49,
@@ -888,8 +728,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1392,
-			 "y":974
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":50,
@@ -899,20 +739,10 @@ let vanillaCoordDict = {
 	   "area":"Pothole Field",
 	   "name":"Under Richard's House",
 	   "locations":[
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":1020,
-		// 	 "y":1624
-		//   },
 		  {
 			 "map":"overworld",
-			 "x":1036,
-			 "y":1754
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1004,
-			  "y": 1462
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":51,
@@ -925,8 +755,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1084,
-			 "y":1608
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":52,
@@ -938,34 +768,22 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1084,
-			 "y":1576
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":53,
 	},
 	"0x1E0":{
 	   "id":"0x1E0",
-	   "area":"Martha's Bay",
+	   "area":"Lake Hylia",
 	   "name":"Mad Batter",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1036,
-			 "y":1868
+			 "x":2174,
+			 "y":1300
 		  },
-		  {
-			  "map": "underworld",
-			  "x": 1036,
-			  "y": 1868
-		  }
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":1570,
-		// 	 "y":2014,
-		// 	 "indirect":true,
-		// 	 "inSimpleEntrance":true,
-		//   }
 	   ],
 	   "index":54,
 	},
@@ -976,8 +794,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1368,
-			 "y":1364
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":55,
@@ -990,8 +808,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1336,
-			 "y":1364
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":56,
@@ -999,13 +817,13 @@ let vanillaCoordDict = {
 	},
 	"0x0F8":{
 	   "id":"0x0F8",
-	   "area":"Martha's Bay",
-	   "name":"Island Bush of Destiny",
+	   "area":"Graveyard",
+	   "name":"Bush near Graveyard",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1360,
-			 "y":2014
+			 "x":1643,
+			 "y":612
 		  }
 	   ],
 	   "index":57,
@@ -1017,8 +835,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1490,
-			 "y":1916
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":58,
@@ -1030,8 +848,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1522,
-			 "y":1478
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":59,
@@ -1043,31 +861,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1328,
-			 "y":1006
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1360,
-			  "y": 942
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":60,
 	},
 	"0x2E9":{
 	   "id":"0x2E9",
-	   "area":"Ukuku Prairie",
+	   "area":"Graveyard",
 	   "name":"Seashell Mansion",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1700,
-			 "y":1088
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1692,
-			  "y": 1136
+			 "x":1190,
+			 "y":590
 		  }
 	   ],
 	   "index":61,
@@ -1079,8 +887,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":752,
-			 "y":1340
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":62,
@@ -1092,8 +900,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":1120
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":63,
@@ -1105,8 +913,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1068,
-			 "y":1364
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":64,
@@ -1118,26 +926,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":890,
-			 "y":1364
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":65,
 	},
 	"0x2E5":{
 	   "id":"0x2E5",
-	   "area":"Ukuku Prairie",
+	   "area":"Death Mountain",
 	   "name":"Boots 'n' Bomb Cave Bombable Wall",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":988,
-			 "y":1088
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1052,
-			  "y": 1104
+			 "x":1160,
+			 "y":260
 		  }
 	   ],
 	   "index":66,
@@ -1145,90 +948,65 @@ let vanillaCoordDict = {
 	},
 	"0x2F4":{
 	   "id":"0x2F4",
-	   "area":"Ukuku Prairie",
+	   "area":"Death Mountain",
 	   "name":"Boots 'n' Bomb Cave Chest",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":988,
-			 "y":1088
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 938,
-			  "y": 1234
+			 "x":1160,
+			 "y":260
 		  }
 	   ],
 	   "index":67,
 	},
 	"0x2CD":{
 	   "id":"0x2CD",
-	   "area":"Ukuku Prairie",
-	   "name":"Cave East of Mabe",
+	   "area":"Desert",
+	   "name":"Cave near Desert Entrance",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":792,
-			 "y":1120
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 712,
-			  "y": 1072
+			 "x":692,
+			 "y":1805
 		  }
 	   ],
 	   "index":68,
 	},
 	"0x2E2":{
 	   "id":"0x2E2",
-	   "area":"Tal Tal Heights",
+	   "area":"Lost Woods",
 	   "name":"Moblin Cave",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":454
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 834,
-			  "y": 398
+			 "x":415,
+			 "y":15
 		  }
 	   ],
 	   "index":69,
 	},
 	"0x074":{
 	   "id":"0x074",
-	   "area":"Koholint Prairie",
-	   "name":"Ghost Grave Dig",
+	   "area":"Swamp",
+	   "name":"Hype Cave",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":744,
-			 "y":958
+			 "x":1530,
+			 "y":1579
 		  }
 	   ],
 	   "index":70,
 	},
 	"0x2DF":{
 	   "id":"0x2DF",
-	   "area":"Koholint Prairie",
-	   "name":"Graveyard Connector",
+	   "area":"Graveyard",
+	   "name":"Cave near Bush",
 	   "locations":[
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":858,
-		// 	 "y":958
-		//   },
 		  {
 			 "map":"overworld",
-			 "x":1068,
-			 "y":958
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1068,
-			  "y": 926
+			 "x":1705,
+			 "y":562
 		  }
 	   ],
 	   "index":71,
@@ -1241,26 +1019,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":858,
-			 "y":470
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":72,
 	},
 	"0x2AF":{
 	   "id":"0x2AF",
-	   "area":"Goponga Swamp",
+	   "area":"Death Mountain",
 	   "name":"Write Cave East",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":178,
-			 "y":292
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 258,
-			  "y": 292
+			 "x":2172,
+			 "y":289
 		  }
 	   ],
 	   "index":73,
@@ -1273,26 +1046,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":178,
-			 "y":210
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":74,
 	},
 	"0x2AE":{
 	   "id":"0x2AE",
-	   "area":"Goponga Swamp",
+	   "area":"Death Mountain",
 	   "name":"Write Cave West",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":178,
-			 "y":292
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 112,
-			  "y": 276
+			 "x":2043,
+			 "y":255
 		  }
 	   ],
 	   "index":75,
@@ -1305,36 +1073,26 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":372,
-			 "y":568
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 340,
-			  "y": 536
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":76,
 	},
 	"0x2AB":{
 	   "id":"0x2AB",
-	   "area":"Mysterious Woods",
-	   "name":"Cave Skull Heart Piece",
+	   "area":"Desert",
+	   "name":"Aginah Flamethrower Cave",
 	   "locations":[
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":128,
-		// 	 "y":682
-		//   },
 		  {
 			 "map":"overworld",
-			 "x":436,
-			 "y":828
+			 "x":578,
+			 "y":1722
 		  },
 		  {
-			  "map": "underworld",
-			  "x": 48,
-			  "y": 698
+			 "map":"overworld",
+			 "x":676,
+			 "y":1707
 		  }
 	   ],
 	   "index":77,
@@ -1347,32 +1105,22 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":436,
-			 "y":828
+			 "x":2800,
+			 "y":2800
 		  },
-		  {
-			  "map": "underworld",
-			  "x": 388,
-			  "y": 828
-		  }
-		//   {
-		// 	 "map":"overworld",
-		// 	 "x":128,
-		// 	 "y":682
-		//   }
 	   ],
 	   "index":78,
 	   "image": "02BD",
 	},
 	"0x041":{
 	   "id":"0x041",
-	   "area":"Mysterious Woods",
-	   "name":"Tail Key Chest",
+	   "area":"Kakariko Village",
+	   "name":"Race Game",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":226,
-			 "y":568
+			 "x":23,
+			 "y":1460
 		  }
 	   ],
 	   "index":79,
@@ -1384,26 +1132,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":664,
-			 "y":406
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":80,
 	},
 	"0x1E1":{
 	   "id":"0x1E1",
-	   "area":"Mysterious Woods",
+	   "area":"Death Mountain",
 	   "name":"Mad Batter",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":436,
-			 "y":682
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 388,
-			  "y": 698
+			 "x":1222,
+			 "y":273
 		  }
 	   ],
 	   "index":81,
@@ -1415,8 +1158,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":226,
-			 "y":990
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":82,
@@ -1428,26 +1171,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":712,
-			 "y":584
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":83,
 	},
 	"0x1E3":{
 	   "id":"0x1E3",
-	   "area":"Martha's Bay",
+	   "area":"Lost Woods",
 	   "name":"Ghost House Barrel",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":1052,
-			 "y":1998
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 1100,
-			  "y": 2046
+			 "x":868,
+			 "y":80
 		  }
 	   ],
 	   "index":84,
@@ -1460,8 +1198,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":922,
-			 "y":1852
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":85,
@@ -1473,26 +1211,21 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":380,
-			 "y":1762
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":86,
 	},
 	"0x2B2":{
 	   "id":"0x2B2",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Dog House Dig",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":242,
-			 "y":1348
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 258,
-			  "y": 1266
+			 "x":400,
+			 "y":850
 		  }
 	   ],
 	   "index":87,
@@ -1505,8 +1238,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":566,
-			 "y":1348
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":88,
@@ -1518,8 +1251,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":258,
-			 "y":1104
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":89,
@@ -1531,49 +1264,34 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":1380
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 64,
-			  "y": 1364
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":90,
 	},
 	"0x2BE":{
 	   "id":"0x2BE",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Dream Hut West",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":518,
-			 "y":1088
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 614,
-			  "y": 876
+			 "x":513,
+			 "y":600
 		  }
 	   ],
 	   "index":91,
 	},
 	"0x2BF":{
 	   "id":"0x2BF",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Dream Hut East",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":518,
-			 "y":1088
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 664,
-			  "y": 876
+			 "x":513,
+			 "y":600
 		  }
 	   ],
 	   "index":92,
@@ -1590,8 +1308,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":10,
@@ -1608,8 +1326,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":9,
@@ -1626,8 +1344,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":8,
@@ -1644,8 +1362,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":7,
@@ -1662,8 +1380,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":3,
@@ -1680,8 +1398,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":1,
@@ -1698,8 +1416,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":2,
@@ -1716,8 +1434,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":5,
@@ -1734,8 +1452,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":6,
@@ -1752,8 +1470,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":4,
@@ -1770,8 +1488,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":0,
@@ -1790,8 +1508,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":23,
@@ -1810,8 +1528,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":80,
-			"y":130
+			 "x":226,
+			 "y":1640
 		}
 	   ],
 	   "index":22,
@@ -1828,8 +1546,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":15,
@@ -1846,8 +1564,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":17,
@@ -1864,8 +1582,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":13,
@@ -1882,8 +1600,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":12,
@@ -1895,8 +1613,8 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":64,
-			 "y":32
+			 "x":50,
+			 "y":1830
 		  },
 		  {
 			 "map":"d8",
@@ -1905,8 +1623,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":16,
@@ -1923,8 +1641,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":20,
@@ -1941,8 +1659,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":14,
@@ -1959,8 +1677,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":11,
@@ -1977,8 +1695,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":21,
@@ -1995,8 +1713,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":21,
@@ -2015,8 +1733,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":18,
@@ -2033,8 +1751,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":18,
@@ -2053,8 +1771,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":19,
@@ -2071,8 +1789,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":9,
@@ -2089,8 +1807,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":7,
@@ -2107,8 +1825,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":6,
@@ -2125,8 +1843,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":6,
@@ -2145,8 +1863,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":8,
@@ -2163,8 +1881,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":2,
@@ -2181,8 +1899,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":3,
@@ -2199,8 +1917,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":4,
@@ -2217,8 +1935,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":5,
@@ -2235,8 +1953,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":1,
@@ -2253,8 +1971,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":80,
-			 "y":130
+			 "x":226,
+			 "y":1640
 		  }
 	   ],
 	   "index":10,
@@ -2271,8 +1989,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":141,
@@ -2291,8 +2009,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":2348,
-			"y":32
+			 "x":1512,
+			 "y":45
 		}
 	   ],
 	   "index":140,
@@ -2309,8 +2027,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":139,
@@ -2327,8 +2045,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":127,
@@ -2350,8 +2068,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":138,
@@ -2368,8 +2086,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":137,
@@ -2386,8 +2104,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":136,
@@ -2404,8 +2122,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":134,
@@ -2422,8 +2140,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":133,
@@ -2440,8 +2158,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":130,
@@ -2458,8 +2176,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":135,
@@ -2476,8 +2194,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":131,
@@ -2494,8 +2212,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":132,
@@ -2512,8 +2230,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":129,
@@ -2530,8 +2248,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":128,
@@ -2548,8 +2266,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":2348,
-			 "y":32
+			 "x":1512,
+			 "y":45
 		  }
 	   ],
 	   "index":126,
@@ -2566,8 +2284,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":160,
@@ -2586,8 +2304,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":1992,
-			"y":1080
+			 "x":2494,
+			 "y":820
 		}
 	   ],
 	   "index":159,
@@ -2604,8 +2322,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":157,
@@ -2622,8 +2340,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":158,
@@ -2640,8 +2358,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":156,
@@ -2658,8 +2376,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":155,
@@ -2676,8 +2394,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":152,
@@ -2694,8 +2412,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":153,
@@ -2712,8 +2430,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":154,
@@ -2724,19 +2442,14 @@ let vanillaCoordDict = {
 	   "name":"Raft Chest",
 	   "locations":[
 		  {
-			 "map":"overworld",
-			 "x":1992,
-			 "y":828
-		  },
-		  {
 			 "map":"d6",
 			 "x":112,
-			 "y":0
+			 "y":2800
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":151,
@@ -2753,8 +2466,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":150,
@@ -2771,8 +2484,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":149,
@@ -2789,8 +2502,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":148,
@@ -2807,8 +2520,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":147,
@@ -2825,8 +2538,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":146,
@@ -2843,8 +2556,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":144,
@@ -2861,8 +2574,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":145,
@@ -2879,8 +2592,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":143,
@@ -2897,8 +2610,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1992,
-			 "y":1080
+			 "x":2494,
+			 "y":820
 		  }
 	   ],
 	   "index":142,
@@ -2915,8 +2628,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":176,
@@ -2935,8 +2648,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":1538,
-			"y":1738
+			 "x":2014,
+			 "y":1705
 		}
 	   ],
 	   "index":175,
@@ -2958,8 +2671,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":168,
@@ -2976,8 +2689,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":172,
@@ -2994,8 +2707,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":174,
@@ -3012,8 +2725,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":170,
@@ -3030,8 +2743,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":171,
@@ -3048,8 +2761,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":169,
@@ -3066,8 +2779,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":167,
@@ -3084,8 +2797,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":166,
@@ -3102,8 +2815,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":164,
@@ -3120,8 +2833,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":163,
@@ -3138,8 +2851,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":165,
@@ -3156,8 +2869,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":173,
@@ -3174,8 +2887,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":162,
@@ -3192,8 +2905,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1538,
-			 "y":1738
+			 "x":2014,
+			 "y":1705
 		  }
 	   ],
 	   "index":161,
@@ -3210,8 +2923,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":192,
@@ -3230,8 +2943,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":1846,
-			"y":276
+			 "x":2540,
+			 "y":330
 		}
 	   ],
 	   "index":191,
@@ -3248,8 +2961,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":190,
@@ -3266,8 +2979,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":188,
@@ -3284,8 +2997,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":187,
@@ -3302,8 +3015,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":186,
@@ -3320,8 +3033,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":189,
@@ -3343,8 +3056,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":184,
@@ -3361,8 +3074,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":185,
@@ -3379,8 +3092,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":183,
@@ -3397,8 +3110,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":182,
@@ -3415,8 +3128,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":181,
@@ -3433,8 +3146,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":180,
@@ -3451,8 +3164,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":179,
@@ -3469,8 +3182,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":178,
@@ -3487,8 +3200,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1846,
-			 "y":276
+			 "x":2540,
+			 "y":330
 		  }
 	   ],
 	   "index":177,
@@ -3505,8 +3218,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":214,
@@ -3525,8 +3238,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":906,
-			"y":1446
+			 "x":2430,
+			 "y":95
 		}
 	   ],
 	   "index":213,
@@ -3543,8 +3256,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":212,
@@ -3557,12 +3270,12 @@ let vanillaCoordDict = {
 		  {
 			 "map":"d3",
 			 "x":64,
-			 "y":0
+			 "y":2800
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":205,
@@ -3579,8 +3292,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":206,
@@ -3597,8 +3310,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":204,
@@ -3615,8 +3328,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":211,
@@ -3633,8 +3346,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":210,
@@ -3651,8 +3364,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":207,
@@ -3669,8 +3382,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":208,
@@ -3687,8 +3400,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":209,
@@ -3705,8 +3418,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":203,
@@ -3723,8 +3436,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":202,
@@ -3741,8 +3454,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":201,
@@ -3759,8 +3472,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":200,
@@ -3777,8 +3490,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":196,
@@ -3795,8 +3508,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":199,
@@ -3813,8 +3526,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":198,
@@ -3831,8 +3544,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":197,
@@ -3849,8 +3562,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":195,
@@ -3867,8 +3580,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":194,
@@ -3885,8 +3598,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":906,
-			 "y":1446
+			 "x":2430,
+			 "y":95
 		  }
 	   ],
 	   "index":193,
@@ -3903,8 +3616,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":231,
@@ -3923,8 +3636,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":230,
@@ -3941,8 +3654,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":229,
@@ -3959,8 +3672,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":228,
@@ -3977,8 +3690,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":227,
@@ -3995,8 +3708,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":223,
@@ -4013,8 +3726,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":224,
@@ -4031,8 +3744,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":226,
@@ -4043,14 +3756,14 @@ let vanillaCoordDict = {
 	   "name":"Outside Boo Buddies Flying Powder",
 	   "locations":[
 		  {
-			 "map": "d2",
-			 "x": 240,
-			 "y": 32
+			 "map":"overworld",
+			 "x":65,
+			 "y":45
 		  },
 		  {
-			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "map": "d2",
+			 "x":720,
+			 "y":820
 		  }
 	   ],
 	   "index":226,
@@ -4069,8 +3782,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":225,
@@ -4087,8 +3800,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":220,
@@ -4105,8 +3818,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":222,
@@ -4118,13 +3831,13 @@ let vanillaCoordDict = {
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  },
 		  {
 			 "map": "d2",
-			 "x": 720,
-			 "y": 832
+			 "x":720,
+			 "y":820
 		  },
 	   ],
 	   "index":222,
@@ -4143,8 +3856,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":221,
@@ -4161,8 +3874,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":219,
@@ -4179,8 +3892,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":218,
@@ -4197,8 +3910,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":217,
@@ -4215,8 +3928,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":216,
@@ -4233,8 +3946,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":696,
-			 "y":276
+			 "x":65,
+			 "y":45
 		  }
 	   ],
 	   "index":215,
@@ -4251,8 +3964,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":246,
@@ -4271,8 +3984,8 @@ let vanillaCoordDict = {
 		},
 		{
 			"map":"overworld",
-			"x":582,
-			"y":1706
+			 "x":1206,
+			 "y":1850
 		}
 	   ],
 	   "index":245,
@@ -4289,8 +4002,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":244,
@@ -4307,8 +4020,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":243,
@@ -4325,8 +4038,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":242,
@@ -4343,8 +4056,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":241,
@@ -4361,8 +4074,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":239,
@@ -4379,8 +4092,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":240,
@@ -4397,8 +4110,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":238,
@@ -4415,8 +4128,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":235,
@@ -4433,8 +4146,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":237,
@@ -4451,8 +4164,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":232,
@@ -4469,8 +4182,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":236,
@@ -4487,8 +4200,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":233,
@@ -4505,98 +4218,74 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":582,
-			 "y":1706
+			 "x":1206,
+			 "y":1850
 		  }
 	   ],
 	   "index":234,
 	},
 	"0x2A1-2":{
 	   "id":"0x2A1-2",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Shop 10 Item",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":550,
-			 "y":1250
+			 "x":402,
+			 "y":1220
 		  }
 	   ],
 	   "index":247,
 	},
 	"0x2A1-1":{
 	   "id":"0x2A1-1",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Shop 980 Item",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":550,
-			 "y":1250
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 510,
-			  "y": 1202
+			 "x":402,
+			 "y":1220
 		  }
 	   ],
 	   "index":248,
 	},
 	"0x2A1-0":{
 	   "id":"0x2A1-0",
-	   "area":"Mabe Village",
+	   "area":"Kakariko Village",
 	   "name":"Shop 200 Item",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":550,
-			 "y":1250
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 510,
-			  "y": 1202
+			 "x":402,
+			 "y":1220
 		  }
 	   ],
 	   "index":249,
 	},
 	"0x2A2":{
 	   "id":"0x2A2",
-	   "area":"Koholint Prairie",
+	   "area":"Eastern Hyrule",
 	   "name":"Witch Item",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":874,
-			 "y":812
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 874,
-			  "y": 844
+			 "x":2045,
+			 "y":670
 		  }
 	   ],
+	   "linkedItem": "TOADSTOOL_CHECKED",
 	   "index":250,
 	},
 	"0x2A22":{
 	   "id":"0x2A22",
-	   "area":"Koholint Prairie",
+	   "area":"Eastern Hyrule",
 	   "name":"Witch Powder",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":874,
-			 "y":812
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 842,
-			  "y": 828
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 922,
-			  "y": 828
+			 "x":2045,
+			 "y":670
 		  }
 	   ],
 	   "index": 250,
@@ -4615,8 +4304,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":12,
@@ -4634,8 +4323,8 @@ let vanillaCoordDict = {
 		  },
 		  {
 			 "map":"overworld",
-			 "x":1246,
-			 "y":926
+			 "x":2800,
+			 "y":2800
 		  }
 	   ],
 	   "index":11,
@@ -4643,49 +4332,28 @@ let vanillaCoordDict = {
 	},
 	"0x2A3":{
 	   "id":"0x2A3",
-	   "area":"Mabe Village",
+	   "area":"Links House",
 	   "name":"Tarin's Gift",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":404,
-			 "y":1364
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 436,
-			  "y": 1364
+			 "x":1399,
+			 "y":1385
 		  }
 	   ],
 	   "index":253,
 	},
 	"0x1F5":{
 	   "id":"0x1F5",
-	   "area":"Toronbo Shores",
+	   "area":"Lake Hylia",
 	   "name":"Boomerang Guy Item",
 	   "locations":[
 		  {
 			 "map":"overworld",
-			 "x":664,
-			 "y":1966
-		  },
-		  {
-			  "map": "underworld",
-			  "x": 720,
-			  "y": 1966
+			 "x":2288,
+			 "y":1560
 		  }
 	   ],
 	   "index":254,
 	},
 }
-
-let coordDict = vanillaCoordDict;
-let linkedChecks = {};
-
-Object.values(coordDict).filter(x => x.linkedItem).map(y => {
-	if (!linkedChecks[y.linkedItem]) {
-		linkedChecks[y.linkedItem] = [];
-	}
-
-	linkedChecks[y.linkedItem].push(y);
-});

@@ -151,14 +151,15 @@ def readEntrances(gb, state):
 
         if state.lastDifferentRoom in consts.sidescrollerRooms:
             sourceEntrance = consts.sidescrollerRooms[state.lastDifferentRoom]
-            destEntrance = state.entranceMap[sourceEntrance]
+            if sourceEntrance in state.entranceMap:
+                destEntrance = state.entranceMap[sourceEntrance]
 
-            expectedRoom = state.entrancesByName[destEntrance].outdoorRoom
-            if destEntrance.endswith(":indoor"):
-                expectedRoom = state.entrancesByName[destEntrance].indoorMap
-            
-            if expectedRoom == state.room:
-                state.entrancesByName[sourceEntrance].map(destEntrance)
+                expectedRoom = state.entrancesByName[destEntrance].outdoorRoom
+                if destEntrance.endswith(":indoor"):
+                    expectedRoom = state.entrancesByName[destEntrance].indoorMap
+                
+                if expectedRoom == state.room:
+                    state.entrancesByName[sourceEntrance].map(destEntrance)
 
         if state.room in consts.sidescrollerRooms:
             validSources = {x.name for x in consts.entranceCoords if x.room == state.lastDifferentRoom}

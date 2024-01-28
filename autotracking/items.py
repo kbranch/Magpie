@@ -6,10 +6,15 @@ def loadItems(state):
 
     for i in range(len(consts.dungeonItems)):
         for item, offset in consts.dungeonItemOffsets.items():
+            dungeonNo = i + 1
+
+            if i == 8:
+                dungeonNo = 0
+
             if item.startswith('KEY'):
-                state.items.append(Item(item.format(i + 1), consts.dungeonItems[i] + offset, count=True))
+                state.items.append(Item(item.format(dungeonNo), consts.dungeonItems[i] + offset, count=True))
             else:
-                state.items.append(Item(item.format(i + 1), consts.dungeonItems[i] + offset))
+                state.items.append(Item(item.format(dungeonNo), consts.dungeonItems[i] + offset))
 
     state.itemDict = {item.id: item for item in state.items}
 

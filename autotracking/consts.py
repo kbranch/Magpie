@@ -101,6 +101,7 @@ inventoryItemIds = {
     0x0D: 'BOOMERANG',
     0x0E: 'TOADSTOOL',
     0x0F: 'ROOSTER',
+    0x10: 'HAMMER',
 }
 
 dungeonKeyDoors = [
@@ -194,6 +195,7 @@ items = [
         Item('BOOMERANG', None),
         Item('TOADSTOOL', None),
         Item('ROOSTER', None),
+        Item('HAMMER', None),
         Item('SWORD', 0xDB4E, count=True),
         Item('POWER_BRACELET', 0xDB43, count=True),
         Item('SHIELD', 0xDB44, count=True),

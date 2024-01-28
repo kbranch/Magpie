@@ -308,6 +308,10 @@ function applySettings(oldArgs=null) {
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
+        if (args.overworld == 'alttp' && mapName == 'overworld') {
+            mapPath =  'static/images/alttp-overworld.png';
+        }
+
         $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
     }
 
@@ -321,6 +325,20 @@ function applySettings(oldArgs=null) {
             },
         });
     }
+
+    coordDict = vanillaCoordDict;
+
+    if (args.overworld == 'alttp') {
+        coordDict = alttpCoordDict;
+    }
+
+    Object.values(coordDict).filter(x => x.linkedItem).map(y => {
+        if (!linkedChecks[y.linkedItem]) {
+            linkedChecks[y.linkedItem] = [];
+        }
+
+        linkedChecks[y.linkedItem].push(y);
+    });
 }
 
 function createElement(type, attrs) {
