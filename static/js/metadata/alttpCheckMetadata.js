@@ -83,12 +83,6 @@ let alttpCoordDict = {
              "x":2800,
              "y":2800
           },
-        //   {
-        //      "map":"overworld",
-        //      "x":1586,
-        //      "y":178,
-        //      "indirect":true
-        //   }
        ],
     },
     "0x2D7-Trade":{
@@ -978,8 +972,8 @@ let alttpCoordDict = {
        "locations":[
           {
              "map":"overworld",
-             "x":2800,
-             "y":2800
+             "x":420,
+             "y":308
           }
        ],
     },
@@ -4080,13 +4074,13 @@ let alttpCoordDict = {
     },
     "0x0D4":{
        "id":"0x0D4",
-       "area":"Somewhere",
-       "name":"Heart Piece",
+       "area":"Desert",
+       "name":"Outside Flame Cave",
        "locations":[
           {
              "map":"overworld",
-             "x":0,
-             "y":0
+             "x":712,
+             "y":1754
           },
        ],
     },
