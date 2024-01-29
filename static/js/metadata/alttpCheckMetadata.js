@@ -4108,4 +4108,16 @@ let alttpCoordDict = {
           },
        ],
     },
+    "0x0E0":{
+       "id":"0x0E0",
+       "area":"Turtle Rock",
+       "name":"Desert Shelf",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":64,
+             "y":1852
+          },
+       ],
+    },
 }
