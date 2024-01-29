@@ -396,14 +396,14 @@ let alttpCoordDict = {
     },
     "0x05D":{
        "id":"0x05D",
-       "area":"Rapids Ride",
-       "name":"East",
+       "area":"Eastern Hyrule",
+       "name":"Witch Bush",
        "locations":[
           {
              "map":"overworld",
-             "x":2800,
-             "y":2800
-          }
+             "x":2186,
+             "y":666
+          },
        ],
     },
     "0x05C":{
@@ -4040,6 +4040,78 @@ let alttpCoordDict = {
              "x":2288,
              "y":1560
           }
+       ],
+    },
+    "0x04A":{
+       "id":"0x04A",
+       "area":"Graveyard",
+       "name":"Bush",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":1652,
+             "y":616
+          },
+       ],
+    },
+    "0x0C7":{
+       "id":"0x0C7",
+       "area":"Swamp",
+       "name":"Peg Rock",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":1182,
+             "y":1592
+          },
+       ],
+    },
+    "0x0B0":{
+       "id":"0x0B0",
+       "area":"Kakariko Village",
+       "name":"Digging Game",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":16,
+             "y":1462
+          },
+       ],
+    },
+    "0x0D4":{
+       "id":"0x0D4",
+       "area":"Somewhere",
+       "name":"Heart Piece",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
+    "0x011":{
+       "id":"0x011",
+       "area":"Lost Woods",
+       "name":"Toadstool",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":258,
+             "y":178
+          },
+       ],
+    },
+    "0x0BF":{
+       "id":"0x0BF",
+       "area":"Eastern Palace",
+       "name":"Peg Rock",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":2478,
+             "y":1494
+          },
        ],
     },
 }

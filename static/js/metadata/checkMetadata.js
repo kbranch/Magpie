@@ -4690,6 +4690,78 @@ let vanillaCoordDict = {
        ],
        "index":26,
     },
+    "0x04A":{
+       "id":"0x04A",
+       "area":"Somewhere",
+       "name":"Seashell",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
+    "0x0C7":{
+       "id":"0xC7",
+       "area":"Somewhere",
+       "name":"Seashell",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
+    "0x0B0":{
+       "id":"0x0B0",
+       "area":"Somewhere",
+       "name":"Heart Piece",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
+    "0x0D4":{
+       "id":"0x0D4",
+       "area":"Somewhere",
+       "name":"Heart Piece",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
+    "0x011":{
+       "id":"0x011",
+       "area":"Somewhere",
+       "name":"Toadstool",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
+    "0x0BF":{
+       "id":"0x0BF",
+       "area":"Somewhere",
+       "name":"Seashell",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":0,
+             "y":0
+          },
+       ],
+    },
 }
 
 let coordDict = vanillaCoordDict;
