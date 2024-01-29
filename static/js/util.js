@@ -203,7 +203,13 @@ function applySettings(oldArgs=null) {
         }
     }
 
-    $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
+    let brightness = localSettings.mapBrightness;
+
+    if (args.overworld == 'alttp') {
+        brightness *= 1.15;
+    }
+
+    $('.map').css('filter', `brightness(${brightness}%)`);
 
     if (!args.rooster) {
         inventory['ROOSTER'] = 0;
