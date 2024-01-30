@@ -418,3 +418,13 @@ function parseHtml(outerHtml) {
     element.innerHTML = outerHtml;
     return element.firstChild;
 }
+
+function viewportSnapshot() {
+    return {
+        width: window.visualViewport.width,
+        height: window.visualViewport.height,
+        scale: window.visualViewport.scale,
+        left: window.visualViewport.offsetLeft,
+        top: window.visualViewport.offsetTop,
+    };
+}

@@ -109,6 +109,7 @@
     var settingsPrefix = '{{settingsPrefix}}';
     var players = {{players|safe}};
     var playerInventories = {};
+    var lastViewport = viewportSnapshot();
 
     var startHouse = 'start_house:inside';
 
@@ -378,15 +379,30 @@
         var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
         var timeoutId;
-        function resizeTimeout() {
+        function resizeTimeout(a, b, c, d) {
             removeNodes();
             clearTimeout(timeoutId);
             skipNextAnimation = true;
             timeoutId = setTimeout(drawActiveTab, 100);
         }
 
+        function viewportResizeTimeout(a, b, c, d) {
+            if (lastViewport.height != window.visualViewport.height
+                || lastViewport.width != window.visualViewport.width
+                || lastViewport.scale != window.visualViewport.scale
+                || lastViewport.left != window.visualViewport.offsetLeft
+                || lastViewport.top != window.visualViewport.offsetTop) {
+                removeNodes();
+                clearTimeout(timeoutId);
+                skipNextAnimation = true;
+                timeoutId = setTimeout(drawActiveTab, 100);
+            }
+
+            lastViewport = viewportSnapshot();
+        }
+
         window.addEventListener("resize", resizeTimeout); // Window size
-        window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
+        window.visualViewport.addEventListener('resize', viewportResizeTimeout); // Pinch zoom
     }
 
     init();
