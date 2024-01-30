@@ -251,7 +251,14 @@ function clearEntranceMapping(entranceId, housekeeping=true) {
     if (coupledEntrances()) {
         delete entranceMap[entranceMap[entranceId]];
     }
-    delete entranceMap[entranceId];
+
+    if (entranceId in entranceMap) {
+        delete entranceMap[entranceId];
+    }
+    else {
+        delete entranceMap[reverseEntranceMap[entranceId]];
+    }
+
 
     updateReverseMap();
 
