@@ -1,8 +1,9 @@
+import copy
 import consts
 from item import Item
 
 def loadItems(state):
-    state.items = consts.items.copy()
+    state.items = copy.deepcopy(consts.items)
 
     for i in range(len(consts.dungeonItems)):
         for item, offset in consts.dungeonItemOffsets.items():
