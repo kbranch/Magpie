@@ -347,6 +347,22 @@ function applySettings(oldArgs=null) {
             vanilla.area = alttp.area;
         });
     }
+    else {
+        Object.keys(coordDict).map(x => {
+            let vanilla = coordDict[x];
+            let vanillaLocs = vanilla.locations.filter(y => y.map == "vanillaOverworld");
+
+            vanilla.locations = vanilla.locations.filter(y => y.map != "overworld");
+            vanillaLocs.map(y => {
+                let loc = structuredClone(y);
+                loc.map = "overworld";
+                vanilla.locations.push(loc);
+            });
+
+            vanilla.name = vanilla.name;
+            vanilla.area = vanilla.area;
+        });
+    }
 
     linkedChecks = {};
     Object.values(coordDict).filter(x => x.linkedItem).map(y => {
