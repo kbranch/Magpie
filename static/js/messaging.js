@@ -12,10 +12,20 @@ function processCheckMessage(message) {
     }
 
     for (const check of message.checks) {
+        let metadata = coordDict[check.id];
+
         if (check.checked) {
+            if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
+                addItem(metadata.linkedItem, 1, false, false, '', false);
+            }
+
             checkedChecks.add(check.id);
         }
         else {
+            if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
+                addItem(metadata.linkedItem, -1, false, false, '', false);
+            }
+
             checkedChecks.delete(check.id);
         }
     }
