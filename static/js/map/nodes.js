@@ -30,7 +30,7 @@ function createNodes(map, mapName) {
     }
 
     let entrances = [...randomizedEntrances];
-    if (localSettings.showVanillaEntrances) {
+    if (localSettings.showVanillaEntrances && (mapName != 'overworld' || args.overworld != 'alttp')) {
         entrances = entrances.concat(Object.keys(entranceMap));
     }
 
