@@ -31,6 +31,7 @@ class LocalSettings:
         self.autotrackerAddress = ''
         self.gps = True
         self.followMap = True
+        self.followToUnderworld = False
         self.linkFace = True
         self.spoilOnCollect = False
         self.showOwnedPickups = False

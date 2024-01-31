@@ -109,7 +109,8 @@ function processLocationMessage(message) {
     if (newMap != oldMap 
         && newMap != null
         && oldMap != null
-        && localSettings.followMap) {
+        && localSettings.followMap
+        && (newMap != 'underworld' || localSettings.followToUnderworld)) {
         openTab(newMap);
     }
 
