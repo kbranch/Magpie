@@ -6,6 +6,8 @@ function processCheckMessage(message) {
         return;
     }
 
+    let addedItem = false;
+
     if (!message.diff) {
         console.log('Receiving full autotracker checks');
         resetChecks();
@@ -17,6 +19,7 @@ function processCheckMessage(message) {
         if (check.checked) {
             if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
                 addItem(metadata.linkedItem, 1, false, false, '', false);
+                addedItem = true;
             }
 
             checkedChecks.add(check.id);
@@ -24,6 +27,7 @@ function processCheckMessage(message) {
         else {
             if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
                 addItem(metadata.linkedItem, -1, false, false, '', false);
+                addedItem = true;
             }
 
             checkedChecks.delete(check.id);
@@ -36,6 +40,10 @@ function processCheckMessage(message) {
     if (message.refresh) {
         drawActiveTab();
         refreshTextChecks();
+
+        if (addedItem) {
+            refreshCheckList();
+        }
     }
 }
 
