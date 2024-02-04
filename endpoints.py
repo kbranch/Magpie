@@ -315,6 +315,7 @@ def suggestion():
     from email.mime.multipart import MIMEMultipart
     from email.mime.base import MIMEBase
     from email.mime.text import MIMEText
+    from email.mime.application import MIMEApplication
 
     subject = 'New Magpie Suggestion'
     emailFrom = 'MagpieSuggestions'
@@ -323,7 +324,7 @@ def suggestion():
     try:
         email = request.form['email']
         body = request.form['body']
-        state = request.form['state']
+        state = base64.b64decode(request.form['state'])
 
         if '<img' in body:
             subject += ' (with images)'
@@ -332,8 +333,8 @@ def suggestion():
         alternative = MIMEMultipart('alternative')
         alternative.attach(html)
 
-        attachment = MIMEText(state)
-        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.now()}-magpie-state.json')
+        attachment = MIMEApplication(state, _subtype="x-zip")
+        attachment.add_header('Content-Disposition', 'attachment', filename=f'{datetime.now()}-magpie-state.zip')
 
         htmlFile = MIMEText(body)
         htmlFile.add_header('Content-Disposition', 'attachment', filename=f'{datetime.now()}-magpie-suggestion.html')

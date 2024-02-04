@@ -210,6 +210,11 @@ function addAutotrackerMessage(status) {
 function processMessage(messageText) {
     let message;
 
+    messageLog.push({time: Date.now(), message: messageText});
+    if (messageLog.length > maxMessageLogSize) {
+        messageLog.splice(0, 1);
+    }
+
     if (settingsPending) {
         messageQueue.push(messageText);
         return;

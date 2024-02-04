@@ -5,6 +5,7 @@
 <script src="static/lib/summernote/summernote-lite.js"></script>
 <script src="static/lib/masonry/masonry.pkgd.min.js"></script>
 <script src="static/lib/html-to-image/html-to-image.js"></script>
+<script src="static/lib/JSZip/jszip.min.js"></script>
 <script src="static/js/util.js"></script>
 <script src="static/js/model/mapNode.js"></script>
 <script src="static/js/model/nodeTooltip.js"></script>
@@ -110,6 +111,8 @@
     var players = {{players|safe}};
     var playerInventories = {};
     var lastViewport = viewportSnapshot();
+    var messageLog = [];
+    var maxMessageLogSize = 1000;
 
     var startHouse = 'start_house:inside';
 
