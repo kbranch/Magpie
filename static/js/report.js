@@ -7,7 +7,7 @@ async function sendSuggestion() {
         data: {
             email: $('#suggestionEmail')[0].value,
             body: $('#bodyTextArea').summernote('code'),
-            state: getStateZip(),
+            state: await getStateZip(),
         },
     });
 }
@@ -22,7 +22,7 @@ async function sendError() {
         data: {
             email: $('#errorEmail')[0].value,
             body: '<pre>' + JSON.stringify(payload, null, 3) + '</pre>',
-            state: getStateZip(),
+            state: await getStateZip(),
         },
     });
 }
