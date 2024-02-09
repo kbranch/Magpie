@@ -93,6 +93,7 @@ function processEntranceMessage(message) {
         }
         else {
             connectEntrances(outdoor, indoor, false);
+            updateReverseMap();
             if (!coupledEntrances() || !inOutEntrances()) {
                 Connection.advancedErConnection([outdoor, indoor], 'overworld');
             }
