@@ -206,6 +206,30 @@ function loadSettings() {
     applySettings();
 
     refreshItems();
+
+    if (localStorage.getItem("importedUndos")) {
+        undoStack = JSON.parse(localStorage.getItem("importedUndos")).reverse();
+        undoStack.map(x => {
+            try {
+                x.checkedChecks = new Set(x.checkedChecks);
+            }
+            catch {
+                x.checkedChecks = new Set();
+            }
+
+            let dehydratedConnections = x.connections;
+            x.connections = []
+            for (const conn of dehydratedConnections) {
+                x.connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
+            }
+        });
+        localStorage.removeItem("importedUndos");
+    }
+
+    if (localStorage.getItem("importedSpoilerLog")) {
+        spoilerLog = JSON.parse(localStorage.getItem("importedSpoilerLog"));
+        localStorage.removeItem("importedSpoilerLog");
+    }
     
     return errors;
 }
@@ -295,6 +319,15 @@ function importState(data) {
                 saveLocations();
                 saveInventory();
                 saveSettingsToStorage(state.args, state.settings);
+
+                if ('undos' in state) {
+                    setLocalStorage('importedUndos', JSON.stringify(state.undos));
+                }
+
+                if ('spoilerLog' in state) {
+                    setLocalStorage('importedSpoilerLog', JSON.stringify(state.spoilerLog));
+                }
+
                 location.reload();
         }
         else {

@@ -32,6 +32,9 @@ async function getStateZip() {
     state.messageLog = messageLog;
     state.undos = getRecentUndos();
     state.spoilerLog = spoilerLog;
+
+    state.undos.map(x => x.checkedChecks = [...x.checkedChecks]);
+
     return await zipString(JSON.stringify(state), `${(new Date()).toISOString().replaceAll(':', '_')}-magpie-state.json`);
 }
 
