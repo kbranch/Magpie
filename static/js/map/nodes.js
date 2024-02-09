@@ -85,8 +85,13 @@ function createNodes(map, mapName) {
             }
             else {
                 let node = nodes[coordString];
+                let entranceId = node.entrance?.id;
 
-                if (node.entrance && !node.entrance.isFound()) {
+                if (entranceId && !Entrance.isInside(entranceId)) {
+                    entranceId = Entrance.getInsideOut(entranceId);
+                }
+
+                if (node.entrance && !Entrance.isFound(entranceId)) {
                     unclaimedChecks[check.id] = check;
                     continue;
                 }
