@@ -119,7 +119,10 @@ function processLocationMessage(message) {
         && newMap != null
         && oldMap != null
         && localSettings.followMap
-        && (newMap != 'underworld' || localSettings.followToUnderworld)) {
+        && (newMap != 'underworld'
+            || localSettings.followToUnderworld == 'always'
+            || (localSettings.followToUnderworld == 'advanced'
+                && advancedER()))) {
         openTab(newMap);
     }
 

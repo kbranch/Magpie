@@ -506,8 +506,13 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input id="followToUnderworld" data-setting="followToUnderworld" type="checkbox" class="form-check-input">
-                            <label for="followToUnderworld" class="form-label">Map follows to underworld</label>
+                            <!-- <input id="followToUnderworld" data-setting="followToUnderworld" type="checkbox" class="form-check-input"> -->
+                            <label for="followToUnderworld" class="form-label">Map follows to underworld <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="'Advanced ER' means that the map will only automatically switch to the underworld when the entrance randomizer setting is set to Wild or higher"></label>
+                            <select id="followToUnderworld" class="form-select" data-setting="followToUnderworld" aria-label="followToUnderworld">
+                                <option value="never">Never</option>
+                                <option value="advanced">Advanced ER</option>
+                                <option value="always">Always</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">

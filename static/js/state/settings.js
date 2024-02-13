@@ -247,6 +247,11 @@ function updateSettings() {
         localSettings.showVanilla = !localSettings.hideVanilla;
         delete localSettings['hideVanilla'];
     }
+    if (localSettings.followToUnderworld === true) {
+        localSettings.followToUnderworld = 'always';
+    } else if (localSettings.followToUnderworld === false) {
+        localSettings.followToUnderworld = 'never';
+    }
 }
 
 function fixArgs(args) {
@@ -403,6 +408,10 @@ function coupledEntrances() {
 
 function inOutEntrances() {
     return ['none', 'simple', 'split', 'mixed', 'chaos'].includes(args.entranceshuffle);
+}
+
+function advancedER() {
+    return !inOutEntrances() || !coupledEntrances();
 }
 
 function resetSession() {
