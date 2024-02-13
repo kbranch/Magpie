@@ -19,9 +19,20 @@ function loadInventory() {
     if (inventory == null) {
         resetInventory();
     }
+
+    for (const item in inventory) {
+        if (item in renamedItems) {
+            inventory[renamedItems[item]] = inventory[item];
+            delete inventory[item];
+        }
+    }
 }
 
 function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
+    if (item in renamedItems) {
+        item = renamedItems[item];
+    }
+
     let inv = getPlayerInventory(player);
 
     if (!(item in inv) || typeof inv[item] != 'number') {
