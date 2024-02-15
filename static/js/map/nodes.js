@@ -200,7 +200,7 @@ function distributeChecks(unclaimedChecks) {
             }
 
             node.checks.map(x => checksByConnector[connectorId].add(x));
-            entrancesByConnector[connectorId].add(entranceId);
+            entrancesByConnector[connectorId].add(Entrance.getInside(entranceId));
         }
         else {
             let id = entranceId;
@@ -235,11 +235,6 @@ function distributeChecks(unclaimedChecks) {
 
     for (const node of remappedNodes) {
         let id = node.entrance.connectedTo();
-
-        if (coupledEntrances() && Entrance.isInside(id)) {
-            id = Entrance.getInsideOut(id);
-        }
-
         node.checks = checksByEntrance[id] ?? [];
     }
 }

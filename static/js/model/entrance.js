@@ -271,4 +271,9 @@ class Entrance {
     static getOutside(id) {
         return id?.replace(':inside', '');
     }
+
+    static getInside(id) {
+        let outside = Entrance.getOutside(id);
+        return !outside ? outside : outside + ':inside';
+    }
 }
