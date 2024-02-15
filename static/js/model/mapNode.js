@@ -214,7 +214,15 @@ class MapNode {
 
         if (this.entrance != null) {
             if (this.entrance.isMapped()) {
+                let simpleInside = false;
+                let entrance = this.entrance;
                 let mappedEntrance = new Entrance(this.entrance.connectedTo());
+
+                if (!advancedER() && this.entrance.isInside()) {
+                    simpleInside = true;
+                    entrance = new Entrance(this.entrance.connectedTo());
+                    mappedEntrance = this.entrance;
+                }
 
                 if (args.randomstartlocation 
                     && mappedEntrance.id == startHouse) {
@@ -225,14 +233,16 @@ class MapNode {
                     || mappedEntrance.type == 'stairs'
                     || !inOutEntrances()
                     || !coupledEntrances()) {
-                    if (Connection.thisSideBlocked(this.entrance.id)) {
-                        classes.push('one-way-out');
-                    }
-                    else if (Connection.otherSideBlocked(this.entrance.id)) {
-                        classes.push('one-way-in');
+                    if (!simpleInside) {
+                        if (Connection.thisSideBlocked(entrance.id)) {
+                            classes.push('one-way-out');
+                        }
+                        else if (Connection.otherSideBlocked(entrance.id)) {
+                            classes.push('one-way-in');
+                        }
                     }
 
-                    let connection = this.entrance.mappedConnection();
+                    let connection = entrance.mappedConnection();
                     if (this.isChecked || this.checks.length == 0) {
                         if (connection?.vanilla) {
                             classes.push('vanilla-entrance-only');
@@ -246,7 +256,7 @@ class MapNode {
                     }
 
                     if (connection?.isIncomplete()
-                        || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {
+                        || (entrance.isConnectedToConnector() && !entrance.isConnected())) {
                         classes.push('partial-entrance');
                     }
 
@@ -304,9 +314,22 @@ class MapNode {
         if (entrance.isConnectedToConnector()
             || !inOutEntrances()
             || !coupledEntrances()) {
-            if (entrance.isConnected()) {
-                let connection = entrance.mappedConnection();
-                $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
+
+            let target = entrance;
+            let insideConnector = !advancedER() && entrance.isInside();
+            if (insideConnector) {
+                target = new Entrance(entrance.connectedTo());
+            }
+
+            if (target.isConnected()) {
+                let connection = target.mappedConnection();
+                if (insideConnector) {
+                    $(this.graphic).attr('data-connected-to', connection.connector.entrances.map(x => Entrance.getInsideOut(x)).join(';'));
+                }
+                else {
+                    $(this.graphic).attr('data-connected-to', connection.otherSides(target.id).join(';'));
+                }
+
                 this.connectorLabel = connection.label;
             }
             else {
@@ -382,7 +405,8 @@ class MapNode {
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
                           && this.entrance?.connectedTo() != 'landfill'
-                          && !this.entrance?.connectedToDummy();
+                          && (!this.entrance?.connectedToDummy()
+                              || activeMap != 'overworld');
         hideDifficulty |= difficulty == 'checked'
                           && this.entrance
                           && (this.entrance.isConnectedToConnector()

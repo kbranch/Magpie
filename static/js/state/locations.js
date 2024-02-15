@@ -279,6 +279,9 @@ function mapToLandfill(entranceId) {
     if (connection != null && connection.entrances.length == 4) {
         otherSide = connection.otherSide(entranceId);
     }
+    else if (coupledEntrances()) {
+        otherSide = entranceMap[entranceId];
+    }
 
     Connection.disconnect(entranceId);
 

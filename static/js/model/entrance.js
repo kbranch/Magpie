@@ -47,7 +47,16 @@ class Entrance {
     }
 
     isConnectedToConnector() {
-        return this.connectedTo() != null && inOutEntrances() && coupledEntrances() && Entrance.isConnector(this.connectedTo());
+        let target = this.connectedTo();
+
+        if (this.isInside()) {
+            target = this.id;
+        }
+
+        return this.connectedTo() != null 
+               && inOutEntrances()
+               && coupledEntrances()
+               && Entrance.isConnector(target);
     }
 
     isConnected() {
