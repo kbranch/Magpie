@@ -255,7 +255,7 @@ class Connection {
             return false;
         }
 
-        let otherId = connector.entrances[0] == thisInsideData.id ? connector.entrances[1] : connector.entrances[0];
+        let otherId = connector.entrances[0] == Entrance.getOutside(thisInsideData.id) ? connector.entrances[1] : connector.entrances[0];
         let otherInsideData = entranceDict[otherId];
 
         return Entrance.isInside(connectedTo) && (otherInsideData?.oneWayBlocked ?? false);
