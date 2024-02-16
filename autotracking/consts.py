@@ -518,8 +518,11 @@ entranceCoords = [
 
 sidescrollerRooms = {
     0x2e9: "seashell_mansion:inside",
+    0x08a: "seashell_mansion",
     0x2fd: "mambo:inside",
+    0x02a: "mambo",
     0x1eb: "castle_secret_exit:inside",
+    0x049: "castle_secret_exit",
     0x1ec: "castle_secret_entrance:inside",
     0x04a: "castle_secret_entrance",
     0x117: "d1:inside", # not a sidescroller, but acts weird 
