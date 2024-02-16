@@ -80,12 +80,20 @@ function processEntranceMessage(message) {
 
     pushUndoState();
 
-    for (const outdoor in message.entranceMap) {
-        if (outdoor in entranceMap) {
+    for (const from in message.entranceMap) {
+        if (from in entranceMap) {
             continue;
         }
 
+        let outdoor = from;
         let indoor = message.entranceMap[outdoor];
+
+        if (coupledEntrances() && inOutEntrances()) {
+            if (Entrance.isInside(outdoor)) {
+                outdoor = indoor;
+                indoor = from;
+            }
+        }
 
         if (coupledEntrances() && inOutEntrances() && Entrance.isConnector(indoor)) {
             connectOneEndConnector(outdoor, indoor, false);
