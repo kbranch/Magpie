@@ -41,7 +41,7 @@ def loadEntrances(state, romData):
     state.entranceMap = world.entrance_mapping
 
 def readVisitedEntrances(gb, state):
-    for entrance in state.entrancesByTarget.values():
+    for entrance in [x for x in state.entrancesByTarget.values() if ':inside' in x.name]:
         if entrance.name not in state.reverseEntranceMap:
             continue
 
