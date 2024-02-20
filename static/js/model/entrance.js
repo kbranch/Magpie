@@ -212,11 +212,11 @@ class Entrance {
     }
 
     static isConnector(id) {
-        return ['connector', 'stairs'].includes(entranceDict[id].type);
+        return ['connector', 'stairs'].includes(entranceDict[Entrance.getOutside(id)].type);
     }
 
     static isStairs(id) {
-        return entranceDict[id].type == 'stairs';
+        return entranceDict[Entrance.getOutside(id)].type == 'stairs';
     }
 
     static isConnected(id) {

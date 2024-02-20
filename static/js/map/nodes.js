@@ -31,7 +31,7 @@ function createNodes(map, mapName) {
 
     let entrances = [...randomizedEntrances];
     if (localSettings.showVanillaEntrances && (mapName != 'overworld' || args.overworld != 'alttp')) {
-        entrances = entrances.concat(Object.keys(entranceMap));
+        entrances = entrances.concat(Object.keys(entranceMap).filter(x => !Entrance.isInside(x)));
     }
 
     entrances = entrances.filter(x => entranceDict[x].locations.map(loc => loc.map).includes(mapName));

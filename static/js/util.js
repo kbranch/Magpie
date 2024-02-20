@@ -126,10 +126,10 @@ function updateEntrances() {
             continue;
         }
 
-        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], false, false);
+        connectExteriors(connector.entrances[0], Entrance.getInside(connector.entrances[0]), connector.entrances[1], Entrance.getInside(connector.entrances[1]), false, false);
 
         if (connector.entrances.length == 3) {
-            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], false, false);
+            connectExteriors(connector.entrances[0], Entrance.getInside(connector.entrances[0]), connector.entrances[2], Entrance.getInside(connector.entrances[2]), false, false);
         }
     }
 }
