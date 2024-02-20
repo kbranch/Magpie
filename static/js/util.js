@@ -126,10 +126,24 @@ function updateEntrances() {
             continue;
         }
 
-        connectExteriors(connector.entrances[0], Entrance.getInside(connector.entrances[0]), connector.entrances[1], Entrance.getInside(connector.entrances[1]), false, false);
+        let inside1 = connector.entrances[0]
+        let inside2 = connector.entrances[1]
+
+        if (!Entrance.isStairs(inside1)) {
+            inside1 = Entrance.getInside(inside1);
+            inside2 = Entrance.getInside(inside2);
+        }
+
+        connectExteriors(connector.entrances[0], inside1, connector.entrances[1], inside2, false, false);
 
         if (connector.entrances.length == 3) {
-            connectExteriors(connector.entrances[0], Entrance.getInside(connector.entrances[0]), connector.entrances[2], Entrance.getInside(connector.entrances[2]), false, false);
+            let inside3 = connector.entrances[2]
+
+            if (!Entrance.isStairs(inside1)) {
+                inside3 = Entrance.getInside(inside3);
+            }
+
+            connectExteriors(connector.entrances[0], inside1, connector.entrances[2], inside3, false, false);
         }
     }
 }

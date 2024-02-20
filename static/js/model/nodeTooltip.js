@@ -201,7 +201,7 @@ class NodeTooltip {
                     && entrance.isMapped()
                     && !['right_taltal_connector1', 'right_taltal_connector2', 'landfill'].includes(entrance.connectedTo())) {
                 let connection = entranceDict[entrance.connectedTo()];
-                if (connection.interiorImage && Entrance.isInside(connection.id)) {
+                if (connection.interiorImage && (Entrance.isInside(connection.id) || Entrance.isStairs(connection.id))) {
                     entranceHtml += interiorImageTemplate.replace('{image}', connection.interiorImage);
                 }
             }
