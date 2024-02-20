@@ -277,7 +277,7 @@ function fixArgs(args) {
 
     args.nagmessages = false;
 
-    if (args.entranceshuffle == 'none') {
+    if (args.entranceshuffle == 'none' && !args.randomstartlocation) {
         startHouse = 'start_house';
     }
     else {

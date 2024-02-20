@@ -293,7 +293,12 @@ def getStartLocations(args):
         return []
 
     if args.entranceshuffle == 'none':
-        return start_locations
+        startLocations = []
+        for loc in start_locations:
+            startLocations.append(loc)
+            startLocations.append(loc + ':inside')
+
+        return startLocations
     else:
         return WorldSetup.getEntrancePool(None, args)
 
