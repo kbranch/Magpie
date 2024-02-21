@@ -386,6 +386,8 @@ function applySettings(oldArgs=null) {
 
         linkedChecks[y.linkedItem].push(y);
     });
+
+    checkAccessibility?.map(x => x.updateChecked());
 }
 
 function createElement(type, attrs) {
