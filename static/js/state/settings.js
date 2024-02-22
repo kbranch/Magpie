@@ -235,7 +235,7 @@ function loadSettings() {
 }
 
 function updateSettings() {
-    if (!(followToUnderworld in localSettings)) {
+    if (!("followToUnderworld" in localSettings)) {
         updateInsideEntrances = true;
     }
     if ('ignoreHigherLogic' in localSettings) {
