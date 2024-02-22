@@ -116,6 +116,7 @@ class State:
                 await sendMessage({
                     'type': 'handshAck',
                     'version': protocolVersion,
+                    'name': 'magpie-autotracker',
                 }, socket)
 
                 self.handshook = True

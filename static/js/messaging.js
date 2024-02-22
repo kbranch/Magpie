@@ -153,15 +153,28 @@ function processLocationMessage(message) {
 }
 
 function processHandshAckMessage(message) {
+    const breakingVersions = [
+        ["Unknown", "1.3"],
+    ];
+    
     let remoteVersion = 'Unknown';
+    let remoteName = 'Unknown';
 
     if ('version' in message) {
         remoteVersion = message.version;
     }
 
-    addAutotrackerMessage(`Local v${protocolVersion}, remote v${remoteVersion}`);
+    if ('name' in message) {
+        remoteName = message.name;
+    }
+
+    addAutotrackerMessage(`Local v${protocolVersion}, remote v${remoteVersion} name: ${remoteName}`);
 
     if (remoteVersion != protocolVersion) {
+        if (breakingVersions.some(x => x[0] == remoteName && versionIsOlder(x[1], remoteVersion))) {
+            alertModal('Old Autotracker', `The connected autotracker is using protocol version ${remoteVersion}, which may not work correctly with the current version (${protocolVersion})<br><br>Consider updating if you encounter problems`);
+        }
+
         addAutotrackerMessage('Consider updating');
     }
 
@@ -355,6 +368,7 @@ function sendHandshake() {
         'version': protocolVersion,
         'features': autotrackerFeatures,
         'flags': args,
+        'name': 'magpie',
     });
 }
 

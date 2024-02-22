@@ -444,3 +444,24 @@ function viewportSnapshot() {
         top: window.visualViewport.offsetTop,
     };
 }
+
+function versionIsOlder(currentVersion, otherVersion) {
+    let currentParts = currentVersion.split('.');
+    let otherParts = otherVersion.split('.');
+    let minParts = currentParts.length < otherParts.length ? currentParts.length : otherParts.length;
+
+    for (let i = 0; i < minParts; i++) {
+        if(Number(otherParts[i]) < Number(currentParts[i])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function alertModal(header, body) {
+    document.getElementById('alertModalLabel').innerHTML = header;
+    document.getElementById('alertBody').innerHTML = body;
+
+    new bootstrap.Modal(document.getElementById('alertModal')).show();
+}
