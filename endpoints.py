@@ -167,12 +167,16 @@ def renderItems():
                 localSettings.itemsTemplate = 'default.html'
             else:
                 customItems = Template(localSettings.customItems)
+        elif not localSettings.itemsTemplate:
+            localSettings.itemsTemplate = 'default.html'
 
         if localSettings.dungeonItemsTemplate == 'custom':
             if localSettings.customDungeonItems == None:
                 localSettings.dungeonItemsTemplate = 'default.html'
             else:
                 customDungeonItems = Template(localSettings.customDungeonItems)
+        elif not localSettings.dungeonItemsTemplate:
+            localSettings.dungeonItemsTemplate = 'default.html'
 
         result = render_template('items.html', allItems=allItems,
                                                args=args,
