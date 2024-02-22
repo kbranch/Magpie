@@ -459,7 +459,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label for="autotrackerAddressSetting" class="form-label">Server <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026."></label>
+                            <label for="autotrackerAddressSetting" class="form-label">Server <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026. Note that modern browsers will typically block insecure connections to remote addresses. Either download the offline version of Magpie or configure your browser to allow insecure WebSocket connections."></label>
                             <input type="text" id="autotrackerAddressSetting" data-setting="autotrackerAddress" class="form-control" aria-label="Server" placeholder="127.0.0.1">
                         </div>
                     </div>
@@ -506,7 +506,6 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <!-- <input id="followToUnderworld" data-setting="followToUnderworld" type="checkbox" class="form-check-input"> -->
                             <label for="followToUnderworld" class="form-label">Map follows to underworld <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="'Advanced ER' means that the map will only automatically switch to the underworld when the entrance randomizer setting is set to Wild or higher"></label>
                             <select id="followToUnderworld" class="form-select" data-setting="followToUnderworld" aria-label="followToUnderworld">
                                 <option value="never">Never</option>
