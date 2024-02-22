@@ -235,7 +235,8 @@ class NodeTooltip {
             && entrance.isDungeon()) {
 
             let options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
-                                                            && !Entrance.isFound(x))
+                                                            && !Entrance.isFound(x)
+                                                            && !Entrance.isInside(x))
                                                 .map(x => [x, entranceDict[x].name]);
             
             options = sortByKey(options, x => [x[0]]);
