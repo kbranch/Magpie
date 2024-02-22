@@ -46,7 +46,7 @@ function loadEntrances() {
         if (raw) {
             let dehydratedConnections = JSON.parse(raw);
             for (const conn of dehydratedConnections) {
-                connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla));
+                connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
             }
         }
 
@@ -158,7 +158,7 @@ function connectOneEndConnector(outdoors, indoors, refresh=true) {
         }
 
         let otherSide = connector.entrances.filter(x => Entrance.isFound(x))
-                                            .map(x => Entrance.connectedFrom(x))[0] ?? null;
+                                            .map(x => Entrance.connectedFrom(Entrance.getInsideOut(x)))[0] ?? null;
 
         if (otherSide != null) {
             let otherInterior = Entrance.connectedTo(otherSide);
@@ -178,6 +178,10 @@ function connectEntrances(from, to, refresh=true) {
     console.assert(to != 'clear');
 
     entranceMap[from] = to;
+
+    if (coupledEntrances()) {
+        entranceMap[to] = from;
+    }
 
     skipNextAnimation = true;
 
@@ -204,13 +208,19 @@ function setStartLocation(entranceId) {
         entranceMap[startHouse] = entranceId;
     }
     else {
-        for (const start of startLocations) {
-            if (entranceMap[start] == startHouse) {
-                delete entranceMap[start];
-            }
+        if (startHouse in entranceMap) {
+            clearEntranceMapping(startHouse, false);
         }
 
-        entranceMap[entranceId] = startHouse;
+        connectEntrances(startHouse, entranceId);
+        Connection.advancedErConnection([startHouse, entranceId], entranceDict[entranceId].locations[0].map);
+        // for (const start of startLocations) {
+        //     if (entranceMap[start] == startHouse) {
+        //         delete entranceMap[start];
+        //     }
+        // }
+
+        // entranceMap[entranceId] = startHouse;
     }
 
     saveEntrances();
@@ -231,13 +241,25 @@ function clearEntranceMapping(entranceId, housekeeping=true) {
 
     if (Entrance.isConnected(entranceId)) {
         let conn = Entrance.mappedConnection(entranceId);
-        if (conn.entrances.length == 2) {
+        if (coupledEntrances() && conn.entrances.length == 4) {
+            delete entranceMap[entranceMap[conn.otherSide(entranceId)]];
             delete entranceMap[conn.otherSide(entranceId)];
         }
     }
 
     Connection.disconnect(entranceId);
-    delete entranceMap[entranceId];
+    if (coupledEntrances()) {
+        delete entranceMap[entranceMap[entranceId]];
+    }
+
+    if (entranceId in entranceMap) {
+        delete entranceMap[entranceId];
+    }
+    else {
+        delete entranceMap[reverseEntranceMap[entranceId]];
+    }
+
+
     updateReverseMap();
 
     if (housekeeping) {
@@ -254,8 +276,11 @@ function mapToLandfill(entranceId) {
     // let connector = Connection.findConnector({ exterior: entranceId });
     let connection = Connection.existingConnectionByEntrance(entranceId);
 
-    if (connection != null && connection.entrances.length == 2) {
+    if (connection != null && connection.entrances.length == 4) {
         otherSide = connection.otherSide(entranceId);
+    }
+    else if (coupledEntrances()) {
+        otherSide = entranceMap[entranceId];
     }
 
     Connection.disconnect(entranceId);
@@ -280,19 +305,26 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
     let connection = Connection.existingConnection(connector);
     
     if (connection == null || connector.id == 'outer_rainbow') {
-        entranceMap[from] = fromInterior;
-        entranceMap[to] = toInterior;
+        connectEntrances(from, fromInterior, false);
+        connectEntrances(to, toInterior, false);
     }
     else {
         if (connection.entrances.includes(from)) {
-            entranceMap[to] = toInterior;
+            connectEntrances(to, toInterior, false);
         }
         else {
-            entranceMap[from] = fromInterior;
+            connectEntrances(from, fromInterior, false);
         }
     }
+     
+    let entrances = [from, to];
 
-    Connection.createConnection([from, to], Entrance.isVanilla(from));
+    if (coupledEntrances()) {
+        entrances.push(entranceMap[from]);
+        entrances.push(entranceMap[to]);
+    }
+
+    Connection.createConnection(entrances, Entrance.isVanilla(from));
 
     skipNextAnimation = true;
 

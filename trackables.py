@@ -45,6 +45,7 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
 
     accessibility[trackerLogic] = accessibility[trackerLogic].difference(accessibility[logics[0]])
         
+    inventory['KEY0'] = 9
     inventory['KEY1'] = 9
     inventory['KEY2'] = 9
     inventory['KEY3'] = 9
@@ -53,7 +54,6 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
     inventory['KEY6'] = 9
     inventory['KEY7'] = 9
     inventory['KEY8'] = 9
-    inventory['KEY9'] = 9
 
     # Find more checks that are behind small keys
     alreadyInKeyLogic = set()
@@ -159,7 +159,7 @@ def addStartingItems(inventory, args):
 def cleanUpEntranceMap(entranceMap, entrances, args):
     for source, dest in entranceMap.items():
         if dest in {'landfill', 'bk_shop'}:
-            entranceMap[source] = 'rooster_house'
+            entranceMap[source] = 'start_house:inside'
 
     for entrance in list(entranceMap.keys()):
         if entrance not in entrances:

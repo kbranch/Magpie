@@ -126,10 +126,24 @@ function updateEntrances() {
             continue;
         }
 
-        connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[1], connector.entrances[1], false, false);
+        let inside1 = connector.entrances[0]
+        let inside2 = connector.entrances[1]
+
+        if (!Entrance.isStairs(inside1)) {
+            inside1 = Entrance.getInside(inside1);
+            inside2 = Entrance.getInside(inside2);
+        }
+
+        connectExteriors(connector.entrances[0], inside1, connector.entrances[1], inside2, false, false);
 
         if (connector.entrances.length == 3) {
-            connectExteriors(connector.entrances[0], connector.entrances[0], connector.entrances[2], connector.entrances[2], false, false);
+            let inside3 = connector.entrances[2]
+
+            if (!Entrance.isStairs(inside1)) {
+                inside3 = Entrance.getInside(inside3);
+            }
+
+            connectExteriors(connector.entrances[0], inside1, connector.entrances[2], inside3, false, false);
         }
     }
 }
@@ -203,7 +217,13 @@ function applySettings(oldArgs=null) {
         }
     }
 
-    $('.map').css('filter', `brightness(${localSettings.mapBrightness}%)`);
+    let brightness = localSettings.mapBrightness;
+
+    if (args.overworld == 'alttp') {
+        brightness *= 1.15;
+    }
+
+    $('.map').css('filter', `brightness(${brightness}%)`);
 
     if (!args.rooster) {
         inventory['ROOSTER'] = 0;
@@ -308,14 +328,11 @@ function applySettings(oldArgs=null) {
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
-        $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
-    }
+        if (args.overworld == 'alttp' && mapName == 'overworld') {
+            mapPath =  'static/images/alttp-overworld.png';
+        }
 
-    if (localSettings.showVanillaEntrances) {
-        $('.map-overlay').show();
-    }
-    else {
-        $('.map-overlay').hide();
+        $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
     }
 
     if (local) {
@@ -328,6 +345,49 @@ function applySettings(oldArgs=null) {
             },
         });
     }
+
+    coordDict = vanillaCoordDict;
+
+    if (args.overworld == 'alttp') {
+        Object.keys(alttpCoordDict).map(x => {
+            let alttp = alttpCoordDict[x];
+            let alttpLocs = alttp.locations.filter(y => y.map == "overworld");
+            let vanilla = coordDict[x];
+
+            vanilla.locations = vanilla.locations.filter(y => y.map != "overworld");
+            alttpLocs.map(y => vanilla.locations.push(y));
+
+            vanilla.name = alttp.name;
+            vanilla.area = alttp.area;
+        });
+    }
+    else {
+        Object.keys(coordDict).map(x => {
+            let vanilla = coordDict[x];
+            let vanillaLocs = vanilla.locations.filter(y => y.map == "vanillaOverworld");
+
+            vanilla.locations = vanilla.locations.filter(y => y.map != "overworld");
+            vanillaLocs.map(y => {
+                let loc = structuredClone(y);
+                loc.map = "overworld";
+                vanilla.locations.push(loc);
+            });
+
+            vanilla.name = vanilla.name;
+            vanilla.area = vanilla.area;
+        });
+    }
+
+    linkedChecks = {};
+    Object.values(coordDict).filter(x => x.linkedItem).map(y => {
+        if (!linkedChecks[y.linkedItem]) {
+            linkedChecks[y.linkedItem] = [];
+        }
+
+        linkedChecks[y.linkedItem].push(y);
+    });
+
+    checkAccessibility?.map(x => x.updateChecked());
 }
 
 function createElement(type, attrs) {
@@ -373,4 +433,35 @@ function parseHtml(outerHtml) {
     let element = document.createElement('div');
     element.innerHTML = outerHtml;
     return element.firstChild;
+}
+
+function viewportSnapshot() {
+    return {
+        width: window.visualViewport.width,
+        height: window.visualViewport.height,
+        scale: window.visualViewport.scale,
+        left: window.visualViewport.offsetLeft,
+        top: window.visualViewport.offsetTop,
+    };
+}
+
+function versionIsOlder(currentVersion, otherVersion) {
+    let currentParts = currentVersion.split('.');
+    let otherParts = otherVersion.split('.');
+    let minParts = currentParts.length < otherParts.length ? currentParts.length : otherParts.length;
+
+    for (let i = 0; i < minParts; i++) {
+        if(Number(otherParts[i]) < Number(currentParts[i])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function alertModal(header, body) {
+    document.getElementById('alertModalLabel').innerHTML = header;
+    document.getElementById('alertBody').innerHTML = body;
+
+    new bootstrap.Modal(document.getElementById('alertModal')).show();
 }

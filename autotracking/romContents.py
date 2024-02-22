@@ -56,9 +56,15 @@ def getSpoilerLog(romData):
 
     return json.dumps(logJson)
 
-def getSettings(romData):
+def getSettingsString(romData):
     rom = ROM(io.BytesIO(romData))
     return rom.readShortSettings()
+
+def loadSettings(settingsString):
+    settings = Settings()
+    settings.loadShortString(settingsString)
+
+    return settings
 
 gfxDict = {
    "71087f57d498acbf51c3831e8c9949d5d3828c0f":"Subrosian",

@@ -1,6 +1,6 @@
 from romContents import *
 
-protocolVersion = "1.2"
+protocolVersion = "1.3"
 
 async def sendMessage(message, socket, refresh=True):
     message['refresh'] = refresh
@@ -20,18 +20,12 @@ async def sendRomAck(socket):
 
     print(f'Sending ROM ack')
 
-async def sendSettings(socket, romData):
-    settings = getSettings(romData)
-
-    if len(settings) == 0:
-        print(f'Settings not found in ROM')
-        return
-
-    print(f'Sending settings string: {settings}')
+async def sendSettings(socket, settingsString):
+    print(f'Sending settings string: {settingsString}')
 
     await sendMessage({
         'type': 'settings',
-        'settings': settings,
+        'settings': settingsString,
     }, socket)
 
 async def sendSpoilerLog(socket, romData):

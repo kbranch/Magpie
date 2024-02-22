@@ -24,10 +24,21 @@ class State:
 
         self.checks = []
 
+        self.settings = {}
+
         self.room = None
+        self.roomChanged = False
+        self.roomSameFor = 0
         self.indoors = None
         self.indoorsChanged = False
+        self.spawnRoom = None
+        self.spawnMap = None
+        self.spawnX = None
+        self.spawnY = None
+        self.spawnChanged = False
+        self.spawnSameFor = 0
         self.lastRoom = None
+        self.lastDifferentRoom = None
         self.screenX = None
         self.screenY = None
         self.locationChanged = False
@@ -35,6 +46,24 @@ class State:
         self.reverseEntranceMap = {}
         self.entrancesByTarget = {}
         self.entrancesByName = {}
+
+    def saveAndQuit(self):
+        self.room = None
+        self.roomChanged = False
+        self.roomSameFor = 0
+        self.indoors = None
+        self.indoorsChanged = False
+        self.spawnRoom = None
+        self.spawnMap = None
+        self.spawnX = None
+        self.spawnY = None
+        self.spawnChanged = False
+        self.spawnSameFor = 0
+        self.lastRoom = None
+        self.lastDifferentRoom = None
+        self.screenX = None
+        self.screenY = None
+        self.locationChanged = False
 
     def needsRom(self):
         return 'entrances' in self.features or 'settings' in self.features or 'spoilers' in self.features
@@ -48,7 +77,14 @@ class State:
         await sendRomAck(socket)
 
         if 'settings' in self.features:
-            await sendSettings(socket, romData)
+            settingsString = getSettingsString(romData)
+
+            if len(settingsString) == 0:
+                print(f'Settings not found in ROM')
+            else:
+                await sendSettings(socket, settingsString)
+                self.settings = loadSettings(settingsString)
+
         if 'spoilers' in self.features:
             await sendSpoilerLog(socket, romData)
         if 'gfx' in self.features:
@@ -80,6 +116,7 @@ class State:
                 await sendMessage({
                     'type': 'handshAck',
                     'version': protocolVersion,
+                    'name': 'magpie-autotracker',
                 }, socket)
 
                 self.handshook = True
@@ -126,7 +163,11 @@ class State:
         self.locationChanged = False
 
     def readTrackables(self, gb):
-        if self.entrancesLoaded and not self.visitedEntrancesRead and 'entrances' in self.features:
+        if (self.entrancesLoaded
+            and not self.visitedEntrancesRead
+            and 'entrances' in self.features
+            and hasattr(self.settings, 'entranceshuffle')
+            and self.settings.entranceshuffle in ('', 'simple', 'split', 'mixed')):
             readVisitedEntrances(gb, self)
             self.visitedEntrancesRead = True
 

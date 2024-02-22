@@ -44,7 +44,7 @@ class MapNode {
 
         return this.entrance?.isMappedToDungeon()
                || (this.checks.length > 0
-                   && this.checks[0].metadata.locations.some(x => x.map != 'overworld'));
+                   && this.checks[0].metadata.locations.some(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x.map)));
     }
 
     dungeonName(pickingEntrance) {
@@ -57,7 +57,7 @@ class MapNode {
         }
 
         return this.checks[0].metadata.locations
-            .filter(x => x.map != 'overworld')[0]
+            .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x.map))[0]
             .map.toUpperCase();
     }
 
@@ -141,12 +141,14 @@ class MapNode {
             return true;
         }
 
+        let connectedTo = this.entranceConnectedTo();
+
         if (!localSettings.showChecked
             && this.isChecked
             && (this.entrance == null
-                || (this.entranceConnectedTo() != startHouse
-                    && (!this.entrance.isConnectedToConnector())
-                        || this.entrance.connectedTo() == 'landfill'))) {
+                || (connectedTo != startHouse
+                    && ((!Entrance.isConnector(connectedTo) && coupledEntrances()))
+                        || connectedTo == 'landfill'))) {
             return true;
         }
 
@@ -156,7 +158,7 @@ class MapNode {
 
         if (args.randomstartlocation
             && args.entranceshuffle == 'none'
-            && Entrance.isFound(startHouse)
+            && Entrance.isMapped(startHouse)
             && this.entrance.connectedTo() != startHouse
             && this.checks.length == 0
             && !this.entrance.isVanilla()) {
@@ -212,22 +214,35 @@ class MapNode {
 
         if (this.entrance != null) {
             if (this.entrance.isMapped()) {
+                let simpleInside = false;
+                let entrance = this.entrance;
                 let mappedEntrance = new Entrance(this.entrance.connectedTo());
+
+                if (!advancedER() && this.entrance.isInside()) {
+                    simpleInside = true;
+                    entrance = new Entrance(this.entrance.connectedTo());
+                    mappedEntrance = this.entrance;
+                }
 
                 if (args.randomstartlocation 
                     && mappedEntrance.id == startHouse) {
                     classes.push('start-location');
                 }
 
-                if (mappedEntrance.type == 'connector' || mappedEntrance.type == 'stairs') {
-                    if (Connection.thisSideBlocked(this.entrance.id)) {
-                        classes.push('one-way-out');
-                    }
-                    else if (Connection.otherSideBlocked(this.entrance.id)) {
-                        classes.push('one-way-in');
+                if (mappedEntrance.type == 'connector'
+                    || mappedEntrance.type == 'stairs'
+                    || !inOutEntrances()
+                    || !coupledEntrances()) {
+                    if (!simpleInside) {
+                        if (Connection.thisSideBlocked(entrance.id)) {
+                            classes.push('one-way-out');
+                        }
+                        else if (Connection.otherSideBlocked(entrance.id)) {
+                            classes.push('one-way-in');
+                        }
                     }
 
-                    let connection = this.entrance.mappedConnection();
+                    let connection = entrance.mappedConnection();
                     if (this.isChecked || this.checks.length == 0) {
                         if (connection?.vanilla) {
                             classes.push('vanilla-entrance-only');
@@ -241,7 +256,7 @@ class MapNode {
                     }
 
                     if (connection?.isIncomplete()
-                        || (this.entrance.isConnectedToConnector() && !this.entrance.isConnected())) {
+                        || (entrance.isConnectedToConnector() && !entrance.isConnected())) {
                         classes.push('partial-entrance');
                     }
 
@@ -251,7 +266,8 @@ class MapNode {
                     classes.push(`difficulty-${this.difficulty}`);
                 }
                 else if (mappedEntrance.id == 'landfill'
-                         || mappedEntrance.type == 'dummy') {
+                         || (mappedEntrance.type == 'dummy'
+                             && mappedEntrance.isInside())) {
                     classes.push('difficulty-checked');
                 }
                 else if (mappedEntrance.id == 'bk_shop') {
@@ -263,8 +279,8 @@ class MapNode {
             }
             else if (this.difficulty == 'checked') {
                 if (!args.randomstartlocation 
-                    || Entrance.isFound(startHouse)
-                    || (args.entranceshuffle != 'mixed' && this.entrance.isConnector())) {
+                    || Entrance.isMapped(startHouse)
+                    || (!connectorsMixed() && this.entrance.isConnector())) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
@@ -295,10 +311,25 @@ class MapNode {
     
         $(this.graphic).attr('data-entrance-id', entrance.id);
     
-        if (entrance.isConnectedToConnector()) {
-            if (entrance.isConnected()) {
-                let connection = entrance.mappedConnection();
-                $(this.graphic).attr('data-connected-to', connection.otherSides(entrance.id).join(';'));
+        if (entrance.isConnectedToConnector()
+            || !inOutEntrances()
+            || !coupledEntrances()) {
+
+            let target = entrance;
+            let insideConnector = !advancedER() && entrance.isInside();
+            if (insideConnector) {
+                target = new Entrance(entrance.connectedTo());
+            }
+
+            if (target.isConnected()) {
+                let connection = target.mappedConnection();
+                if (insideConnector) {
+                    $(this.graphic).attr('data-connected-to', connection.connector.entrances.map(x => Entrance.getInsideOut(x)).join(';'));
+                }
+                else {
+                    $(this.graphic).attr('data-connected-to', connection.otherSides(target.id).join(';'));
+                }
+
                 this.connectorLabel = connection.label;
             }
             else {
@@ -374,15 +405,19 @@ class MapNode {
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
                           && this.entrance?.connectedTo() != 'landfill'
-                          && !this.entrance?.connectedToDummy();
+                          && (!this.entrance?.connectedToDummy()
+                              || activeMap != 'overworld');
         hideDifficulty |= difficulty == 'checked'
-                          && this.entrance?.isConnectedToConnector();
+                          && this.entrance
+                          && (this.entrance.isConnectedToConnector()
+                              || !inOutEntrances()
+                              || !coupledEntrances());
         hideDifficulty |= !localSettings.showChecked
                           && difficulty == 'checked';
         hideDifficulty |= args.randomstartlocation
-                          && !Entrance.isFound('start_house');
+                          && !Entrance.isMapped(startHouse);
         hideDifficulty |= args.randomstartlocation
-                          && this.entrance?.connectedTo() == 'start_house'
+                          && this.entrance?.connectedTo() == startHouse
                           && this.difficulty == 'checked';
         hideDifficulty |= this.boss != null;
 
@@ -451,10 +486,18 @@ class MapNode {
                 && activeMap == 'overworld')) {
 
             let shadowSize = 1 / (localSettings.checkSize / checkSize);
+            let connectorLabel = this.connectorLabel;
+
+            if (!coupledEntrances()) {
+                let connection = Connection.existingConnectionByEntrance(this.entrance?.id);
+                if (connection) {
+                    connectorLabel += (connection.entrances.indexOf(this.entrance.id) + 1).toString();
+                }
+            }
 
             let connectorOverlay = createElement('p', {
                 class: "node-overlay",
-                'data-connector-label': this.connectorLabel,
+                'data-connector-label': connectorLabel,
                 css: `font-size: ${checkSize * 0.72}px;
                       text-shadow: -${shadowSize}px -${shadowSize}px 0 black,  
                                     ${shadowSize}px -${shadowSize}px 0 black,
@@ -465,7 +508,7 @@ class MapNode {
 
             let label;
             if (this.connectorLabel) {
-                label = this.connectorLabel;
+                label = connectorLabel;
             }
             else {
                 label = this.dungeonName(pickingEntrance)[1];

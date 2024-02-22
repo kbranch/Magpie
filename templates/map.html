@@ -2,6 +2,9 @@
     <li class="tab-button active" data-mapname="overworld">
         <button class="btn tab-link" id="overworldTab" type="button" onclick="drawTab(this, clear=true)">Overworld</button>
     </li>
+    <li class="tab-button" data-mapname="underworld">
+        <button class="btn tab-link" id="underworldTab" type="button" onclick="drawTab(this, clear=true)">Underworld</button>
+    </li>
     <li class="tab-button" data-mapname="d1" data-bs-toggle="tooltip" data-bs-title="Tail Cave" data-bs-trigger="hover">
         <button class="btn tab-link" id="d1Tab" type="button" onclick="drawTab(this, clear=true)">D1</button>
     </li>
@@ -35,6 +38,12 @@
     <div class="tab map-container text-center active" id="overworldTabContent">
         <div class="content map-wrapper">
             <img class="map" data-mapname="overworld" src="static/images/overworld.png" width="2592" height="2079" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
+        </div>
+    </div>
+    <div class="tab map-container text-center" id="underworldTabContent">
+        <div class="content map-wrapper">
+            <img class="map" data-mapname="underworld" src="static/images/underworld.png" width="2592" height="2079" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
+            <img class="map-overlay" src="static/images/underworld_borders.png" width="2592" height="2079" onclick="closeAllTooltips();" oncontextmenu="return false;" draggable="false">
         </div>
     </div>
     <div class="tab map-container text-center" id="d1TabContent">

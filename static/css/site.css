@@ -189,6 +189,7 @@ img {
 
 .map-overlay {
     max-width: 100%;
+    max-height: 100%;
     position: absolute;
     left: 0px;
     top: 0px;
@@ -365,6 +366,7 @@ img {
 
 .check-graphic.check-glow:hover, .spoiler-highlight {
     filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
+    z-index: 999 !important;
 }
 
 .partial-entrance .partial-entrance-overlay {
@@ -501,7 +503,7 @@ img {
     z-index: 10;
 }
 
-.difficulty-8 .difficulty-8-overlay,
+.difficulty-8 .node-overlay-wrapper:not([data-hidedifficulty="1"]) .difficulty-8-overlay,
 .entrance-difficulty-8:not(.vanilla) .entrance-difficulty-8-overlay,
 .difficulty-8.static-difficulty-wrapper .difficulty-8-overlay, 
 .difficulty-8.tooltip-check-graphic .difficulty-8-overlay {

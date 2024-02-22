@@ -30,15 +30,15 @@ function createNodes(map, mapName) {
     }
 
     let entrances = [...randomizedEntrances];
-    if (localSettings.showVanillaEntrances) {
-        entrances = entrances.concat(Object.keys(entranceMap));
+    if (localSettings.showVanillaEntrances && (mapName != 'overworld' || args.overworld != 'alttp')) {
+        entrances = entrances.concat(Object.keys(entranceMap).filter(x => !Entrance.isInside(x)));
     }
 
     entrances = entrances.filter(x => entranceDict[x].locations.map(loc => loc.map).includes(mapName));
 
     if (args.randomstartlocation
         && args.entranceshuffle == 'none'
-        && Entrance.isFound(startHouse)
+        && Entrance.isMapped(startHouse)
         && mapName == "overworld") {
         if (!Entrance.connectedTo(startHouse)) {
             connectEntrances(startHouse, Entrance.connectedFrom(startHouse), false);
@@ -50,8 +50,8 @@ function createNodes(map, mapName) {
     }
 
     if (entrances.length > 0) {
-        if (args.randomstartlocation && !Entrance.isFound(startHouse)) {
-            createEntranceNodes(startLocations, scaling);
+        if (args.randomstartlocation && !Entrance.isMapped(startHouse)) {
+            createEntranceNodes(startLocations.filter(x => entranceDict[x].locations[0].map == mapName), scaling);
         }
         else {
             createEntranceNodes(entrances, scaling);
@@ -70,7 +70,7 @@ function createNodes(map, mapName) {
         }
 
         for (const coord of check.mapLocations(mapName)) {
-            if ((['split', 'mixed'].includes(args.entranceshuffle)
+            if ((!vanillaConnectors()
                  && coord.indirect)
                 || (args.entranceshuffle == 'simple'
                     && coord.indirect
@@ -85,8 +85,13 @@ function createNodes(map, mapName) {
             }
             else {
                 let node = nodes[coordString];
+                let entranceId = node.entrance?.id;
 
-                if (node.entrance && !node.entrance.isFound()) {
+                if (entranceId && !Entrance.isInside(entranceId)) {
+                    entranceId = Entrance.getInsideOut(entranceId);
+                }
+
+                if (node.entrance && !Entrance.isFound(entranceId)) {
                     unclaimedChecks[check.id] = check;
                     continue;
                 }
@@ -156,7 +161,6 @@ function distributeChecks(unclaimedChecks) {
     let entrancesByConnector = {};
     let remappedNodes = [];
     let connectorsByCheckId = {};
-    let shuffleConnectors = ['split', 'mixed'].includes(args.entranceshuffle);
 
     connectors.map(connector => connector.checks.map(checkId => connectorsByCheckId[checkId] = connector));
 
@@ -164,7 +168,9 @@ function distributeChecks(unclaimedChecks) {
         let node = nodes[key];
 
         if(node.entrance == null 
-           && shuffleConnectors
+           && !vanillaConnectors()
+           && inOutEntrances()
+           && coupledEntrances()
            && node.checks.some(x => x.id in connectorsByCheckId)) {
             let connector = connectorsByCheckId[node.checks[0].id];
             node.entrance = new Entrance(connector.entrances[0]);
@@ -176,7 +182,9 @@ function distributeChecks(unclaimedChecks) {
         }
 
         let entranceId = node.entrance.id;
-        if (shuffleConnectors
+        if (!vanillaConnectors()
+            && inOutEntrances()
+            && coupledEntrances()
             && node.entrance.isConnector()) {
             let connectorId = node.entrance.metadata.connector;
             let connector = connectorDict[connectorId];
@@ -192,16 +200,22 @@ function distributeChecks(unclaimedChecks) {
             }
 
             node.checks.map(x => checksByConnector[connectorId].add(x));
-            entrancesByConnector[connectorId].add(entranceId);
+            entrancesByConnector[connectorId].add(Entrance.getInside(entranceId));
         }
         else {
-            checksByEntrance[entranceId] = node.checks;
+            let id = entranceId;
+
+            if (!Entrance.isInside(id)) {
+                id = Entrance.getInsideOut(id);
+            }
+
+            checksByEntrance[id] = node.checks;
         }
 
         if (!node.entrance.isMapped()) {
             if (args.entranceshuffle != 'none'
                 || (node.entrance.canBeStart()
-                    && !Entrance.isFound(startHouse))
+                    && !Entrance.isMapped(startHouse))
                 || (args.dungeonshuffle
                     && node.entrance.isDungeon())) {
                 node.checks = [];
@@ -220,7 +234,8 @@ function distributeChecks(unclaimedChecks) {
     }
 
     for (const node of remappedNodes) {
-        node.checks = checksByEntrance[node.entrance.connectedTo()] ?? [];
+        let id = node.entrance.connectedTo();
+        node.checks = checksByEntrance[id] ?? [];
     }
 }
 

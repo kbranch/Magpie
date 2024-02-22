@@ -19,9 +19,20 @@ function loadInventory() {
     if (inventory == null) {
         resetInventory();
     }
+
+    for (const item in inventory) {
+        if (item in renamedItems) {
+            inventory[renamedItems[item]] = inventory[item];
+            delete inventory[item];
+        }
+    }
 }
 
 function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
+    if (item in renamedItems) {
+        item = renamedItems[item];
+    }
+
     let inv = getPlayerInventory(player);
 
     if (!(item in inv) || typeof inv[item] != 'number') {
@@ -70,8 +81,11 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
 function updateLinkedItemChecks(item) {
     if (item in linkedChecks) {
         for (const check of linkedChecks[item]) {
-            let element = $(`li[data-check-id=${check.id}]`);
-            let isVanilla = $(element).attr('data-vanilla');
+            if (!checksById[check.id]) {
+                continue;
+            }
+
+            let isVanilla = checksById[check.id].isVanilla;
 
             if ((check.vanillaLink && !isVanilla)) {
                 continue;

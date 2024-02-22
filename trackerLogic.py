@@ -58,7 +58,7 @@ def build(args, worldSetup):
     if raft_game in locs:
         locs[raft_game].connect(Location().add(VanillaItem(0x07F)), OR(FEATHER, ROOSTER))
     if d0_first_check in locs:
-        locs[d0_first_check].simple_connections[0][0].connect(Location(9).add(VanillaItem(0x30E)), POWER_BRACELET)
+        locs[d0_first_check].simple_connections[0][0].connect(Location(0).add(VanillaItem(0x30E)), POWER_BRACELET)
     if d2_pit_chest in locs:
         locs[d2_pit_chest].add(VanillaItem(0x1392))
     if d2_outside_boo in locs:

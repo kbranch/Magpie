@@ -6,6 +6,8 @@ function processCheckMessage(message) {
         return;
     }
 
+    let addedItem = false;
+
     if (!message.diff) {
         console.log('Receiving full autotracker checks');
         resetChecks();
@@ -17,6 +19,7 @@ function processCheckMessage(message) {
         if (check.checked) {
             if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
                 addItem(metadata.linkedItem, 1, false, false, '', false);
+                addedItem = true;
             }
 
             checkedChecks.add(check.id);
@@ -24,6 +27,7 @@ function processCheckMessage(message) {
         else {
             if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
                 addItem(metadata.linkedItem, -1, false, false, '', false);
+                addedItem = true;
             }
 
             checkedChecks.delete(check.id);
@@ -36,6 +40,10 @@ function processCheckMessage(message) {
     if (message.refresh) {
         drawActiveTab();
         refreshTextChecks();
+
+        if (addedItem) {
+            refreshCheckList();
+        }
     }
 }
 
@@ -72,19 +80,31 @@ function processEntranceMessage(message) {
 
     pushUndoState();
 
-    for (const outdoor in message.entranceMap) {
-        if (outdoor in entranceMap) {
+    for (const from in message.entranceMap) {
+        if (from in entranceMap) {
             continue;
         }
 
+        let outdoor = from;
         let indoor = message.entranceMap[outdoor];
 
-        if (Entrance.isConnector(indoor)) {
+        if (coupledEntrances() && inOutEntrances()) {
+            if (Entrance.isInside(outdoor)) {
+                outdoor = indoor;
+                indoor = from;
+            }
+        }
+
+        if (coupledEntrances() && inOutEntrances() && Entrance.isConnector(indoor)) {
             connectOneEndConnector(outdoor, indoor, false);
             updateReverseMap();
         }
         else {
             connectEntrances(outdoor, indoor, false);
+            updateReverseMap();
+            if (!coupledEntrances() || !inOutEntrances()) {
+                Connection.advancedErConnection([outdoor, indoor], 'overworld');
+            }
         }
     }
 
@@ -106,7 +126,11 @@ function processLocationMessage(message) {
     if (newMap != oldMap 
         && newMap != null
         && oldMap != null
-        && localSettings.followMap) {
+        && localSettings.followMap
+        && (newMap != 'underworld'
+            || localSettings.followToUnderworld == 'always'
+            || (localSettings.followToUnderworld == 'advanced'
+                && advancedER()))) {
         openTab(newMap);
     }
 
@@ -129,15 +153,28 @@ function processLocationMessage(message) {
 }
 
 function processHandshAckMessage(message) {
+    const breakingVersions = [
+        ["Unknown", "1.3"],
+    ];
+    
     let remoteVersion = 'Unknown';
+    let remoteName = 'Unknown';
 
     if ('version' in message) {
         remoteVersion = message.version;
     }
 
-    addAutotrackerMessage(`Local v${protocolVersion}, remote v${remoteVersion}`);
+    if ('name' in message) {
+        remoteName = message.name;
+    }
+
+    addAutotrackerMessage(`Local v${protocolVersion}, remote v${remoteVersion} name: ${remoteName}`);
 
     if (remoteVersion != protocolVersion) {
+        if (breakingVersions.some(x => x[0] == remoteName && versionIsOlder(x[1], remoteVersion))) {
+            alertModal('Old Autotracker', `The connected autotracker is using protocol version ${remoteVersion}, which may not work correctly with the current version (${protocolVersion})<br><br>Consider updating if you encounter problems`);
+        }
+
         addAutotrackerMessage('Consider updating');
     }
 
@@ -197,6 +234,11 @@ function addAutotrackerMessage(status) {
 
 function processMessage(messageText) {
     let message;
+
+    messageLog.push({time: Date.now(), message: messageText});
+    if (messageLog.length > maxMessageLogSize) {
+        messageLog.splice(0, 1);
+    }
 
     if (settingsPending) {
         messageQueue.push(messageText);
@@ -326,6 +368,7 @@ function sendHandshake() {
         'version': protocolVersion,
         'features': autotrackerFeatures,
         'flags': args,
+        'name': 'magpie',
     });
 }
 

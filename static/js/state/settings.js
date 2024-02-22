@@ -206,6 +206,30 @@ function loadSettings() {
     applySettings();
 
     refreshItems();
+
+    if (localStorage.getItem("importedUndos")) {
+        undoStack = JSON.parse(localStorage.getItem("importedUndos")).reverse();
+        undoStack.map(x => {
+            try {
+                x.checkedChecks = new Set(x.checkedChecks);
+            }
+            catch {
+                x.checkedChecks = new Set();
+            }
+
+            let dehydratedConnections = x.connections;
+            x.connections = []
+            for (const conn of dehydratedConnections) {
+                x.connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
+            }
+        });
+        localStorage.removeItem("importedUndos");
+    }
+
+    if (localStorage.getItem("importedSpoilerLog")) {
+        spoilerLog = JSON.parse(localStorage.getItem("importedSpoilerLog"));
+        localStorage.removeItem("importedSpoilerLog");
+    }
     
     return errors;
 }
@@ -222,6 +246,11 @@ function updateSettings() {
     if ('hideVanilla' in localSettings) {
         localSettings.showVanilla = !localSettings.hideVanilla;
         delete localSettings['hideVanilla'];
+    }
+    if (localSettings.followToUnderworld === true) {
+        localSettings.followToUnderworld = 'always';
+    } else if (localSettings.followToUnderworld === false) {
+        localSettings.followToUnderworld = 'never';
     }
 }
 
@@ -247,6 +276,13 @@ function fixArgs(args) {
     }
 
     args.nagmessages = false;
+
+    if (args.entranceshuffle == 'none' && !args.randomstartlocation) {
+        startHouse = 'start_house';
+    }
+    else {
+        startHouse = 'start_house:inside';
+    }
 }
 
 function getState() {
@@ -288,6 +324,15 @@ function importState(data) {
                 saveLocations();
                 saveInventory();
                 saveSettingsToStorage(state.args, state.settings);
+
+                if ('undos' in state) {
+                    setLocalStorage('importedUndos', JSON.stringify(state.undos));
+                }
+
+                if ('spoilerLog' in state) {
+                    setLocalStorage('importedSpoilerLog', JSON.stringify(state.spoilerLog));
+                }
+
                 location.reload();
         }
         else {
@@ -350,7 +395,23 @@ function resetColors() {
 }
 
 function vanillaConnectors() {
-    return !['split', 'mixed'].includes(args.entranceshuffle);
+    return !['split', 'mixed', 'wild', 'chaos', 'insane'].includes(args.entranceshuffle);
+}
+
+function connectorsMixed() {
+    return ['mixed', 'wild', 'chaos', 'insane'].includes(args.entranceshuffle);
+}
+
+function coupledEntrances() {
+    return ['none', 'simple', 'split', 'mixed', 'wild'].includes(args.entranceshuffle);
+}
+
+function inOutEntrances() {
+    return ['none', 'simple', 'split', 'mixed', 'chaos'].includes(args.entranceshuffle);
+}
+
+function advancedER() {
+    return !inOutEntrances() || !coupledEntrances();
 }
 
 function resetSession() {

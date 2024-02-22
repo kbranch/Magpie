@@ -163,40 +163,45 @@ class NodeTooltip {
                                             .replace('{graphic}', graphic)
                                             .replace('{name}', entrance.metadata.name);
             if (entrance.isRemapped() && connectionType == 'none') {
-                let connectionName = entranceDict[entrance.connectedTo()].name;
+                let connection = entranceDict[entrance.connectedTo()];
 
                 if (entrance.isConnected()) {
                     let connection = entrance.mappedConnection();
-                    connectionName = connection.otherSides(entrance.id)
+                    connection.name = connection.otherSides(entrance.id)
                                                .map(x => entranceDict[x].name)
                                                .join(', ');
 
                     if (!connection.isSimple()) {
-                        connectionName += ` via ${connection.connector.name}`;
+                        connection.name += ` via ${connection.connector.name}`;
                     }
                 }
 
-                entranceHtml += connectionTemplate.replace('{connection}', `To ${connectionName}`);
+                entranceHtml += connectionTemplate.replace('{connection}', `To ${Entrance.isInside(connection.id) ? 'inside' : 'outside'} ${connection.name}`);
             }
 
             if (entrance.isFound()
                 && !entrance.isMappedToSelf()
-                && !entrance.isConnectedToConnector()
+                && (!entrance.isConnectedToConnector() || !coupledEntrances())
                 && connectionType == 'none') {
                 let connection = entranceDict[entrance.connectedFrom()];
-                if (connection) {
+
+                if (inOutEntrances()) {
+                    connection = entranceDict[Entrance.connectedFrom(Entrance.getInside(entrance.id))];
+                }
+
+                if (connection && (inOutEntrances() || !coupledEntrances())) {
                     entranceHtml += connectionTemplate.replace('{connection}', `Found at ${connection.name}`);
                 }
             }
 
-            if (connectionType == 'simple' && entrance.metadata.interiorImage) {
+            if (connectionType == 'simple' && entrance.metadata.interiorImage/* && entrance.isInside() why is this here?*/) {
                 entranceHtml += interiorImageTemplate.replace('{image}', entrance.metadata.interiorImage);
             }
             else if(connectionType == 'none'
                     && entrance.isMapped()
                     && !['right_taltal_connector1', 'right_taltal_connector2', 'landfill'].includes(entrance.connectedTo())) {
                 let connection = entranceDict[entrance.connectedTo()];
-                if (connection.interiorImage) {
+                if (connection.interiorImage && (Entrance.isInside(connection.id) || Entrance.isStairs(connection.id))) {
                     entranceHtml += interiorImageTemplate.replace('{image}', connection.interiorImage);
                 }
             }
@@ -218,7 +223,7 @@ class NodeTooltip {
 
         if (entrance.canBeStart()
             && !entrance.isMapped()
-            && !Entrance.isFound(startHouse)) {
+            && !Entrance.isMapped(startHouse)) {
             pinnedHtml += menuItemTemplate.replace('{action}', `setStartLocation('${entrance.id}');`)
                                           .replace('{text}', 'Set as start location')
                                           .replace('{classes}', '')
@@ -236,53 +241,74 @@ class NodeTooltip {
             options = sortByKey(options, x => [x[0]]);
 
             let action = `startGraphicalConnection('${entrance.id}', 'simple')`;
-            let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
+            // let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
 
-            pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', action, options, optionAction);
+            pinnedHtml += NodeTooltip.createEntranceDropdown('Connect to...', entrance.id, action, options);
         }
-        else if (args.entranceshuffle != 'none' && entrance.type != 'stairs') {
-
+        else if (args.entranceshuffle != 'none'
+                 && entrance.type != 'stairs') {
             let action = `startGraphicalConnection('${entrance.id}', '{type}')`;
 
-            if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
-                if (!entrance.isMapped() || entrance.isIncompleteConnection()) {
-                    let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
-                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
-                                                .replace('{text}', text)
-                                                .replace('{classes}', '')
-                                                .replace('{attributes}', '');
+            if (coupledEntrances() && inOutEntrances()) {
+                if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
+                    if (!entrance.isMapped() || entrance.isIncompleteConnection()) {
+                        let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
+                        pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
+                                                    .replace('{text}', text)
+                                                    .replace('{classes}', '')
+                                                    .replace('{attributes}', '');
+                    }
+
+                    if (!entrance.isMapped()) {
+                        let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                        pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
+                                                    .replace('{text}', text)
+                                                    .replace('{classes}', '')
+                                                    .replace('{attributes}', '');
+                    }
                 }
 
-                if (!entrance.isMapped()) {
-                    let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
-                    pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
-                                                .replace('{text}', text)
-                                                .replace('{classes}', '')
-                                                .replace('{attributes}', '');
+                if ((entrance.type != "connector" || args.entranceshuffle == 'mixed')
+                    && !entrance.isMapped()) {
+                    // let optionAction = `connectEntrances('${entrance.id}', Entrance.getInsideOut($(this).attr('data-value')))`;
+                    let title = 'Connect to simple entrance...';
+
+                    let options = Entrance.validConnections(entrance.id, "simple");
+                    options = sortByKey(options, x => [x[1]]);
+
+                    pinnedHtml += NodeTooltip.createEntranceDropdown(title, entrance.id, action.replace('{type}', 'simple'), options);
                 }
             }
+            else if (!entrance.isMapped()) {
+                if (inOutEntrances()) {
+                    let target = entrance.isInside() ? 'overworld' : 'underworld';
+                    let text = 'Connect to {target}...';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', target))
+                                                .replace('{text}', text)
+                                                .replace('{target}', target)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
+                }
+                else {
+                    let text = 'Connect to overworld...';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'overworld'))
+                                                .replace('{text}', text)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
 
-            if ((entrance.type != "connector" || args.entranceshuffle == 'mixed')
-                && !entrance.isMapped()) {
-                let optionAction = `connectEntrances('${entrance.id}', $(this).attr('data-value'))`;
-                let title = 'Connect to simple entrance...';
-
-                // pinnedHtml += menuItemTemplate.replace('{action}', action)
-                //                               .replace('{text}', "Connect using map...")
-                //                               .replace('{classes}', '')
-                //                               .replace('{attributes}', '');
-
-                let options = Entrance.validConnections(entrance.id, true);
-                options = sortByKey(options, x => [x[1]]);
-
-                pinnedHtml += NodeTooltip.createEntranceDropdown(title, action.replace('{type}', 'simple'), options, optionAction);
+                    text = 'Connect to underworld...';
+                    pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'underworld'))
+                                                .replace('{text}', text)
+                                                .replace('{classes}', '')
+                                                .replace('{attributes}', '');
+                }
             }
 
             if (entrance.connectedTo() != 'landfill') {
                 pinnedHtml += menuItemTemplate.replace('{action}', `mapToLandfill('${entrance.id}')`)
-                                              .replace('{text}', 'Mark as useless')
-                                              .replace('{classes}', '')
-                                              .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
+                                            .replace('{text}', 'Mark as useless')
+                                            .replace('{classes}', '')
+                                            .replace('{attributes}', ` data-node-id="${this.node.id()}"`);
             }
         }
 
@@ -293,7 +319,7 @@ class NodeTooltip {
                                               .replace('{attributes}', '');
         }
 
-        if (entrance.isMapped() && !entrance.isVanilla()) {
+        if ((entrance.isMapped() || (!coupledEntrances() && entrance.isFound())) && !entrance.isVanilla()) {
             pinnedHtml += menuItemTemplate.replace('{action}', `clearEntranceMapping('${entrance.id}')`)
                                           .replace('{text}', 'Clear Mapping')
                                           .replace('{classes}', '')
@@ -307,10 +333,10 @@ class NodeTooltip {
         return pinnedHtml;
     }
 
-    static createEntranceDropdown(title, action, options, optionAction) {
+    static createEntranceDropdown(title, sourceId, action, options) {
         const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
         const helperTitleTemplate = `<img src="static/images/entrances/{id}.png">`;
-        let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="${optionAction}">{name}</button></li>`;
+        let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="{action}">{name}</button></li>`;
         let items = '';
 
         for (const option of options) {
@@ -325,7 +351,8 @@ class NodeTooltip {
             }
 
             items += itemTemplate.replace('{value}', option[0])
-                                 .replace('{name}', name);
+                                 .replace('{name}', name)
+                                 .replace('{action}', `connectEntrances('${sourceId}', '${Entrance.isInside(sourceId) ? option[0] : Entrance.getInsideOut(option[0])}')`);
         }
 
         return `<div class="btn-group dropend">
@@ -444,7 +471,7 @@ class NodeTooltip {
             ['KEY6', 'D6 Small Key'],
             ['KEY7', 'D7 Small Key'],
             ['KEY8', 'D8 Small Key'],
-            ['KEY9', 'D0 Small Key'],
+            ['KEY0', 'D0 Small Key'],
             ['NIGHTMARE_KEY1', 'D1 Nightmare Key'],
             ['NIGHTMARE_KEY2', 'D2 Nightmare Key'],
             ['NIGHTMARE_KEY3', 'D3 Nightmare Key'],
@@ -453,7 +480,7 @@ class NodeTooltip {
             ['NIGHTMARE_KEY6', 'D6 Nightmare Key'],
             ['NIGHTMARE_KEY7', 'D7 Nightmare Key'],
             ['NIGHTMARE_KEY8', 'D8 Nightmare Key'],
-            ['NIGHTMARE_KEY9', 'D0 Nightmare Key'],
+            ['NIGHTMARE_KEY0', 'D0 Nightmare Key'],
             ['MAP1', 'D1 Map'],
             ['MAP2', 'D2 Map'],
             ['MAP3', 'D3 Map'],
@@ -462,7 +489,7 @@ class NodeTooltip {
             ['MAP6', 'D6 Map'],
             ['MAP7', 'D7 Map'],
             ['MAP8', 'D8 Map'],
-            ['MAP9', 'D0 Map'],
+            ['MAP0', 'D0 Map'],
             ['COMPASS1', 'D1 Compass'],
             ['COMPASS2', 'D2 Compass'],
             ['COMPASS3', 'D3 Compass'],
@@ -471,7 +498,7 @@ class NodeTooltip {
             ['COMPASS6', 'D6 Compass'],
             ['COMPASS7', 'D7 Compass'],
             ['COMPASS8', 'D8 Compass'],
-            ['COMPASS9', 'D0 Compass'],
+            ['COMPASS0', 'D0 Compass'],
             ['STONE_BEAK1', 'D1 Stone Beak'],
             ['STONE_BEAK2', 'D2 Stone Beak'],
             ['STONE_BEAK3', 'D3 Stone Beak'],
@@ -480,7 +507,7 @@ class NodeTooltip {
             ['STONE_BEAK6', 'D6 Stone Beak'],
             ['STONE_BEAK7', 'D7 Stone Beak'],
             ['STONE_BEAK8', 'D8 Stone Beak'],
-            ['STONE_BEAK9', 'D0 Stone Beak'],
+            ['STONE_BEAK0', 'D0 Stone Beak'],
             ['MEDICINE', 'Medicine'],
             ['SINGLE_ARROW', '1 Arrow'],
             ['ARROWS_10', '10 Arrows'],

@@ -89,7 +89,7 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
 
 function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
-    let isVanilla = checksById[id].vanilla;
+    let isVanilla = checksById[id].isVanilla;
     let metadata = coordDict[id];
 
     if (localSettings.spoilOnCollect) {
@@ -121,7 +121,7 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
 
 function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
-    let isVanilla = checksById[id].vanilla;
+    let isVanilla = checksById[id].isVanilla;
     let metadata = coordDict[id];
 
     if (updateDungeonCount) {

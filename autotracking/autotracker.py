@@ -22,7 +22,7 @@ async def socketLoop(socket, path):
     seed = None
 
     while True:
-        await asyncio.sleep(0.4)
+        await asyncio.sleep(0.1)
 
         if not gb.findEmulator():
             state.romRequested = False
@@ -45,6 +45,9 @@ async def socketLoop(socket, path):
 
             gameState = gb.readRamByte(consts.gameStateAddress)
             if gameState not in consts.validGameStates:
+                if gameState <= 2:
+                    state.saveAndQuit()
+
                 continue
 
             state.readTrackables(gb)

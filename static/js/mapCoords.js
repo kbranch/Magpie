@@ -66,10 +66,18 @@ function refreshCheckList() {
     }
 }
 
+function closeAllTooltips() {
+    // Do nothing so we don't get an error on clicking the map
+}
+
 function refreshLocationList() {
     let locationListGroup = $('#checkLocationsListGroup');
 
     $(locationListGroup).html('');
+
+    if (!activeCheck) {
+        return;
+    }
 
     for (const location of activeCheck.locations) {
         let item = `<div class="list-group-item location-item">
@@ -143,8 +151,11 @@ function mapClick(img, event) {
         y: info.y,
     }
 
+    let coord = `,
+${JSON.stringify(location, null, 4)}`
     console.log(location);
-    activeCheck.locations.push(location);
+    navigator.clipboard.writeText(coord);
+    activeCheck?.locations.push(location);
 
     refreshLocationList();
 }
@@ -183,7 +194,7 @@ function getTileCoords(event, element) {
     x /= xScale;
     y /= yScale;
 
-    if (map == 'overworld') {
+    if (['overworld', 'underworld'].includes(map)) {
         x -= Math.floor(x / 160) * 2;
         y -= Math.floor(y / 128) * 2;
     }
@@ -191,9 +202,9 @@ function getTileCoords(event, element) {
     let targetX = Math.floor(x / 8) * 8;
     let targetY = Math.floor(y / 8) * 8;
 
-    if (map == 'overworld') {
-        xOffset = Math.floor(x / 160) * 2;
-        yOffset = Math.floor(y / 128) * 2;
+    if (['overworld', 'underworld'].includes(map)) {
+        let xOffset = Math.floor(x / 160) * 2;
+        let yOffset = Math.floor(y / 128) * 2;
 
         targetX += xOffset;
         targetY += yOffset;

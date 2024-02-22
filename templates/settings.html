@@ -151,6 +151,9 @@
                                 <option value="simple">Simple</option>
                                 <option value="split">Split</option>
                                 <option value="mixed">Mixed</option>
+                                <option value="wild">Wild</option>
+                                <option value="chaos">Chaos</option>
+                                <option value="insane">Insane</option>
                             </select>
                         </div>
                     </div>
@@ -206,6 +209,7 @@
                                 <option value="normal">Normal</option>
                                 <option value="dungeondive">Dungeon dive</option>
                                 <option value="nodungeons">No dungeons</option>
+                                <option value="alttp">ALttP</option>
                             </select>
                         </div>
                     </div>
@@ -229,7 +233,7 @@
                                  'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
                                  'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
                                  'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette', 'accessibility',
-                                 'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater'] %}
+                                 'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies'] %}
 
             {% for arg in flags if  arg.name not in knownFlags %}
                 {% if 'Other' != ns.group %}
@@ -322,7 +326,7 @@
                 <div class="row">
                     <div class="col">
                         <input id="spoilOnCollect" data-setting="spoilOnCollect" type="checkbox" class="form-check-input">
-                        <label for="spoilOnCollect" class="form-label">Spoil collected items <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Mark checked checks with the item they contained. Requires a spoiler log to be loaded"></label>
+                        <label for="spoilOnCollect" class="form-label">Spoil collected items <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Mark checked checks with the item they contained. Also automatically adds the contained item to your inventory. Requires a spoiler log to be loaded"></label>
                     </div>
                 </div>
             </div>
@@ -455,7 +459,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <label for="autotrackerAddressSetting" class="form-label">Server <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026."></label>
+                            <label for="autotrackerAddressSetting" class="form-label">Server <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026. Note that modern browsers will typically block insecure connections to remote addresses. Either download the offline version of Magpie or configure your browser to allow insecure WebSocket connections."></label>
                             <input type="text" id="autotrackerAddressSetting" data-setting="autotrackerAddress" class="form-control" aria-label="Server" placeholder="127.0.0.1">
                         </div>
                     </div>
@@ -498,6 +502,16 @@
                         <div class="col">
                             <input id="followMap" data-setting="followMap" type="checkbox" class="form-check-input">
                             <label for="followMap" class="form-label">Map follows location</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="followToUnderworld" class="form-label">Map follows to underworld <img class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="'Advanced ER' means that the map will only automatically switch to the underworld when the entrance randomizer setting is set to Wild or higher"></label>
+                            <select id="followToUnderworld" class="form-select" data-setting="followToUnderworld" aria-label="followToUnderworld">
+                                <option value="never">Never</option>
+                                <option value="advanced">Advanced ER</option>
+                                <option value="always">Always</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -570,8 +584,8 @@
         <div class="row">
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff0' class="color-label"><div class="difficulty-0 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-0"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff0" data-setting="diff0Color" class="form-control">
+                    <label for='diff0' class="color-label" data-bs-toggle="tooltip" data-bs-title="In logic" data-bs-trigger="hover"><div class="difficulty-0 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-0"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff0" data-setting="diff0Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="In logic" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff0Alpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -581,8 +595,8 @@
             </div>
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff0V' class="color-label"><div class="difficulty-0 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-0-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff0V" data-setting="diff0VColor" class="form-control">
+                    <label for='diff0V' class="color-label" data-bs-toggle="tooltip" data-bs-title="In logic, vanilla" data-bs-trigger="hover"><div class="difficulty-0 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-0-vanilla"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff0V" data-setting="diff0VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="In logic, vanilla" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff0VAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -593,8 +607,8 @@
 
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff1' class="color-label"><div class="difficulty-1 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-1"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff1" data-setting="diff1Color" class="form-control">
+                    <label for='diff1' class="color-label" data-bs-toggle="tooltip" data-bs-title="+1 difficulty" data-bs-trigger="hover"><div class="difficulty-1 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-1"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff1" data-setting="diff1Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="+1 difficulty" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff1Alpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -604,8 +618,8 @@
             </div>
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff1V' class="color-label"><div class="difficulty-1 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-1-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff1V" data-setting="diff1VColor" class="form-control">
+                    <label for='diff1V' class="color-label" data-bs-toggle="tooltip" data-bs-title="+1 difficulty, vanilla" data-bs-trigger="hover"><div class="difficulty-1 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-1-vanilla"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff1V" data-setting="diff1VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="+1 difficulty, vanilla" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff1VAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -617,8 +631,8 @@
         <div class="row">
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff2' class="color-label"><div class="difficulty-2 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-2"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff2" data-setting="diff2Color" class="form-control">
+                    <label for='diff2' class="color-label" data-bs-toggle="tooltip" data-bs-title="+2 difficulty" data-bs-trigger="hover"><div class="difficulty-2 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-2"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff2" data-setting="diff2Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="+2 difficulty" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff2Alpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -628,8 +642,8 @@
             </div>
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff2V' class="color-label"><div class="difficulty-2 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-2-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff2V" data-setting="diff2VColor" class="form-control">
+                    <label for='diff2V' class="color-label" data-bs-toggle="tooltip" data-bs-title="+2 difficulty, vanilla" data-bs-trigger="hover"><div class="difficulty-2 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-2-vanilla"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff2V" data-setting="diff2VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="+2 difficulty, vanilla" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff2VAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -640,8 +654,8 @@
 
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff3' class="color-label"><div class="difficulty-3 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-3"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff3" data-setting="diff3Color" class="form-control">
+                    <label for='diff3' class="color-label" data-bs-toggle="tooltip" data-bs-title="+3, +4 difficulty" data-bs-trigger="hover"><div class="difficulty-3 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-3"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff3" data-setting="diff3Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="+3, +4 difficulty" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff3Alpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -651,8 +665,8 @@
             </div>
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff3V' class="color-label"><div class="difficulty-3 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-3-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff3V" data-setting="diff3VColor" class="form-control">
+                    <label for='diff3V' class="color-label" data-bs-toggle="tooltip" data-bs-title="+3, +4 difficulty, vanilla" data-bs-trigger="hover"><div class="difficulty-3 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-3-vanilla"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff3V" data-setting="diff3VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="+3, +4 difficulty, vanilla" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff3VAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -664,8 +678,8 @@
         <div class="row">
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff8' class="color-label"><div class="difficulty-8 static-difficulty-wrapper align-middle"><div class="difficulty-8-overlay"></div><svg class="icon static-difficulty"><use xlink:href="#difficulty-8"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff8" data-setting="diff8Color" class="form-control">
+                    <label for='diff8' class="color-label" data-bs-toggle="tooltip" data-bs-title="Tracker logic" data-bs-trigger="hover"><div class="difficulty-8 static-difficulty-wrapper align-middle"><div class="difficulty-8-overlay"></div><svg class="icon static-difficulty"><use xlink:href="#difficulty-8"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff8" data-setting="diff8Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="Tracker logic" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff8Alpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -675,8 +689,8 @@
             </div>
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff8V' class="color-label"><div class="difficulty-8 vanilla static-difficulty-wrapper align-middle"><div class="difficulty-8-overlay"></div><svg class="icon static-difficulty"><use xlink:href="#difficulty-8-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff8V" data-setting="diff8VColor" class="form-control">
+                    <label for='diff8V' class="color-label" data-bs-toggle="tooltip" data-bs-title="Tracker logic, vanilla" data-bs-trigger="hover"><div class="difficulty-8 vanilla static-difficulty-wrapper align-middle"><div class="difficulty-8-overlay"></div><svg class="icon static-difficulty"><use xlink:href="#difficulty-8-vanilla"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff8V" data-setting="diff8VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="Tracker logic, vanilla" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff8VAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -687,8 +701,8 @@
 
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff9' class="color-label"><div class="difficulty-9 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-9"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff9" data-setting="diff9Color" class="form-control">
+                    <label for='diff9' class="color-label" data-bs-toggle="tooltip" data-bs-title="Out of logic" data-bs-trigger="hover"><div class="difficulty-9 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-9"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff9" data-setting="diff9Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="Out of logic" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff9Alpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -698,8 +712,8 @@
             </div>
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diff9V' class="color-label"><div class="difficulty-9 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-9-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff9V" data-setting="diff9VColor" class="form-control">
+                    <label for='diff9V' class="color-label" data-bs-toggle="tooltip" data-bs-title="Out of logic, vanilla" data-bs-trigger="hover"><div class="difficulty-9 vanilla static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-9-vanilla"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diff9V" data-setting="diff9VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="Out of logic, vanilla" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diff9VAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>
@@ -711,8 +725,8 @@
         <div class="row">
             <div class="col col-auto">
                 <div class="color-block">
-                    <label for='diffChecked' class="color-label"><div class="difficulty-checked static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-checked"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diffChecked" data-setting="diffCheckedColor" class="form-control">
+                    <label for='diffChecked' class="color-label" data-bs-toggle="tooltip" data-bs-title="Checked" data-bs-trigger="hover"><div class="difficulty-checked static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-checked"></use></svg></div></label>
+                    <input class="color-picker" type="color" id="diffChecked" data-setting="diffCheckedColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="Checked" data-bs-trigger="hover">
 
                     <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
                         <label for='diffCheckedAlpha' class="color-label"><img class="invert" src="static/images/eye.svg"></label>

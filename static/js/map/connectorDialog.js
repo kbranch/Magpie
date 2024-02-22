@@ -2,11 +2,25 @@
 
 function startGraphicalConnection(entranceId, type) {
     closeAllTooltips();
+
+    graphicalMapOriginalMap = getActiveMap();
+
+    if (['underworld', 'overworld'].includes(type)
+        && type != graphicalMapOriginalMap) {
+        openTab(type);
+    }
+
+    if (type == 'simple') {
+        openTab('overworld');
+    }
+
     graphicalMapType = type;
     graphicalMapSource = entranceId;
-    graphicalMapChoices = new Set(Entrance.validConnections(entranceId, type == "simple").map(x => x[0]));
+    graphicalMapChoices = new Set(Entrance.validConnections(entranceId, type).map(x => x[0]));
     graphicalMapChoices.delete('bk_shop');
     $('#overworldTabContent').mousemove(connectorMouseMove);
+    $('#underworldTabContent').mousemove(connectorMouseMove);
+    
     drawActiveTab();
 }
 
@@ -17,16 +31,27 @@ function endGraphicalConnection(destId = null) {
     graphicalMapChoices = null;
 
     $('#mouseTracker').connections('remove');
-    $('#overworldTabContent').off('mousemove');
+    $('#underworldTabContent').off('mousemove');
     $('#mouseTracker').remove();
+    $('#overworldTabContent').off('mousemove');
+    $('#underworldTabContent').off('mousemove');
 
     if (destId != null) {
+        if (inOutEntrances()) {
+            destId = Entrance.getInsideOut(destId);
+        }
+
         connectEntrances(originalSource, destId);
     }
     else if(originalSource != null) {
         skipNextAnimation = true;
         refreshCheckList();
     }
+
+    // if (graphicalMapOriginalMap != getActiveMap()) {
+    //     openTab(graphicalMapOriginalMap);
+    //     graphicalMapOriginalMap = null;
+    // }
 
     drawActiveTab();
 }
@@ -133,7 +158,9 @@ function fillConnectorGrid(connectors) {
     for (const connector of connectors) {
         let connection = Connection.existingConnection(connector);
 
-        if (connection != null && connection.entrances.length >= connector.entrances.length) {
+        if (connection != null
+            && (connection.entrances.length / 2 >= connector.entrances.length
+                || connection.vanilla)) {
             continue;
         }
 
@@ -187,7 +214,7 @@ function connectorDetail(connectorId) {
         let item = imageTemplate.replaceAll('{image}', 'entrances/' + entranceDict[entranceId].interiorImage)
                                 .replaceAll('{type}', 'entrance')
                                 .replaceAll('{hidden}', hideEntrances ? 'hidden' : '')
-                                .replaceAll('{id}', entranceId);
+                                .replaceAll('{id}', Entrance.getInsideOut(entranceId));
 
         $(grid).append(item);
     }
@@ -202,7 +229,7 @@ function connectorDetail(connectorId) {
     }
     else if (hideEntrances) {
         if (isDeadEnd && unmappedEntrances.length == 1) {
-            $(`.connector-item[data-id="${unmappedEntrances[0]}"]`).addClass('checked');
+            $(`#deadEndConnectorDetailGrid .connector-item[data-id="${Entrance.getInsideOut(unmappedEntrances[0])}"]`).addClass('checked');
         }
 
         $(`.connector-item[data-type="check"]`).addClass('checked');

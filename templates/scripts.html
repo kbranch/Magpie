@@ -5,6 +5,7 @@
 <script src="static/lib/summernote/summernote-lite.js"></script>
 <script src="static/lib/masonry/masonry.pkgd.min.js"></script>
 <script src="static/lib/html-to-image/html-to-image.js"></script>
+<script src="static/lib/JSZip/jszip.min.js"></script>
 <script src="static/js/util.js"></script>
 <script src="static/js/model/mapNode.js"></script>
 <script src="static/js/model/nodeTooltip.js"></script>
@@ -18,6 +19,7 @@
 <script src="static/js/map/nodes.js"></script>
 <script src="static/js/map/tooltips.js"></script>
 <script src="static/js/metadata/checkMetadata.js"></script>
+<script src="static/js/metadata/alttpCheckMetadata.js"></script>
 <script src="static/js/metadata/entranceMetadata.js"></script>
 <script src="static/js/metadata/connectorMetadata.js"></script>
 <script src="static/js/metadata/bossMetadata.js"></script>
@@ -52,7 +54,7 @@
         return obj;
     }
 
-    const protocolVersion = '1.2';
+    const protocolVersion = '1.3';
     const defaultArgs = tryParseJson('{{jsonArgs|safe}}');
     const defaultSettings = tryParseJson('{{jsonSettings|safe}}');
     var settingsOverrides = tryParseJson('{{jsonSettingsOverrides|safe}}');
@@ -81,6 +83,7 @@
     var graphicalMapSource = null;
     var graphicalMapChoices = null;
     var graphicalMapType = null;
+    var graphicalMapOriginalMap = null;
     var autotrackerSocket = null;
     var romRequested = false;
     var autotrackerFeatures = [];
@@ -107,8 +110,22 @@
     var settingsPrefix = '{{settingsPrefix}}';
     var players = {{players|safe}};
     var playerInventories = {};
+    var lastViewport = viewportSnapshot();
+    var messageLog = [];
+    var maxMessageLogSize = 1000;
 
-    const startHouse = 'start_house';
+    const renamedItems = {
+        "KEY9": "KEY0",
+        "NIGHTMARE_KEY9": "NIGHTMARE_KEY0",
+        "MAP9": "MAP0",
+        "COMPASS9": "COMPASS0",
+        "STONE_BEAK9": "STONE_BEAK0",
+        "INSTRUMENT9": "INSTRUMENT0",
+        "REQ9": "REQ0",
+        "ITEM9": "ITEM0",
+    };
+
+    var startHouse = 'start_house:inside';
 
     function refreshItems() {
         $.ajax({
@@ -376,15 +393,30 @@
         var popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 
         var timeoutId;
-        function resizeTimeout() {
+        function resizeTimeout(a, b, c, d) {
             removeNodes();
             clearTimeout(timeoutId);
             skipNextAnimation = true;
             timeoutId = setTimeout(drawActiveTab, 100);
         }
 
+        function viewportResizeTimeout(a, b, c, d) {
+            if (lastViewport.height != window.visualViewport.height
+                || lastViewport.width != window.visualViewport.width
+                || lastViewport.scale != window.visualViewport.scale
+                || lastViewport.left != window.visualViewport.offsetLeft
+                || lastViewport.top != window.visualViewport.offsetTop) {
+                removeNodes();
+                clearTimeout(timeoutId);
+                skipNextAnimation = true;
+                timeoutId = setTimeout(drawActiveTab, 100);
+            }
+
+            lastViewport = viewportSnapshot();
+        }
+
         window.addEventListener("resize", resizeTimeout); // Window size
-        window.visualViewport.addEventListener('resize', resizeTimeout); // Pinch zoom
+        window.visualViewport.addEventListener('resize', viewportResizeTimeout); // Pinch zoom
     }
 
     init();

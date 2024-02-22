@@ -102,17 +102,17 @@ def getItems(args, trimDungeonItems=True):
         if trimDungeonItems:
             if args.dungeon_items == 'keysy':
                 for item_name in ("KEY", "NIGHTMARE_KEY"):
-                    item_name = f"{item_name}{n + 1}"
+                    item_name = f"{item_name}{n}"
                     pool[item_name] = 0
             if args.goal not in ('bingo', 'bingo-full'):
                 for item_name in ("MAP", "COMPASS"):
-                    item_name = f"{item_name}{n + 1}"
+                    item_name = f"{item_name}{n}"
                     pool[item_name] = 0
             if args.owlstatues not in ('both', 'dungeon') and args.goal not in ('bingo', 'bingo-full'):
-                pool[f'STONE_BEAK{n + 1}'] = 0
+                pool[f'STONE_BEAK{n}'] = 0
 
-        pool[f'ITEM{n + 1}'] = 0
-        pool[f'REQ{n + 1}'] = 1
+        pool[f'ITEM{n}'] = 0
+        pool[f'REQ{n}'] = 1
 
     return pool
 
@@ -148,7 +148,7 @@ def getLogics(args, entranceMap, bossList, minibossMap):
         if entrance in entranceMap:
             worldSetup.entrance_mapping[entrance] = entranceMap[entrance]
         elif entrance in entrancePool:
-            worldSetup.entrance_mapping[entrance] = 'rooster_house'
+            worldSetup.entrance_mapping[entrance] = 'start_house:inside'
 
     if args.overworld == "dungeondive":
         worldSetup.entrance_mapping = {"d%d" % (n): "d%d" % (n) for n in range(9)}
@@ -210,7 +210,7 @@ def loadEntrances(logic, inventory):
     e.visit(logic.start)
 
     entrances = {}
-    for name,exterior in logic.world.overworld_entrance.items():
+    for name,exterior in logic.world.entrances.items():
         if not testEntrance(exterior, inventory):
             continue
 
@@ -293,20 +293,28 @@ def getStartLocations(args):
         return []
 
     if args.entranceshuffle == 'none':
-        return start_locations
+        startLocations = []
+        for loc in start_locations:
+            startLocations.append(loc)
+            startLocations.append(loc + ':inside')
+
+        return startLocations
     else:
         return WorldSetup.getEntrancePool(None, args)
 
 def getDungeonItemCount(args):
-    dungeonList = ["Tail Cave",
-                   "Bottle Grotto",
-                   "Key Cavern",
-                   "Angler's Tunnel",
-                   "Catfish's Maw",
-                   "Face Shrine",
-                   "Eagle's Tower",
-                   "Turtle Rock",
-                   "Color Dungeon"]
+    dungeonList = [
+        "Color Dungeon",
+        "Tail Cave",
+        "Bottle Grotto",
+        "Key Cavern",
+        "Angler's Tunnel",
+        "Catfish's Maw",
+        "Face Shrine",
+        "Eagle's Tower",
+        "Turtle Rock",
+    ]
+
     itemCount = {}
 
     allItems = getItems(args, trimDungeonItems=False)
@@ -325,19 +333,25 @@ def getDungeonItemCount(args):
         itemCount[index] += 1
     
     for i in range(len(dungeonList)):
+        if i not in itemCount:
+            continue
+
         if args.dungeon_items in ('', 'localkeys'):
-            itemCount[i] -= allItems[f'KEY{i + 1}']
+            itemCount[i] -= allItems[f'KEY{i}']
         if args.dungeon_items in ('', 'smallkeys', 'keysy'):
-            itemCount[i] -= allItems[f'MAP{i + 1}']
-            itemCount[i] -= allItems[f'COMPASS{i + 1}']
-            itemCount[i] -= allItems[f'STONE_BEAK{i + 1}']
+            itemCount[i] -= allItems[f'MAP{i}']
+            itemCount[i] -= allItems[f'COMPASS{i}']
+            itemCount[i] -= allItems[f'STONE_BEAK{i}']
         if args.dungeon_items in ('', 'smallkeys', 'localkeys', 'nightmarekey'):
-            itemCount[i] -= allItems[f'NIGHTMARE_KEY{i + 1}']
-        if not args.instruments and f'INSTRUMENT{i + 1}' in allItems:
-            itemCount[i] -= allItems[f'INSTRUMENT{i + 1}']
+            itemCount[i] -= allItems[f'NIGHTMARE_KEY{i}']
+        if not args.instruments and f'INSTRUMENT{i}' in allItems:
+            itemCount[i] -= allItems[f'INSTRUMENT{i}']
     
     for i in range(len(dungeonList)):
-        itemCount[f'ITEM{i + 1}'] = itemCount[i]
+        if i not in itemCount:
+            continue
+
+        itemCount[f'ITEM{i}'] = itemCount[i]
         del itemCount[i]
     
     return itemCount
