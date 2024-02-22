@@ -28,6 +28,18 @@ function loadEntrances() {
 
     try {
         entranceMap = JSON.parse(getLocalStorage('entranceMap'));
+
+        if (updateInsideEntrances) {
+            for (const entrance in entranceMap) {
+                let mappedTo = entranceMap[entrance];
+                if (!Entrance.isInside(mappedTo) && mappedTo != 'landfill') {
+                    let inside = Entrance.getInside(mappedTo)
+                    entranceMap[entrance] = inside;
+                    entranceMap[inside] = entrance;
+                }
+            }
+        }
+
         pruneEntranceMap();
     }
     catch (err) {
@@ -46,6 +58,12 @@ function loadEntrances() {
         if (raw) {
             let dehydratedConnections = JSON.parse(raw);
             for (const conn of dehydratedConnections) {
+                if (updateInsideEntrances) {
+                    for (const entrance of [...conn.entrances]) {
+                        conn.entrances.push(entranceMap[entrance]);
+                    }
+                }
+
                 connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
             }
         }
@@ -58,6 +76,8 @@ function loadEntrances() {
     if (connections == null) {
         connections = [];
     }
+
+    updateInsideEntrances = false;
 
     return errors;
 }

@@ -235,6 +235,9 @@ function loadSettings() {
 }
 
 function updateSettings() {
+    if (!(followToUnderworld in localSettings)) {
+        updateInsideEntrances = true;
+    }
     if ('ignoreHigherLogic' in localSettings) {
         localSettings.showHigherLogic = !localSettings.ignoreHigherLogic;
         delete localSettings['ignoreHigherLogic'];
