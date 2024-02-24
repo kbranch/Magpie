@@ -105,6 +105,11 @@ inventoryItemIds = {
 }
 
 dungeonKeyDoors = [
+    { # D0
+        0xDDE5: [0x02],
+        0xDDE9: [0x04],
+        0xDDF0: [0x04],
+    },
     { # D1
         0xD907: [0x04],
         0xD909: [0x40],
@@ -154,11 +159,6 @@ dungeonKeyDoors = [
         0xDA44: [0x40],
         0xDA49: [0x40],
         0xDA4A: [0x01],
-    },
-    { # D0
-        0xDDE5: [0x02],
-        0xDDE9: [0x04],
-        0xDDF0: [0x04],
     },
 ]
 

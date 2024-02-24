@@ -24,7 +24,7 @@ def readItems(gb, state, extraItems):
     
     # Add keys for opened key doors
     for i in range(len(consts.dungeonKeyDoors)):
-        item = f'KEY{i + 1}'
+        item = f'KEY{i}'
         extraItems[item] = 0
 
         for address, masks in consts.dungeonKeyDoors[i].items():
