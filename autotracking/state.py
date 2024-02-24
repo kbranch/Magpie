@@ -81,6 +81,8 @@ class State:
 
             if len(settingsString) == 0:
                 print(f'Settings not found in ROM')
+                self.settings = lambda: None
+                self.settings.archipelago = True
             else:
                 await sendSettings(socket, settingsString)
                 self.settings = loadSettings(settingsString)
@@ -166,8 +168,11 @@ class State:
         if (self.entrancesLoaded
             and not self.visitedEntrancesRead
             and 'entrances' in self.features
-            and hasattr(self.settings, 'entranceshuffle')
-            and self.settings.entranceshuffle in ('', 'simple', 'split', 'mixed')):
+            and ((hasattr(self.settings, 'entranceshuffle')
+                  and self.settings.entranceshuffle in ('', 'simple', 'split', 'mixed'))
+                 or (hasattr(self.settings, 'archipelago')
+                     and self.settings.archipelago == True))
+                  ):
             readVisitedEntrances(gb, self)
             self.visitedEntrancesRead = True
 
