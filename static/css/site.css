@@ -72,14 +72,15 @@ nowrap {
 
 .node-item-overlay {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 85%;
+    top: 75%;
     max-height: 60%;
     min-height: 60%;
     user-select: none;
     pointer-events: none;
     z-index: 15;
     transform: translate(-50%, -50%);
+    filter: drop-shadow(0px 0px 2px #ccc)drop-shadow(0px 0px 2px #ccc)drop-shadow(0px 0px 2px #ccc)drop-shadow(0px 0px 2px #ccc);
 }
 
 .quicksettings-wrapper {
@@ -342,15 +343,15 @@ img {
 
 .behind-keys:not(.difficulty-checked) .behind-keys-overlay {
     position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 90%;
-    height: 90%;
-    background-image: url('/static/images/key.svg');
+    left: 15%;
+    top: 75%;
+    width: 50%;
+    height: 50%;
+    background-image: url('/static/images/lock-fill.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    transform: translate(5%, 5%);
+    transform: translate(-50%, -50%);
     z-index: 2;
 }
 
@@ -424,7 +425,7 @@ img {
 
 .owl:not(.difficulty-checked) .owl-overlay {
     border-style: none;
-    background-image: url('/static/images/owl.svg');
+    background-image: url('/static/images/new-owl.svg');
     position: absolute;
     left: 50%;
     top: 50%;
@@ -433,7 +434,7 @@ img {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    transform: translate(-50%, -45%);
+    transform: translate(-50%, -50%);
     z-index: 9;
 }
 
@@ -507,17 +508,18 @@ img {
 .entrance-difficulty-8:not(.vanilla) .entrance-difficulty-8-overlay,
 .difficulty-8.static-difficulty-wrapper .difficulty-8-overlay, 
 .difficulty-8.tooltip-check-graphic .difficulty-8-overlay {
-    background-image: url('/static/images/exclamation-mark.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 80%;
-    width: 80%;
-    position: absolute;
-    left: 55%;
-    top: 48%;
-    transform: translate(-50%, -50%);
     z-index: 10;
+    border-style: none;
+    background-image: url('/static/images/tracker-logic.svg');
+    position: absolute;
+    left: 85%;
+    top: 25%;
+    width: 60%;
+    height: 60%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    transform: translate(-50%, -50%);
 }
 
 .icon-wrapper {
