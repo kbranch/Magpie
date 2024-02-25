@@ -113,6 +113,7 @@ function processEntranceMessage(message) {
     }
 }
 
+var lastValidMap = null;
 function processLocationMessage(message) {
     if (!autotrackerFeatures.includes('gps')) {
         console.log("GPS feature disabled, ignoring")
@@ -120,12 +121,10 @@ function processLocationMessage(message) {
     }
 
     let room = message.room;
-    let oldMap = mapFromRoom(currentRoom);
     let newMap = mapFromRoom(room);
 
-    if (newMap != oldMap 
+    if (newMap != lastValidMap
         && newMap != null
-        && oldMap != null
         && localSettings.followMap
         && (newMap != 'underworld'
             || localSettings.followToUnderworld == 'always'
@@ -148,6 +147,10 @@ function processLocationMessage(message) {
     currentRoom = room;
     currentX = message.x;
     currentY = message.y;
+
+    if (newMap != null) {
+        lastValidMap = newMap;
+    }
 
     drawLocation();
 }
