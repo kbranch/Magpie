@@ -1182,3 +1182,14 @@ img[data-status="error"] {
 span.logic-name {
     text-transform: capitalize;
 }
+
+.parent-center {
+    position: absolute;
+    left: 50%;
+    top: 54%;
+    transform: translate(-50%, -50%);
+}
+
+.dungeon-parent {
+    position: relative;
+}
