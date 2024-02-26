@@ -247,6 +247,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":13,
+       "requiredRupees": 10,
     },
     "0x2A0":{
        "id":"0x2A0",
@@ -303,6 +304,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":15,
+       "requiredRupees": 300,
     },
     "0x2FD":{
        "id":"0x2FD",
@@ -546,6 +548,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":30,
+       "requiredRupees": 100,
     },
     "0x05D":{
        "id":"0x05D",
@@ -559,6 +562,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":31,
+       "requiredRupees": 100,
     },
     "0x05C":{
        "id":"0x05C",
@@ -572,6 +576,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":32,
+       "requiredRupees": 100,
     },
     "0x07F":{
        "id":"0x07F",
@@ -1523,6 +1528,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":89,
+       "requiredRupees": 15,
     },
     "0x2A4":{
        "id":"0x2A4",
@@ -4523,6 +4529,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":247,
+       "requiredRupees": 10,
     },
     "0x2A1-1":{
        "id":"0x2A1-1",
@@ -4541,6 +4548,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":248,
+       "requiredRupees": 980,
     },
     "0x2A1-0":{
        "id":"0x2A1-0",
@@ -4559,6 +4567,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":249,
+       "requiredRupees": 200,
     },
     "0x2A2":{
        "id":"0x2A2",

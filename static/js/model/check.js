@@ -7,6 +7,7 @@ class Check {
         this.locations = this.metadata.locations;
         this.item = checkContents[this.id];
         this.baseDifficulty = checkInfo.difficulty;
+        this.requiredRupees = this.metadata.requiredRupees;
 
         let dungeonMaps = this.locations.map(x => x.map)
                                         .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x));

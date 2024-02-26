@@ -82,6 +82,16 @@ class MapNode {
                           && uncheckedChecks.every(x => x.behindKeys);
     }
 
+    updateBehindRupees() {
+        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
+                                                      && !x.isChecked()
+                                                      && !x.metadata.vanilla
+                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
+
+        this.behindRupees = uncheckedChecks.length > 0 
+                          && uncheckedChecks.every(x => x.requiredRupees);
+    }
+
     updateDifficulty() {
         this.difficulty = 'checked';
 
@@ -130,6 +140,7 @@ class MapNode {
     update() {
         this.updateDifficulty();
         this.updateBehindKeys();
+        this.updateBehindRupees();
         this.updateIsChecked();
         this.updateIsVanilla();
         this.updateItem();
@@ -195,6 +206,10 @@ class MapNode {
 
         if (this.behindKeys) {
             classes.push('behind-keys');
+        }
+
+        if (this.behindRupees) {
+            classes.push('behind-rupees');
         }
 
         if (this.isVanilla) {
@@ -455,8 +470,24 @@ class MapNode {
                 'xlink:href': `#difficulty-${difficulty}${vanilla}`,
             });
 
+            let hollowSvgHtml = "";
+
+            if (this.behindKeys || this.behindRupees || this.difficulty == 8) {
+                let hollowSvg = createElement('svg', {
+                    class: 'icon hollow',
+                    css: `width: ${checkSize}px;
+                        height: ${checkSize}px;`,
+                });
+                let hollowUse = createElement('use', {
+                    'xlink:href': `#difficulty-${difficulty}-hollow`,
+                });
+
+                hollowSvg.innerHTML = hollowUse.outerHTML;
+                hollowSvgHtml = hollowSvg.outerHTML;
+            }
+
             svg.innerHTML = use.outerHTML;
-            iconWrapper.innerHTML = svg.outerHTML;
+            iconWrapper.innerHTML = svg.outerHTML + hollowSvgHtml;
             overlay.appendChild(iconWrapper);
         }
 
@@ -519,7 +550,7 @@ class MapNode {
         }
 
         let overlayClasses = ['behind-keys', 'one-way-out', 'one-way-in', 'owl', 'unmapped-entrance', 'possible-start-location', 
-                              'start-location', 'difficulty-8', 'entrance-difficulty-8', 'partial-entrance'];
+                              'start-location', 'difficulty-8', 'entrance-difficulty-8', 'partial-entrance', 'behind-rupees'];
         for (const overlayClass of overlayClasses) {
             let newOverlay = createElement('div', {
                 class: overlayClass + "-overlay",
