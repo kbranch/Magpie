@@ -121,6 +121,11 @@ function pruneEntranceMap() {
     for (const entrance in entranceMap) {
         let mappedEntrance = entranceMap[entrance];
 
+        if (String(entrance) == "null" || String(mappedEntrance) == "null") {
+            delete entranceMap[entrance];
+            continue;
+        }
+
         if (Entrance.isVanilla(entrance)) {
             continue;
         }
@@ -195,7 +200,9 @@ function connectEntrances(from, to, refresh=true) {
         pushUndoState();
     }
 
-    console.assert(to != 'clear');
+    if (['clear', 'null'].includes(String(to)) || String(from) == 'null') {
+        throw new Error(`Invalid entrance connection (${from}:${to})`);
+    }
 
     entranceMap[from] = to;
 

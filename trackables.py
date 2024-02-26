@@ -157,9 +157,11 @@ def addStartingItems(inventory, args):
             inventory[f"STONE_BEAK{i + 1}"] = 1
 
 def cleanUpEntranceMap(entranceMap, entrances, args):
-    for source, dest in entranceMap.items():
+    for source, dest in [x for x in entranceMap.items()]:
         if dest in {'landfill', 'bk_shop'}:
             entranceMap[source] = 'start_house:inside'
+        if source in {"null", None} or dest in {"null", None}:
+            del entranceMap[source]
 
     for entrance in list(entranceMap.keys()):
         if entrance not in entrances:
