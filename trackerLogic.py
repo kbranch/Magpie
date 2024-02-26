@@ -136,6 +136,9 @@ def updateMetadata(table):
     table['egg'] = CheckMetadata('Nightmare', 'Tal Tal Mountains')
 
 def buildLogic(args, worldSetup, requirements=None):
+    if worldSetup.goal == 'open':
+        worldSetup.goal = -1
+
     log = logic.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
     for loc in log.location_list:

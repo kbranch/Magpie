@@ -258,8 +258,12 @@ function updateSettings() {
 }
 
 function fixArgs(args) {
-    if (!['seashells', 'bingo', 'bingo-full'].includes(String(args.goal))) {
-        args.goal = 'egg';
+    if (['egg', 'random', '5-8', 'maze'].includes(args.goal)) {
+        args.goal = '8';
+    }
+
+    if (args.goal == 'open-4') {
+        args.goal = '4';
     }
 
     if (args.logic == 'normal') {
