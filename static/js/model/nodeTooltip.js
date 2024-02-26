@@ -367,16 +367,22 @@ class NodeTooltip {
 
     checkGraphicHtml(id) {
         let checks = this.node.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind-keys}{owl}'><div class='behind-keys-overlay'></div><div class='difficulty-8-overlay'></div><div class='owl-overlay'></div><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg></div>{overlay}</div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind}{owl}'><div class='behind-rupees-overlay'></div><div class='behind-keys-overlay'></div><div class='difficulty-8-overlay'></div><div class='owl-overlay'></div><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg>{hollow}</div>{overlay}</div>";
+        let hollowTemplate = "<svg class='tooltip-check-graphic hollow align-middle'><use xlink:href='#difficulty-{difficulty}-hollow'></use></svg>"
         let graphic = '';
 
         for (const check of checks) {
             let difficulty = check.isChecked() ? 'checked' : check.difficulty;
-            let behindKeys = check.behindKeys ? ' behind-keys' : '';
+            let behind = check.behindKeys ? ' behind-keys' : check.requiredRupees ? ' behind-rupees' : '';
             let vanilla = check.isVanilla ? ' vanilla' : '';
             let owl = check.isOwl() ? ' owl' : '';
             let iconVanilla = check.isVanilla ? '-vanilla' : '';
             let overlay = '';
+            let hollow = '';
+
+            if (check.hollow) {
+                hollow = hollowTemplate.replaceAll('{difficulty}', difficulty);
+            }
 
             if (check.item) {
                 overlay = check.itemOverlay();
@@ -387,11 +393,12 @@ class NodeTooltip {
             }
 
             graphic += graphicTemplate.replaceAll('{difficulty}', difficulty)
-                                      .replaceAll('{behind-keys}', behindKeys)
+                                      .replaceAll('{behind}', behind)
                                       .replaceAll('{owl}', owl)
                                       .replaceAll('{vanilla}', vanilla)
                                       .replaceAll('{iconVanilla}', iconVanilla)
-                                      .replaceAll('{overlay}', overlay);
+                                      .replaceAll('{overlay}', overlay)
+                                      .replaceAll('{hollow}', hollow);
         }
 
         return graphic;

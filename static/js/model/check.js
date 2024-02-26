@@ -8,6 +8,7 @@ class Check {
         this.item = checkContents[this.id];
         this.baseDifficulty = checkInfo.difficulty;
         this.requiredRupees = this.metadata.requiredRupees;
+        this.hollow = false;
 
         let dungeonMaps = this.locations.map(x => x.map)
                                         .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x));
@@ -23,6 +24,10 @@ class Check {
         }
 
         this.updateChecked();
+
+        if (this.behindKeys || this.requiredRupees || this.baseDifficulty == 8) {
+            this.hollow = true;
+        }
     }
 
     nodeDifficulty() {

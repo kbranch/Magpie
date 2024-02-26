@@ -557,24 +557,24 @@ img {
     transform: translate(-50%, -50%);
 }
 
-svg.icon.hollow {
+svg.hollow {
     position: absolute;
     left: 0%;
     top: 0%;
     transform: scale(60%);
 }
 
-.icon-difficulty-3 svg.icon.hollow,
-.icon-difficulty-4 svg.icon.hollow {
+.difficulty-3 svg.hollow,
+.difficulty-4 svg.hollow {
     transform: scale(50%);
 }
 
-.icon-difficulty-2 svg.icon.hollow {
+.difficulty-2 svg.hollow {
     transform: scale(45%)
                translate(0, 20%);
 }
 
-.icon-difficulty-1 svg.icon.hollow {
+.difficulty-1 svg.hollow {
     transform: scale(55%)
                translate(0, 5%);
 }
