@@ -82,6 +82,7 @@ def updateMetadata(table):
     table['0x258'] = CheckMetadata('Pot Flying Powder', 'Turtle Rock')
     table['0x23E2'] = CheckMetadata('Cracked Floor Flying Powder', 'Turtle Rock')
     table['0x2352'] = CheckMetadata('Lava Ledge Flying Powder', 'Turtle Rock')
+    table['egg'] = CheckMetadata('Nightmare', 'Tal Tal Mountains')
 
 def buildLogic(args, worldSetup, requirements=None):
     log = logic.Logic(args, world_setup=worldSetup, requirements_settings=requirements)

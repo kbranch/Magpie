@@ -4120,4 +4120,16 @@ let alttpCoordDict = {
           },
        ],
     },
+    "egg":{
+       "id":"egg",
+       "area":"Tal Tal Mountains",
+       "name":"Nightmare",
+       "locations":[
+          {
+             "map": "overworld",
+             "x": 1052,
+             "y": 48
+          },
+       ],
+    },
 }

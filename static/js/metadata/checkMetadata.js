@@ -4784,6 +4784,18 @@ let vanillaCoordDict = {
           },
        ],
     },
+    "egg":{
+       "id":"egg",
+       "vanillaArea":"Tal Tal Mountains",
+       "vanillaName":"Nightmare",
+       "locations":[
+          {
+             "map": "vanillaOverworld",
+             "x": 1052,
+             "y": 48
+          },
+       ],
+    },
 }
 
 let coordDict = vanillaCoordDict;

@@ -257,6 +257,9 @@ def loadChecks(logic, inventory):
             else:
                 if name in nameOverrides:
                     checks.append(allChecks[nameOverrides[name]])
+
+    if logic.windfish in locations:
+        checks.append(allChecks['egg'])
     
     # checks.sort(key=lambda x: (x.area, x.name))
 
