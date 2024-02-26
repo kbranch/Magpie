@@ -39,16 +39,9 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-1.3861113,-1.4069996)">
-    <text
-       xml:space="preserve"
+    <path
+       id="text1"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.0771px;font-family:'Fira Mono';-inkscape-font-specification:'Fira Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       x="0.88816971"
-       y="8.4330912"
-       id="text1"><tspan
-         sodipodi:role="line"
-         id="tspan1"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.0771px;font-family:'Fira Mono';-inkscape-font-specification:'Fira Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-dasharray:none;stroke-opacity:1"
-         x="0.88816971"
-         y="8.4330912">*</tspan></text>
+       d="M 4.0040394 2.0684579 L 4.1730213 4.0611012 L 2.34936 3.3004241 L 2.0475696 4.2662566 L 3.9678659 4.7013722 L 2.6878406 6.2351287 L 3.5451526 6.8149382 L 4.5233875 5.0879119 L 5.5739694 6.7787647 L 6.3951079 6.1503793 L 5.0670236 4.7013722 L 6.9749175 4.2662566 L 6.6731271 3.3004241 L 4.8375802 4.0611012 L 5.0184477 2.0684579 L 4.0040394 2.0684579 z " />
   </g>
 </svg>

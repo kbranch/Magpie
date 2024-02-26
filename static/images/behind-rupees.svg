@@ -24,7 +24,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="26.141091"
-     inkscape:cx="15.7415"
+     inkscape:cx="15.741501"
      inkscape:cy="23.908719"
      inkscape:window-width="3840"
      inkscape:window-height="2091"
@@ -39,17 +39,11 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-8.240719,1.4206171)">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.0771px;font-family:'Fira Mono';-inkscape-font-specification:'Fira Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-       x="11.851342"
-       y="10.052268"
-       id="text1"><tspan
-         sodipodi:role="line"
-         id="tspan1"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.0771px;font-family:'Fira Mono';-inkscape-font-specification:'Fira Mono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
-         x="11.851342"
-         y="10.052268">$</tspan></text>
+    <path
+       style="font-weight:bold;font-size:12.0771px;font-family:'Fira Mono';-inkscape-font-specification:'Fira Mono, Bold';fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       d="m 16.06625,-0.2857294 h -0.978245 v 1.7994879 c -1.49756,0.1570023 -2.427497,1.0507077 -2.427497,2.3671115 0,1.1352474 0.688395,1.8719505 2.427497,2.4516513 V 8.844558 C 14.375456,8.7962496 13.819909,8.5063993 13.27644,8.0353924 l -0.91786,1.0627847 c 0.591778,0.5676237 1.533792,1.0627849 2.729425,1.1473249 v 1.763256 H 16.06625 V 10.20927 c 1.630409,-0.20531 2.524114,-1.2680952 2.524114,-2.6207303 0,-1.449252 -0.905783,-2.1014154 -2.524114,-2.6328078 V 2.8422394 c 0.495161,0.036231 1.002399,0.2173878 1.449252,0.5917779 l 0.929937,-0.978245 C 17.853661,1.9606112 17.056572,1.5862211 16.06625,1.5016814 Z M 15.088005,2.8543165 V 4.5813418 C 14.459996,4.2914914 14.363379,4.0499494 14.363379,3.6514051 c 0,-0.3864672 0.241542,-0.7125489 0.724626,-0.7970886 z m 0.978245,3.864672 c 0.603855,0.3019275 0.74878,0.6280092 0.74878,1.0990161 0,0.5434695 -0.253619,0.8816283 -0.74878,0.9903221 z"
+       id="text1"
+       aria-label="$" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.0771px;font-family:'Fira Mono';-inkscape-font-specification:'Fira Mono, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
