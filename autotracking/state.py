@@ -165,14 +165,29 @@ class State:
         self.locationChanged = False
 
     def readTrackables(self, gb):
+        isArchipelago = False
+        isReadableER = False
+
+        try:
+            self.settings.archipelago == True
+            isArchipelago = True
+        except:
+            pass
+
+        try:
+            if (isArchipelago 
+                or self.settings.entranceshuffle in ('', 'simple', 'split', 'mixed')
+                or self.settings.dungeonshuffle
+                or self.settings.randomstartlocation
+                ):
+                isReadableER = True
+        except:
+            pass
+        
         if (self.entrancesLoaded
             and not self.visitedEntrancesRead
             and 'entrances' in self.features
-            and ((hasattr(self.settings, 'entranceshuffle')
-                  and self.settings.entranceshuffle in ('', 'simple', 'split', 'mixed'))
-                 or (hasattr(self.settings, 'archipelago')
-                     and self.settings.archipelago == True))
-                  ):
+            and isReadableER):
             readVisitedEntrances(gb, self)
             self.visitedEntrancesRead = True
 
