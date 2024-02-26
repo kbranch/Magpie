@@ -410,7 +410,9 @@ class MapNode {
                || data.boss != (this.boss?.mappedTo ?? '')
                || data.item != (this.item ?? '')
                || data.pickingentrance != String(pickingEntrance)
-               || data.activemap != activeMap
+               || data.activemap != this.activeMap
+               || data.behindKeys != this.behindKeys
+               || data.behindRupees != behindRupees
                || label != (this.isDungeon() ? this.dungeonName(pickingEntrance)[1]
                                                            : (this.connectorLabel ?? ''))
     }
