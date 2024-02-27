@@ -1,4 +1,4 @@
-{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', height='32px', overlay_count='', invert_count='',
+{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', height='32px', top='', left='', overlay_count='', invert_count='',
               allItems=None, hideIfZero=False, condition=True, gfx=True, highlightOwnedSecondary=False) %}
 {% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
     {% set altNames = {
@@ -75,10 +75,19 @@
         {% set highlightOwnedSecondary = '' %}
     {% endif %}
 
-    {% set size = 'style="width: ' + width + '; height: ' + height + ';"' %}
+    {% set innerStyle = 'style="width: ' + width + '; height: ' + height + ';"' %}
+    {% set outerStyle = '' %}
 
-    <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{highlightOwnedSecondary}}{{classes}}">
-        <div class="itemWrapper" {{size|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
+    {% if left != '' %}
+        {% set outerStyle = outerStyle + 'left: ' + left + ';' %}
+    {% endif %}
+
+    {% if top != '' %}
+        {% set outerStyle = outerStyle + 'top: ' + top + ';' %}
+    {% endif %}
+
+    <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{highlightOwnedSecondary}}{{classes}}" style="{{outerStyle}}">
+        <div class="itemWrapper" {{innerStyle|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}

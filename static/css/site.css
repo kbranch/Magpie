@@ -1189,8 +1189,6 @@ span.logic-name {
 
 .parent-center {
     position: absolute;
-    left: 50%;
-    top: 54%;
     transform: translate(-50%, -50%);
 }
 
