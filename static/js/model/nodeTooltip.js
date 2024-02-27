@@ -113,7 +113,7 @@ class NodeTooltip {
         ${bossDataDict[this.node.boss.mappedTo].name}
     </div>`
 
-        if (pinned == 'true') {
+        // if (pinned == 'true') {
             let bossTemplate = `<li>
                                     <button class="dropdown-item tooltip-item boss-item" type="button" onclick="{action}">
                                         <div class="boss-menu-image-wrapper me-2">
@@ -137,7 +137,7 @@ class NodeTooltip {
                             ${bossList}
                         </ul>
                     </div>`;
-        }
+        // }
 
         return html;
     }
