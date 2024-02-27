@@ -320,6 +320,9 @@ function processMessage(messageText) {
             case 'handshAck':
                 processHandshAckMessage(message);
                 break;
+            case 'alert':
+                alertModal(message.title, message.body);
+                break;
             default:
                 console.log(`Unrecognized message type: ${message.type}`)
                 break;

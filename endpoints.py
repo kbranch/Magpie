@@ -196,7 +196,7 @@ def serveVersion():
         version = {}
         version['magpie'] = getVersion()
         version['autotracker'] = getAutotrackerVersion()
-        version['api'] = '1.3'
+        version['api'] = '1.31'
 
         return json.dumps(version)
     except:
