@@ -848,22 +848,26 @@ button.nav-link.active {
 .entrance-from {
     border: 10px solid #ff9a00;
     border-radius: 100%;
-    z-index: 100;
+    z-index: 20000;
     pointer-events: none;
 }
 
 .entrance-to {
     border: 10px solid #00a2ff;
     border-radius: 100%;
-    z-index: 100;
+    z-index: 20000;
     pointer-events: none;
 }
 
 .outer-entrance-connection {
     border: 10px double #000;
     border-radius: 100%;
-    z-index: 101;
+    z-index: 20001;
     pointer-events: none;
+}
+
+.tooltip:has(.pinned) {
+    z-index: 20010 !important;
 }
 
 .possible-start-location {

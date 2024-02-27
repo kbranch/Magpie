@@ -4,7 +4,7 @@ class NodeTooltip {
     }
 
     tooltipHtml(pinned, connectionType, hoveredCheckId) {
-        const titleTemplate = `<div class='tooltip-body'>
+        const titleTemplate = `<div class='tooltip-body{pinnedClass}'>
     {areas}
     {entrance}
     {boss}
@@ -72,10 +72,13 @@ class NodeTooltip {
 
         let bossHtml = this.getBossHtml(pinned);
 
+        let pinnedClass = pinned ? ' pinned' : '';
+
         let title = titleTemplate.replace('{areas}', areaHtml)
                                  .replace('{entrance}', entranceHtml)
                                  .replace('{boss}', bossHtml)
-                                 .replace('{pinned}', pinnedHtml);
+                                 .replace('{pinned}', pinnedHtml)
+                                 .replace('{pinnedClass}', pinnedClass);
 
         return title;
     }
