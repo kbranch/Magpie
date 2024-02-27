@@ -62,6 +62,8 @@ function processItemMessage(message) {
         addItem(item.id, item.qty, false, false);
     }
 
+    updateDungeonItems();
+
     if (message.refresh) {
         refreshCheckList();
     }

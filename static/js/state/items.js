@@ -69,6 +69,7 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
         refreshItemNdi();
 
         if (refresh) {
+            updateDungeonItems();
             refreshCheckList();
         }
     }

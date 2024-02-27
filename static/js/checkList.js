@@ -96,10 +96,6 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
         spoilLocation(id, false);
     }
 
-    if (updateDungeonCount) {
-        updateDungeonItems();
-    }
-
     if (doLinked) {
         let contents = getCheckContents(id);
 
@@ -116,6 +112,10 @@ function moveCheckToChecked(id, doLinked=false, updateDungeonCount=true) {
         }
     }
 
+    if (updateDungeonCount) {
+        updateDungeonItems();
+    }
+
     return itemsChanged;
 }
 
@@ -123,10 +123,6 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
     let itemsChanged = false;
     let isVanilla = checksById[id].isVanilla;
     let metadata = coordDict[id];
-
-    if (updateDungeonCount) {
-        updateDungeonItems();
-    }
 
     if (doLinked) {
         let contents = getCheckContents(id);
@@ -142,6 +138,10 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
             addItem(metadata.linkedItem, -1, false, false, '', false);
             itemsChanged = true;
         }
+    }
+
+    if (updateDungeonCount) {
+        updateDungeonItems();
     }
 
     return itemsChanged;
