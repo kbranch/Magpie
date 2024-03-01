@@ -779,6 +779,12 @@
         </div>
         <div class="row justify-content-end pt-4">
             <div class="col-auto">
+                <input type="file" accept=".json" class="hidden" id="logicDiffInput" onchange="getFile(this, importLogicDiff);" />
+                <button type="button" class="btn btn-secondary" onclick="document.getElementById('logicDiffInput').click();"  data-bs-toggle="tooltip" data-bs-title="Import Logic Diff" data-bs-trigger="hover"><img src="static/images/download.svg"></button>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col-auto">
                 <button type="button" class="btn btn-secondary" onclick="exportState()"  data-bs-toggle="tooltip" data-bs-title="Export Tracker State" data-bs-trigger="hover"><img src="static/images/upload.svg"></button>
                 <input type="file" accept=".json" class="hidden" id="stateInput" onchange="getFile(this, importState);" />
                 <button type="button" class="btn btn-secondary" onclick="document.getElementById('stateInput').click();"  data-bs-toggle="tooltip" data-bs-title="Import Tracker State" data-bs-trigger="hover"><img src="static/images/download.svg"></button>

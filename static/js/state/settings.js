@@ -71,6 +71,11 @@ function settingsToQuickSettings() {
 }
 
 function saveSettings() {
+    if (skipApplySettings) {
+        skipApplySettings = false;
+        return;
+    }
+
     settingsToQuickSettings();
 
     let oldArgs = structuredClone(args);
@@ -341,6 +346,57 @@ function importState(data) {
                 }
 
                 location.reload();
+        }
+        else {
+            alert(errorMessage);
+        }
+    }
+    catch (ex) {
+        if (ex.name != 'AbortError') {
+            alert(errorMessage);
+        }
+    }
+}
+
+var skipApplySettings = false;
+function importLogicDiff(data) {
+    let errorMessage = "The selected file does not appear to be a valid logic diff file";
+
+    try {
+        let diff = JSON.parse(data);
+
+        if ('items' in diff
+            && 'common' in diff) {
+                for (const item in inventory) {
+                    if (item in diff.items) {
+                        inventory[item] = diff.items[item];
+                    }
+                    else {
+                        inventory[item] = 0;
+                    }
+                }
+
+                for (const check of checkAccessibility) {
+                    if (diff.new.includes(check.id)) {
+                        check.difficulty = 0;
+                    }
+                    else if (diff.common.includes(check.id)) {
+                        check.difficulty = 1;
+                    }
+                    else if (diff.old.includes(check.id)) {
+                        check.difficulty = 2;
+                    }
+                    else {
+                        check.difficulty = 9;
+                    }
+                }
+
+                skipApplySettings = true;
+
+                refreshImages();
+                drawActiveTab();
+
+                document.getElementById('argsCloseButton').click();
         }
         else {
             alert(errorMessage);
