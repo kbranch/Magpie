@@ -41,7 +41,20 @@ async def socketLoop(socket, path):
         try:
             await state.processMessages(socket)
 
-            gb.snapshot()
+            try:
+                gb.snapshot()
+            except Exception as e:
+                stackTrace = traceback.format_exc()
+                print(f'Error: {stackTrace}')
+
+                await sendMessage({
+                    'type': 'error',
+                    'source': 'snapshot',
+                    'message': 'Error reading emulator memory',
+                    'stackTrace': stackTrace,
+                }, socket, refresh=False)
+
+                continue
 
             gameState = gb.readRamByte(consts.gameStateAddress)
             if gameState not in consts.validGameStates:

@@ -63,7 +63,7 @@ class RetroGameboy:
         command = "READ_CORE_MEMORY"
         
         self.send(f'{command} {hex(address)} {size}\n')
-        self.socket.settimeout(1)
+        self.socket.settimeout(10)
         response = self.socket.recv(size * 3 + len(command) + 1 + len(hex(address)) + 1)
         
         splits = response.decode().split(" ", 2)
