@@ -1,6 +1,6 @@
 from romContents import *
 
-protocolVersion = "1.31"
+protocolVersion = "1.32"
 
 async def sendMessage(message, socket, refresh=True):
     message['refresh'] = refresh

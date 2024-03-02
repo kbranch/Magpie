@@ -59,7 +59,16 @@ async def socketLoop(socket, path):
 
                 await state.sendTrackables(socket)
         except Exception as e:
-            print(f'Error: {traceback.format_exc()}')
+            stackTrace = traceback.format_exc()
+            print(f'Error: {stackTrace}')
+
+            await sendMessage({
+                'type': 'error',
+                'source': 'main loop',
+                'message': 'Unknown error',
+                'stackTrace': stackTrace,
+            }, socket, refresh=False)
+
             return
 
 def getRemoteVersion():

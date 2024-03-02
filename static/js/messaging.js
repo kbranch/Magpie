@@ -325,13 +325,28 @@ function processMessage(messageText) {
             case 'alert':
                 alertModal(message.title, message.body);
                 break;
+            case 'error':
+                let errorObject = {
+                    message: message.message,
+                    stack: message.stackTrace,
+                    filename: message.source,
+                    source: 'autotracker',
+                    time: Date.now(),
+                };
+
+                errorLog.push(errorObject);
+                console.log(errorObject);
+
+                addAutotrackerMessage('Error, see console or press bug report button')
+
+                break;
             default:
                 console.log(`Unrecognized message type: ${message.type}`)
                 break;
         }
     }
     catch (err) {
-        addAutotrackerMessage('Error, see console');
+        addAutotrackerMessage('Error, see console or press bug report button');
         console.log(`Message text: ${messageText}`);
         console.log(err);
     }
