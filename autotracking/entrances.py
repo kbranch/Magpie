@@ -41,11 +41,12 @@ def loadEntrances(state, romData):
     state.entranceMap = world.entrance_mapping
 
 def readVisitedEntrances(gb, state):
-    for entrance in [x for x in state.entrancesByTarget.values() if ':inside' in x.name]:
-        if entrance.name not in state.reverseEntranceMap:
+    for entrance in [x for x in state.entrancesByTarget.values() if ':inside' not in x.name]:
+        indoorName = f'{entrance.name}:inside'
+        if indoorName not in state.reverseEntranceMap:
             continue
 
-        outdoorName = state.reverseEntranceMap[entrance.name]
+        outdoorName = state.reverseEntranceMap[indoorName]
         outdoorEntrance = state.entrancesByName[outdoorName]
 
         indoorAddress = entrance.indoorAddress or (entrance.indoorMap + consts.entranceRoomOffset)
@@ -53,9 +54,9 @@ def readVisitedEntrances(gb, state):
         indoorVisited = gb.readRamByte(indoorAddress) & 0x80
         outdoorVisited = gb.readRamByte(outdoorEntrance.outdoorRoom + consts.entranceRoomOffset) & 0x80
 
-        if indoorVisited and outdoorVisited and entrance.name in state.reverseEntranceMap:
-            outdoorEntrance.map(entrance.name)
-            print(f"Found visited entrance: {outdoorEntrance.name} = {entrance.name}")
+        if indoorVisited and outdoorVisited and indoorName in state.reverseEntranceMap:
+            outdoorEntrance.map(indoorName)
+            print(f"Found visited entrance: {outdoorEntrance.name} = {indoorName}")
 
 def readLocation(gb, state):
     transitionState = gb.readRamByte(consts.transitionState)
