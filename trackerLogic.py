@@ -144,7 +144,7 @@ def buildLogic(args, worldSetup, requirements=None):
     for loc in log.location_list:
         for ii in [x for x in loc.items if len(x.OPTIONS) == 1]:
             ii.item = ii.OPTIONS[0]
-        for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:
-            ii.item = vanillaContents[ii.nameId]
+        # for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:
+        #     ii.item = vanillaContents[ii.nameId]
     
     return log

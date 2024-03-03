@@ -218,14 +218,7 @@ def loadEntrances(logic, inventory):
 
     return inLogicEntrances
 
-def loadChecks(logic, inventory):
-    nameOverrides = {
-        '0x0B1': '0x092',
-        '0x0B2': '0x0F2'
-    }
-
-    checks = []
-
+def visitLogic(logic, inventory):
     e = explorer.Explorer()
 
     for item in inventory:
@@ -235,6 +228,33 @@ def loadChecks(logic, inventory):
             e.addItem(item)
     
     e.visit(logic.start)
+
+    return e
+
+
+def loadChecks(logic, inventory):
+    nameOverrides = {
+        '0x0B1': '0x092',
+        '0x0B2': '0x0F2'
+    }
+
+    checks = []
+
+    instruments = {key for key, value in inventory.items() if 'INSTRUMENT' in key and value > 0}
+    for instrument in instruments:
+        del inventory[instrument]
+
+    e = visitLogic(logic, inventory)
+
+    # Do some gymnastics to avoid vanilla instruments getting double counted
+    foundInstruments = {key for key, value in e._Explorer__inventory.items() if 'INSTRUMENT' in key and value > 0}
+    unfoundInstruments = instruments.difference(foundInstruments)
+
+    if unfoundInstruments:
+        for instrument in unfoundInstruments:
+            inventory[instrument] = 1
+        
+        e = visitLogic(logic, inventory)
 
     locations = e.getAccessableLocations()
 
@@ -250,8 +270,6 @@ def loadChecks(logic, inventory):
 
     if logic.windfish in locations:
         checks.append(allChecks['egg'])
-    
-    # checks.sort(key=lambda x: (x.area, x.name))
 
     return checks
 
