@@ -870,6 +870,10 @@ button.nav-link.active {
     z-index: 20010 !important;
 }
 
+.secondary-tooltip {
+    z-index: 20011 !important;
+}
+
 .possible-start-location {
     border-style: none;
     background-image: url('/static/images/house.svg');
