@@ -222,22 +222,37 @@ function createGroup(name) {
 
 function createTextCheck(check) {
     let checked = checkedChecks.has(check.id) ? ' in-checked' : '';
-    let vanillaWrapper = check.vanilla ? ' vanilla-wrapper' : '';
-    let vanilla = check.vanilla ? ' data-vanilla=true' : '';
+    let vanillaWrapper = check.isVanilla ? ' vanilla-wrapper' : '';
+    let vanilla = check.isVanilla ? ' data-vanilla=true' : '';
     let metadata = coordDict[check.id];
-    let keyWrapper = check.behindKeys ? `<div class="key-indicator-wrapper pe-2">
-    <img class="key-indicator" src="static/images/keyLocked.png">
-</div>` : '';
+    let checkIcon = `
+<div class="text-check-graphic-wrapper">
+<div class="text-check-graphic${check.behindTrackerLogic ? ' behind-tracker' : ''}${check.behindKeys ? ' behind-keys' : ''}${check.requiredRupees ? ' behind-rupees' : ''}">
+    <div class="node-overlay-wrapper" data-difficulty="${check.difficulty}">
+        <div class="icon-wrapper icon-difficulty-${check.difficulty}">
+            <svg class="icon text-icon">
+                <use xlink:href="#difficulty-${check.difficulty}${check.isVanilla ? '-vanilla' : ''}"></use>
+            </svg>
+            ${check.hollow ? `<svg class="icon hollow text-icon">
+                <use xlink:href="#difficulty-${check.difficulty}-hollow"></use>
+            </svg>` : ''}
+        </div>
+        <div class="behind-keys-overlay"></div>
+        <div class="behind-tracker-overlay"></div>
+        <div class="behind-rupees-overlay"></div>
+        <div class="owl-overlay"></div>
+        ${check.item ? `<img src="static/images/${check.item}_1.png" class="node-item-overlay"></img>` : ''}
+    </div>
+</div>
+</div>
+`;
 
     return parseHtml(
 `<div class="row text-check-wrapper${checked}${vanillaWrapper}" data-child-check-id="${check.id}">
     <div class="text-check-col col pe-0">
         <li class="text-check" data-checkname="${metadata.name}" data-checkarea="${metadata.area}" data-behind_keys="${check.behindKeys}" data-logic="{{logic}}" data-check-id="${check.id}" data-difficulty="${check.difficulty}"${vanilla} onclick="toggleCheck(event, '${check.id}')">
-            <div id="text-item-${check.id}" class="col-auto px-0 text-item-wrapper">
-            ${check.itemTextImage()}
-            </div>
             <div class="check-name">
-                ${keyWrapper}
+                ${check.difficulty < 9 && !check.isChecked() ? checkIcon : ''}
                 ${metadata.name}
             </div>
         </li>
