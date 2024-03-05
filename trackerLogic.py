@@ -63,6 +63,7 @@ vanillaIds = set()
 
 fishing_item = '0x2B1'
 trendy = 'Trendy Shop'
+mabe = 'Mabe Village'
 witch = "Witch's Hut"
 raft_game = '0x05C'
 d0_entrance = 'D0 Entrance'
@@ -71,6 +72,8 @@ d2_outside_boo = '0x126'
 d8_pot = 'D8 Entrance'
 d8_cracked_floor = '0x23E'
 d8_lava_ledge = '0x235'
+fisher = '0x2F5-Trade'
+bay_water = 'Bay Water'
 
 def updateVanilla(args):
     global vanillaIds
@@ -92,9 +95,18 @@ def applyTrackerLogic(log):
 
     for loc in log.location_list:
         locs[loc.friendlyName()] = loc
+
+    # Fishing game without bush
+    if fishing_item in locs and mabe in locs:
+        locs[fishing_item].connect(locs[mabe], COUNT('RUPEES', 20))
     
-    if fishing_item in locs: # Fishing game without bush
-        locs[fishing_item].connect(locs['Mabe Village'], COUNT('RUPEES', 20))
+    # Fisher under the bridge without feather - not bad as listed when the photo mouse isn't there
+    if fisher in locs and bay_water in locs:
+        if log.name in ("hard", "glitched", "hell"):
+            locs[fisher].connect(locs[bay_water], AND(TRADING_ITEM_FISHING_HOOK, OR(SWORD, BOW), FLIPPERS))
+
+        if log.name in ("glitched", "hell"):
+            locs[fisher].connect(locs[bay_water], AND(log.requirements_settings.bomb_trigger, FLIPPERS))
 
     # A bunch of powder pickups
     if trendy in locs:
