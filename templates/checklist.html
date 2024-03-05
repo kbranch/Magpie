@@ -6,10 +6,10 @@
         </div>
         {% endfor %}
         <div class="col-auto px-2">
-            <div class="difficulty-8 static-difficulty-wrapper align-middle">
-                <svg class="icon static-difficulty"><use xlink:href="#difficulty-8"></use></svg>
-                <svg class="icon static-difficulty hollow"><use xlink:href="#difficulty-8-hollow"></use></svg>
-                <div class="difficulty-8-overlay"></div>
+            <div class="behind-tracker static-difficulty-wrapper align-middle">
+                <svg class="icon static-difficulty"><use xlink:href="#difficulty-0"></use></svg>
+                <svg class="icon static-difficulty hollow"><use xlink:href="#difficulty-0-hollow"></use></svg>
+                <div class="behind-tracker-overlay"></div>
             </div>: Tracker
             <img id="trackerLogicHelp" class="invert" src="static/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Probably accessible, but not technically in logic">
         </div>
@@ -83,28 +83,6 @@
         {% set ns.hidden = ' hidden' %}
         {% set ns.name = '' %}
     {% endfor %}
-
-        <div id="difficulty8Accordion" data-difficulty="8" class="accordion-item hidden">
-            <h2 id="heading-8" class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-8" aria-expanded="false" aria-controls="collapse-8">
-                    <div class="tooltip-check-graphic difficulty-8 align-middle">
-                        <div class="difficulty-8-overlay"></div>
-                        <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-8"></use></svg>
-                        <svg class="tooltip-check-graphic align-middle hollow"><use xlink:href="#difficulty-8-hollow"></use></svg>
-                    </div>
-                    <span id="difficulty8AccordionName" class="ps-2">In tracker logic</span>
-                </button>
-            </h2>
-    
-            <div id="collapse-8" class="accordion-collapse collapse" aria-labelledby="heading-8" data-bs-parent="#mapAccordion">
-                <div class="accordion-body">
-                    <div class="container">
-                        <div class="row grid" data-difficulty="8" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div id="difficulty9Accordion" data-difficulty="9" class="accordion-item hidden">
             <h2 id="heading-9" class="accordion-header">

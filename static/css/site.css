@@ -510,7 +510,7 @@ img {
     z-index: 2;
 }
 
-.entrance-only.unmapped-entrance.entrance-difficulty-8 {
+.entrance-only.unmapped-entrance.entrance-behind-tracker {
     z-index: 2;
 }
 
@@ -531,7 +531,7 @@ img {
     z-index: 1;
 }
 
-.difficulty-0, .difficulty-8 {
+.difficulty-0, .behind-tracker {
     z-index: 2;
 }
 
@@ -539,10 +539,11 @@ img {
     z-index: 10;
 }
 
-.difficulty-8 .node-overlay-wrapper:not([data-hidedifficulty="1"]) .difficulty-8-overlay,
-.entrance-difficulty-8:not(.vanilla) .entrance-difficulty-8-overlay,
-.difficulty-8.static-difficulty-wrapper .difficulty-8-overlay, 
-.difficulty-8.tooltip-check-graphic .difficulty-8-overlay {
+.behind-tracker .node-overlay-wrapper:not([data-hidedifficulty="1"]) .behind-tracker-overlay,
+.entrance-behind-tracker:not(.vanilla) .entrance-behind-tracker-overlay,
+.behind-tracker.static-difficulty-wrapper .behind-tracker-overlay, 
+.behind-tracker.icon-wrapper .behind-tracker-overlay, 
+.behind-tracker.tooltip-check-graphic .behind-tracker-overlay {
     z-index: 10;
     border-style: none;
     background-image: url('/static/images/tracker-logic.svg');
@@ -589,7 +590,7 @@ svg.hollow {
     float: left;
 }
 
-.difficulty-0.vanilla, .difficulty-8.vanilla {
+.difficulty-0.vanilla, .behind-tracker.vanilla {
     z-index: 0;
 }
 

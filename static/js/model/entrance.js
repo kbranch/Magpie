@@ -3,9 +3,10 @@ class Entrance {
         this.id = id;
         this.metadata = entranceDict[id];
         this.type = this.metadata.type;
-        this.difficulty = entranceAccessibility[id]?.difficulty ?? -1
+        this.difficulty = entranceAccessibility[id]?.difficulty ?? -1;
+        this.behindTrackerLogic = entranceAccessibility[id]?.behindTrackerLogic ?? false;
 
-        if (!localSettings.showHigherLogic && this.difficulty > 0 && this.difficulty != 8) {
+        if (!localSettings.showHigherLogic && this.difficulty > 0) {
             this.difficulty = 9;
         }
     }

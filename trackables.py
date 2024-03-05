@@ -1,4 +1,5 @@
 from ladxrInterface import *
+from trackerLogic import applyTrackerLogic
 
 class FakeLogic:
     pass
@@ -9,21 +10,85 @@ class Accessibility:
         self.entrances = entrances
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
-    normalLogics = []
-    trackerLogic = None
+    checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
+    entranceAccessibility = getEntranceAccessibility(allEntrances, logics, inventory)
 
     for log in logics:
-        if log.name == 'tracker':
-            trackerLogic = log
-        else:
-            normalLogics.append(log)
+        applyTrackerLogic(log)
 
-    checkAccessibility = getCheckAccessibility(allChecks, normalLogics, trackerLogic, inventory)
-    entranceAccessibility = getEntranceAccessibility(allEntrances, normalLogics, trackerLogic, inventory)
+    getCheckTrackerAccessibility(logics, inventory, checkAccessibility)
+    getEntranceTrackerAccessibility(logics, inventory, entranceAccessibility)
 
     return Accessibility(checkAccessibility, entranceAccessibility)
 
-def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
+def getCheckTrackerAccessibility(logics, inventory, accessibility):
+    keyInventory = inventory.copy()
+    keyInventory['KEY0'] = 9
+    keyInventory['KEY1'] = 9
+    keyInventory['KEY2'] = 9
+    keyInventory['KEY3'] = 9
+    keyInventory['KEY4'] = 9
+    keyInventory['KEY5'] = 9
+    keyInventory['KEY6'] = 9
+    keyInventory['KEY7'] = 9
+    keyInventory['KEY8'] = 9
+
+    alreadyFound = set()
+    behindKeys = set()
+    for i in range(len(logics)):
+        level = accessibility[logics[i]]
+        behindKeys = behindKeys.union({x.id for x in level if x.behindKeys})
+
+        checksBehindTrackerLogic = set(loadChecks(logics[i], inventory)).difference(level)
+        checksBehindBoth = set(loadChecks(logics[i], keyInventory)).difference(level, checksBehindTrackerLogic)
+
+        checksBehindTrackerLogic = checksBehindTrackerLogic.difference({x for x in checksBehindTrackerLogic if x.id in behindKeys})
+        checksBehindBoth = checksBehindBoth.difference({x for x in checksBehindBoth if x.id in behindKeys})
+
+        for j in range(i):
+            checksBehindTrackerLogic = checksBehindTrackerLogic.difference(accessibility[logics[j]])
+            checksBehindBoth = checksBehindBoth.difference(accessibility[logics[j]])
+
+        for check in checksBehindTrackerLogic:
+            if check in alreadyFound:
+                continue
+
+            alreadyFound.add(check)
+            level.add(check.cloneBehindTrackerLogic())
+        
+        for check in checksBehindBoth:
+            if check in alreadyFound:
+                continue
+
+            alreadyFound.add(check)
+            level.add(check.cloneBehindBoth())
+
+        for check in level:
+            check.difficulty = i
+        
+    for log in accessibility:
+        if log.difficulty == 9:
+            accessibility[log] = accessibility[log].difference(alreadyFound)
+
+def getEntranceTrackerAccessibility(logics, inventory, accessibility):
+    found = {x for x in accessibility if accessibility[x].difficulty != 9}
+
+    # Initialize each logic level with their full list of accessible entrance IDs
+    for i in range(len(logics)):
+        logic = logics[i]
+        
+        behindTrackerLogic = set(loadEntrances(logic, inventory)).difference(found)
+        found = behindTrackerLogic.union(found)
+
+        for entrance in behindTrackerLogic:
+            if entrance not in accessibility:
+                accessibility[entrance] = Entrance(entrance, i, behindTrackerLogic=True)
+                continue
+
+            accessibility[entrance].difficulty = i
+            accessibility[entrance].behindTrackerLogic = True
+
+def getCheckAccessibility(allChecks, logics, inventory):
     accessibility = {}
 
     outOfLogic = set(allChecks)
@@ -34,32 +99,28 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
         
         accessibility[logic] = set(loadChecks(logic, inventory))
         outOfLogic = outOfLogic.difference(accessibility[logic])
-
-    accessibility[trackerLogic] = set(loadChecks(trackerLogic, inventory))
-    outOfLogic = outOfLogic.difference(accessibility[trackerLogic])
     
     # Remove duplicate checks from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
 
-    accessibility[trackerLogic] = accessibility[trackerLogic].difference(accessibility[logics[0]])
-        
-    inventory['KEY0'] = 9
-    inventory['KEY1'] = 9
-    inventory['KEY2'] = 9
-    inventory['KEY3'] = 9
-    inventory['KEY4'] = 9
-    inventory['KEY5'] = 9
-    inventory['KEY6'] = 9
-    inventory['KEY7'] = 9
-    inventory['KEY8'] = 9
+    keyInventory = inventory.copy()
+    keyInventory['KEY0'] = 9
+    keyInventory['KEY1'] = 9
+    keyInventory['KEY2'] = 9
+    keyInventory['KEY3'] = 9
+    keyInventory['KEY4'] = 9
+    keyInventory['KEY5'] = 9
+    keyInventory['KEY6'] = 9
+    keyInventory['KEY7'] = 9
+    keyInventory['KEY8'] = 9
 
     # Find more checks that are behind small keys
     alreadyInKeyLogic = set()
     for i in range(len(logics)):
         level = accessibility[logics[i]]
-        checksBehindKeys = set(loadChecks(logics[i], inventory)).difference(level)
+        checksBehindKeys = set(loadChecks(logics[i], keyInventory)).difference(level)
 
         for j in range(i):
             checksBehindKeys = checksBehindKeys.difference(accessibility[logics[j]])
@@ -73,19 +134,9 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
 
         # Assign difficulties to each logic level (not just key locked)
         logics[i].difficulty = i
-        for check in level:
-            check.difficulty = i
-
-    for check in accessibility[trackerLogic]:
-        check.difficulty = 8
-
-    trackerLogic.difficulty = 8
-    trackerLogic.friendlyName = 'In tracker logic'
 
     outOfLogic = outOfLogic.difference(alreadyInKeyLogic)
-    # outOfLogic = sorted(outOfLogic, key=lambda x: (x.area, x.name))
 
-    # accessibility[logics[0]] = sorted(accessibility[logics[0]], key=lambda x: (x.area, x.name))
     logics[0].friendlyName = 'In logic'
 
     for check in outOfLogic:
@@ -94,8 +145,6 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
     for i in range(1, len(logics)):
         logics[i].friendlyName = f'In {logics[i].name} logic'
 
-        # accessibility[logics[i]] = sorted(accessibility[logics[i]], key=lambda x: (x.area, x.name))
-    
     oolLogic = FakeLogic()
     oolLogic.friendlyName = 'Out of logic'
     oolLogic.difficulty = 9
@@ -103,7 +152,7 @@ def getCheckAccessibility(allChecks, logics, trackerLogic, inventory):
 
     return accessibility
 
-def getEntranceAccessibility(allEntrances, logics, trackerLogic, inventory):
+def getEntranceAccessibility(allEntrances, logics, inventory):
     accessibility = {}
     entrances = {}
 
@@ -115,25 +164,17 @@ def getEntranceAccessibility(allEntrances, logics, trackerLogic, inventory):
         
         accessibility[logic] = set(loadEntrances(logic, inventory))
         outOfLogic = outOfLogic.difference(accessibility[logics[i]])
-
-    accessibility[trackerLogic] = set(loadEntrances(trackerLogic, inventory))
-    outOfLogic = outOfLogic.difference(accessibility[trackerLogic])
     
     # Remove duplicate entrances from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
 
-    accessibility[trackerLogic] = accessibility[trackerLogic].difference(accessibility[logics[0]])
-    
     # Convert the entrance IDs to Entrance objects
     for i in range(len(logics)):
         for name in accessibility[logics[i]]:
             entrance = Entrance(name, i)
             entrances[name] = entrance
-
-    for name in accessibility[trackerLogic]:
-        entrances[name] = Entrance(name, 8)
 
     for name in outOfLogic:
         entrances[name] = Entrance(name, 9)

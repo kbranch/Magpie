@@ -3,6 +3,7 @@ class Check {
         this.id = checkInfo.id;
         this.metadata = coordDict[this.id];
         this.behindKeys = checkInfo.behindKeys;
+        this.behindTrackerLogic = checkInfo.behindTrackerLogic;
         this.isVanilla = checkInfo.vanilla || (this.metadata.vanilla ?? false);
         this.locations = this.metadata.locations;
         this.item = checkContents[this.id];
@@ -25,7 +26,7 @@ class Check {
 
         this.updateChecked();
 
-        if (this.behindKeys || this.requiredRupees || this.baseDifficulty == 8) {
+        if (this.behindKeys || this.requiredRupees || this.behindTrackerLogic) {
             this.hollow = true;
         }
     }
@@ -40,7 +41,7 @@ class Check {
 
     updateChecked() {
         let difficulty = Number(this.baseDifficulty);
-        if (!localSettings.showHigherLogic && difficulty > 0 && difficulty != 8) {
+        if (!localSettings.showHigherLogic && difficulty > 0) {
             difficulty = 9;
         }
 

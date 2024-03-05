@@ -370,7 +370,7 @@ class NodeTooltip {
 
     checkGraphicHtml(id) {
         let checks = this.node.checksWithId(id);
-        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind}{owl}'><div class='behind-rupees-overlay'></div><div class='behind-keys-overlay'></div><div class='difficulty-8-overlay'></div><div class='owl-overlay'></div><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg>{hollow}</div>{overlay}</div>";
+        let graphicTemplate = "<div class='tooltip-check-graphic difficulty-{difficulty}{vanilla} align-middle'><div class='tooltip-check-graphic icon-wrapper{behind}{owl}'><div class='behind-rupees-overlay'></div><div class='behind-keys-overlay'></div><div class='behind-tracker-overlay'></div><div class='owl-overlay'></div><svg class='tooltip-check-graphic align-middle'><use xlink:href='#difficulty-{difficulty}{iconVanilla}'></use></svg>{hollow}</div>{overlay}</div>";
         let hollowTemplate = "<svg class='tooltip-check-graphic hollow align-middle'><use xlink:href='#difficulty-{difficulty}-hollow'></use></svg>"
         let graphic = '';
 
@@ -382,6 +382,10 @@ class NodeTooltip {
             let iconVanilla = check.isVanilla ? '-vanilla' : '';
             let overlay = '';
             let hollow = '';
+
+            if (check.behindTrackerLogic) {
+                behind += ' behind-tracker'
+            }
 
             if (check.hollow) {
                 hollow = hollowTemplate.replaceAll('{difficulty}', difficulty);

@@ -62,13 +62,13 @@ vanillaContents = {
 vanillaIds = set()
 
 fishing_item = '0x2B1'
-trendy_item = '0x2A0-Trade'
-witch_item = '0x2A2'
+trendy = 'Trendy Shop'
+witch = "Witch's Hut"
 raft_game = '0x05C'
-d0_first_check = '0x314'
+d0_entrance = 'D0 Entrance'
 d2_pit_chest = '0x139'
 d2_outside_boo = '0x126'
-d8_pot = '0x259'
+d8_pot = 'D8 Entrance'
 d8_cracked_floor = '0x23E'
 d8_lava_ledge = '0x235'
 
@@ -84,44 +84,37 @@ def updateVanilla(args):
     if not args.instruments and args.goal == 'seashells':
         vanillaIds -= vanillaBySetting['instruments']
 
-def build(args, worldSetup):
-    r = RequirementsSettings(args)
+def applyTrackerLogic(log):
     # Bomb as bush breaker
-    r.bush._OR__items.append(BOMB)
-
-    log = buildLogic(args, worldSetup, r)
-    log.name = 'tracker'
+    log.requirements_settings.bush._OR__items.append(BOMB)
 
     locs = {}
 
     for loc in log.location_list:
-        if loc.items:
-            locs[loc.items[0].nameId] = loc
+        locs[loc.friendlyName()] = loc
     
     if fishing_item in locs: # Fishing game without bush
-        locs[fishing_item].connect(locs[fishing_item].gated_connections[0][0], COUNT('RUPEES', 20))
+        locs[fishing_item].connect(locs['Mabe Village'], COUNT('RUPEES', 20))
 
     # A bunch of powder pickups
-    if trendy_item in locs:
-        locs[trendy_item].simple_connections[0][0].connect(Location().add(VanillaItem(0x2A0)), COUNT('RUPEES', 10))
-    if witch_item in locs:
-        locs[witch_item].simple_connections[0][0].connect(Location().add(VanillaItem(0x2A22)), POWER_BRACELET)
+    if trendy in locs:
+        locs[trendy].connect(Location().add(VanillaItem(0x2A0)), COUNT('RUPEES', 10))
+    if witch in locs:
+        locs[witch].connect(Location().add(VanillaItem(0x2A22)), POWER_BRACELET)
     if raft_game in locs:
         locs[raft_game].connect(Location().add(VanillaItem(0x07F)), OR(FEATHER, ROOSTER))
-    if d0_first_check in locs:
-        locs[d0_first_check].simple_connections[0][0].connect(Location(0).add(VanillaItem(0x30E)), POWER_BRACELET)
+    if d0_entrance in locs:
+        locs[d0_entrance].connect(Location(dungeon=0).add(VanillaItem(0x30E)), POWER_BRACELET)
     if d2_pit_chest in locs:
-        locs[d2_pit_chest].add(VanillaItem(0x1392))
+        locs[d2_pit_chest].connect(Location(dungeon=2).add(VanillaItem(0x1392)), FEATHER)
     if d2_outside_boo in locs:
-        locs[d2_outside_boo].connect(Location(2).add(VanillaItem(0x1212)), FEATHER)
+        locs[d2_outside_boo].connect(Location(dungeon=2).add(VanillaItem(0x1212)), FEATHER)
     if d8_pot in locs:
-        locs[d8_pot].simple_connections[0][0].connect(Location(8).add(VanillaItem(0x258)), AND(POWER_BRACELET, FEATHER))
+        locs[d8_pot].connect(Location(dungeon=8).add(VanillaItem(0x258)), AND(POWER_BRACELET, FEATHER))
     if d8_cracked_floor in locs:
-        locs[d8_cracked_floor].connect(Location(8).add(VanillaItem(0x23E2)), FEATHER)
+        locs[d8_cracked_floor].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER)
     if d8_lava_ledge in locs:
-        locs[d8_lava_ledge].connect(Location().add(VanillaItem(0x2352)), FEATHER)
-
-    return log
+        locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER)
 
 def updateMetadata(table):
     table['0x2A0'] = CheckMetadata('Trendy Powder', 'Mabe Village')

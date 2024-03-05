@@ -82,6 +82,15 @@ class MapNode {
                           && uncheckedChecks.every(x => x.behindKeys);
     }
 
+    updateBehindTrackerLogic() {
+        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
+                                                      && !x.isChecked()
+                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
+
+        this.behindTrackerLogic = uncheckedChecks.length > 0 
+                          && uncheckedChecks.every(x => x.behindTrackerLogic);
+    }
+
     updateBehindRupees() {
         let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
                                                       && !x.isChecked()
@@ -140,6 +149,7 @@ class MapNode {
     update() {
         this.updateDifficulty();
         this.updateBehindKeys();
+        this.updateBehindTrackerLogic();
         this.updateBehindRupees();
         this.updateIsChecked();
         this.updateIsVanilla();
@@ -206,6 +216,10 @@ class MapNode {
 
         if (this.behindKeys) {
             classes.push('behind-keys');
+        }
+
+        if (this.behindTrackerLogic) {
+            classes.push('behind-tracker');
         }
 
         if (this.behindRupees) {
@@ -299,6 +313,10 @@ class MapNode {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
+
+                    if (entranceAccessibility[this.entrance.id]?.behindTrackerLogic) {
+                        classes.push('entrance-behind-tracker')
+                    }
                 }
                 else {
                     classes.push('possible-start-location');
@@ -474,7 +492,7 @@ class MapNode {
 
             let hollowSvgHtml = "";
 
-            if (this.behindKeys || this.behindRupees || this.difficulty == 8) {
+            if (this.behindKeys || this.behindRupees || this.behindTrackerLogic) {
                 let hollowSvg = createElement('svg', {
                     class: 'icon hollow',
                     css: `width: ${checkSize}px;
@@ -552,7 +570,7 @@ class MapNode {
         }
 
         let overlayClasses = ['behind-keys', 'one-way-out', 'one-way-in', 'owl', 'unmapped-entrance', 'possible-start-location', 
-                              'start-location', 'difficulty-8', 'entrance-difficulty-8', 'partial-entrance', 'behind-rupees'];
+                              'start-location', 'behind-tracker', 'entrance-behind-tracker', 'partial-entrance', 'behind-rupees'];
         for (const overlayClass of overlayClasses) {
             let newOverlay = createElement('div', {
                 class: overlayClass + "-overlay",

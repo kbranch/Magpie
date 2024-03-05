@@ -22,21 +22,29 @@ from romTables import ROMWithTables
 allChecks = {}
 
 class Check:
-    def __init__(self, id, behindKeys=False, vanilla=False):
+    def __init__(self, id, behindKeys=False, behindTrackerLogic=False, vanilla=False):
         self.id = id
         self.behindKeys = behindKeys
+        self.behindTrackerLogic = behindTrackerLogic
         self.vanilla = vanilla
     
     def cloneBehindKeys(self):
-        return Check(self.id, behindKeys=True, vanilla=self.vanilla)
+        return Check(self.id, behindKeys=True, behindTrackerLogic=self.behindTrackerLogic, vanilla=self.vanilla)
+    
+    def cloneBehindTrackerLogic(self):
+        return Check(self.id, behindKeys=self.behindKeys, behindTrackerLogic=True, vanilla=self.vanilla)
+    
+    def cloneBehindBoth(self):
+        return Check(self.id, behindKeys=True, behindTrackerLogic=True, vanilla=self.vanilla)
     
     def __repr__(self) -> str:
         return f'{self.id}: {self.difficulty}'
 
 class Entrance:
-    def __init__(self, id, difficulty=0):
+    def __init__(self, id, difficulty=0, behindTrackerLogic=False):
         self.id = id
         self.difficulty = difficulty
+        self.behindTrackerLogic = behindTrackerLogic
 
 def getArgsFromShortString(shortString):
     settings = Settings()
@@ -162,9 +170,6 @@ def getLogics(args, entranceMap, bossList, minibossMap):
             logics.append(log)
 
     args.logic = originalLogic
-    
-    logics.append(trackerLogic.build(args, worldSetup))
-
     args.owlstatues = originalOwls
     
     return logics
