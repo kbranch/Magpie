@@ -241,10 +241,10 @@ function createTextCheck(check) {
         <div class="behind-tracker-overlay"></div>
         <div class="behind-rupees-overlay"></div>
         <div class="owl-overlay"></div>
-        ${check.item ? `<img src="static/images/${check.item}_1.png" class="node-item-overlay"></img>` : ''}
     </div>
 </div>
 </div>
+${check.item ? `<img src="static/images/${check.item}_1.png" class="text-icon-item"></img>` : ''}
 `;
 
     return parseHtml(
