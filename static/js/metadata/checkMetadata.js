@@ -380,8 +380,8 @@ let vanillaCoordDict = {
        "locations":[
           {
              "map":"vanillaOverworld",
-             "x":2340,
-             "y":1616
+             "x": 2300,
+             "y": 1640
           }
        ],
        "index":20,
@@ -735,6 +735,12 @@ let vanillaCoordDict = {
              "map":"vanillaOverworld",
              "x":2510,
              "y":1560
+          },
+          {
+             "map":"vanillaOverworld",
+             "x": 2380,
+             "y": 1592,
+             "condition": (flags, settings) => { return flags.entranceshuffle != 'none'; },
           },
           {
               "map": "underworld",
@@ -4801,21 +4807,35 @@ let vanillaCoordDict = {
 let coordDict = vanillaCoordDict;
 let linkedChecks = {};
 
-Object.values(coordDict).map(x => {
-    if (x.linkedItem) {
-        if (!linkedChecks[x.linkedItem]) {
-            linkedChecks[x.linkedItem] = [];
-        }
-
-        linkedChecks[x.linkedItem].push(x);
+Object.values(coordDict).map((x) => {
+  if (x.linkedItem) {
+    if (!linkedChecks[x.linkedItem]) {
+      linkedChecks[x.linkedItem] = [];
     }
 
-    x.area = x.vanillaArea;
-    x.name = x.vanillaName;
-    x.locations.filter(y => y.map == "vanillaOverworld")
-               .map(z => {
-                    let clone = structuredClone(z);
-                    clone.map = "overworld";
-                    x.locations.push(clone);
-                });
+    linkedChecks[x.linkedItem].push(x);
+  }
+
+  x.area = x.vanillaArea;
+  x.name = x.vanillaName;
+  x.locations
+    .filter((y) => y.map == "vanillaOverworld")
+    .map((z) => {
+      let condition = null;
+
+      if ("condition" in z) {
+         condition = z.condition;
+         z.condition = null;
+      }
+
+      let clone = structuredClone(z);
+      clone.map = "overworld";
+
+      if (condition) {
+         clone.condition = condition;
+         z.condition = condition;
+      }
+
+      x.locations.push(clone);
+    });
 });

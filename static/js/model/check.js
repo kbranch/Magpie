@@ -95,7 +95,7 @@ class Check {
     }
 
     mapLocations(mapName) {
-        return this.locations.filter(x => x.map == mapName);
+        return this.locations.filter(x => x.map == mapName && (!('condition' in x) || x.condition(args, localSettings)));
     }
 
     itemOverlay() {

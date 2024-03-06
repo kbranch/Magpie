@@ -368,8 +368,21 @@ function applySettings(oldArgs=null) {
 
             vanilla.locations = vanilla.locations.filter(y => y.map != "overworld");
             vanillaLocs.map(y => {
+                let condition = null;
+
+                if ("condition" in y) {
+                    condition = y.condition;
+                    y.condition = null;
+                }
+
                 let loc = structuredClone(y);
                 loc.map = "overworld";
+
+                if (condition) {
+                    loc.condition = condition;
+                    y.condition = condition;
+                }
+
                 vanilla.locations.push(loc);
             });
 
