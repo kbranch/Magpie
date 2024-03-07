@@ -381,8 +381,15 @@ let vanillaCoordDict = {
           {
              "map":"vanillaOverworld",
              "x": 2300,
-             "y": 1640
-          }
+             "y": 1640,
+             "condition": (flags, settings) => { return flags.entranceshuffle != 'none'; },
+          },
+          {
+             "map":"vanillaOverworld",
+             "x": 2340,
+             "y": 1616,
+             "condition": (flags, settings) => { return flags.entranceshuffle == 'none'; },
+          },
        ],
        "index":20,
     },
