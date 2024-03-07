@@ -472,7 +472,7 @@ let entranceDict = {
 	},
 	"bird_cave": {
 		"id": "bird_cave",
-		"name": "Rooster Key Cave",
+		"name": "Bird Key Cave",
 		"index": 0,
 		"icon": "",
 		"type": "single",
