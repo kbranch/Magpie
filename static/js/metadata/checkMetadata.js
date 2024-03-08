@@ -746,7 +746,7 @@ let vanillaCoordDict = {
           {
              "map":"vanillaOverworld",
              "x": 2380,
-             "y": 1592,
+             "y": 1640,
              "condition": (flags, settings) => { return flags.entranceshuffle != 'none'; },
           },
           {

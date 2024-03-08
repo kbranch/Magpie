@@ -7,6 +7,7 @@ class NodeTooltip {
         const titleTemplate = `<div class='tooltip-body{pinnedClass}'>
     {areas}
     {entrance}
+    {hint}
     {boss}
     {pinned}
 </div>`;
@@ -72,11 +73,14 @@ class NodeTooltip {
 
         let bossHtml = this.getBossHtml(pinned);
 
+        let hintHtml = this.getHintHtml(pinned);
+
         let pinnedClass = pinned ? ' pinned' : '';
 
         let title = titleTemplate.replace('{areas}', areaHtml)
                                  .replace('{entrance}', entranceHtml)
                                  .replace('{boss}', bossHtml)
+                                 .replace('{hint}', hintHtml)
                                  .replace('{pinned}', pinnedHtml)
                                  .replace('{pinnedClass}', pinnedClass);
 
@@ -102,6 +106,16 @@ class NodeTooltip {
             ${items}
         </ul>
       </div>`;
+    }
+
+    getHintHtml(pinned) {
+        if (!this.node.logicHint) {
+            return '';
+        }
+
+        return `<div class='tooltip-text align-middle p-2'>
+        ${this.node.logicHint.metadata.text}
+    </div>`
     }
 
     getBossHtml(pinned) {

@@ -283,6 +283,7 @@ def renderCheckList():
             'accessibility': {
                 'checks': [],
                 'entrances': accessibility.entrances,
+                'logicHints': [],
             },
             'logics': [{
                 'difficulty': x.difficulty,
@@ -296,14 +297,8 @@ def renderCheckList():
         for logic in accessibility.checks:
             result['accessibility']['checks'] += list(accessibility.checks[logic])
 
-        # result = render_template("checklist.html", checkAccessibility=accessibility.checks,
-        #                                          entranceAccessibility=json.dumps(accessibility.entrances, default=lambda x: x.__dict__),
-        #                                          logics=logics,
-        #                                          checkCount=len(allChecks),
-        #                                          allChecks=ladxrInterface.allChecks.values(),
-        #                                          entrances=json.dumps(entrances),
-        #                                          startLocations=json.dumps(getStartLocations(args)),
-        #                                          )
+        for logic in accessibility.logicHints:
+            result['accessibility']['logicHints'] += list(accessibility.logicHints[logic])
 
         return json.dumps(result, default=lambda x: x.__dict__) 
     except:

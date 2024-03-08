@@ -5,9 +5,10 @@ class FakeLogic:
     pass
 
 class Accessibility:
-    def __init__(self, checks, entrances):
+    def __init__(self, checks, entrances, logicHints):
         self.checks = checks
         self.entrances = entrances
+        self.logicHints = logicHints
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
     checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
@@ -19,7 +20,14 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     getCheckTrackerAccessibility(logics, inventory, checkAccessibility)
     getEntranceTrackerAccessibility(logics, inventory, entranceAccessibility)
 
-    return Accessibility(checkAccessibility, entranceAccessibility)
+
+    logicHintAccessibility = {}
+    for log in logics:
+        logicHintAccessibility[log] = {x for x in checkAccessibility[log] if x.logicHint}
+        for check in logicHintAccessibility[log]:
+            checkAccessibility[log].remove(check)
+
+    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility)
 
 def getCheckTrackerAccessibility(logics, inventory, accessibility):
     keyInventory = inventory.copy()

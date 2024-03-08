@@ -10,6 +10,7 @@
 <script src="static/js/model/mapNode.js"></script>
 <script src="static/js/model/nodeTooltip.js"></script>
 <script src="static/js/model/check.js"></script>
+<script src="static/js/model/logicHint.js"></script>
 <script src="static/js/model/entrance.js"></script>
 <script src="static/js/model/connection.js"></script>
 <script src="static/js/model/boss.js"></script>
@@ -19,6 +20,7 @@
 <script src="static/js/map/nodes.js"></script>
 <script src="static/js/map/tooltips.js"></script>
 <script src="static/js/metadata/checkMetadata.js"></script>
+<script src="static/js/metadata/logicHintMetadata.js"></script>
 <script src="static/js/metadata/alttpCheckMetadata.js"></script>
 <script src="static/js/metadata/entranceMetadata.js"></script>
 <script src="static/js/metadata/connectorMetadata.js"></script>
@@ -64,6 +66,7 @@
     var randomizedEntrances = null;
     var entranceAccessibility = null;
     var checkAccessibility = null;
+    var logicHintAccessibility = null;
     var checksById = {};
     var localSettings = null;
     var entranceMap = {};
@@ -215,6 +218,8 @@
                     checksById[x.id] = check;
                     return check;
                 });
+
+                logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
 
                 document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
 

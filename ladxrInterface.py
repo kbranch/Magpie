@@ -22,20 +22,21 @@ from romTables import ROMWithTables
 allChecks = {}
 
 class Check:
-    def __init__(self, id, behindKeys=False, behindTrackerLogic=False, vanilla=False):
+    def __init__(self, id, behindKeys=False, behindTrackerLogic=False, vanilla=False, logicHint=False):
         self.id = id
         self.behindKeys = behindKeys
         self.behindTrackerLogic = behindTrackerLogic
         self.vanilla = vanilla
+        self.logicHint = logicHint
     
     def cloneBehindKeys(self):
-        return Check(self.id, behindKeys=True, behindTrackerLogic=self.behindTrackerLogic, vanilla=self.vanilla)
+        return Check(self.id, behindKeys=True, behindTrackerLogic=self.behindTrackerLogic, vanilla=self.vanilla, logicHint=self.logicHint)
     
     def cloneBehindTrackerLogic(self):
-        return Check(self.id, behindKeys=self.behindKeys, behindTrackerLogic=True, vanilla=self.vanilla)
+        return Check(self.id, behindKeys=self.behindKeys, behindTrackerLogic=True, vanilla=self.vanilla, logicHint=self.logicHint)
     
     def cloneBehindBoth(self):
-        return Check(self.id, behindKeys=True, behindTrackerLogic=True, vanilla=self.vanilla)
+        return Check(self.id, behindKeys=True, behindTrackerLogic=True, vanilla=self.vanilla, logicHint=self.logicHint)
     
     def __repr__(self) -> str:
         return f'{self.id}: {self.difficulty}'
@@ -272,6 +273,11 @@ def loadChecks(logic, inventory):
             else:
                 if name in nameOverrides:
                     checks.append(allChecks[nameOverrides[name]])
+                elif type(item) is trackerLogic.LogicHint:
+                    if name not in allChecks:
+                        allChecks[name] = Check(name, logicHint=True)
+
+                    checks.append(allChecks[name])
 
     if logic.windfish in locations:
         checks.append(allChecks['egg'])

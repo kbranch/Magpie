@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="52"
+   height="82"
+   viewBox="0 0 13.758332 21.695831"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="bird_hole.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="10.352485"
+     inkscape:cx="-20.526472"
+     inkscape:cy="50.422675"
+     inkscape:window-width="3840"
+     inkscape:window-height="2091"
+     inkscape:window-x="2560"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
+  <defs
+     id="defs2" />
+  <path
+     id="path894"
+     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:2.2489581;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+     d="M 6.7106755,1.2739237 A 5.5645023,5.5643275 0 0 0 5.4823041,1.45057 5.5645023,5.5643275 0 0 0 1.3161712,6.9130134 c -1.93e-4,8.666e-4 1.777e-4,0.00185 0,0.00272 -0.00194,0.00951 -0.00272,0.019742 -0.00272,0.029851 v 8.8622056 c 0,0.08078 0.065968,0.146753 0.1467513,0.146753 H 12.300846 c 0.08079,0 0.144035,-0.06597 0.144035,-0.146753 V 6.9456256 c 0,-0.010109 -7.82e-4,-0.020416 -0.0027,-0.029851 A 5.5645023,5.5643275 0 0 0 12.28726,5.52701 L 12.257409,5.410151 A 5.5645023,5.5643275 0 0 0 6.7106755,1.2739237 Z" />
+  <path
+     id="path1-5"
+     style="fill:none;stroke:#000000;stroke-width:4.36562;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     inkscape:transform-center-y="-1.5785072e-06"
+     d="m 10.108307,16.729915 -3.2290838,2.511531 -3.229198,-2.511531 m 3.2278507,2.517899 c 0.00957,-5.141045 0.018561,-8.483967 0.018561,-8.483967"
+     sodipodi:nodetypes="ccccc" />
+  <path
+     id="path1"
+     style="fill:none;stroke:#ffffff;stroke-width:1.98437;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     inkscape:transform-center-y="-1.5785072e-06"
+     d="M 10.108306,16.730213 6.8792243,19.241745 3.6500258,16.730213 m 3.2278508,2.517899 c 0.00957,-5.141044 0.018562,-8.483967 0.018562,-8.483967"
+     sodipodi:nodetypes="ccccc" />
+</svg>

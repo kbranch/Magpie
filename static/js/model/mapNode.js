@@ -1,5 +1,5 @@
 class MapNode {
-    constructor(location, scaling, entranceId=null, bossMetadata=null) {
+    constructor(location, scaling, entranceId=null, bossMetadata=null, logicHint=null) {
         this.x = Math.round(location.x * scaling.x + scaling.offset.x);
         this.y = Math.round(location.y * scaling.y + scaling.offset.y);
         this.location = location;
@@ -11,6 +11,7 @@ class MapNode {
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
         this.boss = bossMetadata == null ? null : new Boss(bossMetadata);
+        this.logicHint = logicHint;
     }
 
     id() {
@@ -102,7 +103,7 @@ class MapNode {
     }
 
     updateDifficulty() {
-        this.difficulty = 'checked';
+        this.difficulty = this.logicHint ? this.logicHint.baseDifficulty : 'checked';
 
         for (const check of this.checks) {
             if (!check.isChecked() && (!check.isVanillaOwl() || this.checks.length == 1)) {
@@ -127,7 +128,8 @@ class MapNode {
                                                      && x.behindKeys == this.behindKeys
                                                      && x.isChecked() == this.isChecked
                                                      && (!x.isVanillaOwl() || this.checks.length == 1))
-                                        .every(x => x.isVanilla));
+                                        .every(x => x.isVanilla))
+                         || this.logicHint;
     }
     
     updateItem() {
@@ -212,6 +214,10 @@ class MapNode {
 
         if (this.boss) {
             return ['check-graphic', this.boss.type];
+        }
+
+        if (this.logicHint) {
+            classes.push('logic-hint');
         }
 
         if (this.behindKeys) {
@@ -515,6 +521,17 @@ class MapNode {
             let itemOverlay = createElement('img', {
                 src: `static/images/${this.boss.mappedTo}.png`,
                 class: "node-boss-overlay",
+                onmousedown: "preventDoubleClick(event)"
+            });
+
+            overlay.appendChild(itemOverlay);
+        }
+
+        if (this.logicHint) {
+            let itemOverlay = createElement('img', {
+                src: `static/images/${this.logicHint.metadata.image}`,
+                class: "node-logic-hint-overlay",
+                style: `transform: scale(${this.scaling.x}) translate(-50%, -50%) translate(${this.logicHint.locations[0].offsetX}px, ${this.logicHint.locations[0].offsetY}px); transform-origin: top left;`,
                 onmousedown: "preventDoubleClick(event)"
             });
 

@@ -70,6 +70,15 @@ nowrap {
     transform: translate(-50%, -50%);
 }
 
+.node-logic-hint-overlay {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    user-select: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+}
+
 .node-item-overlay {
     position: absolute;
     left: 85%;

@@ -16,6 +16,15 @@ class VanillaItem(ItemInfo):
     def __init__(self, room):
         super().__init__(room)
 
+class LogicHint(ItemInfo):
+    def __init__(self, name):
+        self.name = name
+        super().__init__(0)
+    
+    @property
+    def nameId(self):
+        return self.name
+
 class Debug(bdb.Bdb):
     def user_line(self, frame):
         for k, v in frame.f_locals.items():
@@ -74,6 +83,12 @@ d8_cracked_floor = '0x23E'
 d8_lava_ledge = '0x235'
 fisher = '0x2F5-Trade'
 bay_water = 'Bay Water'
+animal_village = 'Animal Village'
+ukuku = 'Ukuku Prairie'
+angler_keyhole = 'Near D4 Keyhole'
+kanalet_side = 'Next to Kanalet'
+bird_cave = 'Bird Cave'
+desert = 'Desert'
 
 def updateVanilla(args):
     global vanillaIds
@@ -127,6 +142,28 @@ def applyTrackerLogic(log):
         locs[d8_cracked_floor].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER)
     if d8_lava_ledge in locs:
         locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER)
+
+    # Rooster across the river
+    if animal_village in locs and ukuku in locs:
+        river_rooster = Location().add(LogicHint('RiverRooster'))
+        locs[animal_village].connect(river_rooster, ROOSTER, one_way=True)
+        locs[ukuku].connect(river_rooster, ROOSTER, one_way=True)
+
+    # fly from staircase to staircase on the north side of the moat
+    if angler_keyhole in locs and kanalet_side in locs:
+        kanalet_rooster = Location().add(LogicHint('KanaletRooster'))
+        locs[angler_keyhole].connect(kanalet_rooster, ROOSTER, one_way=True)
+        locs[kanalet_side].connect(kanalet_rooster, ROOSTER, one_way=True)
+
+    # Drop in a hole at bird cave
+    if log.name != "casual" and bird_cave in locs:
+        bird_pits = Location().add(LogicHint('BirdPits'))
+        locs[bird_cave].connect(bird_pits, None, one_way=True)  
+    
+    # Fall down Lanmola's pit
+    if desert in locs:
+        lanmola_pit = Location().add(LogicHint('LanmolaPit'))
+        locs[desert].connect(lanmola_pit, None, one_way=True)
 
 def updateMetadata(table):
     table['0x2A0'] = CheckMetadata('Trendy Powder', 'Mabe Village')

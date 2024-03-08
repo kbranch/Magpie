@@ -59,6 +59,7 @@ function createNodes(map, mapName) {
     }
 
     createBossNodes(scaling, mapName);
+    createLogicHintNodes(scaling, mapName);
 
     let checks = checkAccessibility.filter(x => x.shouldDraw());
     let unclaimedChecks = {};
@@ -151,6 +152,15 @@ function createBossNodes(scaling, mapName) {
             node.boss.mappedTo = bossMap[boss.id];
 
             nodes[coordString] = node;
+        }
+    }
+}
+
+function createLogicHintNodes(scaling, mapName) {
+    for (const hint of logicHintAccessibility.filter(x => x.locations[0].map == mapName && (!x.metadata.condition || x.metadata.condition(args, localSettings)))) {
+        for (const loc of hint.locations) {
+            let coordString = MapNode.nodeId(loc, scaling);
+            nodes[coordString] = new MapNode(loc, scaling, null, null, hint);
         }
     }
 }
@@ -264,6 +274,7 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
     let activeMap = getActiveMap();
     let map = $(mapImg).closest('div.map-container');
     let parent = $(map).find('div.map-wrapper');
+
     createNodes(map, mapName);
 
     for (const nodeId in nodes) {
