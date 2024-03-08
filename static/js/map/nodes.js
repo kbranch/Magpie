@@ -157,6 +157,10 @@ function createBossNodes(scaling, mapName) {
 }
 
 function createLogicHintNodes(scaling, mapName) {
+    if (!localSettings.showLogicHints) {
+        return;
+    }
+
     for (const hint of logicHintAccessibility.filter(x => x.locations[0].map == mapName && (!x.metadata.condition || x.metadata.condition(args, localSettings)))) {
         for (const loc of hint.locations) {
             let coordString = MapNode.nodeId(loc, scaling);
