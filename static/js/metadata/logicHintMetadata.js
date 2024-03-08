@@ -9,9 +9,9 @@ var logicHintDict = {
         {
           "map": "overworld",
           "x": 1644,
-          "y": 1537,
+          "y": 1463,
           "offsetX": 35,
-          "offsetY": -40,
+          "offsetY": 35,
         },
       ],
     },
