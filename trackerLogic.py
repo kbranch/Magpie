@@ -31,6 +31,27 @@ class Debug(bdb.Bdb):
             if isinstance(v, Location) and k not in {"self", "location", "                                                                                                             other", "connection"}:
                 v.local_name = k
 
+class NOT:
+    __slots__ = ('__items')
+
+    def __new__(cls, *args):
+        if False in args:
+            return True
+        return super().__new__(cls)
+
+    def __init__(self, *args):
+        self.__items = [item for item in args if isinstance(item, str)]
+
+    def __repr__(self) -> str:
+        return "not%s" % (self.__items)
+
+    def test(self, inventory) -> bool:
+        for item in self.__items:
+            if item in inventory:
+                return False
+
+        return True
+
 vanillaBySetting = {
     'heartpiece': {'0x000', '0x2A4', '0x044', '0x2AB', '0x2DF', '0x2E5', '0x078', '0x2E6', '0x1E8', '0x1F2', '0x2BA', '0x2B1'},
     'seashells': {'0x0A3', '0x0D2', '0x2B2', '0x1E3', '0x074', '0x0A5', '0x0A6', '0x08B', '0x0A4', '0x0B9', '0x0E9', '0x0F8', '0x0A8', '0x0DA', '0x0FF', '0x00C'},
@@ -78,6 +99,8 @@ raft_game = '0x05C'
 d0_entrance = 'D0 Entrance'
 d2_pit_chest = '0x139'
 d2_outside_boo = '0x126'
+d4_tektite_crystal = '0x17B'
+d4_right_of_entrance = '0x178'
 d8_pot = 'D8 Entrance'
 d8_cracked_floor = '0x23E'
 d8_lava_ledge = '0x235'
@@ -89,6 +112,8 @@ angler_keyhole = 'Near D4 Keyhole'
 kanalet_side = 'Next to Kanalet'
 bird_cave = 'Bird Cave'
 desert = 'Desert'
+fire_cave_north = 'Fire Cave North'
+fire_cave_south = 'Fire Cave South'
 
 def updateVanilla(args):
     global vanillaIds
@@ -164,6 +189,15 @@ def applyTrackerLogic(log):
     if desert in locs:
         lanmola_pit = Location().add(LogicHint('LanmolaPit'))
         locs[desert].connect(lanmola_pit, None, one_way=True)
+    
+    # Alternative flame skip methods
+    if log.name not in ('casual', 'normal') and fire_cave_north in locs and fire_cave_south in locs:
+        locs[fire_cave_north].connect(locs[fire_cave_south], 'MEDICINE2')
+        locs[fire_cave_south].connect(locs[fire_cave_north], log.requirements_settings.damage_boost, one_way=True) # flame skip without boots
+    
+    # D4 tektite crystal chest with a jesus jump superjump
+    if log.name in ('glitched', 'hell') and d4_tektite_crystal in locs and d4_right_of_entrance in locs:
+        locs[d4_tektite_crystal].connect(locs[d4_right_of_entrance], AND(log.requirements_settings.super_jump_feather, NOT(FLIPPERS), SHIELD, log.requirements_settings.attack_hookshot_powder))
 
 def updateMetadata(table):
     table['0x2A0'] = CheckMetadata('Trendy Powder', 'Mabe Village')
