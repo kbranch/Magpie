@@ -97,13 +97,18 @@ mabe = 'Mabe Village'
 witch = "Witch's Hut"
 raft_game = '0x05C'
 d0_entrance = 'D0 Entrance'
+d1_three_of_a_kind = '0x10A'
+d1_right_side = 'D1 Right Side'
 d2_pit_chest = '0x139'
 d2_outside_boo = '0x126'
 d4_tektite_crystal = '0x17B'
 d4_right_of_entrance = '0x178'
+d7_three_of_a_kind = '0x211'
+d7_topright_pillar_area = 'D7 Ball Room'
 d8_pot = 'D8 Entrance'
 d8_cracked_floor = '0x23E'
 d8_lava_ledge = '0x235'
+d8_upper_center = 'D8 Dodongo Area'
 fisher = '0x2F5-Trade'
 bay_water = 'Bay Water'
 animal_village = 'Animal Village'
@@ -114,6 +119,12 @@ bird_cave = 'Bird Cave'
 desert = 'Desert'
 fire_cave_north = 'Fire Cave North'
 fire_cave_south = 'Fire Cave South'
+bird_key = '0x27A'
+armos_maze = 'Armos Maze'
+outside_armos_cave = 'Outside Armos Maze Cave'
+outside_armos_temple = 'Outside Southern Shrine'
+d8_entrance_left = 'D8 After Hinox'
+d8_vire_drop_key = '0x24C'
 
 def updateVanilla(args):
     global vanillaIds
@@ -130,6 +141,7 @@ def updateVanilla(args):
 def applyTrackerLogic(log):
     # Bomb as bush breaker
     log.requirements_settings.bush._OR__items.append(BOMB)
+    log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
 
     locs = {}
 
@@ -164,7 +176,7 @@ def applyTrackerLogic(log):
     if d8_pot in locs:
         locs[d8_pot].connect(Location(dungeon=8).add(VanillaItem(0x258)), AND(POWER_BRACELET, FEATHER))
     if d8_cracked_floor in locs:
-        locs[d8_cracked_floor].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER)
+        locs[d8_upper_center].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER)
     if d8_lava_ledge in locs:
         locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER)
 
@@ -222,5 +234,48 @@ def buildLogic(args, worldSetup, requirements=None):
             ii.item = ii.OPTIONS[0]
         # for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:
         #     ii.item = vanillaContents[ii.nameId]
+
+    if args.ap_logic:
+        locs = {}
+
+        for loc in log.location_list:
+            locs[loc.friendlyName()] = loc
+
+        # Always allow bow for killing wizrobes
+        log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
+
+        # Elephant statue is always there
+        if bird_cave in locs and bird_key in locs:
+            locs[bird_cave].connect(locs[bird_key], AND(FEATHER, COUNT(POWER_BRACELET, 2)))
+        
+        # Put bomb three of a kinds back into all logic
+        if d1_three_of_a_kind in locs and d1_right_side in locs:
+            locs[d1_three_of_a_kind].connect(locs[d1_right_side], OR(log.requirements_settings.attack_hookshot, SHIELD))
+        
+        if d7_three_of_a_kind in locs and d7_topright_pillar_area in locs:
+            locs[d7_three_of_a_kind].connect(locs[d7_topright_pillar_area], OR(log.requirements_settings.attack_hookshot, AND(OR(BOMB, FEATHER), SHIELD)))
+
+        # Put killing gibdos on the cracked floors with hookshot without magic rod back into all logics
+        if d8_cracked_floor in locs and d8_upper_center in locs:
+            locs[d8_cracked_floor].connect(locs[d8_upper_center], log.requirements_settings.attack_skeleton)
+        
+        # Put a dicey bomb route back in normal logic
+        if args.logic not in ['casual', ''] and d8_vire_drop_key in locs and d8_entrance_left in locs:
+            locs[d8_vire_drop_key].connect(locs[d8_entrance_left], BOMB)
+        
+        # Put itemless armos maze back into all logics
+        if armos_maze in locs and outside_armos_cave in locs and outside_armos_temple in locs:
+            locs[armos_maze].connect(locs[outside_armos_cave], None)
+            locs[armos_maze].connect(locs[outside_armos_temple], None)
+        
+        # Left of the castle, 5 holes turned into 3
+        if 'castle_jump_cave' in log.world.entrances:
+            log.world._addEntranceRequirement("castle_jump_cave", AND(FEATHER, PEGASUS_BOOTS))
+
+            # ER has already been applied at this point, we have to track down where it got connected and add a new connection
+            entrance = log.world.entrances['castle_jump_cave']
+            roosterLocs = [x[0] for x in entrance.location.simple_connections if x[1] == 'ROOSTER']
+            if roosterLocs:
+                roosterLocs[0].connect(entrance.location, AND(FEATHER, PEGASUS_BOOTS))
     
     return log

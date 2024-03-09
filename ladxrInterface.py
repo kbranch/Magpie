@@ -66,6 +66,11 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
             value = values.__dict__[flag.key]
 
         args.add(flag, value)
+    
+    if hasattr(values, 'ap_logic'):
+        args.ap_logic = values.ap_logic
+    else:
+        args.ap_logic = False
 
     args.nagmessages = True
     args.multiworld = None

@@ -183,6 +183,10 @@ function processHandshAckMessage(message) {
         addAutotrackerMessage('Consider updating');
     }
 
+    if (localSettings.autotrackSettings && remoteName == 'magpie-autotracker') {
+        setApLogic(false);
+    }
+
     loadFromAutotracker();
     console.log('Sent request to send full autotracker inventory');
 }
@@ -263,6 +267,12 @@ function processMessage(messageText) {
     try {
         switch (message.type) {
             case 'item':
+                if (localSettings.autotrackSettings
+                    && 'version' in message
+                    && message.version == "1.0") {
+                    setApLogic(true);
+                }
+
                 processItemMessage(message);
                 break;
             case 'check':

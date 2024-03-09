@@ -517,3 +517,9 @@ function updateState() {
         saveChecked();
     }
 }
+
+function setApLogic(value) {
+    args.ap_logic = value;
+    setInputValues('flag', args);
+    saveSettings();
+}
