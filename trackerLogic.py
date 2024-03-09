@@ -235,7 +235,7 @@ def buildLogic(args, worldSetup, requirements=None):
         # for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:
         #     ii.item = vanillaContents[ii.nameId]
 
-    if args.ap_logic:
+    if hasattr(args, 'ap_logic') and args.ap_logic:
         locs = {}
 
         for loc in log.location_list:
