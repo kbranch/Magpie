@@ -67,16 +67,27 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
 
         args.add(flag, value)
     
-    if hasattr(values, 'ap_logic'):
-        args.ap_logic = values.ap_logic
-    else:
-        args.ap_logic = False
+    tryCopyValue(values, args, 'ap_logic')
+    tryCopyValue(values, args, 'shuffle_small')
+    tryCopyValue(values, args, 'shuffle_nightmare')
+    tryCopyValue(values, args, 'shuffle_maps')
+    tryCopyValue(values, args, 'shuffle_beaks')
+    tryCopyValue(values, args, 'shuffle_compasses')
+
+    if args.dungeon_items == 'custom':
+        args.dungeon_items = 'keysanity'
 
     args.nagmessages = True
     args.multiworld = None
     args.boomerang = 'gift'
 
     return args
+
+def tryCopyValue(source, target, name, default=False):
+    if hasattr(source, name):
+        setattr(target, name, getattr(source, name))
+    else:
+        setattr(target, name, default)
 
 def getAllItems(args):
     logic = getLogicWithoutER(args)
@@ -355,13 +366,15 @@ def getDungeonItemCount(args):
         if i not in itemCount:
             continue
 
-        if args.dungeon_items in ('', 'localkeys'):
+        if not args.shuffle_small:
             itemCount[i] -= allItems[f'KEY{i}']
-        if args.dungeon_items in ('', 'smallkeys', 'keysy'):
+        if not args.shuffle_maps:
             itemCount[i] -= allItems[f'MAP{i}']
+        if not args.shuffle_compasses:
             itemCount[i] -= allItems[f'COMPASS{i}']
+        if not args.shuffle_beaks:
             itemCount[i] -= allItems[f'STONE_BEAK{i}']
-        if args.dungeon_items in ('', 'smallkeys', 'localkeys', 'nightmarekey'):
+        if not args.shuffle_nightmare:
             itemCount[i] -= allItems[f'NIGHTMARE_KEY{i}']
         if not args.instruments and f'INSTRUMENT{i}' in allItems:
             itemCount[i] -= allItems[f'INSTRUMENT{i}']

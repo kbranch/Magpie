@@ -21,6 +21,19 @@ class Args():
         if obj.goal == 'egg':
             obj.goal = '8'
 
+        if not hasattr(obj, 'ap_logic'):
+            obj.ap_logic = False
+        if not hasattr(obj, 'shuffle_small'):
+            obj.shuffle_small = False
+        if not hasattr(obj, 'shuffle_nightmare'):
+            obj.shuffle_nightmare = False
+        if not hasattr(obj, 'shuffle_maps'):
+            obj.shuffle_maps = False
+        if not hasattr(obj, 'shuffle_compasses'):
+            obj.shuffle_compasses = False
+        if not hasattr(obj, 'shuffle_beaks'):
+            obj.shuffle_beaks = False
+
         return obj
 
 class Flag():

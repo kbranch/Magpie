@@ -255,15 +255,19 @@ function calculateDungeonChecks() {
 
         let newQty = checked;
 
-        if (['', 'localkeys'].includes(args.dungeon_items)) {
+        if (!args.shuffle_small) {
             newQty -= inventory[`KEY${d}`] ?? 0;
         }
-        if (['', 'smallkeys', 'keysy'].includes(args.dungeon_items)) {
-            newQty -= inventory[`MAP${d}`] ?? 0;
-            newQty -= inventory[`COMPASS${d}`] ?? 0;
+        if (!args.shuffle_beaks) {
             newQty -= inventory[`STONE_BEAK${d}`] ?? 0;
         }
-        if (['', 'smallkeys', 'localkeys', 'nightmarekey'].includes(args.dungeon_items)) {
+        if (!args.shuffle_maps) {
+            newQty -= inventory[`MAP${d}`] ?? 0;
+        }
+        if (!args.shuffle_compasses) {
+            newQty -= inventory[`COMPASS${d}`] ?? 0;
+        }
+        if (!args.shuffle_nightmare) {
             newQty -= inventory[`NIGHTMARE_KEY${d}`] ?? 0;
         }
         if (!args.instruments && `INSTRUMENT${d}` in maxInventory) {

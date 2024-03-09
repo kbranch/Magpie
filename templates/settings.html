@@ -102,14 +102,44 @@
                     <div class="row pb-3">
                         <div class="col">
                             <label for="arg-dungeon_items" class="form-label"><img class="settings-image" src="static/images/KEY1_1.png">Dungeon items</label>
-                            <select id="arg-dungeon_items" class="form-select" data-flag="dungeon_items" aria-label="dungeon_items">
+                            <select id="arg-dungeon_items" class="form-select" data-flag="dungeon_items" aria-label="dungeon_items" onchange="setCustomDungeonItemsVisibility();">
                                 <option value="">Standard</option>
                                 <option value="smallkeys">Small keys</option>
+                                <option value="nightmarekeys">Nightmare keys</option>
                                 <option value="localkeys">Map/Compass/Beaks</option>
-                                <option value="nightmarekey">MCB + SmallKeys</option>
+                                <option value="localnightmarekey">MCB + SmallKeys</option>
                                 <option value="keysanity">Keysanity</option>
                                 <option value="keysy">Keysy</option>
+                                <option value="custom">Custom</option>
                             </select>
+                            <div id="customDungeonItems" class="pt-2">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <input type="checkbox" id="arg-shuffle_maps" class="form-check-input" data-flag="shuffle_maps">
+                                        <label class="form-check-label" for="arg-shuffle_maps"><img class="settings-image" src="static/images/MAP1_1.png"></label>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <input type="checkbox" id="arg-shuffle_compasses" class="form-check-input" data-flag="shuffle_compasses">
+                                        <label class="form-check-label" for="arg-shuffle_compasses"><img class="settings-image" src="static/images/COMPASS1_1.png"></label>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <input type="checkbox" id="arg-shuffle_beaks" class="form-check-input" data-flag="shuffle_beaks">
+                                        <label class="form-check-label" for="arg-shuffle_beaks"><img class="settings-image" src="static/images/STONE_BEAK1_1.png"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col"></div>
+                                    <div class="col-4 text-center">
+                                        <input type="checkbox" id="arg-shuffle_small" class="form-check-input" data-flag="shuffle_small">
+                                        <label class="form-check-label" for="arg-shuffle_small"><img class="settings-image" src="static/images/KEY1_1.png"></label>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <input type="checkbox" id="arg-shuffle_nightmare" class="form-check-input" data-flag="shuffle_nightmare">
+                                        <label class="form-check-label" for="arg-shuffle_nightmare"><img class="settings-image" src="static/images/NIGHTMARE_KEY1_1.png"></label>
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row pb-3">

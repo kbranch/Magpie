@@ -523,3 +523,39 @@ function setApLogic(value) {
     setInputValues('flag', args);
     saveSettings();
 }
+
+function setCustomDungeonItemsVisibility() {
+    let e = document.getElementById("arg-dungeon_items");
+    let custom = document.getElementById('customDungeonItems');
+
+    if (e.value == 'custom') {
+        custom.classList.remove('hidden');
+    }
+    else {
+        custom.classList.add('hidden');
+
+        let small = document.getElementById("arg-shuffle_small");
+        let nightmare = document.getElementById("arg-shuffle_nightmare");
+        let maps = document.getElementById("arg-shuffle_maps");
+        let compasses = document.getElementById("arg-shuffle_compasses");
+        let beaks = document.getElementById("arg-shuffle_beaks");
+
+        small.checked = false;
+        nightmare.checked = false;
+        maps.checked = false;
+        compasses.checked = false;
+        beaks.checked = false;
+
+        if (['smallkeys', 'keysanity', 'localnightmarekey'].includes(e.value)) {
+            small.checked = true;
+        }
+        if (['nightmarekeys', 'keysanity'].includes(e.value)) {
+            nightmare.checked = true;
+        }
+        if (['localkeys', 'keysanity', 'localnightmarekey'].includes(e.value)) {
+            maps.checked = true;
+            compasses.checked = true;
+            beaks.checked = true;
+        }
+    }
+}
