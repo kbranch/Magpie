@@ -195,15 +195,19 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label for="apHostname" class="form-label">Server</label>
-                    <input type="text" class="form-control" id="apHostname" value="archipelago.gg:12345">
+                    <input type="text" class="form-control" id="apHostname">
                 </div>
                 <div class="mb-3">
                     <label for="apSlotName" class="form-label">Slot name</label>
                     <input type="text" class="form-control" id="apSlotName">
                 </div>
+                <div class="mb-3">
+                    <label for="apPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="apPassword">
+                </div>
             </div>
             <div class="modal-footer">
-                <button id="connectToApButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="refreshFromArchipelago(document.getElementById('apHostname').value, document.getElementById('apSlotName').value)">Connect</button>
+                <button id="connectToApButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="refreshFromArchipelago(document.getElementById('apHostname').value, document.getElementById('apSlotName').value, document.getElementById('apPassword').value)">Connect</button>
             </div>
         </div>
     </div>

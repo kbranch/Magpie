@@ -482,12 +482,13 @@ function parseCheckedChecks(apCheckIds, diff) {
     processMessage(JSON.stringify(message));
 }
 
-function archipelagoConnect(hostname, port, slotName) {
+function archipelagoConnect(hostname, port, slotName, password) {
     let connectionInfo = {
         hostname: hostname,
         port: port,
         game: "Links Awakening DX",
         name: slotName,
+        password: password,
         tags: ['Tracker'],
         items_handling: ITEMS_HANDLING_FLAGS.REMOTE_ALL,
     };

@@ -43,6 +43,9 @@ class LocalSettings:
         self.stacked = False
         self.playerName = None
         self.eventName = None
+        self.apServer = 'archipelago.gg:12345'
+        self.apSlot = ''
+        self.apPassword = ''
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

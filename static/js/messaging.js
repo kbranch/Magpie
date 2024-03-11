@@ -428,16 +428,30 @@ function autotrackerConnected(event) {
     sendHandshake();
 }
 
-function refreshFromArchipelago(server, slot) {
+function refreshFromArchipelago(server, slot, password) {
     try {
+        localSettings.apServer = server;
+        localSettings.apSlot = slot;
+        localSettings.apPassword = password;
+
+        saveSettingsToStorage(args, localSettings);
+
         let serverPieces = server.split(':');
         let hostname = serverPieces[0];
         let port = Number(serverPieces[1]);
         
-        archipelagoConnect(hostname, port, slot);
+        archipelagoConnect(hostname, port, slot, password);
     }
     catch(err) {
         console.log('Error connecting to Archipelago:', err);
         alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
     }
+}
+
+function showArchipelagoModal() {
+    document.getElementById('apHostname').value = localSettings.apServer;
+    document.getElementById('apSlotName').value = localSettings.apSlot;
+    document.getElementById('apPassword').value = localSettings.apPassword;
+
+    new bootstrap.Modal('#archipelagoModal', null).show();
 }
