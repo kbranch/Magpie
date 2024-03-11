@@ -78,19 +78,24 @@
                         </div>
                     </div>
                     <div class="row" data-tabname="autotracker">
-                        <div class="col px-1">
+                        <div class="col-3 px-1">
                             <button class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Reload items from autotracker" onclick="loadFromAutotracker()" type="button">
-                                <img src="static/images/arrow-clockwise.svg">
+                                <img src="static/images/arrow-clockwise.svg" class="autotracker-button-icon">
                             </button>
                         </div>
-                        <div class="col px-1">
+                        <div class="col-3 px-1">
+                            <button class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Refresh from Archipelago" onclick="new bootstrap.Modal('#archipelagoModal', null).show()" type="button">
+                                <img src="static/images/archipelago-icon.svg" class="autotracker-button-icon">
+                            </button>
+                        </div>
+                        <div class="col-3 px-1">
                             <a href="https://magpietracker.us/static/builds/magpie-autotracker.exe" class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download Windows autotracker" role="button">
-                                <img src="static/images/windows.svg">
+                                <img src="static/images/windows.svg" class="autotracker-button-icon">
                             </a>
                         </div>
-                        <div class="col px-1">
+                        <div class="col-3 px-1">
                             <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux" class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download Linux autotracker" role="button">
-                                <img src="static/images/tux.svg">
+                                <img src="static/images/tux.svg" class="autotracker-button-icon">
                             </a>
                         </div>
                     </div>

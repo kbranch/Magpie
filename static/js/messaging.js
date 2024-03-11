@@ -423,3 +423,17 @@ function autotrackerConnected(event) {
     addAutotrackerMessage('Connected');
     sendHandshake();
 }
+
+function refreshFromArchipelago(server, slot) {
+    try {
+        let serverPieces = server.split(':');
+        let hostname = serverPieces[0];
+        let port = Number(serverPieces[1]);
+        
+        archipelagoConnect(hostname, port, slot);
+    }
+    catch(err) {
+        console.log('Error connecting to Archipelago:', err);
+        alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
+    }
+}

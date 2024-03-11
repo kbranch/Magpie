@@ -185,6 +185,30 @@
     </div>
 </div>
 
+<div class="modal fade" id="archipelagoModal" tabindex="-1" aria-labelledby="archipelagoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="archipelagoModalLabel">Refresh from Archipelago</h6>
+                <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="apHostname" class="form-label">Server</label>
+                    <input type="text" class="form-control" id="apHostname" value="archipelago.gg:12345">
+                </div>
+                <div class="mb-3">
+                    <label for="apSlotName" class="form-label">Slot name</label>
+                    <input type="text" class="form-control" id="apSlotName">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="connectToApButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="refreshFromArchipelago(document.getElementById('apHostname').value, document.getElementById('apSlotName').value)">Connect</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-l">
         <div class="modal-content">

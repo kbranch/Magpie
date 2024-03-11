@@ -1058,6 +1058,10 @@ button.nav-link.active {
     width: 100%;
 }
 
+.autotracker-button-icon {
+    height: 16px;
+}
+
 .quicktab-button .quicksetting-icon {
     filter: invert(1);
     width: 16px;
