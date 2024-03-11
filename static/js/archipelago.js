@@ -6,9 +6,6 @@ import {
     SERVER_PACKET_TYPE,
 } from "/static/lib/archipelago.js/archipelago-1.0.js";
 
-var itemsLoaded = false;
-var checksLoaded = false;
-
 var itemMap = {
   10000000: "POWER_BRACELET",
   10000001: "SHIELD",
@@ -333,9 +330,6 @@ var checkMap = {
   10001168: "0x0A8-Owl",
   10000480: "0x1E0",
   10001198: "0x0C6-Owl",
-  10000198: "0x0C6",
-  10000712: "0x2C8",
-  10000120: "0x078",
   10000090: "0x05A",
   10000088: "0x058",
   10000722: "0x2D2",
@@ -407,14 +401,85 @@ var checkMap = {
 
 const client = new Client();
 
-function disconnect() {
-    processMessage(JSON.stringify({
-        type: "refresh",
-    }));
+function connected(packet) {
+    console.log("Connected to AP server: ", packet);
 
-    console.log("Disconnecting from AP");
+    try {
+        parseCheckedChecks(packet.checked_locations, false);
+    }
+    catch(err) {
+        console.log(`Error processing AP checks: ${err}`);
+    }
+}
 
-    client.disconnect();
+function receivedItems(packet) {
+    console.log("AP Item packet: ", packet);
+
+    try {
+        let apItems = {};
+        for (const item of packet.items) {
+            let ladxItem = itemMap[item.item];
+
+            if (!(ladxItem in apItems)) {
+                apItems[ladxItem] = 0;
+            }
+
+            apItems[ladxItem]++;
+        }
+
+        let message = {
+            type: "item",
+            refresh: true,
+            source: "archipelago",
+            diff: packet.index > 0,
+            items: [],
+        };
+
+        for (const item in apItems) {
+            message.items.push({
+                id: item,
+                qty: apItems[item],
+            });
+        }
+
+        processMessage(JSON.stringify(message));
+    }
+    catch(err) {
+        console.log(`Error processing AP items: ${err}`);
+    }
+}
+
+function roomUpdate(packet) {
+    console.log("AP room update packet: ", packet);
+    try {
+        if (packet.checked_locations) {
+            parseCheckedChecks(packet.checked_locations, true);
+        }
+    }
+    catch(err) {
+        console.log(`Error processing AP items: ${err}`);
+    }
+}
+
+function parseCheckedChecks(apCheckIds, diff) {
+    let checked = apCheckIds.map(x => checkMap[x]);
+
+    let message = {
+        type: "check",
+        refresh: true,
+        source: "archipelago",
+        diff: diff,
+        checks: [],
+    };
+
+    for (const check of checked) {
+        message.checks.push({
+            id: check,
+            checked: true,
+        });
+    }
+
+    processMessage(JSON.stringify(message));
 }
 
 function archipelagoConnect(hostname, port, slotName) {
@@ -427,98 +492,15 @@ function archipelagoConnect(hostname, port, slotName) {
         items_handling: ITEMS_HANDLING_FLAGS.REMOTE_ALL,
     };
 
-    client.addListener(SERVER_PACKET_TYPE.CONNECTED, (packet) => {
-        console.log("Connected to AP server: ", packet);
+    client.disconnect();
 
-        try {
-            let checked = [];
-            packet.checked_locations.map(x => checked.push(checkMap[x]));
-
-            let message = {
-                type: "check",
-                refresh: false,
-                diff: false,
-                checks: [],
-            };
-
-            for (const check of checked) {
-                message.checks.push({
-                    id: check,
-                    checked: true,
-                });
-            }
-
-            processMessage(JSON.stringify(message));
-        }
-        catch(err) {
-            console.log(`Error processing AP checks: ${err}`);
-        }
-
-        checksLoaded = true;
-
-        if (checksLoaded && itemsLoaded) {
-            disconnect();
-        }
-    });
-
-    // client.addListener(SERVER_PACKET_TYPE.ROOM_UPDATE, (packet) => {
-    //     console.log("Room update: ", packet);
-    // });
-
-    client.addListener("ReceivedItems", (packet) => {
-        console.log("AP Item packet: ", packet);
-
-        try {
-            let apItems = {};
-            for (const item of packet.items) {
-                let ladxItem = itemMap[item.item];
-
-                if (!(ladxItem in apItems)) {
-                    apItems[ladxItem] = 0;
-                }
-
-                apItems[ladxItem]++;
-            }
-
-            for (const item in maxInventory) {
-                if (!(item in apItems)) {
-                    apItems[item] = 0;
-                }
-            }
-
-            let message = {
-                type: "item",
-                refresh: false,
-                diff: false,
-                items: [],
-            };
-
-            for (const item in apItems) {
-                message.items.push({
-                    id: item,
-                    qty: apItems[item],
-                });
-            }
-
-            processMessage(JSON.stringify(message));
-        }
-        catch(err) {
-            console.log(`Error processing AP items: ${err}`);
-        }
-
-        itemsLoaded = true;
-
-        if (checksLoaded && itemsLoaded) {
-            disconnect();
-        }
-    });
-
-    itemsLoaded = false;
-    checksLoaded = false;
+    client.addListener(SERVER_PACKET_TYPE.CONNECTED, connected);
+    client.addListener(SERVER_PACKET_TYPE.ROOM_UPDATE, roomUpdate);
+    client.addListener(SERVER_PACKET_TYPE.RECEIVED_ITEMS, receivedItems);
 
     client.connect(connectionInfo)
         .then(() => {
-            // console.log("Connected to the server");
+            addAutotrackerMessage(`Connected to ${hostname}:${port}`);
         })
         .catch((err) => {
             console.error("Failed to connect to AP:", err);
@@ -530,4 +512,13 @@ function archipelagoConnect(hostname, port, slotName) {
     });
 }
 
+function archipelagoDisconnect() {
+    if (client.status == "Connected") {
+        addAutotrackerMessage("Disconnecting from Archipelago");
+    }
+
+    client.disconnect();
+}
+
 window.archipelagoConnect = archipelagoConnect;
+window.archipelagoDisconnect = archipelagoDisconnect;
