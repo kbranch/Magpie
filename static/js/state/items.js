@@ -2,6 +2,10 @@
 
 function resetInventory() {
     inventory = {};
+    for (const item in maxInventory) {
+        inventory[item] = 0;
+    }
+
     saveInventory();
 
     for (const player in playerInventories) {
