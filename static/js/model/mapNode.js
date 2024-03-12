@@ -7,6 +7,7 @@ class MapNode {
         this.hideMe = false;
         this.item = null;
         this.connectorLabel = null;
+        this.bossBeatable = false;
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
@@ -148,6 +149,12 @@ class MapNode {
         }
     }
 
+    updateBossBeatable() {
+        this.bossBeatable = this.checks.some(x => x.difficulty == 0
+                                             && (x.metadata.name.includes("Heart Container")
+                                                 || x.metadata.name.includes("Tunic Fairy")));
+    }
+
     update() {
         this.updateDifficulty();
         this.updateBehindKeys();
@@ -157,6 +164,7 @@ class MapNode {
         this.updateIsVanilla();
         this.updateItem();
         this.sortChecks();
+        this.updateBossBeatable();
     }
 
     canBeHidden() {
@@ -238,6 +246,10 @@ class MapNode {
 
         if (this.checks.length == 1 && this.checks[0].id.includes('Owl')) {
             classes.push('owl');
+        }
+
+        if (this.bossBeatable) {
+            classes.push('boss-beatable');
         }
 
         let items = this.checks.filter(x => x.item)
@@ -587,7 +599,7 @@ class MapNode {
         }
 
         let overlayClasses = ['behind-keys', 'one-way-out', 'one-way-in', 'owl', 'unmapped-entrance', 'possible-start-location', 
-                              'start-location', 'behind-tracker', 'entrance-behind-tracker', 'partial-entrance', 'behind-rupees'];
+                              'start-location', 'behind-tracker', 'entrance-behind-tracker', 'partial-entrance', 'behind-rupees', 'boss-beatable'];
         for (const overlayClass of overlayClasses) {
             let newOverlay = createElement('div', {
                 class: overlayClass + "-overlay",
