@@ -14,6 +14,11 @@ function processCheckMessage(message) {
     }
 
     for (const check of message.checks) {
+        if (!(check.id in coordDict)) {
+            console.log(`Warning: check ID "${check.id}" appears invalid`);
+            continue;
+        }
+
         let metadata = coordDict[check.id];
 
         if (check.checked) {
