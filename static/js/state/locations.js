@@ -108,8 +108,14 @@ function resetEntrances() {
     saveEntrances();
 }
 
-function resetChecks() {
-    checkedChecks = new Set();
+function resetChecks(resetVanillaOwls=true) {
+    if (resetVanillaOwls) {
+        checkedChecks = new Set();
+    }
+    else {
+        checkedChecks = new Set([...checkedChecks].filter(x => Check.isVanillaOwl(x)));
+    }
+
     saveChecked();
 }
 

@@ -62,12 +62,11 @@ class Check {
     }
 
     isVanillaOwl() {
-        let isOverworld = this.id.includes('0x0');
-        return this.isOwl() && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
+        return Check.isVanillaOwl(this.id);
     }
 
     isOwl() {
-        return this.id.includes('Owl');
+        return Check.isOwl(this.id);
     }
 
     isOwnedVanillaPickup() {
@@ -122,5 +121,14 @@ class Check {
 
     static isChecked(id) {
         return checkedChecks.has(id);
+    }
+
+    static isOwl(id) {
+        return id.includes('Owl');
+    }
+
+    static isVanillaOwl(id) {
+        let isOverworld = id.includes('0x0');
+        return Check.isOwl(id) && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
     }
 }

@@ -10,12 +10,17 @@ function processCheckMessage(message) {
 
     if (!message.diff) {
         console.log('Receiving full autotracker checks');
-        resetChecks();
+        resetChecks(false);
     }
 
     for (const check of message.checks) {
         if (!(check.id in coordDict)) {
             console.log(`Warning: check ID "${check.id}" appears invalid`);
+            continue;
+        }
+
+        // The autotracker can't read whether vanilla owls have been read, better to trust what we already have
+        if (Check.isVanillaOwl(check.id)) {
             continue;
         }
 
