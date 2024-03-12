@@ -151,6 +151,7 @@ class MapNode {
 
     updateBossBeatable() {
         this.bossBeatable = this.checks.some(x => x.difficulty == 0
+                                             && !x.behindKeys
                                              && (x.metadata.name.includes("Heart Container")
                                                  || x.metadata.name.includes("Tunic Fairy")));
     }
