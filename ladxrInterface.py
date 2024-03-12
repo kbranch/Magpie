@@ -254,7 +254,7 @@ def visitLogic(logic, inventory):
     return e
 
 
-def loadChecks(logic, inventory):
+def loadChecks(logic, inventory, leaveInstruments=False):
     nameOverrides = {
         '0x0B1': '0x092',
         '0x0B2': '0x0F2'
@@ -262,21 +262,23 @@ def loadChecks(logic, inventory):
 
     checks = []
 
-    instruments = {key for key, value in inventory.items() if 'INSTRUMENT' in key and value > 0}
-    for instrument in instruments:
-        del inventory[instrument]
+    if not leaveInstruments:
+        instruments = {key for key, value in inventory.items() if 'INSTRUMENT' in key and value > 0}
+        for instrument in instruments:
+            del inventory[instrument]
 
     e = visitLogic(logic, inventory)
 
-    # Do some gymnastics to avoid vanilla instruments getting double counted
-    foundInstruments = {key for key, value in e._Explorer__inventory.items() if 'INSTRUMENT' in key and value > 0}
-    unfoundInstruments = instruments.difference(foundInstruments)
+    if not leaveInstruments:
+        # Do some gymnastics to avoid vanilla instruments getting double counted
+        foundInstruments = {key for key, value in e._Explorer__inventory.items() if 'INSTRUMENT' in key and value > 0}
+        unfoundInstruments = instruments.difference(foundInstruments)
 
-    if unfoundInstruments:
-        for instrument in unfoundInstruments:
-            inventory[instrument] = 1
-        
-        e = visitLogic(logic, inventory)
+        if unfoundInstruments:
+            for instrument in unfoundInstruments:
+                inventory[instrument] = 1
+            
+            e = visitLogic(logic, inventory)
 
     locations = e.getAccessableLocations()
 
@@ -349,7 +351,7 @@ def getDungeonItemCount(args):
 
     allItems = getItems(args, trimDungeonItems=False)
 
-    checks = loadChecks(getLogicWithoutER(args), allItems)
+    checks = loadChecks(getLogicWithoutER(args), allItems, leaveInstruments=True)
     for check in checks:
         check.area = checkMetadataTable[check.id].area
 
