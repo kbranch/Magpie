@@ -299,7 +299,7 @@ function fixArgs(args) {
     }
 }
 
-function getState() {
+function getState(addAp=true) {
     let state = new Object();
     state.inventory = inventory;
     state.settings = localSettings;
@@ -311,12 +311,39 @@ function getState() {
     state.errorLog = errorLog;
     state.version = document.querySelector('.version span')?.innerHTML.replace('Version: ', '');
 
+    if (!addAp) {
+        delete state.settings.apServer;
+        delete state.settings.apSlot;
+        delete state.settings.apPassword;
+    }
+
     return state;
 }
 
-function exportState() {
-    let state = getState();
-    download(`Magpie-state-${(new Date()).toISOString()}.json`, JSON.stringify(state));
+function openExportStateDialog() {
+    document.getElementById('exportFilename').value = localSettings.exportFilename;
+    document.getElementById('exportAddTime').checked = localSettings.exportTimestamp;
+    document.getElementById('exportAddAp').checked = localSettings.exportAp;
+
+    new bootstrap.Modal('#exportModal', null).show();
+}
+
+function exportState(filename, addTime, addAp) {
+    localSettings.exportFilename = filename;
+    localSettings.exportAp = addAp;
+    localSettings.exportTimestamp = addTime;
+
+    saveSettingsToStorage(args, localSettings);
+
+    let state = getState(addAp);
+
+    if (addTime) {
+        filename += `-${(new Date()).toISOString()}`;
+    }
+
+    filename += '.json';
+
+    download(filename, JSON.stringify(state));
 }
 
 function importState(data) {

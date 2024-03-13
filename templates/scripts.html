@@ -424,6 +424,16 @@
 
         window.addEventListener("resize", resizeTimeout); // Window size
         window.visualViewport.addEventListener('resize', viewportResizeTimeout); // Pinch zoom
+
+        document.getElementById('exportModal').addEventListener('shown.bs.modal', () => {
+            let textbox = document.getElementById('exportFilename');
+            textbox.focus();
+            textbox.select();
+        });
+
+        document.getElementById('exportModal').addEventListener('hidden.bs.modal', () => {
+            document.getElementById('argsOffcanvas').focus();
+        });
     }
 
     init();

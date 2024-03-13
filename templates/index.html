@@ -230,6 +230,34 @@
     </div>
 </div>
 
+<div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-m">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exportModalLabel">Export State</h6>
+                <button id="exportModalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="exportFilename" class="form-label">Base filename</label>
+                    <input type="text" class="form-control" id="exportFilename" onkeyup="if (event.keyCode == 13) { document.getElementById('exportCloseButton').click() }">
+                </div>
+                <div class="mb-3">
+                    <input type="checkbox" id="exportAddTime" class="form-check-input">
+                    <label class="form-check-label" for="exportAddTime">Append timestamp</label>
+                </div>
+                <div class="mb-3">
+                    <input type="checkbox" id="exportAddAp" class="form-check-input">
+                    <label class="form-check-label" for="exportAddAp">Include Archipelago settings</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="exportCloseButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal" onclick="exportState(document.getElementById('exportFilename').value, document.getElementById('exportAddTime').checked, document.getElementById('exportAddAp').checked);">Export</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="static/js/report.js"></script>
 <script type="application/javascript">
     "use strict"

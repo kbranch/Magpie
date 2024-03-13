@@ -46,6 +46,9 @@ class LocalSettings:
         self.apServer = 'archipelago.gg:12345'
         self.apSlot = ''
         self.apPassword = ''
+        self.exportAp = True
+        self.exportTimestamp = True
+        self.exportFilename = 'Magpie-state'
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'
