@@ -401,8 +401,8 @@ img {
 
 .boss-beatable:not(.difficulty-checked) .boss-beatable-overlay {
     position: absolute;
-    left: 95%;
-    top: 85%;
+    left: 50%;
+    top: 105%;
     width: 100%;
     height: 100%;
     background-image: url('/static/images/boss.svg');
