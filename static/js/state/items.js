@@ -72,6 +72,10 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
         sharingLiveUpdate();
         refreshItemNdi();
 
+        if (item.startsWith('UNUSED_KEY') && inventory[item] == 0) {
+            stickyBehindKeys = true;
+        }
+
         if (refresh) {
             updateDungeonItems();
             refreshCheckList();

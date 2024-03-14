@@ -20,13 +20,32 @@ class Check {
             this.mapName = dungeonMaps[0];
         }
 
+        if (this.behindKeys 
+            && localSettings.enableAutotracking
+            && localSettings.autotrackItems
+            && this.isDungeon()) {
+            let key = `KEY${this.dungeonNumber()}`
+            let unusedKey = `UNUSED_KEY${this.dungeonNumber()}`
+            if (inventory[key] <= 0
+                || (unusedKey in inventory
+                    && inventory[unusedKey] <= 0)
+                    && !stickyBehindKeys) {
+                this.baseDifficulty = 9;
+            }
+        }
+
         if (this.isVanilla && this.metadata.vanillaItem) {
             setCheckContents(this.id, this.metadata.vanillaItem, false);
         }
 
         this.updateChecked();
 
-        if (this.behindKeys || this.requiredRupees || this.behindTrackerLogic) {
+        this.behindRupees = this.requiredRupees
+                            && (!localSettings.enableAutotracking
+                                || !localSettings.autotrackItems
+                                || inventory['RUPEE_COUNT'] < this.requiredRupees);
+
+        if (this.behindKeys || this.behindRupees || this.behindTrackerLogic) {
             this.hollow = true;
         }
     }

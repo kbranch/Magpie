@@ -369,7 +369,7 @@ img {
     z-index: 10;
 } */
 
-.behind-rupees:not(.difficulty-checked) .behind-rupees-overlay {
+.requires-rupees:not(.difficulty-checked) .behind-rupees-overlay {
     position: absolute;
     left: 10%;
     top: 50%;

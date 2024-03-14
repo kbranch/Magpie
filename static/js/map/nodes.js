@@ -271,6 +271,10 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
     
     skipNextAnimation = false;
 
+    if (['overworld', 'underworld'].includes(mapName)) {
+        stickyBehindKeys = false;
+    }
+
     $('.check-graphic.animate__fadeOut').remove();
 
     updateReverseMap();

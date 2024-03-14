@@ -100,7 +100,17 @@ class MapNode {
                                                       && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
 
         this.behindRupees = uncheckedChecks.length > 0 
-                          && uncheckedChecks.every(x => x.requiredRupees);
+                            && uncheckedChecks.every(x => x.behindRupees);
+    }
+
+    updateRequiresRupees() {
+        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
+                                                      && !x.isChecked()
+                                                      && !x.metadata.vanilla
+                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
+
+        this.requiresRupees = uncheckedChecks.length > 0 
+                              && uncheckedChecks.every(x => x.requiredRupees);
     }
 
     updateDifficulty() {
@@ -162,6 +172,7 @@ class MapNode {
         this.updateBehindKeys();
         this.updateBehindTrackerLogic();
         this.updateBehindRupees();
+        this.updateRequiresRupees();
         this.updateIsChecked();
         this.updateIsVanilla();
         this.updateItem();
@@ -240,6 +251,10 @@ class MapNode {
 
         if (this.behindRupees) {
             classes.push('behind-rupees');
+        }
+
+        if (this.requiresRupees) {
+            classes.push('requires-rupees');
         }
 
         if (this.isVanilla) {
