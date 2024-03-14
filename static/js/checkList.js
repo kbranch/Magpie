@@ -227,7 +227,7 @@ function createTextCheck(check) {
     let metadata = coordDict[check.id];
     let checkIcon = `
 <div class="text-check-graphic-wrapper">
-<div class="text-check-graphic${check.behindTrackerLogic ? ' behind-tracker' : ''}${check.behindKeys ? ' behind-keys' : ''}${check.requiredRupees ? ' behind-rupees' : ''}${check.isOwl() ? ' owl' : ''}">
+<div class="text-check-graphic${check.behindTrackerLogic ? ' behind-tracker' : ''}${check.behindKeys ? ' behind-keys' : ''}${check.requiredRupees ? ' requires-rupees' : ''}${check.isOwl() ? ' owl' : ''}">
     <div class="node-overlay-wrapper" data-difficulty="${check.difficulty}">
         <div class="icon-wrapper icon-difficulty-${check.difficulty}">
             <svg class="icon text-icon">

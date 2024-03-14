@@ -390,7 +390,7 @@ class NodeTooltip {
 
         for (const check of checks) {
             let difficulty = check.isChecked() ? 'checked' : check.difficulty;
-            let behind = check.behindKeys ? ' behind-keys' : check.requiredRupees ? ' behind-rupees' : '';
+            let behind = check.behindKeys ? ' behind-keys' : check.requiredRupees ? ' requires-rupees' : '';
             let vanilla = check.isVanilla ? ' vanilla' : '';
             let owl = check.isOwl() ? ' owl' : '';
             let iconVanilla = check.isVanilla ? '-vanilla' : '';
