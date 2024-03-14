@@ -52,6 +52,9 @@ class NOT:
 
         return True
 
+    def hasConsumableRequirement(self):
+        return False
+
 vanillaBySetting = {
     'heartpiece': {'0x000', '0x2A4', '0x044', '0x2AB', '0x2DF', '0x2E5', '0x078', '0x2E6', '0x1E8', '0x1F2', '0x2BA', '0x2B1'},
     'seashells': {'0x0A3', '0x0D2', '0x2B2', '0x1E3', '0x074', '0x0A5', '0x0A6', '0x08B', '0x0A4', '0x0B9', '0x0E9', '0x0F8', '0x0A8', '0x0DA', '0x0FF', '0x00C'},
@@ -183,14 +186,14 @@ def applyTrackerLogic(log):
     # Rooster across the river
     if animal_village in locs and ukuku in locs:
         river_rooster = Location().add(LogicHint('RiverRooster'))
-        locs[animal_village].connect(river_rooster, ROOSTER, one_way=True)
-        locs[ukuku].connect(river_rooster, ROOSTER, one_way=True)
+        locs[animal_village].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
+        locs[ukuku].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
 
     # fly from staircase to staircase on the north side of the moat
     if angler_keyhole in locs and kanalet_side in locs:
         kanalet_rooster = Location().add(LogicHint('KanaletRooster'))
-        locs[angler_keyhole].connect(kanalet_rooster, ROOSTER, one_way=True)
-        locs[kanalet_side].connect(kanalet_rooster, ROOSTER, one_way=True)
+        locs[angler_keyhole].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
+        locs[kanalet_side].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
 
     # Drop in a hole at bird cave
     if log.name != "casual" and bird_cave in locs:
