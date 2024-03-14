@@ -20,7 +20,7 @@ def loadItems(state):
     state.itemDict = {item.id: item for item in state.items}
 
 def readItems(gb, state, extraItems):
-    missingItems = {x for x in state.items if x.address == None}
+    missingItems = {x for x in state.items if x.address == None and x.id != 'RUPEE_COUNT'}
     
     # Add keys for opened key doors
     for i in range(len(consts.dungeonKeyDoors)):
@@ -51,9 +51,18 @@ def readItems(gb, state, extraItems):
     for item in [x for x in state.items if x.address]:
         extra = extraItems[item.id] if item.id in extraItems else 0
         item.set(gb.readRamByte(item.address), extra)
+    
+    # The current rupee count is BCD, but the add/remove values are not
+    currentRupees = calculateRupeeCount(gb.readRamByte(consts.rupeesHigh), gb.readRamByte(consts.rupeesLow))
+    addingRupees = (gb.readRamByte(consts.addRupeesHigh) << 8) +  gb.readRamByte(consts.addRupeesLow)
+    removingRupees = (gb.readRamByte(consts.removeRupeesHigh) << 8) + gb.readRamByte(consts.removeRupeesLow)
+    state.itemDict['RUPEE_COUNT'].set(currentRupees + addingRupees - removingRupees, 0)
 
     if state.firstRead:
         for item in state.items:
             item.diff = 0
     
     state.firstRead = False
+
+def calculateRupeeCount(high, low):
+    return (high - (high // 16 * 6)) * 100 + (low - (low // 16 * 6))

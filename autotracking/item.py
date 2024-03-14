@@ -1,5 +1,5 @@
 class Item:
-    def __init__(self, id, address, threshold=0, mask=None, increaseOnly=False, count=False, max=None):
+    def __init__(self, id, address, threshold=0, mask=None, increaseOnly=False, count=False, max=None, encodedCount=True):
         self.id = id
         self.address = address
         self.threshold = threshold
@@ -19,7 +19,7 @@ class Item:
         
         if not self.count:
             byte = int(byte > self.threshold)
-        else:
+        elif self.encodedCount:
             # LADX seems to store one decimal digit per nibble
             byte = byte - (byte // 16 * 6)
         
@@ -41,3 +41,4 @@ class Item:
 
             if self.diff != 0:
                 print(f'Found {self.id}: {"+" if self.diff > 0 else ""}{self.diff}')
+    

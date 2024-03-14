@@ -46,6 +46,13 @@ linkMotionState = 0xC11C
 transitionSequence = 0xC16B 
 screenCoord = 0xFFFA
 
+rupeesHigh = 0xDB5D
+rupeesLow = 0xDB5E
+addRupeesHigh = 0xDB8F
+addRupeesLow = 0xDB90
+removeRupeesHigh = 0xDB91
+removeRupeesLow = 0xDB92
+
 entranceAddressOverrides = {
     0x312: 0xDDF2,
 }
@@ -180,6 +187,7 @@ dungeonItemOffsets = {
     'STONE_BEAK{}': 2,
     'NIGHTMARE_KEY{}': 3,
     'KEY{}': 4,
+    'UNUSED_KEY{}': 4,
 }
 
 items = [
@@ -196,6 +204,7 @@ items = [
         Item('TOADSTOOL', None),
         Item('ROOSTER', None),
         Item('HAMMER', None),
+        Item('RUPEE_COUNT', None, count=True, encodedCount=False),
         Item('SWORD', 0xDB4E, count=True),
         Item('POWER_BRACELET', 0xDB43, count=True),
         Item('SHIELD', 0xDB44, count=True),
