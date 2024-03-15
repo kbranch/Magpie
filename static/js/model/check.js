@@ -43,6 +43,7 @@ class Check {
         this.behindRupees = this.requiredRupees
                             && (!localSettings.enableAutotracking
                                 || !localSettings.autotrackItems
+                                || !('RUPEE_COUNT' in inventory)
                                 || inventory['RUPEE_COUNT'] < this.requiredRupees);
 
         if (this.behindKeys || this.behindRupees || this.behindTrackerLogic) {
