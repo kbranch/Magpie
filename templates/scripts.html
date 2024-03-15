@@ -119,6 +119,7 @@
     var maxMessageLogSize = 1000;
     var updateInsideEntrances = false;
     var stickyBehindKeys = false;
+    var logicGraph = null;
 
     const renamedItems = {
         "KEY9": "KEY0",
@@ -222,6 +223,7 @@
                 });
 
                 logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
+                logicGraph = response.accessibility.graph;
 
                 document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
 

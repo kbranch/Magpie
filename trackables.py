@@ -5,14 +5,16 @@ class FakeLogic:
     pass
 
 class Accessibility:
-    def __init__(self, checks, entrances, logicHints):
+    def __init__(self, checks, entrances, logicHints, graph):
         self.checks = checks
         self.entrances = entrances
         self.logicHints = logicHints
+        self.graph = graph
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
     checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
     entranceAccessibility = getEntranceAccessibility(allEntrances, logics, inventory)
+    graphAccessibility = getGraphAccessibility(logics)
 
     for log in logics:
         applyTrackerLogic(log)
@@ -20,14 +22,13 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     getCheckTrackerAccessibility(logics, inventory, checkAccessibility)
     getEntranceTrackerAccessibility(logics, inventory, entranceAccessibility)
 
-
     logicHintAccessibility = {}
     for log in logics:
         logicHintAccessibility[log] = {x for x in checkAccessibility[log] if x.logicHint}
         for check in logicHintAccessibility[log]:
             checkAccessibility[log].remove(check)
 
-    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility)
+    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility, graphAccessibility)
 
 def getCheckTrackerAccessibility(logics, inventory, accessibility):
     keyInventory = inventory.copy()
@@ -95,6 +96,41 @@ def getEntranceTrackerAccessibility(logics, inventory, accessibility):
 
             accessibility[entrance].difficulty = i
             accessibility[entrance].behindTrackerLogic = True
+
+def getGraphAccessibility(logics):
+    accessibility = {}
+
+    for i in range(len(logics)):
+        logic = logics[i]
+
+        for loc in logic.location_list:
+            name = loc.friendlyName()
+
+            if name == '':
+                continue
+
+            if name not in accessibility:
+                accessibility[name] = {}
+                accessibility[name]['connections'] = {}
+                accessibility[name]['checks'] = [x.nameId for x in loc.items]
+                accessibility[name]['id'] = name
+            
+            accLoc = accessibility[name]
+
+            for connection in loc.simple_connections + loc.gated_connections:
+                toName = connection[0].friendlyName()
+                reqName = str(connection[1])
+                connId = name + '->' + toName + ':' + reqName
+
+                if connId not in accLoc['connections']:
+                    accLoc['connections'][connId] = {
+                        'from': name,
+                        'to': toName,
+                        'req': reqName,
+                        'diff': i,
+                    }
+    
+    return accessibility
 
 def getCheckAccessibility(allChecks, logics, inventory):
     accessibility = {}

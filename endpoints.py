@@ -1,3 +1,4 @@
+import gzip
 import json
 import base64
 import socket
@@ -6,7 +7,7 @@ import requests
 import traceback
 from jinja2 import Template
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 
 import ladxrInterface
 from version import *
@@ -284,6 +285,7 @@ def renderCheckList():
                 'checks': [],
                 'entrances': accessibility.entrances,
                 'logicHints': [],
+                'graph': accessibility.graph,
             },
             'logics': [{
                 'difficulty': x.difficulty,
@@ -300,7 +302,12 @@ def renderCheckList():
         for logic in accessibility.logicHints:
             result['accessibility']['logicHints'] += list(accessibility.logicHints[logic])
 
-        return json.dumps(result, default=lambda x: x.__dict__) 
+        content = gzip.compress(json.dumps(result, default=lambda x: x.__dict__).encode('utf8'), 5)
+        response = make_response(content)
+        response.headers['Content-length'] = len(content)
+        response.headers['Content-Encoding'] = 'gzip'
+
+        return response
     except:
         return renderTraceback()
 
