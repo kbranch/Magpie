@@ -252,11 +252,15 @@ def getSpoilerLog():
 def renderCheckList():
     try:
         argValues = Args.parse(request.form['args'])
-        settings = json.loads(request.form['localSettings'])
         inventory = json.loads(request.form['inventory'])
         entranceMap = json.loads(request.form['entranceMap'])
         bossList = json.loads(request.form['bossList'])
         minibossMap = json.loads(request.form['minibossMap'])
+
+        settings = {}
+
+        if 'localSettings' in request.form:
+            settings = json.loads(request.form['localSettings'])
 
         for key in list(minibossMap.keys()):
             if key.isnumeric():
