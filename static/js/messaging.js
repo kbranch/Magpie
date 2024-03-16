@@ -307,6 +307,10 @@ function processMessage(messageText) {
 
                 addAutotrackerMessage('ROM Received');
 
+                if(message.romType == 'Archipelago') {
+                    setApLogic(true);
+                }
+
                 break;
             case 'romRequest':
                 romRequested = true;

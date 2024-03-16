@@ -74,8 +74,6 @@ class State:
         if 'entrances' in self.features:
             loadEntrances(self, romData)
 
-        await sendRomAck(socket)
-
         if 'settings' in self.features:
             settingsString = getSettingsString(romData)
 
@@ -93,6 +91,8 @@ class State:
             self.gfx = getGfx(romData[consts.gfxStart:consts.gfxStart + consts.gfxHashSize])
             self.gfxChanged = True
             await sendGfx(socket, self)
+
+        await sendRomAck(socket, "Archipelago" if self.settings.archipelago else "LADXR")
 
     async def processMessages(self, socket):
         while socket.messages:
