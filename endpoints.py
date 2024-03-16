@@ -252,6 +252,7 @@ def getSpoilerLog():
 def renderCheckList():
     try:
         argValues = Args.parse(request.form['args'])
+        settings = json.loads(request.form['localSettings'])
         inventory = json.loads(request.form['inventory'])
         entranceMap = json.loads(request.form['entranceMap'])
         bossList = json.loads(request.form['bossList'])
@@ -265,7 +266,7 @@ def renderCheckList():
         args = getArgs(values=argValues)
         initChecks(args)
 
-        addStartingItems(inventory, args)
+        addStartingItems(inventory, args, settings)
 
         entrances = getEntrancePool(args)
         if args.randomstartlocation and args.entranceshuffle == 'none':
