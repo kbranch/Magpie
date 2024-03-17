@@ -92,7 +92,7 @@ class State:
             self.gfxChanged = True
             await sendGfx(socket, self)
 
-        await sendRomAck(socket, "Archipelago" if self.settings.archipelago else "LADXR")
+        await sendRomAck(socket, "Archipelago" if self.isArchipelago() else "LADXR")
 
     async def processMessages(self, socket):
         while socket.messages:
@@ -165,17 +165,10 @@ class State:
         self.locationChanged = False
 
     def readTrackables(self, gb):
-        isArchipelago = False
         isReadableER = False
 
         try:
-            self.settings.archipelago == True
-            isArchipelago = True
-        except:
-            pass
-
-        try:
-            if (isArchipelago 
+            if (self.isArchipelago()
                 or self.settings.entranceshuffle in ('', 'simple', 'split', 'mixed')
                 or self.settings.dungeonshuffle
                 or self.settings.randomstartlocation
@@ -208,3 +201,14 @@ class State:
 
         if self.entrancesLoaded and 'entrances' in self.features:
             readEntrances(gb, self)
+    
+    def isArchipelago(self):
+        isArchipelago = False
+
+        try:
+            self.settings.archipelago == True
+            isArchipelago = True
+        except:
+            pass
+
+        return isArchipelago
