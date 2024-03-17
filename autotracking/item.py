@@ -10,6 +10,7 @@ class Item:
         self.rawValue = 0
         self.diff = 0
         self.max = max
+        self.encodedCount = encodedCount
 
     def set(self, byte, extra):
         oldValue = self.value

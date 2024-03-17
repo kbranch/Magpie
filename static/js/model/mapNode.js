@@ -261,7 +261,9 @@ class MapNode {
             classes.push('vanilla');
         }
 
-        if (this.checks.length == 1 && this.checks[0].id.includes('Owl')) {
+        if (this.checks.length == 1
+            && this.checks[0].id.includes('Owl')
+            && this.isOnlyVanillaOwls()) {
             classes.push('owl');
         }
 

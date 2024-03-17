@@ -258,6 +258,11 @@ def renderCheckList():
         bossList = json.loads(request.form['bossList'])
         minibossMap = json.loads(request.form['minibossMap'])
 
+        settings = {}
+
+        if 'localSettings' in request.form:
+            settings = json.loads(request.form['localSettings'])
+
         for key in list(minibossMap.keys()):
             if key.isnumeric():
                 minibossMap[int(key)] = minibossMap[key]
@@ -266,7 +271,7 @@ def renderCheckList():
         args = getArgs(values=argValues)
         initChecks(args)
 
-        addStartingItems(inventory, args)
+        addStartingItems(inventory, args, settings)
 
         entrances = getEntrancePool(args)
         if args.randomstartlocation and args.entranceshuffle == 'none':

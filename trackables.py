@@ -225,7 +225,7 @@ def getEntranceAccessibility(allEntrances, logics, inventory):
 
     return entrances
 
-def addStartingItems(inventory, args):
+def addStartingItems(inventory, args, settings):
     inventory['RUPEES_500'] = 10
 
     if args.bowwow != 'normal':
@@ -237,7 +237,10 @@ def addStartingItems(inventory, args):
                 item_name = f"{item_name}{i + 1}"
                 inventory[item_name] = amount
     
-    if args.owlstatues not in ['both', 'dungeon'] and args.goal not in ['bingo', 'bingo-full']:
+    if (args.owlstatues not in ['both', 'dungeon']
+        and args.goal not in ['bingo', 'bingo-full']
+        and ('enableAutotracking' not in settings
+             or not settings['enableAutotracking'])):
         for i in range(9):
             inventory[f"STONE_BEAK{i + 1}"] = 1
 

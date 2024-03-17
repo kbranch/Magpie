@@ -13,9 +13,10 @@ async def sendRomRequest(socket):
 
     print(f'Sending request for ROM')
 
-async def sendRomAck(socket):
+async def sendRomAck(socket, romType='LADXR'):
     await sendMessage({
-        'type': 'romAck'
+        'type': 'romAck',
+        'romType': romType,
     }, socket)
 
     print(f'Sending ROM ack')
