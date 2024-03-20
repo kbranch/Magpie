@@ -117,7 +117,7 @@ class MapNode {
         this.difficulty = this.logicHint ? this.logicHint.baseDifficulty : 'checked';
 
         for (const check of this.checks) {
-            if (!check.isChecked() && (!check.isVanillaOwl() || this.checks.length == 1)) {
+            if (!check.isChecked() && (!check.isVanillaOwl() || this.isOnlyVanillaOwls())) {
                 if ((check.difficulty < this.difficulty || this.difficulty == 'checked')) {
                     this.difficulty = check.difficulty;
                 }
@@ -261,9 +261,9 @@ class MapNode {
             classes.push('vanilla');
         }
 
-        if (this.checks.length == 1
-            && this.checks[0].id.includes('Owl')
-            && this.isOnlyVanillaOwls()) {
+        if (this.checks.length > 0
+            && ((this.checks.length == 1 && this.checks[0].id.includes('Owl'))
+                || this.isOnlyVanillaOwls())) {
             classes.push('owl');
         }
 
