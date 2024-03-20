@@ -1,4 +1,5 @@
 import gzip
+import copy
 import json
 import base64
 import socket
@@ -8,12 +9,14 @@ import traceback
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request, make_response
+# from werkzeug.middleware.profiler import ProfilerMiddleware
 
 import ladxrInterface
 from version import *
 from trackables import *
 from localSettings import LocalSettings, updateSettings
 from args import Args
+from trackerLogic import applyTrackerLogic
 
 try:
     import newrelic.agent
@@ -37,6 +40,8 @@ app.jinja_options['lstrip_blocks'] = True
 
 app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
+
+# app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
 try:
     import sharing
@@ -252,11 +257,18 @@ def getSpoilerLog():
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():
     try:
-        argValues = Args.parse(request.form['args'])
+        argsText = request.form['args']
+        entranceText = request.form['entranceMap']
+        bossText = request.form['bossList']
+        minibossText = request.form['minibossMap']
+
+        argValues = Args.parse(argsText)
         inventory = json.loads(request.form['inventory'])
-        entranceMap = json.loads(request.form['entranceMap'])
-        bossList = json.loads(request.form['bossList'])
-        minibossMap = json.loads(request.form['minibossMap'])
+        entranceMap = json.loads(entranceText)
+        bossList = json.loads(bossText)
+        minibossMap = json.loads(minibossText)
+
+        logicHash = hash(argsText + entranceText + bossText + minibossText)
 
         settings = {}
 
@@ -281,7 +293,7 @@ def renderCheckList():
 
         entrances = list(entrances)
         allItems = getAllItems(args)
-        logics = getLogics(args, entranceMap, bossList, minibossMap)
+        logics = getCachedLogics(logicHash, args, entranceMap, bossList, minibossMap)
         allChecks = loadChecks(getLogicWithoutER(args), allItems)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
@@ -290,13 +302,12 @@ def renderCheckList():
                 'checks': [],
                 'entrances': accessibility.entrances,
                 'logicHints': [],
-                'graph': accessibility.graph,
             },
             'logics': [{
                 'difficulty': x.difficulty,
                 'friendlyName': x.friendlyName,
                 'name': x.name,
-            } for x in logics],
+            } for x in logics['stock']],
             'randomizedEntrances': entrances,
             'startLocations': getStartLocations(args),
         }

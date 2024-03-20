@@ -203,12 +203,11 @@ def testRequirement(requirement, inventory):
     
     return requirement.test(inventory)
 
-def testEntrance(entrance, inventory):
-    smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
-
+def testEntrance(entrance, smallInventory):
     return testRequirement(entrance.requirement, smallInventory) or testRequirement(entrance.one_way_enter_requirement, smallInventory)
 
 def loadEntrances(logic, inventory):
+    smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
     inLogicEntrances = []
 
     e = explorer.Explorer()
@@ -223,7 +222,7 @@ def loadEntrances(logic, inventory):
 
     entrances = {}
     for name,exterior in logic.world.entrances.items():
-        if not testEntrance(exterior, inventory):
+        if not testEntrance(exterior, smallInventory):
             continue
 
         if exterior.location not in entrances:
