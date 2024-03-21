@@ -28,6 +28,10 @@ function openLogicViewer(nodeId, open=true) {
     let connectionsSection = '';
 
     for (const checkId of node.checks) {
+        if (!(checkId in checksById)) {
+            continue;
+        }
+
         let check = checksById[checkId];
 
         checksSection += `
