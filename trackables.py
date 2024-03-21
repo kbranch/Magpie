@@ -48,7 +48,7 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     if allEntrances:
         entranceAccessibility = getEntranceAccessibility(allEntrances, logics['stock'], inventory)
 
-    # graphAccessibility = getGraphAccessibility(logics)
+    graphAccessibility = getGraphAccessibility(logics['tracker'])
 
     getCheckTrackerAccessibility(logics['tracker'], inventory, checkAccessibility)
 
@@ -61,7 +61,7 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
         for check in logicHintAccessibility[log.name]:
             checkAccessibility[log.name].remove(check)
 
-    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility, {})
+    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility, graphAccessibility)
 
 def getCheckTrackerAccessibility(logics, inventory, accessibility):
     keyInventory = inventory.copy()

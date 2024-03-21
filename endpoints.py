@@ -302,6 +302,7 @@ def renderCheckList():
                 'checks': [],
                 'entrances': accessibility.entrances,
                 'logicHints': [],
+                'graph': {k:v for (k,v) in accessibility.graph.items() if v['checks']},
             },
             'logics': [{
                 'difficulty': x.difficulty,
@@ -324,6 +325,7 @@ def renderCheckList():
         response.headers['Content-Encoding'] = 'gzip'
 
         return response
+        # return json.dumps(result, default=lambda x: x.__dict__)
     except:
         return renderTraceback()
 
