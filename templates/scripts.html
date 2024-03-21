@@ -39,6 +39,7 @@
 <script src="static/js/plando.js"></script>
 <script src="static/js/ndi.js"></script>
 <script src="static/js/sharing.js"></script>
+<script src="static/js/logic.js"></script>
 <script src="static/js/archipelago.js" type="module"></script>
 
 <script type="application/javascript">
@@ -120,6 +121,7 @@
     var updateInsideEntrances = false;
     var stickyBehindKeys = false;
     var logicGraph = null;
+    var nodeByCheck = {};
 
     const renamedItems = {
         "KEY9": "KEY0",
@@ -225,6 +227,13 @@
 
                 logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
                 logicGraph = response.accessibility.graph;
+                nodeByCheck = {}
+
+                for (const loc in logicGraph) {
+                    for (const check of logicGraph[loc].checks) {
+                        nodeByCheck[check] = logicGraph[loc];
+                    }
+                }
 
                 document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
 

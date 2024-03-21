@@ -101,6 +101,7 @@ class NodeTooltip {
 
         return `<div class="btn-group dropend">
         <button type="button" class="btn tooltip-item text-start p-0" onclick="${action}"${helperTooltipAttrs}>${title}</button>
+        <div class="col-auto"><button type="button" class="btn btn-secondary p-1 logic-button" onclick="openCheckLogicViewer('${checkId}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="static/images/diagram-2-fill.svg"></button></div>
         <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false" data-parent-node-id="${this.node.id()}"${onmouseover}></button>
         <ul class="dropdown-menu">
             ${items}
