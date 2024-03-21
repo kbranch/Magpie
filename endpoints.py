@@ -302,7 +302,7 @@ def renderCheckList():
                 'checks': [],
                 'entrances': accessibility.entrances,
                 'logicHints': [],
-                'graph': {k:v for (k,v) in accessibility.graph.items() if v['checks']},
+                'graph': accessibility.graph,
             },
             'logics': [{
                 'difficulty': x.difficulty,

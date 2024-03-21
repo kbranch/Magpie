@@ -165,6 +165,9 @@ def getGraphAccessibility(logics):
                         'diff': i,
                     }
     
+    for name in accessibility:
+        accessibility[name]['connections'] = [v for (k,v) in accessibility[name]['connections'].items()]
+        
     return accessibility
 
 def getCheckAccessibility(allChecks, logics, inventory):
