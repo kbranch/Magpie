@@ -60,8 +60,10 @@ function openLogicViewer(nodeId, open=true) {
             continue;
         }
 
+        let otherEnd = connection.badWay ? connection.from : connection.to;
+
         connectionsSection += `
-<tr onclick="openLogicViewer(\`${connection.to}\`, false)">
+<tr onclick="openLogicViewer(\`${otherEnd}\`, false)">
     <td>
     <div class="text-start d-flex p-1 mb-0 align-items-center">
         <div class="tooltip-check-graphic difficulty-${connection.diff} align-middle">
@@ -71,7 +73,7 @@ function openLogicViewer(nodeId, open=true) {
         </div>
     </div>
     </td>
-    <td>${getLogicNodeName(connection.to)}</td>
+    <td>${getLogicNodeName(otherEnd)}${connection.badWay ? ' <img class="logic-item invert" src="static/images/do-not-enter.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">' : ''}</td>
     <td>${iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)}</td>
 </tr>
 `;
@@ -101,8 +103,8 @@ function openLogicViewer(nodeId, open=true) {
 </div>
 `;
 
-    let tooltipTriggerList = dialogBody.querySelectorAll('[data-bs-toggle="tooltip"]')
-    let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }))
+    let tooltipTriggerList = dialogBody.querySelectorAll('[data-bs-toggle="tooltip"]');
+    [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }));
 
     if (open) {
         new bootstrap.Modal(document.getElementById('logicModal')).show();

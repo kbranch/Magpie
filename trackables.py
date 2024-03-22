@@ -161,15 +161,34 @@ def getGraphAccessibility(logics):
                     shortReqName = connection[1].shortName(logic)
 
                 if connId not in accLoc['connections']:
-                    accLoc['connections'][connId] = {
+                    to = connection[0]
+                    matchingConnections = [x for x in to.simple_connections + to.gated_connections if str(x[1]) == fullReqName]
+
+                    newConnection = {
                         'from': name,
                         'to': toName,
                         'req': fullReqName,
                         'diff': i,
                     }
+
+                    accLoc['connections'][connId] = newConnection
+
                     if fullReqName != shortReqName:
-                        accLoc['connections'][connId]['shortReq'] = shortReqName
+                        newConnection['shortReq'] = shortReqName
+                    
+                    if not matchingConnections:
+                        newConnection['oneWay'] = True
     
+    for name,loc in accessibility.items():
+        for id,connection in loc['connections'].items():
+            if 'oneWay' in connection and connection['to'] in accessibility:
+                newConnection = connection.copy()
+                newConnection['badWay'] = True
+                del newConnection['oneWay']
+
+                to = accessibility[connection['to']]
+                to['connections'][id] = newConnection
+
     for name in accessibility:
         accessibility[name]['connections'] = [v for (k,v) in accessibility[name]['connections'].items()]
         
