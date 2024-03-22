@@ -19,6 +19,8 @@ function openCheckLogicViewer(checkId) {
     openLogicViewer(node.id);
 }
 
+var logicStack = [];
+
 function openLogicViewer(nodeId, open=true) {
     let dialogTitle = document.getElementById('logicModalLabel');
     let dialogBody = document.getElementById('logicBody');
@@ -26,6 +28,16 @@ function openLogicViewer(nodeId, open=true) {
     let node = logicGraph[nodeId];
     let checksSection = '';
     let connectionsSection = '';
+
+    if (open || !logicStack.length) {
+        logicStack = [];
+        document.getElementById('logicModalBackButton').disabled = true;
+        document.getElementById('backNodeName').innerHTML = 'Back';
+    }
+    else {
+        document.getElementById('logicModalBackButton').disabled = false;
+        document.getElementById('backNodeName').innerHTML = `Back to ${logicStack.slice(-1)}`;
+    }
 
     for (const checkId of node.checks) {
         if (!(checkId in checksById)) {
@@ -63,7 +75,7 @@ function openLogicViewer(nodeId, open=true) {
         let otherEnd = connection.badWay ? connection.from : connection.to;
 
         connectionsSection += `
-<tr onclick="openLogicViewer(\`${otherEnd}\`, false)">
+<tr onclick="logicStack.push(\`${nodeId}\`); openLogicViewer(\`${otherEnd}\`, false);">
     <td>
     <div class="text-start d-flex p-1 mb-0 align-items-center">
         <div class="tooltip-check-graphic difficulty-${connection.diff} align-middle">

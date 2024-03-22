@@ -240,7 +240,15 @@
             <div class="modal-body" id="logicBody">
             </div>
             <div class="modal-footer">
-                <button id="alertCloseButton" type="button" class="btn btn-secondary big-button" data-bs-dismiss="modal">Close</button>
+                <div class="row justify-content-end big-button">
+                    <div class="col-auto">
+                        <button id="logicModalBackButton" type="button" class="btn btn-secondary" onclick="openLogicViewer(logicStack.pop(), false)"><span id="backNodeName"></span></button>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        <button id="logicModalCloseButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
