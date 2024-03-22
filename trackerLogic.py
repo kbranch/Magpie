@@ -143,13 +143,13 @@ def updateVanilla(args):
 
 def andShortName(self, logic):
     if self in logic.requirements_settings.names:
-        return logic.requirements_settings.names[self]
+        return f'{logic.requirements_settings.names[self]}({str(self)})'
 
     return f"{type(self).__name__.lower()}{self._AND__items + [x.shortName(logic) for x in self._AND__children]}"
 
 def orShortName(self, logic):
     if self in logic.requirements_settings.names:
-        return logic.requirements_settings.names[self]
+        return f'{logic.requirements_settings.names[self]}({str(self)})'
 
     return f"{type(self).__name__.lower()}{self._OR__items + [x.shortName(logic) for x in self._OR__children]}"
 

@@ -101,6 +101,9 @@ function openLogicViewer(nodeId, open=true) {
 </div>
 `;
 
+    let tooltipTriggerList = dialogBody.querySelectorAll('[data-bs-toggle="tooltip"]')
+    let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }))
+
     if (open) {
         new bootstrap.Modal(document.getElementById('logicModal')).show();
     }
@@ -109,8 +112,12 @@ function openLogicViewer(nodeId, open=true) {
 function iconifyRequirement(requirement) {
     const itemRegex = /([^\/A-Z_1-8]|^)('?[A-Z_1-8]{2,}'?)/g;
     const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
+    const tooltipRegex = /(\w+)\(([^\)]+)\)/g;
+
     requirement = requirement.replaceAll('\\', '').replaceAll('"', '').replace(itemRegex, `$1<img class="logic-item" src="/static/images/$2_1.png">`);
-    return requirement.replace(quoteRegex, '/$1_1.png').replaceAll("'", "");
+    requirement = requirement.replace(quoteRegex, '/$1_1.png').replaceAll("'", "");
+    requirement = requirement.replace(tooltipRegex, `<span data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='$2'>$1</span>`);
+    return requirement
 }
 
 function getLogicNodeName(nodeId) {
