@@ -81,7 +81,18 @@ function openLogicViewer(nodeId, open=true) {
 
     dialogTitle.innerHTML = `Viewing node '${getLogicNodeName(node.id)}'`;
     dialogBody.innerHTML = 
-`<h5>${node.id}</h5>
+`<h5>
+    <div class="text-start d-flex p-1 mb-0 align-items-center">
+        <div class="tooltip-check-graphic difficulty-${node.diff ?? '9'} align-middle">
+            <div class="tooltip-check-graphic icon-wrapper">
+                <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-${node.diff ?? '9'}"></use></svg>
+            </div>
+        </div>
+        <div class="ps-2">
+            ${node.id}
+        </div>
+    </div>
+</h5>
 <h6>Checks:</h6>
 <div>
     ${checksSection ? checksSection : 'None'}

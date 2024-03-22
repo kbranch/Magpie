@@ -48,7 +48,7 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     if allEntrances:
         entranceAccessibility = getEntranceAccessibility(allEntrances, logics['stock'], inventory)
 
-    graphAccessibility = getGraphAccessibility(logics['tracker'])
+    graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
 
     getCheckTrackerAccessibility(logics['tracker'], inventory, checkAccessibility)
 
@@ -132,11 +132,14 @@ def getEntranceTrackerAccessibility(logics, inventory, accessibility):
             accessibility[entrance].difficulty = i
             accessibility[entrance].behindTrackerLogic = True
 
-def getGraphAccessibility(logics):
+def getGraphAccessibility(logics, inventory):
     accessibility = {}
 
     for i in range(len(logics)):
         logic = logics[i]
+
+        e = visitLogic(logic, inventory)
+        accessibleLocations = e.getAccessableLocations()
 
         for loc in logic.location_list:
             name = loc.friendlyName()
@@ -151,6 +154,9 @@ def getGraphAccessibility(logics):
                 accessibility[name]['id'] = name
             
             accLoc = accessibility[name]
+
+            if 'diff' not in accLoc and loc in accessibleLocations:
+                accLoc['diff'] = i
 
             for connection in loc.simple_connections + loc.gated_connections:
                 toName = connection[0].friendlyName()
