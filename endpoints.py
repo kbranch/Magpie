@@ -279,6 +279,8 @@ def renderCheckList():
             if key.isnumeric():
                 minibossMap[int(key)] = minibossMap[key]
                 del minibossMap[key]
+            
+        trackerLogic.patchRequirements()
 
         args = getArgs(values=argValues)
         initChecks(args)

@@ -72,7 +72,7 @@ function openLogicViewer(nodeId, open=true) {
     </div>
     </td>
     <td>${getLogicNodeName(connection.to)}</td>
-    <td>${iconifyRequirement(connection.req)}</td>
+    <td>${iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)}</td>
 </tr>
 `;
     }
@@ -109,8 +109,8 @@ function openLogicViewer(nodeId, open=true) {
 function iconifyRequirement(requirement) {
     const itemRegex = /([^\/A-Z_1-8]|^)('?[A-Z_1-8]{2,}'?)/g;
     const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
-    requirement = requirement.replace(itemRegex, "$1<img class='logic-item' src='/static/images/$2_1.png'>");
-    return requirement.replace(quoteRegex, '/$1_1.png')
+    requirement = requirement.replaceAll('\\', '').replaceAll('"', '').replace(itemRegex, `$1<img class="logic-item" src="/static/images/$2_1.png">`);
+    return requirement.replace(quoteRegex, '/$1_1.png').replaceAll("'", "");
 }
 
 function getLogicNodeName(nodeId) {
