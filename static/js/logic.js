@@ -110,13 +110,22 @@ function openLogicViewer(nodeId, open=true) {
 }
 
 function iconifyRequirement(requirement) {
-    const itemRegex = /([^\/A-Z_1-8]|^)('?[A-Z_1-8]{2,}'?)/g;
+    const itemRegex = /([^\/A-Z_1-8]|^)('?[A-Z_1-8]{3,}'?)/g;
     const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
     const tooltipRegex = /(\w+)\(([^\)]+)\)/g;
+    const wrapperRegex = /\((?:and|or)\[('[A-Z_1-8]{3,}')\]\)/g;
 
-    requirement = requirement.replaceAll('\\', '').replaceAll('"', '').replace(itemRegex, `$1<img class="logic-item" src="/static/images/$2_1.png">`);
-    requirement = requirement.replace(quoteRegex, '/$1_1.png').replaceAll("'", "");
-    requirement = requirement.replace(tooltipRegex, `<span data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='$2'>$1</span>`);
+    requirement = requirement
+        .replaceAll('\\', '')
+        .replaceAll('"', '')
+        .replaceAll("and['TRUE']", 'None')
+        .replaceAll("or['FALSE']", 'Disabled')
+        .replace(wrapperRegex, '($1)')
+        .replace(itemRegex, `$1<img class="logic-item" src="/static/images/$2_1.png">`)
+        .replace(quoteRegex, '/$1_1.png')
+        .replaceAll("'", "")
+        .replace(tooltipRegex, `<span data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='$2'>$1</span>`);
+
     return requirement
 }
 

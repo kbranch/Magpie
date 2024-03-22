@@ -271,6 +271,7 @@ def getEntranceAccessibility(allEntrances, logics, inventory):
 
 def addStartingItems(inventory, args, settings):
     inventory['RUPEES_500'] = 10
+    inventory['TRUE'] = 1
 
     if args.bowwow != 'normal':
         inventory['SWORD'] = inventory['SWORD'] + 1
