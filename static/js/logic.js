@@ -168,7 +168,7 @@ function openLogicViewer(nodeId, open=true) {
 <div>
     ${checksSection ? checksSection : 'None'}
 </div>
-<h6>Entrances:</h6>
+<h6 class="pt-3">Entrances:</h6>
 <div>
     ${entrancesSection ? entrancesSection : 'None'}
 </div>
