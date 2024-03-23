@@ -121,7 +121,8 @@
     var updateInsideEntrances = false;
     var stickyBehindKeys = false;
     var logicGraph = null;
-    var nodeByCheck = {};
+    var logicByCheck = {};
+    var logicByEntrance = {};
 
     const renamedItems = {
         "KEY9": "KEY0",
@@ -227,11 +228,17 @@
 
                 logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
                 logicGraph = response.accessibility.graph;
-                nodeByCheck = {}
+                logicByCheck = {}
 
                 for (const loc in logicGraph) {
                     for (const check of logicGraph[loc].checks) {
-                        nodeByCheck[check] = logicGraph[loc];
+                        logicByCheck[check] = logicGraph[loc];
+                    }
+
+                    if ('entrances' in logicGraph[loc]) {
+                        for (const entrance of logicGraph[loc].entrances) {
+                            logicByEntrance[entrance] = logicGraph[loc];
+                        }
                     }
                 }
 

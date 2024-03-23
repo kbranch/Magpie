@@ -6,16 +6,41 @@ function openCheckLogicViewer(checkId) {
     let dialogTitle = document.getElementById('logicModalLabel');
     let dialogBody = document.getElementById('logicBody');
 
-    if (!(checkId in nodeByCheck)) {
+    if (!(checkId in logicByCheck)) {
+        let backButton = document.getElementById('logicModalBackButton');
+
         dialogTitle.innerHTML = "Check not found";
-        dialogBody.innerHTML = "Check not found in logic graph";
+        dialogBody.innerHTML = "Check not found in logic graph. You may need to connect additional entrances.";
+        backButton.style.visibility = "hidden"
 
         new bootstrap.Modal(document.getElementById('logicModal')).show();
 
         return;
     }
 
-    let node = nodeByCheck[checkId];
+    let node = logicByCheck[checkId];
+    openLogicViewer(node.id);
+}
+
+function openEntranceLogicViewer(entranceId) {
+    closeAllTooltips();
+    
+    let dialogTitle = document.getElementById('logicModalLabel');
+    let dialogBody = document.getElementById('logicBody');
+
+    if (!(entranceId in logicByEntrance)) {
+        let backButton = document.getElementById('logicModalBackButton');
+
+        dialogTitle.innerHTML = "Entrance not found";
+        dialogBody.innerHTML = "Entrance not found in logic graph. You may need to connect additional entrances.";
+        backButton.style.visibility = "hidden"
+
+        new bootstrap.Modal(document.getElementById('logicModal')).show();
+
+        return;
+    }
+
+    let node = logicByEntrance[entranceId];
     openLogicViewer(node.id);
 }
 
@@ -24,18 +49,22 @@ var logicStack = [];
 function openLogicViewer(nodeId, open=true) {
     let dialogTitle = document.getElementById('logicModalLabel');
     let dialogBody = document.getElementById('logicBody');
+    let backButton = document.getElementById('logicModalBackButton');
 
     let node = logicGraph[nodeId];
     let checksSection = '';
     let connectionsSection = '';
+    let entrancesSection = '';
+
+    backButton.style.visibility = "visible"
 
     if (open || !logicStack.length) {
         logicStack = [];
-        document.getElementById('logicModalBackButton').disabled = true;
+        backButton.disabled = true;
         document.getElementById('backNodeName').innerHTML = 'Back';
     }
     else {
-        document.getElementById('logicModalBackButton').disabled = false;
+        backButton.disabled = false;
         document.getElementById('backNodeName').innerHTML = `Back to ${logicStack.slice(-1)}`;
     }
 
@@ -65,6 +94,36 @@ function openLogicViewer(nodeId, open=true) {
     </div>
 </div>
 `;
+    }
+
+    if (node.entrances) {
+        for (const entranceId of node.entrances) {
+            if (!(entranceId in entranceAccessibility)) {
+                continue;
+            }
+
+            let entrance = entranceAccessibility[entranceId];
+
+            entrancesSection += `
+    <div class="text-start d-flex p-1 mb-0 align-items-center"">
+        <div class="tooltip-check-graphic difficulty-${entrance.difficulty}${entrance.behindTrackerLogic ? ' behind-tracker' : ''}${entrance.isVanilla ? ' vanilla' : ''} align-middle">
+            <div class="tooltip-check-graphic icon-wrapper">
+                <div class="behind-rupees-overlay"></div>
+                <div class="behind-keys-overlay"></div>
+                <div class="behind-tracker-overlay"></div>
+                <div class="owl-overlay"></div>
+                <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-${entrance.difficulty}${entrance.isVanilla ? '-vanilla' : ''}"></use></svg>
+                ${entrance.behindTrackerLogic ? `<svg class="icon hollow text-icon">
+                    <use xlink:href="#difficulty-${entrance.difficulty}-hollow"></use>
+                </svg>` : ''}
+            </div>
+        </div>
+        <div class="tooltip-text ps-2">
+            <span class="tooltip-text-span">${entranceDict[entrance.id].name} (${entrance.id})</span>
+        </div>
+    </div>
+    `;
+        }
     }
 
     for (const connection of node.connections) {
@@ -108,6 +167,10 @@ function openLogicViewer(nodeId, open=true) {
 <h6>Checks:</h6>
 <div>
     ${checksSection ? checksSection : 'None'}
+</div>
+<h6>Entrances:</h6>
+<div>
+    ${entrancesSection ? entrancesSection : 'None'}
 </div>
 <h6 class="pt-3">Connections:</h6>
 <div>

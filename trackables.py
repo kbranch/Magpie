@@ -185,7 +185,18 @@ def getGraphAccessibility(logics, inventory):
                     if not matchingConnections:
                         newConnection['oneWay'] = True
     
+    entrancesByLocation = {}
+    for entrance,loc in logics[0].world.entrances.items():
+        name = loc.location.friendlyName()
+        if name not in entrancesByLocation:
+            entrancesByLocation[name] = []
+        
+        entrancesByLocation[name].append(entrance)
+
     for name,loc in accessibility.items():
+        if name in entrancesByLocation:
+            accessibility[name]['entrances'] = entrancesByLocation[name]
+
         for id,connection in loc['connections'].items():
             if 'oneWay' in connection and connection['to'] in accessibility:
                 newConnection = connection.copy()
