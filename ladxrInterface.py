@@ -5,6 +5,8 @@ import random
 from xmlrpc.client import boolean
 from trackerLogic import buildLogic
 import trackerLogic
+import trackables
+from datetime import datetime
 from autotracking.romContents import *
 
 sys.path.append(os.path.abspath('LADXR/'))
@@ -20,6 +22,7 @@ from checkMetadata import checkMetadataTable
 from romTables import ROMWithTables
 
 allChecks = {}
+explorerCache = {}
 
 class Check:
     def __init__(self, id, behindKeys=False, behindTrackerLogic=False, vanilla=False, logicHint=False):
@@ -102,6 +105,7 @@ def getAllItems(args):
         pool[item + '_CHECKED'] = 1
 
     pool['TOADSTOOL_CHECKED'] = 1
+    pool['id'] = 0
 
     return pool
 
@@ -138,12 +142,27 @@ def getLogicWithoutER(realArgs):
     args.entranceshuffle = 'none'
     args.boss = 'default'
     args.miniboss = 'default'
+
+    argHash = hash(str({k:v for k,v in args.__dict__.items() if k != 'flags'}))
+    if argHash in trackables.logicCache:
+        logic = trackables.logicCache[argHash]
+        logic['age'] = datetime.now()
+        return logic['noER']
     
     worldSetup = WorldSetup()
     worldSetup.randomize(args, random.Random())
 
     log = buildLogic(args, worldSetup)
     log.name = 'noER'
+
+    trackables.logicCache[argHash] = {'noER':log, 'age':datetime.now()}
+
+    if len(trackables.logicCache) > trackables.maxLogicCache:
+        sortedCache = sorted(trackables.logicCache.keys(), key=lambda x: trackables.logicCache[x]['age'])
+        i = 0
+        while len(trackables.logicCache) > trackables.maxLogicCache:
+            del trackables.logicCache[sortedCache[i]]
+            i += 1
     
     return log
 
@@ -210,15 +229,7 @@ def loadEntrances(logic, inventory):
     smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
     inLogicEntrances = []
 
-    e = explorer.Explorer()
-
-    for item in inventory:
-        count = inventory[item]
-
-        for _ in range(count):
-            e.addItem(item)
-    
-    e.visit(logic.start)
+    e = visitLogic(logic, inventory)
 
     entrances = {}
     for name,exterior in logic.world.entrances.items():
@@ -240,9 +251,15 @@ def loadEntrances(logic, inventory):
     return inLogicEntrances
 
 def visitLogic(logic, inventory):
+    if logic in explorerCache and inventory['id'] in explorerCache[logic]:
+        return explorerCache[logic][inventory['id']]
+
     e = explorer.Explorer()
 
     for item in inventory:
+        if item == 'id':
+            continue
+
         count = inventory[item]
 
         for _ in range(count):
@@ -250,8 +267,12 @@ def visitLogic(logic, inventory):
     
     e.visit(logic.start)
 
-    return e
+    if logic not in explorerCache:
+        explorerCache[logic] = {}
 
+    explorerCache[logic][inventory['id']] = e
+
+    return e
 
 def loadChecks(logic, inventory, leaveInstruments=False):
     nameOverrides = {

@@ -11,12 +11,12 @@ from datetime import datetime
 from flask import Flask, render_template, request, make_response
 # from werkzeug.middleware.profiler import ProfilerMiddleware
 
-import ladxrInterface
 from version import *
 from trackables import *
 from localSettings import LocalSettings, updateSettings
 from args import Args
 from trackerLogic import applyTrackerLogic
+from ladxrInterface import *
 
 try:
     import newrelic.agent
@@ -296,7 +296,7 @@ def renderCheckList():
         entrances = list(entrances)
         allItems = getAllItems(args)
         logics = getCachedLogics(logicHash, args, entranceMap, bossList, minibossMap)
-        allChecks = loadChecks(getLogicWithoutER(args), allItems)
+        allChecks = loadChecks(getLogicWithoutER(args), allItems, True)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
         result = {

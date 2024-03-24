@@ -1,3 +1,4 @@
+import ladxrInterface
 from datetime import datetime
 from ladxrInterface import *
 from trackerLogic import applyTrackerLogic
@@ -41,7 +42,23 @@ def getCachedLogics(hash, args, entranceMap, bossList, minibossMap):
     return logics
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
-    checkAccessibility = getCheckAccessibility(allChecks, logics['stock'], inventory)
+    ladxrInterface.explorerCache = {}
+
+    keyInventory = inventory.copy()
+    keyInventory['KEY0'] = 9
+    keyInventory['KEY1'] = 9
+    keyInventory['KEY2'] = 9
+    keyInventory['KEY3'] = 9
+    keyInventory['KEY4'] = 9
+    keyInventory['KEY5'] = 9
+    keyInventory['KEY6'] = 9
+    keyInventory['KEY7'] = 9
+    keyInventory['KEY8'] = 9
+
+    inventory['id'] = 1
+    keyInventory['id'] = 2
+
+    checkAccessibility = getCheckAccessibility(allChecks, logics['stock'], inventory, keyInventory)
 
     entranceAccessibility = {}
     
@@ -50,7 +67,7 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
 
     graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
 
-    getCheckTrackerAccessibility(logics['tracker'], inventory, checkAccessibility)
+    getCheckTrackerAccessibility(logics['tracker'], inventory, keyInventory, checkAccessibility)
 
     if allEntrances:
         getEntranceTrackerAccessibility(logics['tracker'], inventory, entranceAccessibility)
@@ -63,18 +80,7 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
 
     return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility, graphAccessibility)
 
-def getCheckTrackerAccessibility(logics, inventory, accessibility):
-    keyInventory = inventory.copy()
-    keyInventory['KEY0'] = 9
-    keyInventory['KEY1'] = 9
-    keyInventory['KEY2'] = 9
-    keyInventory['KEY3'] = 9
-    keyInventory['KEY4'] = 9
-    keyInventory['KEY5'] = 9
-    keyInventory['KEY6'] = 9
-    keyInventory['KEY7'] = 9
-    keyInventory['KEY8'] = 9
-
+def getCheckTrackerAccessibility(logics, inventory, keyInventory, accessibility):
     alreadyFound = set()
     behindKeys = set()
     for i in range(len(logics)):
@@ -211,7 +217,7 @@ def getGraphAccessibility(logics, inventory):
         
     return accessibility
 
-def getCheckAccessibility(allChecks, logics, inventory):
+def getCheckAccessibility(allChecks, logics, inventory, keyInventory):
     accessibility = {}
 
     outOfLogic = set(allChecks)
@@ -227,17 +233,6 @@ def getCheckAccessibility(allChecks, logics, inventory):
     for i in range(1, len(logics)):
         for j in range(i):
             accessibility[logics[i].name] = accessibility[logics[i].name].difference(accessibility[logics[j].name])
-
-    keyInventory = inventory.copy()
-    keyInventory['KEY0'] = 9
-    keyInventory['KEY1'] = 9
-    keyInventory['KEY2'] = 9
-    keyInventory['KEY3'] = 9
-    keyInventory['KEY4'] = 9
-    keyInventory['KEY5'] = 9
-    keyInventory['KEY6'] = 9
-    keyInventory['KEY7'] = 9
-    keyInventory['KEY8'] = 9
 
     # Find more checks that are behind small keys
     alreadyInKeyLogic = set()
