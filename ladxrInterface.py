@@ -22,7 +22,6 @@ from checkMetadata import checkMetadataTable
 from romTables import ROMWithTables
 
 allChecks = {}
-explorerCache = {}
 
 class Check:
     def __init__(self, id, behindKeys=False, behindTrackerLogic=False, vanilla=False, logicHint=False):
@@ -105,7 +104,6 @@ def getAllItems(args):
         pool[item + '_CHECKED'] = 1
 
     pool['TOADSTOOL_CHECKED'] = 1
-    pool['id'] = 0
 
     return pool
 
@@ -157,12 +155,7 @@ def getLogicWithoutER(realArgs):
 
     trackables.logicCache[argHash] = {'noER':log, 'age':datetime.now()}
 
-    if len(trackables.logicCache) > trackables.maxLogicCache:
-        sortedCache = sorted(trackables.logicCache.keys(), key=lambda x: trackables.logicCache[x]['age'])
-        i = 0
-        while len(trackables.logicCache) > trackables.maxLogicCache:
-            del trackables.logicCache[sortedCache[i]]
-            i += 1
+    trackables.trimLogicCache()
     
     return log
 
@@ -251,9 +244,6 @@ def loadEntrances(logic, inventory):
     return inLogicEntrances
 
 def visitLogic(logic, inventory):
-    if logic in explorerCache and inventory['id'] in explorerCache[logic]:
-        return explorerCache[logic][inventory['id']]
-
     e = explorer.Explorer()
 
     for item in inventory:
@@ -266,11 +256,6 @@ def visitLogic(logic, inventory):
             e.addItem(item)
     
     e.visit(logic.start)
-
-    if logic not in explorerCache:
-        explorerCache[logic] = {}
-
-    explorerCache[logic][inventory['id']] = e
 
     return e
 

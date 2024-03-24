@@ -32,14 +32,17 @@ def getCachedLogics(hash, args, entranceMap, bossList, minibossMap):
     
     logicCache[hash] = logics
 
+    trimLogicCache()
+    
+    return logics
+
+def trimLogicCache():
     if len(logicCache) > maxLogicCache:
         sortedCache = sorted(logicCache.keys(), key=lambda x: logicCache[x]['age'])
         i = 0
         while len(logicCache) > maxLogicCache:
             del logicCache[sortedCache[i]]
             i += 1
-    
-    return logics
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
     ladxrInterface.explorerCache = {}
@@ -54,9 +57,6 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     keyInventory['KEY6'] = 9
     keyInventory['KEY7'] = 9
     keyInventory['KEY8'] = 9
-
-    inventory['id'] = 1
-    keyInventory['id'] = 2
 
     checkAccessibility = getCheckAccessibility(allChecks, logics['stock'], inventory, keyInventory)
 
