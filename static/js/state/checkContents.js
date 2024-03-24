@@ -64,7 +64,7 @@ function setCheckContents(checkId, contents, housekeeping=true) {
 
     if (housekeeping) {
         drawActiveTab();
-        refreshTextChecks();
+        setTimeout(refreshTextChecks, 20);
     }
 }
 

@@ -18,7 +18,7 @@ function loadLocations() {
     let checkedErrors = loadChecked() ?? [];
     let entranceErrors = loadEntrances() ?? [];
 
-    refreshTextChecks();
+    setTimeout(refreshTextChecks, 20);
 
     return checkedErrors.concat(entranceErrors);
 }

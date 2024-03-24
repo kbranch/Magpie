@@ -47,7 +47,7 @@ function saveQuickSettings() {
     applySettings();
     skipNextAnimation = true;
     drawActiveTab();
-    refreshTextChecks();
+    setTimeout(refreshTextChecks, 20);
 }
 
 function quickSettingsToSettings() {
