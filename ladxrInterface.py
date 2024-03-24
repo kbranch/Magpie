@@ -148,7 +148,7 @@ def getLogicWithoutER(realArgs):
         return logic['noER']
     
     worldSetup = WorldSetup()
-    worldSetup.randomize(args, random.Random())
+    worldSetup.randomize(args, random.Random(1))
 
     log = buildLogic(args, worldSetup)
     log.name = 'noER'
@@ -215,18 +215,17 @@ def testRequirement(requirement, inventory):
     
     return requirement.test(inventory)
 
-def testEntrance(entrance, smallInventory):
-    return testRequirement(entrance.requirement, smallInventory) or testRequirement(entrance.one_way_enter_requirement, smallInventory)
+def testEntrance(entrance, inventory):
+    return testRequirement(entrance.requirement, inventory) or testRequirement(entrance.one_way_enter_requirement, inventory)
 
 def loadEntrances(logic, inventory):
-    smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
     inLogicEntrances = []
 
     e = visitLogic(logic, inventory)
 
     entrances = {}
     for name,exterior in logic.world.entrances.items():
-        if not testEntrance(exterior, smallInventory):
+        if not testEntrance(exterior, inventory):
             continue
 
         if exterior.location not in entrances:

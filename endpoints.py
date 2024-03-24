@@ -286,6 +286,7 @@ def renderCheckList():
         initChecks(args)
 
         addStartingItems(inventory, args, settings)
+        inventory = {key: value for (key, value) in inventory.items() if value > 0}
 
         entrances = getEntrancePool(args)
         if args.randomstartlocation and args.entranceshuffle == 'none':
