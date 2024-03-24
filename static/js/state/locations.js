@@ -18,7 +18,7 @@ function loadLocations() {
     let checkedErrors = loadChecked() ?? [];
     let entranceErrors = loadEntrances() ?? [];
 
-    refreshTextChecks();
+    setTimeout(refreshTextChecks, 20);
 
     return checkedErrors.concat(entranceErrors);
 }
@@ -201,7 +201,7 @@ function connectOneEndConnector(outdoors, indoors, refresh=true) {
     }
 }
 
-function connectEntrances(from, to, refresh=true) {
+function connectEntrances(from, to, refresh=true, save=true) {
     if (refresh) {
         pushUndoState();
     }
@@ -218,10 +218,12 @@ function connectEntrances(from, to, refresh=true) {
 
     skipNextAnimation = true;
 
-    saveEntrances();
-    closeAllTooltips();
+    if (save) {
+        saveEntrances();
+    }
 
     if (refresh) {
+        closeAllTooltips();
         refreshCheckList();
     }
 }
@@ -338,15 +340,15 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
     let connection = Connection.existingConnection(connector);
     
     if (connection == null || connector.id == 'outer_rainbow') {
-        connectEntrances(from, fromInterior, false);
-        connectEntrances(to, toInterior, false);
+        connectEntrances(from, fromInterior, false, save);
+        connectEntrances(to, toInterior, false, save);
     }
     else {
         if (connection.entrances.includes(from)) {
-            connectEntrances(to, toInterior, false);
+            connectEntrances(to, toInterior, false, save);
         }
         else {
-            connectEntrances(from, fromInterior, false);
+            connectEntrances(from, fromInterior, false, save);
         }
     }
      
@@ -361,13 +363,12 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
 
     skipNextAnimation = true;
 
-    closeAllTooltips();
-
     if (save) {
         saveEntrances();
     }
 
     if (refresh) {
+        closeAllTooltips();
         refreshCheckList();
     }
 }

@@ -562,6 +562,22 @@ img {
     z-index: 2;
 }
 
+.logic-button img {
+    width: 100%;
+    height: 100%;
+}
+
+img.logic-item {
+    height: 21px;
+}
+
+.logic-button {
+    width: 31.21px;
+    background-color: var(--bs-tooltip-bg);
+    cursor: default;
+    border: none;
+}
+
 .bk {
     border-style: none;
     background-image: url('/static/images/BK.svg');

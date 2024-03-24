@@ -5,6 +5,8 @@ import random
 from xmlrpc.client import boolean
 from trackerLogic import buildLogic
 import trackerLogic
+import trackables
+from datetime import datetime
 from autotracking.romContents import *
 
 sys.path.append(os.path.abspath('LADXR/'))
@@ -138,12 +140,22 @@ def getLogicWithoutER(realArgs):
     args.entranceshuffle = 'none'
     args.boss = 'default'
     args.miniboss = 'default'
+
+    argHash = hash(str({k:v for k,v in args.__dict__.items() if k != 'flags'}))
+    if argHash in trackables.logicCache:
+        logic = trackables.logicCache[argHash]
+        logic['age'] = datetime.now()
+        return logic['noER']
     
     worldSetup = WorldSetup()
-    worldSetup.randomize(args, random.Random())
+    worldSetup.randomize(args, random.Random(1))
 
     log = buildLogic(args, worldSetup)
     log.name = 'noER'
+
+    trackables.logicCache[argHash] = {'noER':log, 'age':datetime.now()}
+
+    trackables.trimLogicCache()
     
     return log
 
@@ -204,22 +216,12 @@ def testRequirement(requirement, inventory):
     return requirement.test(inventory)
 
 def testEntrance(entrance, inventory):
-    smallInventory = {key: value for (key, value) in inventory.items() if value > 0}
-
-    return testRequirement(entrance.requirement, smallInventory) or testRequirement(entrance.one_way_enter_requirement, smallInventory)
+    return testRequirement(entrance.requirement, inventory) or testRequirement(entrance.one_way_enter_requirement, inventory)
 
 def loadEntrances(logic, inventory):
     inLogicEntrances = []
 
-    e = explorer.Explorer()
-
-    for item in inventory:
-        count = inventory[item]
-
-        for _ in range(count):
-            e.addItem(item)
-    
-    e.visit(logic.start)
+    e = visitLogic(logic, inventory)
 
     entrances = {}
     for name,exterior in logic.world.entrances.items():
@@ -244,6 +246,9 @@ def visitLogic(logic, inventory):
     e = explorer.Explorer()
 
     for item in inventory:
+        if item == 'id':
+            continue
+
         count = inventory[item]
 
         for _ in range(count):
@@ -252,7 +257,6 @@ def visitLogic(logic, inventory):
     e.visit(logic.start)
 
     return e
-
 
 def loadChecks(logic, inventory, leaveInstruments=False):
     nameOverrides = {

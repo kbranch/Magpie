@@ -101,6 +101,7 @@ class NodeTooltip {
 
         return `<div class="btn-group dropend">
         <button type="button" class="btn tooltip-item text-start p-0" onclick="${action}"${helperTooltipAttrs}>${title}</button>
+        <div class="col-auto"><button type="button" class="btn btn-secondary p-1 logic-button" onclick="openCheckLogicViewer('${checkId}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="static/images/diagram-2-fill.svg"></button></div>
         <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false" data-parent-node-id="${this.node.id()}"${onmouseover}></button>
         <ul class="dropdown-menu">
             ${items}
@@ -160,11 +161,12 @@ class NodeTooltip {
         const interiorImageTemplate = `<div>
             <img src="static/images/entrances/{image}.png">
         </div>`
-        const entranceTemplate = `<div class='text-start tooltip-item d-flex p-1 mb-0' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
+        const entranceTemplate = `<div class='text-start tooltip-item d-flex p-1 mb-0 align-items-center' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
             {name}
         </div>
+        <button type="button" class="btn btn-secondary p-1 logic-button" onclick="openEntranceLogicViewer('${this.node?.entrance?.id}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="static/images/diagram-2-fill.svg"></button>
     </div>`;
         const connectionTemplate = `<li class="list-group-item text-start tooltip-item">
     <div class='tooltip-text text-start align-middle'>

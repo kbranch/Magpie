@@ -230,6 +230,30 @@
     </div>
 </div>
 
+<div class="modal fade" id="logicModal" tabindex="-1" aria-labelledby="logicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-l">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="logicModalLabel"></h6>
+                <button id="logicModalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="logicBody">
+            </div>
+            <div class="modal-footer">
+                <div class="row justify-content-end big-button">
+                    <div class="col-auto">
+                        <button id="logicModalBackButton" type="button" class="btn btn-secondary" onclick="openLogicViewer(logicStack.pop(), false)"><span id="backNodeName"></span></button>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col-auto">
+                        <button id="logicModalCloseButton" type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-m">
         <div class="modal-content">

@@ -60,6 +60,10 @@ function modifyTooltipAllowList() {
     allowList.img.push('data-bs-custom-class');
     allowList.img.push('data-node-item');
     allowList.img.push('src');
+    allowList.span.push('data-bs-toggle');
+    allowList.span.push('data-bs-custom-class');
+    allowList.span.push('data-bs-html');
+    allowList.span.push('data-bs-title');
     allowList.button = ['class', 'type', 'data-value', 'onclick', 'data-bs-toggle', 'aria-expanded', 'data-bs-custom-class', 'data-bs-html', 'data-bs-title'];
 }
 
@@ -93,7 +97,7 @@ function disconnectAutotracker() {
     }
 }
 
-function removeVanillaConnectors() {
+function removeVanillaConnectors(save=true) {
     if (connections.length == 0) {
         return;
     }
@@ -108,7 +112,9 @@ function removeVanillaConnectors() {
 
     connections = connections.filter(x => !x.vanilla);
 
-    saveEntrances();
+    if (save) {
+        saveEntrances();
+    }
 }
 
 function updateEntrances() {
@@ -118,7 +124,7 @@ function updateEntrances() {
         }
     }
 
-    removeVanillaConnectors();
+    removeVanillaConnectors(false);
     for (const connectorId in connectorDict) {
         let connector = connectorDict[connectorId];
 
@@ -146,6 +152,8 @@ function updateEntrances() {
             connectExteriors(connector.entrances[0], inside1, connector.entrances[2], inside3, false, false);
         }
     }
+
+    saveEntrances();
 }
 
 function moveChildren(source, dest) {

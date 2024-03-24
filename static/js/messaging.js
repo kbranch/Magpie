@@ -49,7 +49,7 @@ function processCheckMessage(message) {
 
     if (message.refresh) {
         drawActiveTab();
-        refreshTextChecks();
+        setTimeout(refreshTextChecks, 20);
 
         if (addedItem) {
             refreshCheckList();

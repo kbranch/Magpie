@@ -141,6 +141,29 @@ def updateVanilla(args):
     if not args.instruments and args.goal == 'seashells':
         vanillaIds -= vanillaBySetting['instruments']
 
+def andShortName(self, logic):
+    if self in logic.requirements_settings.names:
+        return f'{logic.requirements_settings.names[self]}({str(self)})'
+
+    return f"{type(self).__name__.lower()}{self._AND__items + [x.shortName(logic) for x in self._AND__children]}"
+
+def orShortName(self, logic):
+    if self in logic.requirements_settings.names:
+        return f'{logic.requirements_settings.names[self]}({str(self)})'
+
+    return f"{type(self).__name__.lower()}{self._OR__items + [x.shortName(logic) for x in self._OR__children]}"
+
+def otherShortName(self, logic):
+    return str(self)
+
+def patchRequirements():
+    setattr(AND, 'shortName', andShortName)
+    setattr(OR, 'shortName', orShortName)
+    setattr(NOT, 'shortName', otherShortName)
+    setattr(COUNT, 'shortName', otherShortName)
+    setattr(COUNTS, 'shortName', otherShortName)
+    setattr(FOUND, 'shortName', otherShortName)
+
 def applyTrackerLogic(log):
     # Bomb as bush breaker
     log.requirements_settings.bush._OR__items.append(BOMB)
@@ -229,6 +252,27 @@ def updateMetadata(table):
 def buildLogic(args, worldSetup, requirements=None):
     if worldSetup.goal == 'open':
         worldSetup.goal = -1
+
+    if requirements == None:
+        requirements = RequirementsSettings(args)
+    
+    requirements.names = {}
+
+    for name, req in requirements.__dict__.items():
+        if type(req) not in (type(True), type(''), AND, OR):
+            continue
+
+        if type(req) == type(True):
+            if req:
+                requirements.__dict__[name] = AND(req, 'TRUE')
+            else:
+                requirements.__dict__[name] = OR(req, 'FALSE')
+        if type(req) == type(''):
+            requirements.__dict__[name] = AND(req)
+        
+        req = requirements.__dict__[name]
+
+        requirements.names[req] = name
 
     log = logic.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 

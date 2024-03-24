@@ -1,3 +1,5 @@
+import ladxrInterface
+from datetime import datetime
 from ladxrInterface import *
 from trackerLogic import applyTrackerLogic
 
@@ -5,31 +7,46 @@ class FakeLogic:
     pass
 
 class Accessibility:
-    def __init__(self, checks, entrances, logicHints):
+    def __init__(self, checks, entrances, logicHints, graph):
         self.checks = checks
         self.entrances = entrances
         self.logicHints = logicHints
+        self.graph = graph
+
+maxLogicCache = 1000
+logicCache = {}
+
+def getCachedLogics(hash, args, entranceMap, bossList, minibossMap):
+    if hash in logicCache:
+        logics = logicCache[hash]
+        logics['age'] = datetime.now()
+        return logics
+
+    logics = {}
+    logics['stock'] = getLogics(args, entranceMap, bossList, minibossMap)
+    logics['tracker'] = getLogics(args, entranceMap, bossList, minibossMap)
+    logics['age'] = datetime.now()
+
+    for logic in logics['tracker']:
+        applyTrackerLogic(logic)
+    
+    logicCache[hash] = logics
+
+    trimLogicCache()
+    
+    return logics
+
+def trimLogicCache():
+    if len(logicCache) > maxLogicCache:
+        sortedCache = sorted(logicCache.keys(), key=lambda x: logicCache[x]['age'])
+        i = 0
+        while len(logicCache) > maxLogicCache:
+            del logicCache[sortedCache[i]]
+            i += 1
 
 def getAccessibility(allChecks, allEntrances, logics, inventory):
-    checkAccessibility = getCheckAccessibility(allChecks, logics, inventory)
-    entranceAccessibility = getEntranceAccessibility(allEntrances, logics, inventory)
+    ladxrInterface.explorerCache = {}
 
-    for log in logics:
-        applyTrackerLogic(log)
-
-    getCheckTrackerAccessibility(logics, inventory, checkAccessibility)
-    getEntranceTrackerAccessibility(logics, inventory, entranceAccessibility)
-
-
-    logicHintAccessibility = {}
-    for log in logics:
-        logicHintAccessibility[log] = {x for x in checkAccessibility[log] if x.logicHint}
-        for check in logicHintAccessibility[log]:
-            checkAccessibility[log].remove(check)
-
-    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility)
-
-def getCheckTrackerAccessibility(logics, inventory, accessibility):
     keyInventory = inventory.copy()
     keyInventory['KEY0'] = 9
     keyInventory['KEY1'] = 9
@@ -41,10 +58,35 @@ def getCheckTrackerAccessibility(logics, inventory, accessibility):
     keyInventory['KEY7'] = 9
     keyInventory['KEY8'] = 9
 
+    checkAccessibility = getCheckAccessibility(allChecks, logics['stock'], inventory, keyInventory)
+
+    entranceAccessibility = {}
+    
+    if allEntrances:
+        entranceAccessibility = getEntranceAccessibility(allEntrances, logics['stock'], inventory)
+
+    graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
+
+    getCheckTrackerAccessibility(logics['tracker'], inventory, keyInventory, checkAccessibility)
+
+    if allEntrances:
+        getEntranceTrackerAccessibility(logics['tracker'], inventory, entranceAccessibility)
+
+    logicHintAccessibility = {}
+    for log in logics['tracker']:
+        logicHintAccessibility[log.name] = {x for x in checkAccessibility[log.name] if x.logicHint}
+        for check in logicHintAccessibility[log.name]:
+            checkAccessibility[log.name].remove(check)
+
+    return Accessibility(checkAccessibility, entranceAccessibility, logicHintAccessibility, graphAccessibility)
+
+def getCheckTrackerAccessibility(logics, inventory, keyInventory, accessibility):
     alreadyFound = set()
     behindKeys = set()
     for i in range(len(logics)):
-        level = accessibility[logics[i]]
+        logics[i].difficulty = i
+
+        level = accessibility[logics[i].name]
         behindKeys = behindKeys.union({x.id for x in level if x.behindKeys})
 
         checksBehindTrackerLogic = set(loadChecks(logics[i], inventory)).difference(level)
@@ -54,8 +96,8 @@ def getCheckTrackerAccessibility(logics, inventory, accessibility):
         checksBehindBoth = checksBehindBoth.difference({x for x in checksBehindBoth if x.id in behindKeys})
 
         for j in range(i):
-            checksBehindTrackerLogic = checksBehindTrackerLogic.difference(accessibility[logics[j]])
-            checksBehindBoth = checksBehindBoth.difference(accessibility[logics[j]])
+            checksBehindTrackerLogic = checksBehindTrackerLogic.difference(accessibility[logics[j].name])
+            checksBehindBoth = checksBehindBoth.difference(accessibility[logics[j].name])
 
         for check in checksBehindTrackerLogic:
             if check in alreadyFound:
@@ -74,9 +116,9 @@ def getCheckTrackerAccessibility(logics, inventory, accessibility):
         for check in level:
             check.difficulty = i
         
-    for log in accessibility:
+    for log in logics:
         if log.difficulty == 9:
-            accessibility[log] = accessibility[log].difference(alreadyFound)
+            accessibility[log.name] = accessibility[log.name].difference(alreadyFound)
 
 def getEntranceTrackerAccessibility(logics, inventory, accessibility):
     found = {x for x in accessibility if accessibility[x].difficulty != 9}
@@ -96,7 +138,86 @@ def getEntranceTrackerAccessibility(logics, inventory, accessibility):
             accessibility[entrance].difficulty = i
             accessibility[entrance].behindTrackerLogic = True
 
-def getCheckAccessibility(allChecks, logics, inventory):
+def getGraphAccessibility(logics, inventory):
+    accessibility = {}
+
+    for i in range(len(logics)):
+        logic = logics[i]
+
+        e = visitLogic(logic, inventory)
+        accessibleLocations = e.getAccessableLocations()
+
+        for loc in logic.location_list:
+            name = loc.friendlyName()
+
+            if name == '':
+                continue
+
+            if name not in accessibility:
+                accessibility[name] = {}
+                accessibility[name]['connections'] = {}
+                accessibility[name]['checks'] = [x.nameId for x in loc.items]
+                accessibility[name]['id'] = name
+            
+            accLoc = accessibility[name]
+
+            if 'diff' not in accLoc and loc in accessibleLocations:
+                accLoc['diff'] = i
+
+            for connection in loc.simple_connections + loc.gated_connections:
+                toName = connection[0].friendlyName()
+                fullReqName = str(connection[1])
+                shortReqName = fullReqName
+                connId = name + '->' + toName + ':' + fullReqName
+                if hasattr(connection[1], 'shortName'):
+                    shortReqName = connection[1].shortName(logic)
+
+                if connId not in accLoc['connections']:
+                    to = connection[0]
+                    matchingConnections = [x for x in to.simple_connections + to.gated_connections if str(x[1]) == fullReqName]
+
+                    newConnection = {
+                        'from': name,
+                        'to': toName,
+                        'req': fullReqName,
+                        'diff': i,
+                    }
+
+                    accLoc['connections'][connId] = newConnection
+
+                    if fullReqName != shortReqName:
+                        newConnection['shortReq'] = shortReqName
+                    
+                    if not matchingConnections:
+                        newConnection['oneWay'] = True
+    
+    entrancesByLocation = {}
+    for entrance,loc in logics[0].world.entrances.items():
+        name = loc.location.friendlyName()
+        if name not in entrancesByLocation:
+            entrancesByLocation[name] = []
+        
+        entrancesByLocation[name].append(entrance)
+
+    for name,loc in accessibility.items():
+        if name in entrancesByLocation:
+            accessibility[name]['entrances'] = entrancesByLocation[name]
+
+        for id,connection in loc['connections'].items():
+            if 'oneWay' in connection and connection['to'] in accessibility:
+                newConnection = connection.copy()
+                newConnection['badWay'] = True
+                del newConnection['oneWay']
+
+                to = accessibility[connection['to']]
+                to['connections'][id] = newConnection
+
+    for name in accessibility:
+        accessibility[name]['connections'] = [v for (k,v) in accessibility[name]['connections'].items()]
+        
+    return accessibility
+
+def getCheckAccessibility(allChecks, logics, inventory, keyInventory):
     accessibility = {}
 
     outOfLogic = set(allChecks)
@@ -105,33 +226,22 @@ def getCheckAccessibility(allChecks, logics, inventory):
     for i in range(len(logics)):
         logic = logics[i]
         
-        accessibility[logic] = set(loadChecks(logic, inventory))
-        outOfLogic = outOfLogic.difference(accessibility[logic])
+        accessibility[logic.name] = set(loadChecks(logic, inventory))
+        outOfLogic = outOfLogic.difference(accessibility[logic.name])
     
     # Remove duplicate checks from higher logic levels
     for i in range(1, len(logics)):
         for j in range(i):
-            accessibility[logics[i]] = accessibility[logics[i]].difference(accessibility[logics[j]])
-
-    keyInventory = inventory.copy()
-    keyInventory['KEY0'] = 9
-    keyInventory['KEY1'] = 9
-    keyInventory['KEY2'] = 9
-    keyInventory['KEY3'] = 9
-    keyInventory['KEY4'] = 9
-    keyInventory['KEY5'] = 9
-    keyInventory['KEY6'] = 9
-    keyInventory['KEY7'] = 9
-    keyInventory['KEY8'] = 9
+            accessibility[logics[i].name] = accessibility[logics[i].name].difference(accessibility[logics[j].name])
 
     # Find more checks that are behind small keys
     alreadyInKeyLogic = set()
     for i in range(len(logics)):
-        level = accessibility[logics[i]]
+        level = accessibility[logics[i].name]
         checksBehindKeys = set(loadChecks(logics[i], keyInventory)).difference(level)
 
         for j in range(i):
-            checksBehindKeys = checksBehindKeys.difference(accessibility[logics[j]])
+            checksBehindKeys = checksBehindKeys.difference(accessibility[logics[j].name])
         
         for check in checksBehindKeys:
             if check in alreadyInKeyLogic:
@@ -154,9 +264,10 @@ def getCheckAccessibility(allChecks, logics, inventory):
         logics[i].friendlyName = f'In {logics[i].name} logic'
 
     oolLogic = FakeLogic()
+    oolLogic.name = 'ool'
     oolLogic.friendlyName = 'Out of logic'
     oolLogic.difficulty = 9
-    accessibility[oolLogic] = outOfLogic
+    accessibility[oolLogic.name] = outOfLogic
 
     return accessibility
 
@@ -191,6 +302,7 @@ def getEntranceAccessibility(allEntrances, logics, inventory):
 
 def addStartingItems(inventory, args, settings):
     inventory['RUPEES_500'] = 10
+    inventory['TRUE'] = 1
 
     if args.bowwow != 'normal':
         inventory['SWORD'] = inventory['SWORD'] + 1

@@ -1,3 +1,5 @@
+import gzip
+import copy
 import json
 import base64
 import socket
@@ -6,13 +8,15 @@ import requests
 import traceback
 from jinja2 import Template
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
+# from werkzeug.middleware.profiler import ProfilerMiddleware
 
-import ladxrInterface
 from version import *
 from trackables import *
 from localSettings import LocalSettings, updateSettings
 from args import Args
+from trackerLogic import applyTrackerLogic
+from ladxrInterface import *
 
 try:
     import newrelic.agent
@@ -36,6 +40,8 @@ app.jinja_options['lstrip_blocks'] = True
 
 app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
+
+# app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
 try:
     import sharing
@@ -251,11 +257,18 @@ def getSpoilerLog():
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():
     try:
-        argValues = Args.parse(request.form['args'])
+        argsText = request.form['args']
+        entranceText = request.form['entranceMap']
+        bossText = request.form['bossList']
+        minibossText = request.form['minibossMap']
+
+        argValues = Args.parse(argsText)
         inventory = json.loads(request.form['inventory'])
-        entranceMap = json.loads(request.form['entranceMap'])
-        bossList = json.loads(request.form['bossList'])
-        minibossMap = json.loads(request.form['minibossMap'])
+        entranceMap = json.loads(entranceText)
+        bossList = json.loads(bossText)
+        minibossMap = json.loads(minibossText)
+
+        logicHash = hash(argsText + entranceText + bossText + minibossText)
 
         settings = {}
 
@@ -266,11 +279,14 @@ def renderCheckList():
             if key.isnumeric():
                 minibossMap[int(key)] = minibossMap[key]
                 del minibossMap[key]
+            
+        trackerLogic.patchRequirements()
 
         args = getArgs(values=argValues)
         initChecks(args)
 
         addStartingItems(inventory, args, settings)
+        inventory = {key: value for (key, value) in inventory.items() if value > 0}
 
         entrances = getEntrancePool(args)
         if args.randomstartlocation and args.entranceshuffle == 'none':
@@ -280,8 +296,8 @@ def renderCheckList():
 
         entrances = list(entrances)
         allItems = getAllItems(args)
-        logics = getLogics(args, entranceMap, bossList, minibossMap)
-        allChecks = loadChecks(getLogicWithoutER(args), allItems)
+        logics = getCachedLogics(logicHash, args, entranceMap, bossList, minibossMap)
+        allChecks = loadChecks(getLogicWithoutER(args), allItems, True)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
 
         result = {
@@ -289,12 +305,13 @@ def renderCheckList():
                 'checks': [],
                 'entrances': accessibility.entrances,
                 'logicHints': [],
+                'graph': accessibility.graph,
             },
             'logics': [{
                 'difficulty': x.difficulty,
                 'friendlyName': x.friendlyName,
                 'name': x.name,
-            } for x in logics],
+            } for x in logics['stock']],
             'randomizedEntrances': entrances,
             'startLocations': getStartLocations(args),
         }
@@ -305,7 +322,13 @@ def renderCheckList():
         for logic in accessibility.logicHints:
             result['accessibility']['logicHints'] += list(accessibility.logicHints[logic])
 
-        return json.dumps(result, default=lambda x: x.__dict__) 
+        content = gzip.compress(json.dumps(result, default=lambda x: x.__dict__).encode('utf8'), 5)
+        response = make_response(content)
+        response.headers['Content-length'] = len(content)
+        response.headers['Content-Encoding'] = 'gzip'
+
+        return response
+        # return json.dumps(result, default=lambda x: x.__dict__)
     except:
         return renderTraceback()
 
