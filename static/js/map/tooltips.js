@@ -69,6 +69,10 @@ function removeNodeTooltips() {
 }
 
 function updateTooltip(checkGraphic, hoveredCheckId=null) {
+    if (!checkGraphic) {
+        return;
+    }
+
     let node = nodes[checkGraphic.dataset.nodeId]
 
     if (node == undefined) {

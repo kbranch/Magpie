@@ -309,7 +309,7 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
     if (pinned != null){
         let toPin = $(`[data-node-id="${pinned}"]`);
 
-        if (toPin) {
+        if (toPin && toPin[0]) {
             nodeSecondary(toPin[0]);
         }
 
