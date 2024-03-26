@@ -51,7 +51,7 @@ class Entrance:
 
 def getArgsFromShortString(shortString):
     settings = Settings()
-    settings.loadShortString(shortString)
+    settings.loadShortString(shortString.replace("%3C", "<").replace("%3E", ">").replace("%", ""))
     settings = getArgs(ladxrFlags=settings, useCurrentValue=True).__dict__
     del settings['flags']
     return settings
