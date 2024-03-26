@@ -134,7 +134,7 @@ function openLogicViewer(nodeId, open=true) {
         let otherEnd = connection.badWay ? connection.from : connection.to;
 
         connectionsSection += `
-<tr onclick="logicStack.push(\`${nodeId}\`); openLogicViewer(\`${otherEnd}\`, false);">
+<tr>
     <td>
     <div class="text-start d-flex p-1 mb-0 align-items-center">
         <div class="tooltip-check-graphic difficulty-${connection.diff} align-middle">
@@ -146,6 +146,8 @@ function openLogicViewer(nodeId, open=true) {
     </td>
     <td>${getLogicNodeName(otherEnd)}${connection.badWay ? ' <img class="logic-item invert" src="static/images/do-not-enter.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">' : ''}</td>
     <td>${iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)}</td>
+    <td>${connection.met ? "<img class='connection-met logic-accessibility' src='/static/images/check2-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>" : "<img class='connection-unmet logic-accessibility' src='/static/images/x-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>"}</td>
+    <td><button type="button" class="btn btn-secondary py-0" onclick="logicStack.push(\`${nodeId}\`); openLogicViewer(\`${otherEnd}\`, false);">View</button></td>
 </tr>
 `;
     }
@@ -180,6 +182,8 @@ function openLogicViewer(nodeId, open=true) {
                 <th scope="col"></th>
                 <th scope="col">To</th>
                 <th scope="col">Requirements</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>

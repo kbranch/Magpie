@@ -166,11 +166,12 @@ def getGraphAccessibility(logics, inventory):
 
             for connection in loc.simple_connections + loc.gated_connections:
                 toName = connection[0].friendlyName()
-                fullReqName = str(connection[1])
+                requirement = connection[1]
+                fullReqName = str(requirement)
                 shortReqName = fullReqName
                 connId = name + '->' + toName + ':' + fullReqName
-                if hasattr(connection[1], 'shortName'):
-                    shortReqName = connection[1].shortName(logic)
+                if hasattr(requirement, 'shortName'):
+                    shortReqName = requirement.shortName(logic)
 
                 if connId not in accLoc['connections']:
                     to = connection[0]
@@ -190,6 +191,9 @@ def getGraphAccessibility(logics, inventory):
                     
                     if not matchingConnections:
                         newConnection['oneWay'] = True
+                    
+                    if testRequirement(requirement, inventory):
+                        newConnection['met'] = True
     
     entrancesByLocation = {}
     for entrance,loc in logics[0].world.entrances.items():
@@ -216,6 +220,15 @@ def getGraphAccessibility(logics, inventory):
         accessibility[name]['connections'] = [v for (k,v) in accessibility[name]['connections'].items()]
         
     return accessibility
+
+def testRequirement(requirement, inventory):
+    if not requirement:
+        return True
+
+    if type(requirement) == str:
+        return requirement in inventory
+    
+    return requirement.test(inventory)
 
 def getCheckAccessibility(allChecks, logics, inventory, keyInventory):
     accessibility = {}
