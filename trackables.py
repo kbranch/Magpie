@@ -335,7 +335,7 @@ def addStartingItems(inventory, args, settings):
 
 def cleanUpEntranceMap(entranceMap, entrances, args):
     for source, dest in [x for x in entranceMap.items()]:
-        if dest in {'landfill', 'bk_shop'}:
+        if dest in {'landfill', 'bk_shop', 'bk_shop:inside'}:
             entranceMap[source] = 'start_house:inside'
         if source in {"null", None} or dest in {"null", None}:
             del entranceMap[source]
