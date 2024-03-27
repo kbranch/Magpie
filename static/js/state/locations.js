@@ -140,7 +140,7 @@ function pruneEntranceMap() {
             Connection.disconnect(entrance);
             delete entranceMap[entrance];
         }
-        else if (!['landfill', 'bk_shop'].includes(mappedEntrance) && !randomizedEntrances.includes(mappedEntrance)) {
+        else if (!['landfill', 'bk_shop', 'bk_shop:inside'].includes(mappedEntrance) && !randomizedEntrances.includes(mappedEntrance)) {
             Connection.disconnect(entrance);
             delete entranceMap[entrance];
         }
@@ -151,7 +151,7 @@ function pruneEntranceMap() {
             continue;
         }
 
-        if (!['landfill', 'bk_shop'].includes(entrance) && !randomizedEntrances.includes(entrance)) {
+        if (!['landfill', 'bk_shop', 'bk_shop:inside'].includes(entrance) && !randomizedEntrances.includes(entrance)) {
             Connection.disconnect(reverseEntranceMap[entrance]);
             delete entranceMap[reverseEntranceMap[entrance]];
         }

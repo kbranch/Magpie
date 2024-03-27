@@ -336,7 +336,7 @@ class MapNode {
                              && mappedEntrance.isInside())) {
                     classes.push('difficulty-checked');
                 }
-                else if (mappedEntrance.id == 'bk_shop') {
+                else if (mappedEntrance.id == 'bk_shop:inside') {
                     classes.push('bk');
                 }
                 else {
