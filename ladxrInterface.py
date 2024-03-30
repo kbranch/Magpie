@@ -384,6 +384,10 @@ def getDungeonItemCount(args):
             itemCount[i] -= allItems[f'NIGHTMARE_KEY{i}']
         if not args.instruments and f'INSTRUMENT{i}' in allItems:
             itemCount[i] -= allItems[f'INSTRUMENT{i}']
+        
+    # Exceptions for D6 and D8's outside checks, which can never contain dungeon items and aren't listed as being in the dungeon in the metadata
+    itemCount[6] += 1
+    itemCount[8] += 1
     
     for i in range(len(dungeonList)):
         if i not in itemCount:
