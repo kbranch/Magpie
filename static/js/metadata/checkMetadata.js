@@ -1909,8 +1909,8 @@ let vanillaCoordDict = {
     },
     "0x000":{
        "id":"0x000",
-       "vanillaArea":"Turtle Rock",
-       "vanillaName":"Outside Heart Piece",
+       "vanillaArea":"Tal Tal Mountains",
+       "vanillaName":"Outside D8 Heart Piece",
        "locations":[
           {
              "map":"vanillaOverworld",
@@ -2739,8 +2739,8 @@ let vanillaCoordDict = {
     },
     "0x06C":{
        "id":"0x06C",
-       "vanillaArea":"Face Shrine",
-       "vanillaName":"Raft Chest",
+       "vanillaArea":"Rapids Ride",
+       "vanillaName":"Outside D6 Chest",
        "locations":[
           {
              "map":"vanillaOverworld",
