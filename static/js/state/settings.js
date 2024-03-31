@@ -257,6 +257,14 @@ function updateSettings() {
         localSettings.showVanilla = !localSettings.hideVanilla;
         delete localSettings['hideVanilla'];
     }
+    if ('ndiItems' in localSettings) {
+        localSettings.broadcastItems = localSettings.ndiItems ? 'ndi' : 'none';
+        delete localSettings['ndiItems'];
+    }
+    if ('ndiMap' in localSettings) {
+        localSettings.broadcastMap = localSettings.ndiMap ? 'ndi' : 'none';
+        delete localSettings['ndiMap'];
+    }
     if (localSettings.followToUnderworld === true) {
         localSettings.followToUnderworld = 'always';
     } else if (localSettings.followToUnderworld === false) {

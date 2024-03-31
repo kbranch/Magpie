@@ -6,9 +6,10 @@
     "configurations": [
         {
             "name": "Python: Flask",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
 
+            // Webserver
             "module": "flask",
             "env": {
                 "FLASK_APP": "endpoints.py",
@@ -23,10 +24,14 @@
             ],
             "jinja": true
 
+
+            // Sprite extractor script
             // "program": "spriteExtractor.py",
             // "console": "integratedTerminal",
             // "justMyCode": true
 
+
+            // Local version
             // "program": "magpie.py",
             // "args": [
             //     "--local",

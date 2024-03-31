@@ -1,11 +1,13 @@
 import gzip
-import copy
 import json
+import queue
 import base64
 import socket
 import platform
 import requests
 import traceback
+import broadcastView
+from broadcastView import BroadcastView
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request, make_response
@@ -40,6 +42,10 @@ app.jinja_options['lstrip_blocks'] = True
 
 app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
+
+mainThreadQueue = queue.Queue()
+itemsBroadcastView = BroadcastView(mainThreadQueue, broadcastView.types.items)
+mapBroadcastView = BroadcastView(mainThreadQueue, broadcastView.types.map)
 
 # app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
@@ -380,32 +386,48 @@ def suggestion():
 
     return 'thx'
 
-if 'ndi' in sys.modules:
-    @app.route("/mapNdi", methods=['POST'])
-    def mapNdi():
-        data = request.form["data"]
-        pngBytes = base64.b64decode(data.split(',')[1])
-        ndi.updateMapImage(pngBytes)
+@app.route("/mapBroadcast", methods=['POST'])
+def mapBroadcast():
+    global mapBroadcastView, mainThreadQueue
 
-        return "OK"
+    if not app.config['local']:
+        return "Broadcast view is only available in the offline version of Magpie"
 
-    @app.route("/itemsNdi", methods=['POST'])
-    def itemsNdi():
-        data = request.form["data"]
-        pngBytes = base64.b64decode(data.split(',')[1])
-        ndi.updateItemsImage(pngBytes)
+    data = request.form["data"]
+    pngBytes = base64.b64decode(data.split(',')[1])
+    
+    mapBroadcastView.updateImage(pngBytes)
 
-        return "OK"
+    return "OK"
 
-    @app.route("/ndiSettings", methods=['POST'])
-    def ndiSettings():
-        itemsEnabled = request.form["itemsEnabled"] == 'true'
-        mapEnabled = request.form["mapEnabled"] == 'true'
+@app.route("/itemsBroadcast", methods=['POST'])
+def itemsBroadcast():
+    global itemsBroadcastView, mainThreadQueue
 
-        if app.config['local']:
-            ndi.setNdiStatus(itemsEnabled, mapEnabled)
+    if not app.config['local']:
+        return "Broadcast view is only available in the offline version of Magpie"
 
-        return "OK"
+    data = request.form["data"]
+    pngBytes = base64.b64decode(data.split(',')[1])
+
+    itemsBroadcastView.updateImage(pngBytes)
+
+    return "OK"
+
+@app.route("/broadcastSettings", methods=['POST'])
+def broadcastSettings():
+    global itemsBroadcastView, mainThreadQueue
+
+    if not app.config['local']:
+        return "Broadcast view is only available in the offline version of Magpie"
+
+    items = broadcastView.modes[request.form["items"]]
+    map = broadcastView.modes[request.form["map"]]
+    
+    itemsBroadcastView.setMode(items)
+    mapBroadcastView.setMode(map)
+
+    return "OK"
 
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])

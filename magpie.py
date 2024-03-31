@@ -1,7 +1,10 @@
 import os
-import ndi
 import sys
+import time
+import queue
+import threading
 import argparse
+from tkinter import TclError
 from flaskwebgui import FlaskUI
 
 import endpoints
@@ -29,6 +32,42 @@ if sys.platform.lower().startswith('win'):
         if whnd != 0:
             ctypes.windll.user32.ShowWindow(whnd, 1)
 
+def startLocal(width, height, settings, debug):
+    if width == None:
+        width = settings['width']
+    else:
+        settings['width'] = width
+
+    if height == None:
+        height = settings['height']
+    else:
+        settings['height'] = height
+    
+    if height != None or width != None:
+        localSettings.writeSettings(settings)
+
+    endpoints.diskSettings = settings
+
+    if sys.platform.lower().startswith('win') and not debug:
+        if getattr(sys, 'frozen', False):
+            hideConsole()
+
+    chromePaths = [r'%ProgramFiles%\Google\Chrome\Application\chrome.exe',
+                    r'%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe',
+                    r'%LocalAppData%\Google\Chrome\Application\chrome.exe']
+    
+    browserPath = None
+    
+    for path in chromePaths:
+        expanded = os.path.expandvars(path)
+        if os.path.exists(expanded):
+            browserPath = expanded
+            print(f'Found Chrome at {browserPath}')
+            break
+    
+    ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
+    ui.run()
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
@@ -42,45 +81,22 @@ def main():
     localSettings.nested = args.nested
 
     if endpoints.app.config['local']:
-        width = args.width
-        height = args.height
-
         settings = localSettings.readSettings()
 
-        if width == None:
-            width = settings['width']
-        else:
-            settings['width'] = width
+        thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug))
+        thread.start()
 
-        if height == None:
-            height = settings['height']
-        else:
-            settings['height'] = height
-        
-        if args.height != None or args.width != None:
-            localSettings.writeSettings(settings)
+        while thread.is_alive():
+            try:
+                (callback, args) = endpoints.mainThreadQueue.get(False)
+                callback(*args)
+            except queue.Empty:
+                endpoints.mapBroadcastView.updateWindow()
+                endpoints.itemsBroadcastView.updateWindow()
+            
+            time.sleep(0.1)
 
-        endpoints.diskSettings = settings
-
-        if sys.platform.lower().startswith('win') and not args.debug:
-            if getattr(sys, 'frozen', False):
-                hideConsole()
-
-        chromePaths = [r'%ProgramFiles%\Google\Chrome\Application\chrome.exe',
-                        r'%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe',
-                        r'%LocalAppData%\Google\Chrome\Application\chrome.exe']
-        
-        browserPath = None
-        
-        for path in chromePaths:
-            expanded = os.path.expandvars(path)
-            if os.path.exists(expanded):
-                browserPath = expanded
-                print(f'Found Chrome at {browserPath}')
-                break
-        
-        ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
-        ui.run()
+        thread.join()
 
         if sys.platform.lower().startswith('win') and not args.debug:
             if getattr(sys, 'frozen', False):

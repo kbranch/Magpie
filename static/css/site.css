@@ -665,7 +665,7 @@ svg.hollow {
 
 .svg-map-icon {
     fill-opacity: 1;
-    stroke: #000000;
+    stroke: #000000 !important;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: none;

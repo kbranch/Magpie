@@ -38,8 +38,8 @@ class LocalSettings:
         self.spoilOnCollect = False
         self.showOwnedPickups = False
         self.graphicsPack = ''
-        self.ndiItems = False
-        self.ndiMap = False
+        self.broadcastItems = 'none'
+        self.broadcastMap = 'none'
         self.stacked = False
         self.playerName = None
         self.eventName = None
