@@ -40,6 +40,7 @@
 <script src="static/js/ndi.js"></script>
 <script src="static/js/sharing.js"></script>
 <script src="static/js/logic.js"></script>
+<script src="static/js/broadcast.js" type="module"></script>
 <script src="static/js/archipelago.js" type="module"></script>
 
 <script type="application/javascript">
@@ -123,6 +124,7 @@
     var logicGraph = null;
     var logicByCheck = {};
     var logicByEntrance = {};
+    var broadcastMode = '{{broadcastMode}}';
 
     const renamedItems = {
         "KEY9": "KEY0",
@@ -388,6 +390,8 @@
             $('#errorTextArea').summernote({
                 height: 200,
             });
+
+            broadcastInit();
         });
 
         if (settingsErrors.length || locationErrors.length || checkErrors.length) {
@@ -445,15 +449,19 @@
         window.addEventListener("resize", resizeTimeout); // Window size
         window.visualViewport.addEventListener('resize', viewportResizeTimeout); // Pinch zoom
 
-        document.getElementById('exportModal').addEventListener('shown.bs.modal', () => {
-            let textbox = document.getElementById('exportFilename');
-            textbox.focus();
-            textbox.select();
-        });
+        let exportModal = document.getElementById('exportModal');
 
-        document.getElementById('exportModal').addEventListener('hidden.bs.modal', () => {
-            document.getElementById('argsOffcanvas').focus();
-        });
+        if (exportModal) {
+            exportModal.addEventListener('shown.bs.modal', () => {
+                let textbox = document.getElementById('exportFilename');
+                textbox.focus();
+                textbox.select();
+            });
+
+            exportModal.addEventListener('hidden.bs.modal', () => {
+                document.getElementById('argsOffcanvas').focus();
+            });
+        }
     }
 
     init();

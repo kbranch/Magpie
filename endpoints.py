@@ -148,6 +148,7 @@ def home():
                                          allowAutotracking=True,
                                          allowMap=True,
                                          players=[''],
+                                         broadcastMode='send',
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -386,10 +387,8 @@ def suggestion():
 
     return 'thx'
 
-@app.route("/mapBroadcast", methods=['POST'])
-def mapBroadcast():
-    global mapBroadcastView, mainThreadQueue
-
+@app.route("/mapBroadcastFrame", methods=['POST'])
+def mapBroadcastFrame():
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
 
@@ -400,10 +399,8 @@ def mapBroadcast():
 
     return "OK"
 
-@app.route("/itemsBroadcast", methods=['POST'])
-def itemsBroadcast():
-    global itemsBroadcastView, mainThreadQueue
-
+@app.route("/itemsBroadcastFrame", methods=['POST'])
+def itemsBroadcastFrame():
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
 
@@ -416,8 +413,6 @@ def itemsBroadcast():
 
 @app.route("/broadcastSettings", methods=['POST'])
 def broadcastSettings():
-    global itemsBroadcastView, mainThreadQueue
-
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
 
@@ -428,6 +423,38 @@ def broadcastSettings():
     mapBroadcastView.setMode(map)
 
     return "OK"
+
+@app.route("/itemsBroadcast")
+def itemsBroadcast():
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+
+    return render_template("itemsBroadcast.html",
+                                flags=flags, 
+                                args=args,
+                                defaultSettings=defaultSettings,
+                                jsonArgs=json.dumps(args.__dict__),
+                                jsonSettings=json.dumps(defaultSettings.__dict__),
+                                jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                jsonArgsOverrides=json.dumps(argsOverrides),
+                                local=app.config['local'],
+                                graphicsOptions=LocalSettings.graphicsPacks(),
+                                version=getVersion(),
+                                diskSettings=getDiskSettings(),
+                                hostname=app.config['hostname'],
+                                hideShare=True,
+                                showTitle=True,
+                                keepQueryArgs=True,
+                                settingsPrefix='itemsBroadcast_',
+                                players=[''],
+                                extraTitle=" - Items Broadcast View",
+                                broadcastMode='receive',
+                           )
 
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])
@@ -586,6 +613,7 @@ if sharingEnabled:
                                             viewCode=viewCode,
                                             joinCode=joinCode,
                                             codeFailed=codeFailed,
+                                            extraTitle=" - Event Restream",
                                         )
 
     @app.route("/player")

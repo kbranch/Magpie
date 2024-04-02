@@ -94,6 +94,10 @@ function saveSettings() {
     skipNextAnimation = true;
 
     refreshItems();
+
+    if (broadcastMode == 'send') {
+        broadcastArgs();
+    }
 }
 
 function argsAreValid(tempArgs) {
