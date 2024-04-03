@@ -764,6 +764,10 @@ button.nav-link.active {
     max-width: 1500px;
 }
 
+.full-container {
+    max-width: 100% !important;
+}
+
 .popover {
     max-width: 400px;
     --bs-popover-bg: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));

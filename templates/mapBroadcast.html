@@ -2,19 +2,24 @@
 
 {% block content %}
 
-<div id="unstackedContainer" class="row ps-0 pt-0">
-    <div id="unstackedItems" data-player="" class="col-xs col-md-auto item-width">
-        <div class="items-slot">
-            <div id="itemContainer" class="pb-2"></div>
+{% include 'icons.html' %}
+
+<div id="unstackedContainer" class="row ps-0 pe-4 pt-0" data-player="">
+    <div id="unstackedMap" class="col-xs-12 col-md px-0 pt-0 pb-4 map-slot map-chunk">
+        <div id="mapContainer">
+            {% include 'map.html' %}
         </div>
     </div>
+    <div class="quicksettings-container quicksettings-slot full-height">
+        {% include 'quicksettings.html' %}
+    </div>
 </div>
-<div id="stackedContainer" class="row ps-0 pt-0 hidden">
-    <div id="stackedItems" data-player="" class="col-auto">
-        <div class="row">
-            <div class="col-xs col-md-auto items-slot px-0">
-            </div>
+<div id="stackedContainer" class="ps-0 pe-2 pt-0 hidden" data-player="">
+    <div id="stackedMap" class="row map-chunk">
+        <div class="col px-0 pt-0 pb-4 map-slot">
         </div>
+    </div>
+    <div class="col-auto px-2_5 quicksettings-container quicksettings-slot">
     </div>
 </div>
 

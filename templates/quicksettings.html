@@ -56,6 +56,7 @@
             </div>
         </div>
 
+        {% if not smallQuicksettings %}
         <div class="tab h-100" id="autotrackerTabContent">
             <div class="row h-100 justify-content-center align-items-end">
                 <div class="col">
@@ -171,9 +172,11 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 
+{% if not smallQuicksettings %}
 <ul class="nav px-2_5" id="quickTabs">
     <li class="quicktab-button active" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="quicksettings" data-bs-title="Quick Settings" data-bs-trigger="hover">
         <button class="btn quicktab-link" id="quicksettingsTab" data-tabname="quicksettings" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/ui-checks.svg"></button>
@@ -191,6 +194,7 @@
         <button class="btn quicktab-link" id="downloadsTab" data-tabname="downloads" type="button" onclick="quickSettingsTab(this)"><img class="quicksetting-icon" src="static/images/file-arrow-down.svg"></button>
     </li>
 </ul>
+{% endif %}
 
 <script type="application/javascript">
     "use strict"

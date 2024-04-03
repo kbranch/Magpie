@@ -81,7 +81,6 @@
     var itemLocations = {};
     var hoveredItems = [];
     var inventory = {};
-    var mapNodes = null;
     var args = null;
     var skipNextAnimation = true;
     var undoStack = [];
@@ -112,6 +111,8 @@
     var liveUpdate = false;
     var allowAutotracking = '{{allowAutotracking}}' == 'True';
     var allowMap = '{{allowMap}}' == 'True';
+    var refreshMap = !('{{refreshMap}}' == 'False');
+    var allowItems = '{{allowItems}}' == 'True';
     var keepQueryArgs = '{{keepQueryArgs}}' == 'True';
     var settingsPrefix = '{{settingsPrefix}}';
     var players = {{players|safe}};
@@ -140,6 +141,10 @@
     var startHouse = 'start_house:inside';
 
     function refreshItems() {
+        if (!allowItems) {
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: "/items",
@@ -189,7 +194,7 @@
     }
 
     function refreshCheckList() {
-        if (!allowMap) {
+        if (!allowMap || !refreshMap) {
             return;
         }
 
@@ -269,6 +274,10 @@
                 pruneEntranceMap();
                 fillVanillaLogEntrances();
                 updateEntrances();
+
+                if (broadcastMode == 'send') {
+                    broadcastMap();
+                }
 
                 setTimeout(drawActiveTab);
                 setTimeout(refreshTextChecks, 20);

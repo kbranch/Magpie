@@ -41,6 +41,10 @@ function drawTab(button, clear=false) {
     $(`#mapContainer .tab [data-mapname=${mapName}]`).closest('.map-container').addClass('active');
 
     drawNodes(mapName, false);
+
+    if (broadcastMode == 'send') {
+        broadcastMapTab(mapName);
+    }
 }
 
 function drawConnectorLines() {

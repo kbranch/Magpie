@@ -17,10 +17,13 @@ function channelHandler(e) {
             receiveItems(msg.data);
         }
         else if (msg.type == 'map') {
-            receiveMap(msg.data);
+            receiveMap(msg.data, msg.refresh == true);
         }
         else if (msg.type == 'args') {
             receiveArgs(msg.data);
+        }
+        else if (msg.type == 'mapTab') {
+            openTab(msg.data);
         }
     }
     else if (broadcastMode == 'send') {
@@ -39,8 +42,41 @@ function receiveItems(data) {
     refreshImages();
 }
 
-function receiveMap(data) {
-    console.log(data);
+function receiveMap(data, refresh) {
+    for (const attr in data) {
+        let value = data[attr];
+
+        if (!value) {
+            window[attr] = value;
+            continue;
+        }
+
+        if (attr == 'checkAccessibility') {
+            value = value.map(x => {
+                let check = new Check(x);
+                checksById[x.id] = check;
+                return check;
+            });
+        }
+        else if (attr == 'logicHintAccessibility') {
+            value = value.map(x => new LogicHint(x));
+        }
+        else if (attr == 'connections') {
+            let newConnections = [];
+
+            for (const conn of value) {
+                newConnections.push(new Connection(conn.entrances, conn.connector, conn.label, conn.vanilla, conn.map));
+            }
+
+            value = newConnections;
+        }
+
+        window[attr] = value;
+    }
+
+    if (refresh) {
+        drawActiveTab();
+    }
 }
 
 function receiveArgs(data) {
@@ -53,7 +89,29 @@ function broadcastItems() {
 }
 
 function broadcastMap() {
-    // channel.postMessage({type: 'items', data: inventory});
+    channel.postMessage({type: 'map',
+    data: {
+        startLocations: startLocations,
+        randomizedEntrances: randomizedEntrances,
+        entranceMap: entranceMap,
+        reverseEntranceMap: reverseEntranceMap,
+        connections: connections,
+        bossMap: bossMap,
+        checkedChecks: checkedChecks,
+        checkContents: checkContents,
+    }});
+
+    channel.postMessage({type: 'map',
+    refresh: true,
+    data: {
+        entranceAccessibility: entranceAccessibility,
+        checkAccessibility: checkAccessibility?.map(x => x.source),
+        logicHintAccessibility: logicHintAccessibility?.map(x => x.source),
+    }});
+}
+
+function broadcastMapTab(tabName) {
+    channel.postMessage({type: 'mapTab', data: tabName});
 }
 
 function broadcastArgs() {
@@ -81,3 +139,4 @@ window.broadcastInit = broadcastInit;
 window.broadcastItems = broadcastItems;
 window.broadcastMap = broadcastMap;
 window.broadcastArgs = broadcastArgs;
+window.broadcastMapTab = broadcastMapTab;

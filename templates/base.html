@@ -18,7 +18,7 @@
     </head>
 
     <body>
-        <div class="container body-content">
+        <div class="container body-content{% if fullContainer %} full-container{% endif %}">
             {% for message in get_flashed_messages() %}
                 <div class="flash">{{ message }}</div>
             {% endfor %}

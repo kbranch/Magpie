@@ -147,6 +147,7 @@ def home():
                                          hostname=app.config['hostname'],
                                          allowAutotracking=True,
                                          allowMap=True,
+                                         allowItems=True,
                                          players=[''],
                                          broadcastMode='send',
                                          )
@@ -450,9 +451,47 @@ def itemsBroadcast():
                                 hideShare=True,
                                 showTitle=True,
                                 keepQueryArgs=True,
+                                fullContainer=True,
+                                allowItems=True,
                                 settingsPrefix='itemsBroadcast_',
                                 players=[''],
                                 extraTitle=" - Items Broadcast View",
+                                broadcastMode='receive',
+                           )
+
+@app.route("/mapBroadcast")
+def mapBroadcast():
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+
+    return render_template("mapBroadcast.html",
+                                flags=flags, 
+                                args=args,
+                                defaultSettings=defaultSettings,
+                                jsonArgs=json.dumps(args.__dict__),
+                                jsonSettings=json.dumps(defaultSettings.__dict__),
+                                jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                jsonArgsOverrides=json.dumps(argsOverrides),
+                                local=app.config['local'],
+                                graphicsOptions=LocalSettings.graphicsPacks(),
+                                version=getVersion(),
+                                diskSettings=getDiskSettings(),
+                                hostname=app.config['hostname'],
+                                hideShare=True,
+                                showTitle=True,
+                                allowMap=True,
+                                refreshMap=False,
+                                keepQueryArgs=True,
+                                smallQuicksettings=True,
+                                fullContainer=True,
+                                settingsPrefix='mapBroadcast_',
+                                players=[''],
+                                extraTitle=" - Map Broadcast View",
                                 broadcastMode='receive',
                            )
 
