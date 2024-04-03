@@ -1112,6 +1112,15 @@ img.button-icon {
     filter: invert(1);
 }
 
+.dim {
+    filter: brightness(0.5);
+}
+
+.dimvert {
+    filter: invert(1)
+            brightness(0.5);
+}
+
 .check-item-image-wrapper {
     height: 24px;
     width: 24px;

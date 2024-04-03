@@ -4,7 +4,7 @@
 
 {% include 'icons.html' %}
 
-<div id="unstackedContainer" class="row ps-0 pe-4 pt-0" data-player="">
+<div id="unstackedContainer" class="row ps-0 pe-4 py-0" data-player="">
     <div id="unstackedMap" class="col-xs-12 col-md px-0 pt-0 pb-4 map-slot map-chunk">
         <div id="mapContainer">
             {% include 'map.html' %}
@@ -22,6 +22,12 @@
     <div class="col-auto px-2_5 quicksettings-container quicksettings-slot">
     </div>
 </div>
+
+{% if not local %}
+<div class="pt-0">
+    <h3>Streaming? Try the offline version for browser source support: <a href="https://magpietracker.us/static/builds/magpie-local.zip">Windows</a>, <a href="https://magpietracker.us/static/builds/magpie-local-linux.zip">Linux</a>, <a href="https://magpietracker.us/static/builds/magpie-source.zip">Source bundle</a></h3>
+</div>
+{% endif %}
 
 <div>
     {% include 'navbar.html' %}

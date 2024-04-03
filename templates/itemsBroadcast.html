@@ -18,6 +18,12 @@
     </div>
 </div>
 
+{% if not local %}
+<div class="pt-4">
+    <h3>Streaming? Try the offline version for browser source support: <a href="https://magpietracker.us/static/builds/magpie-local.zip">Windows</a>, <a href="https://magpietracker.us/static/builds/magpie-local-linux.zip">Linux</a>, <a href="https://magpietracker.us/static/builds/magpie-source.zip">Source bundle</a></h3>
+</div>
+{% endif %}
+
 <div>
     {% include 'navbar.html' %}
 </div>
