@@ -127,5 +127,7 @@ function drawLocation() {
                 'min-height': checkSize,
             });
     
-    broadcastLocation();
+    if (broadcastMode == 'send') {
+        broadcastLocation();
+    }
 }
