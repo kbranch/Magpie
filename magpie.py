@@ -1,10 +1,11 @@
 import os
 import sys
+import json
 import time
 import queue
+import traceback
 import threading
 import argparse
-from tkinter import TclError
 from flaskwebgui import FlaskUI
 
 import endpoints
@@ -68,6 +69,50 @@ def startLocal(width, height, settings, debug):
     ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
     ui.run()
 
+async def sendMessage(message, socket):
+    await socket.send(json.dumps(message))
+
+masterMessages = {}
+async def broadcastLoop(socket):
+    import asyncio
+
+    print("Started broadcaster loop")
+
+    lastMessages = {}
+
+    while True:
+        while socket.messages:
+            messageText = await socket.recv()
+            message = None
+
+            try:
+                message = json.loads(messageText)
+            except Exception as e:
+                print(f'Error parsing message: {traceback.format_exc()}')
+                print(f'Message text: {messageText}')
+            
+            message['time'] = time.time()
+            masterMessages[message['type']] = message
+            lastMessages[message['type']] = message['time']
+        
+        for type,msg in masterMessages.items():
+            if type not in lastMessages or lastMessages[type] < msg['time']:
+                await sendMessage(msg, socket)
+                lastMessages[type] = msg['time']
+
+        await asyncio.sleep(0.1)
+
+async def broadcaster():
+    import websockets
+    import asyncio
+
+    async with websockets.serve(broadcastLoop, host=None, port=17025, max_size=1024*1024*10):
+        await asyncio.Future()
+
+def startBroadcaster():
+    import asyncio
+    asyncio.run(broadcaster())
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
@@ -85,6 +130,9 @@ def main():
 
         thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug))
         thread.start()
+
+        broadcastThread = threading.Thread(target=startBroadcaster)
+        broadcastThread.start()
 
         while thread.is_alive():
             try:

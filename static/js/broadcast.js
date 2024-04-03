@@ -1,12 +1,9 @@
 "use strict"
 
-let channel = new BroadcastChannel('magpie');
+let channel = null;
+let broadcastSocket = null;
 
-function channelHandler(e) {
-    let msg = e.data;
-
-    console.log(msg);
-    
+function handleBroadcastMessage(msg) {
     if (!('type' in msg) || !('data' in msg)) {
         console.log(`Invalid broadcast message: ${msg}`);
         return;
@@ -17,7 +14,7 @@ function channelHandler(e) {
             receiveItems(msg.data);
         }
         else if (msg.type == 'map') {
-            receiveMap(msg.data, msg.refresh == true);
+            receiveMap(msg.data);
         }
         else if (msg.type == 'args') {
             receiveArgs(msg.data);
@@ -45,7 +42,14 @@ function receiveItems(data) {
     refreshImages();
 }
 
-function receiveMap(data, refresh) {
+function receiveMap(data) {
+    processMapPart(data.meFirst);
+    processMapPart(data.thenMe);
+
+    drawActiveTab();
+}
+
+function processMapPart(data) {
     for (const attr in data) {
         let value = data[attr];
 
@@ -64,6 +68,9 @@ function receiveMap(data, refresh) {
         else if (attr == 'logicHintAccessibility') {
             value = value.map(x => new LogicHint(x));
         }
+        else if (attr == 'checkedChecks') {
+            value = new Set(value);
+        }
         else if (attr == 'connections') {
             let newConnections = [];
 
@@ -75,10 +82,6 @@ function receiveMap(data, refresh) {
         }
 
         window[attr] = value;
-    }
-
-    if (refresh) {
-        drawActiveTab();
     }
 }
 
@@ -96,41 +99,42 @@ function receiveArgs(data) {
 }
 
 function broadcastItems() {
-    channel.postMessage({type: 'items', data: inventory});
+    broadcastMessage({type: 'items', data: inventory});
 }
 
 function broadcastMap() {
-    channel.postMessage({type: 'map',
-    data: {
-        startLocations: startLocations,
-        randomizedEntrances: randomizedEntrances,
-        entranceMap: entranceMap,
-        reverseEntranceMap: reverseEntranceMap,
-        connections: connections,
-        bossMap: bossMap,
-        checkedChecks: checkedChecks,
-        checkContents: checkContents,
-    }});
-
-    channel.postMessage({type: 'map',
-    refresh: true,
-    data: {
-        entranceAccessibility: entranceAccessibility,
-        checkAccessibility: checkAccessibility?.map(x => x.source),
-        logicHintAccessibility: logicHintAccessibility?.map(x => x.source),
-    }});
+    broadcastMessage({
+        type: 'map',
+        data: {
+            meFirst: {
+                startLocations: startLocations,
+                randomizedEntrances: randomizedEntrances,
+                entranceMap: entranceMap,
+                reverseEntranceMap: reverseEntranceMap,
+                connections: connections,
+                bossMap: bossMap,
+                checkedChecks: Array.from(checkedChecks),
+                checkContents: checkContents,
+            },
+            thenMe: {
+                entranceAccessibility: entranceAccessibility,
+                checkAccessibility: checkAccessibility?.map(x => x.source),
+                logicHintAccessibility: logicHintAccessibility?.map(x => x.source),
+            }
+        }
+    });
 }
 
 function broadcastMapTab(tabName) {
-    channel.postMessage({type: 'mapTab', data: tabName});
+    broadcastMessage({type: 'mapTab', data: tabName});
 }
 
 function broadcastArgs() {
-    channel.postMessage({type: 'args', data: args});
+    broadcastMessage({type: 'args', data: args});
 }
 
 function broadcastLocation() {
-    channel.postMessage({type: 'location', data: {
+    broadcastMessage({type: 'location', data: {
         overworldRoom: overworldRoom,
         overworldX: overworldX,
         overworldY: overworldY,
@@ -141,11 +145,18 @@ function broadcastLocation() {
 }
 
 function requestUpdate() {
-    channel.postMessage({type: 'send', data: null});
+    broadcastMessage({type: 'send', data: null});
 }
 
 function broadcastInit() {
-    channel.onmessage = channelHandler
+    if (local) {
+        connectToBroadcaster();
+        setInterval(connectToBroadcaster, 3 * 1000);
+    }
+    else {
+        channel = new BroadcastChannel('magpie');
+        channel.onmessage = (e) => handleBroadcastMessage(e.data);
+    }
 
     if (broadcastMode == 'receive') {
         requestUpdate();
@@ -154,6 +165,38 @@ function broadcastInit() {
         broadcastArgs();
         broadcastItems();
         broadcastMap();
+    }
+}
+
+function broadcastMessage(msg) {
+    if (local) {
+        if (broadcastSocket != null && broadcastSocket.readyState == 1) {
+            let messageText = JSON.stringify(msg);
+            broadcastSocket.send(messageText);
+        }
+    }
+    else {
+        channel.postMessage(msg);
+    }
+}
+
+function connectToBroadcaster() {
+    if (typeof maxInventory == 'undefined' || typeof randomizedEntrances == 'undefined') {
+        return;
+    }
+
+    if (broadcastSocket == null || broadcastSocket.readyState == 3) {
+        broadcastSocket = new WebSocket(`ws://127.0.0.1:17025/`);
+
+        broadcastSocket.onmessage = (event) => handleBroadcastMessage(JSON.parse(event.data));
+        broadcastSocket.onerror = (event) => console.log(event);
+        broadcastSocket.onclose = (event) => {
+            currentRoom = null;
+            currentX = null;
+            currentY = null;
+
+            drawLocation();
+        };
     }
 }
 
