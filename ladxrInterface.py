@@ -83,7 +83,16 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     args.multiworld = None
     args.boomerang = 'gift'
 
+    if args.goal == 'specific':
+        args.goal = '4'
+
+    fixArgs(args)
+
     return args
+
+def fixArgs(args):
+    if args.goal == '':
+        args.goal = '8'
 
 def tryCopyValue(source, target, name, default=False):
     if hasattr(source, name):
