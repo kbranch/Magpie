@@ -126,4 +126,6 @@ function drawLocation() {
                 'max-height': checkSize,
                 'min-height': checkSize,
             });
+    
+    broadcastLocation();
 }

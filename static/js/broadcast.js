@@ -25,6 +25,9 @@ function channelHandler(e) {
         else if (msg.type == 'mapTab') {
             openTab(msg.data);
         }
+        else if (msg.type == 'location') {
+            receiveLocation(msg.data);
+        }
     }
     else if (broadcastMode == 'send') {
         if (msg.type == 'send') {
@@ -79,6 +82,14 @@ function receiveMap(data, refresh) {
     }
 }
 
+function receiveLocation(data) {
+    for (const attr in data) {
+        window[attr] = data[attr];
+    }
+
+    drawLocation();
+}
+
 function receiveArgs(data) {
     setInputValues('flag', data);
     saveSettings();
@@ -118,6 +129,17 @@ function broadcastArgs() {
     channel.postMessage({type: 'args', data: args});
 }
 
+function broadcastLocation() {
+    channel.postMessage({type: 'location', data: {
+        overworldRoom: overworldRoom,
+        overworldX: overworldX,
+        overworldY: overworldY,
+        currentRoom: currentRoom,
+        currentX: currentX,
+        currentY: currentY,
+    }});
+}
+
 function requestUpdate() {
     channel.postMessage({type: 'send', data: null});
 }
@@ -140,3 +162,4 @@ window.broadcastItems = broadcastItems;
 window.broadcastMap = broadcastMap;
 window.broadcastArgs = broadcastArgs;
 window.broadcastMapTab = broadcastMapTab;
+window.broadcastLocation = broadcastLocation;
