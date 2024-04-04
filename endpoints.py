@@ -67,6 +67,9 @@ def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
 
 def getDiskSettings(prefix=''):
+    if not app.config['local']:
+        return '{}'
+    
     settings = {}
     diskSettings = localSettings.readSettings()
 

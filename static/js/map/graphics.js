@@ -53,14 +53,34 @@ function drawConnectorLines() {
 
 function getMapScaling(map) {
     let scaling = {};
+    let img = $(map).find('.map')[0];
+    let elementAspect = img.width / img.height;
+    let nativeAspect = img.naturalWidth / img.naturalHeight;
+    let w = img.width;
+    let h = img.height;
+    let x = 0;
+    let y = 0;
 
-    scaling.x = Math.min(1, $(map).width() / $(map).find('.map').prop('naturalWidth'));
-    scaling.y = Math.min(1, $(map).height() / $(map).find('.map').prop('naturalHeight'));
+    if (elementAspect - nativeAspect < 0) {
+        let imgH = w / nativeAspect;
+
+        y = (h - imgH) / 2;
+        h = imgH;
+    }
+    else {
+        let imgW = h * nativeAspect;
+
+        x = (w - imgW) / 2;
+        w = imgW;
+    }
+
+    scaling.x = w / img.naturalWidth;
+    scaling.y = h / img.naturalHeight;
 
     scaling.offset = {};
 
-    scaling.offset.x = (16 * scaling.x - checkSize) / 2;
-    scaling.offset.y = (16 * scaling.y - checkSize) / 2;
+    scaling.offset.x = (16 * scaling.x - checkSize) / 2 + x;
+    scaling.offset.y = (16 * scaling.y - checkSize) / 2 + y;
 
     return scaling;
 }
