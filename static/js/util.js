@@ -410,7 +410,8 @@ function applySettings(oldArgs=null) {
 
     checkAccessibility?.map(x => x.updateChecked());
     
-    setCustomDungeonItemsVisibility();
+    setCustomDungeonItemsVisibility()
+    setCustomDungeonItemsArgs();
 }
 
 function createElement(type, attrs) {

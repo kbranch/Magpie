@@ -70,6 +70,7 @@ def startLocal(width, height, settings, debug):
 async def sendMessage(message, socket):
     await socket.send(json.dumps(message))
 
+messageLock = threading.Lock()
 masterMessages = {}
 async def broadcastLoop(socket):
     import asyncio
@@ -79,6 +80,8 @@ async def broadcastLoop(socket):
     lastMessages = {}
 
     while True:
+        messageLock.acquire()
+
         while socket.messages:
             messageText = await socket.recv()
             message = None
@@ -97,6 +100,8 @@ async def broadcastLoop(socket):
             if type not in lastMessages or lastMessages[type] < msg['time']:
                 await sendMessage(msg, socket)
                 lastMessages[type] = msg['time']
+
+        messageLock.release()
 
         await asyncio.sleep(0.1)
 
