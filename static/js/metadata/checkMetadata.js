@@ -4519,8 +4519,8 @@ let vanillaCoordDict = {
        "locations":[
           {
              "map":"d1",
-             "x":560,
-             "y":560
+             "x":608,
+             "y":544
           },
           {
              "map":"vanillaOverworld",
