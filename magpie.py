@@ -124,6 +124,11 @@ def main():
     localSettings.nested = args.nested
 
     if endpoints.app.config['local']:
+        import broadcastView
+        from broadcastView import BroadcastView
+        endpoints.itemsBroadcastView = BroadcastView(endpoints.mainThreadQueue, broadcastView.types.items)
+        endpoints.mapBroadcastView = BroadcastView(endpoints.mainThreadQueue, broadcastView.types.map)
+
         settings = localSettings.readSettings()
 
         thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug))

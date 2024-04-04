@@ -7,8 +7,6 @@ import platform
 import requests
 import traceback
 import localSettings
-import broadcastView
-from broadcastView import BroadcastView
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request, make_response
@@ -26,11 +24,6 @@ try:
 except:
     pass
 
-try:
-    import ndi
-except:
-    pass
-
 def tryGetValue(dict, key):
     if not key in dict:
         return None
@@ -45,8 +38,8 @@ app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
 
 mainThreadQueue = queue.Queue()
-itemsBroadcastView = BroadcastView(mainThreadQueue, broadcastView.types.items)
-mapBroadcastView = BroadcastView(mainThreadQueue, broadcastView.types.map)
+itemsBroadcastView = None
+mapBroadcastView = None
 
 # app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
@@ -416,9 +409,11 @@ def itemsBroadcastFrame():
 def broadcastSettings():
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
+    
+    from broadcastView import modes
 
-    items = broadcastView.modes[request.form["items"]]
-    map = broadcastView.modes[request.form["map"]]
+    items = modes[request.form["items"]]
+    map = modes[request.form["map"]]
     
     itemsBroadcastView.setMode(items)
     mapBroadcastView.setMode(map)

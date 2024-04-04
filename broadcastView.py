@@ -1,11 +1,9 @@
 import io
 import time
 import traceback
-import NDIlib as ndi
 import tkinter as tk
 from enum import Enum
 from queue import Queue
-from ndi import NdiStream
 from threading import Thread
 from PIL import Image, ImageTk
 
@@ -91,6 +89,9 @@ class BroadcastView:
         self.root.update()
 
     def ndiTask(self):
+        import NDIlib as ndi
+        from ndi import NdiStream
+
         ndi.initialize()
 
         stream = NdiStream(f"Magpie-{'Items' if self.type == types.items else 'Map'}")
