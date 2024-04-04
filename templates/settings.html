@@ -585,7 +585,7 @@
         <div class="row">
             <div class="col-auto">
                 <fieldset class="form-group pb-2">
-                    <legend>Broadcast view</legend>
+                    <legend>Non-browser broadcast view</legend>
                     <div class="row">
                         <div class="col">
                             <label for="broadcastItems" class="form-label">Items</label>
@@ -604,6 +604,17 @@
                                 <option value="native">Native window</option>
                                 <option value="ndi">NDI</option>
                             </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group pb-2">
+                    <div class="row">
+                        <div class="col">
+                            <h6>Also try these as browser sources or window captures in OBS:</h6>
+                            <p class="mb-1">Items: <a href="/itemsBroadcast" class="href-content">{{ url_for('itemsBroadcast', _external=True) }}</a></p>
+                            <p>Map: <a href="/mapBroadcast" class="href-content">{{ url_for('mapBroadcast', _external=True) }}</a></p>
                         </div>
                     </div>
                 </fieldset>

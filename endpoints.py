@@ -6,6 +6,7 @@ import socket
 import platform
 import requests
 import traceback
+import localSettings
 import broadcastView
 from broadcastView import BroadcastView
 from jinja2 import Template
@@ -62,27 +63,19 @@ try:
 except:
     sharingEnabled = False
 
-diskSettings = None
-
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
 
-def getDiskSettings():
-    global diskSettings
-
+def getDiskSettings(prefix=''):
     settings = {}
+    diskSettings = localSettings.readSettings()
 
-    if diskSettings == None:
-        return settings
+    if prefix + 'args' in diskSettings:
+        settings['args'] = diskSettings[prefix + 'args']
 
-    if 'args' in diskSettings:
-        settings['args'] = diskSettings['args']
+    if prefix + 'localSettings' in diskSettings:
+        settings['localSettings'] = diskSettings[prefix + 'localSettings']
 
-    if 'localSettings' in diskSettings:
-        settings['localSettings'] = diskSettings['localSettings']
-
-    diskSettings = None
-    
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
 jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks'}
@@ -159,7 +152,11 @@ def renderItems():
         settingsText = request.form['localSettings']
 
         if app.config['local']:
-            updateSettings(argsText, settingsText)
+            prefix = ''
+            if 'settingsPrefix' in request.form:
+                prefix = request.form['settingsPrefix']
+
+            updateSettings(argsText, settingsText, prefix)
 
         args = Args.parse(argsText)
         localSettings = LocalSettings.parse(settingsText)
@@ -434,6 +431,7 @@ def itemsBroadcast():
     args.flags = []
     settingsOverrides = {}
     argsOverrides = {}
+    prefix = 'itemsBroadcast_'
 
     return render_template("itemsBroadcast.html",
                                 flags=flags, 
@@ -446,14 +444,14 @@ def itemsBroadcast():
                                 local=app.config['local'],
                                 graphicsOptions=LocalSettings.graphicsPacks(),
                                 version=getVersion(),
-                                diskSettings=getDiskSettings(),
+                                diskSettings=getDiskSettings(prefix),
                                 hostname=app.config['hostname'],
                                 hideShare=True,
                                 showTitle=True,
                                 keepQueryArgs=True,
                                 fullContainer=True,
                                 allowItems=True,
-                                settingsPrefix='itemsBroadcast_',
+                                settingsPrefix=prefix,
                                 players=[''],
                                 extraTitle=" - Items Broadcast View",
                                 broadcastMode='receive',
@@ -468,6 +466,7 @@ def mapBroadcast():
     args.flags = []
     settingsOverrides = {}
     argsOverrides = {}
+    prefix = 'mapBroadcast_'
 
     return render_template("mapBroadcast.html",
                                 flags=flags, 
@@ -480,7 +479,7 @@ def mapBroadcast():
                                 local=app.config['local'],
                                 graphicsOptions=LocalSettings.graphicsPacks(),
                                 version=getVersion(),
-                                diskSettings=getDiskSettings(),
+                                diskSettings=getDiskSettings(prefix),
                                 hostname=app.config['hostname'],
                                 hideShare=True,
                                 showTitle=True,
@@ -489,7 +488,7 @@ def mapBroadcast():
                                 keepQueryArgs=True,
                                 smallQuicksettings=True,
                                 fullContainer=True,
-                                settingsPrefix='mapBroadcast_',
+                                settingsPrefix=prefix,
                                 players=[''],
                                 extraTitle=" - Map Broadcast View",
                                 broadcastMode='receive',
@@ -614,6 +613,7 @@ if sharingEnabled:
 
         players = []
         codeFailed = False
+        prefix = 'event_'
 
         if eventName:
             eventInfo = sharing.eventInfo(eventName)
@@ -641,12 +641,12 @@ if sharingEnabled:
                                             local=app.config['local'],
                                             graphicsOptions=LocalSettings.graphicsPacks(),
                                             version=getVersion(),
-                                            diskSettings=getDiskSettings(),
+                                            diskSettings=getDiskSettings(prefix),
                                             hostname=app.config['hostname'],
                                             hideShare=True,
                                             showTitle=True,
                                             keepQueryArgs=True,
-                                            settingsPrefix='event_',
+                                            settingsPrefix=prefix,
                                             players=players,
                                             eventName=eventName,
                                             viewCode=viewCode,

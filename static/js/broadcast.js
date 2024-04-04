@@ -98,11 +98,31 @@ function receiveArgs(data) {
     saveSettings();
 }
 
-function broadcastItems() {
+var itemTimeout = null;
+function broadcastItems(buffer=true) {
+    if (buffer) {
+        if (itemTimeout) {
+            clearTimeout(itemTimeout);
+        }
+
+        itemTimeout = setTimeout(() => broadcastItems(false), 100);
+        return;
+    }
+
     broadcastMessage({type: 'items', data: inventory});
 }
 
-function broadcastMap() {
+var mapTimeout = null;
+function broadcastMap(buffer=true) {
+    if (buffer) {
+        if (mapTimeout) {
+            clearTimeout(mapTimeout);
+        }
+
+        mapTimeout = setTimeout(() => broadcastMap(false), 100);
+        return;
+    }
+
     broadcastMessage({
         type: 'map',
         data: {

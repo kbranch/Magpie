@@ -141,7 +141,8 @@
     var startHouse = 'start_house:inside';
 
     function refreshItems() {
-        if (!allowItems) {
+        // If this is the local version, we want to let the request go through so that the settings get saved to disk
+        if (!allowItems && !local) {
             return;
         }
 
@@ -151,8 +152,13 @@
             data: {
                 args: JSON.stringify(args),
                 localSettings: JSON.stringify(localSettings),
+                settingsPrefix: settingsPrefix,
             },
             success: function(response) {
+                if (!allowItems) {
+                    return;
+                }
+
                 if (localSettings.showItemsOnly) {
                     $('#checkList').hide();
                     $('#mapContainer').hide();

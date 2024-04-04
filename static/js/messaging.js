@@ -54,6 +54,10 @@ function processCheckMessage(message) {
         if (addedItem) {
             refreshCheckList();
         }
+
+        if (broadcastMode == 'send') {
+            broadcastMap();
+        }
     }
 }
 

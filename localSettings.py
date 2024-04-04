@@ -111,12 +111,11 @@ nested = False
 def settingsPath():
     return 'settings.json' if not nested else os.path.join('..', 'settings.json')
 
-
-def updateSettings(argsText, settingsText):
+def updateSettings(argsText, settingsText, prefix=''):
     settings = readSettings()
 
-    settings['args'] = argsText
-    settings['localSettings'] = settingsText
+    settings[prefix + 'args'] = argsText
+    settings[prefix + 'localSettings'] = settingsText
 
     writeSettings(settings)
 

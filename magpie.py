@@ -47,8 +47,6 @@ def startLocal(width, height, settings, debug):
     if height != None or width != None:
         localSettings.writeSettings(settings)
 
-    endpoints.diskSettings = settings
-
     if sys.platform.lower().startswith('win') and not debug:
         if getattr(sys, 'frozen', False):
             hideConsole()
