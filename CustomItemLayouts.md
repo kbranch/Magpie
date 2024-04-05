@@ -35,6 +35,8 @@ The item layouts are defined in [templates/mainitems](templates/mainitems) and [
 
 [templates/item.html](templates/item.html) contains a macro that abstracts away most of the details.
 
+Note that the broadcast and event views can have their own layouts that differ from the main Magpie UI.
+
 ## How items work
 Items associated with buttons are automatically passed to LADXR for use in logic. Items that LADXR doesn't know about are ignored in logic but still work in the UI.
 
