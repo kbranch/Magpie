@@ -72,15 +72,16 @@ class BroadcastView:
         stream = io.BytesIO(bytes)
         image = Image.open(stream)
 
-        # Weird transparency stuff happens if the browser zooms in, do our best to strip it out
-        bgColor = (int(self.bgColor[1:3], 16), int(self.bgColor[3:5], 16), int(self.bgColor[5:7], 16), 255)
-        width, height = image.size
-        data = image.load()
+        if self.bgColor:
+            # Weird transparency stuff happens if the browser zooms in, do our best to strip it out
+            bgColor = (int(self.bgColor[1:3], 16), int(self.bgColor[3:5], 16), int(self.bgColor[5:7], 16), 255)
+            width, height = image.size
+            data = image.load()
 
-        for y in range(height):
-            for x in range(width):
-                if data[x, y][3] != 255:
-                    data[x, y] = bgColor
+            for y in range(height):
+                for x in range(width):
+                    if data[x, y][3] != 255:
+                        data[x, y] = bgColor
 
         tkImage = ImageTk.PhotoImage(image)
 

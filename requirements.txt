@@ -6,3 +6,4 @@ opencv-python
 ndi-python
 numpy==1.25.2
 psycopg2-binary
+pillow
