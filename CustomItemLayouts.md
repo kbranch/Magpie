@@ -29,14 +29,14 @@ Once you have something you want to try, click the 'Pick Custom' button that mat
 ![image](https://github.com/kbranch/Magpie/assets/6884577/837663d9-03c9-48e4-994c-47d16d98ad88)
 
 ## How layouts work
-Most of the layout definition happens in [Jinja templates](https://jinja.palletsprojects.com/en/3.1.x/). Simple changes can be done purely in the templates, but more complicated changes may involve Javascript or the `item` macro. Improvements and updates are always welcome.
+Most of the layout definition happens in [Jinja templates](https://jinja.palletsprojects.com/en/3.1.x/). Simple changes can be done purely in the templates, but more complicated changes may involve JavaScript or the [`item` macro](#the-item-macro). Improvements and updates are always welcome.
 
 The item layouts are defined in [templates/mainitems](templates/mainitems) and [templates/dungeonitems](templates/dungeonitems). Each file is selectable from a dropdown in the settings pane. Contributions are welcome - send me a new template or make a pull request and I'll get it added!
 
 [templates/item.html](templates/item.html) contains a macro that abstracts away most of the details.
 
 ## How items work
-Items associated with buttons are automatically passed to LADXR for use in logic. Items that LADXR doesn't know about are ignored in logic.
+Items associated with buttons are automatically passed to LADXR for use in logic. Items that LADXR doesn't know about are ignored in logic but still work in the UI.
 
 Item images must be in the form `{ITEM_NAME}_{COUNT}.png`, e.g. `SWORD_2.png` for the L2 sword.
 
