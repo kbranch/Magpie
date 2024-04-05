@@ -68,6 +68,29 @@ Flags can be changed by clicking the gear icon in the upper right. These are pas
 
 Flags that were added to the randomizer after Magpie was last updated will appear in the list. Because flags can do a lot of different things, these may or may not be relevant or functional without an update to Magpie.
 
+### Streaming
+Here's a summary of your options:
+| OBS Source | Version |   |
+| - | - | - |
+| Browser window capture | Web | Capture the [items](https://magpietracker.us/itemsBroadcast) and [map](https://magpietracker.us/mapBroadcast) broadcast views. Will not work as a browser source in the web version |
+| [Browser source](https://obsproject.com/kb/browser-source) | Offline | Same as above, but it works as a browser source in the offline version |
+| [NDI](https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/) | Offline | Can be enabled in the settings pane in the offline version. See below for limitations. |
+| Non-browser window capture | Offline | Same as NDI, except the image loads into a native (non-browser) window instead |
+
+The best option for streaming is likely to be using the web-based broadcast views ([items](https://magpietracker.us/itemsBroadcast), [map](https://dev.magpietracker.us/mapBroadcast)) in the **offline** version as an [OBS browser source](https://obsproject.com/kb/browser-source). Note that the broadcast views can have totally different settings for layout, color, visibility, etc. than the main UI.
+
+Check out the [custom item layout documentation](/CustomItemLayouts.md) if you want a special stream layout.
+
+The offline version also has NDI support and can display the items and map in native (non-browser) windows, but these options have some limitations:
+ - Turning the page into images takes a lot of processing time, which means that Magpie will stutter briefly when updating
+ - Unlike the web-based broadcast view, the layout must match the main UI
+
+You *could* mitigate these limitations by changing the web-based broadcast views' settings so that they're responsible for the NDI/native window support, but that seems like even more of a rube goldberg machine.
+
+### Restreaming
+
+Magpie also has a restreaming page, where the items from multiple players are displayed and automatically updated based on those players' trackers. Each player must use the sharing button to connect to the same event name (make sure `Live Update` is checked). The sharing button also provides a link to the event page that the restreamer would capture.
+
 ## Autotracker
 Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest packaged autotracker is always available at [https://magpietracker.us/static/builds/magpie-autotracker.exe](https://magpietracker.us/static/builds/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
 
