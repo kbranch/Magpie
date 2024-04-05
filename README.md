@@ -54,6 +54,8 @@ If new items were added to the randomizer since Magpie was last updated, they wi
 
 Item changes will be communicated to the randomizer and used to update the map.
 
+Check out the [custom item layout documentation](/CustomItemLayouts.md).
+
 ### Locations
 Locations are tracked on the left side of the page, either on the maps or as text below them. By default, left clicking a node on the map will toggle all checks inside it between checked and unchecked. Right clicking a node will keep the tooltip open and allow interacting with it. Left clicking an individual check inside the tooltip will toggle only that check.
 
@@ -95,12 +97,3 @@ The spoiler log minitab allows you to upload either a JSON spoiler log or a ROM 
 The `Spoil collected items` setting will mark checks with the item they contain as you check them off. Those items are automatically added to your inventory so you never have to interact with the item tracker. Similarly, manually spoiling visited entrances can reduce the time required to track entrances.
 
 For a more comprehensive spoiler log tool, check out the [spoiler log viewer](https://kabarakh.github.io/ladxr-spoiler-interface/) by [Kabarakh](https://github.com/kabarakh).
-
-## Contributing layouts
-Most of the layout definition happens in [Jinja templates](https://jinja.palletsprojects.com/en/3.1.x/). Simple changes can be done purely in the templates, but more complicated changes may involve Javascript or the item macro. Improvements and updates are always welcome.
-
-The item layouts are defined in [templates/mainitems](templates/mainitems) and [templates/dungeonitems](templates/dungeonitems). Each file is selectable from a dropdown in the settings pane. Contributions are welcome - send me a new template or make a pull request and I'll get it added!
-
-[templates/item.html](templates/item.html) contains a macro that abstracts away most of the details.
-
-Check locations for the map are stored in [static/js/metadata/checkMetadata.js](static/js/metadata/checkMetadata.js), entrances are in [static/js/metadata/entranceMetadata.js](static/js/metadata/entranceMetadata.js), and connectors are in [static/js/metadata/connectorMetadata.js](static/js/metadata/connectorMetadata.js). There is an interface at the [/mapCoords](https://magpietracker.us/mapCoords) route to help manage locations without manual JSON editing, although it's often broken - I generally tweak it to do exactly what I need at the time.
