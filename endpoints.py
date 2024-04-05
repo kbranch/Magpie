@@ -156,6 +156,9 @@ def renderItems():
 
         args = Args.parse(argsText)
         localSettings = LocalSettings.parse(settingsText)
+
+        fixArgs(args)
+
         allItems = getItems(args)
 
         initChecks(args)
