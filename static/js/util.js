@@ -350,6 +350,7 @@ function applySettings(oldArgs=null) {
             data: {
                 items: localSettings.broadcastItems,
                 map: localSettings.broadcastMap,
+                bgColor: localSettings.nativeBgColor,
             },
         });
     }

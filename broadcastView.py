@@ -19,10 +19,13 @@ class BroadcastView:
         self.actualHeight = -1
         self.mode = modes.none
         self.type = type
+        self.bgColor = None
 
         self.ndiThread = None
 
-    def setMode(self, mode):
+    def setMode(self, mode, bgColor=None):
+        self.bgColor = bgColor
+
         if self.mode == modes.native and mode != modes.native:
             self.queue.put((self.root.destroy, []))
 
@@ -53,6 +56,7 @@ class BroadcastView:
             BroadcastView.tkClaimed = True
 
         self.root = tk.Toplevel()
+        self.root.config(bg=self.bgColor)
         self.root.title(f"Magpie {'Items' if self.type == types.items else 'Map'} Broadcast View")
         self.label = tk.Label(self.root)
         self.label.pack()
@@ -67,6 +71,17 @@ class BroadcastView:
 
         stream = io.BytesIO(bytes)
         image = Image.open(stream)
+
+        # Weird transparency stuff happens if the browser zooms in, do our best to strip it out
+        bgColor = (int(self.bgColor[1:3], 16), int(self.bgColor[3:5], 16), int(self.bgColor[5:7], 16), 255)
+        width, height = image.size
+        data = image.load()
+
+        for y in range(height):
+            for x in range(width):
+                if data[x, y][3] != 255:
+                    data[x, y] = bgColor
+
         tkImage = ImageTk.PhotoImage(image)
 
         self.label.config(image=tkImage)

@@ -417,8 +417,9 @@ def broadcastSettings():
 
     items = modes[request.form["items"]]
     map = modes[request.form["map"]]
+    bgColor = request.form["bgColor"]
     
-    itemsBroadcastView.setMode(items)
+    itemsBroadcastView.setMode(items, bgColor)
     mapBroadcastView.setMode(map)
 
     return "OK"
