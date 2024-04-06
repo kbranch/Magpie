@@ -11,6 +11,17 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+        {% if broadcastMode == 'receive' %}
+        <div class="accordion pb-2" id="argsAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#argsCollapse" aria-expanded="false" aria-controls="argsCollapse">
+                  Randomizer flags synced with main window
+                </button>
+              </h2>
+              <div id="argsCollapse" class="accordion-collapse collapse" data-bs-parent="#argsAccordion">
+                <div class="accordion-body">
+        {% endif %}
         <div class="row">
             <div class="col-auto">
                 <h2>Randomizer Flags</h2>
@@ -332,6 +343,12 @@
             </fieldset>
             {% endif %}
         </div>
+        {% if broadcastMode == 'receive' %}
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-auto">
                 <h2>Personalization</h2>

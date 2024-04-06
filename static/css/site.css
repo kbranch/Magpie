@@ -177,6 +177,10 @@ img {
     background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
 }
 
+.accordion-button.collapsed::after {
+    filter: invert(1);
+}
+
 .accordion-button:not(.collapsed) {
     background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
 }
