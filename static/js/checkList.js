@@ -29,9 +29,7 @@ function toggleNode(node) {
     drawActiveTab();
     setTimeout(refreshTextChecks, 20);
 
-    if (broadcastMode == 'send') {
-        broadcastMap();
-    }
+    broadcastMap();
 
     if (toggleList.has('0x07B-Trade')) {
         refreshCheckList();
@@ -87,9 +85,7 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
             refreshCheckList();
         }
 
-        if (broadcastMode == 'send') {
-            broadcastMap();
-        }
+        broadcastMap();
     }
 
     return itemsChanged;

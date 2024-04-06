@@ -2,6 +2,7 @@
 
 let channel = null;
 let broadcastSocket = null;
+let receiving = false;
 
 function handleBroadcastMessage(msg) {
     if (!('type' in msg) || !('data' in msg)) {
@@ -9,7 +10,9 @@ function handleBroadcastMessage(msg) {
         return;
     }
 
-    if (broadcastMode == 'receive') {
+    receiving = true;
+
+    try {
         if (msg.type == 'items') {
             receiveItems(msg.data);
         }
@@ -25,14 +28,17 @@ function handleBroadcastMessage(msg) {
         else if (msg.type == 'location') {
             receiveLocation(msg.data);
         }
-    }
-    else if (broadcastMode == 'send') {
-        if (msg.type == 'send') {
+        else if (msg.type == 'send') {
             broadcastItems();
             broadcastMap();
             broadcastArgs();
         }
     }
+    catch(e) {
+        console.log(`Error processing broadcast message '${msg}': ${e}`);
+    }
+
+    receiving = false;
 }
 
 function receiveItems(data) {
@@ -40,6 +46,10 @@ function receiveItems(data) {
 
     saveInventory();
     refreshImages();
+
+    if (allowMap) {
+        refreshCheckList();
+    }
 }
 
 function receiveMap(data) {
@@ -100,6 +110,10 @@ function receiveArgs(data) {
 
 var itemTimeout = null;
 function broadcastItems(buffer=true) {
+    if (receiving) {
+        return;
+    }
+
     if (buffer) {
         if (itemTimeout) {
             clearTimeout(itemTimeout);
@@ -114,6 +128,10 @@ function broadcastItems(buffer=true) {
 
 var mapTimeout = null;
 function broadcastMap(buffer=true) {
+    if (receiving) {
+        return;
+    }
+
     if (buffer) {
         if (mapTimeout) {
             clearTimeout(mapTimeout);
@@ -146,14 +164,26 @@ function broadcastMap(buffer=true) {
 }
 
 function broadcastMapTab(tabName) {
+    if (receiving) {
+        return;
+    }
+
     broadcastMessage({type: 'mapTab', data: tabName});
 }
 
 function broadcastArgs() {
+    if (receiving) {
+        return;
+    }
+
     broadcastMessage({type: 'args', data: args});
 }
 
 function broadcastLocation() {
+    if (receiving) {
+        return;
+    }
+
     broadcastMessage({type: 'location', data: {
         overworldRoom: overworldRoom,
         overworldX: overworldX,

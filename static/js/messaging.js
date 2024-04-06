@@ -55,9 +55,7 @@ function processCheckMessage(message) {
             refreshCheckList();
         }
 
-        if (broadcastMode == 'send') {
-            broadcastMap();
-        }
+        broadcastMap();
     }
 }
 

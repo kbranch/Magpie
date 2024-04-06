@@ -42,9 +42,7 @@ function drawTab(button, clear=false) {
 
     drawNodes(mapName, false);
 
-    if (broadcastMode == 'send') {
-        broadcastMapTab(mapName);
-    }
+    broadcastMapTab(mapName);
 }
 
 function drawConnectorLines() {

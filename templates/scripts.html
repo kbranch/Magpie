@@ -281,9 +281,7 @@
                 fillVanillaLogEntrances();
                 updateEntrances();
 
-                if (broadcastMode == 'send') {
-                    broadcastMap();
-                }
+                broadcastMap();
 
                 setTimeout(drawActiveTab);
                 setTimeout(refreshTextChecks, 20);
