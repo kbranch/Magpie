@@ -59,6 +59,10 @@ function receiveMap(data) {
     processMapPart(data.thenMe);
 
     drawActiveTab();
+
+    if (allowMap) {
+        refreshCheckList();
+    }
 }
 
 function processMapPart(data) {
