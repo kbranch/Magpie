@@ -29,6 +29,8 @@ function handleBroadcastMessage(msg) {
             receiveLocation(msg.data);
         }
         else if (msg.type == 'send') {
+            receiving = false;
+
             broadcastItems();
             broadcastMap();
             broadcastArgs();
