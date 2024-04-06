@@ -21,10 +21,10 @@ cp settings.json dist/windows
 cp settings.json dist/linux
 
 cd dist/windows
-zip -x \*__pycache__\* -r magpie-local.zip magpie-data magpie.bat settings.json
+zip -x \*__pycache__\* -r magpie-local.zip magpie-data magpie.bat
 
 cd ../linux
-zip -x \*__pycache__\* -r magpie-local-linux.zip magpie-data magpie.sh settings.json
+zip -x \*__pycache__\* -r magpie-local-linux.zip magpie-data magpie.sh
 
 cd ../../
 zip -x static/images/temp/\* -x \*__pycache__\* -x \*.gbc -x \*.venv/\* -r dist/magpie-source.zip autotracking LADXR static templates *.*
