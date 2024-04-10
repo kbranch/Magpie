@@ -80,10 +80,12 @@ class State:
             if len(settingsString) == 0:
                 print(f'Settings not found in ROM')
                 self.settings = lambda: None
-                self.settings.archipelago = True
             else:
                 await sendSettings(socket, settingsString)
                 self.settings = loadSettings(settingsString)
+
+            if not romData[0x134:0x143].startswith(b'LADXR'):
+                self.settings.archipelago = True
 
         if 'spoilers' in self.features:
             await sendSpoilerLog(socket, romData)
