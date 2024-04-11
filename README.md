@@ -72,12 +72,12 @@ Flags that were added to the randomizer after Magpie was last updated will appea
 Here's a summary of your options:
 | OBS Source | Version |   |
 | - | - | - |
-| Browser window capture | Web | Capture the [items](https://dev.magpietracker.us/itemsBroadcast) and [map](https://dev.magpietracker.us/mapBroadcast) broadcast views. Will not work as a browser source in the web version |
+| Browser window capture | Web | Capture the [items](https://magpietracker.us/itemsBroadcast) and [map](https://magpietracker.us/mapBroadcast) broadcast views. Will not work as a browser source in the web version |
 | [Browser source](https://obsproject.com/kb/browser-source) | Offline | Same as above, but it works as a browser source in the offline version |
 | [NDI](https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/) | Offline | Can be enabled in the settings pane in the offline version. See below for limitations. |
 | Non-browser window capture | Offline | Same as NDI, except the image loads into a native (non-browser) window instead |
 
-The best option for streaming is likely to be using the web-based broadcast views ([items](https://dev.magpietracker.us/itemsBroadcast), [map](https://dev.magpietracker.us/mapBroadcast)) in the **offline** version as an [OBS browser source](https://obsproject.com/kb/browser-source). Note that the broadcast views can have totally different settings for layout, color, visibility, etc. than the main UI.
+The best option for streaming is likely to be using the web-based broadcast views ([items](https://magpietracker.us/itemsBroadcast), [map](https://magpietracker.us/mapBroadcast)) in the **offline** version as an [OBS browser source](https://obsproject.com/kb/browser-source). Note that the broadcast views can have totally different settings for layout, color, visibility, etc. than the main UI.
 
 Check out the [custom item layout documentation](/CustomItemLayouts.md) if you want a special stream layout.
 
