@@ -1107,7 +1107,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":61,
-       "condition": (flags, settings) => { return !flags.ap_logic; },
+       "condition": (flags, settings) => { return false && !flags.ap_logic; },
     },
     "0x2E9-1":{
        "id":"0x2E9-1",
@@ -1126,7 +1126,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":62,
-       "condition": (flags, settings) => { return !flags.ap_logic; },
+       "condition": (flags, settings) => { return false && !flags.ap_logic; },
     },
     "0x0A4":{
        "id":"0x0A4",

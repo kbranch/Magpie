@@ -258,7 +258,8 @@ def buildLogic(args, worldSetup, requirements=None):
     
     requirements.names = {}
 
-    if args.ap_logic:
+    #Temporarily force this on because this isn't live yet
+    if True or args.ap_logic:
         # AP doesn't require the magnifier for anything
         requirements.shuffled_magnifier = None
 
