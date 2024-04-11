@@ -39,7 +39,17 @@ function updateItemLocations() {
 }
 
 function resetCheckContents() {
-    checkContents = {};
+    for (const checkId in checkContents) {
+        if (!coordDict[checkId].vanillaItem) {
+            delete checkContents[checkId];
+        }
+    }
+
+    for (const checkId in checksById) {
+        if (!(checkId in checkContents)) {
+            checksById[checkId].item = null;
+        }
+    }
 
     saveCheckContents();
 }

@@ -37,6 +37,7 @@ class Check {
 
         if (this.isVanilla && this.metadata.vanillaItem) {
             setCheckContents(this.id, this.metadata.vanillaItem, false);
+            this.item = this.metadata.vanillaItem;
         }
 
         this.updateChecked();
