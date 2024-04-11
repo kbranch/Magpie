@@ -97,6 +97,10 @@ class Check {
         return inventory[vanillaItem] ?? false
     }
 
+    isValid() {
+        return !(this.metadata.condition) || this.metadata.condition(args, localSettings);
+    }
+
     fullName() {
         return Check.fullName(this.metadata.area, this.metadata.name);
     }
@@ -107,7 +111,8 @@ class Check {
             || (this.isVanilla
                 && !localSettings.showVanilla)
             || (this.isOwnedVanillaPickup()
-                && !localSettings.showOwnedPickups)) {
+                && !localSettings.showOwnedPickups)
+            || !this.isValid()) {
 
             return false;
         }
