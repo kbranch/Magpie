@@ -54,6 +54,8 @@ function processCheckMessage(message) {
         if (addedItem) {
             refreshCheckList();
         }
+
+        broadcastMap();
     }
 }
 

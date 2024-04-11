@@ -24,6 +24,9 @@ function setSpoilerLabel(text) {
 
 function loadLogContents(logText, loadSettings=true) {
     let log = JSON.parse(logText);
+    let isArchipelago = log.archipelago == true;
+
+    setApLogic(isArchipelago);
 
     if (log.raceRom) {
         setSpoilerLabel("Can't spoil race ROMs");
@@ -50,7 +53,7 @@ function loadLogContents(logText, loadSettings=true) {
     $('#spoilAllButton').show();
     $('.spoil-connector').removeClass('d-none');
 
-    if ('shortSettings' in spoilerLog && loadSettings) {
+    if ('shortSettings' in spoilerLog && loadSettings && !isArchipelago) {
         $("#shortString")[0].value = spoilerLog.shortSettings;
         loadShortString(true);
     }

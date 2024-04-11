@@ -10,6 +10,7 @@ class Check {
         this.baseDifficulty = checkInfo.difficulty;
         this.requiredRupees = this.metadata.requiredRupees;
         this.hollow = false;
+        this.source = checkInfo;
 
         let dungeonMaps = this.locations.map(x => x.map)
                                         .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x));
@@ -36,6 +37,7 @@ class Check {
 
         if (this.isVanilla && this.metadata.vanillaItem) {
             setCheckContents(this.id, this.metadata.vanillaItem, false);
+            this.item = this.metadata.vanillaItem;
         }
 
         this.updateChecked();
@@ -95,6 +97,10 @@ class Check {
         return inventory[vanillaItem] ?? false
     }
 
+    isValid() {
+        return !(this.metadata.condition) || this.metadata.condition(args, localSettings);
+    }
+
     fullName() {
         return Check.fullName(this.metadata.area, this.metadata.name);
     }
@@ -105,7 +111,8 @@ class Check {
             || (this.isVanilla
                 && !localSettings.showVanilla)
             || (this.isOwnedVanillaPickup()
-                && !localSettings.showOwnedPickups)) {
+                && !localSettings.showOwnedPickups)
+            || !this.isValid()) {
 
             return false;
         }

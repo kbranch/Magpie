@@ -11,11 +11,6 @@ nowrap {
     width: 100%;
 }
 
-.map-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
 .secondary {
     position: absolute;
     top: 0;
@@ -182,6 +177,10 @@ img {
     background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
 }
 
+.accordion-button.collapsed::after {
+    filter: invert(1);
+}
+
 .accordion-button:not(.collapsed) {
     background: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
 }
@@ -195,10 +194,18 @@ img {
     background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
 }
 
+.map-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
 .map {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    object-fit: scale-down;
+    object-fit:contain;
+    max-height: 100%;
+    aspect-ratio: 1182/948 !important;
 }
 
 .map-overlay {
@@ -665,7 +672,7 @@ svg.hollow {
 
 .svg-map-icon {
     fill-opacity: 1;
-    stroke: #000000;
+    stroke: #000000 !important;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-dasharray: none;
@@ -762,6 +769,10 @@ button.nav-link.active {
 
 .container {
     max-width: 1500px;
+}
+
+.full-container {
+    max-width: 100% !important;
 }
 
 .popover {
@@ -1106,6 +1117,15 @@ img.button-icon {
 
 .invert {
     filter: invert(1);
+}
+
+.dim {
+    filter: brightness(0.5);
+}
+
+.dimvert {
+    filter: invert(1)
+            brightness(0.5);
 }
 
 .check-item-image-wrapper {

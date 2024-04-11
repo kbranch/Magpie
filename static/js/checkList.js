@@ -29,6 +29,8 @@ function toggleNode(node) {
     drawActiveTab();
     setTimeout(refreshTextChecks, 20);
 
+    broadcastMap();
+
     if (toggleList.has('0x07B-Trade')) {
         refreshCheckList();
     }
@@ -69,9 +71,9 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
         itemsChanged = moveCheckToChecked(id, true);
     }
 
-    saveChecked();
-
     checksById[id].updateChecked();
+
+    saveChecked();
 
     preventDoubleClick(event);
 
@@ -82,6 +84,8 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
         if (itemsChanged) {
             refreshCheckList();
         }
+
+        broadcastMap();
     }
 
     return itemsChanged;

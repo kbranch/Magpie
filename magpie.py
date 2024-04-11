@@ -1,6 +1,10 @@
 import os
-import ndi
 import sys
+import json
+import time
+import queue
+import traceback
+import threading
 import argparse
 from flaskwebgui import FlaskUI
 
@@ -29,6 +33,89 @@ if sys.platform.lower().startswith('win'):
         if whnd != 0:
             ctypes.windll.user32.ShowWindow(whnd, 1)
 
+def startLocal(width, height, settings, debug):
+    if width == None:
+        width = settings['width']
+    else:
+        settings['width'] = width
+
+    if height == None:
+        height = settings['height']
+    else:
+        settings['height'] = height
+    
+    if height != None or width != None:
+        localSettings.writeSettings(settings)
+
+    if sys.platform.lower().startswith('win') and not debug:
+        if getattr(sys, 'frozen', False):
+            hideConsole()
+
+    chromePaths = [r'%ProgramFiles%\Google\Chrome\Application\chrome.exe',
+                    r'%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe',
+                    r'%LocalAppData%\Google\Chrome\Application\chrome.exe']
+    
+    browserPath = None
+    
+    for path in chromePaths:
+        expanded = os.path.expandvars(path)
+        if os.path.exists(expanded):
+            browserPath = expanded
+            print(f'Found Chrome at {browserPath}')
+            break
+    
+    ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
+    ui.run()
+
+async def sendMessage(message, socket):
+    await socket.send(json.dumps(message))
+
+messageLock = threading.Lock()
+masterMessages = {}
+async def broadcastLoop(socket):
+    import asyncio
+
+    print("Started broadcaster loop")
+
+    lastMessages = {}
+
+    while True:
+        messageLock.acquire()
+
+        while socket.messages:
+            messageText = await socket.recv()
+            message = None
+
+            try:
+                message = json.loads(messageText)
+            except Exception as e:
+                print(f'Error parsing message: {traceback.format_exc()}')
+                print(f'Message text: {messageText}')
+            
+            message['time'] = time.time()
+            masterMessages[message['type']] = message
+            lastMessages[message['type']] = message['time']
+        
+        for type,msg in masterMessages.items():
+            if type not in lastMessages or lastMessages[type] < msg['time']:
+                await sendMessage(msg, socket)
+                lastMessages[type] = msg['time']
+
+        messageLock.release()
+
+        await asyncio.sleep(0.1)
+
+async def broadcaster():
+    import websockets
+    import asyncio
+
+    async with websockets.serve(broadcastLoop, host=None, port=17025, max_size=1024*1024*10):
+        await asyncio.Future()
+
+def startBroadcaster():
+    import asyncio
+    asyncio.run(broadcaster())
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
@@ -42,45 +129,30 @@ def main():
     localSettings.nested = args.nested
 
     if endpoints.app.config['local']:
-        width = args.width
-        height = args.height
+        import broadcastView
+        from broadcastView import BroadcastView
+        endpoints.itemsBroadcastView = BroadcastView(endpoints.mainThreadQueue, broadcastView.types.items)
+        endpoints.mapBroadcastView = BroadcastView(endpoints.mainThreadQueue, broadcastView.types.map)
 
         settings = localSettings.readSettings()
 
-        if width == None:
-            width = settings['width']
-        else:
-            settings['width'] = width
+        thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug))
+        thread.start()
 
-        if height == None:
-            height = settings['height']
-        else:
-            settings['height'] = height
-        
-        if args.height != None or args.width != None:
-            localSettings.writeSettings(settings)
+        broadcastThread = threading.Thread(target=startBroadcaster)
+        broadcastThread.start()
 
-        endpoints.diskSettings = settings
+        while thread.is_alive():
+            try:
+                (callback, args) = endpoints.mainThreadQueue.get(False)
+                callback(*args)
+            except queue.Empty:
+                endpoints.mapBroadcastView.updateWindow()
+                endpoints.itemsBroadcastView.updateWindow()
+            
+            time.sleep(0.1)
 
-        if sys.platform.lower().startswith('win') and not args.debug:
-            if getattr(sys, 'frozen', False):
-                hideConsole()
-
-        chromePaths = [r'%ProgramFiles%\Google\Chrome\Application\chrome.exe',
-                        r'%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe',
-                        r'%LocalAppData%\Google\Chrome\Application\chrome.exe']
-        
-        browserPath = None
-        
-        for path in chromePaths:
-            expanded = os.path.expandvars(path)
-            if os.path.exists(expanded):
-                browserPath = expanded
-                print(f'Found Chrome at {browserPath}')
-                break
-        
-        ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
-        ui.run()
+        thread.join()
 
         if sys.platform.lower().startswith('win') and not args.debug:
             if getattr(sys, 'frozen', False):

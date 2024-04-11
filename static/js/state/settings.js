@@ -94,6 +94,10 @@ function saveSettings() {
     skipNextAnimation = true;
 
     refreshItems();
+
+    if (broadcastMode == 'send') {
+        broadcastArgs();
+    }
 }
 
 function argsAreValid(tempArgs) {
@@ -256,6 +260,14 @@ function updateSettings() {
     if ('hideVanilla' in localSettings) {
         localSettings.showVanilla = !localSettings.hideVanilla;
         delete localSettings['hideVanilla'];
+    }
+    if ('ndiItems' in localSettings) {
+        localSettings.broadcastItems = localSettings.ndiItems ? 'ndi' : 'none';
+        delete localSettings['ndiItems'];
+    }
+    if ('ndiMap' in localSettings) {
+        localSettings.broadcastMap = localSettings.ndiMap ? 'ndi' : 'none';
+        delete localSettings['ndiMap'];
     }
     if (localSettings.followToUnderworld === true) {
         localSettings.followToUnderworld = 'always';
@@ -551,6 +563,41 @@ function setApLogic(value) {
     saveSettings();
 }
 
+function getCustomDungeonItems(dungeonItems) {
+    let settings = {
+        shuffle_small: false,
+        shuffle_nightmare: false,
+        shuffle_maps: false,
+        shuffle_compasses: false,
+        shuffle_beaks: false
+    };
+
+    if (['smallkeys', 'keysanity', 'localnightmarekey'].includes(dungeonItems)) {
+        settings.shuffle_small = true;
+    }
+    if (['nightmarekeys', 'keysanity'].includes(dungeonItems)) {
+        settings.shuffle_nightmare = true;
+    }
+    if (['localkeys', 'keysanity', 'localnightmarekey'].includes(dungeonItems)) {
+        settings.shuffle_maps = true;
+        settings.shuffle_compasses = true;
+        settings.shuffle_beaks = true;
+    }
+
+    return settings;
+}
+
+function setCustomDungeonItemsArgs() {
+    if (args.dungeon_items == 'custom') {
+        return;
+    }
+
+    let settings = getCustomDungeonItems(args.dungeon_items);
+    for (const prop in settings) {
+        args[prop] = settings[prop];
+    }
+}
+
 function setCustomDungeonItemsVisibility() {
     let e = document.getElementById("arg-dungeon_items");
     let custom = document.getElementById('customDungeonItems');
@@ -567,22 +614,12 @@ function setCustomDungeonItemsVisibility() {
         let compasses = document.getElementById("arg-shuffle_compasses");
         let beaks = document.getElementById("arg-shuffle_beaks");
 
-        small.checked = false;
-        nightmare.checked = false;
-        maps.checked = false;
-        compasses.checked = false;
-        beaks.checked = false;
+        let settings = getCustomDungeonItems(e.value);
 
-        if (['smallkeys', 'keysanity', 'localnightmarekey'].includes(e.value)) {
-            small.checked = true;
-        }
-        if (['nightmarekeys', 'keysanity'].includes(e.value)) {
-            nightmare.checked = true;
-        }
-        if (['localkeys', 'keysanity', 'localnightmarekey'].includes(e.value)) {
-            maps.checked = true;
-            compasses.checked = true;
-            beaks.checked = true;
-        }
+        small.checked = settings.shuffle_small;
+        nightmare.checked = settings.shuffle_nightmare;
+        maps.checked = settings.shuffle_maps;
+        compasses.checked = settings.shuffle_compasses;
+        beaks.checked = settings.shuffle_beaks;
     }
 }

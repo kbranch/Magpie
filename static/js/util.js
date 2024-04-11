@@ -346,10 +346,11 @@ function applySettings(oldArgs=null) {
     if (local) {
         $.ajax({
             type: "POST",
-            url: "/ndiSettings",
+            url: "/broadcastSettings",
             data: {
-                itemsEnabled: localSettings.ndiItems,
-                mapEnabled: localSettings.ndiMap,
+                items: localSettings.broadcastItems,
+                map: localSettings.broadcastMap,
+                bgColor: localSettings.nativeBgColor,
             },
         });
     }
@@ -410,7 +411,8 @@ function applySettings(oldArgs=null) {
 
     checkAccessibility?.map(x => x.updateChecked());
     
-    setCustomDungeonItemsVisibility();
+    setCustomDungeonItemsVisibility()
+    setCustomDungeonItemsArgs();
 }
 
 function createElement(type, attrs) {

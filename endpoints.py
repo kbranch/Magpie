@@ -1,11 +1,12 @@
 import gzip
-import copy
 import json
+import queue
 import base64
 import socket
 import platform
 import requests
 import traceback
+import localSettings
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request, make_response
@@ -23,11 +24,6 @@ try:
 except:
     pass
 
-try:
-    import ndi
-except:
-    pass
-
 def tryGetValue(dict, key):
     if not key in dict:
         return None
@@ -40,6 +36,10 @@ app.jinja_options['lstrip_blocks'] = True
 
 app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
+
+mainThreadQueue = queue.Queue()
+itemsBroadcastView = None
+mapBroadcastView = None
 
 # app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
@@ -56,27 +56,22 @@ try:
 except:
     sharingEnabled = False
 
-diskSettings = None
-
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
 
-def getDiskSettings():
-    global diskSettings
-
-    settings = {}
-
-    if diskSettings == None:
-        return settings
-
-    if 'args' in diskSettings:
-        settings['args'] = diskSettings['args']
-
-    if 'localSettings' in diskSettings:
-        settings['localSettings'] = diskSettings['localSettings']
-
-    diskSettings = None
+def getDiskSettings(prefix=''):
+    if not app.config['local']:
+        return '{}'
     
+    settings = {}
+    diskSettings = localSettings.readSettings()
+
+    if prefix + 'args' in diskSettings:
+        settings['args'] = diskSettings[prefix + 'args']
+
+    if prefix + 'localSettings' in diskSettings:
+        settings['localSettings'] = diskSettings[prefix + 'localSettings']
+
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
 jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks'}
@@ -141,7 +136,9 @@ def home():
                                          hostname=app.config['hostname'],
                                          allowAutotracking=True,
                                          allowMap=True,
+                                         allowItems=True,
                                          players=[''],
+                                         broadcastMode='send',
                                          )
 
 @app.route("/items", methods=['POST'])
@@ -151,7 +148,11 @@ def renderItems():
         settingsText = request.form['localSettings']
 
         if app.config['local']:
-            updateSettings(argsText, settingsText)
+            prefix = ''
+            if 'settingsPrefix' in request.form:
+                prefix = request.form['settingsPrefix']
+
+            updateSettings(argsText, settingsText, prefix)
 
         args = Args.parse(argsText)
         localSettings = LocalSettings.parse(settingsText)
@@ -383,32 +384,117 @@ def suggestion():
 
     return 'thx'
 
-if 'ndi' in sys.modules:
-    @app.route("/mapNdi", methods=['POST'])
-    def mapNdi():
-        data = request.form["data"]
-        pngBytes = base64.b64decode(data.split(',')[1])
-        ndi.updateMapImage(pngBytes)
+@app.route("/mapBroadcastFrame", methods=['POST'])
+def mapBroadcastFrame():
+    if not app.config['local']:
+        return "Broadcast view is only available in the offline version of Magpie"
 
-        return "OK"
+    data = request.form["data"]
+    pngBytes = base64.b64decode(data.split(',')[1])
+    
+    mapBroadcastView.updateImage(pngBytes)
 
-    @app.route("/itemsNdi", methods=['POST'])
-    def itemsNdi():
-        data = request.form["data"]
-        pngBytes = base64.b64decode(data.split(',')[1])
-        ndi.updateItemsImage(pngBytes)
+    return "OK"
 
-        return "OK"
+@app.route("/itemsBroadcastFrame", methods=['POST'])
+def itemsBroadcastFrame():
+    if not app.config['local']:
+        return "Broadcast view is only available in the offline version of Magpie"
 
-    @app.route("/ndiSettings", methods=['POST'])
-    def ndiSettings():
-        itemsEnabled = request.form["itemsEnabled"] == 'true'
-        mapEnabled = request.form["mapEnabled"] == 'true'
+    data = request.form["data"]
+    pngBytes = base64.b64decode(data.split(',')[1])
 
-        if app.config['local']:
-            ndi.setNdiStatus(itemsEnabled, mapEnabled)
+    itemsBroadcastView.updateImage(pngBytes)
 
-        return "OK"
+    return "OK"
+
+@app.route("/broadcastSettings", methods=['POST'])
+def broadcastSettings():
+    if not app.config['local']:
+        return "Broadcast view is only available in the offline version of Magpie"
+    
+    from broadcastView import modes
+
+    items = modes[request.form["items"]]
+    map = modes[request.form["map"]]
+    bgColor = request.form["bgColor"]
+    
+    itemsBroadcastView.setMode(items, bgColor)
+    mapBroadcastView.setMode(map)
+
+    return "OK"
+
+@app.route("/itemsBroadcast")
+def itemsBroadcast():
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+    prefix = 'itemsBroadcast_'
+
+    return render_template("itemsBroadcast.html",
+                                flags=flags, 
+                                args=args,
+                                defaultSettings=defaultSettings,
+                                jsonArgs=json.dumps(args.__dict__),
+                                jsonSettings=json.dumps(defaultSettings.__dict__),
+                                jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                jsonArgsOverrides=json.dumps(argsOverrides),
+                                local=app.config['local'],
+                                graphicsOptions=LocalSettings.graphicsPacks(),
+                                version=getVersion(),
+                                diskSettings=getDiskSettings(prefix),
+                                hostname=app.config['hostname'],
+                                hideShare=True,
+                                showTitle=True,
+                                keepQueryArgs=True,
+                                fullContainer=True,
+                                allowItems=True,
+                                settingsPrefix=prefix,
+                                players=[''],
+                                extraTitle=" - Items Broadcast View",
+                                broadcastMode='receive',
+                           )
+
+@app.route("/mapBroadcast")
+def mapBroadcast():
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+    prefix = 'mapBroadcast_'
+
+    return render_template("mapBroadcast.html",
+                                flags=flags, 
+                                args=args,
+                                defaultSettings=defaultSettings,
+                                jsonArgs=json.dumps(args.__dict__),
+                                jsonSettings=json.dumps(defaultSettings.__dict__),
+                                jsonSettingsOverrides=json.dumps(settingsOverrides),
+                                jsonArgsOverrides=json.dumps(argsOverrides),
+                                local=app.config['local'],
+                                graphicsOptions=LocalSettings.graphicsPacks(),
+                                version=getVersion(),
+                                diskSettings=getDiskSettings(prefix),
+                                hostname=app.config['hostname'],
+                                hideShare=True,
+                                showTitle=True,
+                                allowMap=True,
+                                refreshMap=False,
+                                keepQueryArgs=True,
+                                smallQuicksettings=True,
+                                fullContainer=True,
+                                settingsPrefix=prefix,
+                                players=[''],
+                                extraTitle=" - Map Broadcast View",
+                                broadcastMode='receive',
+                           )
 
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])
@@ -529,6 +615,7 @@ if sharingEnabled:
 
         players = []
         codeFailed = False
+        prefix = 'event_'
 
         if eventName:
             eventInfo = sharing.eventInfo(eventName)
@@ -556,17 +643,18 @@ if sharingEnabled:
                                             local=app.config['local'],
                                             graphicsOptions=LocalSettings.graphicsPacks(),
                                             version=getVersion(),
-                                            diskSettings=getDiskSettings(),
+                                            diskSettings=getDiskSettings(prefix),
                                             hostname=app.config['hostname'],
                                             hideShare=True,
                                             showTitle=True,
                                             keepQueryArgs=True,
-                                            settingsPrefix='event_',
+                                            settingsPrefix=prefix,
                                             players=players,
                                             eventName=eventName,
                                             viewCode=viewCode,
                                             joinCode=joinCode,
                                             codeFailed=codeFailed,
+                                            extraTitle=" - Event Restream",
                                         )
 
     @app.route("/player")

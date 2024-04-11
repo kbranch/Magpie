@@ -38,8 +38,8 @@ class LocalSettings:
         self.spoilOnCollect = False
         self.showOwnedPickups = False
         self.graphicsPack = ''
-        self.ndiItems = False
-        self.ndiMap = False
+        self.broadcastItems = 'none'
+        self.broadcastMap = 'none'
         self.stacked = False
         self.playerName = None
         self.eventName = None
@@ -81,6 +81,7 @@ class LocalSettings:
         self.bgColor = '#212529'
         self.textColor = '#f8f9fa'
         self.highlightColor = '#444444'
+        self.nativeBgColor = '#212529'
     
     def parse(settingsString):
         localSettings = json.loads(settingsString)
@@ -111,12 +112,11 @@ nested = False
 def settingsPath():
     return 'settings.json' if not nested else os.path.join('..', 'settings.json')
 
-
-def updateSettings(argsText, settingsText):
+def updateSettings(argsText, settingsText, prefix=''):
     settings = readSettings()
 
-    settings['args'] = argsText
-    settings['localSettings'] = settingsText
+    settings[prefix + 'args'] = argsText
+    settings[prefix + 'localSettings'] = settingsText
 
     writeSettings(settings)
 

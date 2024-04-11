@@ -53,6 +53,7 @@ def getSpoilerLog(romData):
         print(message)
 
     logJson['shortSettings'] = shortSettings
+    logJson['archipelago'] = not romData[0x134:0x143].startswith(b'LADXR')
 
     return json.dumps(logJson)
 

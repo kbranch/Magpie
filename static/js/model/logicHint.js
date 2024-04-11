@@ -8,6 +8,7 @@ class LogicHint {
         this.locations = this.metadata.locations;
         this.baseDifficulty = hintInfo.difficulty;
         this.hollow = false;
+        this.source = hintInfo;
 
         let dungeonMaps = this.locations.map(x => x.map)
                                         .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x));

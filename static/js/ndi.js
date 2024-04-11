@@ -17,7 +17,7 @@ async function sendMapFrame() {
 
     $.ajax({
         type: "POST",
-        url: "/mapNdi",
+        url: "/mapBroadcastFrame",
         data: {
             data: frame,
         },
@@ -37,7 +37,7 @@ async function sendItemFrame() {
 
     $.ajax({
         type: "POST",
-        url: "/itemsNdi",
+        url: "/itemsBroadcastFrame",
         data: {
             data: frame,
         },
@@ -46,28 +46,28 @@ async function sendItemFrame() {
     replaceClass('.reglowme', 'reglowme', 'glow');
 }
 
-var itemNdiTimeout = null;
+var itemsBroadcastTimeout = null;
 function refreshItemNdi() {
-    if (!localSettings?.ndiItems) {
+    if ((localSettings?.broadcastItems ?? 'none') == 'none') {
         return;
     }
 
-    if (itemNdiTimeout) {
-        clearTimeout(itemNdiTimeout);
+    if (itemsBroadcastTimeout) {
+        clearTimeout(itemsBroadcastTimeout);
     }
 
-    itemNdiTimeout = setTimeout(sendItemFrame, 500);
+    itemsBroadcastTimeout = setTimeout(sendItemFrame, 500);
 }
 
-let mapNdiTimeout = null;
+let mapBroadcastTimeout = null;
 function refreshMapNdi() {
-    if (!localSettings?.ndiMap) {
+    if ((localSettings?.broadcastMap ?? 'none') == 'none') {
         return;
     }
 
-    if (mapNdiTimeout) {
-        clearTimeout(mapNdiTimeout);
+    if (mapBroadcastTimeout) {
+        clearTimeout(mapBroadcastTimeout);
     }
 
-    mapNdiTimeout = setTimeout(sendMapFrame, 1000);
+    mapBroadcastTimeout = setTimeout(sendMapFrame, 1000);
 }

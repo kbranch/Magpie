@@ -11,6 +11,17 @@
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+        {% if broadcastMode == 'receive' %}
+        <div class="accordion pb-2" id="argsAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#argsCollapse" aria-expanded="false" aria-controls="argsCollapse">
+                  Randomizer flags synced with main window
+                </button>
+              </h2>
+              <div id="argsCollapse" class="accordion-collapse collapse" data-bs-parent="#argsAccordion">
+                <div class="accordion-body">
+        {% endif %}
         <div class="row">
             <div class="col-auto">
                 <h2>Randomizer Flags</h2>
@@ -332,6 +343,12 @@
             </fieldset>
             {% endif %}
         </div>
+        {% if broadcastMode == 'receive' %}
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-auto">
                 <h2>Personalization</h2>
@@ -424,20 +441,6 @@
                             </select>
                         </div>
                     </div>
-                    {% if local %}
-                    <div class="row">
-                        <div class="col">
-                            <input id="ndiItems" data-setting="ndiItems" type="checkbox" class="form-check-input">
-                            <label for="ndiItems" class="form-label">Enable items NDI output</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <input id="ndiMap" data-setting="ndiMap" type="checkbox" class="form-check-input">
-                            <label for="ndiMap" class="form-label">Enable map NDI output</label>
-                        </div>
-                    </div>
-                    {% endif %}
                 </fieldset>
             </div>
             <div class="col-auto">
@@ -590,6 +593,59 @@
                 </fieldset>
             </div>
         </div>
+        {% if local %}
+        <div class="row">
+            <div class="col-auto">
+                <h2>Offline Exclusives</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <fieldset class="form-group pb-2">
+                    <legend>Non-browser broadcast view</legend>
+                    <div class="row">
+                        <div class="col">
+                            <label for="broadcastItems" class="form-label">Items</label>
+                            <select id="broadcastItems" class="form-select" data-setting="broadcastItems" aria-label="broadcastItems">
+                                <option value="none">None</option>
+                                <option value="native">Native window</option>
+                                <option value="ndi">NDI</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col">
+                            <label for="broadcastMap" class="form-label">Map</label>
+                            <select id="broadcastMap" class="form-select" data-setting="broadcastMap" aria-label="broadcastMap">
+                                <option value="none">None</option>
+                                <option value="native">Native window</option>
+                                <option value="ndi">NDI</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col">
+                            <div class="color-block">
+                                <label for='nativeBg' class="color-label">Native window background</label>
+                                <input class="color-picker" type="color" id="nativeBg" data-setting="nativeBgColor" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="col-auto">
+                <fieldset class="form-group pb-2">
+                    <div class="row">
+                        <div class="col">
+                            <h6>Also try these as browser sources or window captures in OBS:</h6>
+                            <p class="mb-1">Items: <a href="/itemsBroadcast" class="href-content">{{ url_for('itemsBroadcast', _external=True) }}</a></p>
+                            <p>Map: <a href="/mapBroadcast" class="href-content">{{ url_for('mapBroadcast', _external=True) }}</a></p>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        {% endif %}
         <div class="row">
             <div class="col-auto">
                 <h2>Layouts</h2>
@@ -635,6 +691,12 @@
                     {% endfor %}
                     </select>
                 </div>
+            </div>
+            <div class="col col-auto mx-2">
+                    <h5>Customization info</h5>
+                    <p class="py-0 my-0"><a href="https://raw.githubusercontent.com/kbranch/Magpie/master/templates/mainitems/sevenbysix.html" target="_blank">Default main items template</a></p>
+                    <p class="py-0 my-0"><a href="https://raw.githubusercontent.com/kbranch/Magpie/master/templates/dungeonitems/default.html" target="_blank">Default dungeon items template</a></p>
+                    <p class="py-0 my-0"><a href="https://github.com/kbranch/Magpie/blob/master/CustomItemLayouts.md" target="_blank">Layout documentation</a></p>
             </div>
         </div>
         <div class="row pt-2">

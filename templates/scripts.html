@@ -40,6 +40,7 @@
 <script src="static/js/ndi.js"></script>
 <script src="static/js/sharing.js"></script>
 <script src="static/js/logic.js"></script>
+<script src="static/js/broadcast.js" type="module"></script>
 <script src="static/js/archipelago.js" type="module"></script>
 
 <script type="application/javascript">
@@ -80,7 +81,6 @@
     var itemLocations = {};
     var hoveredItems = [];
     var inventory = {};
-    var mapNodes = null;
     var args = null;
     var skipNextAnimation = true;
     var undoStack = [];
@@ -111,6 +111,8 @@
     var liveUpdate = false;
     var allowAutotracking = '{{allowAutotracking}}' == 'True';
     var allowMap = '{{allowMap}}' == 'True';
+    var refreshMap = !('{{refreshMap}}' == 'False');
+    var allowItems = '{{allowItems}}' == 'True';
     var keepQueryArgs = '{{keepQueryArgs}}' == 'True';
     var settingsPrefix = '{{settingsPrefix}}';
     var players = {{players|safe}};
@@ -123,6 +125,7 @@
     var logicGraph = null;
     var logicByCheck = {};
     var logicByEntrance = {};
+    var broadcastMode = '{{broadcastMode}}';
 
     const renamedItems = {
         "KEY9": "KEY0",
@@ -138,14 +141,24 @@
     var startHouse = 'start_house:inside';
 
     function refreshItems() {
+        // If this is the local version, we want to let the request go through so that the settings get saved to disk
+        if (!allowItems && !local) {
+            return;
+        }
+
         $.ajax({
             type: "POST",
             url: "/items",
             data: {
                 args: JSON.stringify(args),
                 localSettings: JSON.stringify(localSettings),
+                settingsPrefix: settingsPrefix,
             },
             success: function(response) {
+                if (!allowItems) {
+                    return;
+                }
+
                 if (localSettings.showItemsOnly) {
                     $('#checkList').hide();
                     $('#mapContainer').hide();
@@ -187,7 +200,7 @@
     }
 
     function refreshCheckList() {
-        if (!allowMap) {
+        if (!allowMap || !refreshMap) {
             return;
         }
 
@@ -268,6 +281,8 @@
                 fillVanillaLogEntrances();
                 updateEntrances();
 
+                broadcastMap();
+
                 setTimeout(drawActiveTab);
                 setTimeout(refreshTextChecks, 20);
             }
@@ -325,6 +340,14 @@
             filename: e.filename,
             time: e.timeStamp,
         });
+    }
+
+    function openItemsBroadcastView() {
+        window.open("/itemsBroadcast", "_blank", "width=700, height=700");
+    }
+
+    function openMapBroadcastView() {
+        window.open("/mapBroadcast", "_blank", "width=800, height=700");
     }
 
     function init() {
@@ -388,6 +411,8 @@
             $('#errorTextArea').summernote({
                 height: 200,
             });
+
+            broadcastInit();
         });
 
         if (settingsErrors.length || locationErrors.length || checkErrors.length) {
@@ -445,15 +470,19 @@
         window.addEventListener("resize", resizeTimeout); // Window size
         window.visualViewport.addEventListener('resize', viewportResizeTimeout); // Pinch zoom
 
-        document.getElementById('exportModal').addEventListener('shown.bs.modal', () => {
-            let textbox = document.getElementById('exportFilename');
-            textbox.focus();
-            textbox.select();
-        });
+        let exportModal = document.getElementById('exportModal');
 
-        document.getElementById('exportModal').addEventListener('hidden.bs.modal', () => {
-            document.getElementById('argsOffcanvas').focus();
-        });
+        if (exportModal) {
+            exportModal.addEventListener('shown.bs.modal', () => {
+                let textbox = document.getElementById('exportFilename');
+                textbox.focus();
+                textbox.select();
+            });
+
+            exportModal.addEventListener('hidden.bs.modal', () => {
+                document.getElementById('argsOffcanvas').focus();
+            });
+        }
     }
 
     init();

@@ -2,11 +2,15 @@
 
 function saveChecked() {
     setLocalStorage('checkedChecks', JSON.stringify([...checkedChecks]));
+
+    broadcastMap();
 }
 
 function saveEntrances() {
     setLocalStorage('entranceMap', JSON.stringify(entranceMap));
     setLocalStorage('connections', JSON.stringify(connections));
+
+    broadcastMap();
 }
 
 function saveLocations() {

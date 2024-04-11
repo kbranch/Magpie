@@ -15,6 +15,10 @@ function resetInventory() {
 
 function saveInventory() {
     setLocalStorage("inventory", JSON.stringify(inventory));
+
+    if (typeof broadcastItems === 'function') {
+        broadcastItems();
+    }
 }
 
 function loadInventory() {

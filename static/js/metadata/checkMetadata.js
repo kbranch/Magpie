@@ -1088,7 +1088,45 @@ let vanillaCoordDict = {
               "y": 1136
           }
        ],
+       "index":63,
+    },
+    "0x2E9-0":{
+       "id":"0x2E9-0",
+       "vanillaArea":"Ukuku Prairie",
+       "vanillaName":"Seashell Mansion 5 Bonus",
+       "locations":[
+          {
+             "map":"vanillaOverworld",
+             "x":1700,
+             "y":1088,
+          },
+          {
+             "map": "underworld",
+             "x": 1692,
+             "y": 1136,
+          }
+       ],
        "index":61,
+       "condition": (flags, settings) => { return false && !flags.ap_logic; },
+    },
+    "0x2E9-1":{
+       "id":"0x2E9-1",
+       "vanillaArea":"Ukuku Prairie",
+       "vanillaName":"Seashell Mansion 10 Bonus",
+       "locations":[
+          {
+             "map":"vanillaOverworld",
+             "x":1700,
+             "y":1088,
+          },
+          {
+             "map": "underworld",
+             "x": 1692,
+             "y": 1136,
+          }
+       ],
+       "index":62,
+       "condition": (flags, settings) => { return false && !flags.ap_logic; },
     },
     "0x0A4":{
        "id":"0x0A4",
@@ -4519,8 +4557,8 @@ let vanillaCoordDict = {
        "locations":[
           {
              "map":"d1",
-             "x":560,
-             "y":560
+             "x":608,
+             "y":544
           },
           {
              "map":"vanillaOverworld",
