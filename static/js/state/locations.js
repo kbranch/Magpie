@@ -3,14 +3,18 @@
 function saveChecked() {
     setLocalStorage('checkedChecks', JSON.stringify([...checkedChecks]));
 
-    broadcastMap();
+    if (typeof broadcastMap === 'function') {
+        broadcastMap();
+    }
 }
 
 function saveEntrances() {
     setLocalStorage('entranceMap', JSON.stringify(entranceMap));
     setLocalStorage('connections', JSON.stringify(connections));
 
-    broadcastMap();
+    if (typeof broadcastMap === 'function') {
+        broadcastMap();
+    }
 }
 
 function saveLocations() {

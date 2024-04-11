@@ -12,6 +12,9 @@ function handleBroadcastMessage(msg) {
 
     receiving = true;
 
+    // console.log(`receiving ${msg.type} ID ${msg.id}`);
+    // console.log(msg);
+
     try {
         if (msg.type == 'items') {
             receiveItems(msg.data);
@@ -28,12 +31,10 @@ function handleBroadcastMessage(msg) {
         else if (msg.type == 'location') {
             receiveLocation(msg.data);
         }
-        else if (msg.type == 'send') {
-            receiving = false;
-
-            broadcastItems();
-            broadcastMap();
-            broadcastArgs();
+        else if (msg.type == 'send' && broadcastMode == 'send') {
+            broadcastItems(false, true);
+            broadcastMap(false, true);
+            broadcastArgs(false, true);
         }
     }
     catch(e) {
@@ -115,8 +116,8 @@ function receiveArgs(data) {
 }
 
 var itemTimeout = null;
-function broadcastItems(buffer=true) {
-    if (receiving) {
+function broadcastItems(buffer=true, force=false) {
+    if (receiving && !force) {
         return;
     }
 
@@ -133,8 +134,8 @@ function broadcastItems(buffer=true) {
 }
 
 var mapTimeout = null;
-function broadcastMap(buffer=true) {
-    if (receiving) {
+function broadcastMap(buffer=true, force=false) {
+    if (receiving && !force) {
         return;
     }
 
@@ -177,8 +178,18 @@ function broadcastMapTab(tabName) {
     broadcastMessage({type: 'mapTab', data: tabName});
 }
 
-function broadcastArgs() {
-    if (receiving) {
+var argsTimeout = null;
+function broadcastArgs(buffer=true, force=false) {
+    if (receiving && !force) {
+        return;
+    }
+
+    if (buffer) {
+        if (argsTimeout) {
+            clearTimeout(argsTimeout);
+        }
+
+        argsTimeout = setTimeout(() => broadcastArgs(false), 100);
         return;
     }
 
@@ -225,6 +236,10 @@ function broadcastInit() {
 }
 
 function broadcastMessage(msg) {
+    msg.id = String(Math.random());
+
+    // console.log(`sending ${msg.type} ID ${msg.id}`);
+
     if (local) {
         if (broadcastSocket != null && broadcastSocket.readyState == 1) {
             let messageText = JSON.stringify(msg);
