@@ -1,6 +1,9 @@
 {% set instrumentClass = "flex-container" if localSettings.showDungeonItemCount else "" %}
 
-<div class="row pt-2 item-width">
+{# Magpie is built with a width of 294 in mind - change with caution #}
+{% set width = 294 %}
+
+<div class="row pt-2" style="width: {{width}}px;">
     <div class="col col-3 text-center px-0">
         <div class="{{instrumentClass}}">
             {{ item("INSTRUMENT1", max="1", secondary="REQ1", classes="") }}
@@ -54,7 +57,7 @@
         </div>
     </div>
 </div>
-<div class="row pt-2 item-width">
+<div class="row pt-2" style="width: {{width}}px;">
     <div class="col col-3 text-center px-0">
         <div class="{{instrumentClass}}">
             {{ item("INSTRUMENT5", max="1", secondary="REQ5", classes="") }}
@@ -108,7 +111,7 @@
         </div>
     </div>
 </div>
-<div class="row pt-2 item-width">
+<div class="row pt-2" style="width: {{width}}px;">
     <div class="col text-center px-0">
         <div class="{{instrumentClass}} great-fairy">
             {{ item("GREAT_FAIRY", max="1", classes="", gfx=False) }}
