@@ -1,5 +1,7 @@
-<!-- Main items -->
-<div class="row item-width">
+{# Magpie is built with a width of 294 in mind - change with caution #}
+{% set width = 294 %}
+
+<div class="row" style="width: {{width}}px;">
     {{ item('SHIELD', max="2") }}
     {{ item("SWORD", max="2") }}
     {{ item("TOADSTOOL", secondary="TOADSTOOL_CHECKED", secondaryMax="1", highlightOwnedSecondary=True) }}
@@ -36,7 +38,7 @@
 </div>
 
 {% if args.tradequest %}
-<div class="row pb-3 pt-1 item-width">
+<div class="row pb-3 pt-1" style="width: {{width}}px;">
     {{ item('TRADING_ITEM_YOSHI_DOLL', max="1", secondary='TRADING_ITEM_YOSHI_DOLL_CHECKED', secondaryMax="1", highlightOwnedSecondary=True) }}
     {{ item('TRADING_ITEM_RIBBON', max="1", secondary='TRADING_ITEM_RIBBON_CHECKED', secondaryMax="1", highlightOwnedSecondary=True) }}
     {{ item('TRADING_ITEM_DOG_FOOD', max="1", secondary='TRADING_ITEM_DOG_FOOD_CHECKED', secondaryMax="1", highlightOwnedSecondary=True) }}

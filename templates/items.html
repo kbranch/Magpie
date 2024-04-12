@@ -22,8 +22,13 @@
 'HAMMER', 'id',
 ] %}
 
+{% set block='' %} 
+{% if not localSettings.stacked %}
+    {% set block = " style=\"display: block;\"" %} 
+{% endif %}
+
 <div class="d-flex justify-content-center">
-    <div id="items" class="row">
+    <div id="items" class="row"{{block|safe}}>
         <div class="col-auto align-self-center">
             {% if localSettings.itemsTemplate == "custom" %}
                 {% include customItems %}
