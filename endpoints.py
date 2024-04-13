@@ -668,3 +668,11 @@ if sharingEnabled:
                 return False
         
         return True
+
+@app.route("/vue")
+def vueRoot():
+    return app.send_static_file("vue/index.html")
+
+@app.route('/assets/<path:filename>')
+def vueCatchall(filename):
+  return app.send_static_file('vue/assets/' + filename)

@@ -16,3 +16,4 @@ __pycache__/
 /image-tools/
 *.xcf
 /instance
+/static/vue
