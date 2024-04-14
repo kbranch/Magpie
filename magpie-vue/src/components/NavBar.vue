@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted } from 'vue';
 
-import JSZip from 'jszip'
-import 'bootstrap';
-import 'summernote/dist/summernote-lite.min.css';
-import 'summernote/dist/summernote-lite.min.js';
-import $ from 'jquery';
+// import JSZip from 'jszip'
+// import 'bootstrap';
+// import 'summernote/dist/summernote-lite.min.css';
+// import 'summernote/dist/summernote-lite.min.js';
+// import $ from 'jquery';
 
 defineProps({
   showTitle: {
@@ -90,26 +90,26 @@ async function zipString(string, filename) {
         <div class="container px-0">
             <a v-if="showTitle" class="nav-link pe-2" href="/">Magpie</a>
             <button type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-title="About Magpie" :data-bs-content=aboutContents data-bs-html="true">
-                <img class="button-icon" src="/static/images/question-circle.svg">
+                <img class="button-icon" src="/images/question-circle.svg">
             </button>
             <button class="btn btn-secondary ms-1" alt="Make a suggestion or report a bug" data-bs-toggle="modal" data-bs-target="#suggestionModal" type="button">
-                <img class="button-icon" src="/static/images/bug.svg">
+                <img class="button-icon" src="/images/bug.svg">
             </button>
 
             <div v-if="showShare">
                 <button class="btn btn-secondary ms-1" onclick="prepShareModal()" alt="Share" data-bs-toggle="modal" data-bs-target="#shareModal" type="button">
-                    <img class="button-icon" src="/static/images/share.svg">
+                    <img class="button-icon" src="/images/share.svg">
                 </button>
-                <img id="liveUpdateIcon" src="/static/images/broadcast-pin.svg" data-status="off" class="p-1" data-bs-toggle="tooltip" data-bs-title="Live sharing" data-bs-trigger="hover">
+                <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" data-bs-toggle="tooltip" data-bs-title="Live sharing" data-bs-trigger="hover">
             </div>
 
             <div class="col text-end">
                 <button type="button" class="btn btn-secondary" onclick="resetSession()" data-bs-toggle="tooltip" data-bs-title="Reset Checks and Inventory" data-bs-trigger="hover">
-                    <img class="button-icon" src="/static/images/arrow-clockwise.svg">
+                    <img class="button-icon" src="/images/arrow-clockwise.svg">
                 </button>
                 <span data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
                     <button id="argsCloseButton" class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Settings" data-bs-trigger="hover">
-                        <img class="button-icon" src="/static/images/gear.svg">
+                        <img class="button-icon" src="/images/gear.svg">
                     </button>
                 </span>
             </div>

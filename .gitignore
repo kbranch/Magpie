@@ -17,3 +17,4 @@ __pycache__/
 *.xcf
 /instance
 /static/vue
+/vue-dist

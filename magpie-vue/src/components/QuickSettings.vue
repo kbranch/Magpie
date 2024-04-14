@@ -1,0 +1,220 @@
+<script setup>
+defineProps({
+    smallQuicksettings: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
+});
+
+function quickSettingsTab(id) {
+    let element = document.getElementById(id);
+    let tabName = $(element).attr('data-tabname');
+    $('#quickTabContents .tab.active').removeClass('active');
+    $('#quickTabs .quicktab-button.active').removeClass('active');
+    $(`#quickTabs .quicktab-button[data-tabname=${tabName}]`).addClass('active');
+    $(`#quickTabContents .tab [data-tabname=${tabName}]`).closest('.tab').addClass('active');
+}
+</script>
+
+<template>
+<div class="fill-box px-2_5 pt-1 item-width" id="quicksettings">
+    <div class="tabs h-100" id="quickTabContents">
+        <div class="tab h-100 active" id="quicksettingsTabContent">
+            <div class="row h-100 align-items-end" data-tabname="quicksettings">
+                <div class="col quicksettings-col">
+                    <div class="row">
+                        <div class="col-4 mb-4">
+                            <input id="showOutOfLogicQuick" data-setting="showOutOfLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showOutOfLogicQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show out of logic"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-9"></use></svg></label>
+                        </div>
+                        <div class="col-4 mb-4">
+                            <input id="showHigherLogicQuick" data-setting="showHigherLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showHigherLogicQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show higher logic levels"><img src="/images/higher-logic.svg" class="quicksettings-icon align-middle"></label>
+                        </div>
+                        <div class="col-4 mb-4">
+                            <input id="showCheckedQuick" data-setting="showChecked" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showCheckedQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show checked locations"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-checked"></use></svg></label>
+                        </div>
+                        <div class="col-3 pe-1 mb-4">
+                            <input id="showVanillaQuick" data-setting="showVanilla" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showVanillaQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show vanilla checks"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-0-vanilla"></use></svg></label>
+                        </div>
+                        <div class="col-3 px-1 mb-4">
+                            <input id="showOwnedQuick" data-setting="showOwnedPickups" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showOwnedQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show owned vanilla pickups">
+                                <div class="row ms-0 px-0">
+                                    <div class="col-auto px-0">
+                                        <div class="quicksettings-wrapper">
+                                            <div class="node-overlay-wrapper">
+                                                <div class="icon-wrapper behind-tracker">
+                                                    <div class="behind-tracker-overlay"></div>
+                                                    <svg class="icon" style="width: 100%; height: 100%;">
+                                                        <use xlink:href="#difficulty-0-vanilla"></use>
+                                                    </svg>
+                                                    <svg class="icon hollow" style="width: 100%; height: 100%;">
+                                                        <use xlink:href="#difficulty-0-hollow"></use>
+                                                    </svg>
+                                                    <img src="/images/MAGIC_POWDER_1.png" class="node-item-overlay" data-node-item="MAGIC_POWDER" onmousedown="preventDoubleClick(event)">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="col-3 px-1 mb-4">
+                            <input id="showVanillaEntrancesQuick" data-setting="showVanillaEntrances" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showVanillaEntrancesQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show vanilla entrances and dungeon stairs"><img class="quicksettings-icon align-middle" src="/images/vanilla-entrance.svg"></label>
+                        </div>
+                        <div class="col-3 ps-1 mb-4">
+                            <input id="showLogicHintsQuick" data-setting="showLogicHints" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <label for="showLogicHintsQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show logic hints"><img class="quicksettings-icon align-middle" src="/images/logicHints.svg"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- {% if not smallQuicksettings %} -->
+        <div v-if="!smallQuicksettings">
+            <div class="tab h-100" id="autotrackerTabContent">
+                <div class="row h-100 justify-content-center align-items-end">
+                    <div class="col">
+                        <div class="row py-2 hidden" id="romRow">
+                            <div class="col even-col">
+                                <label for="romInput" class="form-label">Select ROM File <img class="invert" src="/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="The autotracker requires a copy of the ROM file before entrances can be tracked"></label>
+                                <input type="file" accept=".gbc" class="hidden" id="romInput" onchange="loadRom(this)" />
+                                <input type="button" id="romButton" class="btn btn-secondary" value="Browse..." onclick="document.getElementById('romInput').click();" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea id="autotrackerMessages" readonly></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <input id="enableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                                <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
+                            </div>
+                        </div>
+                        <div class="row" data-tabname="autotracker">
+                            <div class="col-3 px-1">
+                                <button class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Reload items from autotracker" onclick="loadFromAutotracker()" type="button">
+                                    <img src="/images/arrow-clockwise.svg" class="autotracker-button-icon">
+                                </button>
+                            </div>
+                            <div class="col-3 px-1">
+                                <button class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Refresh from Archipelago" onclick="showArchipelagoModal()" type="button">
+                                    <img src="/images/archipelago-icon.svg" class="autotracker-button-icon">
+                                </button>
+                            </div>
+                            <div class="col-3 px-1">
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker.exe" class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download Windows autotracker" role="button">
+                                    <img src="/images/windows.svg" class="autotracker-button-icon">
+                                </a>
+                            </div>
+                            <div class="col-3 px-1">
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux" class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Download Linux autotracker" role="button">
+                                    <img src="/images/tux.svg" class="autotracker-button-icon">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab h-100" id="spoilersTabContent">
+                <div class="row h-100 align-items-end" data-tabname="spoilers">
+                    <div class="col rom-col">
+                        <div class="row">
+                            <div class="col">
+                                <p id="spoilerSeed"></p>
+                            </div>
+                        </div>
+                        <div class="row pb-2">
+                            <div class="col">
+                                <input type="button" id="spoilAllButton" class="btn btn-secondary hidden" value="Spoil Everything" onclick="spoilAll();" />
+                            </div>
+                            <div class="col-auto">
+                                <input type="button" id="clearSpoilersButton" class="btn btn-secondary" value="Clear" onclick="resetCheckContents();drawActiveTab();" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col even-col">
+                                <label for="spoilerInput" class="form-label pe-2">Select Spoiler File <img class="invert" src="/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Select either a JSON spoiler log file or a ROM file"></label>
+                                <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
+                                <input type="button" class="btn btn-secondary spoiler-browse" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab h-100" id="plandoTabContent">
+                <div class="row h-100 align-items-end" data-tabname="plando">
+                    <div class="col rom-col">
+                        <input type="button" id="plandoButton" class="btn btn-secondary" value="Export as Plan" onclick="exportPlando()" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab h-100" id="downloadsTabContent">
+                <div class="row h-100 align-items-end" data-tabname="downloads">
+                    <div class="col rom-col">
+                        <h6 class="mb-0">Offline version</h6>
+                        <ul class="mb-1">
+                            <li><a href="https://magpietracker.us/static/builds/magpie-local.zip">Windows</a>, <a href="https://magpietracker.us/static/builds/magpie-local-linux.zip">Linux</a></li>
+                            <li><a href="https://magpietracker.us/static/builds/magpie-source.zip">Source bundle</a></li>
+                        </ul>
+
+                        <h6 class="mb-0">Autotracker</h6>
+                        <ul class="mb-1">
+                            <li><a href="https://magpietracker.us/static/builds/magpie-autotracker.exe">Windows</a>, <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux">Linux</a></li>
+                        </ul>
+
+                        <h6 class="mb-0">Compatible emulators</h6>
+                        <ul class="mb-0">
+                            <li><a href="https://bgb.bircd.org/#downloads">BGB</a> (Windows, others via Wine)</li>
+                            <li>
+                                <a href="https://tasvideos.org/BizHawk">Bizhawk</a> (cross platform)
+                                <ul>
+                                    <li>Use <a href="https://magpietracker.us/static/bizhawk-ladxr.zip">this LUA script</a>, from <a href="https://github.com/ArchipelagoMW/Archipelago">Archipelago</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="https://www.retroarch.com/?page=platforms">Retroarch</a> (cross platform)
+                                <ul>
+                                    <li>Must <a href="https://docs.libretro.com/development/retroarch/network-control-interface/">enable networking</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- {% endif %} -->
+    </div>
+</div>
+
+<!-- {% if not smallQuicksettings %} -->
+<ul v-if="!smallQuicksettings" class="nav px-2_5" id="quickTabs">
+    <li class="quicktab-button active" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="quicksettings" data-bs-title="Quick Settings" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="quicksettingsTab" data-tabname="quicksettings" type="button" @click="quickSettingsTab('quicksettingsTab')"><img class="quicksetting-icon" src="/images/ui-checks.svg"></button>
+    </li>
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="autotracker" data-bs-title="Autotracking" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="autotrackerTab" data-tabname="autotracker" type="button" @click="quickSettingsTab('autotrackerTab')"><img class="quicksetting-icon" src="/images/cpu.svg"></button>
+    </li>
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="spoilers" data-bs-title="Spoilers" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="spoilersTab" data-tabname="spoilers" type="button" @click="quickSettingsTab('spoilersTab')"><img class="quicksetting-icon" src="/images/eye.svg"></button>
+    </li>
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="plando" data-bs-title="Plandomizer" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="plandoTab" data-tabname="plando" type="button" @click="quickSettingsTab('plandoTab')"><img class="quicksetting-icon" src="/images/gift.svg"></button>
+    </li>
+    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="downloads" data-bs-title="Downloads" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="downloadsTab" data-tabname="downloads" type="button" @click="quickSettingsTab('downloadsTab')"><img class="quicksetting-icon" src="/images/file-arrow-down.svg"></button>
+    </li>
+</ul>
+<!-- {% endif %} -->
+</template>

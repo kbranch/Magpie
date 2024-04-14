@@ -9,7 +9,7 @@ import traceback
 import localSettings
 from jinja2 import Template
 from datetime import datetime
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, send_from_directory
 # from werkzeug.middleware.profiler import ProfilerMiddleware
 
 from version import *
@@ -74,8 +74,8 @@ def getDiskSettings(prefix=''):
 
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks'}
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -671,8 +671,65 @@ if sharingEnabled:
 
 @app.route("/vue")
 def vueRoot():
-    return app.send_static_file("vue/index.html")
+    return send_from_directory("vue-dist", "index.html")
 
 @app.route('/assets/<path:filename>')
 def vueCatchall(filename):
-  return app.send_static_file('vue/assets/' + filename)
+  return send_from_directory('vue-dist/assets', filename)
+
+@app.route('/<path:filename>')
+def staticCatchall(filename):
+  return app.send_static_file(filename)
+
+@app.route("/vueInit")
+def vueInit():
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+
+    if request.args.get('enable_autotracking') or request.args.get('enable_autotracker'):
+        settingsOverrides['enableAutotracking'] = True
+
+    shortString = request.args.get('shortString') 
+    if shortString:
+        argsOverrides = getArgsFromShortString(shortString)
+
+    settingsPrefix = 'setting_'
+    argsPrefix = 'flag_'
+    for arg, value in request.args.items():
+        if arg.startswith(settingsPrefix):
+            settingsOverrides[arg[len(settingsPrefix):]] = value
+        if arg.startswith(argsPrefix):
+            argsOverrides[arg[len(argsPrefix):]] = value
+
+    remoteVersion = None
+
+    if app.config['local']:
+        remoteVersion = getRemoteVersion()
+        if remoteVersion:
+            remoteVersion = remoteVersion['magpie']
+
+    return json.dumps(
+        {
+            "flags": [x.__dict__ for x in flags],
+            "args": args.__dict__,
+            "defaultSettings": defaultSettings.__dict__,
+            "jsonSettingsOverrides": settingsOverrides,
+            "jsonArgsOverrides": argsOverrides,
+            "local": app.config["local"],
+            "graphicsOptions": LocalSettings.graphicsPacks(),
+            "version": getVersion(),
+            "remoteVersion": remoteVersion,
+            "diskSettings": json.loads(getDiskSettings()),
+            "hostname": app.config["hostname"],
+            "allowAutotracking": True,
+            "allowMap": True,
+            "allowItems": True,
+            "players": [""],
+            "broadcastMode": "send",
+        }
+    )
