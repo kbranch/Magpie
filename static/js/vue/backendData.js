@@ -8,7 +8,7 @@ function refreshItems() {
 
     $.ajax({
         type: "POST",
-        url: "/items",
+        url: rootPrefix + "/items",
         data: {
             args: JSON.stringify(args),
             localSettings: JSON.stringify(localSettings),
@@ -76,7 +76,7 @@ function refreshCheckList() {
 
     $.ajax({
         type: "POST",
-        url: "/checkList",
+        url: rootPrefix + "/checkList",
         data: {
             args: JSON.stringify(args),
             inventory: JSON.stringify(tempInventory),
@@ -154,7 +154,7 @@ function loadShortString(saveOnLoad=false) {
 
     $.ajax({
         type: "POST",
-        url: "/shortString",
+        url: rootPrefix + "/shortString",
         data: {
             shortString: shortString,
         },
@@ -181,7 +181,7 @@ function loadShortString(saveOnLoad=false) {
 function loadSpoilerLog(romData) {
     $.ajax({
         type: "POST",
-        url: "/spoilerLog",
+        url: rootPrefix + "/spoilerLog",
         data: {
             romData: btoa(romData),
         },
@@ -203,11 +203,11 @@ function errorHandler(e) {
 }
 
 function openItemsBroadcastView() {
-    window.open("/itemsBroadcast", "_blank", "width=700, height=700");
+    window.open(rootPrefix + "/itemsBroadcast", "_blank", "width=700, height=700");
 }
 
 function openMapBroadcastView() {
-    window.open("/mapBroadcast", "_blank", "width=800, height=700");
+    window.open(rootPrefix + "/mapBroadcast", "_blank", "width=800, height=700");
 }
 
 function init() {
@@ -342,5 +342,12 @@ function init() {
         exportModal.addEventListener('hidden.bs.modal', () => {
             document.getElementById('argsOffcanvas').focus();
         });
+    }
+}
+
+function hardReset() {
+    if (confirm("Completely clear all tracker data, including settings and trackable objects?")) {
+        localStorage.clear();
+        location.reload();
     }
 }

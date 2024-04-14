@@ -67,6 +67,7 @@ var logicGraph = null;
 var logicByCheck = {};
 var logicByEntrance = {};
 var broadcastMode;// = '{{broadcastMode}}';
+var rootPrefix = "";
 
 const renamedItems = {
     "KEY9": "KEY0",

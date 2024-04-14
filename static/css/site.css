@@ -1307,3 +1307,7 @@ span.logic-name {
 .dungeon-parent {
     position: relative;
 }
+
+input {
+    margin-right: 0.25rem;
+}

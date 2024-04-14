@@ -18,9 +18,9 @@ export default defineConfig({
     outDir: '../vue-dist/',
     emptyOutDir: true,
   },
-  server: {
-    watch: {
-      ignored: ['**/static/**'],
-    },
-  },
+  // server: {
+  //   watch: {
+  //     ignored: ['**/static/**'],
+  //   },
+  // },
 })

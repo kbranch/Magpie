@@ -330,7 +330,7 @@ function applySettings(oldArgs=null) {
     themeStyles.insertRule(highlightRule, 0);
 
     highlightRule = `.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
-        border-bottom-color: ${localSettings.highlightColor};
+        border-bottom-color: ${localSettings.highlightColor} !important;
     }`;
     themeStyles.insertRule(highlightRule, 0);
 

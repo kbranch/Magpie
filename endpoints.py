@@ -75,7 +75,7 @@ def getDiskSettings(prefix=''):
     return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
 jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':

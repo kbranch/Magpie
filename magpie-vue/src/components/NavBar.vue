@@ -11,7 +11,7 @@ defineProps({
   showTitle: {
     type: Boolean,
     required: false,
-    default: true,
+    default: false,
   },
   showShare: {
     type: Boolean,
@@ -107,7 +107,7 @@ async function zipString(string, filename) {
                 <button type="button" class="btn btn-secondary" onclick="resetSession()" data-bs-toggle="tooltip" data-bs-title="Reset Checks and Inventory" data-bs-trigger="hover">
                     <img class="button-icon" src="/images/arrow-clockwise.svg">
                 </button>
-                <span data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
+                <span class="ms-1" data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
                     <button id="argsCloseButton" class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Settings" data-bs-trigger="hover">
                         <img class="button-icon" src="/images/gear.svg">
                     </button>
