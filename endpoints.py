@@ -654,6 +654,7 @@ if sharingEnabled:
                                             viewCode=viewCode,
                                             joinCode=joinCode,
                                             codeFailed=codeFailed,
+                                            allowItems=True,
                                             extraTitle=" - Event Restream",
                                         )
 
