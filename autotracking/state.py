@@ -72,7 +72,12 @@ class State:
         self.visitedEntrancesRead = False
 
         if 'entrances' in self.features:
-            loadEntrances(self, romData)
+            try:
+                loadEntrances(self, romData)
+            except Exception as e:
+                print(f'Error parsing message: {traceback.format_exc()}')
+                print('Disabling entrance tracking')
+                self.features.remove('entrances')
 
         if 'settings' in self.features:
             settingsString = getSettingsString(romData)

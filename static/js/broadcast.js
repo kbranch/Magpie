@@ -3,6 +3,7 @@
 let channel = null;
 let broadcastSocket = null;
 let receiving = false;
+let skipNextBroadcast = false;
 
 function handleBroadcastMessage(msg) {
     if (!('type' in msg) || !('data' in msg)) {
@@ -62,6 +63,7 @@ function receiveMap(data) {
     drawActiveTab();
 
     if (allowMap) {
+        skipNextBroadcast = true;
         refreshCheckList();
     }
 }
@@ -135,7 +137,8 @@ function broadcastItems(buffer=true, force=false) {
 
 var mapTimeout = null;
 function broadcastMap(buffer=true, force=false) {
-    if (receiving && !force) {
+    if ((receiving && !force) || skipNextBroadcast) {
+        skipNextBroadcast = false;
         return;
     }
 

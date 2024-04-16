@@ -16,5 +16,8 @@ __pycache__/
 /image-tools/
 *.xcf
 /instance
-/static/vue
 /vue-dist
+/magpie-vue/node_modules
+/magpie-vue/dist
+magpie-vue/.vite/
+/static/vue
