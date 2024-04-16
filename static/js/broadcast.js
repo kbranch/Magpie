@@ -138,7 +138,10 @@ function broadcastItems(buffer=true, force=false) {
 var mapTimeout = null;
 function broadcastMap(buffer=true, force=false) {
     if ((receiving && !force) || skipNextBroadcast) {
-        skipNextBroadcast = false;
+        if (!buffer) {
+            skipNextBroadcast = false;
+        }
+
         return;
     }
 
