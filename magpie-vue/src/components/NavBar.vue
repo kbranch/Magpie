@@ -1,12 +1,6 @@
 <script setup>
 import { onMounted } from 'vue';
 
-// import JSZip from 'jszip'
-// import 'bootstrap';
-// import 'summernote/dist/summernote-lite.min.css';
-// import 'summernote/dist/summernote-lite.min.js';
-// import $ from 'jquery';
-
 defineProps({
   showTitle: {
     type: Boolean,
@@ -48,41 +42,6 @@ async function sendSuggestion() {
         },
     });
 }
-
-async function getStateZip() {
-    // let state = getState();
-    // state.messageLog = messageLog;
-    // state.undos = getRecentUndos();
-    // state.spoilerLog = spoilerLog;
-
-    // state.undos.map(x => x.checkedChecks = [...x.checkedChecks]);
-
-    let string = await zipString(JSON.stringify({test: 'asdf'}), `${(new Date()).toISOString().replaceAll(':', '_')}-magpie-state.json`);
-
-    return string;
-}
-
-async function zipString(string, filename) {
-    var zip = new JSZip();
-    zip.file(filename, string);
-    return await zip.generateAsync({
-        type: "base64",
-        compression: "DEFLATE",
-        compressionOptions: {
-            level: 9
-        }
-    });
-}
-
-// function getRecentUndos() {
-//     let undos = [];
-
-//     for (let i = undoStack.length - 1; i >= 0 && undos.length < 100; i--) {
-//         undos.push(undoStack[i]);
-//     }
-
-//     return undos;
-// }
 </script>
 
 <template>
@@ -96,12 +55,12 @@ async function zipString(string, filename) {
                 <img class="button-icon" src="/images/bug.svg">
             </button>
 
-            <div v-if="showShare">
+            <template v-if="showShare">
                 <button class="btn btn-secondary ms-1" onclick="prepShareModal()" alt="Share" data-bs-toggle="modal" data-bs-target="#shareModal" type="button">
                     <img class="button-icon" src="/images/share.svg">
                 </button>
                 <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" data-bs-toggle="tooltip" data-bs-title="Live sharing" data-bs-trigger="hover">
-            </div>
+            </template>
 
             <div class="col text-end">
                 <button type="button" class="btn btn-secondary" onclick="resetSession()" data-bs-toggle="tooltip" data-bs-title="Reset Checks and Inventory" data-bs-trigger="hover">

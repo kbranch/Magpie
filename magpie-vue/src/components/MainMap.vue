@@ -42,12 +42,12 @@ defineProps({
     <li class="tab-button" data-mapname="d0" data-bs-toggle="tooltip" data-bs-title="Color Dungeon" data-bs-trigger="hover">
         <button class="btn tab-link" id="d0Tab" type="button" onclick="drawTab(this, clear=true)">D0</button>
     </li>
-    <!-- {% if broadcastMode == 'send' %} -->
-    <div class="col"></div>
-    <div v-if="broadcastMode == 'send'" class="col-auto pt-2">
-        <a href="/mapBroadcast" target="_blank" onclick="openMapBroadcastView(); return false;" class="me-2" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Open map broadcast view"><img class="dimvert" src="/images/pop-out.svg"></a>
-    </div>
-    <!-- {% endif %} -->
+    <template v-if="broadMode == 'send'">
+        <div class="col"></div>
+        <div v-if="broadcastMode == 'send'" class="col-auto pt-2">
+            <a href="/mapBroadcast" target="_blank" onclick="openMapBroadcastView(); return false;" class="me-2" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Open map broadcast view"><img class="dimvert" src="/images/pop-out.svg"></a>
+        </div>
+    </template>
 </ul>
 
 <div class="tabs" id="tabContents">

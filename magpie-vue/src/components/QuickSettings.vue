@@ -76,7 +76,7 @@ function quickSettingsTab(id) {
             </div>
         </div>
 
-        <div v-if="!smallQuicksettings">
+        <template v-if="!smallQuicksettings">
             <div class="tab h-100" id="autotrackerTabContent">
                 <div class="row h-100 justify-content-center align-items-end">
                     <div class="col">
@@ -192,7 +192,7 @@ function quickSettingsTab(id) {
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
     </div>
 </div>
 

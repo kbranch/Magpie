@@ -610,8 +610,7 @@ defineProps({
                 </fieldset>
             </div>
         </div>
-        <!-- {% if local %} -->
-        <div v-if="local">
+        <template v-if="local">
             <div class="row">
                 <div class="col-auto">
                     <h2>Offline Exclusives</h2>
@@ -663,8 +662,7 @@ defineProps({
                     </fieldset>
                 </div>
             </div>
-        </div>
-        <!-- {% endif %} -->
+        </template>
         <div class="row">
             <div class="col-auto">
                 <h2>Layouts</h2>
@@ -707,9 +705,7 @@ defineProps({
                     <label for="graphicsPack" class="form-label">Graphics pack</label>
                     <select id="graphicsPack" class="form-select" data-setting="graphicsPack" aria-label="graphicsPack">
                         <option value="">Default</option>
-                    <!-- {% for option in graphicsOptions|sort %} -->
-                        <option v-for="option in graphicsOptions" value="/{{option}}" :key="option">{{option}}</option>
-                    <!-- {% endfor %} -->
+                        <option v-for="option in graphicsOptions" :value="`/${option}`" :key="option">{{option}}</option>
                     </select>
                 </div>
             </div>

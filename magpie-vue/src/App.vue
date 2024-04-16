@@ -50,7 +50,6 @@ function initGlobals(data) {
   players = data.players;
   broadcastMode = data.broadcastMode;
   rootPrefix = import.meta.env.VITE_API_URL;
-  // graphicsOptions 
 }
 
 </script>

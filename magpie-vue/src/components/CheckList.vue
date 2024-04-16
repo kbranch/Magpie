@@ -57,8 +57,6 @@
 </div>
 
 <div id="mapAccordion" class="accordion">
-    <!-- {% set ns = namespace(expanded='true', show=' show', collapsed='', hidden='', name='In logic') %} -->
-    <!-- {% for i in range(5) %} -->
         <div v-for="(n, i) in 5" :key="i" :id="`difficulty${i}Accordion`" :data-difficulty="i" :class="`accordion-item${i == 0 ? '' : ' hidden'}`">
             <h2 :id="`heading-${i}`" class="accordion-header">
                 <button :class="`accordion-button${i == 0 ? '' : ' collapsed'}`" type="button" data-bs-toggle="collapse" :data-bs-target="`#collapse-${i}`" :aria-expanded="i == 0" :aria-controls="`collapse-${i}`">
@@ -78,13 +76,6 @@
                 </div>
             </div>
         </div>
-    
-        <!-- {% set ns.expanded = 'false' %}
-        {% set ns.show = '' %}
-        {% set ns.collapsed = ' collapsed' %}
-        {% set ns.hidden = ' hidden' %}
-        {% set ns.name = '' %} -->
-    <!-- {% endfor %} -->
 
         <div id="difficulty9Accordion" data-difficulty="9" class="accordion-item hidden">
             <h2 id="heading-9" class="accordion-header">
