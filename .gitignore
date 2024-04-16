@@ -19,3 +19,4 @@ __pycache__/
 /vue-dist
 /magpie-vue/node_modules
 /magpie-vue/dist
+magpie-vue/.vite/
