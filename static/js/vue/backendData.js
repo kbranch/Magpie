@@ -115,8 +115,6 @@ function refreshCheckList() {
                 }
             }
 
-            vueApp.updateLogics(response.logics);
-
             let checkCount = new Set(checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem).map(x => x.id)).size;
             document.getElementById('checkCounter').innerHTML = `Total checks: ${checkCount}`;
 
@@ -124,12 +122,13 @@ function refreshCheckList() {
             fillVanillaLogEntrances();
             updateEntrances();
 
-            vueApp.updateCheckAccessibility(checkAccessibility);
-
             broadcastMap();
 
             setTimeout(drawActiveTab);
-            setTimeout(refreshTextChecks, 20);
+            setTimeout(() => {
+                vueApp.updateCheckAccessibility(checkAccessibility);
+                vueApp.updateLogics(response.logics);
+            }, 20);
         }
     });
 }

@@ -14,8 +14,8 @@ const remoteVersion = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
 
-const logics = ref(null);
-const checkAccessibility = ref(null);
+const logics = ref([]);
+const checkAccessibility = ref([]);
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
@@ -125,7 +125,7 @@ defineExpose({
 
   <div class="row">
     <div id="checkList" class="col">
-      <CheckList :logics="logics" />
+      <CheckList :logics="logics" :check-accessibility="checkAccessibility" />
     </div>
   </div>
 

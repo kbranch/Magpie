@@ -53,6 +53,10 @@ class Check {
         }
     }
 
+    signature() {
+        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}`;
+    }
+
     nodeDifficulty() {
         return this.difficulty == -1 ? 'checked' : this.difficulty;
     }

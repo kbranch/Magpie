@@ -1,11 +1,42 @@
 <script setup>
+import { computed } from 'vue';
 import TextLogic from './TextLogic.vue';
 
-defineProps({
+const props = defineProps({
     logics: {
         required: true,
     },
+    checkAccessibility: {
+        required: true,
+    },
 });
+
+const filteredChecks = computed(() => props.checkAccessibility.filter(check => (check.shouldDraw() || check.difficulty == 9)));
+const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => check.difficulty));
+
+function compare(a, b) {
+    if (a > b) {
+        return 1
+    } else if (a < b) {
+        return -1
+    } else {
+        return 0
+    }
+}
+
+function sortByKey(arr, key) {
+    return arr.sort((a, b) => compare(key(a), key(b)))
+}
+
+function getChecks(difficulty) {
+    let diff = difficulty == 'Checked' ? -1 : difficulty;
+
+    if (!(diff in checksByDifficulty.value)) {
+        return [];
+    }
+
+    return sortByKey(checksByDifficulty.value[diff], x => [x.metadata.area, x.metadata.name]);
+}
 </script>
 
 <template>
@@ -64,50 +95,11 @@ defineProps({
 </div>
 
 <div id="mapAccordion" class="accordion">
-        <div v-for="logic in logics" :key="logic.difficulty" :id="`difficulty${logic.difficulty}Accordion`" :data-difficulty="logic.difficulty" :class="`accordion-item${logic.difficulty == 0 ? '' : ' hidden'}`">
-            <TextLogic :logic="logic" />
-        </div>
-
-        <div id="difficulty9Accordion" data-difficulty="9" class="accordion-item hidden">
-            <h2 id="heading-9" class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-9" aria-expanded="false" aria-controls="collapse-9">
-                    <div class="tooltip-check-graphic difficulty-9 align-middle">
-                        <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-9"></use></svg>
-                    </div>
-                    <span id="difficulty9AccordionName" class="ps-2">Out of logic</span>
-                </button>
-            </h2>
-    
-            <div id="collapse-9" class="accordion-collapse collapse" aria-labelledby="heading-9" data-bs-parent="#mapAccordion">
-                <div class="accordion-body">
-                    <div class="container">
-                        <div class="row grid" data-difficulty="9" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div id="difficultyCheckedAccordion" data-difficulty="checked" class="accordion-item hidden">
-            <h2 id="heading-Checked" class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-Checked" aria-expanded="false" aria-controls="collapse-Checked">
-                    <div class="tooltip-check-graphic difficulty-checked align-middle">
-                        <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-checked"></use></svg>
-                    </div>
-                    <span class="ps-2">Checked</span>
-                </button>
-            </h2>
-    
-            <div id="collapse-Checked" class="accordion-collapse collapse" aria-labelledby="heading-Checked" data-bs-parent="#mapAccordion">
-                <div class="accordion-body">
-                    <div class="container">
-                        <div class="row grid" data-difficulty="checked" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <TextLogic v-for="logic in [...logics,
+                                { difficulty: 9, friendlyName: 'Out of logic' },
+                                { difficulty: 'Checked', friendlyName: 'Checked' }]"
+        :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" />
+</div>
 
 <p id="checkCounter"></p>
 </template>
