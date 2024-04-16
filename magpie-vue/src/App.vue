@@ -14,6 +14,9 @@ const remoteVersion = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
 
+const logics = ref(null);
+const checkAccessibility = ref(null);
+
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
     .then(response => response.json())
@@ -52,6 +55,18 @@ function initGlobals(data) {
   rootPrefix = import.meta.env.VITE_API_URL;
 }
 
+function updateLogics(newLogics) {
+  logics.value = newLogics;
+}
+
+function updateCheckAccessibility(accessibility) {
+  checkAccessibility.value = accessibility;
+}
+
+defineExpose({
+  updateCheckAccessibility,
+  updateLogics,
+});
 </script>
 
 <template>
@@ -110,7 +125,7 @@ function initGlobals(data) {
 
   <div class="row">
     <div id="checkList" class="col">
-      <CheckList />
+      <CheckList :logics="logics" />
     </div>
   </div>
 

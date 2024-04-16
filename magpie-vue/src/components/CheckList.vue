@@ -1,11 +1,18 @@
 <script setup>
+import TextLogic from './TextLogic.vue';
+
+defineProps({
+    logics: {
+        required: true,
+    },
+});
 </script>
 
 <template>
 <div class="d-flex flex-wrap py-1">
     <div id="legend" class="flex-grow-1 d-flex flex-wrap justify-content-center">
-        <div v-for="(n, i) in 5" :key="i" :id="`legendDifficulty${i}`" class="col-auto px-2 legend-difficulty hidden">
-            <svg class="tooltip-check-graphic align-middle"><use :xlink:href="`#difficulty-${i}`"></use></svg><span :id="`legendDifficultyName${i}`" class="p-0 m-0 logic-name">: {{i}}</span>
+        <div v-for="logic in logics" :key="logic.difficulty" :id="`legendDifficulty${logic.difficulty}`" class="col-auto px-2 legend-difficulty">
+            <svg class="tooltip-check-graphic align-middle"><use :xlink:href="`#difficulty-${logic.difficulty}`"></use></svg><span :id="`legendDifficultyName${logic.difficulty}`" class="p-0 m-0 logic-name">: {{logic.name}}</span>
         </div>
         <div class="col-auto px-2">
             <div class="behind-tracker static-difficulty-wrapper align-middle">
@@ -57,24 +64,8 @@
 </div>
 
 <div id="mapAccordion" class="accordion">
-        <div v-for="(n, i) in 5" :key="i" :id="`difficulty${i}Accordion`" :data-difficulty="i" :class="`accordion-item${i == 0 ? '' : ' hidden'}`">
-            <h2 :id="`heading-${i}`" class="accordion-header">
-                <button :class="`accordion-button${i == 0 ? '' : ' collapsed'}`" type="button" data-bs-toggle="collapse" :data-bs-target="`#collapse-${i}`" :aria-expanded="i == 0" :aria-controls="`collapse-${i}`">
-                    <div :class="`tooltip-check-graphic difficulty-${i} align-middle`">
-                        <svg class="tooltip-check-graphic align-middle"><use :xlink:href="`#difficulty-${i}`"></use></svg>
-                    </div>
-                    <span :id="`difficulty${i}AccordionName`" class="ps-2">{{i == 0 ? 'In logic' : ''}}</span>
-                </button>
-            </h2>
-    
-            <div :id="`collapse-${i}`" :class="`accordion-collapse collapse${i == 0 ? ' show' : ''}`" :aria-labelledby="`heading-${i}`" data-bs-parent="#mapAccordion">
-                <div class="accordion-body">
-                    <div class="container">
-                        <div class="row grid" :data-difficulty="i" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div v-for="logic in logics" :key="logic.difficulty" :id="`difficulty${logic.difficulty}Accordion`" :data-difficulty="logic.difficulty" :class="`accordion-item${logic.difficulty == 0 ? '' : ' hidden'}`">
+            <TextLogic :logic="logic" />
         </div>
 
         <div id="difficulty9Accordion" data-difficulty="9" class="accordion-item hidden">

@@ -11,7 +11,7 @@ function addCssLink(href, id='') {
   document.getElementsByTagName("head")[0].appendChild(link);
 }
 
-createApp(App).mount('#app');
+window.vueApp = createApp(App).mount('#app');
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/site.css");

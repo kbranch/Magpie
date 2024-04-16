@@ -14,7 +14,7 @@ function refreshItems() {
             localSettings: JSON.stringify(localSettings),
             settingsPrefix: settingsPrefix,
         },
-        success: function(response) {
+        success: (response) => {
             if (!allowItems) {
                 return;
             }
@@ -85,7 +85,7 @@ function refreshCheckList() {
             minibossMap: JSON.stringify(minibossMap),
             localSettings: JSON.stringify(localSettings),
         },
-        success: function(response) {
+        success: (response) => {
             response = JSON.parse(response);
             pruneEntranceMap();
 
@@ -115,24 +115,7 @@ function refreshCheckList() {
                 }
             }
 
-            document.querySelectorAll('.legend-difficulty').forEach(x => x.classList.add('hidden'));
-
-            for (const logic of response.logics) {
-                let name = document.getElementById(`legendDifficultyName${logic.difficulty}`);
-
-                if (!name) {
-                    continue;
-                }
-
-                name.innerHTML = `: ${logic.name}`;
-
-                let wrapper = document.getElementById(`legendDifficulty${logic.difficulty}`);
-                wrapper.classList.remove('hidden');
-
-                if (!isNaN(logic.difficulty) && logic.difficulty > 0 && logic.difficulty < 9) {
-                    document.getElementById(`difficulty${logic.difficulty}AccordionName`).innerHTML = logic.friendlyName;
-                }
-            }
+            vueApp.updateLogics(response.logics);
 
             let checkCount = new Set(checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem).map(x => x.id)).size;
             document.getElementById('checkCounter').innerHTML = `Total checks: ${checkCount}`;
@@ -140,6 +123,8 @@ function refreshCheckList() {
             pruneEntranceMap();
             fillVanillaLogEntrances();
             updateEntrances();
+
+            vueApp.updateCheckAccessibility(checkAccessibility);
 
             broadcastMap();
 
@@ -158,7 +143,7 @@ function loadShortString(saveOnLoad=false) {
         data: {
             shortString: shortString,
         },
-        success: function(response) {
+        success: (response) => {
             let newArgs = JSON.parse(response);
             fixArgs(newArgs);
             setInputValues('flag', newArgs);
@@ -185,7 +170,7 @@ function loadSpoilerLog(romData) {
         data: {
             romData: btoa(romData),
         },
-        success: function(response) {
+        success: (response) => {
             loadLogContents(response);
         }
     });
@@ -231,8 +216,6 @@ function init() {
         transitionDuration: 0,
         columnWidth: '.text-check-card-wrapper:not(.hidden)',
     });
-
-    $('.accordion-collapse').on('shown.bs.collapse', () => applyMasonry());
 
     modifyTooltipAllowList();
     initKnownItems();
