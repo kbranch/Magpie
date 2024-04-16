@@ -14,12 +14,6 @@ const remoteVersion = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
 
-addCssLink("/lib/bootstrap/css/bootstrap.min.css");
-addCssLink("/lib/summernote/summernote-lite.css");
-addCssLink("/css/icons.css", "iconsSheet");
-addCssLink("/css/theme.css", "themeSheet");
-addCssLink("/css/site.css");
-
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
     .then(response => response.json())
@@ -35,16 +29,6 @@ onMounted(() => {
       init();
     });
 });
-
-function addCssLink(href, id='') {
-  var link = document.createElement("link");
-  link.href = href;
-  link.id = id;
-  link.type = "text/css";
-  link.rel = "stylesheet";
-
-  document.getElementsByTagName("head")[0].appendChild(link);
-}
 
 function initGlobals(data) {
   defaultArgs = data.args;
@@ -209,7 +193,7 @@ function initGlobals(data) {
                 <a v-else href="/event" class="mr-auto">Create a private event</a>
 
                 <div>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="shareState()">Share</button>
+                    <button type="button" class="btn btn-primary me-1" data-bs-dismiss="modal" onclick="shareState()">Share</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>

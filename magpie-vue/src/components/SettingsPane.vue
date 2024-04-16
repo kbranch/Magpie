@@ -912,7 +912,7 @@ defineProps({
             <div class="col">
             </div>
             <div class="col-auto">
-                <button type="button" class="btn btn-secondary" onclick="openExportStateDialog()"  data-bs-toggle="tooltip" data-bs-title="Export Tracker State" data-bs-trigger="hover"><img src="/images/upload.svg"></button>
+                <button type="button" class="btn btn-secondary me-1" onclick="openExportStateDialog()"  data-bs-toggle="tooltip" data-bs-title="Export Tracker State" data-bs-trigger="hover"><img src="/images/upload.svg"></button>
                 <input type="file" accept=".json" class="hidden" id="stateInput" onchange="getFile(this, importState);" />
                 <button type="button" class="btn btn-secondary" onclick="document.getElementById('stateInput').click();"  data-bs-toggle="tooltip" data-bs-title="Import Tracker State" data-bs-trigger="hover"><img src="/images/download.svg"></button>
             </div>

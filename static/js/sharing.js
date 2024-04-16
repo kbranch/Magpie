@@ -219,7 +219,7 @@ function updatePlayerInventories() {
 }
 
 function sharingUrlPrefix() {
-    return local ? 'https://magpietracker.us' : '';
+    return local ? 'https://magpietracker.us' : rootPrefix;
 }
 
 function eventAction() {

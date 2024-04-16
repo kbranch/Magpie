@@ -76,7 +76,6 @@ function quickSettingsTab(id) {
             </div>
         </div>
 
-        <!-- {% if not smallQuicksettings %} -->
         <div v-if="!smallQuicksettings">
             <div class="tab h-100" id="autotrackerTabContent">
                 <div class="row h-100 justify-content-center align-items-end">
@@ -194,11 +193,9 @@ function quickSettingsTab(id) {
                 </div>
             </div>
         </div>
-        <!-- {% endif %} -->
     </div>
 </div>
 
-<!-- {% if not smallQuicksettings %} -->
 <ul v-if="!smallQuicksettings" class="nav px-2_5" id="quickTabs">
     <li class="quicktab-button active" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="quicksettings" data-bs-title="Quick Settings" data-bs-trigger="hover">
         <button class="btn quicktab-link" id="quicksettingsTab" data-tabname="quicksettings" type="button" @click="quickSettingsTab('quicksettingsTab')"><img class="quicksetting-icon" src="/images/ui-checks.svg"></button>
@@ -216,5 +213,4 @@ function quickSettingsTab(id) {
         <button class="btn quicktab-link" id="downloadsTab" data-tabname="downloads" type="button" @click="quickSettingsTab('downloadsTab')"><img class="quicksetting-icon" src="/images/file-arrow-down.svg"></button>
     </li>
 </ul>
-<!-- {% endif %} -->
 </template>

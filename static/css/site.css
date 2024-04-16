@@ -1309,5 +1309,9 @@ span.logic-name {
 }
 
 input {
+    margin-right: 0.51rem;
+}
+
+.color-label {
     margin-right: 0.25rem;
 }
