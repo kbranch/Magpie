@@ -154,6 +154,13 @@ function broadcastMap(buffer=true, force=false) {
         return;
     }
 
+    let contents = checkContents;
+
+    if (isVue) {
+        contents = {};
+        Object.assign(contents, checkContents);
+    }
+
     broadcastMessage({
         type: 'map',
         data: {
@@ -165,7 +172,7 @@ function broadcastMap(buffer=true, force=false) {
                 connections: connections,
                 bossMap: bossMap,
                 checkedChecks: Array.from(checkedChecks),
-                checkContents: checkContents,
+                checkContents: contents,
             },
             thenMe: {
                 entranceAccessibility: entranceAccessibility,

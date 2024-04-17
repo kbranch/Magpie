@@ -1,4 +1,6 @@
 <script setup>
+import {$} from '/src/moduleWrappers.js';
+
 defineProps({
     smallQuicksettings: {
         type: Boolean,

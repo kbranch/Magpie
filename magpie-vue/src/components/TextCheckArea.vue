@@ -1,4 +1,6 @@
 <script setup>
+import { toggleCheck } from '/src/moduleWrappers.js';
+
 defineProps({
     area: {
         required: true,
@@ -6,15 +8,10 @@ defineProps({
     checks: {
         required: true,
     },
+    misc: {
+        required: true,
+    },
 });
-
-function checkedClass(check) {
-    return checkedChecks.has(check.id) ? ' in-checked' : '';
-}
-
-function vanillaWrapper(check) {
-    return check.isVanilla ? ' vanilla-wrapper' : '';
-}
 </script>
 
 <template>
@@ -24,10 +21,10 @@ function vanillaWrapper(check) {
             {{ area }}
         </div>
         <div class="card-body">
-            <ul class="list-group list-group-flush px-2" :data-area="area">
-                <div v-for="check in checks" :key="check.signature()" :class="`row text-check-wrapper${checkedClass(check)}${vanillaWrapper(check)}`" :data-child-check-id="check.id">
+            <ul class="list-group list-group-flush px-2">
+                <div v-for="check in checks" :key="check.signature()" class="row">
                     <div class="text-check-col col pe-0">
-                        <li class="text-check" :data-checkname="check.metadata.name" :data-checkarea="check.metadata.area" :data-behind_keys="check.behindKeys" :data-check-id="check.id" :data-difficulty="check.difficulty" :data-vanilla="check.isVanilla" :onclick="`toggleCheck(event, ${check.id})`">
+                        <li class="text-check" @click="toggleCheck($event, check.id)">
                             <div class="check-name">
 
                                 <div v-if="check.difficulty < 9 && !check.isChecked()" class="text-check-graphic-wrapper">
@@ -66,3 +63,14 @@ function vanillaWrapper(check) {
     </div>
 </div>
 </template>
+
+<style scoped>
+.text-check-col:hover {
+    background-color: rgba(255, 255, 255, .1);
+    border-radius: 3px;
+}
+
+.text-check {
+    cursor: default;
+}
+</style>

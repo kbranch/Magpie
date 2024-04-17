@@ -1,4 +1,5 @@
 <script setup>
+import {$} from '/src/moduleWrappers.js';
 import TextCheckArea from './TextCheckArea.vue';
 import { ref, onMounted, computed, onUpdated } from 'vue';
 
@@ -7,6 +8,9 @@ const props = defineProps({
         required: true,
     },
     checks: {
+        required: true,
+    },
+    misc: {
         required: true,
     },
 });
@@ -52,7 +56,7 @@ function applyMasonry() {
         <div class="accordion-body">
             <div class="container">
                 <div ref="grid" class="row grid" :data-difficulty="lowerDiff" data-masonry='{"percentPosition": true }' onclick="preventDoubleClick(event)">
-                    <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" />
+                    <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" :misc="misc" />
                 </div>
             </div>
         </div>

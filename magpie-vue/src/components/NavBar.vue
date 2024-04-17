@@ -1,4 +1,5 @@
 <script setup>
+import {$, getStateZip} from '/src/moduleWrappers.js';
 import { onMounted } from 'vue';
 
 defineProps({

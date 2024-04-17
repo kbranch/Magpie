@@ -9,10 +9,20 @@ const props = defineProps({
     checkAccessibility: {
         required: true,
     },
+    misc: {
+        required: true,
+    },
 });
 
-const filteredChecks = computed(() => props.checkAccessibility.filter(check => (check.shouldDraw() || check.difficulty == 9)));
-const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => check.difficulty));
+const filteredChecks = computed(() => props.checkAccessibility.filter(check => check.shouldDraw() || check.difficulty == 9));
+const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => props.misc.checkedChecks?.has(check.id) ? -1 : check.difficulty));
+
+// let startTime;
+// import { onBeforeMount, onBeforeUpdate, onMounted, onUpdated } from 'vue';
+// onBeforeMount(() => startTime = Date.now());
+// onBeforeUpdate(() => startTime = Date.now());
+// onMounted(() => console.log(`CheckList mounted in ${Date.now() - startTime}`));
+// onUpdated(() => console.log(`CheckList updated in ${Date.now() - startTime}`));
 
 function compare(a, b) {
     if (a > b) {
@@ -98,7 +108,7 @@ function getChecks(difficulty) {
     <TextLogic v-for="logic in [...logics,
                                 { difficulty: 9, friendlyName: 'Out of logic' },
                                 { difficulty: 'Checked', friendlyName: 'Checked' }]"
-        :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" />
+        :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" :misc="misc" />
 </div>
 
 <p id="checkCounter"></p>

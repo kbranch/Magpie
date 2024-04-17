@@ -1,4 +1,5 @@
 <script setup>
+import { initGlobals, init, win } from '/src/moduleWrappers.js';
 import { onMounted, ref } from 'vue';
 import DifficultyIcons from './components/DifficultyIcons.vue';
 import NavBar from './components/NavBar.vue';
@@ -16,6 +17,7 @@ const graphicsOptions = ref([]);
 
 const logics = ref([]);
 const checkAccessibility = ref([]);
+const misc = ref({});
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
@@ -33,28 +35,6 @@ onMounted(() => {
     });
 });
 
-function initGlobals(data) {
-  defaultArgs = data.args;
-  defaultSettings = data.defaultSettings;
-  settingsOverrides = data.jsonSettingsOverrides;
-  argsOverrides = data.jsonArgsOverrides;
-  diskSettings = data.diskSettings;
-
-  iconStyles = $('link#iconsSheet')[0].sheet;
-  themeStyles = $('link#themeSheet')[0].sheet;
-
-  local = Boolean(data.local);
-  allowAutotracking = Boolean(data.allowAutotracking);
-  allowMap = Boolean(data.allowMap);
-  refreshMap = data.refreshMap !== false;
-  allowItems = Boolean(data.allowItems);
-  keepQueryArgs = Boolean(data.keepQueryArgs);
-  settingsPrefix = data.settingsPrefix;
-  players = data.players;
-  broadcastMode = data.broadcastMode;
-  rootPrefix = import.meta.env.VITE_API_URL;
-}
-
 function updateLogics(newLogics) {
   logics.value = newLogics;
 }
@@ -63,9 +43,31 @@ function updateCheckAccessibility(accessibility) {
   checkAccessibility.value = accessibility;
 }
 
+function updateChecked(checked) {
+  misc.value.checkedChecks = new Set(checked);
+}
+
+function updateCheckContents(contents) {
+  misc.value.checkContents = contents;
+  win.checkContents = misc.value.checkContents;
+}
+
+function updateSettings(settings) {
+  misc.value.localSettings = settings;
+  win.localSettings = misc.value.localSettings;
+}
+
+function updateArgs(args) {
+  misc.value.args = args;
+}
+
 defineExpose({
   updateCheckAccessibility,
   updateLogics,
+  updateChecked,
+  updateCheckContents,
+  updateSettings,
+  updateArgs,
 });
 </script>
 
@@ -125,7 +127,7 @@ defineExpose({
 
   <div class="row">
     <div id="checkList" class="col">
-      <CheckList :logics="logics" :check-accessibility="checkAccessibility" />
+      <CheckList :logics="logics" :check-accessibility="checkAccessibility" :misc="misc" />
     </div>
   </div>
 

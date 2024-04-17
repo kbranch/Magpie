@@ -3,6 +3,10 @@
 function saveChecked() {
     setLocalStorage('checkedChecks', JSON.stringify([...checkedChecks]));
 
+    if (isVue) {
+        vueApp.updateChecked(checkedChecks);
+    }
+
     if (typeof broadcastMap === 'function') {
         broadcastMap();
     }

@@ -54,7 +54,7 @@ class Check {
     }
 
     signature() {
-        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}`;
+        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}-${this.id in checkContents ? checkContents[this.id] : ''}-${this.isChecked()}`;
     }
 
     nodeDifficulty() {

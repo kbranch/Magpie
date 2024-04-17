@@ -3,10 +3,18 @@
 function saveSettingsToStorage(args, localSettings) {
     if (argsAreValid(args)) {
         setLocalStorage('args', JSON.stringify(args));
+
+        if (isVue) {
+            vueApp.updateArgs(args);
+        }
     }
 
     if (settingsAreValid(localSettings)) {
         setLocalStorage('settings', JSON.stringify(localSettings));
+
+        if (isVue) {
+            vueApp.updateSettings(localSettings);
+        }
     }
 }
 

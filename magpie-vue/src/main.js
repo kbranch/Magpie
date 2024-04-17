@@ -14,7 +14,7 @@ function addCssLink(href, id='') {
 window.vueApp = createApp(App).mount('#app');
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
-addCssLink("/css/site.css");
+addCssLink("/css/vue-legacy.css");
 addCssLink("/css/icons.css", "iconsSheet");
 addCssLink("/css/theme.css", "themeSheet");
 addCssLink("/css/animate.min.css");
