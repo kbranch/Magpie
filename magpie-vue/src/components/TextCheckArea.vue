@@ -26,7 +26,6 @@ defineProps({
                     <div class="text-check-col col pe-0">
                         <li class="text-check" @click="toggleCheck($event, check.id)">
                             <div class="check-name">
-
                                 <div v-if="check.difficulty < 9 && !check.isChecked()" class="text-check-graphic-wrapper">
                                     <div :class="`text-check-graphic${check.behindTrackerLogic ? ' behind-tracker' : ''}${check.behindKeys ? ' behind-keys' : ''}${check.requiredRupees ? ' requires-rupees' : ''}${check.isOwl() ? ' owl' : ''}`">
                                         <div class="node-overlay-wrapper" :data-difficulty="check.difficulty">
@@ -38,10 +37,10 @@ defineProps({
                                                     <use :xlink:href="`#difficulty-${check.difficulty}-hollow`"></use>
                                                 </svg>
                                             </div>
-                                            <div class="behind-keys-overlay"></div>
-                                            <div class="behind-tracker-overlay"></div>
-                                            <div class="behind-rupees-overlay"></div>
-                                            <div class="owl-overlay"></div>
+                                            <div v-if="check.behindKeys" class="behind-keys-overlay"></div>
+                                            <div v-if="check.behindTrackerLogic" class="behind-tracker-overlay"></div>
+                                            <div v-if="check.requiredRupees" class="behind-rupees-overlay"></div>
+                                            <div v-if="check.isOwl()" class="owl-overlay"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -72,5 +71,24 @@ defineProps({
 
 .text-check {
     cursor: default;
+}
+
+.check-name {
+    float: left;
+}
+
+.text-check-graphic-wrapper {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+    transform: translate(0%, 15%);
+}
+
+.text-check-graphic {
+    position: absolute;
+    width: 16px;
+    height: 16px;
 }
 </style>

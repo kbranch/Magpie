@@ -416,21 +416,6 @@ img {
     position: absolute;
 }
 
-.text-check-graphic-wrapper {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    margin: 0px;
-    padding: 0px;
-    transform: translate(0%, 15%);
-}
-
-.text-check-graphic {
-    position: absolute;
-    width: 16px;
-    height: 16px;
-}
-
 .text-icon-item {
     width: 16px;
     height: 16px;
@@ -797,10 +782,6 @@ button.nav-link.active {
 .key-indicator {
     height: 16px;
     width: 8.61px;
-}
-
-.check-name {
-    float: left;
 }
 
 .left-click {
