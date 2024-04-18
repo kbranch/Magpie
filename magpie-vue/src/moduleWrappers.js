@@ -3,6 +3,8 @@ export let $ = window.$;
 export let getStateZip = window.getStateZip
 export let init = window.init;
 export let win = window;
+export let openItemsBroadcastView = window.openItemsBroadcastView;
+export let openMapBroadcastView = window.openMapBroadcastView;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

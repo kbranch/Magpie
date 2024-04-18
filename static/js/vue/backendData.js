@@ -115,9 +115,6 @@ function refreshCheckList() {
                 }
             }
 
-            let checkCount = new Set(checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem).map(x => x.id)).size;
-            document.getElementById('checkCounter').innerHTML = `Total checks: ${checkCount}`;
-
             pruneEntranceMap();
             fillVanillaLogEntrances();
             updateEntrances();

@@ -7,6 +7,7 @@ import QuickSettings from './components/QuickSettings.vue'
 import MainMap from './components/MainMap.vue'
 import SettingsPane from './components/SettingsPane.vue';
 import CheckList from './components/CheckList.vue';
+import OpenBroadcastView from './components/OpenBroadcastView.vue';
 
 const isLocal = ref(false);
 const hostname = ref(null);
@@ -90,9 +91,7 @@ defineExpose({
       <div class="row">
         <div class="col"></div>
         <div class="col-auto">
-          <a href="/itemsBroadcast" target="_blank" onclick="openItemsBroadcastView(); return false;" class="pe-2" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Open items broadcast view">
-            <img class="dimvert" src="/images/pop-out.svg">
-          </a>
+          <OpenBroadcastView type="items" />
         </div>
       </div>
       <div class="quicksettings-container quicksettings-slot full-height">
@@ -114,10 +113,7 @@ defineExpose({
       <div class="col-xs col-md-auto items-slot">
       </div>
       <div class="col-auto mt-2">
-        <a href="/itemsBroadcast" target="_blank" onclick="openItemsBroadcastView(); return false;"
-          data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Open items broadcast view">
-          <img class="dimvert" src="/images/pop-out.svg">
-        </a>
+          <OpenBroadcastView type="items" />
       </div>
       <div class="col"></div>
       <div class="col-auto px-2_5 quicksettings-container quicksettings-slot">
@@ -345,4 +341,12 @@ defineExpose({
 </template>
 
 <style scoped>
+.quicksettings-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.full-height {
+    height: 100%;
+}
 </style>

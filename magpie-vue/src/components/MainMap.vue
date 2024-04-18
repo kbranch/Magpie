@@ -1,4 +1,6 @@
 <script setup>
+import OpenBroadcastView from './OpenBroadcastView.vue';
+
 defineProps({
     broadcastMode: {
         type: String,
@@ -44,7 +46,7 @@ defineProps({
     </li>
     <div class="col"></div>
     <div v-if="broadcastMode == 'send'" class="col-auto pt-2">
-        <a href="/mapBroadcast" target="_blank" onclick="openMapBroadcastView(); return false;" class="me-2" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Open map broadcast view"><img class="dimvert" src="/images/pop-out.svg"></a>
+        <OpenBroadcastView type="map" />
     </div>
 </ul>
 
