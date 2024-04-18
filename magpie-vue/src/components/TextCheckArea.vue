@@ -40,7 +40,7 @@ defineProps({
                                             <div v-if="check.behindKeys" class="behind-keys-overlay"></div>
                                             <div v-if="check.behindTrackerLogic" class="behind-tracker-overlay"></div>
                                             <div v-if="check.requiredRupees" class="behind-rupees-overlay"></div>
-                                            <div v-if="check.isOwl()" class="owl-overlay"></div>
+                                            <div v-if="check.isVanillaOwl()" class="owl-overlay"></div>
                                         </div>
                                     </div>
                                 </div>

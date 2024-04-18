@@ -263,7 +263,7 @@ class MapNode {
 
         if (this.checks.length > 0
             && ((this.checks.length == 1 && this.checks[0].id.includes('Owl'))
-                || this.isOnlyVanillaOwls())) {
+                && this.isOnlyVanillaOwls())) {
             classes.push('owl');
         }
 
