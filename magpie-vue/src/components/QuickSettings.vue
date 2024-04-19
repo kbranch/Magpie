@@ -216,3 +216,9 @@ function quickSettingsTab(id) {
     </li>
 </ul>
 </template>
+
+<style scoped>
+.tab:not(.active) {
+    display: none;
+}
+</style>

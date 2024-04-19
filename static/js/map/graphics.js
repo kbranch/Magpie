@@ -29,6 +29,10 @@ function pickingEntrances() {
 }
 
 function drawTab(button, clear=false) {
+    if (isVue) {
+        return;
+    }
+
     if (clear) {
         removeNodes();
         closeAllTooltips();

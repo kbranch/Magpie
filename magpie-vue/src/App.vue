@@ -78,7 +78,7 @@ defineExpose({
   <div id="unstackedContainer" class="row" data-player="">
     <div id="unstackedMap" class="col-xs-12 col-md map-slot map-chunk">
       <div id="mapContainer">
-        <MainMap :broadcast-mode="broadMode" />
+        <MainMap :broadcast-mode="broadMode" :args="misc.args" :settings="misc.localSettings" />
       </div>
     </div>
     <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container px-0 item-chunk">

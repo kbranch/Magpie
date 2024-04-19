@@ -3,20 +3,16 @@ import { computed } from 'vue';
 import TextLogic from './TextLogic.vue';
 import MapLegend from './MapLegend.vue';
 
-const props = defineProps({
-    logics: {
-        required: true,
-    },
-    checkAccessibility: {
-        required: true,
-    },
-    misc: {
-        required: true,
-    },
-});
+const props = defineProps([
+    'logics',
+    'checkAccessibility',
+    'misc'
+]);
 
 const filteredChecks = computed(() => props.checkAccessibility.filter(check => check.shouldDraw() || check.difficulty == 9));
 const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => props.misc.checkedChecks?.has(check.id) ? -1 : check.difficulty));
+const totalChecks = computed(() => props.checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem)
+                                                           .map(x => x.id).length);
 
 // let startTime;
 // import { onBeforeMount, onBeforeUpdate, onMounted, onUpdated } from 'vue';
@@ -53,12 +49,14 @@ function getChecks(difficulty) {
 <template>
 <MapLegend :logics="logics" />
 
-<div class="accordion">
-    <TextLogic v-for="logic in [...logics,
-                                { difficulty: 9, friendlyName: 'Out of logic' },
-                                { difficulty: 'Checked', friendlyName: 'Checked' }]"
+<div id="mapAccordion" class="accordion">
+    <TextLogic v-for="logic in [
+        ...logics,
+        { difficulty: 9, friendlyName: 'Out of logic' },
+        { difficulty: 'Checked', friendlyName: 'Checked' }
+    ]"
         :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" :misc="misc" />
 </div>
 
-<p>Total checks: {{ checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem).map(x => x.id).length }}</p>
+<p>Total checks: {{ totalChecks }}</p>
 </template>

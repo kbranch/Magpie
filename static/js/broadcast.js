@@ -183,7 +183,7 @@ function broadcastMap(buffer=true, force=false) {
     });
 }
 
-function broadcastMapTab(tabName) {
+export function broadcastMapTab(tabName) {
     if (receiving) {
         return;
     }
@@ -249,6 +249,10 @@ function broadcastInit() {
 }
 
 function broadcastMessage(msg) {
+    if (!channel) {
+        return;
+    }
+
     msg.id = String(Math.random());
 
     // console.log(`sending ${msg.type} ID ${msg.id}`);

@@ -254,6 +254,10 @@ function distributeChecks(unclaimedChecks) {
 }
 
 function drawNodes(mapName, animate=true, updateNdi=true) {
+    if (!randomizedEntrances) {
+        return;
+    }
+
     let mapImg = document.querySelector(`img[data-mapname="${mapName}"]`);
 
     if ($(mapImg).width() <= 100) {

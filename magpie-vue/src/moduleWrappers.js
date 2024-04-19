@@ -5,6 +5,9 @@ export let init = window.init;
 export let win = window;
 export let openItemsBroadcastView = window.openItemsBroadcastView;
 export let openMapBroadcastView = window.openMapBroadcastView;
+export let closeAllTooltips = window.closeAllTooltips;
+export let removeNodes = window.removeNodes;
+export let drawNodes = window.drawNodes;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

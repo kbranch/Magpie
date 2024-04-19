@@ -44,7 +44,7 @@ defineProps({
                                         </div>
                                     </div>
                                 </div>
-                                <img v-if="check.item" :src="`static/images/${check.item}_1.png`" class="text-icon-item">
+                                <img v-if="check.item" class="text-icon-item ms-1" :src="`static/images/${check.item}_1.png`">
                                 {{ check.metadata.name }}
                             </div>
                         </li>
