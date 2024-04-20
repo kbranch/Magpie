@@ -1,6 +1,7 @@
 <script setup>
 import {$, getStateZip} from '/src/moduleWrappers.js';
 import { onMounted } from 'vue';
+import ShareDialog from './ShareDialog.vue';
 
 defineProps({
   showTitle: {
@@ -12,6 +13,12 @@ defineProps({
     type: Boolean,
     required: false,
     default: true,
+  },
+  settings: {
+    required: true,
+  },
+  isLocal: {
+    required: true,
   },
 });
 
@@ -57,7 +64,7 @@ async function sendSuggestion() {
             </button>
 
             <template v-if="showShare">
-                <button class="btn btn-secondary ms-1" onclick="prepShareModal()" alt="Share" data-bs-toggle="modal" data-bs-target="#shareModal" type="button">
+                <button class="btn btn-secondary ms-1" alt="Share" data-bs-toggle="modal" data-bs-target="#shareModal" type="button">
                     <img class="button-icon" src="/images/share.svg">
                 </button>
                 <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" data-bs-toggle="tooltip" data-bs-title="Live sharing" data-bs-trigger="hover">
@@ -98,4 +105,9 @@ async function sendSuggestion() {
             </div>
         </div>
     </div>
+
+    <ShareDialog v-if="showShare" :is-local="isLocal" :player-id="settings?.playerId"
+        :initial-player-name="settings?.playerName"
+        :initial-event-name="settings?.eventName"
+        :initial-join-code="settings?.joinCode" />
 </template>

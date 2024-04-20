@@ -4,7 +4,7 @@ function shareState() {
     liveUpdate = document.getElementById('liveUpdate').checked;
     localSettings.playerName = document.getElementById('playerName').value;
     localSettings.eventName = document.getElementById('eventName').value;
-    localSettings.joinCode = document.getElementById('joinCode').value;
+    localSettings.joinCode = document.getElementById('joinCode')?.value;
 
     saveSettingsToStorage(args, localSettings);
 
@@ -52,11 +52,17 @@ function sharingLiveUpdate() {
 function prepShareModal() {
     document.getElementById('playerName').value = localSettings.playerName;
     document.getElementById('eventName').value = localSettings.eventName;
-    document.getElementById('joinCode').value = localSettings.joinCode ?? '';
 
-    setElementHidden(document.getElementById('playerIdWarning'), true);
+    let joinCode = document.getElementById('joinCode');
+    if (joinCode) {
+        joinCode.value = localSettings.joinCode ?? '';
+    }
 
-    updateShareUrls();
+    if (!isVue) {
+        setElementHidden(document.getElementById('playerIdWarning'), true);
+
+        updateShareUrls();
+    }
 }
 
 function checkPlayerId() {

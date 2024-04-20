@@ -9,5 +9,8 @@
   },
   "[vue]": {
     "editor.defaultFormatter": "Vue.volar"
-  }
+  },
+  "cSpell.words": [
+    "debouncers"
+  ]
 }

@@ -83,7 +83,7 @@ defineExpose({
     </div>
     <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container px-0 item-chunk">
       <div class="navbar-slot">
-        <NavBar />
+        <NavBar :is-local="isLocal" :settings="misc.localSettings" />
       </div>
       <div class="items-slot">
         <div id="itemContainer" class="pb-2"></div>
@@ -159,59 +159,6 @@ defineExpose({
   <div class="form-check form-switch">
     <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
   </div>
-
-  <div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title" id="shareModalLabel">Share Tracker State</h6>
-                <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <div>
-                        <label for="playerName" class="form-label">Player name</label>
-                        <input type="text" id="playerName" class="form-control" maxlength="80" oninput="updateShareUrls()" placeholder="Required" aria-label="Player Name">
-                        <!-- <div id="playerLink" class="pt-1">
-                            <span class="pe-2">Player link:</span><a id="playerUrl" href="/player">asdf</a>
-                        </div> -->
-                        <div id="playerIdWarning" class="alert alert-warning py-2 my-2 hidden" role="alert">Warning: A player with this name already exists. Consider using another name.</div>
-                    </div>
-                    <div class="pt-3">
-                        <label for="eventName" class="form-label">Event name</label>
-                        <input type="text" id="eventName" class="form-control" maxlength="80" oninput="updateShareUrls()" aria-label="Event name">
-
-                        <div id="joinRequiredAlert" class="alert alert-primary py-2 my-2 hidden" role="alert">Event requires a join code</div>
-
-                        <label for="joinCode" class="form-label pt-2 hidden">Join code</label>
-                        <input type="text" id="joinCode" class="form-control hidden" maxlength="80" oninput="updateShareUrls()" aria-label="Join code">
-
-                        <div id="joinCodeAlert" class="alert alert-danger py-2 my-2 hidden" role="alert">Incorrect join code</div>
-
-                        <div id="eventLink" class="pt-1">
-                            <span class="pe-2">Event link:</span><a id="eventUrl" href="/event">Event URL</a>
-                        </div>
-
-                        <div id="shareErrorAlert" class="alert alert-danger py-2 my-2 hidden" role="alert"></div>
-                    </div>
-                    <div class="pt-3">
-                        <input id="liveUpdate" type="checkbox" class="form-check-input">
-                        <label for="liveUpdate" class="form-label">Live update <img class="invert" src="/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Inventory and check changes will be automatically shared for the rest of this session"></label>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <a v-if="isLocal" href="https://magpietracker.us/event" class="mr-auto">Create a private event</a>
-                <a v-else href="/event" class="mr-auto">Create a private event</a>
-
-                <div>
-                    <button type="button" class="btn btn-primary me-1" data-bs-dismiss="modal" onclick="shareState()">Share</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
