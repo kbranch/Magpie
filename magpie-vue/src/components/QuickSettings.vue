@@ -1,5 +1,5 @@
 <script setup>
-import {$} from '/src/moduleWrappers.js';
+import {$} from '@/moduleWrappers.js';
 
 defineProps({
     smallQuicksettings: {

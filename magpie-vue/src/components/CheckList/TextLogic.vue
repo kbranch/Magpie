@@ -1,5 +1,5 @@
 <script setup>
-import {$} from '/src/moduleWrappers.js';
+import {$} from '@/moduleWrappers.js';
 import TextCheckArea from './TextCheckArea.vue';
 import { ref, onMounted, computed, onUpdated } from 'vue';
 

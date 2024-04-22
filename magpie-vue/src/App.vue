@@ -1,13 +1,13 @@
 <script setup>
-import { initGlobals, init, win } from '/src/moduleWrappers.js';
+import { initGlobals, init, win } from '@/moduleWrappers.js';
 import { onMounted, ref } from 'vue';
-import DifficultyIcons from './components/DifficultyIcons.vue';
-import NavBar from './components/NavBar.vue';
-import QuickSettings from './components/QuickSettings.vue'
-import MainMap from './components/MainMap.vue'
-import SettingsPane from './components/SettingsPane.vue';
-import CheckList from './components/CheckList.vue';
-import OpenBroadcastView from './components/OpenBroadcastView.vue';
+import DifficultyIcons from '@/components/DifficultyIcons.vue';
+import NavBar from '@/components/NavBar.vue';
+import QuickSettings from '@/components/QuickSettings.vue'
+import MainMap from '@/components/Map/MainMap.vue'
+import SettingsPane from '@/components/SettingsPane.vue';
+import CheckList from '@/components/CheckList/CheckList.vue';
+import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 
 const isLocal = ref(false);
 const hostname = ref(null);

@@ -1,5 +1,5 @@
 <script setup>
-import { toggleCheck } from '/src/moduleWrappers.js';
+import { toggleCheck } from '@/moduleWrappers.js';
 
 defineProps({
     area: {

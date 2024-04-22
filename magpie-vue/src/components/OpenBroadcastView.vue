@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { openItemsBroadcastView, openMapBroadcastView } from '/src/moduleWrappers.js';
+import { openItemsBroadcastView, openMapBroadcastView } from '@/moduleWrappers.js';
 
 const props = defineProps(['type']);
 

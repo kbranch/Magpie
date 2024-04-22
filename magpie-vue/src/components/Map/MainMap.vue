@@ -1,6 +1,6 @@
 <script setup>
-import { closeAllTooltips, removeNodes, drawNodes, win } from '/src/moduleWrappers.js';
-import OpenBroadcastView from './OpenBroadcastView.vue';
+import { closeAllTooltips, removeNodes, drawNodes, win } from '@/moduleWrappers.js';
+import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
 import { computed, onUpdated, ref } from 'vue';
 

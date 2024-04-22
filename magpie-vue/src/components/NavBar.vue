@@ -1,5 +1,5 @@
 <script setup>
-import {$, getStateZip} from '/src/moduleWrappers.js';
+import {$, getStateZip} from '@/moduleWrappers.js';
 import { onMounted } from 'vue';
 import ShareDialog from './ShareDialog.vue';
 
