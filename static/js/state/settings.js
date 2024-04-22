@@ -50,7 +50,11 @@ function setInputValues(dataAttrName, values) {
 
 function saveQuickSettings() {
     quickSettingsToSettings();
-    localSettings = getInputValues('setting', localSettings);
+
+    if (!isVue) {
+        localSettings = getInputValues('setting', localSettings);
+    }
+
     saveSettingsToStorage(args, localSettings);
     applySettings();
     skipNextAnimation = true;
@@ -70,6 +74,10 @@ function quickSettingsToSettings() {
 }
 
 function settingsToQuickSettings() {
+    if (isVue) {
+        return;
+    }
+
     $('#enableAutotracking').prop('checked', $('#mainEnableAutotracking').prop('checked'));
     $('#showOutOfLogicQuick').prop('checked', $('#showOutOfLogic').prop('checked'));
     $('#showHigherLogicQuick').prop('checked', $('#showHigherLogic').prop('checked'));

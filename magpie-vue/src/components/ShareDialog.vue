@@ -58,10 +58,7 @@ function checkPlayerIdTaken() {
         body: data,
     })
         .then(response => response.text())
-        .then(text => {
-            playerIdTaken.value = !(text == 'None' || text == props.playerId);
-            console.log(playerIdTaken.value);
-        });
+        .then(text => playerIdTaken.value = !(text == 'None' || text == props.playerId));
 }
 
 async function getEventInfo() {

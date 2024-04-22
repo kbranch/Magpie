@@ -1,5 +1,6 @@
 <script setup>
-import {$} from '@/moduleWrappers.js';
+import { saveQuickSettings } from '@/moduleWrappers.js';
+import { ref } from 'vue';
 
 defineProps({
     smallQuicksettings: {
@@ -7,43 +8,43 @@ defineProps({
         required: false,
         default: false,
     },
+    settings: {
+        required: true,
+    },
 });
 
-function quickSettingsTab(id) {
-    let element = document.getElementById(id);
-    let tabName = $(element).attr('data-tabname');
-    $('#quickTabContents .tab.active').removeClass('active');
-    $('#quickTabs .quicktab-button.active').removeClass('active');
-    $(`#quickTabs .quicktab-button[data-tabname=${tabName}]`).addClass('active');
-    $(`#quickTabContents .tab [data-tabname=${tabName}]`).closest('.tab').addClass('active');
+const activeTabId = ref('quicksettingsTab');
+
+function switchTabs(e) {
+    activeTabId.value = e.currentTarget.id;
 }
 </script>
 
 <template>
 <div class="fill-box px-2_5 pt-1 item-width" id="quicksettings">
-    <div class="tabs h-100" id="quickTabContents">
-        <div class="tab h-100 active" id="quicksettingsTabContent">
-            <div class="row h-100 align-items-end" data-tabname="quicksettings">
+    <div class="tabs h-100">
+        <div v-if="activeTabId == 'quicksettingsTab'" class="tab h-100">
+            <div class="row h-100 align-items-end">
                 <div class="col quicksettings-col">
                     <div class="row">
                         <div class="col-4 mb-4">
-                            <input id="showOutOfLogicQuick" data-setting="showOutOfLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showOutOfLogicQuick" type="checkbox" :checked="settings?.showOutOfLogic" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showOutOfLogicQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show out of logic"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-9"></use></svg></label>
                         </div>
                         <div class="col-4 mb-4">
-                            <input id="showHigherLogicQuick" data-setting="showHigherLogic" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showHigherLogicQuick" type="checkbox" :checked="settings?.showHigherLogic" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showHigherLogicQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show higher logic levels"><img src="/images/higher-logic.svg" class="quicksettings-icon align-middle"></label>
                         </div>
                         <div class="col-4 mb-4">
-                            <input id="showCheckedQuick" data-setting="showChecked" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showCheckedQuick" type="checkbox" :checked="settings?.showChecked" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showCheckedQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show checked locations"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-checked"></use></svg></label>
                         </div>
                         <div class="col-3 pe-1 mb-4">
-                            <input id="showVanillaQuick" data-setting="showVanilla" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showVanillaQuick" type="checkbox" :checked="settings?.showVanilla" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showVanillaQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show vanilla checks"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-0-vanilla"></use></svg></label>
                         </div>
                         <div class="col-3 px-1 mb-4">
-                            <input id="showOwnedQuick" data-setting="showOwnedPickups" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showOwnedQuick" type="checkbox" :checked="settings?.showOwnedPickups" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showOwnedQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show owned vanilla pickups">
                                 <div class="row ms-0 px-0">
                                     <div class="col-auto px-0">
@@ -66,11 +67,11 @@ function quickSettingsTab(id) {
                             </label>
                         </div>
                         <div class="col-3 px-1 mb-4">
-                            <input id="showVanillaEntrancesQuick" data-setting="showVanillaEntrances" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showVanillaEntrancesQuick" type="checkbox" :checked="settings?.showVanillaEntrances" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showVanillaEntrancesQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show vanilla entrances and dungeon stairs"><img class="quicksettings-icon align-middle" src="/images/vanilla-entrance.svg"></label>
                         </div>
                         <div class="col-3 ps-1 mb-4">
-                            <input id="showLogicHintsQuick" data-setting="showLogicHints" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                            <input id="showLogicHintsQuick" type="checkbox" :checked="settings?.showLogicHints" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showLogicHintsQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show logic hints"><img class="quicksettings-icon align-middle" src="/images/logicHints.svg"></label>
                         </div>
                     </div>
@@ -79,7 +80,7 @@ function quickSettingsTab(id) {
         </div>
 
         <template v-if="!smallQuicksettings">
-            <div class="tab h-100" id="autotrackerTabContent">
+            <div v-if="activeTabId == 'autotrackerTab'" class="tab h-100">
                 <div class="row h-100 justify-content-center align-items-end">
                     <div class="col">
                         <div class="row py-2 hidden" id="romRow">
@@ -96,11 +97,11 @@ function quickSettingsTab(id) {
                         </div>
                         <div class="row">
                             <div class="col-auto">
-                                <input id="enableAutotracking" data-setting="enableAutotracking" type="checkbox" class="form-check-input" onchange="saveQuickSettings()">
+                                <input id="enableAutotracking" type="checkbox" :checked="settings?.enableAutotracking" class="form-check-input" @change="saveQuickSettings()">
                                 <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
                             </div>
                         </div>
-                        <div class="row" data-tabname="autotracker">
+                        <div class="row">
                             <div class="col-3 px-1">
                                 <button class="btn btn-secondary autotracker-button" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Reload items from autotracker" onclick="loadFromAutotracker()" type="button">
                                     <img src="/images/arrow-clockwise.svg" class="autotracker-button-icon">
@@ -126,8 +127,8 @@ function quickSettingsTab(id) {
                 </div>
             </div>
 
-            <div class="tab h-100" id="spoilersTabContent">
-                <div class="row h-100 align-items-end" data-tabname="spoilers">
+            <div v-if="activeTabId == 'spoilersTab'" class="tab h-100">
+                <div class="row h-100 align-items-end">
                     <div class="col rom-col">
                         <div class="row">
                             <div class="col">
@@ -153,16 +154,16 @@ function quickSettingsTab(id) {
                 </div>
             </div>
 
-            <div class="tab h-100" id="plandoTabContent">
-                <div class="row h-100 align-items-end" data-tabname="plando">
+            <div v-if="activeTabId == 'plandoTab'" class="tab h-100" id="plandoTabContent">
+                <div class="row h-100 align-items-end">
                     <div class="col rom-col">
                         <input type="button" id="plandoButton" class="btn btn-secondary" value="Export as Plan" onclick="exportPlando()" />
                     </div>
                 </div>
             </div>
 
-            <div class="tab h-100" id="downloadsTabContent">
-                <div class="row h-100 align-items-end" data-tabname="downloads">
+            <div v-if="activeTabId == 'downloadsTab'" class="tab h-100">
+                <div class="row h-100 align-items-end">
                     <div class="col rom-col">
                         <h6 class="mb-0">Offline version</h6>
                         <ul class="mb-1">
@@ -198,27 +199,82 @@ function quickSettingsTab(id) {
     </div>
 </div>
 
-<ul v-if="!smallQuicksettings" class="nav px-2_5" id="quickTabs">
-    <li class="quicktab-button active" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="quicksettings" data-bs-title="Quick Settings" data-bs-trigger="hover">
-        <button class="btn quicktab-link" id="quicksettingsTab" data-tabname="quicksettings" type="button" @click="quickSettingsTab('quicksettingsTab')"><img class="quicksetting-icon" src="/images/ui-checks.svg"></button>
+<ul v-if="!smallQuicksettings" class="nav px-2_5">
+    <li :class="['quicktab-button', activeTabId == 'quicksettingsTab' ? 'active' : null]" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Quick Settings" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="quicksettingsTab" type="button" @click="switchTabs($event)"><img class="quicksetting-icon" src="/images/ui-checks.svg"></button>
     </li>
-    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="autotracker" data-bs-title="Autotracking" data-bs-trigger="hover">
-        <button class="btn quicktab-link" id="autotrackerTab" data-tabname="autotracker" type="button" @click="quickSettingsTab('autotrackerTab')"><img class="quicksetting-icon" src="/images/cpu.svg"></button>
+    <li :class="['quicktab-button', activeTabId == 'autotrackerTab' ? 'active' : null]" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Autotracking" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="autotrackerTab" type="button" @click="switchTabs($event)"><img class="quicksetting-icon" src="/images/cpu.svg"></button>
     </li>
-    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="spoilers" data-bs-title="Spoilers" data-bs-trigger="hover">
-        <button class="btn quicktab-link" id="spoilersTab" data-tabname="spoilers" type="button" @click="quickSettingsTab('spoilersTab')"><img class="quicksetting-icon" src="/images/eye.svg"></button>
+    <li :class="['quicktab-button', activeTabId == 'spoilersTab' ? 'active' : null]" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Spoilers" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="spoilersTab" type="button" @click="switchTabs($event)"><img class="quicksetting-icon" src="/images/eye.svg"></button>
     </li>
-    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="plando" data-bs-title="Plandomizer" data-bs-trigger="hover">
-        <button class="btn quicktab-link" id="plandoTab" data-tabname="plando" type="button" @click="quickSettingsTab('plandoTab')"><img class="quicksetting-icon" src="/images/gift.svg"></button>
+    <li :class="['quicktab-button', activeTabId == 'plandoTab' ? 'active' : null]" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Plandomizer" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="plandoTab" type="button" @click="switchTabs($event)"><img class="quicksetting-icon" src="/images/gift.svg"></button>
     </li>
-    <li class="quicktab-button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-tabname="downloads" data-bs-title="Downloads" data-bs-trigger="hover">
-        <button class="btn quicktab-link" id="downloadsTab" data-tabname="downloads" type="button" @click="quickSettingsTab('downloadsTab')"><img class="quicksetting-icon" src="/images/file-arrow-down.svg"></button>
+    <li :class="['quicktab-button', activeTabId == 'downloadsTab' ? 'active' : null]" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Downloads" data-bs-trigger="hover">
+        <button class="btn quicktab-link" id="downloadsTab" type="button" @click="switchTabs($event)"><img class="quicksetting-icon" src="/images/file-arrow-down.svg"></button>
     </li>
 </ul>
 </template>
 
 <style scoped>
-.tab:not(.active) {
-    display: none;
+.quicktab-button.active .quicktab-link {
+    border-color: #fff;
+    color: #fff;
+    /* background-color: #6c757d; */
+}
+
+.quicktab-button:not(.active) .quicktab-link:hover {
+    border-color: #ccc;
+}
+
+.quicktab-link {
+    border-radius: 0px 0px 5px 5px;
+}
+
+.quicktab-link {
+    border-color: transparent;
+    padding: 9px 16px 8px 16px;
+    border-width: 0px 1px 1px 1px;
+    color: #ccc;
+}
+
+.quicktab-button .quicksetting-icon {
+    filter: invert(1);
+    width: 16px;
+    height: 16px;
+}
+
+.autotracker-button {
+    width: 100%;
+}
+
+.autotracker-button-icon {
+    height: 16px;
+}
+
+.quicksettings-col {
+    width: 290px;
+}
+
+.quicksettings-image {
+    max-width: 32px;
+    max-height: 32px;
+    margin-right: 0.25em;
+}
+
+.quicksettings-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    float: left;
+}
+
+.quicksettings-wrapper {
+    position: relative;
+    width: 32px;
+    height: 32px;
 }
 </style>

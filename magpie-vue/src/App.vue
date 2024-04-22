@@ -95,7 +95,7 @@ defineExpose({
         </div>
       </div>
       <div class="quicksettings-container quicksettings-slot full-height">
-        <QuickSettings />
+        <QuickSettings :settings="misc.localSettings" />
       </div>
     </div>
   </div>

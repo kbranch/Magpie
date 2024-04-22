@@ -8,6 +8,8 @@ export let openMapBroadcastView = window.openMapBroadcastView;
 export let closeAllTooltips = window.closeAllTooltips;
 export let removeNodes = window.removeNodes;
 export let drawNodes = window.drawNodes;
+export let resetSession = window.resetSession;
+export let saveQuickSettings = window.saveQuickSettings;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

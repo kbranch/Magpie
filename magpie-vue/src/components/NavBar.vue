@@ -1,5 +1,5 @@
 <script setup>
-import {$, getStateZip} from '@/moduleWrappers.js';
+import {$, getStateZip, resetSession} from '@/moduleWrappers.js';
 import { onMounted } from 'vue';
 import ShareDialog from './ShareDialog.vue';
 
@@ -71,7 +71,7 @@ async function sendSuggestion() {
             </template>
 
             <div class="col text-end">
-                <button type="button" class="btn btn-secondary" onclick="resetSession()" data-bs-toggle="tooltip" data-bs-title="Reset Checks and Inventory" data-bs-trigger="hover">
+                <button type="button" class="btn btn-secondary" @click="resetSession()" data-bs-toggle="tooltip" data-bs-title="Reset Checks and Inventory" data-bs-trigger="hover">
                     <img class="button-icon" src="/images/arrow-clockwise.svg">
                 </button>
                 <span class="ms-1" data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
