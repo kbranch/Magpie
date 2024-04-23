@@ -20,6 +20,19 @@ const props = defineProps({
     },
 });
 
+const graphicsDict = {};
+
+watch(props, (newValue) => {
+    refreshItems(newValue.settings);
+    
+    let newGraphics = newValue.graphicsOptions.reduce((acc, val) => {
+        acc[`/${val}`] = val;
+        return acc;
+    }, {'': 'Default'})
+
+    Object.assign(graphicsDict, newGraphics);
+})
+
 const types = SettingsItem.types;
 
 const layout = [
@@ -454,8 +467,163 @@ const layout = [
                     ],
                 }),
             ],
+            [
+                new SettingsGroup({
+                    name: 'Autotracker',
+                    items: [
+                        new SettingsItem({
+                            title: 'Enable autotracker',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'enableAutotracking',
+                        }),
+                        new SettingsItem({
+                            title: 'Server',
+                            type: types.text,
+                            settingBase: 'settings',
+                            settingName: 'autotrackerAddress',
+                            placeholder: '127.0.0.1',
+                            helperText: 'Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026. Note that modern browsers will typically block insecure connections to remote addresses. Either download the offline version of Magpie or configure your browser to allow insecure WebSocket connections.',
+                        }),
+                        new SettingsItem({
+                            title: 'Track items',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'autotrackItems',
+                        }),
+                        new SettingsItem({
+                            title: 'Track checks',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'autotrackChecks',
+                        }),
+                        new SettingsItem({
+                            title: 'Track entrances',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'autotrackEntrances',
+                        }),
+                        new SettingsItem({
+                            title: 'Track settings',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'autotrackSettings',
+                        }),
+                        new SettingsItem({
+                            title: 'Track spoilers',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'autotrackSpoilers',
+                            helperText: 'Loads a spoiler log from the ROM but does not spoil anything until asked',
+                        }),
+                        new SettingsItem({
+                            title: 'Track graphics pack',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'autotrackGraphicsPack',
+                        }),
+                        new SettingsItem({
+                            title: 'Track location',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'linkFace',
+                            icon: 'linkface.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Map follows location',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'followMap',
+                        }),
+                        new SettingsItem({
+                            title: 'Map follows to underworld',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'followToUnderworld',
+                            helperText: "'Advanced ER' means that the map will only automatically switch to the underworld when the entrance randomizer setting is set to Wild or higher",
+                            options: {
+                                'never': 'Never',
+                                'advanced': 'Advanced ER',
+                                'always': 'Always',
+                            },
+                        }),
+                    ],
+                }),
+            ],
         ]
-    })
+    }),
+    new SettingsGroup({
+        name: 'Layouts',
+        columns: [
+            [
+                new SettingsGroup({
+                    name: '',
+                    items: [
+                        new SettingsItem({
+                            title: 'Main items',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'itemsTemplate',
+                            customHtml: `<input type="file" accept=".html,.htm" class="hidden" id="customItemsInput" onchange="getFile(this, pickCustomItemsPath);">`,
+                            options: {
+                                'sevenbysix.html': 'Default',
+                                'default.html': 'Classic',
+                                'notrade.html': 'No trade items',
+                                'empty.html': 'Empty',
+                                'custom': 'Custom',
+                            }
+                        }),
+                        new SettingsItem({
+                            title: 'Pick Custom',
+                            type: types.button,
+                            action: () => { document.getElementById('customItemsInput').click(); },
+                            maxWidth: true,
+                        }),
+                    ],
+                }),
+            ],
+            [
+                new SettingsGroup({
+                    name: '',
+                    items: [
+                        new SettingsItem({
+                            title: 'Dungeon items',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'dungeonItemsTemplate',
+                            customHtml: `<input type="file" accept=".html,.htm" class="hidden" id="customDungeonItemInput" onchange="getFile(this, pickCustomDungeonItemsPath);">`,
+                            options: {
+                                'default.html': 'Default',
+                                'compact.html': 'Compact',
+                                'empty.html': 'Empty',
+                                'custom': 'Custom',
+                            }
+                        }),
+                        new SettingsItem({
+                            title: 'Pick Custom',
+                            type: types.button,
+                            action: () => { document.getElementById('customDungeonItemInput').click(); },
+                            maxWidth: true,
+                        }),
+                    ],
+                }),
+            ],
+            [
+                new SettingsGroup({
+                    name: '',
+                    items: [
+                        new SettingsItem({
+                            title: 'Graphics pack',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'graphicsPack',
+                            options: graphicsDict,
+                        }),
+                    ],
+                }),
+            ],
+        ]
+    }),
 ]
 
 const settingsItems = layout.reduce((acc, group) => acc.concat(extractItems(group)), []);
@@ -485,10 +653,6 @@ function extractItems(group) {
     return items;
 }
 
-watch(props, (newValue) => {
-    refreshItems(newValue.settings);
-})
-
 function refreshItems(obj) {
     for (const item of settingsItems) {
         item.refreshBind(obj);
@@ -514,38 +678,51 @@ function refreshItems(obj) {
                 <div class="col-auto">
                     <h2>{{ bigGroup.name }}</h2>
                 </div>
-                <div class="col">
-
-                </div>
-                <div class="col-3">
-                    <input type="text" id="shortString" class="form-control" aria-label="Short String">
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-primary" onclick="loadShortString()">Load Short String</button>
-                </div>
+                <template v-if="bigGroup.name == 'Randomizer Flags'">
+                    <div class="col">
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="shortString" class="form-control" aria-label="Short String">
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-primary" onclick="loadShortString()">Load Short String</button>
+                    </div>
+                </template>
             </div>
 
             <div class="row">
                 <div v-for="col in bigGroup.columns" :key="col" class="col-auto">
                     <fieldset v-for="smallGroup in col" :key="smallGroup" class="form-group">
-                        <legend>{{ smallGroup.name }}</legend>
+                        <legend v-if="smallGroup.name">{{ smallGroup.name }}</legend>
                         <div v-for="item in smallGroup.items" :key="item" class="row pb-2">
                             <div v-if="item.settingBind" class="col">
-                                <input v-if="item.type == types.checkbox" v-model="item.settingBind[item.settingName]" type="checkbox" :id="item.settingName" class="form-check-input">
+                                <input v-if="item.type == types.checkbox" v-model="item.settingBind[item.settingName]" type="checkbox" :id="`${item.settingName}-setting`" class="form-check-input">
 
-                                <label :for="item.settingName" :class="item.type == types.checkbox ? 'form-check-label' : 'form-label'">
+                                <label :for="`${item.settingName}-setting`" :class="item.type == types.checkbox ? 'form-check-label' : 'form-label'">
                                     <span v-if="item.customIcon" v-html="item.customIcon" style="display: inline-block;"></span>
                                     <img v-if="item.icon" class="settings-image" :src="`/images/${item.icon}`">
                                     {{ item.title }}
                                     <img v-if="item.helperText" class="invert" src="/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" :data-bs-title="item.helperText">
                                 </label>
 
-                                <select v-if="item.type == types.dropdown" v-model="item.settingBind[item.settingName]" :id="item.settingName" class="form-select">
+                                <select v-if="item.type == types.dropdown" v-model="item.settingBind[item.settingName]" :id="`${item.settingName}-setting`" class="form-select">
                                     <option v-for="option in Object.keys(item.options)" :key="option" :value="option">{{ item.options[option] }}</option>
                                 </select>
 
-                                <input v-if="item.type == types.slider" v-model="item.settingBind[item.settingName]" :id="item.settingName" type="range" :min="item.min" :max="item.max" class="form-range">
+                                <input v-if="item.type == types.slider" v-model="item.settingBind[item.settingName]" :id="`${item.settingName}-setting`" type="range" :min="item.min" :max="item.max" class="form-range">
+
+                                <input v-if="item.type == types.text" v-model="item.settingBind[item.settingName]" :id="`${item.settingName}-setting`" type="text" class="form-control" :placeholder="item.placeholder">
                             </div>
+
+                            <div v-else-if="item.type == types.button" class="col">
+                                <button type="button" :style="item.maxWidth ? 'width: 100%;' : ''" class="btn btn-secondary" @click="item.action">
+                                    <span v-if="item.customIcon" v-html="item.customIcon" style="display: inline-block;"></span>
+                                    <img v-if="item.icon" class="settings-image" :src="`/images/${item.icon}`">
+                                    {{ item.title }}
+                                </button>
+                            </div>
+
+                            <span v-if="item.customHtml" v-html="item.customHtml"></span>
                         </div>
                     </fieldset>
                 </div>

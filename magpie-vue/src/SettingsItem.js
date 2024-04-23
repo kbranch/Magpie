@@ -23,6 +23,7 @@ export class SettingsItem {
     max;
     step;
     action;
+    maxWidth;
     tooltip;
     helperText;
     href;
@@ -34,7 +35,7 @@ export class SettingsItem {
     }
 
     refreshBind(obj) {
-        if (!obj) {
+        if (!obj || !this.settingBase || !this.settingName) {
             return;
         }
 

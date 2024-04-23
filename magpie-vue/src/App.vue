@@ -31,6 +31,8 @@ onMounted(() => {
       broadMode.value = data.broadcastMode;
       graphicsOptions.value = data.graphicsOptions;
 
+      graphicsOptions.value.sort();
+
       initGlobals(data);
       init();
     });
