@@ -2,14 +2,13 @@
 import { saveQuickSettings } from '@/moduleWrappers.js';
 import { ref } from 'vue';
 
+const settings = defineModel();
+
 defineProps({
     smallQuicksettings: {
         type: Boolean,
         required: false,
         default: false,
-    },
-    settings: {
-        required: true,
     },
 });
 
@@ -28,23 +27,23 @@ function switchTabs(e) {
                 <div class="col quicksettings-col">
                     <div class="row">
                         <div class="col-4 mb-4">
-                            <input id="showOutOfLogicQuick" type="checkbox" :checked="settings?.showOutOfLogic" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showOutOfLogicQuick" type="checkbox" v-model="settings.showOutOfLogic" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showOutOfLogicQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show out of logic"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-9"></use></svg></label>
                         </div>
                         <div class="col-4 mb-4">
-                            <input id="showHigherLogicQuick" type="checkbox" :checked="settings?.showHigherLogic" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showHigherLogicQuick" type="checkbox" v-model="settings.showHigherLogic" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showHigherLogicQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show higher logic levels"><img src="/images/higher-logic.svg" class="quicksettings-icon align-middle"></label>
                         </div>
                         <div class="col-4 mb-4">
-                            <input id="showCheckedQuick" type="checkbox" :checked="settings?.showChecked" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showCheckedQuick" type="checkbox" v-model="settings.showChecked" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showCheckedQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show checked locations"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-checked"></use></svg></label>
                         </div>
                         <div class="col-3 pe-1 mb-4">
-                            <input id="showVanillaQuick" type="checkbox" :checked="settings?.showVanilla" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showVanillaQuick" type="checkbox" v-model="settings.showVanilla" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showVanillaQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show vanilla checks"><svg class="quicksettings-icon align-middle"><use xlink:href="#difficulty-0-vanilla"></use></svg></label>
                         </div>
                         <div class="col-3 px-1 mb-4">
-                            <input id="showOwnedQuick" type="checkbox" :checked="settings?.showOwnedPickups" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showOwnedQuick" type="checkbox" v-model="settings.showOwnedPickups" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showOwnedQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show owned vanilla pickups">
                                 <div class="row ms-0 px-0">
                                     <div class="col-auto px-0">
@@ -67,11 +66,11 @@ function switchTabs(e) {
                             </label>
                         </div>
                         <div class="col-3 px-1 mb-4">
-                            <input id="showVanillaEntrancesQuick" type="checkbox" :checked="settings?.showVanillaEntrances" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showVanillaEntrancesQuick" type="checkbox" v-model="settings.showVanillaEntrances" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showVanillaEntrancesQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show vanilla entrances and dungeon stairs"><img class="quicksettings-icon align-middle" src="/images/vanilla-entrance.svg"></label>
                         </div>
                         <div class="col-3 ps-1 mb-4">
-                            <input id="showLogicHintsQuick" type="checkbox" :checked="settings?.showLogicHints" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showLogicHintsQuick" type="checkbox" v-model="settings.showLogicHints" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showLogicHintsQuick" class="form-label" data-bs-toggle="tooltip" data-bs-title="Show logic hints"><img class="quicksettings-icon align-middle" src="/images/logicHints.svg"></label>
                         </div>
                     </div>
@@ -97,7 +96,7 @@ function switchTabs(e) {
                         </div>
                         <div class="row">
                             <div class="col-auto">
-                                <input id="enableAutotracking" type="checkbox" :checked="settings?.enableAutotracking" class="form-check-input" @change="saveQuickSettings()">
+                                <input id="enableAutotracking" type="checkbox" v-model="settings.enableAutotracking" class="form-check-input" @change="saveQuickSettings()">
                                 <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
                             </div>
                         </div>

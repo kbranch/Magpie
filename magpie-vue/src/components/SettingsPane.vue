@@ -1,5 +1,9 @@
 <script setup>
-defineProps({
+import { SettingsGroup } from '@/SettingsGroup.js';
+import { SettingsItem } from '@/SettingsItem.js';
+import { watch } from 'vue';
+
+const props = defineProps({
     local: {
         type: Boolean,
         required: true,
@@ -10,8 +14,486 @@ defineProps({
     },
     graphicsOptions: {
         required: true,
-    }
+    },
+    settings: {
+        required: true,
+    },
 });
+
+const types = SettingsItem.types;
+
+const layout = [
+    new SettingsGroup({
+        name: 'Randomizer Flags',
+        columns: [
+            [
+                new SettingsGroup({
+                    name: 'Main',
+                    items: [
+                        new SettingsItem({
+                            title: 'Logic',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'logic',
+                            options: {
+                                'casual': 'Casual',
+                                '': 'Normal',
+                                'hard': 'Hard',
+                                'glitched': 'Glitched',
+                                'hell': 'Hell',
+                            }
+                        }),
+                        new SettingsItem({
+                            title: 'Archipelago logic mode',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'ap_logic',
+                            icon: 'archipelago.png',
+                        }),
+                    ],
+                }),
+                new SettingsGroup({
+                    name: 'Items',
+                    items: [
+                        new SettingsItem({
+                            title: 'Randomize heart pieces',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'heartpiece',
+                            icon: 'HEART_PIECE_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Randomize hidden seashells',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'seashells',
+                            icon: 'SEASHELL_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Randomize heart containers',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'heartcontainers',
+                            icon: 'HEART_CONTAINER_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Randomize instruments',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'instruments',
+                            icon: 'INSTRUMENT1_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Randomize trade quest',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'tradequest',
+                            icon: 'TRADING_ITEM_YOSHI_DOLL_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Randomize item given by the witch',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'witch',
+                            icon: 'TOADSTOOL_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Add the rooster',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'rooster',
+                            icon: 'ROOSTER_1.png',
+                        }),
+                    ],
+                }),
+            ],
+            [
+                new SettingsGroup({
+                    name: 'Gameplay',
+                    items: [
+                        new SettingsItem({
+                            title: 'Dungeon items',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'dungeon_items',
+                            icon: 'KEY1_1.png',
+                            options: {
+                                '': 'Standard',
+                                'smallkeys': 'Small keys',
+                                'nightmarekeys': 'Nightmare keys',
+                                'localkeys': 'Map/Compass/Beaks',
+                                'localnightmarekey': 'MCB + SmallKeys',
+                                'keysanity': 'Keysanity',
+                                'keysy': 'Keysy',
+                                'custom': 'Custom',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Boss shuffle',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'boss',
+                            icon: 'b8.png',
+                            options: {
+                                'default': 'Normal',
+                                'shuffle': 'Shuffle',
+                                'random': 'Randomize',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Miniboss shuffle',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'miniboss',
+                            icon: 'm1.png',
+                            options: {
+                                'default': 'Normal',
+                                'shuffle': 'Shuffle',
+                                'random': 'Randomize',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Goal',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'goal',
+                            icon: 'egg.png',
+                            options: {
+                                '8': '8 instruments',
+                                '7': '7 instruments',
+                                '6': '6 instruments',
+                                '5': '5 instruments',
+                                '4': '4 instruments',
+                                '3': '3 instruments',
+                                '2': '2 instruments',
+                                '1': '1 instruments',
+                                '0': '0 instruments',
+                                'open': 'Egg open',
+                                'seashells': 'Seashell hunt (20)',
+                                'bingo': 'Bingo!',
+                                'bingo-full': 'Bingo-25!',
+                            },
+                        }),
+                    ]
+                })
+            ],
+            [
+                new SettingsGroup({
+                    name: 'Entrances',
+                    items: [
+                        new SettingsItem({
+                            title: 'Entrance randomizer',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'entranceshuffle',
+                            icon: 'entrance.svg',
+                            options: {
+                                'none': 'Default',
+                                'simple': 'Simple',
+                                'split': 'Split',
+                                'mixed': 'Mixed',
+                                'wild': 'Wild',
+                                'chaos': 'Chaos',
+                                'insane': 'Insane',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Random start location',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'randomstartlocation',
+                            icon: 'marin.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Dungeon shuffle',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'dungeonshuffle',
+                            icon: 'NIGHTMARE_KEY1_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Shuffle itemless entrances',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'shufflejunk',
+                            icon: 'phonebooth.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Shuffle annoying entrances',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'shuffleannoying',
+                            icon: 'mamu.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Shuffle water entrances',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'shufflewater',
+                            icon: 'manbo.png',
+                        }),
+                    ]
+                }),
+            ],
+            [
+                new SettingsGroup({
+                    name: 'Special',
+                    items: [
+                        new SettingsItem({
+                            title: 'Good boy mode',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'bowwow',
+                            icon: 'BOWWOW_1.png',
+                            options: {
+                                'normal': 'Disabled',
+                                'always': 'Enabled',
+                                'swordless': 'Enabled (swordless)',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Overworld',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'overworld',
+                            icon: 'grass.png',
+                            options: {
+                                'normal': 'Normal',
+                                'dungeondive': 'Dungeon dive',
+                                'nodungeons': 'No dungeons',
+                                'alttp': 'ALttP',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Owl statues',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'owlstatues',
+                            icon: 'owlstatue.png',
+                            options: {
+                                '': 'Never',
+                                'dungeon': 'In dungeons',
+                                'overworld': 'On the overworld',
+                                'both': 'Dungeons and overworld',
+                            },
+                        }),
+                    ]
+                }),
+            ],
+        ]
+    }),
+    new SettingsGroup({
+        name: 'Personalization',
+        columns: [
+            [
+                new SettingsGroup({
+                    name: 'Map',
+                    items: [
+                        new SettingsItem({
+                            title: 'Icon size',
+                            type: types.slider,
+                            settingBase: 'settings',
+                            settingName: 'checkSize',
+                            min: 16,
+                            max: 48,
+                            step: 2,
+                        }),
+                        new SettingsItem({
+                            title: 'Brightness',
+                            type: types.slider,
+                            settingBase: 'settings',
+                            settingName: 'mapBrightness',
+                            min: 25,
+                            max: 100,
+                            step: 1,
+                        }),
+                        new SettingsItem({
+                            title: 'Swap mouse buttons',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'swapMouseButtons',
+                        }),
+                        new SettingsItem({
+                            title: 'Animate checks',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'animateChecks',
+                        }),
+                        new SettingsItem({
+                            title: 'Spoil collected items',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'spoilOnCollect',
+                            helperText: 'Mark checked checks with the item they contained. Also automatically adds the contained item to your inventory. Requires a spoiler log to be loaded'
+                        }),
+                    ],
+                }),
+            ],
+            [
+                new SettingsGroup({
+                    name: 'Layout',
+                    items: [
+                        new SettingsItem({
+                            title: 'Swap items and map',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'swapItemsAndMap',
+                        }),
+                        new SettingsItem({
+                            title: 'Stack map and items',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'stacked',
+                        }),
+                        new SettingsItem({
+                            title: 'Show major dungeon item count',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showDungeonItemCount',
+                        }),
+                        new SettingsItem({
+                            title: 'Show go mode button',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showGoMode',
+                        }),
+                        new SettingsItem({
+                            title: 'Only show items',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showItemsOnly',
+                        }),
+                        new SettingsItem({
+                            title: 'Highlight items on hover',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'highlightItemsOnHover',
+                        }),
+                        new SettingsItem({
+                            title: 'Highlight owned items',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'ownedHighlight',
+                            options: {
+                                '': 'None',
+                                'bar': 'Bar',
+                                'square': 'Square',
+                            },
+                        }),
+                    ],
+                }),
+            ],
+            [
+                new SettingsGroup({
+                    name: 'Visibility',
+                    items: [
+                        new SettingsItem({
+                            title: 'Show out of logic',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showOutOfLogic',
+                            customIcon: '<svg class="tooltip-check-graphic align-middle me-2"><use xlink:href="#difficulty-9"></use></svg>',
+                        }),
+                        new SettingsItem({
+                            title: 'Show higher logic levels',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showHigherLogic',
+                            icon: 'higher-logic.svg',
+                        }),
+                        new SettingsItem({
+                            title: 'Show checked locations',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showChecked',
+                            customIcon: '<svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-checked"></use></svg>',
+                        }),
+                        new SettingsItem({
+                            title: 'Show vanilla checks',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showVanilla',
+                            customIcon: '<svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-0-vanilla"></use></svg>',
+                        }),
+                        new SettingsItem({
+                            title: 'Show owned vanilla pickups',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showOwnedPickups',
+                            customIcon: `<div class="col-auto px-0">
+                                            <div class="settings-wrapper">
+                                                <div class="node-overlay-wrapper">
+                                                    <div class="icon-wrapper behind-tracker">
+                                                        <div class="behind-tracker-overlay"></div>
+                                                        <svg class="icon" style="width: 100%; height: 100%;">
+                                                            <use xlink:href="#difficulty-0-vanilla"></use>
+                                                        </svg>
+                                                        <svg class="icon static-difficulty hollow">
+                                                            <use xlink:href="#difficulty-0-hollow"></use>
+                                                        </svg>
+                                                        <img src="static/images/MAGIC_POWDER_1.png" class="node-item-overlay" data-node-item="MAGIC_POWDER" onmousedown="preventDoubleClick(event)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`,
+                        }),
+                        new SettingsItem({
+                            title: 'Show vanilla entrances',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showVanillaEntrances',
+                            icon: 'vanilla-entrance.svg',
+                        }),
+                        new SettingsItem({
+                            title: 'Show logic hints',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showLogicHints',
+                            icon: 'logicHints.svg',
+                        }),
+                    ],
+                }),
+            ],
+        ]
+    })
+]
+
+const settingsItems = layout.reduce((acc, group) => acc.concat(extractItems(group)), []);
+
+refreshItems(props.settings);
+
+function extractItems(group) {
+    let items = [];
+
+    let groupItems = group.items;
+
+    if ('columns' in group) {
+        for (const col of group.columns) {
+            groupItems = groupItems.concat(col);
+        }
+    }
+
+    for (const item of groupItems) {
+        if (item instanceof SettingsItem) {
+            items.push(item);
+        }
+        else if (item instanceof SettingsGroup) {
+            items = items.concat(extractItems(item));
+        }
+    }
+
+    return items;
+}
+
+watch(props, (newValue) => {
+    refreshItems(newValue.settings);
+})
+
+function refreshItems(obj) {
+    for (const item of settingsItems) {
+        item.refreshBind(obj);
+    }
+}
 </script>
 
 <template>
@@ -22,24 +504,55 @@ defineProps({
                 <h2 class="offcanvas-title" id="argsLabel">Settings</h2>
             </div>
             <div class="col">
-                <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="offcanvas" onclick="settingsCancel()">Cancel</button> -->
             </div>
         </div>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-        <!-- {% if broadcastMode == 'receive' %}
-        <div class="accordion pb-2" id="argsAccordion">
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#argsCollapse" aria-expanded="false" aria-controls="argsCollapse">
-                  Randomizer flags synced with main window
-                </button>
-              </h2>
-              <div id="argsCollapse" class="accordion-collapse collapse" data-bs-parent="#argsAccordion">
-                <div class="accordion-body">
-        {% endif %} -->
-        <div class="row">
+        <template v-for="bigGroup in layout" :key="bigGroup">
+            <div class="row">
+                <div class="col-auto">
+                    <h2>{{ bigGroup.name }}</h2>
+                </div>
+                <div class="col">
+
+                </div>
+                <div class="col-3">
+                    <input type="text" id="shortString" class="form-control" aria-label="Short String">
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn btn-primary" onclick="loadShortString()">Load Short String</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div v-for="col in bigGroup.columns" :key="col" class="col-auto">
+                    <fieldset v-for="smallGroup in col" :key="smallGroup" class="form-group">
+                        <legend>{{ smallGroup.name }}</legend>
+                        <div v-for="item in smallGroup.items" :key="item" class="row pb-2">
+                            <div v-if="item.settingBind" class="col">
+                                <input v-if="item.type == types.checkbox" v-model="item.settingBind[item.settingName]" type="checkbox" :id="item.settingName" class="form-check-input">
+
+                                <label :for="item.settingName" :class="item.type == types.checkbox ? 'form-check-label' : 'form-label'">
+                                    <span v-if="item.customIcon" v-html="item.customIcon" style="display: inline-block;"></span>
+                                    <img v-if="item.icon" class="settings-image" :src="`/images/${item.icon}`">
+                                    {{ item.title }}
+                                    <img v-if="item.helperText" class="invert" src="/images/question-circle.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" :data-bs-title="item.helperText">
+                                </label>
+
+                                <select v-if="item.type == types.dropdown" v-model="item.settingBind[item.settingName]" :id="item.settingName" class="form-select">
+                                    <option v-for="option in Object.keys(item.options)" :key="option" :value="option">{{ item.options[option] }}</option>
+                                </select>
+
+                                <input v-if="item.type == types.slider" v-model="item.settingBind[item.settingName]" :id="item.settingName" type="range" :min="item.min" :max="item.max" class="form-range">
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </template>
+
+        <!-- <div class="row">
             <div class="col-auto">
                 <h2>Randomizer Flags</h2>
             </div>
@@ -76,8 +589,6 @@ defineProps({
                         </div>
                     </div>
                 </fieldset>
-            <!-- </div>
-            <div class="col-auto"> -->
                 <fieldset class="form-group">
                     <legend>Items</legend>
                     <div class="row pb-3">
@@ -194,7 +705,6 @@ defineProps({
                         <div class="col">
                             <label for="arg-goal" class="form-label"><img class="settings-image" src="/images/egg.png">Goal</label>
                             <select id="arg-goal" class="form-select" data-flag="goal" aria-label="goal">
-                                <!-- <option value="egg">Egg</option> -->
                                 <option value="8">8 instruments</option>
                                 <option value="7">7 instruments</option>
                                 <option value="6">6 instruments</option>
@@ -300,7 +810,7 @@ defineProps({
                 </fieldset>
             </div>
 
-            <!-- {% set ns = namespace(group='') %}
+            {% set ns = namespace(group='') %}
             {% set knownFlags = ['logic', 'heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster', 'dungeon_items', 'goal', 'bowwow', 
                                  'overworld', 'owlstatues', 'race', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 
                                  'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
@@ -358,14 +868,8 @@ defineProps({
             {% if ns.group != '' %}
                 </div>
             </fieldset>
-            {% endif %} -->
+            {% endif %}
         </div>
-        <!-- {% if broadcastMode == 'receive' %}
-                </div>
-              </div>
-            </div>
-        </div>
-        {% endif %} -->
         <div class="row">
             <div class="col-auto">
                 <h2>Personalization</h2>
@@ -388,8 +892,6 @@ defineProps({
                         </div>
                     </div>
                 </fieldset>
-            <!-- </div>
-            <div class="col-auto"> -->
                 <div class="row">
                     <div class="col">
                         <input id="swapMouseButtons" data-setting="swapMouseButtons" type="checkbox" class="form-check-input">
@@ -545,10 +1047,7 @@ defineProps({
                         </div>
                     </div>
                 </fieldset>
-            <!-- </div>
-            <div class="col-auto"> -->
                 <fieldset class="form-group">
-                    <!-- <legend>Features</legend> -->
                     <div class="row">
                         <div class="col">
                             <input id="autotrackItems" data-setting="autotrackItems" type="checkbox" class="form-check-input">
@@ -816,29 +1315,6 @@ defineProps({
             </div>
         </div>
         <div class="row">
-            <!-- <div class="col col-auto">
-                <div class="color-block">
-                    <label for='diff8' class="color-label" data-bs-toggle="tooltip" data-bs-title="Tracker logic" data-bs-trigger="hover"><div class="difficulty-8 static-difficulty-wrapper align-middle"><div class="difficulty-8-overlay"></div><svg class="icon static-difficulty"><use xlink:href="#difficulty-8"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff8" data-setting="diff8Color" class="form-control" data-bs-toggle="tooltip" data-bs-title="Tracker logic" data-bs-trigger="hover">
-
-                    <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
-                        <label for='diff8Alpha' class="color-label"><img class="invert" src="/images/eye.svg"></label>
-                        <input id="diff8Alpha" data-setting="diff8Alpha" type="range" min="0.2" max="1" step="0.1" value="" class="form-range node-opacity-slider pt-2">
-                    </div>
-                </div>
-            </div>
-            <div class="col col-auto">
-                <div class="color-block">
-                    <label for='diff8V' class="color-label" data-bs-toggle="tooltip" data-bs-title="Tracker logic, vanilla" data-bs-trigger="hover"><div class="difficulty-8 vanilla static-difficulty-wrapper align-middle"><div class="difficulty-8-overlay"></div><svg class="icon static-difficulty"><use xlink:href="#difficulty-8-vanilla"></use></svg></div></label>
-                    <input class="color-picker" type="color" id="diff8V" data-setting="diff8VColor" class="form-control" data-bs-toggle="tooltip" data-bs-title="Tracker logic, vanilla" data-bs-trigger="hover">
-
-                    <div class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
-                        <label for='diff8VAlpha' class="color-label"><img class="invert" src="/images/eye.svg"></label>
-                        <input id="diff8VAlpha" data-setting="diff8VAlpha" type="range" min="0.2" max="1" step="0.1" value="" class="form-range node-opacity-slider pt-2">
-                    </div>
-                </div>
-            </div> -->
-
             <div class="col col-auto">
                 <div class="color-block">
                     <label for='diff9' class="color-label" data-bs-toggle="tooltip" data-bs-title="Out of logic" data-bs-trigger="hover"><div class="difficulty-9 static-difficulty-wrapper align-middle"><svg class="icon static-difficulty"><use xlink:href="#difficulty-9"></use></svg></div></label>
@@ -912,7 +1388,7 @@ defineProps({
                 <input type="file" accept=".json" class="hidden" id="stateInput" onchange="getFile(this, importState);" />
                 <button type="button" class="btn btn-secondary" onclick="document.getElementById('stateInput').click();"  data-bs-toggle="tooltip" data-bs-title="Import Tracker State" data-bs-trigger="hover"><img src="/images/download.svg"></button>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 </template>

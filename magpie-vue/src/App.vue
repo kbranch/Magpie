@@ -1,6 +1,6 @@
 <script setup>
 import { initGlobals, init, win } from '@/moduleWrappers.js';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, toRaw } from 'vue';
 import DifficultyIcons from '@/components/DifficultyIcons.vue';
 import NavBar from '@/components/NavBar.vue';
 import QuickSettings from '@/components/QuickSettings.vue'
@@ -18,7 +18,7 @@ const graphicsOptions = ref([]);
 
 const logics = ref([]);
 const checkAccessibility = ref([]);
-const misc = ref({});
+const misc = ref({localSettings: {}, args: {}});
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
@@ -60,6 +60,11 @@ function updateSettings(settings) {
 
 function updateArgs(args) {
   misc.value.args = args;
+  win.args = misc.value.args;
+}
+
+function stripProxy(obj) {
+  return toRaw(obj);
 }
 
 defineExpose({
@@ -69,6 +74,7 @@ defineExpose({
   updateCheckContents,
   updateSettings,
   updateArgs,
+  stripProxy,
 });
 </script>
 
@@ -95,7 +101,7 @@ defineExpose({
         </div>
       </div>
       <div class="quicksettings-container quicksettings-slot full-height">
-        <QuickSettings :settings="misc.localSettings" />
+        <QuickSettings v-model="misc.localSettings" />
       </div>
     </div>
   </div>
@@ -128,7 +134,7 @@ defineExpose({
   </div>
 
   <div id="settingsContainer">
-    <SettingsPane :local="isLocal" :broadcast-mode="broadMode" :graphics-options="graphicsOptions" />
+    <SettingsPane :local="isLocal" :broadcast-mode="broadMode" :graphics-options="graphicsOptions" :settings="{ args: misc.args, settings: misc.localSettings }" />
   </div>
 
   <div class="row justify-content-end pt-4">

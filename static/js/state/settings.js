@@ -63,6 +63,10 @@ function saveQuickSettings() {
 }
 
 function quickSettingsToSettings() {
+    if (isVue) {
+        return;
+    }
+
     $('#mainEnableAutotracking').prop('checked', $('#enableAutotracking').prop('checked'));
     $('#showOutOfLogic').prop('checked', $('#showOutOfLogicQuick').prop('checked'));
     $('#showHigherLogic').prop('checked', $('#showHigherLogicQuick').prop('checked'));
@@ -96,7 +100,13 @@ function saveSettings() {
 
     settingsToQuickSettings();
 
-    let oldArgs = structuredClone(args);
+    let rawArgs = args;
+
+    if (isVue) {
+        rawArgs = vueApp.stripProxy(args);
+    }
+
+    let oldArgs = structuredClone(rawArgs);
     args = getInputValues('flag', args);
     localSettings = getInputValues('setting', localSettings);
 
@@ -615,6 +625,10 @@ function setCustomDungeonItemsArgs() {
 }
 
 function setCustomDungeonItemsVisibility() {
+    if (isVue) {
+        return;
+    }
+
     let e = document.getElementById("arg-dungeon_items");
     let custom = document.getElementById('customDungeonItems');
 

@@ -264,6 +264,10 @@ function broadcastMessage(msg) {
         }
     }
     else {
+        if (isVue) {
+            msg.data = vueApp.stripProxy(msg.data);
+        }
+
         channel.postMessage(msg);
     }
 }
