@@ -15,7 +15,9 @@ export class SettingsItem {
     type;
     settingBase;
     settingName;
+    opacitySettingName;
     icon;
+    iconClass;
     customIcon;
     options;
     placeholder;

@@ -491,37 +491,55 @@ function pickCustomDungeonItemsPath(data) {
 }
 
 function resetColors() {
-    setInputValues('setting', {
-        "diff0Color": "#0066ff",
-        "diff0VColor": "#ffffff",
-        "diff1Color": "#ffff00",
-        "diff1VColor": "#ffffff",
-        "diff2Color": "#ff8800",
-        "diff2VColor": "#ffffff",
-        "diff3Color": "#ff0000",
-        "diff3VColor": "#ffffff",
-        "diff8Color": "#0066ff",
-        "diff8VColor": "#ffffff",
-        "diff9Color": "#444444",
-        "diff9VColor": "#aaaaaa",
-        "diffCheckedColor": "#00ff00",
-        "diff0Alpha": 1,
-        "diff0VAlpha": 1,
-        "diff1Alpha": 1,
-        "diff1VAlpha": 1,
-        "diff2Alpha": 1,
-        "diff2VAlpha": 1,
-        "diff3Alpha": 1,
-        "diff3VAlpha": 1,
-        "diff8Alpha": 1,
-        "diff8VAlpha": 1,
-        "diff9Alpha": 1,
-        "diff9VAlpha": 1,
-        "diffCheckedAlpha": 1,
-        "bgColor": "#212529",
-        "textColor": "#f8f9fa",
-        "highlightColor": "#444444",
-    });
+    if (isVue) {
+        const settings = [
+            'diff0Color', 'diff0VColor', 'diff1Color', 'diff1VColor',
+            'diff2Color', 'diff2VColor', 'diff3Color', 'diff3VColor',
+            'diff8Color', 'diff8VColor', 'diff9Color', 'diff9VColor',
+            'diffCheckedColor', 'diff0Alpha', 'diff0VAlpha',
+            'diff1Alpha', 'diff1VAlpha', 'diff2Alpha', 'diff2VAlpha',
+            'diff3Alpha', 'diff3VAlpha', 'diff8Alpha', 'diff8VAlpha',
+            'diff9Alpha', 'diff9VAlpha', 'diffCheckedAlpha',
+            'bgColor', 'textColor', 'highlightColor',
+        ]
+
+        for (const setting of settings) {
+            localSettings[setting] = defaultSettings[setting];
+        }
+    }
+    else {
+        setInputValues('setting', {
+            "diff0Color": "#0066ff",
+            "diff0VColor": "#ffffff",
+            "diff1Color": "#ffff00",
+            "diff1VColor": "#ffffff",
+            "diff2Color": "#ff8800",
+            "diff2VColor": "#ffffff",
+            "diff3Color": "#ff0000",
+            "diff3VColor": "#ffffff",
+            "diff8Color": "#0066ff",
+            "diff8VColor": "#ffffff",
+            "diff9Color": "#444444",
+            "diff9VColor": "#aaaaaa",
+            "diffCheckedColor": "#00ff00",
+            "diff0Alpha": 1,
+            "diff0VAlpha": 1,
+            "diff1Alpha": 1,
+            "diff1VAlpha": 1,
+            "diff2Alpha": 1,
+            "diff2VAlpha": 1,
+            "diff3Alpha": 1,
+            "diff3VAlpha": 1,
+            "diff8Alpha": 1,
+            "diff8VAlpha": 1,
+            "diff9Alpha": 1,
+            "diff9VAlpha": 1,
+            "diffCheckedAlpha": 1,
+            "bgColor": "#212529",
+            "textColor": "#f8f9fa",
+            "highlightColor": "#444444",
+        });
+    }
 }
 
 function vanillaConnectors() {

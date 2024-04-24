@@ -179,7 +179,8 @@ function errorHandler(e) {
         message: e.error.message,
         stack: e.error.stack,
         filename: e.filename,
-        time: e.timeStamp,
+        eventTime: e.timeStamp,
+        unixTime: Date.now(),
     });
 }
 

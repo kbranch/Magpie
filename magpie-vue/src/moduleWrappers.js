@@ -10,6 +10,11 @@ export let removeNodes = window.removeNodes;
 export let drawNodes = window.drawNodes;
 export let resetSession = window.resetSession;
 export let saveQuickSettings = window.saveQuickSettings;
+export let resetColors = window.resetColors;
+export let getFile = window.getFile;
+export let importState = window.importState;
+export let importLogicDiff = window.importLogicDiff;
+export let openExportStateDialog = window.openExportStateDialog;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;
