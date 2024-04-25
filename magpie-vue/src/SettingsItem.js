@@ -9,10 +9,16 @@ export class SettingsItem {
         color: 4,
         button: 5,
         link: 6,
+        column: 7,
+        group: 8,
     });
 
+    children = [];
+
     title;
+    header;
     type;
+    class;
     settingBase;
     settingName;
     opacitySettingName;
@@ -29,11 +35,18 @@ export class SettingsItem {
     tooltip;
     helperText;
     href;
-    visibleCondition = true;
+    visibleCondition = () => { return true; };
+    includeRow = true;
+    includeCol = true;
+    colSize;
     settingBind;
 
     constructor(obj) {
         obj && Object.assign(this, obj);
+
+        if (!this.settingName) {
+            this.settingBind = {};
+        }
     }
 
     refreshBind(obj) {

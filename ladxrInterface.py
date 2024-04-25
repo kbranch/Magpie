@@ -187,7 +187,8 @@ def getLogics(args, entranceMap, bossList, minibossMap):
             worldSetup.entrance_mapping[entrance] = 'start_house:inside'
 
     if args.overworld == "dungeondive":
-        worldSetup.entrance_mapping = {"d%d" % (n): "d%d" % (n) for n in range(9)}
+        worldSetup.entrance_mapping = {"d%d" % (n): "d%d:inside" % (n) for n in range(9)}
+        worldSetup.entrance_mapping.update({"d%d:inside" % (n): "d%d" % (n) for n in range(9)})
 
     logicFlag = [x for x in args.flags if x.name == 'logic'][0]
     originalLogic = args.logic

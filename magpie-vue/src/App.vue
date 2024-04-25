@@ -3,9 +3,9 @@ import { initGlobals, init, win } from '@/moduleWrappers.js';
 import { onMounted, ref, toRaw } from 'vue';
 import DifficultyIcons from '@/components/DifficultyIcons.vue';
 import NavBar from '@/components/NavBar.vue';
-import QuickSettings from '@/components/QuickSettings.vue'
+import QuickSettings from '@/components/Settings/QuickSettings.vue'
 import MainMap from '@/components/Map/MainMap.vue'
-import SettingsPane from '@/components/SettingsPane.vue';
+import SettingsPane from '@/components/Settings/SettingsPane.vue';
 import CheckList from '@/components/CheckList/CheckList.vue';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 
@@ -136,7 +136,7 @@ defineExpose({
   </div>
 
   <div id="settingsContainer">
-    <SettingsPane :local="isLocal" :broadcast-mode="broadMode" :graphics-options="graphicsOptions" :settings="{ args: misc.args, settings: misc.localSettings }" />
+    <SettingsPane v-if="misc.localSettings.checkSize" :local="isLocal" :broadcast-mode="broadMode" :graphics-options="graphicsOptions" :settings="{ args: misc.args, settings: misc.localSettings }" />
   </div>
 
   <div class="row justify-content-end pt-4">
