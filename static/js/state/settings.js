@@ -107,8 +107,11 @@ function saveSettings() {
     }
 
     let oldArgs = structuredClone(rawArgs);
-    args = getInputValues('flag', args);
-    localSettings = getInputValues('setting', localSettings);
+
+    if (!isVue) {
+        args = getInputValues('flag', args);
+        localSettings = getInputValues('setting', localSettings);
+    }
 
     resetUndoRedo()
 

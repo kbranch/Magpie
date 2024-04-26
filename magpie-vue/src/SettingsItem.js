@@ -35,7 +35,7 @@ export class SettingsItem {
     tooltip;
     helperText;
     href;
-    visibleCondition = () => { return true; };
+    visibleCondition = () => { return true };
     includeRow = true;
     includeCol = true;
     colSize;

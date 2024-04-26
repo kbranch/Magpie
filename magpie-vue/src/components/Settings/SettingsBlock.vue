@@ -1,4 +1,5 @@
 <script setup>
+import VFragment from '@/components/VFragment.vue';
 import SettingControls from './SettingControls.vue';
 import { SettingsItem } from '@/SettingsItem.js';
 import { computed } from 'vue';
@@ -15,81 +16,18 @@ const bsTrigger = computed(() => props.item.tooltip ? 'hover' : undefined);
 </script>
 
 <template>
-    <div v-if="item.includeRow && item.includeCol" class="row" :class="{ 'pb-2': !item.children.length || item.children[0].type != types.color }">
-        <div :class="colSize" :data-bs-toggle="bsToggle" :data-bs-trigger="bsTrigger" :data-bs-title="item.tooltip">
-            <template v-if="item.type == types.group">
-                <fieldset class="form-group">
+    <template v-if="item.visibleCondition() && (!item.settingName || item.settingBind)">
+        <component :is="item.includeRow ? 'div' : VFragment" class="row" :class="{ 'pb-2': !item.children.length || item.children[0].type != types.color }">
+            <component :is="item.includeCol ? 'div' : VFragment" :class="colSize" :data-bs-toggle="bsToggle" :data-bs-trigger="bsTrigger" :data-bs-title="item.tooltip">
+                <component :is="item.type == types.group ? 'fieldset' : VFragment" class="form-group">
                     <SettingControls v-model="model" :item="item" />
 
                     <template v-for="child in item.children" :key="child">
-                        <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
+                        <SettingsBlock v-model="child.settingBind" :item="child" />
                     </template>
-                </fieldset>
-            </template>
-            <template v-else>
-                <SettingControls v-model="model" :item="item" />
-
-                <template v-for="child in item.children" :key="child">
-                    <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-                </template>
-            </template>
-        </div>
-    </div>
-    <div v-else-if="item.includeCol" :class="colSize" :data-bs-toggle="bsToggle" :data-bs-trigger="bsTrigger" :data-bs-title="item.tooltip">
-        <template v-if="item.type == types.group">
-            <fieldset class="form-group">
-                <SettingControls v-model="model" :item="item" />
-
-                <template v-for="child in item.children" :key="child">
-                    <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-                </template>
-            </fieldset>
-        </template>
-        <template v-else>
-            <SettingControls v-model="model" :item="item" />
-
-            <template v-for="child in item.children" :key="child">
-                <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-            </template>
-        </template>
-    </div>
-    <div v-else-if="item.includeRow" class="row" :class="{ 'pb-2': !item.children.length || item.children[0].type != types.color }"
-        :data-bs-toggle="bsToggle" :data-bs-trigger="bsTrigger" :data-bs-title="item.tooltip">
-
-        <template v-if="item.type == types.group">
-            <fieldset class="form-group">
-                <SettingControls v-model="model" :item="item" />
-
-                <template v-for="child in item.children" :key="child">
-                    <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-                </template>
-            </fieldset>
-        </template>
-        <template v-else>
-            <SettingControls v-model="model" :item="item" />
-
-            <template v-for="child in item.children" :key="child">
-                <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-            </template>
-        </template>
-    </div>
-    <template v-else>
-        <template v-if="item.type == types.group">
-            <fieldset class="form-group">
-                <SettingControls v-model="model" :item="item" />
-
-                <template v-for="child in item.children" :key="child">
-                    <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-                </template>
-            </fieldset>
-        </template>
-        <template v-else>
-            <SettingControls v-model="model" :item="item" />
-
-            <template v-for="child in item.children" :key="child">
-                <SettingsBlock v-if="!child.settingName || child.settingBind" v-model="child.settingBind" :item="child" />
-            </template>
-        </template>
+                </component>
+            </component>
+        </component>
     </template>
 </template>
 

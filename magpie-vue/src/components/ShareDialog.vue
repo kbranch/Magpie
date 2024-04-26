@@ -1,4 +1,5 @@
 <script setup>
+import { debounce } from '@/main';
 import { computed, onMounted, ref, watch } from 'vue';
 
 const props = defineProps(['isLocal', 'playerId', 'initialPlayerName', 'initialEventName', 'initialJoinCode']);
@@ -34,20 +35,6 @@ watch(props, (newValue, oldValue) => {
 
 watch(eventName, () => debounce(getEventInfo, 500));
 watch(playerName, () => debounce(checkPlayerIdTaken, 500));
-
-const debouncers = {};
-function debounce(f, delay) {
-    if (!(f.name in debouncers)) {
-        debouncers[f.name] = setTimeout(f, delay);
-        return;
-    }
-
-    if (debouncers[f.name]) {
-        clearTimeout(debouncers[f.name]);
-    }
-
-    debouncers[f.name] = setTimeout(f, delay);
-}
 
 function checkPlayerIdTaken() {
     let data = new FormData();

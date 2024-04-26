@@ -1,8 +1,9 @@
 <script setup>
-import { resetColors, getFile, importState, importLogicDiff, openExportStateDialog } from '@/moduleWrappers.js';
+import { resetColors, getFile, importState, importLogicDiff, openExportStateDialog, resetUndoRedo, fixArgs, saveSettingsToStorage, applySettings, broadcastArgs, refreshItems } from '@/moduleWrappers.js';
 import { SettingsItem } from '@/SettingsItem.js';
+import { rateLimit } from '@/main';
 import SettingsBlock from './SettingsBlock.vue';
-import { ref, watch } from 'vue';
+import { onMounted, ref, toRaw, watch } from 'vue';
 
 const props = defineProps({
     local: {
@@ -23,11 +24,33 @@ const props = defineProps({
 
 const stateInput = ref(null);
 const logicDiffInput = ref(null);
+const offcanvas = ref(null);
 
 const graphicsDict = ref({});
 
-watch(props, (newValue) => {
-    refreshItems(newValue.settings);
+onMounted(() => {
+    offcanvas.value.addEventListener("hide.bs.offcanvas", function() {
+        /*if(skipSettingsSave) {
+            skipSettingsSave = false;
+            console.log("skipping");
+            return;
+        }
+
+        console.log("saving");*/
+        // saveSettings();
+        resetUndoRedo()
+    });
+});
+
+let skipPropWatch = false;
+let lastSettings = null;
+watch(props, (newValue, oldValue) => {
+    if (skipPropWatch) {
+        skipPropWatch = false;
+        return;
+    }
+
+    refreshSettingsItems(newValue.settings);
 
     let newGraphics = newValue.graphicsOptions.reduce((acc, val) => {
         acc[`/${val}`] = val;
@@ -35,6 +58,33 @@ watch(props, (newValue) => {
     }, { '': 'Default' })
 
     Object.assign(graphicsDict.value, newGraphics);
+
+    if (lastSettings === null) {
+        lastSettings = cloneSettings(newValue.settings);
+    }
+
+    if (JSON.stringify(newValue.settings) === JSON.stringify(lastSettings)) {
+        return;
+    }
+
+    updateCustomDungeonItems(newValue.settings.args);
+
+    fixArgs(newValue.settings.args);
+    saveSettingsToStorage(newValue.settings.args, newValue.settings.settings);
+
+    applySettings(oldValue.settings.args);
+
+    // skipNextAnimation = true;
+
+    rateLimit(refreshItems, 1000);
+
+    if (props.broadcastMode == 'send') {
+        if (broadcastArgs) {
+            broadcastArgs();
+        }
+    }
+
+    lastSettings = cloneSettings(newValue.settings);
 })
 
 const types = SettingsItem.types;
@@ -185,6 +235,67 @@ const layout = [
                             'keysy': 'Keysy',
                             'custom': 'Custom',
                         },
+                    }),
+                    new SettingsItem({
+                        type: types.column,
+                        includeCol: false,
+                        visibleCondition: () => { return props.settings.args.dungeon_items == 'custom' },
+                        children: [
+                            new SettingsItem({
+                                type: types.checkbox,
+                                includeRow: false,
+                                icon: 'MAP1_1.png',
+                                settingBase: 'args',
+                                settingName: 'shuffle_maps',
+                            }),
+                            new SettingsItem({
+                                type: types.checkbox,
+                                includeRow: false,
+                                icon: 'COMPASS1_1.png',
+                                settingBase: 'args',
+                                settingName: 'shuffle_compasses',
+                            }),
+                            new SettingsItem({
+                                type: types.checkbox,
+                                includeRow: false,
+                                icon: 'STONE_BEAK1_1.png',
+                                settingBase: 'args',
+                                settingName: 'shuffle_beaks',
+                            }),
+                        ]
+                    }),
+                    new SettingsItem({
+                        type: types.column,
+                        includeCol: false,
+                        visibleCondition: () => { return props.settings.args.dungeon_items == 'custom' },
+                        children: [
+                            new SettingsItem({
+                                type: types.column,
+                                includeRow: false,
+                                colSize: '',
+                            }),
+                            new SettingsItem({
+                                type: types.checkbox,
+                                includeRow: false,
+                                colSize: '4',
+                                icon: 'KEY1_1.png',
+                                settingBase: 'args',
+                                settingName: 'shuffle_small',
+                            }),
+                            new SettingsItem({
+                                type: types.checkbox,
+                                includeRow: false,
+                                colSize: '4',
+                                icon: 'NIGHTMARE_KEY1_1.png',
+                                settingBase: 'args',
+                                settingName: 'shuffle_nightmare',
+                            }),
+                            new SettingsItem({
+                                type: types.column,
+                                includeRow: false,
+                                colSize: '',
+                            }),
+                        ]
                     }),
                     new SettingsItem({
                         title: 'Boss shuffle',
@@ -900,7 +1011,14 @@ const layout = [
 
 const settingsItems = layout.reduce((acc, item) => acc.concat(extractBindables(item)), []);
 
-refreshItems(props.settings);
+refreshSettingsItems(props.settings);
+
+function cloneSettings(settings) {
+    return structuredClone({
+        args: toRaw(settings.args),
+        settings: toRaw(settings.settings),
+    });
+}
 
 function extractBindables(item) {
     let items = [];
@@ -917,9 +1035,42 @@ function extractBindables(item) {
     return items;
 }
 
-function refreshItems(obj) {
+function refreshSettingsItems(obj) {
     for (const item of settingsItems) {
         item.refreshBind(obj);
+    }
+}
+
+function updateCustomDungeonItems(args) {
+    if (!args || args.dungeon_items == 'custom') {
+        return;
+    }
+
+    let settings = {
+        shuffle_small: false,
+        shuffle_nightmare: false,
+        shuffle_maps: false,
+        shuffle_compasses: false,
+        shuffle_beaks: false,
+    }
+
+    if (['smallkeys', 'keysanity', 'localnightmarekey'].includes(args.dungeon_items)) {
+        settings.shuffle_small = true;
+    }
+    if (['nightmarekeys', 'keysanity'].includes(args.dungeon_items)) {
+        settings.shuffle_nightmare = true;
+    }
+    if (['localkeys', 'keysanity', 'localnightmarekey'].includes(args.dungeon_items)) {
+        settings.shuffle_maps = true;
+        settings.shuffle_compasses = true;
+        settings.shuffle_beaks = true;
+    }
+
+    for (const prop in settings) {
+        if (args[prop] != settings[prop]) {
+            skipPropWatch = true;
+            args[prop] = settings[prop];
+        }
     }
 }
 
@@ -985,7 +1136,7 @@ function refreshItems(obj) {
 </script>
 
 <template>
-    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="argsOffcanvas" aria-labelledby="argsLabel">
+    <div ref="offcanvas" class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="argsOffcanvas" aria-labelledby="argsLabel">
         <div class="offcanvas-header">
             <div class="row align-items-center">
                 <div class="col">
@@ -999,7 +1150,7 @@ function refreshItems(obj) {
         </div>
         <div class="offcanvas-body">
             <template v-for="item in layout" :key="item">
-                <SettingsBlock v-if="(!item.settingName || item.settingBind) && item.visibleCondition()" v-model="item.settingBind" :item="item" />
+                <SettingsBlock v-model="item.settingBind" :item="item" />
             </template>
             
             <div class="row justify-content-end pt-4">
