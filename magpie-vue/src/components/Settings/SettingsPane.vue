@@ -43,8 +43,7 @@ onMounted(() => {
 });
 
 let skipPropWatch = false;
-let lastSettings = null;
-watch(props, (newValue, oldValue) => {
+watch(props, (newValue) => {
     if (skipPropWatch) {
         skipPropWatch = false;
         return;
@@ -59,32 +58,7 @@ watch(props, (newValue, oldValue) => {
 
     Object.assign(graphicsDict.value, newGraphics);
 
-    if (lastSettings === null) {
-        lastSettings = cloneSettings(newValue.settings);
-    }
-
-    if (JSON.stringify(newValue.settings) === JSON.stringify(lastSettings)) {
-        return;
-    }
-
-    updateCustomDungeonItems(newValue.settings.args);
-
-    fixArgs(newValue.settings.args);
-    saveSettingsToStorage(newValue.settings.args, newValue.settings.settings);
-
-    applySettings(oldValue.settings.args);
-
-    // skipNextAnimation = true;
-
-    rateLimit(refreshItems, 1000);
-
-    if (props.broadcastMode == 'send') {
-        if (broadcastArgs) {
-            broadcastArgs();
-        }
-    }
-
-    lastSettings = cloneSettings(newValue.settings);
+    saveSettings(newValue.settings);
 })
 
 const types = SettingsItem.types;
@@ -1072,6 +1046,35 @@ function updateCustomDungeonItems(args) {
             args[prop] = settings[prop];
         }
     }
+}
+
+let lastSettings = null;
+function saveSettings(settings) {
+    if (lastSettings === null) {
+        lastSettings = cloneSettings(settings);
+    }
+
+    if (JSON.stringify(settings) === JSON.stringify(lastSettings)) {
+        return;
+    }
+
+    updateCustomDungeonItems(settings.args);
+    fixArgs(settings.args);
+    saveSettingsToStorage(settings.args, settings.settings);
+
+    applySettings(lastSettings.args);
+
+    // skipNextAnimation = true;
+
+    rateLimit(refreshItems, 1000);
+
+    if (props.broadcastMode == 'send') {
+        if (broadcastArgs) {
+            broadcastArgs();
+        }
+    }
+
+    lastSettings = cloneSettings(settings);
 }
 
 // {% set ns = namespace(group='') %}

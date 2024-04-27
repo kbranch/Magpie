@@ -140,9 +140,9 @@ function loadShortString(saveOnLoad=false) {
             shortString: shortString,
         },
         success: (response) => {
-            let newArgs = JSON.parse(response);
-            fixArgs(newArgs);
-            setInputValues('flag', newArgs);
+            Object.keys(args).map(x => delete args[x]);
+            Object.assign(args, JSON.parse(response));
+            args.flags = {};
 
             if (saveOnLoad) {
                 saveSettings();
