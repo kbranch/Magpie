@@ -9,7 +9,10 @@ export const useTextTooltipStore = defineStore('textTooltip', () => {
 
     const delayTimeout = ref(null);
     function tooltip(Text, event, DelayMs=0) {
-        element.value = event.currentTarget;
+        if (event.currentTarget) {
+            element.value = event.currentTarget;
+        }
+
         text.value = Text;
         delayMs.value = DelayMs;
 
@@ -37,6 +40,8 @@ export const useTextTooltipStore = defineStore('textTooltip', () => {
             delayTimeout.value = null;
         }
     }
+
+    window.vueTooltip = tooltip;
 
     return { text, element, delayTimeout, delayMs, show, tooltip, clearTooltip };
 });

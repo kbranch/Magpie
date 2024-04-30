@@ -13,6 +13,7 @@ function refreshItems() {
             args: JSON.stringify(args),
             localSettings: JSON.stringify(localSettings),
             settingsPrefix: settingsPrefix,
+            isVue: true,
         },
         success: (response) => {
             if (!allowItems) {
@@ -42,8 +43,6 @@ function refreshItems() {
                 //Activate the bootstrap tooltips
                 let tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]:not(.itemWrapper)')
                 let tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }))
-                let itemTooltips = document.querySelectorAll('.itemWrapper[data-bs-toggle="tooltip"]')
-                tooltipList = [...itemTooltips].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl, { delay: { "show": 500, "hide": 0 }, sanitize: false }))
             }
 
             if (localSettings.highlightItemsOnHover) {
