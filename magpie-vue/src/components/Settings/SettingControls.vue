@@ -1,7 +1,9 @@
 <script setup>
 import SettingLabel from '@/components/Settings/SettingLabel.vue';
 import { SettingsItem } from '@/SettingsItem.js';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 
+const tip = useTextTooltipStore();
 const types = SettingsItem.types;
 
 const model = defineModel();
@@ -38,11 +40,13 @@ defineProps(['item']);
     <!-- Color -->
     <template v-if="item.type == types.color && item.settingBind[item.settingName]">
         <div class="color-block">
-            <label :for="`${item.settingName}-setting`" class="color-label">
-                <SettingLabel :item="item" />
-            </label>
-            <input v-model="model[item.settingName]" :id="`${item.settingName}-setting`" type="color" class="color-picker">
-            <div v-if="item.opacitySettingName" class="opacity-block ps-2" data-bs-toggle="tooltip" data-bs-title="Opacity" data-bs-trigger="hover">
+            <span @mouseenter="tip.tooltip(item.tooltip, $event)">
+                <label :for="`${item.settingName}-setting`" class="color-label">
+                    <SettingLabel :item="item" />
+                </label>
+                <input v-model="model[item.settingName]" :id="`${item.settingName}-setting`" type="color" class="color-picker">
+            </span>
+            <div v-if="item.opacitySettingName" class="opacity-block ps-2" @mouseenter="tip.tooltip('Opacity', $event)">
                 <label :for="`${item.opacitySettingName}-setting`" class="color-label"><img class="invert" src="/images/eye.svg"></label>
                 <input v-model="model[item.opacitySettingName]" :id="`${item.opacitySettingName}-setting`" type="range" min="0.2" max="1" step="0.1" class="form-range node-opacity-slider pt-2 me-0">
             </div>

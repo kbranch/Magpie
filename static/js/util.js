@@ -305,34 +305,38 @@ function applySettings(oldArgs=null) {
         ".difficulty-checked": localSettings.diffCheckedAlpha,
     }
 
-    for (const rule of iconStyles.cssRules) {
-        if (rule.selectorText.startsWith('#')) {
-            rule.style.fill = iconStyleTable[rule.selectorText];
-        }
-        else {
-            rule.style.opacity = iconStyleTable[rule.selectorText];
+    if (iconStyles) {
+        for (const rule of iconStyles.cssRules) {
+            if (rule.selectorText.startsWith('#')) {
+                rule.style.fill = iconStyleTable[rule.selectorText];
+            }
+            else {
+                rule.style.opacity = iconStyleTable[rule.selectorText];
+            }
         }
     }
 
-    for(let i = 0; i < themeStyles.rules.length; i++) {
-        themeStyles.removeRule(0);
+    if (themeStyles) {
+        for(let i = 0; i < themeStyles.rules.length; i++) {
+            themeStyles.removeRule(0);
+        }
+
+        let themeRule = `.bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
+            background: ${localSettings.bgColor} !important;
+            color: ${localSettings.textColor} !important;
+        }`;
+        themeStyles.insertRule(themeRule, 0);
+
+        let highlightRule = `.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
+            background-color: ${localSettings.highlightColor};
+        }`;
+        themeStyles.insertRule(highlightRule, 0);
+
+        highlightRule = `.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
+            border-bottom-color: ${localSettings.highlightColor} !important;
+        }`;
+        themeStyles.insertRule(highlightRule, 0);
     }
-
-    let themeRule = `.bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
-        background: ${localSettings.bgColor} !important;
-        color: ${localSettings.textColor} !important;
-    }`;
-    themeStyles.insertRule(themeRule, 0);
-
-    let highlightRule = `.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
-        background-color: ${localSettings.highlightColor};
-    }`;
-    themeStyles.insertRule(highlightRule, 0);
-
-    highlightRule = `.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
-        border-bottom-color: ${localSettings.highlightColor} !important;
-    }`;
-    themeStyles.insertRule(highlightRule, 0);
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;

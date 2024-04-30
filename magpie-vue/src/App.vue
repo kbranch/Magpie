@@ -1,6 +1,7 @@
 <script setup>
 import { initGlobals, init, win } from '@/moduleWrappers.js';
 import { onMounted, ref, toRaw } from 'vue';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import DifficultyIcons from '@/components/DifficultyIcons.vue';
 import NavBar from '@/components/NavBar.vue';
 import QuickSettings from '@/components/Settings/QuickSettings.vue'
@@ -8,6 +9,7 @@ import MainMap from '@/components/Map/MainMap.vue'
 import SettingsPane from '@/components/Settings/SettingsPane.vue';
 import CheckList from '@/components/CheckList/CheckList.vue';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
+import TextTooltip from '@/components/Tooltips/TextTooltip.vue';
 
 const isLocal = ref(false);
 const hostname = ref(null);
@@ -20,6 +22,8 @@ const logics = ref([]);
 const checkAccessibility = ref([]);
 const misc = ref({localSettings: {}, args: {}});
 const argDescriptions = ref({});
+
+const tip = useTextTooltipStore();
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
@@ -137,6 +141,8 @@ defineExpose({
     </div>
   </div>
 
+  <TextTooltip :text-color="misc.localSettings.textColor" />
+
   <div id="settingsContainer">
     <SettingsPane v-if="misc.localSettings.checkSize" :local="isLocal" :broadcast-mode="broadMode"
       :graphics-options="graphicsOptions" :settings="{ args: misc.args, settings: misc.localSettings }"
@@ -157,8 +163,7 @@ defineExpose({
     <div v-if="isLocal && version != remoteVersion && remoteVersion" class="col-auto">
       <div class="version">
         <span>Latest version: {{ remoteVersion }}</span>
-        <a href="/fetchupdate" class="btn btn-secondary update-button ms-2" data-bs-toggle="tooltip"
-          data-bs-trigger="hover" data-bs-title="Download update" role="button">
+        <a href="/fetchupdate" class="btn btn-secondary update-button ms-2" @mouseenter="tip.tooltip('Download update', $event)" role="button">
           <img src="/images/file-arrow-down.svg">
         </a>
       </div>

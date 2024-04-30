@@ -1,6 +1,7 @@
 <script setup>
 import {$, getStateZip, resetSession} from '@/moduleWrappers.js';
 import { onMounted } from 'vue';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import ShareDialog from './ShareDialog.vue';
 
 defineProps({
@@ -21,6 +22,8 @@ defineProps({
     required: true,
   },
 });
+
+const tip = useTextTooltipStore();
 
 const aboutContents = `<p>The source is up on <a href='https://github.com/kbranch/Magpie'>GitHub</a> - <a href='https://github.com/kbranch/Magpie/issues/new/choose'>report a bug</a></p>
     <p>Check out the <a href='https://github.com/kbranch/Magpie/blob/master/README.md'>readme</a> for some documentation</p>
@@ -56,26 +59,26 @@ async function sendSuggestion() {
     <nav id="navbar" class="navbar px-2_5">
         <div class="container px-0">
             <a v-if="showTitle" class="nav-link pe-2" href="/">Magpie</a>
-            <button type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-title="About Magpie" :data-bs-content=aboutContents data-bs-html="true">
+            <button type="button" class="btn btn-secondary" data-bs-toggle="popover" :data-bs-content=aboutContents data-bs-html="true" @mouseenter="tip.tooltip('About Magpie', $event)">
                 <img class="button-icon" src="/images/question-circle.svg">
             </button>
-            <button class="btn btn-secondary ms-1" alt="Make a suggestion or report a bug" data-bs-toggle="modal" data-bs-target="#suggestionModal" type="button">
+            <button class="btn btn-secondary ms-1"  @mouseenter="tip.tooltip('Make a suggestion or report a bug', $event)" data-bs-toggle="modal" data-bs-target="#suggestionModal" type="button">
                 <img class="button-icon" src="/images/bug.svg">
             </button>
 
             <template v-if="showShare">
-                <button class="btn btn-secondary ms-1" alt="Share" data-bs-toggle="modal" data-bs-target="#shareModal" type="button">
+                <button class="btn btn-secondary ms-1" data-bs-toggle="modal" data-bs-target="#shareModal" type="button" @mouseenter="tip.tooltip('Share', $event)">
                     <img class="button-icon" src="/images/share.svg">
                 </button>
-                <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" data-bs-toggle="tooltip" data-bs-title="Live sharing" data-bs-trigger="hover">
+                <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" @mouseenter="tip.tooltip('Live sharing', $event)">
             </template>
 
             <div class="col text-end">
-                <button type="button" class="btn btn-secondary" @click="resetSession()" data-bs-toggle="tooltip" data-bs-title="Reset Checks and Inventory" data-bs-trigger="hover">
+                <button type="button" class="btn btn-secondary" @click="resetSession()" @mouseenter="tip.tooltip('Reset Checks and Inventory', $event)">
                     <img class="button-icon" src="/images/arrow-clockwise.svg">
                 </button>
                 <span class="ms-1" data-bs-toggle="offcanvas" data-bs-target="#argsOffcanvas" aria-controls="argsOffcanvas">
-                    <button id="argsCloseButton" class="btn btn-secondary" type="button" data-bs-toggle="tooltip" data-bs-title="Settings" data-bs-trigger="hover">
+                    <button id="argsCloseButton" class="btn btn-secondary" type="button" @mouseenter="tip.tooltip('Settings', $event)">
                         <img class="button-icon" src="/images/gear.svg">
                     </button>
                 </span>

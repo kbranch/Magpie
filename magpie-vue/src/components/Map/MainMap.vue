@@ -3,11 +3,13 @@ import { closeAllTooltips, removeNodes, drawNodes, win } from '@/moduleWrappers.
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
 import { computed, onUpdated, ref } from 'vue';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 
+const tip = useTextTooltipStore();
 const props = defineProps(['broadcastMode', 'args', 'settings']);
 
 const maps = ['overworld', 'underworld', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd0'];
-const mapTooltips = { 
+const mapTooltips = {
     'overworld': undefined,
     'underworld': undefined,
     'd1': 'Tail Cave',
@@ -30,7 +32,7 @@ const mapPaths = computed(() => maps.reduce((acc, x) => {
 function getMapPath(map) {
     let mapPath = props.localSettings?.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
     if (props.args?.overworld == 'alttp' && map == 'overworld') {
-        mapPath =  '/images/alttp-overworld.png';
+        mapPath = '/images/alttp-overworld.png';
     }
 
     return mapPath;
@@ -47,8 +49,7 @@ onUpdated(() => {
 
 <template>
 <ul class="nav" id="mapTabs">
-    <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == activeTab }]" :data-mapname="map"
-        data-bs-toggle="tooltip" :data-bs-title="mapTooltips[map]" data-bs-trigger="hover">
+    <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == activeTab }]" :data-mapname="map" @mouseenter="tip.tooltip(mapTooltips[map], $event)">
         <button class="btn tab-link map-button" :id="`${map}Tab`" type="button" @click="activeTab = map">
             {{ map }}
         </button>
@@ -101,7 +102,7 @@ onUpdated(() => {
 .map {
     width: 100%;
     height: auto;
-    object-fit:contain;
+    object-fit: contain;
     max-height: 100%;
     aspect-ratio: 1182/948 !important;
 }

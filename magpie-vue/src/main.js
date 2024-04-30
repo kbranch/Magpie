@@ -1,5 +1,6 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import App from './App.vue';
 
 function addCssLink(href, id='') {
   var link = document.createElement("link");
@@ -11,7 +12,11 @@ function addCssLink(href, id='') {
   document.getElementsByTagName("head")[0].appendChild(link);
 }
 
-window.vueApp = createApp(App).mount('#app');
+const pinia = createPinia();
+let app = createApp(App);
+
+app.use(pinia);
+window.vueApp = app.mount('#app');
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/vue-legacy.css");

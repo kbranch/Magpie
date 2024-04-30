@@ -4,7 +4,9 @@ import { getLayout } from '@/settingsLayout.js';
 import { rateLimit } from '@/main';
 import SettingsBlock from './SettingsBlock.vue';
 import { computed, onMounted, ref, toRaw, watch } from 'vue';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 
+const tip = useTextTooltipStore();
 const props = defineProps({
     local: {
         type: Boolean,
@@ -179,24 +181,19 @@ function saveSettings(settings) {
             
             <div class="row justify-content-end pt-4">
                 <div class="col-auto">
-                    <input ref="logicDiffInput" type="file" accept=".json" class="hidden" id="logicDiffInput"
-                        @change="getFile($event.currentTarget, importLogicDiff);">
-                    <button type="button" class="btn btn-secondary" @click="logicDiffInput.click();"
-                        data-bs-toggle="tooltip" data-bs-title="Import Logic Diff" data-bs-trigger="hover">
+                    <input ref="logicDiffInput" type="file" accept=".json" class="hidden" id="logicDiffInput" @change="getFile($event.currentTarget, importLogicDiff);">
+                    <button type="button" class="btn btn-secondary" @click="logicDiffInput.click();" @mouseenter="tip.tooltip('Import Logic Diff', $event)">
                         <img class="invert" src="/images/download.svg">
                     </button>
                 </div>
                 <div class="col">
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-secondary me-2" @click="openExportStateDialog()"
-                        data-bs-toggle="tooltip" data-bs-title="Export Tracker State" data-bs-trigger="hover">
+                    <button type="button" class="btn btn-secondary me-2" @click="openExportStateDialog()" @mouseenter="tip.tooltip('Export Tracker State', $event)">
                         <img class="invert" src="/images/upload.svg">
                     </button>
-                    <input ref="stateInput" type="file" accept=".json" class="hidden" id="stateInput"
-                        @change="getFile($event.currentTarget, importState);">
-                    <button type="button" class="btn btn-secondary" @click="stateInput.click();"
-                        data-bs-toggle="tooltip" data-bs-title="Import Tracker State" data-bs-trigger="hover">
+                    <input ref="stateInput" type="file" accept=".json" class="hidden" id="stateInput" @change="getFile($event.currentTarget, importState);">
+                    <button type="button" class="btn btn-secondary" @click="stateInput.click();" @mouseenter="tip.tooltip('Import Tracker State', $event)">
                         <img class="invert" src="/images/download.svg">
                     </button>
                 </div>

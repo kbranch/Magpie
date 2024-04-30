@@ -1,7 +1,9 @@
 <script setup>
 import { debounce } from '@/main';
 import { computed, onMounted, ref, watch } from 'vue';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 
+const tip = useTextTooltipStore();
 const props = defineProps(['isLocal', 'playerId', 'initialPlayerName', 'initialEventName', 'initialJoinCode']);
 
 const playerIdTaken = ref(false);
@@ -110,10 +112,10 @@ async function getEventInfo() {
                         </div>
                         <div class="pt-3">
                             <input id="liveUpdate" type="checkbox" class="form-check-input">
-                            <label for="liveUpdate" class="form-label">Live update <img class="invert"
-                                    src="/images/question-circle.svg" data-bs-toggle="tooltip"
-                                    data-bs-custom-class="secondary-tooltip"
-                                    data-bs-title="Inventory and check changes will be automatically shared for the rest of this session"></label>
+                            <label for="liveUpdate" class="form-label">
+                                Live update
+                                <img class="invert" src="/images/question-circle.svg" @mouseenter="tip.tooltip('Inventory and check changes will be automatically shared for the rest of this session', $event)">
+                            </label>
                         </div>
                     </div>
                 </div>
