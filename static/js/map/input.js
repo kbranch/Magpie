@@ -7,13 +7,15 @@ function checkGraphicMouseEnter(element) {
         return;
     }
 
-    let tooltip = bootstrap.Tooltip.getInstance(element);
+    if (!isVue) {
+        let tooltip = bootstrap.Tooltip.getInstance(element);
 
-    if (tooltip._isShown()) {
-        return;
+        if (tooltip._isShown()) {
+            return;
+        }
+
+        tooltip.show();
     }
-
-    tooltip.show();
 
     let node = nodes[element.id];
     let connection = node.entrance?.mappedConnection();
@@ -41,8 +43,11 @@ function checkGraphicMouseEnter(element) {
 
 function checkGraphicMouseLeave(element) {
     if (!hasAttr(element, 'data-pinned')) {
-        let tooltip = bootstrap.Tooltip.getInstance(element);
-        tooltip.hide();
+        if (!isVue) {
+            let tooltip = bootstrap.Tooltip.getInstance(element);
+            tooltip.hide();
+        }
+
         $('connection.connector-line').connections('remove');
     }
 
