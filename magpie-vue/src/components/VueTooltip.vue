@@ -14,11 +14,14 @@ const tipRect = ref(null);
 const parentClean = ref(false);
 const tipClean = ref(false);
 const allNodes = ref(nodes);
+const stateNode = computed(() => props.type == 'node' ? state.node : state.auxNode);
+const stateShow = computed(() => props.type == 'auxNode' ? state.auxShow : state.show);
+const stateElement = computed(() => props.type == 'auxNode' ? state.auxElement : state.element);
 
 window.nodes = allNodes.value;
 
-const node = computed(() => allNodes.value[state.node?.id()]);
-const show = computed(() => state.show && (props.type == 'text' ? state.text : node.value) && state.element && tipClean.value && parentClean.value);
+const node = computed(() => allNodes.value[stateNode.value?.id()]);
+const show = computed(() => stateShow.value && (props.type == 'text' ? state.text : node.value) && stateElement.value && tipClean.value && parentClean.value);
 const tipLeft = computed(() => getTooltipLeft(parentRect.value, tipRect.value, rootRect.value));
 const tipTop = computed(() => getTooltipTop(parentRect.value, tipRect.value));
 
@@ -75,7 +78,7 @@ window.addEventListener('scroll', () => {
 let observedParent = null;
 let observedTip = null;
 function observe() {
-    if (!state.element || !tooltip.value) {
+    if (!stateElement.value || !tooltip.value) {
         parentObserver.disconnect();
         tipObserver.disconnect();
 
@@ -85,13 +88,13 @@ function observe() {
         return;
     }
 
-    if (observedParent != state.element || scrollChanged) {
+    if (observedParent != stateElement.value || scrollChanged) {
         parentClean.value = false;
         scrollChanged = false;
-        observedParent = state.element;
+        observedParent = stateElement.value;
 
         parentObserver.disconnect();
-        parentObserver.observe(state.element);
+        parentObserver.observe(stateElement.value);
     }
 
     if (observedTip != tooltip.value) {
@@ -147,12 +150,12 @@ function getTooltipTop(parentRect, tipRect) {
 
 let watchTimeout = null;
 function watch() {
-    if (!state.element || (!state.element.matches(':hover') && (!node.value || !node.value.pinned))) {
+    if (!stateElement.value || (!stateElement.value.matches(':hover') && (!node.value || !node.value.pinned))) {
         if (watchTimeout) {
             clearTimeout(watchTimeout);
         }
 
-        state.clearTooltip();
+        state.clearTooltip(props.type);
 
         return;
     }

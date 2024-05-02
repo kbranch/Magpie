@@ -7,25 +7,40 @@ export const useNodeTooltipStore = defineStore('nodeTooltip', () => {
     const delayMs = ref(null);
     const show = ref(false);
 
+    const auxNode = ref(null);
+    const auxElement = ref(null);
+    const auxDelayMs = ref(null);
+    const auxShow = ref(false);
+
     const delayTimeout = ref(null);
+    const auxDelayTimeout = ref(null);
     function tooltip(Node, event, DelayMs=0) {
+        let aux = show.value || delayTimeout.value;
+        let el = aux ? auxElement : element;
+        let n = aux ? auxNode : node;
+        let delay = aux ? auxDelayMs : delayMs;
+        let type = aux ? 'auxNode' : 'node';
+        let handler = aux ? auxLeaveHandler : leaveHandler;
+        let timeout = aux ? auxDelayTimeout : delayTimeout;
+        let s = aux ? auxShow : show;
+
         if (event.currentTarget) {
-            element.value = event.currentTarget;
+            el.value = event.currentTarget;
         }
 
-        node.value = Node;
-        delayMs.value = DelayMs;
+        n.value = Node;
+        delay.value = DelayMs;
 
-        clearTooltip();
+        clearTooltip(type);
 
-        event.currentTarget.addEventListener('mouseleave', leaveHandler);
+        event.currentTarget.addEventListener('mouseleave', handler);
 
         if (DelayMs) {
-            delayTimeout.value = setTimeout(() => { tooltip(Node, event); }, DelayMs);
+            timeout.value = setTimeout(() => { tooltip(Node, event); }, DelayMs);
             return;
         }
 
-        show.value = true;
+        s.value = true;
     }
 
     function leaveHandler() {
@@ -33,23 +48,45 @@ export const useNodeTooltipStore = defineStore('nodeTooltip', () => {
             return;
         }
 
-        clearTooltip();
+        clearTooltip('node');
     }
 
-    function clearTooltip() {
-        show.value = false;
-        
-        if (element.value) {
-            element.value.removeEventListener('mouseleave', leaveHandler);
+    function auxLeaveHandler() {
+        if (auxNode.value && auxNode.value.pinned) {
+            return;
         }
 
-        if (delayTimeout.value) { 
-            clearTimeout(delayTimeout.value);
-            delayTimeout.value = null;
+        clearTooltip('auxNode');
+    }
+
+    function clearTooltip(type) {
+        if (type == 'auxNode') {
+            auxShow.value = false;
+            
+            if (auxElement.value) {
+                auxElement.value.removeEventListener('mouseleave', leaveHandler);
+            }
+
+            if (auxDelayTimeout.value) { 
+                clearTimeout(auxDelayTimeout.value);
+                auxDelayTimeout.value = null;
+            }
+        }
+        else {
+            show.value = false;
+            
+            if (element.value) {
+                element.value.removeEventListener('mouseleave', leaveHandler);
+            }
+
+            if (delayTimeout.value) { 
+                clearTimeout(delayTimeout.value);
+                delayTimeout.value = null;
+            }
         }
     }
 
     window.vueNodeTooltip = tooltip;
 
-    return { node, element, delayTimeout, delayMs, show, tooltip, clearTooltip };
+    return { node, element, delayTimeout, delayMs, show, auxNode, auxElement, auxDelayMs, auxShow, tooltip, clearTooltip };
 });
