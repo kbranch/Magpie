@@ -22,6 +22,9 @@ export let saveSettingsToStorage = window.saveSettingsToStorage;
 export let applySettings = window.applySettings;
 export let refreshItems = window.refreshItems;
 export let broadcastArgs = window.broadcastArgs;
+export let toggleSingleNodeCheck = window.toggleSingleNodeCheck;
+export let openCheckLogicViewer = window.openCheckLogicViewer;
+export let nodes = window.nodes;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

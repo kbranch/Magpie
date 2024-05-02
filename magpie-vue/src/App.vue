@@ -141,8 +141,8 @@ defineExpose({
     </div>
   </div>
 
-  <VueTooltip type="text" />
-  <VueTooltip type="node" />
+  <VueTooltip type="text" :text-color="misc.localSettings.textColor" />
+  <VueTooltip type="node" :text-color="misc.localSettings.textColor" />
 
   <div id="settingsContainer">
     <SettingsPane v-if="misc.localSettings.checkSize" :local="isLocal" :broadcast-mode="broadMode"

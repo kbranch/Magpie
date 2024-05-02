@@ -317,21 +317,6 @@ img {
     width: 100%;
 }
 
-/* .behind-keys:not(.difficulty-checked) .behind-keys-overlay,
-.behind-rupees:not(.difficulty-checked) .behind-keys-overlay {
-    position: absolute;
-    left: 15%;
-    top: 75%;
-    width: 50%;
-    height: 50%;
-    background-image: url('/static/images/lock-fill.svg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-} */
-
 .requires-rupees:not(.difficulty-checked) .behind-rupees-overlay {
     position: absolute;
     left: 10%;
@@ -347,7 +332,7 @@ img {
     z-index: 10;
 }
 
-.behind-keys:not(.difficulty-checked) .behind-rupees-overlay {
+.behind-keys:not(.difficulty-checked) .behind-keys-overlay {
     position: absolute;
     left: 10%;
     top: 50%;

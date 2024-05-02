@@ -1,9 +1,10 @@
 <script setup>
 import { useNodeTooltipStore } from '@/stores/nodeTooltipStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { toggleSingleNodeCheck, openCheckLogicViewer, nodes } from '@/moduleWrappers.js';
 import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
 
-const props = defineProps(['type']);
+const props = defineProps(['type', 'textColor']);
 
 const state = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
 const tooltip = ref(null);
@@ -12,8 +13,12 @@ const parentRect = ref(null);
 const tipRect = ref(null);
 const parentClean = ref(false);
 const tipClean = ref(false);
+const allNodes = ref(nodes);
 
-const show = computed(() => state.show && (props.type == 'text' ? state.text : state.node) && state.element && tipClean.value && parentClean.value);
+window.nodes = allNodes.value;
+
+const node = computed(() => allNodes.value[state.node?.id()]);
+const show = computed(() => state.show && (props.type == 'text' ? state.text : node.value) && state.element && tipClean.value && parentClean.value);
 const tipLeft = computed(() => getTooltipLeft(parentRect.value, tipRect.value, rootRect.value));
 const tipTop = computed(() => getTooltipTop(parentRect.value, tipRect.value));
 
@@ -142,7 +147,7 @@ function getTooltipTop(parentRect, tipRect) {
 
 let watchTimeout = null;
 function watch() {
-    if (!state.element || !state.element.matches(':hover')) {
+    if (!state.element || (!state.element.matches(':hover') && (!node.value || !node.value.pinned))) {
         if (watchTimeout) {
             clearTimeout(watchTimeout);
         }
@@ -157,16 +162,60 @@ function watch() {
 </script>
 
 <template>
-    <div ref="tooltip" class="vueTooltip" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}`">
+    <div ref="tooltip" class="vueTooltip" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
         <template v-if="type == 'text'">
             <span class="tooltipText">{{ state.text }}</span>
         </template>
 
-        <template v-else>
-            <p class="tooltipText">X:{{ state.node?.x }}, Y:{{ state.node?.y }} this is some longer text to see what happens if it gets really long</p>
-            <p class="tooltipText">X:{{ state.node?.x }}, Y:{{ state.node?.y }}</p>
-            <p class="tooltipText">X:{{ state.node?.x }}, Y:{{ state.node?.y }}</p>
-            <p class="tooltipText">X:{{ state.node?.x }}, Y:{{ state.node?.y }}</p>
+        <template v-else-if="node">
+            <div class="tooltip-body" :class="[{ 'pinned': node.pinned }]">
+                <div v-for="area in node.areaChecks()" :key="area" class='card tooltip-area-card'>
+                    <div class='card-header tooltip-area-header'>
+                        {{ area.name }}
+                    </div>
+                    <ul class='list-group'>
+                        <div v-for="check in area.uniqueChecks" :key="check.id" class="btn-group dropend">
+                            <button type="button" @click="toggleSingleNodeCheck(`#tooltip-check-${check.id}`)" class="btn tooltip-item text-start p-0"
+                              :data-bs-toggle="'image' in check.checks[0].metadata ? 'tooltip' : null" data-bs-html="true" 
+                              :data-bs-title='"image" in check.checks[0].metadata ? `<img src="/images/checks/${check.id}.png` : null'>
+                                <li class="list-group-item tooltip-check">
+                                    <div :id="`tooltip-check-${check.id}`" class='text-start d-flex p-1 mb-0 align-items-center' :data-check-id='check.id' :data-vanilla="[{ 'true': check.checks[0].isVanilla }]">
+                                        <div v-for="subCheck in check.checks" :key="subCheck.id" class='tooltip-check-graphic align-middle' :class="[`difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}`, subCheck.isVanilla ? 'vanilla' : '']">
+                                            <div class='tooltip-check-graphic icon-wrapper' :class="[{ 'behind-keys': subCheck.behindKeys },
+                                                                                                     { 'requires-rupees': subCheck.requiredRupees },
+                                                                                                     { 'behind-tracker': subCheck.behindTrackerLogic },
+                                                                                                     { 'owl': subCheck.isOwl() }]">
+                                                <div v-if="subCheck.requiredRupees" class='behind-rupees-overlay'></div>
+                                                <div v-if="subCheck.behindKeys" class='behind-keys-overlay'></div>
+                                                <div v-if="subCheck.behindTrackerLogic" class='behind-tracker-overlay'></div>
+                                                <div v-if="subCheck.isOwl()" class='owl-overlay'></div>
+                                                <svg class='tooltip-check-graphic align-middle'>
+                                                    <use :xlink:href="`#difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}${subCheck.isVanilla ? '-vanilla' : ''}`"></use>
+                                                </svg>
+                                                <svg v-if="subCheck.hollow" class='tooltip-check-graphic hollow align-middle'>
+                                                    <use :xlink:href="`#difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}-hollow`"></use>
+                                                </svg>
+                                            </div>
+                                            <img v-if="subCheck.item" class="node-item-overlay" :data-node-item="subCheck.item" :src="`/images/${subCheck.item}_1.png`" onmousedown="preventDoubleClick(event)">
+                                        </div>
+                                        <div class='tooltip-text ps-2'>
+                                            <span class='tooltip-text-span'>
+                                                {{ check.checks[0].metadata.name }}
+                                                <img v-if="'image' in check.checks[0].metadata" class='helper' src='/images/light-question-circle.svg'>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </button>
+                            <div class="col-auto"><button type="button" class="btn btn-secondary p-1 logic-button" @click="openCheckLogicViewer(check.id)" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="/images/diagram-2-fill.svg"></button></div>
+                            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false" :data-parent-node-id="node.id"></button>
+                            <ul class="dropdown-menu">
+                                <!-- ${items} -->
+                            </ul>
+                        </div>
+                    </ul>
+                </div>
+            </div>
         </template>
     </div>
 </template>
@@ -174,12 +223,11 @@ function watch() {
 <style scoped>
 .vueTooltip {
     background-color: black;
-    color: #ccc;
+    font-size: 14px;
     text-align: center;
     border-radius: 6px;
-    /* width: fit-content; */
     max-width: 500px;
-    padding: 5px 10px 5px 10px;
+    padding: 0.25em 0.5em 0.25em 0.5em;
     position: fixed;
     z-index: 999999;
 }

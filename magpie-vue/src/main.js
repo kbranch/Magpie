@@ -27,16 +27,16 @@ addCssLink("/lib/summernote/summernote-lite.css");
 
 const debouncers = {};
 export function debounce(f, delay) {
-    if (!(f.name in debouncers)) {
-        debouncers[f.name] = setTimeout(f, delay);
-        return;
-    }
-
-    if (debouncers[f.name]) {
-        clearTimeout(debouncers[f.name]);
-    }
-
+  if (!(f.name in debouncers)) {
     debouncers[f.name] = setTimeout(f, delay);
+    return;
+  }
+
+  if (debouncers[f.name]) {
+    clearTimeout(debouncers[f.name]);
+  }
+
+  debouncers[f.name] = setTimeout(f, delay);
 }
 
 const limiters = {};

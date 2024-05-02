@@ -18,7 +18,15 @@ function updateCheckSize() {
 }
 
 function createNodes(map, mapName) {
-    nodes = {};
+    let pinnedId = Object.values(nodes).filter(x => x.pinned);
+    if (pinnedId.length) {
+        pinnedId = pinnedId[0].id();
+    }
+    else {
+        pinnedId = null;
+    }
+
+    Object.keys(nodes).map(x => delete nodes[x]);
 
     updateCheckSize();
     let scaling = getMapScaling(map);
@@ -83,6 +91,9 @@ function createNodes(map, mapName) {
 
             if (!(coordString in nodes)) {
                 nodes[coordString] = new MapNode(coord, scaling);
+                if (coordString == pinnedId) {
+                    nodes[coordString].pinned = true;
+                }
             }
             else {
                 let node = nodes[coordString];

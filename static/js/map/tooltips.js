@@ -2,33 +2,41 @@
 
 function closeOtherTooltips(element) {
     let id = $(element).attr('data-node-id');
-    let nodes = $(`.check-graphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
+    let nodeElements = $(`.check-graphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
     let secondaries = $('.helper');
 
     $(secondaries).tooltip('hide');
-    $(nodes).tooltip('hide');
-    $(nodes).removeAttr('data-pinned');
+    $(nodeElements).tooltip('hide');
+    $(nodeElements).removeAttr('data-pinned');
 
-    for (const node of nodes) {
+    Object.values(nodes).map(x => {
+        if (x.id != id) {
+            x.pinned = false;
+        }
+    });
+
+    for (const node of nodeElements) {
         updateTooltip(node);
     }
 }
 
 function closeAllCheckTooltips() {
     let secondaries = $('.helper');
-    let nodes = $('.check-graphic');
+    let nodeElements = $('.check-graphic');
 
     if (secondaries.length) {
         $(secondaries).tooltip('hide');
     }
-    if (nodes.length) {
-        $(nodes).tooltip('hide');
+    if (nodeElements.length) {
+        $(nodeElements).tooltip('hide');
     }
 
     $('connection.connector-line').connections('remove');
 
     let pinnedNodes = $('.check-graphic[data-pinned]');
     pinnedNodes.removeAttr('data-pinned');
+
+    Object.values(nodes).map(x => x.pinned = false);
 
     for (const node of pinnedNodes) {
         updateTooltip(node);

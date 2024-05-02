@@ -108,11 +108,14 @@ function nodeSecondary(element) {
         return;
     }
 
-    if (hasAttr(element, 'data-pinned')) {
-        $(element).removeAttr('data-pinned');
+    let node = nodes[element.dataset.nodeId];
+    node.pinned = !node.pinned;
+
+    if (node.pinned) {
+        $(element).attr('data-pinned', true);
     }
     else {
-        $(element).attr('data-pinned', true);
+        $(element).removeAttr('data-pinned');
     }
 
     updateTooltip(element);

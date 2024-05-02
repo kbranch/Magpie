@@ -8,6 +8,7 @@ class MapNode {
         this.item = null;
         this.connectorLabel = null;
         this.bossBeatable = false;
+        this.pinned = false;
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
@@ -218,6 +219,31 @@ class MapNode {
         }
 
         return false;
+    }
+
+    areaChecks() {
+        let areaDict = this.checks.reduce((acc, check) => {
+            if (!(check.metadata.area in acc)) {
+                acc[check.metadata.area] = [];
+            }
+
+            acc[check.metadata.area].push(check);
+
+            return acc;
+        }, {});
+
+        return Object.entries(areaDict).map(area => {
+            return {
+                name: area[0],
+                uniqueChecks: Array.from(new Set(area[1].map(check => check.id)))
+                    .map(id => {
+                        return {
+                            'id': id,
+                            'checks': this.checksWithId(id),
+                        };
+                    }),
+            };
+        });
     }
 
     tooltipHtml(pinned, connectionType, hoveredCheckId=null) {
@@ -684,7 +710,7 @@ class MapNode {
         });
         $(this.graphic).on('mouseenter', (e) => {
             checkGraphicMouseEnter(e.currentTarget);
-            vueNodeTooltip(this, e);
+            vueNodeTooltip(nodes[this.id()], e);
         });
         $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);

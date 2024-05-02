@@ -29,6 +29,10 @@ export const useNodeTooltipStore = defineStore('nodeTooltip', () => {
     }
 
     function leaveHandler() {
+        if (node.value && node.value.pinned) {
+            return;
+        }
+
         clearTooltip();
     }
 
