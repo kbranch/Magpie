@@ -1,7 +1,7 @@
 "use strict"
 
 let spoilerLog = null;
-let itemsByLocation = {};
+var itemsByLocation = {};
 
 function loadLogFile(element) {
     if (element.files.length == 0) {
@@ -44,7 +44,7 @@ function loadLogContents(logText, loadSettings=true) {
 
     let items = [...log.accessibleItems].concat(log.inaccessibleItems);
 
-    itemsByLocation = {};
+    Object.keys(itemsByLocation).map(x => delete itemsByLocation[x]);
     for (const location of items) {
         itemsByLocation[location.id] = location.itemName;
     }

@@ -3,8 +3,10 @@ import { useNodeTooltipStore } from '@/stores/nodeTooltipStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { toggleSingleNodeCheck, openCheckLogicViewer, nodes } from '@/moduleWrappers.js';
 import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
+import ItemDropdown from '@/components/ItemDropdown.vue';
 
 const props = defineProps(['type', 'textColor']);
+const textTip = useTextTooltipStore();
 
 const state = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
 const tooltip = ref(null);
@@ -64,10 +66,10 @@ onBeforeMount(() => {
 });
 onMounted(() => {
     observe();
-    watch();
+    watchMouseOut();
 });
 onBeforeUpdate(() => observe());
-onUpdated(() => watch());
+onUpdated(() => watchMouseOut());
 
 let scrollChanged = false;
 window.addEventListener('scroll', () => {
@@ -149,7 +151,7 @@ function getTooltipTop(parentRect, tipRect) {
 }
 
 let watchTimeout = null;
-function watch() {
+function watchMouseOut() {
     if (!stateElement.value || (!stateElement.value.matches(':hover') && (!node.value || !node.value.pinned))) {
         if (watchTimeout) {
             clearTimeout(watchTimeout);
@@ -160,12 +162,12 @@ function watch() {
         return;
     }
 
-    setTimeout(watch, 250);
+    setTimeout(watchMouseOut, 250);
 }
 </script>
 
 <template>
-    <div ref="tooltip" class="vueTooltip" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
+    <div ref="tooltip" class="vueTooltip" :class="type == 'text' ? 'text-tooltip' : 'node-tooltip'" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
         <template v-if="type == 'text'">
             <span class="tooltipText">{{ state.text }}</span>
         </template>
@@ -210,11 +212,12 @@ function watch() {
                                     </div>
                                 </li>
                             </button>
-                            <div class="col-auto"><button type="button" class="btn btn-secondary p-1 logic-button" @click="openCheckLogicViewer(check.id)" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="/images/diagram-2-fill.svg"></button></div>
-                            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false" :data-parent-node-id="node.id"></button>
-                            <ul class="dropdown-menu">
-                                <!-- ${items} -->
-                            </ul>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-secondary p-1 logic-button" @click="openCheckLogicViewer(check.id)" @mouseenter="textTip.tooltip('View Logic', $event)">
+                                    <img class="invert" src="/images/diagram-2-fill.svg">
+                                </button>
+                            </div>
+                            <ItemDropdown :active="show" :check-id="check.id" />
                         </div>
                     </ul>
                 </div>
@@ -233,5 +236,9 @@ function watch() {
     padding: 0.25em 0.5em 0.25em 0.5em;
     position: fixed;
     z-index: 999999;
+}
+
+.text-tooltip {
+    z-index: 9999999;
 }
 </style>

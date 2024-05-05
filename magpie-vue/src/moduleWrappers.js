@@ -25,6 +25,9 @@ export let broadcastArgs = window.broadcastArgs;
 export let toggleSingleNodeCheck = window.toggleSingleNodeCheck;
 export let openCheckLogicViewer = window.openCheckLogicViewer;
 export let nodes = window.nodes;
+export let setCheckContents = window.setCheckContents;
+export let spoilLocation = window.spoilLocation;
+export let itemsByLocation = window.itemsByLocation;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;
@@ -46,4 +49,5 @@ export function initGlobals(data) {
     window.players = data.players;
     window.broadcastMode = data.broadcastMode;
     window.rootPrefix = import.meta.env.VITE_API_URL;
+    itemsByLocation = window.itemsByLocation;
 }
