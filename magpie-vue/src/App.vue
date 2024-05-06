@@ -9,7 +9,7 @@ import MainMap from '@/components/Map/MainMap.vue'
 import SettingsPane from '@/components/Settings/SettingsPane.vue';
 import CheckList from '@/components/CheckList/CheckList.vue';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
-import VueTooltip from '@/components/VueTooltip.vue';
+import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 
 const isLocal = ref(false);
 const hostname = ref(null);
@@ -142,8 +142,8 @@ defineExpose({
   </div>
 
   <VueTooltip type="text" :text-color="misc.localSettings.textColor" />
-  <VueTooltip type="node" :text-color="misc.localSettings.textColor" />
-  <VueTooltip type="auxNode" :text-color="misc.localSettings.textColor" />
+  <VueTooltip type="node" :args="misc.args" :text-color="misc.localSettings.textColor" />
+  <VueTooltip type="auxNode" :args="misc.args" :text-color="misc.localSettings.textColor" />
 
   <div id="settingsContainer">
     <SettingsPane v-if="misc.localSettings.checkSize" :local="isLocal" :broadcast-mode="broadMode"

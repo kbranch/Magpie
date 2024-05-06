@@ -28,6 +28,14 @@ export let nodes = window.nodes;
 export let setCheckContents = window.setCheckContents;
 export let spoilLocation = window.spoilLocation;
 export let itemsByLocation = window.itemsByLocation;
+export let getPopperConfig = window.getPopperConfig;
+export let startHouse = window.startHouse;
+export let Entrance = window.Entrance;
+export let setStartLocation = window.setStartLocation;
+export let canBeStart = window.canBeStart;
+export let startGraphicalConnection = window.startGraphicalConnection;
+export let getInsideOutEntrance = window.getInsideOutEntrance;
+export let connectEntrances = window.connectEntrances;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

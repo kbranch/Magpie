@@ -717,6 +717,34 @@ class MapNode {
         });
     }
 
+    entranceOptions() {
+        let options = null;
+
+        if (args.entranceshuffle == 'none'
+            && args.dungeonshuffle
+            && this.entrance.isDungeon()) {
+
+            options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
+                && !Entrance.isFound(x)
+                && !Entrance.isInside(x))
+                .map(x => [x, entranceDict[x].name]);
+            options = sortByKey(options, x => [x[0]])
+        }
+        else if (args.entranceshuffle != 'none'
+                 && this.entrance.type != 'stairs'
+                 && coupledEntrances()
+                 && inOutEntrances()
+                 && (this.entrance.type != "connector"
+                     || args.entranceshuffle == 'mixed')
+                 && !this.entrance.isMapped()) {
+
+            options = Entrance.validConnections(this.entrance.id, "simple");
+            options = sortByKey(options, x => [x[1]]);
+        }
+
+        return options.map(x => entranceDict[x[0]]);
+    }
+
     static nodeId(location, scaling) {
         return `${Math.round(location.x * scaling.x + scaling.offset.x)},${Math.round(location.y * scaling.y + scaling.offset.y)}`;
     }

@@ -494,3 +494,13 @@ function alertModal(header, body) {
 
     new bootstrap.Modal(document.getElementById('alertModal')).show();
 }
+
+function canBeStart(node) {
+    return node.entrance.canBeStart()
+        && !node.entrance.isMapped()
+        && !Entrance.isMapped(startHouse)
+}
+
+function getInsideOutEntrance(id) {
+    return Entrance.getInsideOut(id);
+}

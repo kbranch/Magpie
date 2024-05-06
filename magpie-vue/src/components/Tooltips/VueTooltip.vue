@@ -1,12 +1,12 @@
 <script setup>
 import { useNodeTooltipStore } from '@/stores/nodeTooltipStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
-import { toggleSingleNodeCheck, openCheckLogicViewer, nodes } from '@/moduleWrappers.js';
+import { nodes } from '@/moduleWrappers.js';
 import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
-import ItemDropdown from '@/components/ItemDropdown.vue';
+import CheckItem from '@/components/Tooltips/CheckItem.vue';
+import EntranceChunk from '@/components/Tooltips/EntranceChunk.vue';
 
-const props = defineProps(['type', 'textColor']);
-const textTip = useTextTooltipStore();
+const props = defineProps(['type', 'textColor', 'args']);
 
 const state = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
 const tooltip = ref(null);
@@ -167,7 +167,7 @@ function watchMouseOut() {
 </script>
 
 <template>
-    <div ref="tooltip" class="vueTooltip" :class="type == 'text' ? 'text-tooltip' : 'node-tooltip'" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
+    <div ref="tooltip" class="vue-tooltip" :class="type == 'text' ? 'text-tooltip' : 'node-tooltip'" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
         <template v-if="type == 'text'">
             <span class="tooltipText">{{ state.text }}</span>
         </template>
@@ -180,54 +180,18 @@ function watchMouseOut() {
                     </div>
                     <ul class='list-group'>
                         <div v-for="check in area.uniqueChecks" :key="check.id" class="btn-group dropend">
-                            <button type="button" @click="toggleSingleNodeCheck(`#tooltip-check-${check.id}`)" class="btn tooltip-item text-start p-0"
-                              :data-bs-toggle="'image' in check.checks[0].metadata ? 'tooltip' : null" data-bs-html="true" 
-                              :data-bs-title='"image" in check.checks[0].metadata ? `<img src="/images/checks/${check.id}.png` : null'>
-                                <li class="list-group-item tooltip-check">
-                                    <div :id="`tooltip-check-${check.id}`" class='text-start d-flex p-1 mb-0 align-items-center' :data-check-id='check.id' :data-vanilla="[{ 'true': check.checks[0].isVanilla }]">
-                                        <div v-for="subCheck in check.checks" :key="subCheck.id" class='tooltip-check-graphic align-middle' :class="[`difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}`, subCheck.isVanilla ? 'vanilla' : '']">
-                                            <div class='tooltip-check-graphic icon-wrapper' :class="[{ 'behind-keys': subCheck.behindKeys },
-                                                                                                     { 'requires-rupees': subCheck.requiredRupees },
-                                                                                                     { 'behind-tracker': subCheck.behindTrackerLogic },
-                                                                                                     { 'owl': subCheck.isOwl() }]">
-                                                <div v-if="subCheck.requiredRupees" class='behind-rupees-overlay'></div>
-                                                <div v-if="subCheck.behindKeys" class='behind-keys-overlay'></div>
-                                                <div v-if="subCheck.behindTrackerLogic" class='behind-tracker-overlay'></div>
-                                                <div v-if="subCheck.isOwl()" class='owl-overlay'></div>
-                                                <svg class='tooltip-check-graphic align-middle'>
-                                                    <use :xlink:href="`#difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}${subCheck.isVanilla ? '-vanilla' : ''}`"></use>
-                                                </svg>
-                                                <svg v-if="subCheck.hollow" class='tooltip-check-graphic hollow align-middle'>
-                                                    <use :xlink:href="`#difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}-hollow`"></use>
-                                                </svg>
-                                            </div>
-                                            <img v-if="subCheck.item" class="node-item-overlay" :data-node-item="subCheck.item" :src="`/images/${subCheck.item}_1.png`" onmousedown="preventDoubleClick(event)">
-                                        </div>
-                                        <div class='tooltip-text ps-2'>
-                                            <span class='tooltip-text-span'>
-                                                {{ check.checks[0].metadata.name }}
-                                                <img v-if="'image' in check.checks[0].metadata" class='helper' src='/images/light-question-circle.svg'>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </button>
-                            <div class="col-auto">
-                                <button type="button" class="btn btn-secondary p-1 logic-button" @click="openCheckLogicViewer(check.id)" @mouseenter="textTip.tooltip('View Logic', $event)">
-                                    <img class="invert" src="/images/diagram-2-fill.svg">
-                                </button>
-                            </div>
-                            <ItemDropdown :active="show" :check-id="check.id" />
+                            <CheckItem :unique-check="check" :show="show" />
                         </div>
                     </ul>
                 </div>
+                <EntranceChunk v-if="node.entrance" :node="node" :args="args" />
             </div>
         </template>
     </div>
 </template>
 
 <style scoped>
-.vueTooltip {
+.vue-tooltip {
     background-color: black;
     font-size: 14px;
     text-align: center;
