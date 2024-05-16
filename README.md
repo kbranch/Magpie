@@ -25,14 +25,14 @@ Several packages are available:
 
 ### From Source
 #### Downloading
-The easiest option is to download the [source bundle](https://magpietracker.us/static/builds/magpie-local-linux.zip).
+The easiest option is to download the [source bundle](https://magpietracker.us/static/builds/magpie-source.zip).
 
 If you're a developer or need a specific version of the source, the best option is Git. Make sure you include submodules when cloning: `git clone --recurse-submodules https://github.com/kbranch/Magpie.git`.
 
 If you're not familiar with Git, you can download Magpie as zip files:
  - Download the Magpie [zip file](https://github.com/kbranch/Magpie/archive/refs/heads/master.zip)
  - Download LADXR as a [separate zip](https://github.com/kbranch/LADXR/archive/refs/heads/master.zip)
-   - Note that it's hard to determine which branch of LADXR is required for any given version of Magpie. Use the [source bundle](https://magpietracker.us/static/builds/magpie-local-linux.zip) to avoid that issue.
+   - Note that it's hard to determine which branch of LADXR is required for any given version of Magpie. Use the [source bundle](https://magpietracker.us/static/builds/magpie-source.zip) to avoid that issue.
  - Extract both zip files to separate folders (e.g. `Magpie-master` and `LADXR-master`
  - Copy everything from inside the `LADXR-master` folder into `Magpie-master/LADXR`
 
