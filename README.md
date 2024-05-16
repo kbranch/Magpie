@@ -39,6 +39,7 @@ If you're not familiar with Git, you can download Magpie as zip files:
 #### Linux (and Mac?)
  - Run `setup.sh` to create a python virtual environment and install the required packages
  - Run `startLocal.sh` to start as a local application - a browser window should open, and the application will exit when it is closed
+   - If you're hosting your own instance without a WSGI server, just make sure `magpie.py` gets launched with the venv created above (e.g. `. .venv/bin/activate && python3 magpie.py`)
  
 #### Windows
  - Install [Python3](https://www.python.org/downloads/)
