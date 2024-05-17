@@ -27,4 +27,4 @@ cd ../linux
 zip -x \*__pycache__\* -r magpie-local-linux.zip magpie-data magpie.sh
 
 cd ../../
-zip -x static/images/temp/\* -x \*__pycache__\* -x \*.gbc -x \*.venv/\* -r dist/magpie-source.zip autotracking LADXR static templates *.*
+zip -x static/images/temp/\* -x \*__pycache__\* -x \*.gbc -x \*.venv/\* -r dist/magpie-source.zip autotracking LADXR static scripts templates *.*
