@@ -248,6 +248,12 @@ items = [
         Item('RED_TUNIC', 0xDB6D, mask=1 << 0),
         Item('BLUE_TUNIC', 0xDB6D, mask=1 << 1),
         Item('GREAT_FAIRY', 0xDDE1, mask=1 << 4),
+        Item('ANGLER_TUNNEL_OPENED', 0xD82B, mask=1 << 4),
+        Item('KEY_CAVERN_OPENED', 0xD8B5, mask=1 << 4),
+        Item('TAIL_CAVE_OPENED', 0xD8D3, mask=1 << 4),
+        Item('FACE_SHRINE_OPENED', 0xD88C, mask=1 << 4),
+        Item('EAGLE_TOWER_OPENED', 0xD80E, mask=1 << 4),
+        Item('CASTLE_GATE_OPENED', 0xD879, mask=1 << 4),
     ]
 
 # Checks
@@ -276,6 +282,12 @@ checkMaskOverrides = {
     '0x1F5': 0x06,
     '0x301-0': 0x10,
     '0x301-1': 0x10,
+    '0x0D3': 0x20,
+    '0x0B5': 0x20,
+    '0x2C3': 0x20,
+    '0x08C': 0x20,
+    '0x02B': 0x20,
+    '0x00E': 0x20,
 }
 
 checkAddressOverrides = {
