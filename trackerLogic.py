@@ -278,7 +278,7 @@ def buildLogic(args, worldSetup, requirements=None):
 
         requirements.names[req] = name
 
-    log = logic.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
+    log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
     for loc in log.location_list:
         for ii in [x for x in loc.items if len(x.OPTIONS) == 1]:

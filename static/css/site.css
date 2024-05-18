@@ -18,6 +18,10 @@ nowrap {
     z-index: 1;
 }
 
+.lowSecondary {
+    z-index: -1 !important;
+}
+
 .overlay {
     position: absolute;
     bottom: 0;

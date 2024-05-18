@@ -280,6 +280,12 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <input type="checkbox" id="arg-keyholesanity" class="form-check-input" data-flag="keyholesanity">
+                            <label for="arg-keyholesanity" class="form-label"><img class="settings-image" src="static/images/ANGLER_KEYHOLE_1.png">Keyhole sanity</label>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
 
@@ -289,7 +295,7 @@
                                  'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
                                  'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
                                  'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette', 'accessibility',
-                                 'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies'] %}
+                                 'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies', 'keyholesanity'] %}
 
             {% for arg in flags if  arg.name not in knownFlags %}
                 {% if 'Other' != ns.group %}

@@ -156,6 +156,11 @@ def renderItems():
 
         args = Args.parse(argsText)
         localSettings = LocalSettings.parse(settingsText)
+        defaultArgs = getArgs()
+
+        for arg, value in defaultArgs.__dict__.items():
+            if arg not in args.__dict__:
+                args.__dict__[arg] = value
 
         fixArgs(args)
 

@@ -1,5 +1,5 @@
 {% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', height='32px', top='', left='', overlay_count='', invert_count='',
-              allItems=None, hideIfZero=False, condition=True, gfx=True, highlightOwnedSecondary=False) %}
+              allItems=None, hideIfZero=False, condition=True, gfx=True, highlightOwnedSecondary=False, secondaryBelow=False) %}
 {% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
     {% set altNames = {
         'SONG1': 'Ballad of the Wind Fish',
@@ -88,10 +88,15 @@
         {% set outerStyle = outerStyle + 'top: ' + top + ';' %}
     {% endif %}
 
+    {% set secondaryClasses = '' %}
+    {% if secondaryBelow %}
+        {% set secondaryClasses = ' lowSecondary' %}
+    {% endif %}
+
     <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{highlightOwnedSecondary}}{{classes}}" style="{{outerStyle}}">
         <div class="itemWrapper" {{innerStyle|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="{{onmouseenter|safe}}" onmouseleave="itemMouseLeave(this)"  data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
         {% if secondary != '' and src == '' %}
-            <img data-item="{{secondary}}" class="itemImage secondary" src="static/images/{{secondary}}_0.png" draggable="false">
+            <img data-item="{{secondary}}" class="itemImage secondary{{secondaryClasses}}" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}
             <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{invert_count}} class="itemImage primary" src="static/images/{{primary}}_0.png" draggable="false">
         {% if overlay_count != '' %}
