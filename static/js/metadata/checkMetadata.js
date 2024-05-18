@@ -4847,6 +4847,90 @@ let vanillaCoordDict = {
           },
        ],
     },
+    "0x0D3":{
+       "id":"0x0D3",
+       "vanillaArea":"Toronbo Shores",
+       "vanillaName":"Tail Cave Keyhole",
+       "locations":[
+         {
+            "map": "vanillaOverworld",
+            "x": 582,
+            "y": 1770,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+       ],
+    },
+    "0x0B5":{
+       "id":"0x0B5",
+       "vanillaArea":"Ukuku Prairie",
+       "vanillaName":"Key Cavern Keyhole",
+       "locations":[
+         {
+            "map": "vanillaOverworld",
+            "x": 906,
+            "y": 1510,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+       ],
+    },
+    "0x2C3":{
+       "id":"0x2C3",
+       "vanillaArea":"Kanalet Castle",
+       "vanillaName":"Kanalet Gate Button",
+       "locations":[
+         {
+            "map": "vanillaOverworld",
+            "x": 1538,
+            "y": 828,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+         {
+            "map": "underworld",
+            "x": 1748,
+            "y": 876,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+       ],
+    },
+    "0x08C":{
+       "id":"0x08C",
+       "vanillaArea":"Southern Face Shrine",
+       "vanillaName":"Face Shrine Keyhole",
+       "locations":[
+         {
+            "map": "vanillaOverworld",
+            "x": 2056,
+            "y": 1072,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+       ],
+    },
+    "0x02B":{
+       "id":"0x02B",
+       "vanillaArea":"Tal Tal Heights",
+       "vanillaName":"Angler's Tunnel Keyhole",
+       "locations":[
+         {
+            "map": "vanillaOverworld",
+            "x": 1846,
+            "y": 340,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+       ],
+    },
+    "0x00E":{
+       "id":"0x00E",
+       "vanillaArea":"Tal Tal Mountains",
+       "vanillaName":"Eagle's Tower Keyhole",
+       "locations":[
+         {
+            "map": "vanillaOverworld",
+            "x": 2284,
+            "y": 64,
+            "condition": (flags, settings) => { return flags.keyholesanity; },
+         },
+       ],
+    },
 }
 
 let coordDict = vanillaCoordDict;
