@@ -9,7 +9,7 @@ const knownFlags = [
     'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
     'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
     'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette', 'accessibility',
-    'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies',
+    'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies', 'keyholesanity',
 ];
 
 function getUnknownArgs(argDescriptions) {
@@ -418,6 +418,13 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                                 'overworld': 'On the overworld',
                                 'both': 'Dungeons and overworld',
                             },
+                        }),
+                        new SettingsItem({
+                            title: 'Keyhole sanity',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'keyholesanity',
+                            icon: 'ANGLER_KEYHOLE_1.png',
                         }),
                     ]
                 }), // Args columns
