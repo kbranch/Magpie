@@ -8,7 +8,7 @@ The item, map and even flag layouts also include a text-based section for new it
 Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/QhAKagk84e) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
 
 Special thanks to:
- - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is essentially a port of, and for help with the design
+ - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this started out as a port of, and for help with the design
  - [Daid](https://github.com/daid) for creating [LADXR](https://daid.github.io/LADXR/) and keeping it open
  - [Artemis251](http://artemis251.fobby.net/zelda/index.php) for the great map resources and screenshots
 
