@@ -110,7 +110,7 @@ Setup is similar to the local version of Magpie:
  - Run [autotracker/start.sh](https://github.com/kbranch/Magpie/blob/master/autotracking/start.sh) to start the autotracker
 
 ### Emulator Compatibility
-Currently, [BGB](https://bgb.bircd.org/) and [RetroArch](https://www.retroarch.com/) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on.
+Currently, [BGB](https://bgb.bircd.org/), [RetroArch](https://www.retroarch.com/) and [Bizhawk](https://tasvideos.org/Bizhawk) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on (Archipelago has a [good guide](https://archipelago.gg/tutorial/Links%20Awakening%20DX/setup/en#retroarch-1.10.3-or-newer)). Bizhawk requires a [LUA script](https://magpietracker.us/static/bizhawk-ladxr.zip) (taken from [Archipelago](https://github.com/ArchipelagoMW/Archipelago)).
 
 The autotracker requires a copy of the ROM for some features to work. When it is not able to pull the ROM directly from the emulator, it will request a copy from the user in the main Magpie UI.
 
