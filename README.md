@@ -1,4 +1,6 @@
 # Magpie
+Primary hosting at [https://magpietracker.us/](https://magpietracker.us/)
+
 A web based tracker specifically built for [LADXR](https://github.com/daid/LADXR), a `Legend Of Zelda: Link's Awakening DX` randomizer.
 
 The differentiating feature of Magpie compared to something like [EmoTracker](https://emotracker.net/) is the fact that it does not attempt to reimplement the randomizer's logic. Instead, it embeds a copy of the randomizer and simply asks it which locations are in logic given a set of flags and items.
