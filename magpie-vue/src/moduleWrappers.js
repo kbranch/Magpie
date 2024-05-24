@@ -36,6 +36,9 @@ export let canBeStart = window.canBeStart;
 export let startGraphicalConnection = window.startGraphicalConnection;
 export let getInsideOutEntrance = window.getInsideOutEntrance;
 export let connectEntrances = window.connectEntrances;
+export let startIsSet = window.startIsSet;
+export let openDeadEndDialog = window.openDeadEndDialog;
+export let inOutEntrances = window.inOutEntrances;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

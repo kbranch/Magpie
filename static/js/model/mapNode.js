@@ -742,7 +742,23 @@ class MapNode {
             options = sortByKey(options, x => [x[1]]);
         }
 
-        return options.map(x => entranceDict[x[0]]);
+        return options?.map(x => entranceDict[x[0]]);
+    }
+
+    usesConnectorDialog() {
+        return coupledEntrances() && inOutEntrances()
+            && (this.entrance.type == "connector" || args.entranceshuffle == 'mixed');
+    }
+
+    usesAdvancedEr() {
+        return args.entranceshuffle != 'none'
+            && this.entrance.type != 'stairs'
+            && advancedER();
+    }
+
+    usesAdvancedErInOut() {
+        return this.usesAdvancedEr()
+            && inOutEntrances();
     }
 
     static nodeId(location, scaling) {

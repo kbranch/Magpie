@@ -501,6 +501,10 @@ function canBeStart(node) {
         && !Entrance.isMapped(startHouse)
 }
 
+function startIsSet() {
+    return Entrance.isMapped(startHouse);
+}
+
 function getInsideOutEntrance(id) {
     return Entrance.getInsideOut(id);
 }
