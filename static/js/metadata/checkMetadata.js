@@ -4856,9 +4856,9 @@ let vanillaCoordDict = {
             "map": "vanillaOverworld",
             "x": 582,
             "y": 1770,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
        ],
+      "condition": (flags, settings) => { return flags.keyholesanity; },
     },
     "0x0B5":{
        "id":"0x0B5",
@@ -4869,9 +4869,9 @@ let vanillaCoordDict = {
             "map": "vanillaOverworld",
             "x": 906,
             "y": 1510,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
        ],
+      "condition": (flags, settings) => { return flags.keyholesanity; },
     },
     "0x2C3":{
        "id":"0x2C3",
@@ -4882,15 +4882,14 @@ let vanillaCoordDict = {
             "map": "vanillaOverworld",
             "x": 1538,
             "y": 828,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
          {
             "map": "underworld",
             "x": 1748,
             "y": 876,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
        ],
+      "condition": (flags, settings) => { return flags.keyholesanity; },
     },
     "0x08C":{
        "id":"0x08C",
@@ -4901,9 +4900,9 @@ let vanillaCoordDict = {
             "map": "vanillaOverworld",
             "x": 2056,
             "y": 1072,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
        ],
+      "condition": (flags, settings) => { return flags.keyholesanity; },
     },
     "0x02B":{
        "id":"0x02B",
@@ -4914,9 +4913,9 @@ let vanillaCoordDict = {
             "map": "vanillaOverworld",
             "x": 1846,
             "y": 340,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
        ],
+      "condition": (flags, settings) => { return flags.keyholesanity; },
     },
     "0x00E":{
        "id":"0x00E",
@@ -4927,9 +4926,9 @@ let vanillaCoordDict = {
             "map": "vanillaOverworld",
             "x": 2284,
             "y": 64,
-            "condition": (flags, settings) => { return flags.keyholesanity; },
          },
        ],
+      "condition": (flags, settings) => { return flags.keyholesanity; },
     },
 }
 
