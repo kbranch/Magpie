@@ -235,7 +235,7 @@ def loadEntrances(logic, inventory):
 
     entrances = {}
     for name,exterior in logic.world.entrances.items():
-        if not testEntrance(exterior, inventory):
+        if not testEntrance(exterior, e._Explorer__inventory):
             continue
 
         if exterior.location not in entrances:
