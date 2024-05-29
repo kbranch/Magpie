@@ -233,9 +233,16 @@ def loadEntrances(logic, inventory):
 
     e = visitLogic(logic, inventory)
 
+    for item, count in e._Explorer__inventory.items():
+        if item.endswith('_OPENED_USED'):
+            item = item[:len('_USED') * -1]
+
+        if item not in inventory and not item.endswith('_USED'):
+            inventory[item] = count
+
     entrances = {}
     for name,exterior in logic.world.entrances.items():
-        if not testEntrance(exterior, e._Explorer__inventory):
+        if not testEntrance(exterior, inventory):
             continue
 
         if exterior.location not in entrances:
