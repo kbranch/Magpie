@@ -355,6 +355,9 @@ function processMessage(messageText) {
             case 'alert':
                 alertModal(message.title, message.body);
                 break;
+            case 'slot_data':
+                alertModal('slot_data message received', JSON.stringify(message.slot_data, null, 2));
+                break;
             case 'error':
                 let errorObject = {
                     message: message.message,
