@@ -4737,6 +4737,7 @@ let vanillaCoordDict = {
           }
        ],
        "index":254,
+       "linkedItem": "TRADING_ITEM_MAGNIFYING_GLASS_CHECKED",
     },
     "0x025":{
        "id":"0x025",
