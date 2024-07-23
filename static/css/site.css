@@ -1311,3 +1311,11 @@ span.logic-name {
 .dungeon-parent {
     position: relative;
 }
+
+.logic-stats, .logic-name {
+    white-space: nowrap;
+}
+
+.logic-stats {
+    padding-right: 1rem;
+}
