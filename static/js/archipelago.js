@@ -407,6 +407,7 @@ function connected(packet) {
     console.log("Connected to AP server: ", packet);
 
     try {
+        parseSlotData(packet.slot_data)
         parseCheckedChecks(packet.checked_locations, false);
     }
     catch(err) {
@@ -449,6 +450,15 @@ function receivedItems(packet) {
     catch(err) {
         console.log(`Error processing AP items: ${err}`);
     }
+}
+
+function parseSlotData(slotData) {
+    let message = {
+        type: "slot_data",
+        slot_data: slotData,
+    };
+
+    processMessage(JSON.stringify(message));
 }
 
 function roomUpdate(packet) {
