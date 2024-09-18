@@ -169,6 +169,116 @@ function processLocationMessage(message) {
     drawLocation();
 }
 
+function processSlotDataMessage(message) {
+    let slotData = message.slot_data;
+    const flagLookup = {
+        'logic': 'logic',
+        'goal': 'goal',
+        'instrument_count': 'goal',
+        'shuffle_nightmare_keys': 'shuffle_nightmare',
+        'shuffle_small_keys': 'shuffle_small',
+        'shuffle_maps': 'shuffle_maps',
+        'shuffle_compasses': 'shuffle_compasses',
+        'shuffle_stone_beaks': 'shuffle_beaks',
+        'shuffle_instruments': 'instruments',
+        'tradequest': 'tradequest',
+        'rooster': 'rooster',
+        'experimental_dungeon_shuffle': 'dungeonshuffle',
+        'experimental_entrance_shuffle': 'entranceshuffle',
+    };
+    const valueLookup = {
+        'logic': {
+            'normal': '',
+        },
+        'goal': {
+            'instruments': null,
+        },
+        'instrument_count': {
+            'random': 8,
+            'random-low': 4,
+            'random-high': 8,
+        },
+        'shuffle_nightmare_keys': {
+            'original_dungeon': false,
+            'own_dungeons': true,
+            'own_world': true,
+            'any_world': true,
+            'different_world': true,
+        },
+        'shuffle_small_keys': {
+            'original_dungeon': false,
+            'own_dungeons': true,
+            'own_world': true,
+            'any_world': true,
+            'different_world': true,
+        },
+        'shuffle_maps': {
+            'original_dungeon': false,
+            'own_dungeons': true,
+            'own_world': true,
+            'any_world': true,
+            'different_world': true,
+        },
+        'shuffle_compasses': {
+            'original_dungeon': false,
+            'own_dungeons': true,
+            'own_world': true,
+            'any_world': true,
+            'different_world': true,
+        },
+        'shuffle_stone_beaks': {
+            'original_dungeon': false,
+            'own_dungeons': true,
+            'own_world': true,
+            'any_world': true,
+            'different_world': true,
+        },
+        'shuffle_instruments': {
+            'vanilla': false,
+            'original_dungeon': true,
+            'own_dungeons': true,
+            'own_world': true,
+            'any_world': true,
+            'different_world': true,
+        },
+    };
+
+    for (const flag in slotData) {
+        if (!(flag in flagLookup)) {
+            continue;
+        }
+
+        let value = slotData[flag];
+
+        if (flag in valueLookup && value in valueLookup[flag]) {
+            value = valueLookup[flag][value]
+        }
+
+        if (value === 'true') {
+            value = true;
+        }
+        else if (value === 'false') {
+            value = false;
+        }
+
+        if (value === null) {
+            continue;
+        }
+
+        args[flagLookup[flag]] = value;
+    }
+
+    args['dungeon_items'] = 'custom';
+
+    if (slotData.gfxmod) {
+        localSettings.graphicsPack = slotData.gfxmod
+    }
+
+    setInputValues('flag', args);
+    setInputValues('setting', localSettings);
+    saveSettings();
+}
+
 function processHandshAckMessage(message) {
     const breakingVersions = [
         ["Unknown", "1.3"],
@@ -356,7 +466,12 @@ function processMessage(messageText) {
                 alertModal(message.title, message.body);
                 break;
             case 'slot_data':
-                alertModal('slot_data message received', JSON.stringify(message.slot_data, null, 2));
+                if (autotrackerFeatures.includes('settings')) {
+                    processSlotDataMessage(message);
+                }
+                else {
+                    console.log("Settings feature disabled, ignoring")
+                }
                 break;
             case 'error':
                 let errorObject = {

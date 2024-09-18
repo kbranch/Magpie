@@ -261,7 +261,7 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
         return;
     }
 
-    if (typeof randomizedEntrances == 'undefined') {
+    if (typeof randomizedEntrances == 'undefined' || randomizedEntrances === null) {
         return;
     }
 
