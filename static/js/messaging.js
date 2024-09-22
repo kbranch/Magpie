@@ -185,6 +185,7 @@ function processSlotDataMessage(message) {
         'rooster': 'rooster',
         'experimental_dungeon_shuffle': 'dungeonshuffle',
         'experimental_entrance_shuffle': 'entranceshuffle',
+        'hard_mode': 'hardmode',
     };
     const valueLookup = {
         'logic': {
