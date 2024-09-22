@@ -38,6 +38,10 @@ function setInputValues(dataAttrName, values) {
             }
         }
     }
+
+    if (dataAttrName == 'flag') {
+        setApVisibility(values.ap_logic);
+    }
 }
 
 function saveQuickSettings() {

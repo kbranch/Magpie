@@ -75,6 +75,8 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     tryCopyValue(values, args, 'shuffle_maps')
     tryCopyValue(values, args, 'shuffle_beaks')
     tryCopyValue(values, args, 'shuffle_compasses')
+    tryCopyValue(values, args, 'openmabe')
+    tryCopyValue(values, args, 'prerelease')
 
     if args.dungeon_items == 'custom':
         args.dungeon_items = 'keysanity'

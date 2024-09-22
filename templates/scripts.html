@@ -350,6 +350,10 @@
         window.open("/mapBroadcast", "_blank", "width=800, height=700");
     }
 
+    function setApVisibility(apMode) {
+        document.getElementById('apSettings').style.visibility = apMode ? 'visible' : 'hidden';
+    }
+
     function init() {
         if (!players) {
             players = [''];

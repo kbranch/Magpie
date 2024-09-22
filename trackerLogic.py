@@ -128,6 +128,10 @@ outside_armos_cave = 'Outside Armos Maze Cave'
 outside_armos_temple = 'Outside Southern Shrine'
 d8_entrance_left = 'D8 After Hinox'
 d8_vire_drop_key = '0x24C'
+d0_stone_beak = '0x311'
+d0_lower_small_key = '0x314'
+d0_bullshit_room = '0x307'
+d0_zol_chest = '0x306'
 
 def updateVanilla(args):
     global vanillaIds
@@ -286,12 +290,16 @@ def buildLogic(args, worldSetup, requirements=None):
         # for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:
         #     ii.item = vanillaContents[ii.nameId]
 
-    if args.ap_logic:
-        locs = {}
+    locs = {}
 
-        for loc in log.location_list:
-            locs[loc.friendlyName()] = loc
+    for loc in log.location_list:
+        locs[loc.friendlyName()] = loc
 
+    # AP patch to turn the Mabe quarantine rocks into bushes
+    if args.openmabe:
+        locs[ukuku].connect(locs[mabe], log.requirements_settings.bush)
+
+    if args.ap_logic and not args.prerelease:
         # Always allow bow for killing wizrobes
         log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
 
@@ -328,5 +336,12 @@ def buildLogic(args, worldSetup, requirements=None):
             roosterLocs = [x[0] for x in entrance.location.simple_connections if x[1] == 'ROOSTER']
             if roosterLocs:
                 roosterLocs[0].connect(entrance.location, AND(FEATHER, PEGASUS_BOOTS))
+        
+        # Remove the bracelet requirement for the color ball dudes
+        if d0_stone_beak in locs:
+            locs[d0_stone_beak].connect(locs[d0_lower_small_key], log.requirements_settings.attack_hookshot)
+
+        if d0_bullshit_room in locs:
+            locs[d0_bullshit_room].connect(locs[d0_zol_chest], log.requirements_settings.attack_hookshot)
     
     return log
