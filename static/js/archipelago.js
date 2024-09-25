@@ -4,6 +4,7 @@ import {
     Client,
     ITEMS_HANDLING_FLAGS,
     SERVER_PACKET_TYPE,
+    CLIENT_PACKET_TYPE,
 } from "/static/lib/archipelago.js/archipelago-1.0.js";
 
 var itemMap = {
@@ -403,6 +404,15 @@ var checkMap = {
 
 const client = new Client();
 
+function sync() {
+    const syncPacket = {
+        cmd: CLIENT_PACKET_TYPE.SYNC,
+    };
+
+    client.send(syncPacket);
+}
+
+
 function connected(packet) {
     console.log("Connected to AP server: ", packet);
 
@@ -455,6 +465,7 @@ function receivedItems(packet) {
 function parseSlotData(slotData) {
     let message = {
         type: "slot_data",
+        source: "archipelago",
         slot_data: slotData,
     };
 
@@ -535,3 +546,5 @@ function archipelagoDisconnect() {
 
 window.archipelagoConnect = archipelagoConnect;
 window.archipelagoDisconnect = archipelagoDisconnect;
+window.archipelagoClient = client;
+window.archipelagoSync = sync;
