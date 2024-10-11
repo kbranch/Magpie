@@ -10,6 +10,9 @@ const props = defineProps({
     checks: {
         required: true,
     },
+    totalCheckCount: {
+        required: true,
+    },
     misc: {
         required: true,
     },
@@ -48,7 +51,9 @@ function applyMasonry() {
             <div :class="`tooltip-check-graphic difficulty-${lowerDiff}`">
                 <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-${lowerDiff}`"></use></svg>
             </div>
-            <span class="ps-2">{{logic.friendlyName}}</span>
+            <span class="ps-2 logic-name">{{logic.friendlyName}}</span>
+            <div style="width: 100%"></div>
+            <span class="ps-2 logic-stats">{{ checks.length }} ({{ (checks.length / totalCheckCount * 100).toFixed(1) }}%)</span>
         </button>
     </h2>
 
@@ -63,3 +68,13 @@ function applyMasonry() {
     </div>
 </div>
 </template>
+
+<style scoped>
+.logic-stats, .logic-name {
+    white-space: nowrap;
+}
+
+.logic-stats {
+    padding-right: 1rem;
+}
+</style>

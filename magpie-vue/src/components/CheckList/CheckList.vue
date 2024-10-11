@@ -55,7 +55,7 @@ function getChecks(difficulty) {
         { difficulty: 9, friendlyName: 'Out of logic' },
         { difficulty: 'Checked', friendlyName: 'Checked' }
     ]"
-        :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" :misc="misc" />
+        :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" :total-check-count="totalChecks" :misc="misc" />
 </div>
 
 <p>Total checks: {{ totalChecks }}</p>

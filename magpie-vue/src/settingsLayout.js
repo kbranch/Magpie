@@ -117,7 +117,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                                     }
                                 }),
                                 new SettingsItem({
-                                    title: 'Archipelago logic mode',
+                                    title: 'Archipelago mode',
                                     type: types.checkbox,
                                     settingBase: 'args',
                                     settingName: 'ap_logic',
@@ -314,6 +314,32 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                                 'bingo-full': 'Bingo-25!',
                             },
                         }),
+                        new SettingsItem({
+                            title: 'Item pool',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'itempool',
+                            icon: 'pool.png',
+                            options: {
+                                '': 'Normal',
+                                'casual': 'Casual',
+                                'pain': 'Path of Pain',
+                                'keyup': 'More keys',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Hard mode',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'hardmode',
+                            icon: 'dead-link.png',
+                            options: {
+                                'none': 'Normal',
+                                'oracle': 'Oracle',
+                                'hero': 'Hero',
+                                'ohko': 'One hit KO',
+                            },
+                        }),
                     ]
                 }),
                 new SettingsItem({
@@ -425,6 +451,22 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                             settingBase: 'args',
                             settingName: 'keyholesanity',
                             icon: 'ANGLER_KEYHOLE_1.png',
+                        }),
+                        new SettingsItem({
+                            title: 'Open mabe',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'openmabe',
+                            icon: 'rock.png',
+                            visibleCondition: () => { return args.ap_logic },
+                        }),
+                        new SettingsItem({
+                            title: 'Prerelease version',
+                            type: types.checkbox,
+                            settingBase: 'args',
+                            settingName: 'prerelease',
+                            icon: 'archipelago.png',
+                            visibleCondition: () => { return args.ap_logic },
                         }),
                     ]
                 }), // Args columns

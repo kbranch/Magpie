@@ -47,7 +47,7 @@ function setInputValues(dataAttrName, values) {
         }
     }
 
-    if (dataAttrName == 'flag') {
+    if (!isVue && dataAttrName == 'flag') {
         setApVisibility(values.ap_logic);
     }
 }
