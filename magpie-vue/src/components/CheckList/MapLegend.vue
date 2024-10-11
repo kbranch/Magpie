@@ -34,7 +34,7 @@ defineProps(['logics']);
                 <svg class="icon static-difficulty hollow">
                     <use xlink:href="#difficulty-0-hollow"></use>
                 </svg>
-                <div class="behind-rupees-overlay"></div>
+                <div class="behind-keys-overlay"></div>
             </div>: Needs keys
         </div>
         <div class="col-auto px-2">
