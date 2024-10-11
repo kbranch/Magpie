@@ -793,6 +793,32 @@ let alttpCoordDict = {
           }
        ],
     },
+    "0x2E9-0":{
+       "id":"0x2E9-0",
+       "area":"Graveyard",
+       "name":"Seashell Mansion 5 Bonus",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":1190,
+             "y":590,
+          },
+       ],
+       "condition": (flags, settings) => { return !flags.ap_logic; },
+    },
+    "0x2E9-1":{
+       "id":"0x2E9-1",
+       "area":"Graveyard",
+       "name":"Seashell Mansion 10 Bonus",
+       "locations":[
+          {
+             "map":"overworld",
+             "x":1190,
+             "y":590,
+          },
+       ],
+       "condition": (flags, settings) => { return !flags.ap_logic; },
+    },
     "0x0A4":{
        "id":"0x0A4",
        "area":"Ukuku Prairie",

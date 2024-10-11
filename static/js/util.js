@@ -259,6 +259,7 @@ function applySettings(oldArgs=null) {
     }
     if (localSettings.autotrackSettings) {
         autotrackerFeatures.push('settings');
+        autotrackerFeatures.push('slot_data');
     }
     if (localSettings.gps) {
         autotrackerFeatures.push('gps');

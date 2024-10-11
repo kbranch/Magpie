@@ -54,8 +54,8 @@
                     </div>
                     <div class="row pb-3">
                         <div class="col">
-                            <input type="checkbox" id="arg-ap_logic" class="form-check-input" data-flag="ap_logic">
-                            <label class="form-check-label" for="arg-ap_logic"><img class="settings-image" src="static/images/archipelago.png">Archipelago logic mode</label>
+                            <input type="checkbox" id="arg-ap_logic" class="form-check-input" data-flag="ap_logic" onchange="setApVisibility(this.checked)">
+                            <label class="form-check-label" for="arg-ap_logic"><img class="settings-image" src="static/images/archipelago.png">Archipelago mode</label>
                         </div>
                     </div>
                 </fieldset>
@@ -194,6 +194,28 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-itempool" class="form-label"><img class="settings-image" src="static/images/pool.png">Item pool</label>
+                            <select id="arg-itempool" class="form-select" data-flag="itempool" aria-label="itempool">
+                                <option value="">Normal</option>
+                                <option value="casual">Casual</option>
+                                <option value="pain">Path of Pain</option>
+                                <option value="keyup">More keys</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col">
+                            <label for="arg-hardmode" class="form-label"><img class="settings-image" src="static/images/dead-link.png">Hard mode</label>
+                            <select id="arg-hardmode" class="form-select" data-flag="hardmode" aria-label="hardmode">
+                                <option value="none">Normal</option>
+                                <option value="oracle">Oracle</option>
+                                <option value="hero">Hero</option>
+                                <option value="ohko">One hit KO</option>
+                            </select>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
             <div class="col-auto">
@@ -284,6 +306,20 @@
                         <div class="col">
                             <input type="checkbox" id="arg-keyholesanity" class="form-check-input" data-flag="keyholesanity">
                             <label for="arg-keyholesanity" class="form-label"><img class="settings-image" src="static/images/ANGLER_KEYHOLE_1.png">Keyhole sanity</label>
+                        </div>
+                    </div>
+                    <div id="apSettings" style="visibility: 'hidden'">
+                        <div class="row pb-3">
+                            <div class="col">
+                                <input type="checkbox" id="arg-openmabe" class="form-check-input" data-flag="openmabe">
+                                <label for="arg-openmabe" class="form-label"><img class="settings-image" src="static/images/rock.png">Open Mabe</label>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col">
+                                <input type="checkbox" id="arg-prerelease" class="form-check-input" data-flag="prerelease">
+                                <label for="arg-prerelease" class="form-label"><img class="settings-image" src="static/images/archipelago.png">Prerelease Version</label>
+                            </div>
                         </div>
                     </div>
                 </fieldset>

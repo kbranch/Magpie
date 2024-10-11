@@ -1,4 +1,6 @@
 # Magpie
+Primary hosting at [https://magpietracker.us/](https://magpietracker.us/)
+
 A web based tracker specifically built for [LADXR](https://github.com/daid/LADXR), a `Legend Of Zelda: Link's Awakening DX` randomizer.
 
 The differentiating feature of Magpie compared to something like [EmoTracker](https://emotracker.net/) is the fact that it does not attempt to reimplement the randomizer's logic. Instead, it embeds a copy of the randomizer and simply asks it which locations are in logic given a set of flags and items.
@@ -8,7 +10,7 @@ The item, map and even flag layouts also include a text-based section for new it
 Visit us on the [Zelda 4 Randomizer Discord server](https://discord.gg/QhAKagk84e) - tracker discussion happens in the #tracker-general channel. Suggestions and bug reports are very welcome.
 
 Special thanks to:
- - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this is essentially a port of, and for help with the design
+ - [MuffinJets](https://twitter.com/muffinjets_) for his [EmoTracker pack](https://github.com/muffinjets/ladx_maptracker_muffinjets_wolfman2000), which this started out as a port of, and for help with the design
  - [Daid](https://github.com/daid) for creating [LADXR](https://daid.github.io/LADXR/) and keeping it open
  - [Artemis251](http://artemis251.fobby.net/zelda/index.php) for the great map resources and screenshots
 
@@ -110,7 +112,7 @@ Setup is similar to the local version of Magpie:
  - Run [autotracker/start.sh](https://github.com/kbranch/Magpie/blob/master/autotracking/start.sh) to start the autotracker
 
 ### Emulator Compatibility
-Currently, [BGB](https://bgb.bircd.org/) and [RetroArch](https://www.retroarch.com/) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on.
+Currently, [BGB](https://bgb.bircd.org/), [RetroArch](https://www.retroarch.com/) and [Bizhawk](https://tasvideos.org/Bizhawk) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on (Archipelago has a [good guide](https://archipelago.gg/tutorial/Links%20Awakening%20DX/setup/en#retroarch-1.10.3-or-newer)). Bizhawk requires a [LUA script](https://magpietracker.us/static/bizhawk-ladxr.zip) (taken from [Archipelago](https://github.com/ArchipelagoMW/Archipelago)).
 
 The autotracker requires a copy of the ROM for some features to work. When it is not able to pull the ROM directly from the emulator, it will request a copy from the user in the main Magpie UI.
 

@@ -75,6 +75,8 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     tryCopyValue(values, args, 'shuffle_maps')
     tryCopyValue(values, args, 'shuffle_beaks')
     tryCopyValue(values, args, 'shuffle_compasses')
+    tryCopyValue(values, args, 'openmabe')
+    tryCopyValue(values, args, 'prerelease')
 
     if args.dungeon_items == 'custom':
         args.dungeon_items = 'keysanity'
@@ -232,6 +234,13 @@ def loadEntrances(logic, inventory):
     inLogicEntrances = []
 
     e = visitLogic(logic, inventory)
+
+    for item, count in e._Explorer__inventory.items():
+        if item.endswith('_OPENED_USED'):
+            item = item[:len('_USED') * -1]
+
+        if item not in inventory and not item.endswith('_USED'):
+            inventory[item] = count
 
     entrances = {}
     for name,exterior in logic.world.entrances.items():

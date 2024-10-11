@@ -174,6 +174,12 @@ function refreshTextChecks() {
         let accordion = document.getElementById(`difficulty${difficulty == 'checked' ? 'Checked' : difficulty}Accordion`);
         setElementHidden(accordion, logicChecks.length == 0);
 
+        let statsSpan = accordion.querySelector('span.logic-stats')
+
+        let checkCount = new Set(checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem).map(x => x.id)).size;
+        let logicCount = logicChecks.length;
+        statsSpan.innerHTML = `${logicCount} (${(logicCount / checkCount * 100).toFixed(1)}%)`;
+
         for (const check of logicChecks) {
             let checkArea = coordDict[check.id].area;
             if (checkArea != lastArea) {
