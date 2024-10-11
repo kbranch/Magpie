@@ -26,6 +26,9 @@ Several packages are available:
   - [Linux](https://magpietracker.us/static/builds/magpie-autotracker-linux)
 
 ### From Source
+
+Note that due to a dependency that hasn't been updated, **Python 3.12 is not currently supported**. Python 3.10 is known to work, and Python 3.11 may or may not work.
+
 #### Downloading
 The easiest option is to download the [source bundle](https://magpietracker.us/static/builds/magpie-source.zip).
 
