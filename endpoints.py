@@ -50,7 +50,8 @@ try:
                       tryGetValue(app.config, 'SHARING_PORT'),
                       tryGetValue(app.config, 'SHARING_DB'),
                       tryGetValue(app.config, 'SHARING_USERNAME'),
-                      tryGetValue(app.config, 'SHARING_PASSWORD'))
+                      tryGetValue(app.config, 'SHARING_PASSWORD'),
+                      tryGetValue(app.config, 'SHARING_DBTYPE'))
 
     sharingEnabled = True
 except:
