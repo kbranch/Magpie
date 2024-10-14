@@ -7,7 +7,7 @@ mysql-connector-python
 pillow
 
 # Does not work with Python 3.12
-# Install these for NDI support
-# opencv-python
-# ndi-python
-# numpy==1.25.2
+# Required for NDI support
+opencv-python
+ndi-python
+numpy==1.25.2
