@@ -1,8 +1,10 @@
+import sys
 import gzip
 import json
 import queue
 import base64
 import socket
+import logging
 import platform
 import requests
 import traceback
@@ -23,6 +25,16 @@ try:
     import newrelic.agent
 except:
     pass
+
+logging.basicConfig(
+    filename="magpie.log",
+    filemode="w",
+    format="%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s",
+    datefmt="%H:%M:%S",
+    level=logging.DEBUG,
+)
+
+logging.getLogger().addHandler(logging.StreamHandler(sys.stdout))
 
 def tryGetValue(dict, key):
     if not key in dict:
@@ -54,8 +66,10 @@ try:
                       tryGetValue(app.config, 'SHARING_DBTYPE'))
 
     sharingEnabled = True
+    logging.info("Sharing enabled")
 except:
     sharingEnabled = False
+    logging.info(f"Sharing disabled: {traceback.format_exc()}")
 
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"

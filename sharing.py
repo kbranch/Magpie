@@ -1,5 +1,7 @@
 import time
+import logging
 import datetime
+import traceback
 import threading
 
 postgresInstalled = False
@@ -8,14 +10,16 @@ mysqlInstalled = False
 try:
     import psycopg2
     postgresInstalled = True
+    logging.info('Postgres support enabled')
 except:
-    pass
+    logging.info(f'Postgres support disabled: {traceback.format_exc()}')
 
 try:
     import mysql.connector
     mysqlInstalled = True
+    logging.info('Mysql support enabled')
 except:
-    pass
+    logging.info(f'Mysql support disabled: {traceback.format_exc()}')
 
 server = None
 port = None
