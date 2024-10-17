@@ -1,34 +1,72 @@
 import time
+import logging
 import datetime
-import psycopg2
+import traceback
 import threading
+
+postgresInstalled = False
+mysqlInstalled = False
+
+try:
+    import psycopg2
+    postgresInstalled = True
+    logging.info('Postgres support enabled')
+except:
+    logging.info(f'Postgres support disabled: {traceback.format_exc()}')
+
+try:
+    import mysql.connector
+    mysqlInstalled = True
+    logging.info('Mysql support enabled')
+except:
+    logging.info(f'Mysql support disabled: {traceback.format_exc()}')
 
 server = None
 port = None
 db = None
 username = None
 password = None
+dbType = None
 
 writeLock = threading.Lock()
 
-def setDbInfo(newServer, newPort, newDb, newUsername, newPassword):
-    global server, port, db, username, password
+def setDbInfo(newServer, newPort, newDb, newUsername, newPassword, newDbType):
+    global server, port, db, username, password, dbType
+
+    if ((newDbType == 'mysql' and not mysqlInstalled)
+        or (newDbType == 'postgres' and not postgresInstalled)
+        or newDbType not in ('mysql', 'postgres')):
+        return
 
     server = newServer
     port = newPort
     db = newDb
     username = newUsername
     password = newPassword
+    dbType = newDbType
 
 def dbConfigured():
     return bool(server)
 
 def getDbConnection():
-    return psycopg2.connect(database=db,
+    if dbType == 'mysql':
+        return mysql.connector.connect(database=db,
+                                host=server,
+                                user=username,
+                                password=password,
+                                port=port)
+    elif dbType == 'postgres':
+        return psycopg2.connect(database=db,
                             host=server,
                             user=username,
                             password=password,
                             port=port)
+
+def getCursor(conn):
+    if dbType == 'mysql':
+        return conn.cursor(buffered=True)
+    else:
+        return conn.cursor()
     
 def writeState(player, playerId, event, state):
     if not dbConfigured():
@@ -50,7 +88,12 @@ def writeState(player, playerId, event, state):
     insertQuery = """
         insert into sharing (player_name, player_id, event_name, state, timestamp, player_no)
         values (%(player)s, %(id)s, %(event)s, %(state)s, %(timestamp)s, %(playerNo)s);
-
+    """
+    updateQuery = """
+        update events
+        set last_activity = current_timestamp()
+        where events.name = %(event)s;
+    """ if dbType == 'mysql' else """
         update events
         set last_activity = current_timestamp
         where events.name = %(event)s;
@@ -58,7 +101,7 @@ def writeState(player, playerId, event, state):
 
     with writeLock:
         conn = getDbConnection()
-        cursor = conn.cursor()
+        cursor = getCursor(conn)
 
         playerNo = None
         cursor.execute(playerNoQuery, { 'player': player })
@@ -66,6 +109,9 @@ def writeState(player, playerId, event, state):
 
         if result:
             playerNo = result[0]
+        
+        cursor.close()
+        cursor = conn.cursor()
 
         # cursor.execute(deleteQuery, { 'player': player })
 
@@ -78,9 +124,16 @@ def writeState(player, playerId, event, state):
             'playerNo': playerNo,
         })
 
-        conn.commit()
+        cursor.close()
+        cursor = conn.cursor()
+
+        cursor.execute(updateQuery, {
+            'event': event,
+        })
 
         cursor.close()
+
+        conn.commit()
         conn.close()
 
     return timestamp
@@ -95,13 +148,22 @@ def getState(player, timestamp, delaySeconds=0):
         from sharing
         where sharing.player_name = %(player)s
               and sharing.timestamp > %(timestamp)s
+              and (%(delaySeconds)s = 0 or sharing.creation_time <= date_add(current_timestamp(), interval (-1 * %(delaySeconds)s) second))
+	    order by sharing.timestamp desc
+		limit 1
+    """ if dbType == 'mysql' else """
+        select sharing.state
+              ,sharing.timestamp
+        from sharing
+        where sharing.player_name = %(player)s
+              and sharing.timestamp > %(timestamp)s
               and (%(delaySeconds)s = 0 or sharing.creation_time <= (current_timestamp - interval '1 second' * %(delaySeconds)s))
 	    order by sharing.timestamp desc
 		limit 1
     """
 
     conn = getDbConnection()
-    cursor = conn.cursor()
+    cursor = getCursor(conn)
 
     cursor.execute(query, {
         'player': player,
@@ -129,7 +191,7 @@ def getPlayerId(player):
     """
 
     conn = getDbConnection()
-    cursor = conn.cursor()
+    cursor = getCursor(conn)
 
     cursor.execute(query, {
         'player': player,
@@ -181,6 +243,9 @@ def getEventPlayers(event):
         })
 
         result = cursor.fetchall()
+        
+        cursor.close()
+        cursor = conn.cursor()
 
         cursor.execute(purgeQuery, {
             'threshold': threshold
@@ -194,6 +259,9 @@ def getEventPlayers(event):
 
         for player in unNumberedPlayers:
             player['number'] = maxNumber + 1
+        
+            cursor.close()
+            cursor = conn.cursor()
 
             cursor.execute(updateQuery, {
                 'playerName': player['player'],
@@ -226,7 +294,7 @@ def eventExists(eventName):
     """
     
     conn = getDbConnection()
-    cursor = conn.cursor()
+    cursor = getCursor(conn)
 
     cursor.execute(eventQuery, { 'eventName': eventName })
     result = cursor.fetchone()
@@ -259,7 +327,7 @@ def eventInfo(eventName):
     """
     
     conn = getDbConnection()
-    cursor = conn.cursor()
+    cursor = getCursor(conn)
 
     cursor.execute(eventQuery, { 'eventName': eventName })
     result = cursor.fetchone()
@@ -285,7 +353,7 @@ def authenticateEvent(eventName, code):
     """
     
     conn = getDbConnection()
-    cursor = conn.cursor()
+    cursor = getCursor(conn)
 
     cursor.execute(eventQuery, { 'eventName': eventName })
     result = cursor.fetchone()
