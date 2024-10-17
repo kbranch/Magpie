@@ -61,6 +61,12 @@ def getDbConnection():
                             user=username,
                             password=password,
                             port=port)
+
+def getCursor(conn):
+    if dbType == 'mysql':
+        return conn.cursor(buffered=True)
+    else:
+        return conn.cursor()
     
 def writeState(player, playerId, event, state):
     if not dbConfigured():
@@ -95,7 +101,7 @@ def writeState(player, playerId, event, state):
 
     with writeLock:
         conn = getDbConnection()
-        cursor = conn.cursor(buffered=True)
+        cursor = getCursor(conn)
 
         playerNo = None
         cursor.execute(playerNoQuery, { 'player': player })
@@ -157,7 +163,7 @@ def getState(player, timestamp, delaySeconds=0):
     """
 
     conn = getDbConnection()
-    cursor = conn.cursor(buffered=True)
+    cursor = getCursor(conn)
 
     cursor.execute(query, {
         'player': player,
@@ -185,7 +191,7 @@ def getPlayerId(player):
     """
 
     conn = getDbConnection()
-    cursor = conn.cursor(buffered=True)
+    cursor = getCursor(conn)
 
     cursor.execute(query, {
         'player': player,
@@ -288,7 +294,7 @@ def eventExists(eventName):
     """
     
     conn = getDbConnection()
-    cursor = conn.cursor(buffered=True)
+    cursor = getCursor(conn)
 
     cursor.execute(eventQuery, { 'eventName': eventName })
     result = cursor.fetchone()
@@ -321,7 +327,7 @@ def eventInfo(eventName):
     """
     
     conn = getDbConnection()
-    cursor = conn.cursor(buffered=True)
+    cursor = getCursor(conn)
 
     cursor.execute(eventQuery, { 'eventName': eventName })
     result = cursor.fetchone()
@@ -347,7 +353,7 @@ def authenticateEvent(eventName, code):
     """
     
     conn = getDbConnection()
-    cursor = conn.cursor(buffered=True)
+    cursor = getCursor(conn)
 
     cursor.execute(eventQuery, { 'eventName': eventName })
     result = cursor.fetchone()
