@@ -570,9 +570,12 @@ if sharingEnabled:
         if 'playerName' not in request.form:
             return "playerName is required", 400
 
-        id = sharing.getPlayerId(request.form['playerName'])
+        try:
+            id = sharing.getPlayerId(request.form['playerName'])
 
-        return str(id)
+            return str(id)
+        except:
+            return json.dumps({'error': f'{traceback.format_exc()}'})
 
     @app.route("/canJoinEvent", methods=['GET'])
     def canJoinEvent():
@@ -602,9 +605,12 @@ if sharingEnabled:
         if not eventName:
             return "eventName is required", 400
 
-        event = sharing.eventInfo(eventName)
+        try:
+            event = sharing.eventInfo(eventName)
 
-        return json.dumps(event)
+            return json.dumps(event)
+        except:
+            return json.dumps({'error': f'{traceback.format_exc()}'})
 
     @app.route("/createEvent", methods=['POST'])
     def createEvent():

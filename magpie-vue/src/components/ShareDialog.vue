@@ -39,6 +39,10 @@ watch(eventName, () => debounce(getEventInfo, 500));
 watch(playerName, () => debounce(checkPlayerIdTaken, 500));
 
 function checkPlayerIdTaken() {
+    if (!document.getElementById('shareModal').checkVisibility()) {
+        return;
+    }
+
     let data = new FormData();
     data.append('playerName', playerName.value);
 
@@ -51,6 +55,10 @@ function checkPlayerIdTaken() {
 }
 
 async function getEventInfo() {
+    if (!document.getElementById('shareModal').checkVisibility()) {
+        return;
+    }
+
     try {
         let response = await fetch(`${sharingUrlPrefix.value}/eventInfo?${new URLSearchParams({ eventName: eventName.value })}`, {
             method: 'GET',

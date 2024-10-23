@@ -326,9 +326,10 @@ function fixArgs(args) {
         args.dungeon_items = '';
     }
 
-    if (args.dungeon_items == 'localnightmarekey') {
-        args.dungeon_items = 'nightmarekey';
-    }
+    // why on earth did this ever exist?
+    // if (args.dungeon_items == 'localnightmarekey') {
+    //     args.dungeon_items = 'nightmarekey';
+    // }
 
     if (args.owlstatues == 'none') {
         args.owlstatues = '';
@@ -623,10 +624,10 @@ function getCustomDungeonItems(dungeonItems) {
         shuffle_beaks: false
     };
 
-    if (['smallkeys', 'keysanity', 'localnightmarekey'].includes(dungeonItems)) {
+    if (['smallkeys', 'keysanity', 'localnightmarekey', 'keysy'].includes(dungeonItems)) {
         settings.shuffle_small = true;
     }
-    if (['nightmarekeys', 'keysanity'].includes(dungeonItems)) {
+    if (['nightmarekeys', 'keysanity', 'keysy'].includes(dungeonItems)) {
         settings.shuffle_nightmare = true;
     }
     if (['localkeys', 'keysanity', 'localnightmarekey'].includes(dungeonItems)) {
