@@ -85,6 +85,7 @@ function refreshCheckList() {
             localSettings: JSON.stringify(localSettings),
         },
         success: (response) => {
+            console.log("Received checkList response");
             response = JSON.parse(response);
             pruneEntranceMap();
 
