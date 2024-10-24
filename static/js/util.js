@@ -503,7 +503,7 @@ function canBeStart(node) {
 }
 
 function startIsSet() {
-    return Entrance.isMapped(startHouse);
+    return Entrance.isMapped(startHouse) || !args.randomstartlocation;
 }
 
 function getInsideOutEntrance(id) {

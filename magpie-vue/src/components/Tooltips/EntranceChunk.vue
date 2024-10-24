@@ -1,6 +1,7 @@
 <script setup>
 import { canBeStart, setStartLocation, startGraphicalConnection, getInsideOutEntrance, connectEntrances,
-    startIsSet, openDeadEndDialog } from '@/moduleWrappers.js';
+    startIsSet, openDeadEndDialog, mapToLandfill, spoilEntrance, clearEntranceMapping, spoilerLogExists,
+    } from '@/moduleWrappers.js';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 
 const props = defineProps(['node', 'args']);
@@ -53,6 +54,7 @@ function updateHelpers() {
             <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip"
                 data-bs-title="Used when you can access at least two entrances of a connector" src="/images/light-question-circle.svg">
         </li>
+
         <template v-if="!entrance.isMapped()">
             <li v-if="node.usesConnectorDialog()"
                 class="list-group-item text-start tooltip-item p-1 text-align-middle"
@@ -76,6 +78,7 @@ function updateHelpers() {
                 </li>
             </template>
         </template>
+
         <div v-if="node.entranceOptions()" class="btn-group dropend">
             <button type="button" class="btn tooltip-item text-start p-1" @click="startGraphicalConnection(entrance.id, 'simple')">
                 {{ args.entranceshuffle != 'none' ? 'Connect to simple entrance...' : 'Connect to...' }}
@@ -92,6 +95,25 @@ function updateHelpers() {
                 </li>
             </ul>
         </div>
+
+        <template v-if="entrance.canBeLandfill()">
+            <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="mapToLandfill(entrance.id)" oncontextmenu="return false;">
+                Mark as useless
+            </li>
+        </template>
+
+        <template v-if="spoilerLogExists()">
+            <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="spoilEntrance(entrance.id)" oncontextmenu="return false;">
+                Spoil entrance
+            </li>
+        </template>
+
+        <template v-if="entrance.canBeCleared()">
+            <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="clearEntranceMapping(entrance.id)" oncontextmenu="return false;">
+                Clear mapping
+            </li>
+        </template>
+
     </template>
 </template>
 </template>

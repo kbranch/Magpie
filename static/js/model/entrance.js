@@ -123,6 +123,14 @@ class Entrance {
     isInside() {
         return Entrance.isInside(this.id);
     }
+
+    canBeLandfill() {
+        return !this.isVanilla() && !('landfill', startHouse).includes(this.connectedTo());
+    }
+
+    canBeCleared() {
+        return (this.isMapped() || (!coupledEntrances() && this.isFound())) && !this.isVanilla();
+    }
     
     static validConnections(sourceId, type) {
         let requireConnector = !connectorsMixed() && Entrance.isConnector(sourceId);

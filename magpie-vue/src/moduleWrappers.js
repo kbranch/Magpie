@@ -39,6 +39,10 @@ export let connectEntrances = window.connectEntrances;
 export let startIsSet = window.startIsSet;
 export let openDeadEndDialog = window.openDeadEndDialog;
 export let inOutEntrances = window.inOutEntrances;
+export let mapToLandfill = window.mapToLandfill;
+export let spoilEntrance = window.spoilEntrance;
+export let clearEntranceMapping = window.clearEntranceMapping;
+export let spoilerLogExists = window.spoilerLogExists;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

@@ -172,6 +172,10 @@ function loadSpoilerLog(romData) {
     });
 }
 
+function spoilerLogExists() {
+    return Boolean(spoilerLog);
+}
+
 function errorHandler(e) {
     errorLog.push({
         col: e.colno,
