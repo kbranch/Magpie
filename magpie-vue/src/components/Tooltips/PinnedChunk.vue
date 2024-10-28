@@ -39,6 +39,7 @@ function updateHelpers() {
 </script>
 
 <template>
+    <hr class="m-1">
     <li v-if="canBeStart(node)" class="list-group-item text-start tooltip-item p-1 text-align-middle" :data-node-id="node.id()"
         @click="setStartLocation(entrance.id)" oncontextmenu="return false;">
 

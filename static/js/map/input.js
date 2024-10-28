@@ -175,7 +175,7 @@ function connectorMouseMove(event) {
 
         $('#mapContainer').append(mouseTracker);
 
-        let source = $(`[data-entrance-id="${graphicalMapSource}"]`);
+        let source = $(`.check-graphic[data-entrance-id="${graphicalMapSource}"]`);
         $(source).connections({ class: 'entrance-from', to: $(mouseTracker) });
         $(source).connections({ class: 'outer-entrance-connection', to: $(mouseTracker) });
     }
