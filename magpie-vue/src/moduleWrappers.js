@@ -24,6 +24,7 @@ export let refreshItems = window.refreshItems;
 export let broadcastArgs = window.broadcastArgs;
 export let toggleSingleNodeCheck = window.toggleSingleNodeCheck;
 export let openCheckLogicViewer = window.openCheckLogicViewer;
+export let openEntranceLogicViewer = window.openEntranceLogicViewer;
 export let nodes = window.nodes;
 export let setCheckContents = window.setCheckContents;
 export let spoilLocation = window.spoilLocation;
@@ -43,6 +44,10 @@ export let mapToLandfill = window.mapToLandfill;
 export let spoilEntrance = window.spoilEntrance;
 export let clearEntranceMapping = window.clearEntranceMapping;
 export let spoilerLogExists = window.spoilerLogExists;
+export let graphicalMapType = window.graphicalMapType;
+export let graphicalMapSource = window.graphicalMapSource;
+export let coupledEntrances = window.coupledEntrances;
+export let mapBoss = window.mapBoss;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

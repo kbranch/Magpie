@@ -104,6 +104,10 @@ class Connection {
         return (this.connector ?? null) == null || this.connector?.id == 'outer_rainbow';
     }
 
+    isInside() {
+        return Entrance.isInside(this.id);
+    }
+
     static disconnect(entranceId) {
         if (!Entrance.isConnected(entranceId)) {
             return;

@@ -710,7 +710,10 @@ class MapNode {
         });
         $(this.graphic).on('mouseenter', (e) => {
             checkGraphicMouseEnter(e.currentTarget);
-            vueNodeTooltip(nodes[this.id()], e);
+
+            if (isVue) {
+                vueNodeTooltip(nodes[this.id()], e);
+            }
         });
         $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);

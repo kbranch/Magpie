@@ -1,15 +1,32 @@
 <script setup>
-import { canBeStart, setStartLocation, startGraphicalConnection, getInsideOutEntrance, connectEntrances,
-    startIsSet, openDeadEndDialog, mapToLandfill, spoilEntrance, clearEntranceMapping, spoilerLogExists,
-    } from '@/moduleWrappers.js';
+import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { openEntranceLogicViewer, graphicalMapType, graphicalMapSource, coupledEntrances, inOutEntrances } from '@/moduleWrappers';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 
 const props = defineProps(['node', 'args']);
 
 const helper = ref(null);
+const mapType = ref(graphicalMapType);
+const mapSource = ref(graphicalMapSource);
+const tip = useTextTooltipStore();
 
 const entrance = computed(() => props.node?.entrance);
-const mapTarget = computed(() => entrance.value.isInside() ? 'overworld' : 'underworld');
+const connection = computed(() => entrance?.value?.connectedToMetadata());
+const connectionType = computed(() => mapSource.value != null ? mapType.value : 'none');
+const interiorImage = computed(() => {
+    if (connectionType.value == 'simple' && entrance.value.metadata.interiorImage) {
+        return `/images/entrances/${entrance.value.metadata.interiorImage}.png`;
+    }
+    else if(connectionType.value == 'none'
+            && entrance.value.isMapped()
+            && !['right_taltal_connector1', 'right_taltal_connector2', 'landfill'].includes(entrance.value.connectedTo())) {
+        if (connection.value.interiorImage && (entrance.value.isConnectedToInside() || entrance.value.isConnectedToStairs())) {
+            return `/images/entrances/${connection.value.interiorImage}.png`;
+        }
+    }
+
+    return null;
+});
 
 onMounted(() => {
     updateHelpers();
@@ -36,90 +53,43 @@ function updateHelpers() {
         }
     }
 }
+
 </script>
 
 <template>
-<template v-if="node.pinned">
-    <li v-if="canBeStart(node)" class="list-group-item text-start tooltip-item p-1 text-align-middle" :data-node-id="node.id()"
-        @click="setStartLocation(entrance.id)" oncontextmenu="return false;">
 
-        Set as start location
-    </li>
-    <template v-if="startIsSet()">
-        <li v-if="node.usesConnectorDialog() && (!entrance.isMapped() || entrance.isIncompleteConnection())"
-            class="list-group-item text-start tooltip-item p-1 text-align-middle"
-            @click="startGraphicalConnection(entrance.id, 'connector')" oncontextmenu="return false;">
+<div class='text-start tooltip-item d-flex p-1 mb-0 align-items-center' :data-entrance-id='entrance.id' oncontextmenu='return false;'>
+    <div class='tooltip-check-graphic entrance-only'></div>
+    <div class='tooltip-text align-middle ps-2'>
+        {{ entrance.metadata.name }}
+    </div>
+    <button type="button" class="btn btn-secondary p-1 logic-button" @click="openEntranceLogicViewer(entrance.id)" @mouseenter="tip.tooltip('View Logic', $event)">
+        <img class="invert" src="/images/diagram-2-fill.svg">
+    </button>
+</div>
 
-            Connect to via connector...
-            <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip"
-                data-bs-title="Used when you can access at least two entrances of a connector" src="/images/light-question-circle.svg">
-        </li>
-
-        <template v-if="!entrance.isMapped()">
-            <li v-if="node.usesConnectorDialog()"
-                class="list-group-item text-start tooltip-item p-1 text-align-middle"
-                @click="openDeadEndDialog(entrance.id)" oncontextmenu="return false;">
-
-                Connect one connector end...
-                <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip"
-                    data-bs-title="Used when you can only access one entrance of a connector" src="/images/light-question-circle.svg">
-            </li>
-            <template v-if="node.usesAdvancedErInOut()">
-                <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="startGraphicalConnection(entrance.id, mapTarget)" oncontextmenu="return false;">
-                    Connect to {{ mapTarget }}...
-                </li>
-            </template>
-            <template v-else-if="node.usesAdvancedEr()">
-                <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="startGraphicalConnection(entrance.id, 'overworld')" oncontextmenu="return false;">
-                    Connect to overworld...
-                </li>
-                <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="startGraphicalConnection(entrance.id, 'underworld')" oncontextmenu="return false;">
-                    Connect to underworld...
-                </li>
-            </template>
-        </template>
-
-        <div v-if="node.entranceOptions()" class="btn-group dropend">
-            <button type="button" class="btn tooltip-item text-start p-1" @click="startGraphicalConnection(entrance.id, 'simple')">
-                {{ args.entranceshuffle != 'none' ? 'Connect to simple entrance...' : 'Connect to...' }}
-            </button>
-            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split px-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
-            <ul class="dropdown-menu">
-                <li v-for="option in node.entranceOptions()" :key="option.id">
-                    <button class="dropdown-item tooltip-item" type="button" :data-value="option.id"
-                        @click="connectEntrances(entrance.id, entrance.isInside() ? option.id : getInsideOutEntrance(option.id))">
-                        {{ option.name }}
-                        <img ref="helper" v-if="option.interiorImage" class='helper' src='/images/light-question-circle.svg'
-                            data-bs-toggle='tooltip' data-bs-html='true' :data-bs-title='`<img src="/images/entrances/${option.interiorImage}.png">`'>
-                    </button>
-                </li>
-            </ul>
+<template v-if="entrance.isRemapped() && connectionType == 'none'">
+    <li class="list-group-item text-start tooltip-item">
+        <div class='tooltip-text text-start align-middle'>
+            To {{entrance.isConnectedToInside() ? 'inside' : 'outside'}} {{connection.name}}
         </div>
-
-        <template v-if="entrance.canBeLandfill()">
-            <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="mapToLandfill(entrance.id)" oncontextmenu="return false;">
-                Mark as useless
-            </li>
-        </template>
-
-        <template v-if="spoilerLogExists()">
-            <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="spoilEntrance(entrance.id)" oncontextmenu="return false;">
-                Spoil entrance
-            </li>
-        </template>
-
-        <template v-if="entrance.canBeCleared()">
-            <li class="list-group-item text-start tooltip-item p-1 text-align-middle" @click="clearEntranceMapping(entrance.id)" oncontextmenu="return false;">
-                Clear mapping
-            </li>
-        </template>
-
-    </template>
-</template>
+    </li>
 </template>
 
-<style scoped>
-.dropdown-menu {
-    background-color: black;
-}
-</style>
+<li v-if="entrance.isFound()
+          && !entrance.isMappedToSelf()
+          && (!entrance.isConnectedToConnector() || !coupledEntrances())
+          && connectionType == 'none'
+          && (inOutEntrances() || !coupledEntrances())"
+    class="list-group-item text-start tooltip-item">
+
+    <div class='tooltip-text text-start align-middle'>
+        Found at {{ entrance.foundAt().name }}
+    </div>
+</li>
+
+<div v-if="interiorImage">
+    <img :src="interiorImage">
+</div>
+
+</template>

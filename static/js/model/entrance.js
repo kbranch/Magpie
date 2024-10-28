@@ -15,6 +15,12 @@ class Entrance {
         return Entrance.connectedTo(this.id);
     }
 
+    connectedToMetadata() {
+        let to = this.connectedTo();
+
+        return to ? entranceDict[this.connectedTo()] : null;
+    }
+
     connectedToDummy() {
         return Entrance.connectedToDummy(this.id);
     }
@@ -123,13 +129,35 @@ class Entrance {
     isInside() {
         return Entrance.isInside(this.id);
     }
+    
+    isConnectedToInside() {
+        return Entrance.isInside(this.connectedTo());
+    }
 
     canBeLandfill() {
-        return !this.isVanilla() && !('landfill', startHouse).includes(this.connectedTo());
+        return !this.isVanilla() && !['landfill', startHouse].includes(this.connectedTo());
     }
 
     canBeCleared() {
         return (this.isMapped() || (!coupledEntrances() && this.isFound())) && !this.isVanilla();
+    }
+    
+    isConnectedToStairs() {
+        return Entrance.isStairs(this.connectedTo());
+    }
+
+    foundAt() {
+        if (!this.isFound()) {
+            return null;
+        }
+
+        let connection = entranceDict[this.connectedFrom()];
+
+        if (inOutEntrances()) {
+            connection = entranceDict[Entrance.connectedFrom(Entrance.getInside(this.id))];
+        }
+
+        return connection;
     }
     
     static validConnections(sourceId, type) {

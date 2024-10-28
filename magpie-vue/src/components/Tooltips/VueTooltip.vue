@@ -4,7 +4,9 @@ import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { nodes } from '@/moduleWrappers.js';
 import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
 import CheckItem from '@/components/Tooltips/CheckItem.vue';
-import EntranceChunk from '@/components/Tooltips/EntranceChunk.vue';
+import PinnedChunk from '@/components/Tooltips/PinnedChunk.vue';
+import EntranceChunk from './EntranceChunk.vue';
+import BossChunk from './BossChunk.vue';
 
 const props = defineProps(['type', 'textColor', 'args']);
 
@@ -167,7 +169,9 @@ function watchMouseOut() {
 </script>
 
 <template>
-    <div ref="tooltip" class="vue-tooltip" :class="type == 'text' ? 'text-tooltip' : 'node-tooltip'" :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
+    <div ref="tooltip" class="vue-tooltip" :class="type == 'text' ? 'text-tooltip' : 'node-tooltip'"
+        :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
+
         <template v-if="type == 'text'">
             <span class="tooltipText">{{ state.text }}</span>
         </template>
@@ -185,6 +189,12 @@ function watchMouseOut() {
                     </ul>
                 </div>
                 <EntranceChunk v-if="node.entrance" :node="node" :args="args" />
+                <PinnedChunk v-if="node.entrance && node.pinned" :node="node" :args="args" />
+                <BossChunk v-if="node.boss" :node="node" />
+
+                <div v-if="node.logicHint" class='tooltip-text align-middle p-2'>
+                    {{ node.logicHint.metadata.text }}
+                </div>
             </div>
         </template>
     </div>
