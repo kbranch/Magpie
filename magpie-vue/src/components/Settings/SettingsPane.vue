@@ -162,7 +162,7 @@ function saveSettings(settings) {
 </script>
 
 <template>
-    <div ref="offcanvas" class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="argsOffcanvas" aria-labelledby="argsLabel">
+    <div ref="offcanvas" class="offcanvas offcanvas-end magpie-colors" tabindex="-1" id="argsOffcanvas" aria-labelledby="argsLabel">
         <div class="offcanvas-header">
             <div class="row align-items-center">
                 <div class="col">

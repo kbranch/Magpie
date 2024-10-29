@@ -57,7 +57,6 @@ export function initGlobals(data) {
     window.diskSettings = data.diskSettings;
 
     window.iconStyles = $('link#iconsSheet')[0].sheet;
-    window.themeStyles = $('link#themeSheet')[0].sheet;
 
     window.local = Boolean(data.local);
     window.allowAutotracking = Boolean(data.allowAutotracking);

@@ -16,7 +16,7 @@ defineProps({
 
 <template>
 <div class="text-check-card-wrapper col-xxl-2 col-lg-3 col-md-4 col-sm-6 col-12 px-1 py-1" :data-area="area">
-    <div class="card text-bg-dark text-check-card" onclick="preventDoubleClick(event)">
+    <div class="card magpie-colors text-check-card" onclick="preventDoubleClick(event)">
         <div class="card-header">
             {{ area }}
         </div>
@@ -90,5 +90,8 @@ defineProps({
     position: absolute;
     width: 16px;
     height: 16px;
+}
+li {
+    list-style-type: none;
 }
 </style>

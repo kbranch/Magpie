@@ -1,6 +1,6 @@
 <script setup>
 import { initGlobals, init, win } from '@/moduleWrappers.js';
-import { onMounted, ref, toRaw } from 'vue';
+import { computed, onMounted, ref, toRaw } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import DifficultyIcons from '@/components/DifficultyIcons.vue';
 import NavBar from '@/components/NavBar.vue';
@@ -22,6 +22,10 @@ const logics = ref([]);
 const checkAccessibility = ref([]);
 const misc = ref({localSettings: {}, args: {}});
 const argDescriptions = ref({});
+
+const bgColor = computed(() => misc.value?.localSettings?.bgColor);
+const textColor = computed(() => misc.value?.localSettings?.textColor);
+const highlightColor = computed(() => misc.value?.localSettings?.highlightColor);
 
 const tip = useTextTooltipStore();
 
@@ -87,6 +91,9 @@ defineExpose({
 </script>
 
 <template>
+<div id="appWrapper" class="magpie-colors">
+<div id="appInner">
+
   <DifficultyIcons />
 
   <div id="unstackedContainer" class="row" data-player="">
@@ -316,9 +323,11 @@ defineExpose({
       </div>
     </div>
   </div>
+</div>
+</div>
 </template>
 
-<style scoped>
+<style>
 .quicksettings-container {
     display: flex;
     flex-flow: column;
@@ -326,5 +335,30 @@ defineExpose({
 
 .full-height {
     height: 100%;
+}
+
+.magpie-colors, .bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
+  background-color: v-bind(bgColor) !important;
+  color: v-bind(textColor) !important;
+}
+
+.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
+  background-color: v-bind(highlightColor);
+}
+
+.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
+  border-bottom-color: v-bind(highlightColor) !important;
+}
+
+#appWrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#appInner {
+  max-width: 1500px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 </style>
