@@ -9,10 +9,14 @@ const props = defineProps([
     'misc'
 ]);
 
-const filteredChecks = computed(() => props.checkAccessibility.filter(check => check.shouldDraw() || check.difficulty == 9));
+const filteredChecks = computed(() => props.checkAccessibility.filter(check => (check.shouldDraw() || check.difficulty == 9) && check.isEnabled()));
 const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => props.misc.checkedChecks?.has(check.id) ? -1 : check.difficulty));
-const totalChecks = computed(() => props.checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem)
-                                                           .map(x => x.id).length);
+const totalChecks = computed(() => new Set(props.checkAccessibility.filter(x => !x.isVanillaOwl() 
+                                                                                && x.id != 'egg' 
+                                                                                && !x.metadata.vanillaItem 
+                                                                                && x.isEnabled())
+                                                                   .map(x => x.id))
+                                                                   .size);
 
 // let startTime;
 // import { onBeforeMount, onBeforeUpdate, onMounted, onUpdated } from 'vue';

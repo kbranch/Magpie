@@ -124,6 +124,10 @@ class Check {
         return true;
     }
 
+    isEnabled() {
+        return !this.metadata.condition || this.metadata.condition(args, localSettings);
+    }
+
     mapLocations(mapName) {
         return this.locations.filter(x => x.map == mapName && (!('condition' in x) || x.condition(args, localSettings)));
     }
