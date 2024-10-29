@@ -3,7 +3,7 @@
 async function sendSuggestion() {
     $.ajax({
         type: "POST",
-        url: "https://magpietracker.us/suggestion",
+        url: "https://dev.magpietracker.us/suggestion",
         data: {
             email: $('#suggestionEmail')[0].value,
             body: $('#bodyTextArea').summernote('code'),
@@ -18,7 +18,7 @@ async function sendError() {
 
     $.ajax({
         type: "POST",
-        url: "https://magpietracker.us/suggestion",
+        url: "https://dev.magpietracker.us/suggestion",
         data: {
             email: $('#errorEmail')[0].value,
             body: '<pre>' + JSON.stringify(payload, null, 3) + '</pre>',

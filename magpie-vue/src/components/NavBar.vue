@@ -45,7 +45,7 @@ onMounted(() => {
 async function sendSuggestion() {
     $.ajax({
         type: "POST",
-        url: "https://magpietracker.us/suggestion",
+        url: "https://dev.magpietracker.us/suggestion",
         data: {
             email: $('#suggestionEmail')[0].value,
             body: $('#bodyTextArea').summernote('code'),
