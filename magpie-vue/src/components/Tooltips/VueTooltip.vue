@@ -21,6 +21,7 @@ const allNodes = ref(nodes);
 const stateNode = computed(() => props.type == 'node' ? state.node : state.auxNode);
 const stateShow = computed(() => props.type == 'auxNode' ? state.auxShow : state.show);
 const stateElement = computed(() => props.type == 'auxNode' ? state.auxElement : state.element);
+const zIndex = computed(() => node?.value?.pinned ? 20010 : 1000);
 
 window.nodes = allNodes.value;
 
@@ -209,7 +210,7 @@ function watchMouseOut() {
     max-width: 500px;
     padding: 0.25em 0.5em 0.25em 0.5em;
     position: fixed;
-    z-index: 999999;
+    z-index: v-bind(zIndex);
 }
 
 .text-tooltip {

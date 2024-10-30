@@ -10,6 +10,10 @@ const helper = ref(null);
 
 const entrance = computed(() => props.node?.entrance);
 const mapTarget = computed(() => entrance.value.isInside() ? 'overworld' : 'underworld');
+const canConnectViaConnector = computed(() => props.node.usesConnectorDialog() && (!entrance.value.isMapped() || entrance.value.isIncompleteConnection()));
+const hasMenuItems = computed(() => canBeStart(props.node)
+                                    || (entrance.value
+                                        && entrance.value.isRandomized()));
 
 onMounted(() => {
     updateHelpers();
@@ -39,14 +43,14 @@ function updateHelpers() {
 </script>
 
 <template>
-    <hr class="m-1">
+    <hr v-if="hasMenuItems" class="m-1">
     <li v-if="canBeStart(node)" class="list-group-item text-start tooltip-item p-1 text-align-middle" :data-node-id="node.id()"
         @click="setStartLocation(entrance.id)" oncontextmenu="return false;">
 
         Set as start location
     </li>
     <template v-if="startIsSet()">
-        <li v-if="node.usesConnectorDialog() && (!entrance.isMapped() || entrance.isIncompleteConnection())"
+        <li v-if="canConnectViaConnector"
             class="list-group-item text-start tooltip-item p-1 text-align-middle"
             @click="startGraphicalConnection(entrance.id, 'connector')" oncontextmenu="return false;">
 

@@ -80,7 +80,8 @@ function updateHelpers() {
           && !entrance.isMappedToSelf()
           && (!entrance.isConnectedToConnector() || !coupledEntrances())
           && connectionType == 'none'
-          && (inOutEntrances() || !coupledEntrances())"
+          && (inOutEntrances() || !coupledEntrances())
+          && entrance.foundAt()"
     class="list-group-item text-start tooltip-item">
 
     <div class='tooltip-text text-start align-middle'>

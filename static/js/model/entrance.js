@@ -159,6 +159,10 @@ class Entrance {
 
         return connection;
     }
+
+    isRandomized() {
+        return randomizedEntrances.includes(this.id);
+    }
     
     static validConnections(sourceId, type) {
         let requireConnector = !connectorsMixed() && Entrance.isConnector(sourceId);
