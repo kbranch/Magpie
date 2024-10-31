@@ -76,7 +76,7 @@ def renderTraceback():
 
 def getDiskSettings(prefix='', jsonify=True):
     if not app.config['local']:
-        return '{}'
+        return '{}' if jsonify else {}
     
     settings = {}
     diskSettings = localSettings.readSettings()
