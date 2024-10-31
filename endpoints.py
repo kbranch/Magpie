@@ -74,7 +74,7 @@ except:
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
 
-def getDiskSettings(prefix=''):
+def getDiskSettings(prefix='', jsonify=True):
     if not app.config['local']:
         return '{}'
     
@@ -86,8 +86,11 @@ def getDiskSettings(prefix=''):
 
     if prefix + 'localSettings' in diskSettings:
         settings['localSettings'] = diskSettings[prefix + 'localSettings']
+    
+    if jsonify:
+        diskSettings = json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
-    return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
+    return diskSettings
 
 jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit'}
 corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog'}
@@ -104,7 +107,7 @@ def afterRequest(response):
 
     return response
 
-@app.route("/")
+@app.route("/classic")
 def home():
     args = getArgs()
     defaultSettings = LocalSettings()
@@ -696,7 +699,7 @@ if sharingEnabled:
         
         return True
 
-@app.route("/vue")
+@app.route("/")
 def vueRoot():
     return send_from_directory("vue-dist", "index.html")
 
@@ -751,7 +754,7 @@ def vueInit():
             "graphicsOptions": LocalSettings.graphicsPacks(),
             "version": getVersion(),
             "remoteVersion": remoteVersion,
-            "diskSettings": json.loads(getDiskSettings()),
+            "diskSettings": getDiskSettings(jsonify=False),
             "hostname": app.config["hostname"],
             "allowAutotracking": True,
             "allowMap": True,

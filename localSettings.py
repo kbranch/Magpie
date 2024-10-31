@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 
 class LocalSettings:
     def __init__(self):
@@ -121,16 +122,20 @@ def updateSettings(argsText, settingsText, prefix=''):
     writeSettings(settings)
 
 def writeSettings(settings):
+    text = json.dumps(settings)
+
     try:
         with open(settingsPath(), 'w') as file:
-            file.write(json.dumps(settings))
+            file.write(text)
     except Exception as e:
         print(f"Error writing settings: {e}")
 
 def readSettings():
     try:
         with open(settingsPath(), 'r') as file:
-            return json.loads(file.read())
+            text = file.read()
+            parsed = json.loads(text)
+            return parsed
     except Exception as e:
         print(f"Error reading settings, loading defaults: {e}")
         return defaultSettings()
