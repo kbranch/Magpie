@@ -445,11 +445,37 @@ function setElementHidden(element, hidden) {
 }
 
 function setLocalStorage(key, value) {
+    if (key == 'everything') {
+        for (const item in value) {
+            localStorage.setItem(item, value[item]);
+        }
+
+        return;
+    }
+
     let prefix = settingsPrefix ?? '';
     localStorage.setItem(prefix + key, value);
+
+    debounce(uploadLocalStorage, 100);
+}
+
+function uploadLocalStorage() {
+    if (local) {
+        let data = new FormData();
+        data.append('localStorage', JSON.stringify(localStorage));
+
+        fetch('/diskSettings', {
+            method: 'POST',
+            body: data,
+        });
+    }
 }
 
 function getLocalStorage(key) {
+    if (key == 'everything') {
+        return localStorage;
+    }
+
     let prefix = settingsPrefix ?? '';
     return localStorage.getItem(prefix + key);
 }

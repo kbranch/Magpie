@@ -420,6 +420,8 @@ function importState(data) {
                     setLocalStorage('importedSpoilerLog', JSON.stringify(state.spoilerLog));
                 }
 
+                uploadLocalStorage();
+
                 location.reload();
         }
         else {

@@ -72,18 +72,19 @@ function refreshCheckList() {
 
     let bossList = getBossList();
     let minibossMap = getMinibossMap();
+    let data = {
+        args: JSON.stringify(args),
+        inventory: JSON.stringify(tempInventory),
+        entranceMap: JSON.stringify(entranceMap),
+        bossList: JSON.stringify(bossList),
+        minibossMap: JSON.stringify(minibossMap),
+        localSettings: JSON.stringify(localSettings),
+    }
 
     $.ajax({
         type: "POST",
         url: rootPrefix + "/checkList",
-        data: {
-            args: JSON.stringify(args),
-            inventory: JSON.stringify(tempInventory),
-            entranceMap: JSON.stringify(entranceMap),
-            bossList: JSON.stringify(bossList),
-            minibossMap: JSON.stringify(minibossMap),
-            localSettings: JSON.stringify(localSettings),
-        },
+        data: data,
         success: (response) => {
             console.log("Received checkList response");
             response = JSON.parse(response);
@@ -229,6 +230,11 @@ function init() {
         setLocalStorage('settings', diskSettings['localSettings'])
     }
 
+    if ('localStorage' in diskSettings) {
+        let state = JSON.parse(diskSettings.localStorage);
+        setLocalStorage('everything', state);
+    }
+
     let storage = { ...localStorage };
     let settingsErrors = loadSettings();
     let locationErrors = loadLocations();
@@ -332,6 +338,9 @@ function init() {
 function hardReset() {
     if (confirm("Completely clear all tracker data, including settings and trackable objects?")) {
         localStorage.clear();
+
+        uploadLocalStorage();
+
         location.reload();
     }
 }

@@ -84,16 +84,16 @@ def getDiskSettings(prefix='', jsonify=True):
     if prefix + 'args' in diskSettings:
         settings['args'] = diskSettings[prefix + 'args']
 
-    if prefix + 'localSettings' in diskSettings:
-        settings['localSettings'] = diskSettings[prefix + 'localSettings']
+    if 'localSettings' in diskSettings:
+        settings['localSettings'] = diskSettings['localSettings']
     
     if jsonify:
         diskSettings = json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
     return diskSettings
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog'}
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -164,13 +164,6 @@ def renderItems():
     try:
         argsText = request.form['args']
         settingsText = request.form['localSettings']
-
-        if app.config['local']:
-            prefix = ''
-            if 'settingsPrefix' in request.form:
-                prefix = request.form['settingsPrefix']
-
-            updateSettings(argsText, settingsText, prefix)
 
         args = Args.parse(argsText)
         localSettings = LocalSettings.parse(settingsText)
@@ -280,6 +273,13 @@ def getSpoilerLog():
         return loadSpoilerLog(romData)
     except:
         return renderTraceback()
+
+@app.route("/diskSettings", methods=['POST'])
+def updateDiskSettings():
+    storage = request.form['localStorage']
+    updateSettings(localStorage=storage)
+
+    return "ok"
 
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():

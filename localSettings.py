@@ -1,6 +1,9 @@
 import os
 import json
 import logging
+import threading
+
+fileLock = threading.Lock()
 
 class LocalSettings:
     def __init__(self):
@@ -113,11 +116,15 @@ nested = False
 def settingsPath():
     return 'settings.json' if not nested else os.path.join('..', 'settings.json')
 
-def updateSettings(argsText, settingsText, prefix=''):
+def updateSettings(argsText=None, settingsText=None, localStorage=None, prefix=''):
     settings = readSettings()
 
-    settings[prefix + 'args'] = argsText
-    settings[prefix + 'localSettings'] = settingsText
+    if argsText:
+        settings[prefix + 'args'] = argsText
+    if settingsText:
+        settings[prefix + 'localSettings'] = settingsText
+    if localStorage:
+        settings['localStorage'] = localStorage
 
     writeSettings(settings)
 
@@ -125,17 +132,19 @@ def writeSettings(settings):
     text = json.dumps(settings)
 
     try:
-        with open(settingsPath(), 'w') as file:
-            file.write(text)
+        with fileLock:
+            with open(settingsPath(), 'w') as file:
+                file.write(text)
     except Exception as e:
         print(f"Error writing settings: {e}")
 
 def readSettings():
     try:
-        with open(settingsPath(), 'r') as file:
-            text = file.read()
-            parsed = json.loads(text)
-            return parsed
+        with fileLock:
+            with open(settingsPath(), 'r') as file:
+                text = file.read()
+                parsed = json.loads(text)
+                return parsed
     except Exception as e:
         print(f"Error reading settings, loading defaults: {e}")
         return defaultSettings()

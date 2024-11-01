@@ -1,3 +1,5 @@
+import { debounce } from "./main";
+
 export let toggleCheck = window.toggleCheck
 export let $ = window.$;
 export let getStateZip = window.getStateZip
@@ -69,4 +71,6 @@ export function initGlobals(data) {
     window.broadcastMode = data.broadcastMode;
     window.rootPrefix = import.meta.env.VITE_API_URL;
     itemsByLocation = window.itemsByLocation;
+
+    window.debounce = debounce;
 }
