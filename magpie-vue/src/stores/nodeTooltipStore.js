@@ -84,6 +84,9 @@ export const useNodeTooltipStore = defineStore('nodeTooltip', () => {
                 delayTimeout.value = null;
             }
         }
+
+        // Dumb workaround for the dumb bootstrap tooltips still used for helpers
+        [...document.querySelectorAll(".bs-tooltip-auto")].map((x) => x.remove());
     }
 
     window.vueNodeTooltip = tooltip;

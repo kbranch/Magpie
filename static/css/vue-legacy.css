@@ -49,6 +49,7 @@ nowrap {
     background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity));
     line-height: 16px;
     padding-left: 2px;
+    pointer-events: none;
 }
 
 .node-overlay-wrapper {

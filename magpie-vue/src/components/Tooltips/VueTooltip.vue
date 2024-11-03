@@ -2,7 +2,7 @@
 import { useNodeTooltipStore } from '@/stores/nodeTooltipStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { nodes } from '@/moduleWrappers.js';
-import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
+import { computed, onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref, watch } from 'vue';
 import CheckItem from '@/components/Tooltips/CheckItem.vue';
 import PinnedChunk from '@/components/Tooltips/PinnedChunk.vue';
 import EntranceChunk from './EntranceChunk.vue';
@@ -30,20 +30,18 @@ const show = computed(() => stateShow.value && (props.type == 'text' ? state.tex
 const tipLeft = computed(() => getTooltipLeft(parentRect.value, tipRect.value, rootRect.value));
 const tipTop = computed(() => getTooltipTop(parentRect.value, tipRect.value));
 
-const rootObserver = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-        rootRect.value = entry.boundingClientRect;
-    }
-}, { threshold: 1.0 });
+const rootObserver = new IntersectionObserver(updateRoot, { threshold: 1.0 });
+const rootResizeObserver = new ResizeObserver(updateRoot, { threshold: 1.0 });
 
 const parentObserver = new IntersectionObserver((entries) => {
     for (const entry of entries) {
         let rect = entry.boundingClientRect;
         if (!rectsSame(parentRect.value, rect)) {
             parentRect.value = rect;
-            parentClean.value = true;
         }
     }
+
+    parentClean.value = true;
 }, { threshold: 1.0 });
 
 const tipObserver = new ResizeObserver((entries) => {
@@ -63,8 +61,13 @@ const tipObserver = new ResizeObserver((entries) => {
     tipClean.value = true;
 }, { threshold: 1.0 });
 
+watch(stateShow, () => {
+    observe();
+});
+
 onBeforeMount(() => {
     rootObserver.observe(document.body);
+    rootResizeObserver.observe(document.body);
     observe();
 });
 onMounted(() => {
@@ -109,6 +112,11 @@ function observe() {
         tipObserver.disconnect();
         tipObserver.observe(tooltip.value);
     }
+}
+
+function updateRoot() {
+    scrollChanged = true;
+    rootRect.value = document.body.getBoundingClientRect();
 }
 
 function rectsSame(r1, r2) {
