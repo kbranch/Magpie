@@ -24,7 +24,7 @@ defineProps({
             <ul class="list-group list-group-flush px-2">
                 <div v-for="check in checks" :key="check.signature()" class="row">
                     <div class="text-check-col col pe-0">
-                        <li class="text-check" @click="toggleCheck($event, check.id)">
+                        <li class="text-check" :class="{'has-graphic': check.difficulty < 9 && !check.isChecked()}" @click="toggleCheck($event, check.id)">
                             <div class="check-name">
                                 <div v-if="check.difficulty < 9 && !check.isChecked()" class="text-check-graphic-wrapper">
                                     <div :class="`text-check-graphic${check.behindTrackerLogic ? ' behind-tracker' : ''}${check.behindKeys ? ' behind-keys' : ''}${check.requiredRupees ? ' requires-rupees' : ''}${check.isOwl() ? ' owl' : ''}`">
@@ -91,7 +91,8 @@ defineProps({
     width: 16px;
     height: 16px;
 }
-li {
+
+li.has-graphic {
     list-style-type: none;
 }
 </style>
