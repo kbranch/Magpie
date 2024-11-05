@@ -186,7 +186,7 @@ function processSlotDataMessage(message) {
         'experimental_dungeon_shuffle': 'dungeonshuffle',
         'experimental_entrance_shuffle': 'entranceshuffle',
         'hard_mode': 'hardmode',
-        'open_mabe': 'openmabe',
+        'overworld': 'openmabe',
         'prerelease': 'prerelease',
     };
     const valueLookup = {
@@ -197,9 +197,9 @@ function processSlotDataMessage(message) {
             'instruments': null,
         },
         'instrument_count': {
-            'random': 8,
-            'random-low': 4,
-            'random-high': 8,
+            'random': "8",
+            'random-low': "4",
+            'random-high': "8",
         },
         'shuffle_nightmare_keys': {
             'original_dungeon': false,
@@ -244,6 +244,9 @@ function processSlotDataMessage(message) {
             'any_world': true,
             'different_world': true,
         },
+        'overworld': {
+            'open_mabe': true,
+        }
     };
 
     for (const flag in slotData) {
@@ -272,9 +275,10 @@ function processSlotDataMessage(message) {
     }
 
     args['dungeon_items'] = 'custom';
+    args['goal'] = String(args['goal']);
 
     if (slotData.gfxmod) {
-        localSettings.graphicsPack = slotData.gfxmod
+        localSettings.graphicsPack = `/${slotData.gfxmod}`;
     }
 
     setInputValues('flag', args);
@@ -470,6 +474,7 @@ function processMessage(messageText) {
                 break;
             case 'slot_data':
                 if (autotrackerFeatures.includes('settings')) {
+                    setApLogic(true);
                     processSlotDataMessage(message);
                 }
                 else {
