@@ -186,7 +186,7 @@ function processSlotDataMessage(message) {
         'experimental_dungeon_shuffle': 'dungeonshuffle',
         'experimental_entrance_shuffle': 'entranceshuffle',
         'hard_mode': 'hardmode',
-        'open_mabe': 'openmabe',
+        'overworld': 'openmabe',
         'prerelease': 'prerelease',
     };
     const valueLookup = {
@@ -243,6 +243,9 @@ function processSlotDataMessage(message) {
             'own_world': true,
             'any_world': true,
             'different_world': true,
+        },
+        'overworld': {
+            'open_mabe': true,
         },
     };
 
@@ -470,6 +473,7 @@ function processMessage(messageText) {
                 break;
             case 'slot_data':
                 if (autotrackerFeatures.includes('settings')) {
+                    setApLogic(true);
                     processSlotDataMessage(message);
                 }
                 else {
