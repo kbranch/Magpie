@@ -36,7 +36,7 @@ function addAutotrackerMessage(status) {
     let minutes = now.getMinutes().toString(10).padStart(2, '0');
     let seconds = now.getSeconds().toString(10).padStart(2, '0');
 
-    autotrackerLog.value += `\n${hours}:${minutes}:${seconds}: ` + status;
+    autotrackerLog.value = `${hours}:${minutes}:${seconds}: ${status}\n${autotrackerLog.value}`;
 }
 
 function setRomRequested(value) {

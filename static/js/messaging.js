@@ -326,6 +326,7 @@ function connectToAutotracker() {
     }
 
     if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
+        setRomRequested(false);
         addAutotrackerMessage('Connecting...');
         const defaultAddress = '127.0.0.1';
         let address = localSettings.autotrackerAddress ? localSettings.autotrackerAddress : defaultAddress;
@@ -407,8 +408,6 @@ function processMessage(messageText) {
                 break;
             case 'romAck':
                 setRomRequested(false);
-                romRequested = false;
-                // $('#romRow').hide();
 
                 addAutotrackerMessage('ROM Received');
 
@@ -419,15 +418,7 @@ function processMessage(messageText) {
                 break;
             case 'romRequest':
                 setRomRequested(true);
-                romRequested = true;
                 console.log('Autotracker requested a copy of the ROM');
-
-                // quickSettingsTab($('#autotrackerTab'))
-                // $('#romInput')[0].value = null;
-                // $('#romRow').show();
-                // $('#romRow').removeClass('hidden');
-                // $('#romRow').addClass('animate__animated')
-                // $('#romRow').addClass('animate__flash')
 
                 addAutotrackerMessage('ROM Requested');
 

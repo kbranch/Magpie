@@ -31,7 +31,6 @@ var graphicalMapChoices = null;
 var graphicalMapType = null;
 var graphicalMapOriginalMap = null;
 var autotrackerSocket = null;
-var romRequested = false;
 var autotrackerFeatures = [];
 var currentRoom = null;
 var currentX = null;
