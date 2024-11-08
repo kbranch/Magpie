@@ -456,7 +456,9 @@ function setLocalStorage(key, value) {
     let prefix = settingsPrefix ?? '';
     localStorage.setItem(prefix + key, value);
 
-    debounce(uploadLocalStorage, 100);
+    if (isVue) {
+        debounce(uploadLocalStorage, 100);
+    }
 }
 
 function uploadLocalStorage() {

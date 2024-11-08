@@ -55,6 +55,7 @@ nowrap {
     line-height: 16px;
     padding-left: 2px;
     pointer-events: none;
+    z-index: 4;
 }
 
 .node-overlay-wrapper {
