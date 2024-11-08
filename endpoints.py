@@ -242,10 +242,12 @@ def fetchUpdate():
 
     try:
         headers = {'User-Agent': 'Magpie'}
-        url ="https://magpietracker.us/static/builds/magpie-local.zip"
+        # url = "https://magpietracker.us/static/builds/magpie-local.zip"
+        url = "https://dev.magpietracker.us/static/builds/magpie-local-dev.zip"
 
         if platform.system().lower() != 'windows':
-            url = "https://magpietracker.us/static/builds/magpie-local-linux.zip"
+            # url = "https://magpietracker.us/static/builds/magpie-local-linux.zip"
+            url = "https://dev.magpietracker.us/static/builds/magpie-local-linux-dev.zip"
 
         request = requests.get(url, headers=headers)
 
