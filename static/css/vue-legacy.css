@@ -24,11 +24,16 @@ nowrap {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 3;
+}
+
+.primary {
+    position: relative;
+    z-index: 2;
 }
 
 .lowSecondary {
-    z-index: -1 !important;
+    z-index: 1 !important;
 }
 
 .overlay {
