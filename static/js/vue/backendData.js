@@ -245,11 +245,9 @@ function init() {
     $(document).keydown(keyDown);
 
     if (allowAutotracking) {
-        document.addEventListener('DOMContentLoaded', function() {
-            connectToAutotracker();
+        connectToAutotracker();
 
-            setInterval(connectToAutotracker, 3 * 1000);
-        });
+        setInterval(connectToAutotracker, 3 * 1000);
     }
 
     $('#connectorModal').on('hide.bs.modal', () => { endGraphicalConnection(); });

@@ -1,6 +1,6 @@
 <script setup>
 import { saveQuickSettings } from '@/moduleWrappers.js';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 
 const tip = useTextTooltipStore();
@@ -15,10 +15,40 @@ defineProps({
 });
 
 const activeTabId = ref('quicksettingsTab');
+const autotrackerLog = ref('');
+const romRequested = ref(false);
+const romInput = ref(null);
+
+watch(romRequested, (newValue) => {
+    if (newValue) {
+        activeTabId.value = 'autotrackerTab';
+
+        if (romInput.value) {
+            romInput.value.value = null;
+        }
+    }
+});
+
+function addAutotrackerMessage(status) {
+    // I cannot believe the state of vanilla javascript date formatting
+    let now = new Date();
+    let hours = now.getHours().toString(10).padStart(2, '0');
+    let minutes = now.getMinutes().toString(10).padStart(2, '0');
+    let seconds = now.getSeconds().toString(10).padStart(2, '0');
+
+    autotrackerLog.value += `\n${hours}:${minutes}:${seconds}: ` + status;
+}
+
+function setRomRequested(value) {
+    romRequested.value = value;
+}
 
 function switchTabs(e) {
     activeTabId.value = e.currentTarget.id;
 }
+
+window.addAutotrackerMessage = addAutotrackerMessage;
+window.setRomRequested = setRomRequested;
 </script>
 
 <template>
@@ -102,20 +132,20 @@ function switchTabs(e) {
             <div v-if="activeTabId == 'autotrackerTab'" class="tab h-100">
                 <div class="row h-100 justify-content-center align-items-end">
                     <div class="col">
-                        <div class="row py-2 hidden" id="romRow">
+                        <div v-if="romRequested" class="row py-2 animate__animated animate__flash" id="romRow">
                             <div class="col even-col">
                                 <label for="romInput" class="form-label">
                                     Select ROM File
                                     <img class="invert" src="/images/question-circle.svg" 
                                         @mouseenter="tip.tooltip('The autotracker requires a copy of the ROM file before entrances can be tracked', $event)">
                                 </label>
-                                <input type="file" accept=".gbc" class="hidden" id="romInput" onchange="loadRom(this)" />
+                                <input type="file" accept=".gbc" class="hidden" id="romInput" ref="romInput" onchange="loadRom(this)" />
                                 <input type="button" id="romButton" class="btn btn-secondary" value="Browse..." onclick="document.getElementById('romInput').click();" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <textarea id="autotrackerMessages" readonly></textarea>
+                                <textarea id="autotrackerMessages" readonly v-model="autotrackerLog"></textarea>
                             </div>
                         </div>
                         <div class="row">

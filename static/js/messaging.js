@@ -355,21 +355,6 @@ function autotrackerIsConnected() {
     return autotrackerSocket?.readyState == 1;
 }
 
-function addAutotrackerMessage(status) {
-    // I cannot believe the state of vanilla javascript date formatting
-    let now = new Date();
-    let hours = now.getHours().toString(10).padStart(2, '0');
-    let minutes = now.getMinutes().toString(10).padStart(2, '0');
-    let seconds = now.getSeconds().toString(10).padStart(2, '0');
-    let textArea = $('#autotrackerMessages');
-    textArea.append(`\n${hours}:${minutes}:${seconds}: ` + status);
-    textArea.scrollTop(textArea[0].scrollHeight);
-
-    if (status != 'ROM Requested') {
-        $('#romRow').removeClass('animate__flash');
-    }
-}
-
 function processMessage(messageText) {
     let message;
 
@@ -421,8 +406,9 @@ function processMessage(messageText) {
                 processLocationMessage(message);
                 break;
             case 'romAck':
+                setRomRequested(false);
                 romRequested = false;
-                $('#romRow').hide();
+                // $('#romRow').hide();
 
                 addAutotrackerMessage('ROM Received');
 
@@ -432,15 +418,16 @@ function processMessage(messageText) {
 
                 break;
             case 'romRequest':
+                setRomRequested(true);
                 romRequested = true;
                 console.log('Autotracker requested a copy of the ROM');
 
-                $('#romInput')[0].value = null;
-                $('#romRow').show();
-                $('#romRow').removeClass('hidden');
-                $('#romRow').addClass('animate__animated')
-                $('#romRow').addClass('animate__flash')
-                quickSettingsTab($('#autotrackerTab'))
+                // quickSettingsTab($('#autotrackerTab'))
+                // $('#romInput')[0].value = null;
+                // $('#romRow').show();
+                // $('#romRow').removeClass('hidden');
+                // $('#romRow').addClass('animate__animated')
+                // $('#romRow').addClass('animate__flash')
 
                 addAutotrackerMessage('ROM Requested');
 
