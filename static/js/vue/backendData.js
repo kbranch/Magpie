@@ -1,6 +1,6 @@
 "use strict"
 
-function refreshItems() {
+function refreshItems(doCheckList=true) {
     // If this is the local version, we want to let the request go through so that the settings get saved to disk
     if (!allowItems && !local) {
         return;
@@ -53,7 +53,9 @@ function refreshItems() {
             }
 
             initKnownItems();
-            refreshCheckList();
+            if (doCheckList) {
+                refreshCheckList();
+            }
          }
     });
 }

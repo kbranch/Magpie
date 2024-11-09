@@ -1,7 +1,7 @@
 <script setup>
-import { getFile, importState, importLogicDiff, openExportStateDialog, resetUndoRedo, fixArgs, saveSettingsToStorage, applySettings, broadcastArgs, refreshItems } from '@/moduleWrappers.js';
+import { getFile, importState, importLogicDiff, openExportStateDialog, resetUndoRedo, fixArgs, saveSettingsToStorage, applySettings, broadcastArgs, refreshItems, drawActiveTab } from '@/moduleWrappers.js';
 import { getLayout } from '@/settingsLayout.js';
-import { rateLimit } from '@/main';
+import { debounce } from '@/main';
 import SettingsBlock from './SettingsBlock.vue';
 import { computed, onMounted, ref, toRaw, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
@@ -19,7 +19,7 @@ const props = defineProps({
     graphicsOptions: {
         required: true,
     },
-    settings: {
+    misc: {
         required: true,
     },
     argDescriptions: {
@@ -31,6 +31,12 @@ const stateInput = ref(null);
 const logicDiffInput = ref(null);
 const offcanvas = ref(null);
 const graphicsDict = ref({});
+
+const layout = computed(() => getLayout(settings.value.args, props.argDescriptions, settings.value.settings, graphicsDict));
+const settingsItems = computed(() => layout.value.reduce((acc, item) => acc.concat(extractBindables(item)), []));
+const settings = computed(() => {
+    return { args: props.misc?.args, settings: props.misc?.localSettings };
+});
 
 onMounted(() => {
     offcanvas.value.addEventListener("hide.bs.offcanvas", function() {
@@ -53,8 +59,6 @@ watch(props, (newValue) => {
         return;
     }
 
-    refreshSettingsItems(newValue.settings);
-
     let newGraphics = newValue.graphicsOptions.reduce((acc, val) => {
         acc[`/${val}`] = val;
         return acc;
@@ -62,18 +66,16 @@ watch(props, (newValue) => {
 
     Object.assign(graphicsDict.value, newGraphics);
 
-    saveSettings(newValue.settings);
-})
+    refreshSettingsItems(settings.value);
+    saveSettings(settings.value);
+});
 
-const layout = computed(() => getLayout(props.settings.args, props.argDescriptions, props.settings.settings, graphicsDict));
-const settingsItems = computed(() => layout.value.reduce((acc, item) => acc.concat(extractBindables(item)), []));
+refreshSettingsItems(settings.value);
 
-refreshSettingsItems(props.settings);
-
-function cloneSettings(settings) {
+function cloneSettings(obj) {
     return structuredClone({
-        args: toRaw(settings.args),
-        settings: toRaw(settings.settings),
+        args: toRaw(obj.args),
+        settings: toRaw(obj.settings),
     });
 }
 
@@ -133,8 +135,11 @@ function updateCustomDungeonItems(args) {
 
 let lastSettings = null;
 function saveSettings(settings) {
+    let argsChanged = true;
+
     if (lastSettings === null) {
         lastSettings = cloneSettings(settings);
+        debounce(() => refreshItems(argsChanged), 500);
     }
 
     if (JSON.stringify(settings) === JSON.stringify(lastSettings)) {
@@ -147,9 +152,14 @@ function saveSettings(settings) {
 
     applySettings(lastSettings.args);
 
-    // skipNextAnimation = true;
+    window.skipNextAnimation = true;
+    argsChanged = JSON.stringify(settings.args) != JSON.stringify(lastSettings.args);
 
-    rateLimit(refreshItems, 1000);
+    debounce(() => refreshItems(argsChanged), 500);
+
+    if (!argsChanged) {
+        debounce(drawActiveTab, 200);
+    }
 
     if (props.broadcastMode == 'send') {
         if (broadcastArgs) {

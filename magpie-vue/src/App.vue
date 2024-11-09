@@ -154,7 +154,7 @@ defineExpose({
 
   <div id="settingsContainer">
     <SettingsPane v-if="misc.localSettings.checkSize" :local="isLocal" :broadcast-mode="broadMode"
-      :graphics-options="graphicsOptions" :settings="{ args: misc.args, settings: misc.localSettings }"
+      :graphics-options="graphicsOptions" :misc="misc"
       :argDescriptions="argDescriptions" />
   </div>
 

@@ -10,6 +10,7 @@ export let openMapBroadcastView = window.openMapBroadcastView;
 export let closeAllTooltips = window.closeAllTooltips;
 export let removeNodes = window.removeNodes;
 export let drawNodes = window.drawNodes;
+export let drawActiveTab = window.drawActiveTab;
 export let resetSession = window.resetSession;
 export let saveQuickSettings = window.saveQuickSettings;
 export let saveSettings = window.saveSettings;
@@ -50,6 +51,7 @@ export let graphicalMapType = window.graphicalMapType;
 export let graphicalMapSource = window.graphicalMapSource;
 export let coupledEntrances = window.coupledEntrances;
 export let mapBoss = window.mapBoss;
+export let skipNextAnimation = window.skipNextAnimation;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;
