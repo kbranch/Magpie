@@ -228,13 +228,13 @@ function connectEntrances(from, to, refresh=true, save=true) {
         entranceMap[to] = from;
     }
 
-    skipNextAnimation = true;
-
     if (save) {
         saveEntrances();
     }
 
     if (refresh) {
+        skipNextAnimation = true;
+
         closeAllTooltips();
         refreshCheckList();
     }
@@ -373,13 +373,13 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
 
     Connection.createConnection(entrances, Entrance.isVanilla(from));
 
-    skipNextAnimation = true;
-
     if (save) {
         saveEntrances();
     }
 
     if (refresh) {
+        skipNextAnimation = true;
+
         closeAllTooltips();
         refreshCheckList();
     }
