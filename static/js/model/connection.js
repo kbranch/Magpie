@@ -14,9 +14,7 @@ class Connection {
             this.connector = connector;
         }
 
-        if (this.connector) {
-            this.map = map ?? this.connector.map;
-        }
+        this.map = map ?? this.connector.map;
 
         if (label == null) {
             // this.connector = connectors.filter(x => x.entrances.includes(fromInterior))[0] || null;

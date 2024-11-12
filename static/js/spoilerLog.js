@@ -83,7 +83,9 @@ function spoilAll() {
     }
 
     for (const entranceId in spoilerLog.entrances) {
-        spoilEntrance(entranceId, false);
+        if (!coupledEntrances() || !Entrance.isInside(entranceId)) {
+            spoilEntrance(entranceId, false);
+        }
     }
 
     applySettings();
@@ -109,6 +111,10 @@ function spoilEntrance(entranceId, housekeeping=true) {
     }
     else {
         entranceMap[entranceId] = spoilerLog.entrances[entranceId];
+
+        if (coupledEntrances()) {
+            entranceMap[entranceMap[entranceId]] = entranceId;
+        }
 
         saveEntrances();
 
