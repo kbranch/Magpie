@@ -83,7 +83,7 @@ function spoilAll() {
     }
 
     for (const entranceId in spoilerLog.entrances) {
-        if (!coupledEntrances() || !Entrance.isInside(entranceId)) {
+        if (!inOutEntrances() || !Entrance.isInside(entranceId)) {
             spoilEntrance(entranceId, false);
         }
     }
@@ -112,7 +112,7 @@ function spoilEntrance(entranceId, housekeeping=true) {
     else {
         entranceMap[entranceId] = spoilerLog.entrances[entranceId];
 
-        if (coupledEntrances()) {
+        if (inOutEntrances()) {
             entranceMap[entranceMap[entranceId]] = entranceId;
         }
 
