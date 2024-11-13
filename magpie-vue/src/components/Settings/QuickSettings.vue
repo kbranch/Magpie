@@ -228,10 +228,10 @@ window.setRomRequested = setRomRequested;
                     <div class="col rom-col">
                         <h6 class="mb-0">Offline version</h6>
                         <ul class="mb-1">
-                            <li><a href="https://dev.magpietracker.us/static/builds/magpie-local-dev.zip">Windows</a>, <a
-                                    href="https://dev.magpietracker.us/static/builds/magpie-local-linux-dev.zip">Linux</a>
+                            <li><a href="https://magpietracker.us/static/builds/magpie-local.zip">Windows</a>, <a
+                                    href="https://magpietracker.us/static/builds/magpie-local-linux.zip">Linux</a>
                             </li>
-                            <li><a href="https://dev.magpietracker.us/static/builds/magpie-source-dev.zip">Source bundle</a>
+                            <li><a href="https://magpietracker.us/static/builds/magpie-source.zip">Source bundle</a>
                             </li>
                         </ul>
 
