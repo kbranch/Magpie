@@ -343,6 +343,7 @@ def renderCheckList():
             } for x in logics['stock']],
             'randomizedEntrances': entrances,
             'startLocations': getStartLocations(args),
+            'version': getVersion(),
         }
 
         for logic in accessibility.checks:
@@ -357,7 +358,6 @@ def renderCheckList():
         response.headers['Content-Encoding'] = 'gzip'
 
         return response
-        # return json.dumps(result, default=lambda x: x.__dict__)
     except:
         return renderTraceback()
 

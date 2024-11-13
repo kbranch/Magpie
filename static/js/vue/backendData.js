@@ -128,6 +128,7 @@ function refreshCheckList() {
             setTimeout(() => {
                 vueApp.updateCheckAccessibility(checkAccessibility);
                 vueApp.updateLogics(response.logics);
+                vueApp.updateServerVersion(response.version);
             }, 20);
         }
     });

@@ -17,6 +17,7 @@ let app = createApp(App);
 
 app.use(pinia);
 window.vueApp = app.mount('#app');
+app.config.globalProperties.window = window
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/vue-legacy.css");

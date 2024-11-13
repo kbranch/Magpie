@@ -10,6 +10,7 @@ import SettingsPane from '@/components/Settings/SettingsPane.vue';
 import CheckList from '@/components/CheckList/CheckList.vue';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
+import VersionAlert from './components/VersionAlert.vue';
 
 const isLocal = ref(false);
 const hostname = ref(null);
@@ -17,6 +18,7 @@ const version = ref(null);
 const remoteVersion = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
+const serverVersion = ref(null);
 
 const logics = ref([]);
 const checkAccessibility = ref([]);
@@ -36,6 +38,7 @@ onMounted(() => {
       isLocal.value = data.local;
       hostname.value = data.hostname;
       version.value = data.version;
+      serverVersion.value = data.version;
       remoteVersion.value = data.remoteVersion;
       broadMode.value = data.broadcastMode;
       graphicsOptions.value = data.graphicsOptions;
@@ -79,6 +82,10 @@ function stripProxy(obj) {
   return toRaw(obj);
 }
 
+function updateServerVersion(newVersion) {
+  serverVersion.value = newVersion;
+}
+
 defineExpose({
   updateCheckAccessibility,
   updateLogics,
@@ -87,6 +94,7 @@ defineExpose({
   updateSettings,
   updateArgs,
   stripProxy,
+  updateServerVersion,
 });
 </script>
 
@@ -115,6 +123,7 @@ defineExpose({
           <OpenBroadcastView type="items" />
         </div>
       </div>
+      <VersionAlert :client-version="version" :server-version="serverVersion" />
       <div class="quicksettings-container quicksettings-slot full-height">
         <QuickSettings v-model="misc.localSettings" />
       </div>
