@@ -7,13 +7,15 @@ function checkGraphicMouseEnter(element) {
         return;
     }
 
-    let tooltip = bootstrap.Tooltip.getInstance(element);
+    if (!isVue) {
+        let tooltip = bootstrap.Tooltip.getInstance(element);
 
-    if (tooltip._isShown()) {
-        return;
+        if (tooltip._isShown()) {
+            return;
+        }
+
+        tooltip.show();
     }
-
-    tooltip.show();
 
     let node = nodes[element.id];
     let connection = node.entrance?.mappedConnection();
@@ -41,8 +43,11 @@ function checkGraphicMouseEnter(element) {
 
 function checkGraphicMouseLeave(element) {
     if (!hasAttr(element, 'data-pinned')) {
-        let tooltip = bootstrap.Tooltip.getInstance(element);
-        tooltip.hide();
+        if (!isVue) {
+            let tooltip = bootstrap.Tooltip.getInstance(element);
+            tooltip.hide();
+        }
+
         $('connection.connector-line').connections('remove');
     }
 
@@ -103,11 +108,14 @@ function nodeSecondary(element) {
         return;
     }
 
-    if (hasAttr(element, 'data-pinned')) {
-        $(element).removeAttr('data-pinned');
+    let node = nodes[element.dataset.nodeId];
+    node.pinned = !node.pinned;
+
+    if (node.pinned) {
+        $(element).attr('data-pinned', true);
     }
     else {
-        $(element).attr('data-pinned', true);
+        $(element).removeAttr('data-pinned');
     }
 
     updateTooltip(element);
@@ -167,7 +175,7 @@ function connectorMouseMove(event) {
 
         $('#mapContainer').append(mouseTracker);
 
-        let source = $(`[data-entrance-id="${graphicalMapSource}"]`);
+        let source = $(`.check-graphic[data-entrance-id="${graphicalMapSource}"]`);
         $(source).connections({ class: 'entrance-from', to: $(mouseTracker) });
         $(source).connections({ class: 'outer-entrance-connection', to: $(mouseTracker) });
     }

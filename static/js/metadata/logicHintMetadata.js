@@ -59,4 +59,19 @@ var logicHintDict = {
         },
       ],
     },
+    "DampPit":{
+      "id":"DampPit",
+      "text":"Fall Down the Damp Cave Pit",
+      "image": "lanmola-hole.svg",
+      "condition": (flags, settings) => { return flags.entranceshuffle != 'none' && flags.shufflewater; },
+      "locations":[
+        {
+          "map":"overworld",
+          "x": 2438,
+          "y": 210,
+          "offsetX": -74,
+          "offsetY": 0,
+        },
+      ],
+    },
 }

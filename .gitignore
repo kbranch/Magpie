@@ -20,4 +20,5 @@ __pycache__/
 /magpie-vue/node_modules
 /magpie-vue/dist
 magpie-vue/.vite/
+/static/vue
 magpie.log

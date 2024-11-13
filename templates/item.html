@@ -45,6 +45,8 @@
         {% set tooltip = primaryName.replace('_', ' ').replace('TRADING ITEM ', '')|title %}
     {% endif %}
 
+    {% set onmouseenter = "itemMouseEnter(this); if (isVue) { vueTooltip(`" + tooltip + "`, window.event, 500); }" %}
+
     {% if classes == '"' %}
         {% set classes = "pt-2 px-1 col text-center" %}
     {% endif %}
@@ -92,7 +94,7 @@
     {% endif %}
 
     <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{highlightOwnedSecondary}}{{classes}}" style="{{outerStyle}}">
-        <div class="itemWrapper" {{innerStyle|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="itemMouseEnter(this)" onmouseleave="itemMouseLeave(this)" data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
+        <div class="itemWrapper" {{innerStyle|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="{{onmouseenter|safe}}" onmouseleave="itemMouseLeave(this)"  data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" class="itemImage secondary{{secondaryClasses}}" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}

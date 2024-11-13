@@ -154,6 +154,13 @@ function broadcastMap(buffer=true, force=false) {
         return;
     }
 
+    let contents = checkContents;
+
+    if (isVue) {
+        contents = {};
+        Object.assign(contents, checkContents);
+    }
+
     broadcastMessage({
         type: 'map',
         data: {
@@ -165,7 +172,7 @@ function broadcastMap(buffer=true, force=false) {
                 connections: connections,
                 bossMap: bossMap,
                 checkedChecks: Array.from(checkedChecks),
-                checkContents: checkContents,
+                checkContents: contents,
             },
             thenMe: {
                 entranceAccessibility: entranceAccessibility,
@@ -176,7 +183,7 @@ function broadcastMap(buffer=true, force=false) {
     });
 }
 
-function broadcastMapTab(tabName) {
+export function broadcastMapTab(tabName) {
     if (receiving) {
         return;
     }
@@ -242,6 +249,10 @@ function broadcastInit() {
 }
 
 function broadcastMessage(msg) {
+    if (!channel) {
+        return;
+    }
+
     msg.id = String(Math.random());
 
     // console.log(`sending ${msg.type} ID ${msg.id}`);
@@ -253,6 +264,10 @@ function broadcastMessage(msg) {
         }
     }
     else {
+        if (isVue) {
+            msg.data = vueApp.stripProxy(msg.data);
+        }
+
         channel.postMessage(msg);
     }
 }

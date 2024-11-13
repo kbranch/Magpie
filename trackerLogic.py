@@ -132,6 +132,8 @@ d0_stone_beak = '0x311'
 d0_lower_small_key = '0x314'
 d0_bullshit_room = '0x307'
 d0_zol_chest = '0x306'
+damp_pit = 'Near Hole to Damp Cave'
+d7_plateau = 'D7 Plateau'
 
 def updateVanilla(args):
     global vanillaIds
@@ -216,7 +218,7 @@ def applyTrackerLogic(log):
         locs[animal_village].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
         locs[ukuku].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
 
-    # fly from staircase to staircase on the north side of the moat
+    # Fly from staircase to staircase on the north side of the moat
     if angler_keyhole in locs and kanalet_side in locs:
         kanalet_rooster = Location().add(LogicHint('KanaletRooster'))
         locs[angler_keyhole].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
@@ -231,6 +233,25 @@ def applyTrackerLogic(log):
     if desert in locs:
         lanmola_pit = Location().add(LogicHint('LanmolaPit'))
         locs[desert].connect(lanmola_pit, None, one_way=True)
+    
+    # Fall down the damp cave pit
+    if damp_pit in locs or d7_plateau in locs:
+        damp_cave_pit = Location().add(LogicHint('DampPit'))
+
+        if damp_pit in locs:
+            locs[damp_pit].connect(damp_cave_pit, AND(log.name != 'casual',
+                                                      OR('FLIPPERS',
+                                                         log.name == 'hell',
+                                                         AND(log.name == 'glitched',
+                                                             'FEATHER'))
+                ), one_way=True)
+        if d7_plateau in locs:
+            locs[d7_plateau].connect(damp_cave_pit, AND(log.name != 'casual',
+                                                      OR('FLIPPERS',
+                                                         log.name == 'hell',
+                                                         AND(log.name == 'glitched',
+                                                             'FEATHER'))
+                ), one_way=True)
     
     # Alternative flame skip methods
     if log.name not in ('casual', 'normal') and fire_cave_north in locs and fire_cave_south in locs:

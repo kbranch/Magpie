@@ -3,6 +3,10 @@
 function saveCheckContents() {
     setLocalStorage('checkContents', JSON.stringify(checkContents));
     updateItemLocations();
+
+    if (isVue) {
+        vueApp.updateCheckContents(checkContents);
+    }
 }
 
 function loadCheckContents() {

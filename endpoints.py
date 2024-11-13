@@ -11,7 +11,7 @@ import traceback
 import localSettings
 from jinja2 import Template
 from datetime import datetime
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, send_from_directory
 # from werkzeug.middleware.profiler import ProfilerMiddleware
 
 from version import *
@@ -74,9 +74,9 @@ except:
 def renderTraceback():
     return f"<pre>{traceback.format_exc()}</pre>"
 
-def getDiskSettings(prefix=''):
+def getDiskSettings(prefix='', jsonify=True):
     if not app.config['local']:
-        return '{}'
+        return '{}' if jsonify else {}
     
     settings = {}
     diskSettings = localSettings.readSettings()
@@ -84,13 +84,16 @@ def getDiskSettings(prefix=''):
     if prefix + 'args' in diskSettings:
         settings['args'] = diskSettings[prefix + 'args']
 
-    if prefix + 'localSettings' in diskSettings:
-        settings['localSettings'] = diskSettings[prefix + 'localSettings']
+    if 'localSettings' in diskSettings:
+        settings['localSettings'] = diskSettings['localSettings']
+    
+    if jsonify:
+        diskSettings = json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
 
-    return json.dumps(settings).replace("'", '"').replace("\\", "\\\\")
+    return diskSettings
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks'}
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -104,7 +107,7 @@ def afterRequest(response):
 
     return response
 
-@app.route("/")
+@app.route("/classic")
 def home():
     args = getArgs()
     defaultSettings = LocalSettings()
@@ -161,13 +164,6 @@ def renderItems():
     try:
         argsText = request.form['args']
         settingsText = request.form['localSettings']
-
-        if app.config['local']:
-            prefix = ''
-            if 'settingsPrefix' in request.form:
-                prefix = request.form['settingsPrefix']
-
-            updateSettings(argsText, settingsText, prefix)
 
         args = Args.parse(argsText)
         localSettings = LocalSettings.parse(settingsText)
@@ -246,10 +242,12 @@ def fetchUpdate():
 
     try:
         headers = {'User-Agent': 'Magpie'}
-        url ="https://magpietracker.us/static/builds/magpie-local.zip"
+        url = "https://magpietracker.us/static/builds/magpie-local.zip"
+        # url = "https://dev.magpietracker.us/static/builds/magpie-local-dev.zip"
 
         if platform.system().lower() != 'windows':
             url = "https://magpietracker.us/static/builds/magpie-local-linux.zip"
+            # url = "https://dev.magpietracker.us/static/builds/magpie-local-linux-dev.zip"
 
         request = requests.get(url, headers=headers)
 
@@ -277,6 +275,13 @@ def getSpoilerLog():
         return loadSpoilerLog(romData)
     except:
         return renderTraceback()
+
+@app.route("/diskSettings", methods=['POST'])
+def updateDiskSettings():
+    storage = request.form['localStorage']
+    updateSettings(localStorage=storage)
+
+    return "ok"
 
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():
@@ -570,9 +575,12 @@ if sharingEnabled:
         if 'playerName' not in request.form:
             return "playerName is required", 400
 
-        id = sharing.getPlayerId(request.form['playerName'])
+        try:
+            id = sharing.getPlayerId(request.form['playerName'])
 
-        return str(id)
+            return str(id)
+        except:
+            return json.dumps({'error': f'{traceback.format_exc()}'})
 
     @app.route("/canJoinEvent", methods=['GET'])
     def canJoinEvent():
@@ -602,9 +610,12 @@ if sharingEnabled:
         if not eventName:
             return "eventName is required", 400
 
-        event = sharing.eventInfo(eventName)
+        try:
+            event = sharing.eventInfo(eventName)
 
-        return json.dumps(event)
+            return json.dumps(event)
+        except:
+            return json.dumps({'error': f'{traceback.format_exc()}'})
 
     @app.route("/createEvent", methods=['POST'])
     def createEvent():
@@ -689,3 +700,68 @@ if sharingEnabled:
                 return False
         
         return True
+
+@app.route("/")
+def vueRoot():
+    return send_from_directory("vue-dist", "index.html")
+
+@app.route('/assets/<path:filename>')
+def vueCatchall(filename):
+  return send_from_directory('vue-dist/assets', filename)
+
+@app.route('/<path:filename>')
+def staticCatchall(filename):
+  return app.send_static_file(filename)
+
+@app.route("/vueInit")
+def vueInit():
+    args = getArgs()
+    defaultSettings = LocalSettings()
+
+    flags = args.flags
+    args.flags = []
+    settingsOverrides = {}
+    argsOverrides = {}
+
+    if request.args.get('enable_autotracking') or request.args.get('enable_autotracker'):
+        settingsOverrides['enableAutotracking'] = True
+
+    shortString = request.args.get('shortString') 
+    if shortString:
+        argsOverrides = getArgsFromShortString(shortString)
+
+    settingsPrefix = 'setting_'
+    argsPrefix = 'flag_'
+    for arg, value in request.args.items():
+        if arg.startswith(settingsPrefix):
+            settingsOverrides[arg[len(settingsPrefix):]] = value
+        if arg.startswith(argsPrefix):
+            argsOverrides[arg[len(argsPrefix):]] = value
+
+    remoteVersion = None
+
+    if app.config['local']:
+        remoteVersion = getRemoteVersion()
+        if remoteVersion:
+            remoteVersion = remoteVersion['magpie']
+
+    return json.dumps(
+        {
+            "flags": [x.__dict__ for x in flags],
+            "args": args.__dict__,
+            "defaultSettings": defaultSettings.__dict__,
+            "jsonSettingsOverrides": settingsOverrides,
+            "jsonArgsOverrides": argsOverrides,
+            "local": app.config["local"],
+            "graphicsOptions": LocalSettings.graphicsPacks(),
+            "version": getVersion(),
+            "remoteVersion": remoteVersion,
+            "diskSettings": getDiskSettings(jsonify=False),
+            "hostname": app.config["hostname"],
+            "allowAutotracking": True,
+            "allowMap": True,
+            "allowItems": True,
+            "players": [""],
+            "broadcastMode": "send",
+        }
+    )

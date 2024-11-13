@@ -28,12 +28,12 @@
     {{ item("SEASHELL", max_image="1", overlay_count="SEASHELL") }}
 
     {% if args.keyholesanity %}
-        {{ item("TAIL_KEY", max="1", secondary="TAIL_CAVE_OPENED", secondaryMax="1") }}
-        {{ item("ANGLER_KEY", max="1", secondary="ANGLER_TUNNEL_OPENED", secondaryMax="1") }}
-        {{ item("FACE_KEY", max="1", secondary="FACE_SHRINE_OPENED", secondaryMax="1") }}
-        {{ item("BIRD_KEY", max="1", secondary="EAGLE_TOWER_OPENED", secondaryMax="1") }}
-        {{ item("SLIME_KEY", max="1", secondary="KEY_CAVERN_OPENED", secondaryMax="1") }}
-        {{ item("GOLD_LEAF", max_image="5", gfx=False, secondary="CASTLE_GATE_OPENED", secondaryMax="1") }}
+        {{ item("TAIL_KEY", max="1", secondary="TAIL_CAVE_OPENED", secondaryMax="1", secondaryBelow=True) }}
+        {{ item("ANGLER_KEY", max="1", secondary="ANGLER_TUNNEL_OPENED", secondaryMax="1", secondaryBelow=True) }}
+        {{ item("FACE_KEY", max="1", secondary="FACE_SHRINE_OPENED", secondaryMax="1", secondaryBelow=True) }}
+        {{ item("BIRD_KEY", max="1", secondary="EAGLE_TOWER_OPENED", secondaryMax="1", secondaryBelow=True) }}
+        {{ item("SLIME_KEY", max="1", secondary="KEY_CAVERN_OPENED", secondaryMax="1", secondaryBelow=True) }}
+        {{ item("GOLD_LEAF", max_image="5", gfx=False, secondary="CASTLE_GATE_OPENED", secondaryMax="1", secondaryBelow=True) }}
     {% else %}
         {{ item("TAIL_KEY", max="1") }}
         {{ item("ANGLER_KEY", max="1") }}

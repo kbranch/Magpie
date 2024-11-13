@@ -8,4 +8,8 @@ class Boss {
         return bosses.filter(x => x.type == this.type
                                  && x.id != this.mappedTo);
     }
+
+    mappedToMetadata() {
+        return bossDataDict[this.mappedTo];
+    }
 }

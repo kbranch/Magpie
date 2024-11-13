@@ -9,6 +9,11 @@ ln -s magpie-data.spec a.spec
 
 git rev-list --count HEAD > version
 
+cd magpie-vue/
+npm install
+npm run build
+cd ..
+
 docker run -v "$(pwd):/src/" kbranch/pyinstaller-w64
 docker run -v "$(pwd):/src/" kbranch/pyinstaller-l64
 

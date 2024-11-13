@@ -197,9 +197,9 @@ function processSlotDataMessage(message) {
             'instruments': null,
         },
         'instrument_count': {
-            'random': 8,
-            'random-low': 4,
-            'random-high': 8,
+            'random': "8",
+            'random-low': "4",
+            'random-high': "8",
         },
         'shuffle_nightmare_keys': {
             'original_dungeon': false,
@@ -246,7 +246,7 @@ function processSlotDataMessage(message) {
         },
         'overworld': {
             'open_mabe': true,
-        },
+        }
     };
 
     for (const flag in slotData) {
@@ -275,9 +275,10 @@ function processSlotDataMessage(message) {
     }
 
     args['dungeon_items'] = 'custom';
+    args['goal'] = String(args['goal']);
 
     if (slotData.gfxmod) {
-        localSettings.graphicsPack = slotData.gfxmod
+        localSettings.graphicsPack = `/${slotData.gfxmod}`;
     }
 
     setInputValues('flag', args);
@@ -325,6 +326,7 @@ function connectToAutotracker() {
     }
 
     if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
+        setRomRequested(false);
         addAutotrackerMessage('Connecting...');
         const defaultAddress = '127.0.0.1';
         let address = localSettings.autotrackerAddress ? localSettings.autotrackerAddress : defaultAddress;
@@ -352,21 +354,6 @@ function connectToAutotracker() {
 
 function autotrackerIsConnected() {
     return autotrackerSocket?.readyState == 1;
-}
-
-function addAutotrackerMessage(status) {
-    // I cannot believe the state of vanilla javascript date formatting
-    let now = new Date();
-    let hours = now.getHours().toString(10).padStart(2, '0');
-    let minutes = now.getMinutes().toString(10).padStart(2, '0');
-    let seconds = now.getSeconds().toString(10).padStart(2, '0');
-    let textArea = $('#autotrackerMessages');
-    textArea.append(`\n${hours}:${minutes}:${seconds}: ` + status);
-    textArea.scrollTop(textArea[0].scrollHeight);
-
-    if (status != 'ROM Requested') {
-        $('#romRow').removeClass('animate__flash');
-    }
 }
 
 function processMessage(messageText) {
@@ -420,8 +407,7 @@ function processMessage(messageText) {
                 processLocationMessage(message);
                 break;
             case 'romAck':
-                romRequested = false;
-                $('#romRow').hide();
+                setRomRequested(false);
 
                 addAutotrackerMessage('ROM Received');
 
@@ -431,15 +417,8 @@ function processMessage(messageText) {
 
                 break;
             case 'romRequest':
-                romRequested = true;
+                setRomRequested(true);
                 console.log('Autotracker requested a copy of the ROM');
-
-                $('#romInput')[0].value = null;
-                $('#romRow').show();
-                $('#romRow').removeClass('hidden');
-                $('#romRow').addClass('animate__animated')
-                $('#romRow').addClass('animate__flash')
-                quickSettingsTab($('#autotrackerTab'))
 
                 addAutotrackerMessage('ROM Requested');
 

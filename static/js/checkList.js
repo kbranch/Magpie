@@ -152,6 +152,10 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
 }
 
 function refreshTextChecks() {
+    if (isVue) {
+        return;
+    }
+
     if (!checkAccessibility) {
         return;
     }

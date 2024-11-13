@@ -8,6 +8,7 @@ class MapNode {
         this.item = null;
         this.connectorLabel = null;
         this.bossBeatable = false;
+        this.pinned = false;
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
@@ -220,6 +221,31 @@ class MapNode {
         return false;
     }
 
+    areaChecks() {
+        let areaDict = this.checks.reduce((acc, check) => {
+            if (!(check.metadata.area in acc)) {
+                acc[check.metadata.area] = [];
+            }
+
+            acc[check.metadata.area].push(check);
+
+            return acc;
+        }, {});
+
+        return Object.entries(areaDict).map(area => {
+            return {
+                name: area[0],
+                uniqueChecks: Array.from(new Set(area[1].map(check => check.id)))
+                    .map(id => {
+                        return {
+                            'id': id,
+                            'checks': this.checksWithId(id),
+                        };
+                    }),
+            };
+        });
+    }
+
     tooltipHtml(pinned, connectionType, hoveredCheckId=null) {
         let tooltip = new NodeTooltip(this);
         return tooltip.tooltipHtml(pinned, connectionType, hoveredCheckId);
@@ -263,7 +289,7 @@ class MapNode {
 
         if (this.checks.length > 0
             && ((this.checks.length == 1 && this.checks[0].id.includes('Owl'))
-                || this.isOnlyVanillaOwls())) {
+                && this.isOnlyVanillaOwls())) {
             classes.push('owl');
         }
 
@@ -684,10 +710,58 @@ class MapNode {
         });
         $(this.graphic).on('mouseenter', (e) => {
             checkGraphicMouseEnter(e.currentTarget);
+
+            if (isVue) {
+                vueNodeTooltip(nodes[this.id()], e);
+            }
         });
         $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);
         });
+    }
+
+    entranceOptions() {
+        let options = null;
+
+        if (args.entranceshuffle == 'none'
+            && args.dungeonshuffle
+            && this.entrance.isDungeon()) {
+
+            options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
+                && !Entrance.isFound(x)
+                && !Entrance.isInside(x))
+                .map(x => [x, entranceDict[x].name]);
+            options = sortByKey(options, x => [x[0]])
+        }
+        else if (args.entranceshuffle != 'none'
+                 && this.entrance.type != 'stairs'
+                 && coupledEntrances()
+                 && inOutEntrances()
+                 && (this.entrance.type != "connector"
+                     || args.entranceshuffle == 'mixed')
+                 && !this.entrance.isMapped()) {
+
+            options = Entrance.validConnections(this.entrance.id, "simple");
+            options = sortByKey(options, x => [x[1]]);
+        }
+
+        return options?.map(x => entranceDict[x[0]]);
+    }
+
+    usesConnectorDialog() {
+        return coupledEntrances() && inOutEntrances()
+            && (this.entrance.type == "connector" || args.entranceshuffle == 'mixed');
+    }
+
+    usesAdvancedEr() {
+        return args.entranceshuffle != 'none'
+            && this.entrance.type != 'stairs'
+            && advancedER();
+    }
+
+    usesAdvancedErInOut() {
+        return this.usesAdvancedEr()
+            && inOutEntrances();
     }
 
     static nodeId(location, scaling) {

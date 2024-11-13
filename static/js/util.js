@@ -306,34 +306,38 @@ function applySettings(oldArgs=null) {
         ".difficulty-checked": localSettings.diffCheckedAlpha,
     }
 
-    for (const rule of iconStyles.cssRules) {
-        if (rule.selectorText.startsWith('#')) {
-            rule.style.fill = iconStyleTable[rule.selectorText];
-        }
-        else {
-            rule.style.opacity = iconStyleTable[rule.selectorText];
+    if (iconStyles) {
+        for (const rule of iconStyles.cssRules) {
+            if (rule.selectorText.startsWith('#')) {
+                rule.style.fill = iconStyleTable[rule.selectorText];
+            }
+            else {
+                rule.style.opacity = iconStyleTable[rule.selectorText];
+            }
         }
     }
 
-    for(let i = 0; i < themeStyles.rules.length; i++) {
-        themeStyles.removeRule(0);
+    if (themeStyles) {
+        for(let i = 0; i < themeStyles.rules.length; i++) {
+            themeStyles.removeRule(0);
+        }
+
+        let themeRule = `.bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
+            background: ${localSettings.bgColor} !important;
+            color: ${localSettings.textColor} !important;
+        }`;
+        themeStyles.insertRule(themeRule, 0);
+
+        let highlightRule = `.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
+            background-color: ${localSettings.highlightColor};
+        }`;
+        themeStyles.insertRule(highlightRule, 0);
+
+        highlightRule = `.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
+            border-bottom-color: ${localSettings.highlightColor} !important;
+        }`;
+        themeStyles.insertRule(highlightRule, 0);
     }
-
-    let themeRule = `.bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
-        background: ${localSettings.bgColor} !important;
-        color: ${localSettings.textColor} !important;
-    }`;
-    themeStyles.insertRule(themeRule, 0);
-
-    let highlightRule = `.owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {
-        background-color: ${localSettings.highlightColor};
-    }`;
-    themeStyles.insertRule(highlightRule, 0);
-
-    highlightRule = `.owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
-        border-bottom-color: ${localSettings.highlightColor};
-    }`;
-    themeStyles.insertRule(highlightRule, 0);
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
@@ -441,11 +445,39 @@ function setElementHidden(element, hidden) {
 }
 
 function setLocalStorage(key, value) {
+    if (key == 'everything') {
+        for (const item in value) {
+            localStorage.setItem(item, value[item]);
+        }
+
+        return;
+    }
+
     let prefix = settingsPrefix ?? '';
     localStorage.setItem(prefix + key, value);
+
+    if (isVue) {
+        debounce(uploadLocalStorage, 100);
+    }
+}
+
+function uploadLocalStorage() {
+    if (local) {
+        let data = new FormData();
+        data.append('localStorage', JSON.stringify(localStorage));
+
+        fetch('/diskSettings', {
+            method: 'POST',
+            body: data,
+        });
+    }
 }
 
 function getLocalStorage(key) {
+    if (key == 'everything') {
+        return localStorage;
+    }
+
     let prefix = settingsPrefix ?? '';
     return localStorage.getItem(prefix + key);
 }
@@ -490,4 +522,18 @@ function alertModal(header, body) {
     document.getElementById('alertBody').innerHTML = body;
 
     new bootstrap.Modal(document.getElementById('alertModal')).show();
+}
+
+function canBeStart(node) {
+    return node.entrance.canBeStart()
+        && !node.entrance.isMapped()
+        && !Entrance.isMapped(startHouse)
+}
+
+function startIsSet() {
+    return Entrance.isMapped(startHouse) || !args.randomstartlocation;
+}
+
+function getInsideOutEntrance(id) {
+    return Entrance.getInsideOut(id);
 }

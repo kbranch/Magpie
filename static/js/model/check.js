@@ -53,6 +53,10 @@ class Check {
         }
     }
 
+    signature() {
+        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}-${this.id in checkContents ? checkContents[this.id] : ''}-${this.isChecked()}`;
+    }
+
     nodeDifficulty() {
         return this.difficulty == -1 ? 'checked' : this.difficulty;
     }
@@ -118,6 +122,10 @@ class Check {
         }
 
         return true;
+    }
+
+    isEnabled() {
+        return !this.metadata.condition || this.metadata.condition(args, localSettings);
     }
 
     mapLocations(mapName) {
