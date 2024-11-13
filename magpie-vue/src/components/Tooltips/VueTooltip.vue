@@ -182,7 +182,7 @@ function watchMouseOut() {
         :style="`top: 0px; left: 0px; transform: translate(${tipLeft}px, ${tipTop}px); visibility: ${show ? 'visible' : 'hidden'}; color: ${textColor}`">
 
         <template v-if="type == 'text'">
-            <span class="tooltipText">{{ state.text }}</span>
+            <span class="tooltipText" v-html="state.text"></span>
         </template>
 
         <template v-else-if="node">

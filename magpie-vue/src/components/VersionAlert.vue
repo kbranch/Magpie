@@ -1,11 +1,11 @@
 <script setup>
 import { watch, ref } from 'vue';
 
-const props = defineProps(['clientVersion', 'serverVersion']);
+const props = defineProps(['clientVersion', 'remoteVersion', 'updateMessage']);
 
 const alertShown = ref(false);
 
-watch(() => props.serverVersion, (newValue, oldValue) => {
+watch(() => props.remoteVersion, (newValue, oldValue) => {
     if (newValue != oldValue) {
         alertShown.value = false
     }
@@ -13,10 +13,10 @@ watch(() => props.serverVersion, (newValue, oldValue) => {
 </script>
 
 <template>
-    <div class="wrapper" v-if="!alertShown && clientVersion != serverVersion">
+    <div class="wrapper" v-if="!alertShown && clientVersion != remoteVersion && updateMessage">
         <div class="row">
             <div class="col">
-                <p class="message">The server is using a different version of Magpie than is currently loaded. Consider refreshing if anything behaves strangely.</p>
+                <p class="message">{{ updateMessage }}</p>
             </div>
         </div>
         <div class="row">

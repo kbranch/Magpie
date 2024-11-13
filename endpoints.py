@@ -344,6 +344,7 @@ def renderCheckList():
             'randomizedEntrances': entrances,
             'startLocations': getStartLocations(args),
             'version': getVersion(),
+            'updateMessage': getUpdateMessage(),
         }
 
         for logic in accessibility.checks:
@@ -738,7 +739,8 @@ def vueInit():
         if arg.startswith(argsPrefix):
             argsOverrides[arg[len(argsPrefix):]] = value
 
-    remoteVersion = None
+    version = getVersion()
+    remoteVersion = version
 
     if app.config['local']:
         remoteVersion = getRemoteVersion()
@@ -754,7 +756,7 @@ def vueInit():
             "jsonArgsOverrides": argsOverrides,
             "local": app.config["local"],
             "graphicsOptions": LocalSettings.graphicsPacks(),
-            "version": getVersion(),
+            "version": version,
             "remoteVersion": remoteVersion,
             "diskSettings": getDiskSettings(jsonify=False),
             "hostname": app.config["hostname"],

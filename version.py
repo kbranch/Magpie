@@ -24,3 +24,11 @@ def getAutotrackerVersion():
             return reader.read().strip()
     except:
         return 'unknown'
+
+def getUpdateMessage():
+    try:
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'updateMessage')
+        with open(path, 'r') as reader:
+            return reader.read().strip()
+    except:
+        return None

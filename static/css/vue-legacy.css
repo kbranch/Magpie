@@ -1072,10 +1072,6 @@ img.button-icon {
     align-items: center;
 }
 
-.update-button {
-    width: 50px;
-}
-
 body {
     overflow-y: scroll;
 }

@@ -21,6 +21,12 @@ defineProps({
   isLocal: {
     required: true,
   },
+  version: {
+    required: false,
+  },
+  remoteVersion: {
+    required: false,
+  },
 });
 
 const tip = useTextTooltipStore();
@@ -71,6 +77,16 @@ async function sendSuggestion() {
                     <img class="button-icon" src="/images/share.svg">
                 </button>
                 <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" @mouseenter="tip.tooltip('Live sharing', $event)">
+
+                <div v-if="version != remoteVersion && remoteVersion" class="col-auto">
+                    <div class="version">
+                        <a class="btn btn-success ms-1" role="button" 
+                          @mouseenter="tip.tooltip(`${isLocal ? 'Download' : 'Refresh to'} update<br>Current version: ${version}<br>New Version: ${remoteVersion}`, $event)"
+                          @click="() => isLocal ? window.location.href = '/fetchupdate' : window.location.reload()">
+                            <img src="/images/file-arrow-down.svg">
+                        </a>
+                    </div>
+                </div>
             </template>
 
             <div class="col text-end">

@@ -1,7 +1,6 @@
 <script setup>
 import { initGlobals, init, win } from '@/moduleWrappers.js';
 import { computed, onMounted, ref, toRaw } from 'vue';
-import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import DifficultyIcons from '@/components/DifficultyIcons.vue';
 import NavBar from '@/components/NavBar.vue';
 import QuickSettings from '@/components/Settings/QuickSettings.vue'
@@ -18,7 +17,7 @@ const version = ref(null);
 const remoteVersion = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
-const serverVersion = ref(null);
+const updateMessage = ref(null);
 
 const logics = ref([]);
 const checkAccessibility = ref([]);
@@ -29,8 +28,6 @@ const bgColor = computed(() => misc.value?.localSettings?.bgColor);
 const textColor = computed(() => misc.value?.localSettings?.textColor);
 const highlightColor = computed(() => misc.value?.localSettings?.highlightColor);
 
-const tip = useTextTooltipStore();
-
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
     .then(response => response.json())
@@ -38,7 +35,6 @@ onMounted(() => {
       isLocal.value = data.local;
       hostname.value = data.hostname;
       version.value = data.version;
-      serverVersion.value = data.version;
       remoteVersion.value = data.remoteVersion;
       broadMode.value = data.broadcastMode;
       graphicsOptions.value = data.graphicsOptions;
@@ -82,8 +78,11 @@ function stripProxy(obj) {
   return toRaw(obj);
 }
 
-function updateServerVersion(newVersion) {
-  serverVersion.value = newVersion;
+function updateServerVersion(newVersion, message=null) {
+  if (!isLocal.value) {
+    remoteVersion.value = newVersion;
+    updateMessage.value = message;
+  }
 }
 
 defineExpose({
@@ -112,7 +111,7 @@ defineExpose({
     </div>
     <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container px-0 item-chunk">
       <div class="navbar-slot">
-        <NavBar :is-local="isLocal" :settings="misc.localSettings" />
+        <NavBar :is-local="isLocal" :settings="misc.localSettings" :version="version" :remote-version="remoteVersion" />
       </div>
       <div class="items-slot">
         <div id="itemContainer" class="pb-2"></div>
@@ -123,7 +122,7 @@ defineExpose({
           <OpenBroadcastView type="items" />
         </div>
       </div>
-      <VersionAlert :client-version="version" :server-version="serverVersion" />
+      <VersionAlert :client-version="version" :remote-version="remoteVersion" :update-message="updateMessage" />
       <div class="quicksettings-container quicksettings-slot full-height">
         <QuickSettings v-model="misc.localSettings" />
       </div>
@@ -175,15 +174,6 @@ defineExpose({
     <div class="col-auto">
       <div class="version">
         <span>Version: {{ version }}</span>
-      </div>
-    </div>
-
-    <div v-if="isLocal && version != remoteVersion && remoteVersion" class="col-auto">
-      <div class="version">
-        <span>Latest version: {{ remoteVersion }}</span>
-        <a href="/fetchupdate" class="btn btn-secondary update-button ms-2" @mouseenter="tip.tooltip('Download update', $event)" role="button">
-          <img src="/images/file-arrow-down.svg">
-        </a>
       </div>
     </div>
 
