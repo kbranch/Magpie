@@ -30,7 +30,12 @@ const props = defineProps({
 const stateInput = ref(null);
 const logicDiffInput = ref(null);
 const offcanvas = ref(null);
-const graphicsDict = ref({});
+const graphicsDict = computed(() => {
+    return props.graphicsOptions.reduce((acc, val) => {
+            acc[`/${val}`] = val;
+            return acc;
+        }, { '': 'Default' });
+})
 
 const layout = computed(() => getLayout(settings.value.args, props.argDescriptions, settings.value.settings, graphicsDict));
 const settingsItems = computed(() => layout.value.reduce((acc, item) => acc.concat(extractBindables(item)), []));
@@ -59,12 +64,12 @@ watch(props, (newValue) => {
         return;
     }
 
-    let newGraphics = newValue.graphicsOptions.reduce((acc, val) => {
-        acc[`/${val}`] = val;
-        return acc;
-    }, { '': 'Default' })
+    // let newGraphics = newValue.graphicsOptions.reduce((acc, val) => {
+    //     acc[`/${val}`] = val;
+    //     return acc;
+    // }, { '': 'Default' })
 
-    Object.assign(graphicsDict.value, newGraphics);
+    // Object.assign(graphicsDict.value, newGraphics);
 
     refreshSettingsItems(settings.value);
     saveSettings(settings.value);
