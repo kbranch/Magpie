@@ -92,6 +92,14 @@ def getDiskSettings(prefix='', jsonify=True):
 
     return diskSettings
 
+def getSidebarMessage():
+    try:
+        path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'sidebarMessage')
+        with open(path, 'r') as reader:
+            return reader.read().strip()
+    except:
+        return None
+
 jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings'}
 corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings'}
 @app.after_request
@@ -345,6 +353,7 @@ def renderCheckList():
             'startLocations': getStartLocations(args),
             'version': getVersion(),
             'updateMessage': getUpdateMessage(),
+            'sidebarMessage': getSidebarMessage(),
         }
 
         for logic in accessibility.checks:

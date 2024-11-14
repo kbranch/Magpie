@@ -10,6 +10,7 @@ import CheckList from '@/components/CheckList/CheckList.vue';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import VersionAlert from './components/VersionAlert.vue';
+import SidebarAlert from './components/SidebarAlert.vue';
 
 const isLocal = ref(false);
 const hostname = ref(null);
@@ -18,6 +19,7 @@ const remoteVersion = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
 const updateMessage = ref(null);
+const sidebarMessage = ref(null);
 
 const logics = ref([]);
 const checkAccessibility = ref([]);
@@ -85,6 +87,10 @@ function updateServerVersion(newVersion, message=null) {
   }
 }
 
+function updateSidebarMessage(message) {
+  sidebarMessage.value = message;
+}
+
 defineExpose({
   updateCheckAccessibility,
   updateLogics,
@@ -94,6 +100,7 @@ defineExpose({
   updateArgs,
   stripProxy,
   updateServerVersion,
+  updateSidebarMessage,
 });
 </script>
 
@@ -123,6 +130,7 @@ defineExpose({
         </div>
       </div>
       <VersionAlert :client-version="version" :remote-version="remoteVersion" :update-message="updateMessage" />
+      <SidebarAlert :message="sidebarMessage" />
       <div class="quicksettings-container quicksettings-slot full-height">
         <QuickSettings v-model="misc.localSettings" />
       </div>

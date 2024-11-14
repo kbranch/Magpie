@@ -129,6 +129,7 @@ function refreshCheckList() {
                 vueApp.updateCheckAccessibility(checkAccessibility);
                 vueApp.updateLogics(response.logics);
                 vueApp.updateServerVersion(response.version, response.updateMessage);
+                vueApp.updateSidebarMessage(response.sidebarMessage);
             }, 20);
         }
     });
