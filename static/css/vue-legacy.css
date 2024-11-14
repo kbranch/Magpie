@@ -379,6 +379,7 @@ img {
 .text-icon-item {
     width: 16px;
     height: 16px;
+    object-fit: contain;
 }
 
 #linkFace {
