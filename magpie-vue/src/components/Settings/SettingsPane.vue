@@ -58,18 +58,11 @@ onMounted(() => {
 });
 
 let skipPropWatch = false;
-watch(props, (newValue) => {
+watch(props, () => {
     if (skipPropWatch) {
         skipPropWatch = false;
         return;
     }
-
-    // let newGraphics = newValue.graphicsOptions.reduce((acc, val) => {
-    //     acc[`/${val}`] = val;
-    //     return acc;
-    // }, { '': 'Default' })
-
-    // Object.assign(graphicsDict.value, newGraphics);
 
     refreshSettingsItems(settings.value);
     saveSettings(settings.value);
