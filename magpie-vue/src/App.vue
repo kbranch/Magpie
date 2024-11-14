@@ -152,7 +152,10 @@ defineExpose({
       <div class="col-auto mt-2">
         <OpenBroadcastView type="items" />
       </div>
-      <div class="col"></div>
+      <div class="col">
+        <VersionAlert :client-version="version" :remote-version="remoteVersion" :update-message="updateMessage" />
+        <SidebarAlert :message="sidebarMessage" />
+      </div>
       <div class="col-auto px-2_5 quicksettings-container quicksettings-slot">
       </div>
     </div>
