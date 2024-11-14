@@ -40,6 +40,7 @@ export class SettingsItem {
     includeCol = true;
     colSize;
     settingBind;
+    padding;
 
     constructor(obj) {
         obj && Object.assign(this, obj);

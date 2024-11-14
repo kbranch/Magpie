@@ -976,6 +976,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
         new SettingsItem({
             type: types.column,
             includeCol: false,
+            padding: 'py-2',
             children: [
                 new SettingsItem({
                     title: 'Background color',

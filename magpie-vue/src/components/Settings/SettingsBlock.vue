@@ -13,11 +13,21 @@ const types = SettingsItem.types;
 
 const colSize = computed(() => `col${props.item.colSize !== undefined ? props.item.colSize == '' ? '' : '-' + props.item.colSize 
                                                         : props.item.type == types.column ? '-auto' : ''}`);
+
+const classObj = computed(() => {
+    let obj =  { 'pb-2': !props.item.children.length || props.item.children[0].type != types.color };
+
+    if (props.item.padding) {
+        obj[props.item.padding] = true;
+    }
+
+    return obj;
+});
 </script>
 
 <template>
     <template v-if="item.visibleCondition() && (!item.settingName || item.settingBind)">
-        <component :is="item.includeRow ? 'div' : VFragment" class="row" :class="{ 'pb-2': !item.children.length || item.children[0].type != types.color }">
+        <component :is="item.includeRow ? 'div' : VFragment" class="row" :class="classObj">
             <component :is="item.includeCol ? 'div' : VFragment" :class="colSize" @mouseenter="tip.tooltip(item.type == types.color ? '' : item.tooltip, $event)">
                 <component :is="item.type == types.group ? 'fieldset' : VFragment" class="form-group">
                     <SettingControls v-model="model" :item="item" />
