@@ -13,7 +13,7 @@ from state import State
 
 gb = Gameboy()
 
-async def socketLoop(socket, path):
+async def socketLoop(socket):
     print('Connected to tracker')
     state = State()
     loadItems(state)
