@@ -102,41 +102,42 @@ class State:
         await sendRomAck(socket, "Archipelago" if self.isArchipelago() else "LADXR")
 
     async def processMessages(self, socket):
-        messageText = await socket.recv()
-        message = None
+        while len(socket.recv_messages.frames):
+            messageText = await socket.recv()
+            message = None
 
-        try:
-            message = json.loads(messageText)
-        except Exception as e:
-            print(f'Error parsing message: {traceback.format_exc()}')
-            print(f'Message text: {messageText}')
+            try:
+                message = json.loads(messageText)
+            except Exception as e:
+                print(f'Error parsing message: {traceback.format_exc()}')
+                print(f'Message text: {messageText}')
 
-        if message['type'] == 'handshake':
-            print("Received handshake request")
-            self.features = set(message['features'])
-            if 'flags' in message:
-                self.flags = message['flags']
-            else:
-                self.flags = {}
+            if message['type'] == 'handshake':
+                print("Received handshake request")
+                self.features = set(message['features'])
+                if 'flags' in message:
+                    self.flags = message['flags']
+                else:
+                    self.flags = {}
 
-            print(f"Features: {self.features}")
+                print(f"Features: {self.features}")
 
-            await sendMessage({
-                'type': 'handshAck',
-                'version': protocolVersion,
-                'name': 'magpie-autotracker',
-            }, socket)
+                await sendMessage({
+                    'type': 'handshAck',
+                    'version': protocolVersion,
+                    'name': 'magpie-autotracker',
+                }, socket)
 
-            self.handshook = True
-        elif message['type'] == 'rom':
-            print("Received ROM")
+                self.handshook = True
+            elif message['type'] == 'rom':
+                print("Received ROM")
 
-            romData = base64.b64decode(message['rom'])
-            await self.parseRom(socket, romData)
+                romData = base64.b64decode(message['rom'])
+                await self.parseRom(socket, romData)
 
-            self.entrancesLoaded = True
-        elif message['type'] == 'sendFull':
-            self.sendFull = True
+                self.entrancesLoaded = True
+            elif message['type'] == 'sendFull':
+                self.sendFull = True
 
     async def sendTrackables(self, socket):
         if self.sendFull:
