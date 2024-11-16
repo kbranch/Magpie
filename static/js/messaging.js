@@ -32,7 +32,7 @@ function processCheckMessage(message) {
                 addedItem = true;
             }
 
-            checkedChecks.add(check.id);
+            checkCheck(check.id);
         }
         else {
             if (metadata.linkedItem && metadata.linkedItem.endsWith('_CHECKED')) {
@@ -40,7 +40,7 @@ function processCheckMessage(message) {
                 addedItem = true;
             }
 
-            checkedChecks.delete(check.id);
+            uncheckCheck(check.id);
         }
     }
 

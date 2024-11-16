@@ -63,11 +63,11 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
     }
 
     if (Check.isChecked(id)) {
-        checkedChecks.delete(id);
+        uncheckCheck(id);
         itemsChanged = moveCheckFromChecked(id, true);
     }
     else {
-        checkedChecks.add(id);
+        checkCheck(id);
         itemsChanged = moveCheckToChecked(id, true);
     }
 

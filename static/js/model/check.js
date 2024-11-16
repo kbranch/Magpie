@@ -54,7 +54,7 @@ class Check {
     }
 
     signature() {
-        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}-${this.id in checkContents ? checkContents[this.id] : ''}-${this.isChecked()}`;
+        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}-${this.id in checkContents ? checkContents[this.id] : ''}-${this.checked}`;
     }
 
     nodeDifficulty() {
@@ -73,9 +73,11 @@ class Check {
 
         if (this.isChecked()) {
             this.difficulty = -1;
+            this.checked = true;
         }
         else {
             this.difficulty = difficulty;
+            this.checked = false;
         }
     }
 

@@ -105,10 +105,10 @@ function updateLinkedItemChecks(item) {
             }
 
             if (inventory[item] > 0) {
-                checkedChecks.add(check.id);
+                checkCheck(check.id);
             }
             else {
-                checkedChecks.delete(check.id);
+                uncheckCheck(check.id);
             }
         }
 

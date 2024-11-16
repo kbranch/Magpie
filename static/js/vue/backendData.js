@@ -185,7 +185,7 @@ function errorHandler(e) {
     errorLog.push({
         col: e.colno,
         line: e.lineno,
-        message: e.error.message,
+        message: e.error ? e.error.message : e.message,
         stack: e.error.stack,
         filename: e.filename,
         eventTime: e.timeStamp,

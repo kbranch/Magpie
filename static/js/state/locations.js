@@ -384,3 +384,19 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
         refreshCheckList();
     }
 }
+
+function checkCheck(id) {
+    checkedChecks.add(id);
+
+    if (id in checksById) {
+        checksById[id].updateChecked();
+    }
+}
+
+function uncheckCheck(id) {
+    checkedChecks.delete(id);
+
+    if (id in checksById) {
+        checksById[id].updateChecked();
+    }
+}

@@ -1,14 +1,22 @@
 <script setup>
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { toggleSingleNodeCheck, openCheckLogicViewer, getPopperConfig } from '@/moduleWrappers.js';
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, onUpdated, ref, computed } from 'vue';
 import ItemDropdown from '@/components/Tooltips/ItemDropdown.vue';
 
-defineProps(['uniqueCheck', 'show'])
+const props = defineProps(['uniqueCheck', 'show'])
 
 const tip = useTextTooltipStore();
 
 const button = ref(null);
+
+const subChecks = computed(() => {
+    if (props.uniqueCheck?.checks[0].checked) {
+        return [props.uniqueCheck.checks[0]];
+    }
+
+    return props.uniqueCheck?.checks;
+});
 
 onMounted(() => {
     updateHelper();
@@ -37,20 +45,20 @@ function updateHelper() {
     :data-bs-title='"image" in uniqueCheck.checks[0].metadata ? `<img src="/static/images/checks/${uniqueCheck.checks[0].metadata.image}.png">` : null'>
     <li class="list-group-item tooltip-check">
         <div :id="`tooltip-check-${uniqueCheck.id}`" class='text-start d-flex p-1 mb-0 align-items-center' :data-check-id='uniqueCheck.id' :data-vanilla="uniqueCheck.checks[0].isVanilla ? true : null">
-            <div v-for="subCheck in uniqueCheck.checks" :key="subCheck.id" class='tooltip-check-graphic align-middle' :class="[`difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}`, subCheck.isVanilla ? 'vanilla' : '']">
+            <div v-for="subCheck in subChecks" :key="subCheck.id" class='tooltip-check-graphic align-middle' :class="[`difficulty-${subCheck.checked ? 'checked' : subCheck.difficulty}`, subCheck.isVanilla ? 'vanilla' : '']">
                 <div class='tooltip-check-graphic icon-wrapper' :class="[{ 'behind-keys': subCheck.behindKeys },
                                                                             { 'requires-rupees': subCheck.requiredRupees },
                                                                             { 'behind-tracker': subCheck.behindTrackerLogic },
                                                                             { 'owl': subCheck.isOwl() }]">
-                    <div v-if="subCheck.requiredRupees" class='behind-rupees-overlay'></div>
-                    <div v-if="subCheck.behindKeys" class='behind-keys-overlay'></div>
-                    <div v-if="subCheck.behindTrackerLogic" class='behind-tracker-overlay'></div>
-                    <div v-if="subCheck.isOwl()" class='owl-overlay'></div>
+                    <div v-if="subCheck.requiredRupees && !subCheck.checked" class='behind-rupees-overlay'></div>
+                    <div v-if="subCheck.behindKeys && !subCheck.checked" class='behind-keys-overlay'></div>
+                    <div v-if="subCheck.behindTrackerLogic && !subCheck.checked" class='behind-tracker-overlay'></div>
+                    <div v-if="subCheck.isOwl() && !subCheck.checked" class='owl-overlay'></div>
                     <svg class='tooltip-check-graphic align-middle'>
-                        <use :xlink:href="`#difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}${subCheck.isVanilla ? '-vanilla' : ''}`"></use>
+                        <use :xlink:href="`#difficulty-${subCheck.checked ? 'checked' : subCheck.difficulty}${subCheck.isVanilla ? '-vanilla' : ''}`"></use>
                     </svg>
-                    <svg v-if="subCheck.hollow" class='tooltip-check-graphic hollow align-middle'>
-                        <use :xlink:href="`#difficulty-${subCheck.isChecked() ? 'checked' : subCheck.difficulty}-hollow`"></use>
+                    <svg v-if="subCheck.hollow && !subCheck.checked" class='tooltip-check-graphic hollow align-middle'>
+                        <use :xlink:href="`#difficulty-${subCheck.checked ? 'checked' : subCheck.difficulty}-hollow`"></use>
                     </svg>
                 </div>
                 <img v-if="subCheck.item" class="node-item-overlay" :data-node-item="subCheck.item" :src="`/images/${subCheck.item}_1.png`" onmousedown="preventDoubleClick(event)">
