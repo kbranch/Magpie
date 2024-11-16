@@ -12,6 +12,7 @@ var entranceAccessibility = null;
 var checkAccessibility = null;
 var logicHintAccessibility = null;
 var checksById = {};
+var allChecksById = {};
 var localSettings = null;
 var entranceMap = {};
 var reverseEntranceMap = {};

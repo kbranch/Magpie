@@ -96,9 +96,17 @@ function refreshCheckList() {
             startLocations = response.startLocations;
             entranceAccessibility = response.accessibility.entrances;
             checksById = {};
+            allChecksById = {};
             checkAccessibility = response.accessibility.checks.map(x => {
                 let check = new Check(x);
                 checksById[x.id] = check;
+
+                if (!(x.id in allChecksById)) {
+                    allChecksById[x.id] = [];
+                }
+
+                allChecksById[x.id].push(check);
+
                 return check;
             });
 
