@@ -173,7 +173,7 @@ function loadSettings() {
 
     try {
         if (!settingsAreValid(localSettings)) {
-            localSettings = defaultSettings;
+            localSettings = structuredClone(defaultSettings);
         }
     }
     catch (err) {
@@ -181,7 +181,7 @@ function loadSettings() {
             errors.push(err);
         }
 
-        localSettings = defaultSettings;
+        localSettings = structuredClone(defaultSettings);
     }
 
     for (let setting in defaultSettings) {
