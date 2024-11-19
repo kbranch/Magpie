@@ -1,6 +1,6 @@
 <script setup>
 import {$} from '@/moduleWrappers.js';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import MapLegend from './MapLegend.vue';
 import TextCheckArea from './TextCheckArea.vue';
@@ -16,10 +16,6 @@ const props = defineProps([
 const activeTab = ref('dynamic');
 const checksDiv = ref(null);
 
-watch(props.checkAccessibility, () => {
-    console.log('watchin');
-});
-
 // const filteredChecks = computed(() => props.checkAccessibility.filter(check => (check.shouldDraw() || check.difficulty == 9) && check.isEnabled()));
 // const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => props.misc.checkedChecks?.has(check.id) ? -1 : check.difficulty));
 const totalChecks = computed(() => new Set(props.checkAccessibility.filter(x => !x.isVanillaOwl() 
@@ -32,6 +28,10 @@ const totalChecks = computed(() => new Set(props.checkAccessibility.filter(x => 
 const activeChecks = computed(() => {
     let checks = [];
     let areasWithChecks = new Set();
+    
+    // This shouldn't be needed - check.checked isn't behaving reactive for some reason
+    // eslint-disable-next-line no-unused-vars
+    let dummy = props.misc.checkedChecks?.has('asdf');
 
     props.checkAccessibility.map(x => x.updateChecked());
 
@@ -79,12 +79,12 @@ const activeChecks = computed(() => {
     }
 
     checks.map(x => {
-        if (!x.checked && x.difficulty < 9) { 
+        if (x.difficulty < 9) { 
             areasWithChecks.add(x.metadata.area)
         }
     });
 
-    return sortByKey(checks, x => [!areasWithChecks.has(x.metadata.area), x.metadata.area, x.checked, x.difficulty, x.metadata.name]);
+    return sortByKey(checks, x => [!areasWithChecks.has(x.metadata.area), x.metadata.area, x.baseDifficulty, x.metadata.name]);
 });
 
 const checksByArea = computed(() => {
