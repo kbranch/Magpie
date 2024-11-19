@@ -152,6 +152,10 @@ class Check {
         return textItemTemplate.replaceAll('{item}', this.item);
     }
 
+    isHigherLogic() {
+        return this.baseDifficulty > 0 && this.baseDifficulty < 9 && !this.checked;
+    }
+
     static fullName(area, name) {
         return `${area}-${name}`;
     }

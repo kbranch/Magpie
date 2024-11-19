@@ -48,7 +48,7 @@ defineProps(['item']);
             </span>
             <div v-if="item.opacitySettingName" class="opacity-block ps-2" @mouseenter="tip.tooltip('Opacity', $event)">
                 <label :for="`${item.opacitySettingName}-setting`" class="color-label"><img class="invert" src="/images/eye.svg"></label>
-                <input v-model="model[item.opacitySettingName]" :id="`${item.opacitySettingName}-setting`" type="range" min="0.2" max="1" step="0.1" class="form-range node-opacity-slider pt-2 me-0">
+                <input v-model="model[item.opacitySettingName]" :id="`${item.opacitySettingName}-setting`" type="range" :min="0.2" :max="1" :step="0.1" class="form-range node-opacity-slider pt-2 me-0">
             </div>
         </div>
     </template>
