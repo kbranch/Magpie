@@ -17,12 +17,18 @@ const props = defineProps([
 const activeTab = ref('dynamic');
 const checksDiv = ref(null);
 
-const totalChecks = computed(() => new Set(props.checkAccessibility.filter(x => !x.isVanillaOwl() 
-                                                                                && x.id != 'egg' 
-                                                                                && !x.metadata.vanillaItem 
-                                                                                && x.isEnabled())
-                                                                   .map(x => x.id))
-                                                                   .size);
+const countableChecks = computed(() => {
+    // This shouldn't be needed - check.checked isn't behaving reactive for some reason
+    // eslint-disable-next-line no-unused-vars
+    let dummy = state.checkedChecks?.has('asdf');
+
+    return props.checkAccessibility.filter(x => !x.isVanillaOwl()
+        && x.id != 'egg'
+        && !x.metadata.vanillaItem
+        && x.isEnabled())
+});
+
+const totalChecks = computed(() => new Set(countableChecks.value.map(x => x.id)).size);
 
 const activeChecks = computed(() => {
     let checks = [];
@@ -86,10 +92,8 @@ const activeChecks = computed(() => {
     return sortByKey(checks, x => [!areasWithChecks.has(x.metadata.area), x.metadata.area, x.baseDifficulty, x.metadata.name]);
 });
 
-const checksByArea = computed(() => {
-    let result = Object.groupBy(activeChecks.value, check => check.metadata.area)
-    return result;
-});
+const checksByArea = computed(() => Object.groupBy(activeChecks.value, check => check.metadata.area));
+const checksByDifficulty = computed(() => Object.groupBy(countableChecks.value, check => check.difficulty));
 
 function applyMasonry() {
     $(checksDiv.value).masonry('reloadItems')
@@ -159,18 +163,32 @@ function sortByKey(arr, key) {
         </ul>
     </div>
     <div class="col"></div>
-    <div id="checkStats" class="col-auto">
+    <div v-if="state.settings.showStats" id="checkStats" class="col-auto">
+        <div v-for="difficulty in Object.keys(checksByDifficulty)" :key="difficulty" class="check-stat px-2">
+                <div :class="`tooltip-check-graphic difficulty-${difficulty == -1 ? 'checked' : difficulty}`">
+                    <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-${difficulty == -1 ? 'checked' : difficulty}`"></use></svg>
+                </div>
+            <span>
+                : {{ checksByDifficulty[difficulty].length }} ({{ (checksByDifficulty[difficulty].length / totalChecks * 100).toFixed(1) }}%)
+            </span>
+        </div>
         <span>Total: {{ totalChecks }}</span>
+        <img src="/images/x.svg" class="invert close-button ms-2" @mouseenter="tip.tooltip('Hide stats', $event)" @click="state.settings.showStats = false">
     </div>
 </div>
 
 <div ref="checksDiv" id="checks" onclick="preventDoubleClick(event)"
      data-masonry='{ "transitionDuration": 0, "columnWidth": ".text-check-card-wrapper" }'>
     <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" />
+    <span v-if="Object.keys(checksByArea).length == 0" id="no-checks" class="ps-2">No checks!</span>
 </div>
 </template>
 
 <style scoped>
+.check-stat {
+    display: inline-block;
+}
+
 .tab-button.active {
     border-bottom: 3px;
     border-bottom-color: rgba(255, 255, 255, 0.3);
@@ -188,6 +206,16 @@ function sortByKey(arr, key) {
 .tab-button .tab-link {
     border-radius: 5px 5px 0px 0px;
     background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.close-button {
+    height: 24px;
+    opacity: 0.5;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 
 li {
@@ -211,5 +239,12 @@ ul {
 
 #checkStats {
     align-content: center;
+    padding-right: 0.4em;
+}
+
+#no-checks {
+    font-size: larger;
+    width: 100%;
+    text-align: center;
 }
 </style>

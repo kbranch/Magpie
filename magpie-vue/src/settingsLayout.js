@@ -529,6 +529,12 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                             settingBase: 'settings',
                             settingName: 'showLegend',
                         }),
+                        new SettingsItem({
+                            title: 'Show stats',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showStats',
+                        }),
                     ],
                 }),
                 new SettingsItem ({
