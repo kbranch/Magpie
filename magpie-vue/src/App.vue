@@ -11,6 +11,9 @@ import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import VersionAlert from './components/VersionAlert.vue';
 import SidebarAlert from './components/SidebarAlert.vue';
+import { useStateStore } from '@/stores/stateStore.js';
+
+const state = useStateStore();
 
 const isLocal = ref(false);
 const hostname = ref(null);
@@ -23,12 +26,11 @@ const sidebarMessage = ref(null);
 
 const logics = ref([]);
 const checkAccessibility = ref([]);
-const misc = ref({localSettings: {}, args: {}});
 const argDescriptions = ref({});
 
-const bgColor = computed(() => misc.value?.localSettings?.bgColor);
-const textColor = computed(() => misc.value?.localSettings?.textColor);
-const highlightColor = computed(() => misc.value?.localSettings?.highlightColor);
+const bgColor = computed(() => state.settings.bgColor);
+const textColor = computed(() => state.settings.textColor);
+const highlightColor = computed(() => state.settings.highlightColor);
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/vueInit')
@@ -58,22 +60,22 @@ function updateCheckAccessibility(accessibility) {
 }
 
 function updateChecked(checked) {
-  misc.value.checkedChecks = new Set(checked);
+  state.checkedChecks = new Set(checked);
 }
 
 function updateCheckContents(contents) {
-  misc.value.checkContents = contents;
-  win.checkContents = misc.value.checkContents;
+  state.checkContents = contents;
+  win.checkContents = state.checkContents;
 }
 
 function updateSettings(settings) {
-  misc.value.localSettings = settings;
-  win.localSettings = misc.value.localSettings;
+  state.settings = settings;
+  win.localSettings = state.settings;
 }
 
 function updateArgs(args) {
-  misc.value.args = args;
-  win.args = misc.value.args;
+  state.args = args;
+  win.args = state.args;
 }
 
 function stripProxy(obj) {
@@ -113,12 +115,12 @@ defineExpose({
   <div id="unstackedContainer" class="row" data-player="">
     <div id="unstackedMap" class="col-xs-12 col-md map-slot map-chunk">
       <div id="mapContainer">
-        <MainMap :broadcast-mode="broadMode" :args="misc.args" :settings="misc.localSettings" />
+        <MainMap :broadcast-mode="broadMode" />
       </div>
     </div>
     <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container px-0 item-chunk">
       <div class="navbar-slot">
-        <NavBar :is-local="isLocal" :settings="misc.localSettings" :version="version" :remote-version="remoteVersion" />
+        <NavBar :is-local="isLocal" :version="version" :remote-version="remoteVersion" />
       </div>
       <div class="items-slot">
         <div id="itemContainer" class="pb-2"></div>
@@ -132,7 +134,7 @@ defineExpose({
       <VersionAlert :client-version="version" :remote-version="remoteVersion" :update-message="updateMessage" />
       <SidebarAlert :message="sidebarMessage" />
       <div class="quicksettings-container quicksettings-slot full-height">
-        <QuickSettings v-model="misc.localSettings" />
+        <QuickSettings />
       </div>
     </div>
   </div>
@@ -163,17 +165,17 @@ defineExpose({
 
   <div class="row">
     <div id="checkList" class="col">
-      <CheckList :logics="logics" :check-accessibility="checkAccessibility" :misc="misc" />
+      <CheckList :logics="logics" :check-accessibility="checkAccessibility" />
     </div>
   </div>
 
-  <VueTooltip type="text" :text-color="misc.localSettings.textColor" />
-  <VueTooltip type="node" :args="misc.args" :text-color="misc.localSettings.textColor" />
-  <VueTooltip type="auxNode" :args="misc.args" :text-color="misc.localSettings.textColor" />
+  <VueTooltip type="text" :text-color="state.settings.textColor" />
+  <VueTooltip type="node" :text-color="state.settings.textColor" />
+  <VueTooltip type="auxNode" :text-color="state.settings.textColor" />
 
   <div id="settingsContainer">
-    <SettingsPane v-if="misc.localSettings.checkSize" :local="isLocal" :broadcast-mode="broadMode"
-      :graphics-options="graphicsOptions" :misc="misc"
+    <SettingsPane v-if="state.settings.checkSize" :local="isLocal" :broadcast-mode="broadMode"
+      :graphics-options="graphicsOptions"
       :argDescriptions="argDescriptions" />
   </div>
 
@@ -368,6 +370,7 @@ defineExpose({
 
 #appInner {
   max-width: 1500px;
+  width: 100%;
   padding-left: 12px;
   padding-right: 12px;
 }

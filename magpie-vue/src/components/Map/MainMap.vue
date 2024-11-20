@@ -4,9 +4,11 @@ import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
 import { computed, onUpdated, ref } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { useStateStore } from '@/stores/stateStore';
 
 const tip = useTextTooltipStore();
-const props = defineProps(['broadcastMode', 'args', 'settings']);
+const state = useStateStore();
+defineProps(['broadcastMode']);
 
 const maps = ['overworld', 'underworld', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd0'];
 const mapTooltips = {
@@ -30,8 +32,8 @@ const mapPaths = computed(() => maps.reduce((acc, x) => {
 }, {}));
 
 function getMapPath(map) {
-    let mapPath = props.localSettings?.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
-    if (props.args?.overworld == 'alttp' && map == 'overworld') {
+    let mapPath = state.settings.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
+    if (state.args.overworld == 'alttp' && map == 'overworld') {
         mapPath = '/images/alttp-overworld.png';
     }
 

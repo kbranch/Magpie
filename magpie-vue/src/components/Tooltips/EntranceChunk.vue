@@ -3,7 +3,7 @@ import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { openEntranceLogicViewer, graphicalMapType, graphicalMapSource, coupledEntrances, inOutEntrances } from '@/moduleWrappers';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 
-const props = defineProps(['node', 'args']);
+const props = defineProps(['node']);
 
 const helper = ref(null);
 const mapType = ref(graphicalMapType);

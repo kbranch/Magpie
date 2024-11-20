@@ -53,6 +53,8 @@ class LocalSettings:
         self.exportAp = True
         self.exportTimestamp = True
         self.exportFilename = 'Magpie-state'
+        self.showLegend = True
+        self.showStats = True
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

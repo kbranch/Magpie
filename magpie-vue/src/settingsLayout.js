@@ -523,6 +523,18 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                             settingName: 'spoilOnCollect',
                             helperText: 'Mark checked checks with the item they contained. Also automatically adds the contained item to your inventory. Requires a spoiler log to be loaded'
                         }),
+                        new SettingsItem({
+                            title: 'Show legend',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showLegend',
+                        }),
+                        new SettingsItem({
+                            title: 'Show stats',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showStats',
+                        }),
                     ],
                 }),
                 new SettingsItem ({

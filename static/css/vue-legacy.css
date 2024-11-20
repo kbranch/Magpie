@@ -1090,10 +1090,6 @@ body {
     height: 21px;
 }
 
-.card-header {
-    background-color: rgba(255, 255, 255, .1);
-}
-
 .accordion-collapse {
     transition: none !important;
 }
