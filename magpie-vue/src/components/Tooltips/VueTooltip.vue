@@ -8,7 +8,7 @@ import PinnedChunk from '@/components/Tooltips/PinnedChunk.vue';
 import EntranceChunk from './EntranceChunk.vue';
 import BossChunk from './BossChunk.vue';
 
-const props = defineProps(['type', 'textColor', 'args']);
+const props = defineProps(['type', 'textColor']);
 
 const state = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
 const tooltip = ref(null);
@@ -197,8 +197,8 @@ function watchMouseOut() {
                         </div>
                     </ul>
                 </div>
-                <EntranceChunk v-if="node.entrance" :node="node" :args="args" />
-                <PinnedChunk v-if="node.entrance && node.pinned" :node="node" :args="args" />
+                <EntranceChunk v-if="node.entrance" :node="node" />
+                <PinnedChunk v-if="node.entrance && node.pinned" :node="node" />
                 <BossChunk v-if="node.boss" :node="node" />
 
                 <div v-if="node.logicHint" class='tooltip-text align-middle p-2'>

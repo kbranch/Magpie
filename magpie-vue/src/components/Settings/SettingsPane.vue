@@ -5,7 +5,9 @@ import { debounce } from '@/main';
 import SettingsBlock from './SettingsBlock.vue';
 import { computed, onMounted, ref, toRaw, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { useStateStore } from '@/stores/stateStore';
 
+const state = useStateStore();
 const tip = useTextTooltipStore();
 const props = defineProps({
     local: {
@@ -17,9 +19,6 @@ const props = defineProps({
         required: true,
     },
     graphicsOptions: {
-        required: true,
-    },
-    misc: {
         required: true,
     },
     argDescriptions: {
@@ -40,7 +39,7 @@ const graphicsDict = computed(() => {
 const layout = computed(() => getLayout(settings.value.args, props.argDescriptions, settings.value.settings, graphicsDict));
 const settingsItems = computed(() => layout.value.reduce((acc, item) => acc.concat(extractBindables(item)), []));
 const settings = computed(() => {
-    return { args: props.misc?.args, settings: props.misc?.localSettings };
+    return { args: state.args, settings: state.settings };
 });
 
 onMounted(() => {
@@ -57,8 +56,14 @@ onMounted(() => {
     });
 });
 
+watch(props, refresh);
+watch(state.settings, refresh);
+watch(state.args, refresh);
+
+refreshSettingsItems(settings.value);
+
 let skipPropWatch = false;
-watch(props, () => {
+function refresh() {
     if (skipPropWatch) {
         skipPropWatch = false;
         return;
@@ -66,9 +71,7 @@ watch(props, () => {
 
     refreshSettingsItems(settings.value);
     saveSettings(settings.value);
-});
-
-refreshSettingsItems(settings.value);
+}
 
 function cloneSettings(obj) {
     return structuredClone({
@@ -135,13 +138,13 @@ let lastSettings = null;
 function saveSettings(settings) {
     let argsChanged = true;
 
+    if (JSON.stringify(settings) === JSON.stringify(lastSettings)) {
+        return;
+    }
+
     if (lastSettings === null) {
         lastSettings = cloneSettings(settings);
         debounce(() => refreshItems(argsChanged), 500);
-    }
-
-    if (JSON.stringify(settings) === JSON.stringify(lastSettings)) {
-        return;
     }
 
     updateCustomDungeonItems(settings.args);

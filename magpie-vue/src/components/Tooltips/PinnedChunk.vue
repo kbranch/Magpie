@@ -2,9 +2,11 @@
 import { canBeStart, setStartLocation, startGraphicalConnection, getInsideOutEntrance, connectEntrances,
     startIsSet, openDeadEndDialog, mapToLandfill, spoilEntrance, clearEntranceMapping, spoilerLogExists,
     } from '@/moduleWrappers.js';
+import { useStateStore } from '@/stores/stateStore';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 
-const props = defineProps(['node', 'args']);
+const state = useStateStore();
+const props = defineProps(['node']);
 
 const helper = ref(null);
 
@@ -85,7 +87,7 @@ function updateHelpers() {
 
         <div v-if="node.entranceOptions()" class="btn-group dropend">
             <button type="button" class="btn tooltip-item text-start p-1" @click="startGraphicalConnection(entrance.id, 'simple')">
-                {{ args.entranceshuffle != 'none' ? 'Connect to simple entrance...' : 'Connect to...' }}
+                {{ state.args.entranceshuffle != 'none' ? 'Connect to simple entrance...' : 'Connect to...' }}
             </button>
             <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split px-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
             <ul class="dropdown-menu">

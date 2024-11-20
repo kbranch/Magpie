@@ -1,12 +1,14 @@
 <script setup>
+import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 
+const state = useStateStore();
 const tip = useTextTooltipStore();
 defineProps(['logics']);
 </script>
 
 <template>
-<div class="d-flex flex-wrap py-1">
+<div v-if="state.settings.showLegend" class="d-flex flex-wrap py-1">
     <div class="flex-grow-1 d-flex flex-wrap justify-content-center">
         <div v-for="logic in logics" :key="logic.difficulty" class="col-auto px-2">
             <svg class="tooltip-check-graphic">
@@ -73,6 +75,9 @@ defineProps(['logics']);
         <div class="col-auto pe-2">
             <div class="tooltip-check-graphic left-click"></div>: View Dungeon
         </div>
+        <div class="col-auto">
+            <img src="/images/x.svg" class="invert close-button" @mouseenter="tip.tooltip('Hide legend', $event)" @click="state.settings.showLegend = false">
+        </div>
     </div>
     <div id="item-blank"></div>
 </div>
@@ -85,5 +90,15 @@ defineProps(['logics']);
 
 span.logic-name {
     text-transform: capitalize;
+}
+
+.close-button {
+    height: 100%;
+    opacity: 0.5;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 </style>

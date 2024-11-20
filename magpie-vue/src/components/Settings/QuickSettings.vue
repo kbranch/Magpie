@@ -2,9 +2,10 @@
 import { saveQuickSettings } from '@/moduleWrappers.js';
 import { ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { useStateStore } from '@/stores/stateStore';
 
+const state = useStateStore();
 const tip = useTextTooltipStore();
-const settings = defineModel();
 
 defineProps({
     smallQuicksettings: {
@@ -59,7 +60,7 @@ window.setRomRequested = setRomRequested;
                 <div class="col quicksettings-col">
                     <div class="row">
                         <div class="col-4 mb-4">
-                            <input id="showOutOfLogicQuick" type="checkbox" v-model="settings.showOutOfLogic" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showOutOfLogicQuick" type="checkbox" v-model="state.settings.showOutOfLogic" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showOutOfLogicQuick" class="form-label" @mouseenter="tip.tooltip('Show out of logic', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-9"></use>
@@ -67,13 +68,13 @@ window.setRomRequested = setRomRequested;
                             </label>
                         </div>
                         <div class="col-4 mb-4">
-                            <input id="showHigherLogicQuick" type="checkbox" v-model="settings.showHigherLogic" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showHigherLogicQuick" type="checkbox" v-model="state.settings.showHigherLogic" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showHigherLogicQuick" class="form-label" @mouseenter="tip.tooltip('Show higher logic levels', $event)">
                                 <img src="/images/higher-logic.svg" class="quicksettings-icon align-middle">
                             </label>
                         </div>
                         <div class="col-4 mb-4">
-                            <input id="showCheckedQuick" type="checkbox" v-model="settings.showChecked" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showCheckedQuick" type="checkbox" v-model="state.settings.showChecked" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showCheckedQuick" class="form-label" @mouseenter="tip.tooltip('Show checked locations', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-checked"></use>
@@ -81,7 +82,7 @@ window.setRomRequested = setRomRequested;
                             </label>
                         </div>
                         <div class="col-3 pe-1 mb-4">
-                            <input id="showVanillaQuick" type="checkbox" v-model="settings.showVanilla" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showVanillaQuick" type="checkbox" v-model="state.settings.showVanilla" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showVanillaQuick" class="form-label" @mouseenter="tip.tooltip('Show vanilla checks', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-0-vanilla"></use>
@@ -89,7 +90,7 @@ window.setRomRequested = setRomRequested;
                             </label>
                         </div>
                         <div class="col-3 px-1 mb-4">
-                            <input id="showOwnedQuick" type="checkbox" v-model="settings.showOwnedPickups" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showOwnedQuick" type="checkbox" v-model="state.settings.showOwnedPickups" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showOwnedQuick" class="form-label" @mouseenter="tip.tooltip('Show owned vanilla pickups', $event)">
                                 <div class="row ms-0 px-0">
                                     <div class="col-auto px-0">
@@ -112,13 +113,13 @@ window.setRomRequested = setRomRequested;
                             </label>
                         </div>
                         <div class="col-3 px-1 mb-4">
-                            <input id="showVanillaEntrancesQuick" type="checkbox" v-model="settings.showVanillaEntrances" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showVanillaEntrancesQuick" type="checkbox" v-model="state.settings.showVanillaEntrances" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showVanillaEntrancesQuick" class="form-label" @mouseenter="tip.tooltip('Show vanilla entrances and dungeon stairs', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/vanilla-entrance.svg">
                             </label>
                         </div>
                         <div class="col-3 ps-1 mb-4">
-                            <input id="showLogicHintsQuick" type="checkbox" v-model="settings.showLogicHints" class="form-check-input" @change="saveQuickSettings()">
+                            <input id="showLogicHintsQuick" type="checkbox" v-model="state.settings.showLogicHints" class="form-check-input" @change="saveQuickSettings()">
                             <label for="showLogicHintsQuick" class="form-label" @mouseenter="tip.tooltip('Show logic hints', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/logicHints.svg">
                             </label>
@@ -150,7 +151,7 @@ window.setRomRequested = setRomRequested;
                         </div>
                         <div class="row">
                             <div class="col-auto">
-                                <input id="enableAutotracking" type="checkbox" v-model="settings.enableAutotracking" class="form-check-input" @change="saveQuickSettings()">
+                                <input id="enableAutotracking" type="checkbox" v-model="state.settings.enableAutotracking" class="form-check-input" @change="saveQuickSettings()">
                                 <label for="enableAutotracking" class="form-label">Enable Autotracker</label>
                             </div>
                         </div>

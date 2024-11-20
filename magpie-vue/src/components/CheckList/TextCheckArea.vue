@@ -2,7 +2,7 @@
 import { toggleCheck } from '@/moduleWrappers.js';
 import { onUpdated } from 'vue';
 
-const props = defineProps({
+defineProps({
     area: {
         required: true,
     },

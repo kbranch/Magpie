@@ -3,6 +3,9 @@ import {$, getStateZip, resetSession} from '@/moduleWrappers.js';
 import { onMounted } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import ShareDialog from './ShareDialog.vue';
+import { useStateStore } from '@/stores/stateStore';
+
+const state = useStateStore();
 
 defineProps({
   showTitle: {
@@ -14,9 +17,6 @@ defineProps({
     type: Boolean,
     required: false,
     default: true,
-  },
-  settings: {
-    required: true,
   },
   isLocal: {
     required: true,
@@ -125,8 +125,8 @@ async function sendSuggestion() {
         </div>
     </div>
 
-    <ShareDialog v-if="showShare" :is-local="isLocal" :player-id="settings?.playerId"
-        :initial-player-name="settings?.playerName"
-        :initial-event-name="settings?.eventName"
-        :initial-join-code="settings?.joinCode" />
+    <ShareDialog v-if="showShare" :is-local="isLocal" :player-id="state.settings.playerId"
+        :initial-player-name="state.settings.playerName"
+        :initial-event-name="state.settings.eventName"
+        :initial-join-code="state.settings.joinCode" />
 </template>

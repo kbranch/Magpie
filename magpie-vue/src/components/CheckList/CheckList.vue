@@ -2,22 +2,21 @@
 import {$} from '@/moduleWrappers.js';
 import { computed, ref } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { useStateStore } from '@/stores/stateStore.js';
 import MapLegend from './MapLegend.vue';
 import TextCheckArea from './TextCheckArea.vue';
 
+const state = useStateStore();
 const tip = useTextTooltipStore();
 
 const props = defineProps([
     'logics',
     'checkAccessibility',
-    'misc'
 ]);
 
 const activeTab = ref('dynamic');
 const checksDiv = ref(null);
 
-// const filteredChecks = computed(() => props.checkAccessibility.filter(check => (check.shouldDraw() || check.difficulty == 9) && check.isEnabled()));
-// const checksByDifficulty = computed(() => Object.groupBy(filteredChecks.value, check => props.misc.checkedChecks?.has(check.id) ? -1 : check.difficulty));
 const totalChecks = computed(() => new Set(props.checkAccessibility.filter(x => !x.isVanillaOwl() 
                                                                                 && x.id != 'egg' 
                                                                                 && !x.metadata.vanillaItem 
@@ -31,21 +30,21 @@ const activeChecks = computed(() => {
     
     // This shouldn't be needed - check.checked isn't behaving reactive for some reason
     // eslint-disable-next-line no-unused-vars
-    let dummy = props.misc.checkedChecks?.has('asdf');
+    let dummy = state.checkedChecks?.has('asdf');
 
     props.checkAccessibility.map(x => x.updateChecked());
 
     if (activeTab.value == 'dynamic') {
         checks = props.checkAccessibility.filter(check => (check.difficulty != 9
-                                                           || props.misc.localSettings.showOutOfLogic)
+                                                           || state.settings.showOutOfLogic)
                                                           && (!check.isVanilla
-                                                              || props.misc.localSettings.showVanilla)
+                                                              || state.settings.showVanilla)
                                                           && (!check.isOwnedVanillaPickup()
-                                                              || props.misc.localSettings.showOwnedPickups)
+                                                              || state.settings.showOwnedPickups)
                                                           && (!check.isHigherLogic()
-                                                              || props.misc.localSettings.showHigherLogic)
+                                                              || state.settings.showHigherLogic)
                                                           && (!check.checked
-                                                              || props.misc.localSettings.showChecked)
+                                                              || state.settings.showChecked)
                                                           && check.isEnabled()
                                                 );
     }
@@ -54,27 +53,27 @@ const activeChecks = computed(() => {
         checks = props.checkAccessibility.filter(check => check.isHigherLogic()
                                                           && !check.checked
                                                           && (!check.isVanilla
-                                                              || props.misc.localSettings.showVanilla)
+                                                              || state.settings.showVanilla)
                                                           && (!check.isOwnedVanillaPickup()
-                                                              || props.misc.localSettings.showOwnedPickups)
+                                                              || state.settings.showOwnedPickups)
                                                           && check.isEnabled());
     }
 
     if (activeTab.value == 'checked') {
         checks = props.checkAccessibility.filter(check => check.checked
                                                           && (!check.isVanilla
-                                                                  || props.misc.localSettings.showVanilla)
+                                                                  || state.settings.showVanilla)
                                                               && (!check.isOwnedVanillaPickup()
-                                                                  || props.misc.localSettings.showOwnedPickups)
+                                                                  || state.settings.showOwnedPickups)
                                                               && check.isEnabled());
     }
 
     if (activeTab.value == 'outOfLogic') {
         checks = props.checkAccessibility.filter(check => check.difficulty == 9
                                                           && (!check.isVanilla
-                                                                  || props.misc.localSettings.showVanilla)
+                                                                  || state.settings.showVanilla)
                                                               && (!check.isOwnedVanillaPickup()
-                                                                  || props.misc.localSettings.showOwnedPickups)
+                                                                  || state.settings.showOwnedPickups)
                                                               && check.isEnabled());
     }
 
@@ -120,87 +119,75 @@ function compare(a, b) {
 function sortByKey(arr, key) {
     return arr.sort((a, b) => compare(key(a), key(b)))
 }
-
-// function getChecks(difficulty) {
-//     let diff = difficulty == 'Checked' ? -1 : difficulty;
-
-//     if (!(diff in checksByDifficulty.value)) {
-//         return [];
-//     }
-
-//     return sortByKey(checksByDifficulty.value[diff], x => [x.metadata.area, x.metadata.name]);
-// }
 </script>
 
 <template>
 <MapLegend :logics="logics" />
 
-<ul id="tabButtons">
-    <li :class="['tab-button', { active: activeTab == 'dynamic' }]" @mouseenter="tip.tooltip('Checks', $event)">
-        <button class="btn tab-link" type="button" @click="activeTab = 'dynamic'">
-            <div :class="`tooltip-check-graphic difficulty-0`">
-                <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-0`"></use></svg>
-            </div>
-        </button>
-    </li>
+<div class="row" :class="{'pt-2': !state.settings.showLegend}">
+    <div class="col-auto">
+        <ul id="tabButtons">
+            <li class="me-1" :class="['tab-button', { active: activeTab == 'dynamic' }]" @mouseenter="tip.tooltip('Checks', $event)">
+                <button class="btn tab-link" type="button" @click="activeTab = 'dynamic'">
+                    <div :class="`tooltip-check-graphic difficulty-0`">
+                        <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-0`"></use></svg>
+                    </div>
+                </button>
+            </li>
 
-    <li :class="['tab-button', { active: activeTab == 'higherLogic' }]" @mouseenter="tip.tooltip('Higher logic levels', $event)">
-        <button class="btn tab-link" type="button" @click="activeTab = 'higherLogic'">
-            <img src="/images/higher-logic.svg" class="quicksettings-icon align-middle tooltip-check-graphic">
-        </button>
-    </li>
+            <li class="mx-0" :class="['tab-button', { active: activeTab == 'higherLogic' }]" @mouseenter="tip.tooltip('Higher logic levels', $event)">
+                <button class="btn tab-link" type="button" @click="activeTab = 'higherLogic'">
+                    <img src="/images/higher-logic.svg" class="quicksettings-icon align-middle tooltip-check-graphic">
+                </button>
+            </li>
 
-    <li :class="['tab-button', { active: activeTab == 'checked' }]" @mouseenter="tip.tooltip('Checked', $event)">
-        <button class="btn tab-link" type="button" @click="activeTab = 'checked'">
-            <div :class="`tooltip-check-graphic difficulty-checked`">
-                <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-checked`"></use></svg>
-            </div>
-        </button>
-    </li>
+            <li class="mx-1" :class="['tab-button', { active: activeTab == 'checked' }]" @mouseenter="tip.tooltip('Checked', $event)">
+                <button class="btn tab-link" type="button" @click="activeTab = 'checked'">
+                    <div :class="`tooltip-check-graphic difficulty-checked`">
+                        <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-checked`"></use></svg>
+                    </div>
+                </button>
+            </li>
 
-    <li :class="['tab-button', { active: activeTab == 'outOfLogic' }]" @mouseenter="tip.tooltip('Out of logic', $event)">
-        <button class="btn tab-link" type="button" @click="activeTab = 'outOfLogic'">
-            <div :class="`tooltip-check-graphic difficulty-9`">
-                <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-9`"></use></svg>
-            </div>
-        </button>
-    </li>
-</ul>
+            <li class="mx-0" :class="['tab-button', { active: activeTab == 'outOfLogic' }]" @mouseenter="tip.tooltip('Out of logic', $event)">
+                <button class="btn tab-link" type="button" @click="activeTab = 'outOfLogic'">
+                    <div :class="`tooltip-check-graphic difficulty-9`">
+                        <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-9`"></use></svg>
+                    </div>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="col"></div>
+    <div id="checkStats" class="col-auto">
+        <span>Total: {{ totalChecks }}</span>
+    </div>
+</div>
 
 <div ref="checksDiv" id="checks" onclick="preventDoubleClick(event)"
      data-masonry='{ "transitionDuration": 0, "columnWidth": ".text-check-card-wrapper" }'>
-    <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" :misc="misc" />
-    <!-- <div v-for="area in Object.keys(checksByArea)">
-    </div> -->
+    <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" />
 </div>
-
-<!-- <div id="mapAccordion" class="accordion">
-    <TextLogic v-for="logic in [
-        ...logics,
-        { difficulty: 9, friendlyName: 'Out of logic' },
-        { difficulty: 'Checked', friendlyName: 'Checked' }
-    ]"
-        :key="logic.difficulty" :logic="logic" :checks="getChecks(logic.difficulty)" :total-check-count="totalChecks" :misc="misc" />
-</div> -->
-
-<p>Total checks: {{ totalChecks }}</p>
 </template>
 
 <style scoped>
-.tab-button.active .tab-link {
-    background-color: rgba(255, 255, 255, 0.05) !important;
+.tab-button.active {
+    border-bottom: 3px;
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-bottom-style: solid;
 }
 
-.tab-link:hover {
-    background-color: rgba(255, 255, 255, 0.035) !important;
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.075) !important;
 }
 
 .btn {
-    border-width: 0px !important;
+    border-width: 0px;
 }
 
 .tab-button .tab-link {
     border-radius: 5px 5px 0px 0px;
+    background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 li {
@@ -215,11 +202,14 @@ ul {
     padding-top: 0px;
     border-radius: 0px 5px 5px 5px;
     margin: 0px -4px 0px -4px;
-    /* background-color: rgba(255, 255, 255, 0.025) !important; */
 }
 
 #tabButtons {
     padding-left: 0px;
     margin: 0px;
+}
+
+#checkStats {
+    align-content: center;
 }
 </style>
