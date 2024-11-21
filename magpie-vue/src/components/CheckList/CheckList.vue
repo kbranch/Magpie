@@ -138,11 +138,11 @@ function sortByKey(arr, key) {
                 </button>
             </li>
 
-            <li class="mx-0" :class="['tab-button', { active: activeTab == 'higherLogic' }]" @mouseenter="tip.tooltip('Higher logic levels', $event)">
+            <!-- <li class="mx-0" :class="['tab-button', { active: activeTab == 'higherLogic' }]" @mouseenter="tip.tooltip('Higher logic levels', $event)">
                 <button class="btn tab-link" type="button" @click="activeTab = 'higherLogic'">
                     <img src="/images/higher-logic.svg" class="quicksettings-icon align-middle tooltip-check-graphic">
                 </button>
-            </li>
+            </li> -->
 
             <li class="mx-1" :class="['tab-button', { active: activeTab == 'checked' }]" @mouseenter="tip.tooltip('Checked', $event)">
                 <button class="btn tab-link" type="button" @click="activeTab = 'checked'">
