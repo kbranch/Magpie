@@ -24,11 +24,11 @@ onUpdated(() => {
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush px-2">
-                <div v-for="check in checks" :key="check.signature()" class="row">
+                <div v-for="group in checks" :key="group.check.signature()" class="row">
                     <div class="text-check-col col pe-0">
-                        <li class="text-check" @click="toggleCheck($event, check.id)">
+                        <li class="text-check" @click="toggleCheck($event, group.check.id)">
                             <div class="check-name">
-                                <div class="text-check-graphic-wrapper">
+                                <div v-for="check in group.allChecks" :key="check.signature()" class="text-check-graphic-wrapper">
                                     <div :class="`text-check-graphic${check.behindTrackerLogic ? ' behind-tracker' : ''}${check.behindKeys ? ' behind-keys' : ''}${check.requiredRupees ? ' requires-rupees' : ''}${check.isOwl() ? ' owl' : ''}`">
                                         <div class="node-overlay-wrapper" :data-difficulty="check.nodeDifficulty()">
                                             <div :class="`icon-wrapper icon-difficulty-${check.nodeDifficulty()}`">
@@ -47,8 +47,8 @@ onUpdated(() => {
                                     </div>
                                 </div>
                                 <div class="check-text" onmousedown="preventDoubleClick(event)">
-                                    <img v-if="check.item" class="text-icon-item ms-1" :src="`static/images/${check.item}_1.png`">
-                                    {{ check.metadata.name }}
+                                    <img v-if="group.check.item" class="text-icon-item ms-1" :src="`static/images/${group.check.item}_1.png`">
+                                    {{ group.check.metadata.name }}
                                 </div>
                             </div>
                         </li>
@@ -56,8 +56,8 @@ onUpdated(() => {
                     <div class="col-auto ps-0 pe-0">
                         <div class="btn-group dropend">
                             <button type="button" class="btn hidden"></button>
-                            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" :data-check-id="check.id" onmousedown="populateCheckOptions(this)" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                            <ul :id="`text-${check.id}`" class="dropdown-menu text-dropdown"></ul>
+                            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" :data-check-id="group.id" onmousedown="populateCheckOptions(this)" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul :id="`text-${group.id}`" class="dropdown-menu text-dropdown"></ul>
                         </div>
                     </div>
                 </div>

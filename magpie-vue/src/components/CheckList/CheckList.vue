@@ -88,10 +88,22 @@ const activeChecks = computed(() => {
         }
     });
 
-    return sortByKey(checks, x => [!areasWithChecks.has(x.metadata.area), x.metadata.area, x.baseDifficulty, x.metadata.name]);
+    checks = sortByKey(checks, x => [!areasWithChecks.has(x.metadata.area), x.metadata.area, x.baseDifficulty, x.metadata.name]);
+
+    checks = Array.from(new Set(checks.map(check => check.id)))
+         .map(id => {
+             let sharedChecks = checks.filter(x => x.id == id);
+             return {
+                 'id': id,
+                 'allChecks': sharedChecks,
+                 'check': sharedChecks[0],
+             };
+         });
+
+    return checks;
 });
 
-const checksByArea = computed(() => Object.groupBy(activeChecks.value, check => check.metadata.area));
+const checksByArea = computed(() => Object.groupBy(activeChecks.value, check => check.check.metadata.area));
 const checksByDifficulty = computed(() => Object.groupBy(countableChecks.value, check => check.difficulty));
 
 function applyMasonry() {

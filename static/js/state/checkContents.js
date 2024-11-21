@@ -73,7 +73,9 @@ function setCheckContents(checkId, contents, housekeeping=true) {
     saveCheckContents();
 
     if (checksById[checkId]) {
-        checksById[checkId].item = contents;
+        for (const check of allChecksById[checkId]) {
+            check.item = contents;
+        }
     }
 
     if (housekeeping) {
