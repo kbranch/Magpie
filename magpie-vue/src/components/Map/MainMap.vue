@@ -52,7 +52,7 @@ onUpdated(() => {
 <template>
 <ul class="nav" id="mapTabs">
     <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == activeTab }]" :data-mapname="map" @mouseenter="tip.tooltip(mapTooltips[map], $event)">
-        <button class="btn tab-link map-button" :id="`${map}Tab`" type="button" @click="activeTab = map">
+        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="activeTab = map">
             {{ map }}
         </button>
     </li>
@@ -92,15 +92,21 @@ onUpdated(() => {
     opacity: 0;
 }
 
-.tab-button.active .tab-link {
-    border-color: #fff;
-    border-radius: 5px 5px 0px 0px;
-    color: #fff;
+.tab-button.active {
+    border-bottom: 3px;
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-bottom-style: solid;
 }
 
-.tab-button:not(.active) .tab-link:hover {
-    border-color: #ccc;
+.tab-button:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.075) !important;
+}
+
+.tab-button {
     border-radius: 5px 5px 0px 0px;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    margin-right: 4px;
+    margin-top: 6px;
 }
 
 .map-container {
@@ -130,6 +136,7 @@ onUpdated(() => {
 
 .map-button {
     text-transform: capitalize;
+    color: inherit;
 }
 
 #showLegend {
