@@ -194,7 +194,7 @@ function errorHandler(e) {
         col: e.colno,
         line: e.lineno,
         message: e.error ? e.error.message : e.message,
-        stack: e.error.stack,
+        stack: e.error ? e.error.stack : e.message,
         filename: e.filename,
         eventTime: e.timeStamp,
         unixTime: Date.now(),

@@ -1,20 +1,36 @@
 <script setup>
 import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
-import { computed } from 'vue';
+import { computed, nextTick, onBeforeMount, ref, watch } from 'vue';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
 
 defineProps(['logics']);
 
-const legendHeight = computed(() => state.settings.showLegend ? '33.38px' : '0px');
+const legendWrapper = ref(null);
+const legendHeight = ref('unset');
+const showLegend = computed(() => state.settings.showLegend);
+
+const rootResizeObserver = new ResizeObserver(() => nextTick(updateLegendHeight), { threshold: 1.0 });
+
+onBeforeMount(() => {
+    rootResizeObserver.observe(document.body);
+});
+
+watch(showLegend, () => {
+    nextTick(updateLegendHeight);
+});
+
+function updateLegendHeight() {
+    legendHeight.value = state.settings.showLegend ? `${legendWrapper.value?.getBoundingClientRect().height}px` : '0px';
+}
 </script>
 
 <template>
 <div id="wrapper" class="pb-1">
 <Transition>
-<div v-if="state.settings.showLegend" id="legendWrapper" class="d-flex flex-wrap py-1">
+<div ref="legendWrapper" v-if="state.settings.showLegend" id="legendWrapper" class="d-flex flex-wrap py-1">
     <div class="flex-grow-1 d-flex flex-wrap justify-content-center">
         <div class="col-auto close-button-wrapper">
             <img src="/images/chevron-up.svg" class="invert close-button"
