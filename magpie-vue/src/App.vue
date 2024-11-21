@@ -148,17 +148,17 @@ defineExpose({
       </div>
     </div>
     <div id="stackedItems" class="row item-chunk">
-      <div class="col"></div>
-      <div class="col-xs col-md-auto items-slot">
+      <div class="col p-0"></div>
+      <div class="col-xs col-md-auto items-slot px-0">
       </div>
       <div class="col-auto mt-2">
         <OpenBroadcastView type="items" />
       </div>
-      <div class="col">
+      <div class="col p-0">
         <VersionAlert :client-version="version" :remote-version="remoteVersion" :update-message="updateMessage" />
         <SidebarAlert :message="sidebarMessage" />
       </div>
-      <div class="col-auto px-2_5 quicksettings-container quicksettings-slot">
+      <div class="col-auto px-0 quicksettings-container quicksettings-slot">
       </div>
     </div>
   </div>
