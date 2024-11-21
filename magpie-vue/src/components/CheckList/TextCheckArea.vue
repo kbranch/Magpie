@@ -47,7 +47,7 @@ onUpdated(() => {
                                     </div>
                                 </div>
                                 <div class="check-text" onmousedown="preventDoubleClick(event)">
-                                    <img v-if="group.check.item" class="text-icon-item ms-1" :src="`static/images/${group.check.item}_1.png`">
+                                    <img v-if="group.check.item" class="text-icon-item" :src="`static/images/${group.check.item}_1.png`">
                                     {{ group.check.metadata.name }}
                                 </div>
                             </div>
@@ -86,12 +86,16 @@ onUpdated(() => {
 }
 
 .text-check-graphic-wrapper {
-    width: 16px;
-    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
     display: inline-block;
     margin: 0px;
-    padding-right: 20px;
+    padding-right: 0px;
     transform: translate(0%, 25%);
+}
+
+.check-text {
+    padding-left: 8px;
 }
 
 .text-check-graphic {
