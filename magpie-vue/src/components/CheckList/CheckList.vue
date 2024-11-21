@@ -1,6 +1,6 @@
 <script setup>
 import {$} from '@/moduleWrappers.js';
-import { computed, ref } from 'vue';
+import { computed, ref, onUpdated } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore.js';
 import MapLegend from './MapLegend.vue';
@@ -49,8 +49,7 @@ const activeChecks = computed(() => {
                                                               || state.settings.showOwnedPickups)
                                                           && (!check.isHigherLogic()
                                                               || state.settings.showHigherLogic)
-                                                          && (!check.checked
-                                                              || state.settings.showChecked)
+                                                          && !check.checked
                                                           && check.isEnabled()
                                                 );
     }
@@ -100,14 +99,14 @@ function applyMasonry() {
                       .masonry('layout');
 }
 
-let startTime;
-import { onBeforeMount, onBeforeUpdate, onMounted, onUpdated } from 'vue';
-onBeforeMount(() => startTime = Date.now());
-onBeforeUpdate(() => startTime = Date.now());
-onMounted(() => console.log(`CheckList mounted in ${Date.now() - startTime}`));
+// let startTime;
+// import { onBeforeMount, onBeforeUpdate, onMounted } from 'vue';
+// onBeforeMount(() => startTime = Date.now());
+// onBeforeUpdate(() => startTime = Date.now());
+// onMounted(() => console.log(`CheckList mounted in ${Date.now() - startTime}`));
+
 onUpdated(() => {
     applyMasonry();
-    console.log(`CheckList updated in ${Date.now() - startTime}`)
 });
 
 function compare(a, b) {
@@ -128,7 +127,7 @@ function sortByKey(arr, key) {
 <template>
 <MapLegend :logics="logics" />
 
-<div class="row" :class="{'pt-2': !state.settings.showLegend}">
+<div class="row">
     <div class="col-auto">
         <ul id="tabButtons">
             <li class="me-1" :class="['tab-button', { active: activeTab == 'dynamic' }]" @mouseenter="tip.tooltip('Checks', $event)">
@@ -163,28 +162,49 @@ function sortByKey(arr, key) {
         </ul>
     </div>
     <div class="col"></div>
-    <div v-if="state.settings.showStats" id="checkStats" class="col-auto">
-        <div v-for="difficulty in Object.keys(checksByDifficulty)" :key="difficulty" class="check-stat px-2">
-                <div :class="`tooltip-check-graphic difficulty-${difficulty == -1 ? 'checked' : difficulty}`">
-                    <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-${difficulty == -1 ? 'checked' : difficulty}`"></use></svg>
+    <div id="checkStats" class="col-auto">
+        <div id="statsWrapperWrapper">
+            <Transition>
+                <div id="statsWrapper" v-if="state.settings.showStats">
+                    <div v-for="difficulty in Object.keys(checksByDifficulty)" :key="difficulty" class="check-stat px-2">
+                            <div :class="`tooltip-check-graphic difficulty-${difficulty == -1 ? 'checked' : difficulty}`">
+                                <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-${difficulty == -1 ? 'checked' : difficulty}`"></use></svg>
+                            </div>
+                        <span>
+                            : {{ checksByDifficulty[difficulty].length }} ({{ (checksByDifficulty[difficulty].length / totalChecks * 100).toFixed(1) }}%)
+                        </span>
+                    </div>
+                    <span>Total: {{ totalChecks }}</span>
                 </div>
-            <span>
-                : {{ checksByDifficulty[difficulty].length }} ({{ (checksByDifficulty[difficulty].length / totalChecks * 100).toFixed(1) }}%)
-            </span>
+            </Transition>
         </div>
-        <span>Total: {{ totalChecks }}</span>
-        <img src="/images/x.svg" class="invert close-button ms-2" @mouseenter="tip.tooltip('Hide stats', $event)" @click="state.settings.showStats = false">
+
+        <div id="hideButton">
+            <img :src="`/images/chevron-${state.settings.showStats ? 'right' : 'left'}.svg`" class="invert close-button ms-2"
+                @mouseenter="tip.tooltip(state.settings.showStats ? 'Hide stats' : 'Show stats', $event)"
+                @click="() => { state.settings.showStats = !state.settings.showStats; tip.clearTooltip(); }">
+        </div>
     </div>
 </div>
 
 <div ref="checksDiv" id="checks" onclick="preventDoubleClick(event)"
      data-masonry='{ "transitionDuration": 0, "columnWidth": ".text-check-card-wrapper" }'>
     <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" />
-    <span v-if="Object.keys(checksByArea).length == 0" id="no-checks" class="ps-2">No checks!</span>
+    <span v-if="Object.keys(checksByArea).length == 0" id="noChecks" class="ps-2">No checks!</span>
 </div>
 </template>
 
 <style scoped>
+#statsWrapper.v-enter-active,
+#statsWrapper.v-leave-active {
+  transition: all 0.3s ease;
+}
+
+#statsWrapper.v-enter-from,
+#statsWrapper.v-leave-to {
+    transform: translateX(100%);
+}
+
 .check-stat {
     display: inline-block;
 }
@@ -211,6 +231,7 @@ function sortByKey(arr, key) {
 .close-button {
     height: 24px;
     opacity: 0.5;
+    padding: 4px;
 }
 
 .close-button:hover {
@@ -240,11 +261,21 @@ ul {
 #checkStats {
     align-content: center;
     padding-right: 0.4em;
+    display: flex;
 }
 
-#no-checks {
+#noChecks {
     font-size: larger;
     width: 100%;
     text-align: center;
+}
+
+#statsWrapperWrapper {
+    overflow: hidden;
+    align-content: center;
+}
+
+#hideButton {
+    align-content: center;
 }
 </style>

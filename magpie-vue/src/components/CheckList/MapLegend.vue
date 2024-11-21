@@ -1,22 +1,34 @@
 <script setup>
 import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
+import { computed } from 'vue';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
+
 defineProps(['logics']);
+
+const legendHeight = computed(() => state.settings.showLegend ? '33.38px' : '0px');
 </script>
 
 <template>
-<div v-if="state.settings.showLegend" class="d-flex flex-wrap py-1">
+<div id="wrapper" class="pb-1">
+<Transition>
+<div v-if="state.settings.showLegend" id="legendWrapper" class="d-flex flex-wrap py-1">
     <div class="flex-grow-1 d-flex flex-wrap justify-content-center">
-        <div v-for="logic in logics" :key="logic.difficulty" class="col-auto px-2">
+        <div class="col-auto close-button-wrapper">
+            <img src="/images/chevron-up.svg" class="invert close-button"
+                 @mouseenter="tip.tooltip('Hide legend', $event)"
+                 @click="() => { state.settings.showLegend = false; tip.clearTooltip(); }">
+        </div>
+        <div class="col"></div>
+        <div v-for="logic in logics" :key="logic.difficulty" class="col-auto pe-3">
             <svg class="tooltip-check-graphic">
                 <use :xlink:href="`#difficulty-${logic.difficulty}`"></use>
             </svg>
             <span class="p-0 m-0 logic-name">: {{ logic.name }}</span>
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <div class="behind-tracker static-difficulty-wrapper align-middle">
                 <svg class="icon static-difficulty">
                     <use xlink:href="#difficulty-0"></use>
@@ -28,7 +40,7 @@ defineProps(['logics']);
             </div>: Tracker
             <img class="invert" src="/images/question-circle.svg" @mouseenter="tip.tooltip('Probably accessible, but not technically in logic', $event)">
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <div class="difficulty-0 static-difficulty-wrapper behind-keys align-middle">
                 <svg class="icon static-difficulty">
                     <use xlink:href="#difficulty-0"></use>
@@ -39,7 +51,7 @@ defineProps(['logics']);
                 <div class="behind-keys-overlay"></div>
             </div>: Needs keys
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <div class="difficulty-0 static-difficulty-wrapper requires-rupees align-middle">
                 <svg class="icon static-difficulty">
                     <use xlink:href="#difficulty-0"></use>
@@ -50,41 +62,60 @@ defineProps(['logics']);
                 <div class="behind-rupees-overlay"></div>
             </div>: Needs rupees
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <svg class="tooltip-check-graphic">
                 <use xlink:href="#difficulty-0-vanilla"></use>
             </svg>: Vanilla
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <svg class="tooltip-check-graphic">
                 <use xlink:href="#difficulty-9"></use>
             </svg>: Out of logic
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <div class="tooltip-check-graphic left-click"></div>: Toggle
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             <div class="tooltip-check-graphic right-click"></div>: Pin
         </div>
-        <div class="col-auto px-2">
+        <div class="col-auto pe-3">
             Ctrl+Z: Undo
         </div>
-        <div class="col-auto ps-2">
+        <div class="col-auto">
             <div class="tooltip-check-graphic middle-click"></div> or Ctrl+
         </div>
-        <div class="col-auto pe-2">
+        <div class="col-auto">
             <div class="tooltip-check-graphic left-click"></div>: View Dungeon
         </div>
-        <div class="col-auto">
-            <img src="/images/x.svg" class="invert close-button" @mouseenter="tip.tooltip('Hide legend', $event)" @click="state.settings.showLegend = false">
-        </div>
     </div>
-    <div id="item-blank"></div>
+    <div id="itemBlank"></div>
+</div>
+</Transition>
 </div>
 </template>
 
 <style scoped>
-#item-blank {
+#legendWrapper.v-enter-active,
+#legendWrapper.v-leave-active {
+    transition: transform 0.3s ease;
+}
+
+#legendWrapper.v-enter-from,
+#legendWrapper.v-leave-to {
+    transform: translateY(-100%);
+}
+
+#legendWrapper {
+    overflow: hidden;
+}
+
+#wrapper {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: v-bind(legendHeight);
+}
+
+#itemBlank {
     width: 294px;
 }
 
@@ -93,8 +124,11 @@ span.logic-name {
 }
 
 .close-button {
-    height: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
     opacity: 0.5;
+    padding: 4px;
 }
 
 .close-button:hover {

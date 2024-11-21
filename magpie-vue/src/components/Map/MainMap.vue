@@ -71,12 +71,27 @@ onUpdated(() => {
                 @click="closeAllTooltips();" @contextmenu.prevent="" draggable="false">
         </div>
     </div>
+    <Transition>
+        <div v-if="!state.settings.showLegend" id="showLegend">
+            <img src="/images/chevron-down.svg" class="invert show-button" @mouseenter="tip.tooltip('Show legend', $event)" @click="state.settings.showLegend = true">
+        </div>
+    </Transition>
 </div>
 
 <ConnectorModal />
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.3s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+
 .tab-button.active .tab-link {
     border-color: #fff;
     border-radius: 5px 5px 0px 0px;
@@ -115,5 +130,24 @@ onUpdated(() => {
 
 .map-button {
     text-transform: capitalize;
+}
+
+#showLegend {
+    transform: translate(0, -100%);
+    position: absolute;
+    width: 32px;
+    height: 32px;
+}
+
+.show-button {
+    height: 100%;
+    width: 100%;
+    opacity: 0.85;
+    padding: 4px;
+}
+
+.show-button:hover {
+    background-color: #ccc;
+    border-radius: 5px;
 }
 </style>
