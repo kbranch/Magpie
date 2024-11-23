@@ -101,12 +101,6 @@ function refreshCheckList() {
                 let check = new Check(x);
                 checksById[x.id] = check;
 
-                if (!(x.id in allChecksById)) {
-                    allChecksById[x.id] = [];
-                }
-
-                allChecksById[x.id].push(check);
-
                 return check;
             });
 
@@ -225,11 +219,6 @@ function init() {
     }
 
     window.addEventListener('error', errorHandler);
-
-    $('.grid').masonry({
-        transitionDuration: 0,
-        columnWidth: '.text-check-card-wrapper:not(.hidden)',
-    });
 
     modifyTooltipAllowList();
     initKnownItems();

@@ -12,6 +12,14 @@ class Check {
         this.hollow = false;
         this.source = checkInfo;
 
+        if (!(this.id in allChecksById)) {
+            allChecksById[this.id] = [];
+        }
+
+        if (!(this.id in allChecksById[this.id])) {
+            allChecksById[this.id].push(this);
+        }
+
         let dungeonMaps = this.locations.map(x => x.map)
                                         .filter(x => !['overworld', 'underworld', 'vanillaOverworld'].includes(x));
         if (dungeonMaps.length == 0) {

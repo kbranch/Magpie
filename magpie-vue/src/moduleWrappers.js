@@ -56,23 +56,42 @@ export let skipNextAnimation = window.skipNextAnimation;
 export function initGlobals(data) {
     window.defaultArgs = data.args;
     window.defaultSettings = data.defaultSettings;
-    window.settingsOverrides = data.jsonSettingsOverrides;
-    window.argsOverrides = data.jsonArgsOverrides;
     window.diskSettings = data.diskSettings;
-
-    window.iconStyles = $('link#iconsSheet')[0].sheet;
-
     window.local = Boolean(data.local);
+    window.settingsPrefix = data.settingsPrefix;
     window.allowAutotracking = Boolean(data.allowAutotracking);
     window.allowMap = Boolean(data.allowMap);
     window.refreshMap = data.refreshMap !== false;
     window.allowItems = Boolean(data.allowItems);
     window.keepQueryArgs = Boolean(data.keepQueryArgs);
-    window.settingsPrefix = data.settingsPrefix;
-    window.players = data.players;
-    window.broadcastMode = data.broadcastMode;
-    window.rootPrefix = import.meta.env.VITE_API_URL;
+
+    if ('jsonSettingsOverrides' in data) {
+        window.settingsOverrides = data.jsonSettingsOverrides;
+        window.argsOverrides = data.jsonArgsOverrides;
+    }
+    else {
+        window.settingsOverrides = {};
+        window.argsOverrides = {};
+    }
+
+    if ('players' in data) {
+        window.players = data.players;
+    }
+    else {
+        window.players = [''];
+    }
+
+    if ('broadcastMode' in data) {
+        window.broadcastMode = data.broadcastMode;
+    }
+    else {
+        window.broadcastMode = 'receive';
+    }
+
     itemsByLocation = window.itemsByLocation;
+
+    window.rootPrefix = import.meta.env.VITE_API_URL;
+    window.iconStyles = $('link#iconsSheet')[0].sheet;
 
     window.debounce = debounce;
 }

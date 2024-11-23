@@ -78,6 +78,8 @@ function processMapPart(data) {
         }
 
         if (attr == 'checkAccessibility') {
+            allChecksById = {};
+
             value = value.map(x => {
                 let check = new Check(x);
                 checksById[x.id] = check;

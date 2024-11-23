@@ -100,8 +100,8 @@ def getSidebarMessage():
     except:
         return None
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings'}
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings', '/api/basicInit'}
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings', '/api/basicInit'}
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -459,77 +459,33 @@ def broadcastSettings():
 
     return "OK"
 
-@app.route("/itemsBroadcast")
-def itemsBroadcast():
+@app.route("/api/basicInit")
+def getBasicInit():
     args = getArgs()
     defaultSettings = LocalSettings()
-
     flags = args.flags
     args.flags = []
-    settingsOverrides = {}
-    argsOverrides = {}
-    prefix = 'itemsBroadcast_'
 
-    return render_template("itemsBroadcast.html",
-                                flags=flags, 
-                                args=args,
-                                defaultSettings=defaultSettings,
-                                jsonArgs=json.dumps(args.__dict__),
-                                jsonSettings=json.dumps(defaultSettings.__dict__),
-                                jsonSettingsOverrides=json.dumps(settingsOverrides),
-                                jsonArgsOverrides=json.dumps(argsOverrides),
-                                local=app.config['local'],
-                                graphicsOptions=LocalSettings.graphicsPacks(),
-                                version=getVersion(),
-                                diskSettings=getDiskSettings(prefix),
-                                hostname=app.config['hostname'],
-                                hideShare=True,
-                                showTitle=True,
-                                keepQueryArgs=True,
-                                fullContainer=True,
-                                allowItems=True,
-                                settingsPrefix=prefix,
-                                players=[''],
-                                extraTitle=" - Items Broadcast View",
-                                broadcastMode='receive',
-                           )
+    version = getVersion()
+    remoteVersion = version
 
-@app.route("/mapBroadcast")
-def mapBroadcast():
-    args = getArgs()
-    defaultSettings = LocalSettings()
+    if app.config['local']:
+        remoteVersion = getRemoteVersion()
+        if remoteVersion:
+            remoteVersion = remoteVersion['magpie']
 
-    flags = args.flags
-    args.flags = []
-    settingsOverrides = {}
-    argsOverrides = {}
-    prefix = 'mapBroadcast_'
+    return json.dumps({
+        "flags": [x.__dict__ for x in flags],
+        "args": args.__dict__,
+        "defaultSettings": defaultSettings.__dict__,
+        "local": app.config["local"],
+        "graphicsOptions": LocalSettings.graphicsPacks(),
+        "version": version,
+        "remoteVersion": remoteVersion,
+        "diskSettings": getDiskSettings(jsonify=False),
+        "hostname": app.config["hostname"],
+    })
 
-    return render_template("mapBroadcast.html",
-                                flags=flags, 
-                                args=args,
-                                defaultSettings=defaultSettings,
-                                jsonArgs=json.dumps(args.__dict__),
-                                jsonSettings=json.dumps(defaultSettings.__dict__),
-                                jsonSettingsOverrides=json.dumps(settingsOverrides),
-                                jsonArgsOverrides=json.dumps(argsOverrides),
-                                local=app.config['local'],
-                                graphicsOptions=LocalSettings.graphicsPacks(),
-                                version=getVersion(),
-                                diskSettings=getDiskSettings(prefix),
-                                hostname=app.config['hostname'],
-                                hideShare=True,
-                                showTitle=True,
-                                allowMap=True,
-                                refreshMap=False,
-                                keepQueryArgs=True,
-                                smallQuicksettings=True,
-                                fullContainer=True,
-                                settingsPrefix=prefix,
-                                players=[''],
-                                extraTitle=" - Map Broadcast View",
-                                broadcastMode='receive',
-                           )
 
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])
@@ -712,16 +668,19 @@ if sharingEnabled:
         return True
 
 @app.route("/")
+@app.route("/mapBroadcast")
+@app.route("/itemsBroadcast")
+@app.route("/route/<path:filename>")
 def vueRoot():
     return send_from_directory("vue-dist", "index.html")
 
 @app.route('/assets/<path:filename>')
 def vueCatchall(filename):
-  return send_from_directory('vue-dist/assets', filename)
+    return send_from_directory('vue-dist/assets', filename)
 
 @app.route('/<path:filename>')
 def staticCatchall(filename):
-  return app.send_static_file(filename)
+    return app.send_static_file(filename)
 
 @app.route("/vueInit")
 def vueInit():

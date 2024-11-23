@@ -1,6 +1,10 @@
+import { createWebHistory, createRouter } from 'vue-router'
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import App from './App.vue';
+import MapBroadcast from './views/MapBroadcast.vue';
+import ItemsBroadcast from './views/ItemsBroadcast.vue';
+import MainTracker from './views/MainTracker.vue';
 
 function addCssLink(href, id='') {
   var link = document.createElement("link");
@@ -12,10 +16,22 @@ function addCssLink(href, id='') {
   document.getElementsByTagName("head")[0].appendChild(link);
 }
 
+const routes = [
+  { path: '/', component: MainTracker },
+  { path: '/mapBroadcast', component: MapBroadcast },
+  { path: '/itemsBroadcast', component: ItemsBroadcast },
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+})
+
 const pinia = createPinia();
 let app = createApp(App);
 
 app.use(pinia);
+app.use(router);
 window.vueApp = app.mount('#app');
 app.config.globalProperties.window = window
 
