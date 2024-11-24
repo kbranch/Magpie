@@ -85,11 +85,10 @@ function refreshCheckList() {
 
     $.ajax({
         type: "POST",
-        url: rootPrefix + "/checkList",
+        url: rootPrefix + "/api/checkList",
         data: data,
         success: (response) => {
             console.log("Received checkList response");
-            response = JSON.parse(response);
             pruneEntranceMap();
 
             randomizedEntrances = response.randomizedEntrances;
@@ -142,13 +141,13 @@ function loadShortString(saveOnLoad=false) {
 
     $.ajax({
         type: "POST",
-        url: rootPrefix + "/shortString",
+        url: rootPrefix + "/api/shortString",
         data: {
             shortString: shortString,
         },
         success: (response) => {
             Object.keys(args).map(x => delete args[x]);
-            Object.assign(args, JSON.parse(response));
+            Object.assign(args, response);
             args.flags = {};
 
             if (saveOnLoad) {
@@ -169,7 +168,7 @@ function loadShortString(saveOnLoad=false) {
 function loadSpoilerLog(romData) {
     $.ajax({
         type: "POST",
-        url: rootPrefix + "/spoilerLog",
+        url: rootPrefix + "/api/spoilerLog",
         data: {
             romData: btoa(romData),
         },

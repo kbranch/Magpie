@@ -22,7 +22,7 @@ const graphicsOptions = ref([]);
 const argDescriptions = ref({});
 
 onMounted(() => {
-  fetch(import.meta.env.VITE_API_URL + '/vueInit')
+  fetch(import.meta.env.VITE_API_URL + '/api/init')
     .then(response => response.json())
     .then(data => {
       state.isLocal = data.local;

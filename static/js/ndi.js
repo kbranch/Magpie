@@ -17,7 +17,7 @@ async function sendMapFrame() {
 
     $.ajax({
         type: "POST",
-        url: "/mapBroadcastFrame",
+        url: "/api/mapBroadcastFrame",
         data: {
             data: frame,
         },
@@ -37,7 +37,7 @@ async function sendItemFrame() {
 
     $.ajax({
         type: "POST",
-        url: "/itemsBroadcastFrame",
+        url: "/api/itemsBroadcastFrame",
         data: {
             data: frame,
         },

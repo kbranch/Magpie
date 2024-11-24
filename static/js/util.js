@@ -351,7 +351,7 @@ function applySettings(oldArgs=null) {
     if (local) {
         $.ajax({
             type: "POST",
-            url: "/broadcastSettings",
+            url: "/api/broadcastSettings",
             data: {
                 items: localSettings.broadcastItems,
                 map: localSettings.broadcastMap,
@@ -466,7 +466,7 @@ function uploadLocalStorage() {
         let data = new FormData();
         data.append('localStorage', JSON.stringify(localStorage));
 
-        fetch('/diskSettings', {
+        fetch('/api/diskSettings', {
             method: 'POST',
             body: data,
         });

@@ -72,7 +72,9 @@ except:
     logging.info(f"Sharing disabled: {traceback.format_exc()}")
 
 def renderTraceback():
-    return f"<pre>{traceback.format_exc()}</pre>"
+    return json.dumps({
+        'error': traceback.format_exc(),
+    })
 
 def getDiskSettings(prefix='', jsonify=True):
     if not app.config['local']:
@@ -100,72 +102,20 @@ def getSidebarMessage():
     except:
         return None
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings', '/api/basicInit', '/api/event' }
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings', '/api/basicInit', '/api/event' }
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings' }
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings' }
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
         response.headers.add('Access-Control-Allow-Origin', '*')
         response.headers.add('Access-Control-Allow-Headers', 'content-type')
-    elif request.path in corsEndpoints:
+    elif request.path in corsEndpoints or '/api/' in request.path:
         response.headers.add('Access-Control-Allow-Origin', '*')
     
-    if request.path in jsonEndpoints:
+    if request.path in jsonEndpoints or '/api/' in request.path:
         response.mimetype = 'application/json'
 
     return response
-
-@app.route("/classic")
-def home():
-    args = getArgs()
-    defaultSettings = LocalSettings()
-
-    flags = args.flags
-    args.flags = []
-    settingsOverrides = {}
-    argsOverrides = {}
-
-    if request.args.get('enable_autotracking') or request.args.get('enable_autotracker'):
-        settingsOverrides['enableAutotracking'] = True
-
-    shortString = request.args.get('shortString') 
-    if shortString:
-        argsOverrides = getArgsFromShortString(shortString)
-    
-    settingsPrefix = 'setting_'
-    argsPrefix = 'flag_'
-    for arg, value in request.args.items():
-        if arg.startswith(settingsPrefix):
-            settingsOverrides[arg[len(settingsPrefix):]] = value
-        if arg.startswith(argsPrefix):
-            argsOverrides[arg[len(argsPrefix):]] = value
-    
-    remoteVersion = None
-
-    if app.config['local']:
-        remoteVersion = getRemoteVersion()
-        if remoteVersion:
-            remoteVersion = remoteVersion['magpie']
-
-    return render_template("index.html", flags=flags, 
-                                         args=args,
-                                         defaultSettings=defaultSettings,
-                                         jsonArgs=json.dumps(args.__dict__),
-                                         jsonSettings=json.dumps(defaultSettings.__dict__),
-                                         jsonSettingsOverrides=json.dumps(settingsOverrides),
-                                         jsonArgsOverrides=json.dumps(argsOverrides),
-                                         local=app.config['local'],
-                                         graphicsOptions=LocalSettings.graphicsPacks(),
-                                         version=getVersion(),
-                                         remoteVersion=remoteVersion,
-                                         diskSettings=getDiskSettings(),
-                                         hostname=app.config['hostname'],
-                                         allowAutotracking=True,
-                                         allowMap=True,
-                                         allowItems=True,
-                                         players=[''],
-                                         broadcastMode='send',
-                                         )
 
 @app.route("/items", methods=['POST'])
 def renderItems():
@@ -225,6 +175,7 @@ def renderItems():
         return renderTraceback()
 
 @app.route("/version")
+@app.route("/api/version")
 def serveVersion():
     try:
         version = {}
@@ -266,6 +217,7 @@ def fetchUpdate():
     except:
         return renderTraceback()
 
+@app.route("/api/shortString", methods=['POST'])
 @app.route("/shortString", methods=['POST'])
 def parseShortString():
     try:
@@ -276,6 +228,7 @@ def parseShortString():
     except:
         return renderTraceback()
 
+@app.route("/api/spoilerLog", methods=['POST'])
 @app.route("/spoilerLog", methods=['POST'])
 def getSpoilerLog():
     try:
@@ -284,13 +237,14 @@ def getSpoilerLog():
     except:
         return renderTraceback()
 
-@app.route("/diskSettings", methods=['POST'])
+@app.route("/api/diskSettings", methods=['POST'])
 def updateDiskSettings():
     storage = request.form['localStorage']
     updateSettings(localStorage=storage)
 
     return "ok"
 
+@app.route("/api/checkList", methods=['POST'])
 @app.route("/checkList", methods=['POST'])
 def renderCheckList():
     try:
@@ -419,7 +373,7 @@ def suggestion():
 
     return 'thx'
 
-@app.route("/mapBroadcastFrame", methods=['POST'])
+@app.route("/api/mapBroadcastFrame", methods=['POST'])
 def mapBroadcastFrame():
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
@@ -431,7 +385,7 @@ def mapBroadcastFrame():
 
     return "OK"
 
-@app.route("/itemsBroadcastFrame", methods=['POST'])
+@app.route("/api/itemsBroadcastFrame", methods=['POST'])
 def itemsBroadcastFrame():
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
@@ -443,7 +397,7 @@ def itemsBroadcastFrame():
 
     return "OK"
 
-@app.route("/broadcastSettings", methods=['POST'])
+@app.route("/api/broadcastSettings", methods=['POST'])
 def broadcastSettings():
     if not app.config['local']:
         return "Broadcast view is only available in the offline version of Magpie"
@@ -489,6 +443,7 @@ def getBasicInit():
 
 if sharingEnabled:
     @app.route("/playerState", methods=['POST'])
+    @app.route("/api/playerState", methods=['POST'])
     def playerStatePost():
         try:
             state = request.json
@@ -522,6 +477,7 @@ if sharingEnabled:
         return str(timestamp)
 
     @app.route("/playerState", methods=['GET'])
+    @app.route("/api/playerState", methods=['GET'])
     def playerStateGet():
         playerJson = request.args.get('players')
         if not playerJson:
@@ -537,6 +493,7 @@ if sharingEnabled:
         return json.dumps(result)
 
     @app.route("/playerId", methods=['POST'])
+    @app.route("/api/playerId", methods=['POST'])
     def playerId():
         if 'playerName' not in request.form:
             return "playerName is required", 400
@@ -548,29 +505,30 @@ if sharingEnabled:
         except:
             return json.dumps({'error': f'{traceback.format_exc()}'})
 
-    @app.route("/canJoinEvent", methods=['GET'])
+    @app.route("/api/canJoinEvent", methods=['GET'])
     def canJoinEvent():
         eventName = request.args.get('eventName')
         code = request.args.get('joinCode')
         if not eventName or not code:
-            return "eventName and joinCode are required", 400
+            return json.dumps({ 'error': "eventName and joinCode are required" }), 400
 
         (join, view) = sharing.authenticateEvent(eventName, code)
 
         return json.dumps(join)
 
-    @app.route("/canViewEvent", methods=['GET'])
+    @app.route("/api/canViewEvent", methods=['GET'])
     def canViewEvent():
         eventName = request.args.get('eventName')
         code = request.args.get('viewCode')
         if not eventName or not code:
-            return "eventName and viewCode are required", 400
+            return json.dumps({ 'error': "eventName and viewCode are required" }), 400
 
         (join, view) = sharing.authenticateEvent(eventName, code)
 
         return json.dumps(view)
 
     @app.route("/eventInfo", methods=['GET'])
+    @app.route("/api/eventInfo", methods=['GET'])
     def eventInfo():
         eventName = request.args.get('eventName')
         if not eventName:
@@ -581,16 +539,17 @@ if sharingEnabled:
 
             return json.dumps(event)
         except:
-            return json.dumps({'error': f'{traceback.format_exc()}'})
+            return renderTraceback()
 
     @app.route("/createEvent", methods=['POST'])
+    @app.route("/api/createEvent", methods=['POST'])
     def createEvent():
         eventName = request.form['eventName']
         joinCode = request.form['joinCode']
         viewCode = request.form['viewCode']
 
         if (not eventName):
-            return "eventName is required", 400
+            return json.dumps({ 'error': "eventName is required" }), 400
 
         success = sharing.createEvent(eventName, joinCode, viewCode)
 
@@ -644,9 +603,7 @@ if sharingEnabled:
                 "codeFailed": codeFailed,
             })
         except:
-            return json.dumps({
-                "error": traceback.format_exc(),
-            })
+            return renderTraceback()
 
     @app.route("/player")
     def player():
@@ -676,6 +633,7 @@ def vueCatchall(filename):
 def staticCatchall(filename):
     return app.send_static_file(filename)
 
+@app.route("/api/init")
 @app.route("/vueInit")
 def vueInit():
     args = getArgs()

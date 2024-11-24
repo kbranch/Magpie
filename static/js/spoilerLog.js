@@ -22,8 +22,7 @@ function setSpoilerLabel(text) {
     $('#spoilerSeed').html(text);
 }
 
-function loadLogContents(logText, loadSettings=true) {
-    let log = JSON.parse(logText);
+function loadLogContents(log, loadSettings=true) {
     let isArchipelago = log.archipelago == true;
 
     setApLogic(isArchipelago);

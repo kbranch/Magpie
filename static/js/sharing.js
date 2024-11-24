@@ -22,7 +22,7 @@ function sendState() {
 
     $.ajax({
         type: "POST",
-        url: sharingUrlApiPrefix() + "/playerState",
+        url: sharingUrlApiPrefix() + "/api/playerState",
         contentType: "application/json",
         data: JSON.stringify(state),
         success: () => {
@@ -68,7 +68,7 @@ function prepShareModal() {
 function checkPlayerId() {
     $.ajax({
         type: "POST",
-        url: sharingUrlApiPrefix() + "/playerId",
+        url: sharingUrlApiPrefix() + "/api/playerId",
         data: {
             'playerName': document.getElementById('playerName').value
         },
@@ -117,7 +117,7 @@ function updateShareUrls() {
 
         $.ajax({
             type: "GET",
-            url: sharingUrlApiPrefix() + "/eventInfo",
+            url: sharingUrlApiPrefix() + "/api/eventInfo",
             data: { 'eventName': eventBox.value },
             success: (response) => {
                 updateEventType(response);
@@ -195,7 +195,7 @@ function updatePlayerInventories() {
 
     $.ajax({
         type: "GET",
-        url: sharingUrlApiPrefix() + "/playerState",
+        url: sharingUrlApiPrefix() + "/api/playerState",
         data: {
             players: JSON.stringify(data),
         },
@@ -244,7 +244,7 @@ function eventAction() {
     else if (buttonAction == 'create') {
         $.ajax({
             type: "POST",
-            url: sharingUrlApiPrefix() + "/createEvent",
+            url: sharingUrlApiPrefix() + "/api/createEvent",
             data: {
                 'eventName': eventName,
                 'joinCode': joinCode,
@@ -277,7 +277,7 @@ function eventNameInput() {
 
         $.ajax({
             type: "GET",
-            url: sharingUrlApiPrefix() + "/eventInfo",
+            url: sharingUrlApiPrefix() + "/api/eventInfo",
             // contentType: "application/json",
             data: {'eventName': eventBox.value },
             success: (response) => {
