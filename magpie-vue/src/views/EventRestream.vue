@@ -40,7 +40,7 @@ onMounted(() => {
     params.append('viewCode', props.viewCode);
   }
 
-  let url = `${import.meta.env.VITE_API_URL}/event?${params}`;
+  let url = `${import.meta.env.VITE_API_URL}/api/event?${params}`;
 
   fetch(url)
     .then(response => response.json())

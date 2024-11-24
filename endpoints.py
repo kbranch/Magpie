@@ -100,8 +100,8 @@ def getSidebarMessage():
     except:
         return None
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings', '/api/basicInit', '/event' }
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings', '/api/basicInit', '/event' }
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings', '/api/basicInit', '/api/event' }
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings', '/api/basicInit', '/api/event' }
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -596,7 +596,7 @@ if sharingEnabled:
 
         return json.dumps(success)
 
-    @app.route("/event", methods=['GET'])
+    @app.route("/api/event", methods=['GET'])
     def event():
         try:
             eventName = request.args.get('eventName')
