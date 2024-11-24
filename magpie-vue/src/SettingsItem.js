@@ -17,6 +17,7 @@ export class SettingsItem {
 
     title;
     header;
+    headerSize = 2;
     type;
     class;
     settingBase;

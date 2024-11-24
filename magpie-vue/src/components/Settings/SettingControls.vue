@@ -15,7 +15,7 @@ defineProps(['item']);
     <legend v-if="item.type == types.group">{{ item.title }}</legend>
     
     <!-- Header -->
-    <h2 v-if="item.header">{{ item.header }}</h2>
+    <component :is="`h${item.headerSize}`" v-if="item.header">{{ item.header }}</component>
 
     <!-- Checkbox -->
     <input v-if="item.type == types.checkbox && item.settingBind" v-model="model[item.settingName]" type="checkbox" :id="`${item.settingName}-setting`" class="form-check-input">

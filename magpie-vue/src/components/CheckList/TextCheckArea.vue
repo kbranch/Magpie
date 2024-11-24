@@ -1,6 +1,5 @@
 <script setup>
 import { toggleCheck } from '@/moduleWrappers.js';
-import { onUpdated } from 'vue';
 
 defineProps({
     area: {
@@ -9,10 +8,6 @@ defineProps({
     checks: {
         required: true,
     },
-});
-
-onUpdated(() => {
-    console.log("updated TextAreaCheck");
 });
 </script>
 

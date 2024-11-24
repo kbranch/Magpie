@@ -747,6 +747,78 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
             ] // Personalization section
         }),
         new SettingsItem({
+            header: 'Offline Exclusives',
+            type: types.column,
+            visibleCondition: () => { return window.local },
+        }),
+        new SettingsItem({
+            type: types.column,
+            includeCol: false,
+            visibleCondition: () => { return window.local },
+            children: [
+                new SettingsItem({
+                    title: 'Non-browser broadcast view',
+                    type: types.group,
+                    includeRow: false,
+                    colSize: 'auto',
+                    children: [
+                        new SettingsItem({
+                            title: 'Items',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'broadcastItems',
+                            options: {
+                                'none': 'None',
+                                'native': 'Native window',
+                                'ndi': 'NDI',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Map',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'broadcastMap',
+                            options: {
+                                'none': 'None',
+                                'native': 'Native window',
+                                'ndi': 'NDI',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Native window background',
+                            type: types.color,
+                            includeRow: false,
+                            colSize: 'auto',
+                            settingBase: 'settings',
+                            settingName: 'nativeBg',
+                        }),
+                    ],
+                }),
+                new SettingsItem({
+                    title: 'Also try these as browser sources or window captures in OBS',
+                    type: types.group,
+                    includeRow: false,
+                    colSize: '5',
+                    children: [
+                        new SettingsItem({
+                            title: new URL('/itemsBroadcast', document.baseURI).href,
+                            header: 'Items',
+                            headerSize: 6,
+                            type: types.link,
+                            href: '/itemsBroadcast',
+                        }),
+                        new SettingsItem({
+                            title: new URL('/mapBroadcast', document.baseURI).href,
+                            header: 'Map',
+                            headerSize: 6,
+                            type: types.link,
+                            href: '/mapBroadcast',
+                        }),
+                    ],
+                }),
+            ]
+        }), // Offline Exclusives
+        new SettingsItem({
             header: 'Layouts',
             type: types.column,
         }),
