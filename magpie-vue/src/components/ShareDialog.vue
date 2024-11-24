@@ -13,9 +13,10 @@ const eventName = ref('');
 const joinCode = ref('');
 const playerName = ref('');
 
-const sharingUrlPrefix = computed(() => props.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
+const sharingUrlApiPrefix = computed(() => props.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
+const sharingUrlPrefix = computed(() => props.isLocal ? 'https://magpietracker.us' : "");
 const eventUrl = computed(() => `${sharingUrlPrefix.value}/event?eventName=${encodeURIComponent(eventName.value)}`);
-const newEventUrl = `${import.meta.env.VITE_API_URL}/event`;
+const newEventUrl = computed(() => props.isLocal ? 'https://magpietracker.us/event' : '/event');
 
 onMounted(() => {
     playerName.value = props.initialPlayerName;
@@ -46,7 +47,7 @@ function checkPlayerIdTaken() {
     let data = new FormData();
     data.append('playerName', playerName.value);
 
-    fetch(sharingUrlPrefix.value + '/playerId', {
+    fetch(sharingUrlApiPrefix.value + '/playerId', {
         method: 'POST',
         body: data,
     })
@@ -60,7 +61,7 @@ async function getEventInfo() {
     }
 
     try {
-        let response = await fetch(`${sharingUrlPrefix.value}/eventInfo?${new URLSearchParams({ eventName: eventName.value })}`, {
+        let response = await fetch(`${sharingUrlApiPrefix.value}/eventInfo?${new URLSearchParams({ eventName: eventName.value })}`, {
             method: 'GET',
         });
         if (!(response?.ok)) {
@@ -128,8 +129,7 @@ async function getEventInfo() {
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <a v-if="isLocal" href="https://magpietracker.us/event" class="mr-auto">Create a private event</a>
-                    <a v-else :href="newEventUrl" class="mr-auto">Create a private event</a>
+                    <a :href="newEventUrl" class="mr-auto">Create a private event</a>
 
                     <div>
                         <button type="button" class="btn btn-primary me-1" data-bs-dismiss="modal" onclick="shareState()">Share</button>

@@ -52,6 +52,7 @@ export let graphicalMapSource = window.graphicalMapSource;
 export let coupledEntrances = window.coupledEntrances;
 export let mapBoss = window.mapBoss;
 export let skipNextAnimation = window.skipNextAnimation;
+export let eventNameInput = window.eventNameInput;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

@@ -100,8 +100,8 @@ def getSidebarMessage():
     except:
         return None
 
-jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings', '/api/basicInit'}
-corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings', '/api/basicInit'}
+jsonEndpoints = {'/playerState', '/eventInfo', '/createEvent', '/checks', '/vueInit', '/diskSettings', '/api/basicInit', '/event' }
+corsEndpoints = {'/playerState', '/playerId', '/suggestion', '/eventInfo', '/createEvent', '/event', '/checks', '/vueInit', '/items', '/checkList', '/shortString', '/spoilerLog', '/diskSettings', '/api/basicInit', '/event' }
 @app.after_request
 def afterRequest(response):
     if request.method.lower() == 'options':
@@ -598,62 +598,55 @@ if sharingEnabled:
 
     @app.route("/event", methods=['GET'])
     def event():
-        eventName = request.args.get('eventName')
-        joinCode = request.args.get('joinCode')
-        viewCode = request.args.get('viewCode')
+        try:
+            eventName = request.args.get('eventName')
+            joinCode = request.args.get('joinCode')
+            viewCode = request.args.get('viewCode')
 
-        args = getArgs()
-        defaultSettings = LocalSettings()
+            args = getArgs()
+            defaultSettings = LocalSettings()
 
-        flags = args.flags
-        args.flags = []
-        settingsOverrides = {}
-        argsOverrides = {}
+            flags = args.flags
+            args.flags = []
+            settingsOverrides = {}
+            argsOverrides = {}
 
-        players = []
-        codeFailed = False
-        prefix = 'event_'
+            players = []
+            codeFailed = False
 
-        if eventName:
-            eventInfo = sharing.eventInfo(eventName)
+            if eventName:
+                eventInfo = sharing.eventInfo(eventName)
 
-            if eventInfo:
-                view = True
-                permissions = sharing.authenticateEvent(eventName, viewCode)
+                if eventInfo:
+                    view = True
+                    permissions = sharing.authenticateEvent(eventName, viewCode)
 
-                if permissions:
-                    (join, view) = permissions
+                    if permissions:
+                        (join, view) = permissions
 
-                if eventInfo['privateView']:
-                    codeFailed = not view
+                    if eventInfo['privateView']:
+                        codeFailed = not view
 
-                if ((eventInfo['privateView'] and view) or not eventInfo['privateView']):
-                    players = sharing.getEventPlayers(eventName)
+                    if ((eventInfo['privateView'] and view) or not eventInfo['privateView']):
+                        players = sharing.getEventPlayers(eventName)
 
-        return render_template("event.html", flags=flags, 
-                                            args=args,
-                                            defaultSettings=defaultSettings,
-                                            jsonArgs=json.dumps(args.__dict__),
-                                            jsonSettings=json.dumps(defaultSettings.__dict__),
-                                            jsonSettingsOverrides=json.dumps(settingsOverrides),
-                                            jsonArgsOverrides=json.dumps(argsOverrides),
-                                            local=app.config['local'],
-                                            graphicsOptions=LocalSettings.graphicsPacks(),
-                                            version=getVersion(),
-                                            diskSettings=getDiskSettings(prefix),
-                                            hostname=app.config['hostname'],
-                                            hideShare=True,
-                                            showTitle=True,
-                                            keepQueryArgs=True,
-                                            settingsPrefix=prefix,
-                                            players=players,
-                                            eventName=eventName,
-                                            viewCode=viewCode,
-                                            joinCode=joinCode,
-                                            codeFailed=codeFailed,
-                                            allowItems=True,
-                                            extraTitle=" - Event Restream",
-                                        )
+            return json.dumps({
+                "flags": [x.__dict__ for x in flags],
+                "args": args.__dict__,
+                "defaultSettings": defaultSettings.__dict__,
+                "local": app.config['local'],
+                "graphicsOptions": LocalSettings.graphicsPacks(),
+                "diskSettings": getDiskSettings(jsonify=False),
+                "players": players,
+                "eventName": eventName,
+                "viewCode": viewCode,
+                "joinCode": joinCode,
+                "codeFailed": codeFailed,
+            })
+        except:
+            return json.dumps({
+                "error": traceback.format_exc(),
+            })
 
     @app.route("/player")
     def player():
@@ -670,6 +663,7 @@ if sharingEnabled:
 @app.route("/")
 @app.route("/mapBroadcast")
 @app.route("/itemsBroadcast")
+@app.route("/event")
 @app.route("/route/<path:filename>")
 def vueRoot():
     return send_from_directory("vue-dist", "index.html")

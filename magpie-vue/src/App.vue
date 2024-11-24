@@ -2,8 +2,10 @@
 import { win } from '@/moduleWrappers.js';
 import { computed, toRaw } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
+import { useEventStore } from '@/stores/eventStore';
 
 const state = useStateStore();
+const eventStore = useEventStore();
 
 const bgColor = computed(() => state.settings.bgColor);
 const textColor = computed(() => state.settings.textColor);
@@ -51,6 +53,11 @@ function updateSidebarMessage(message) {
   state.sidebarMessage = message;
 }
 
+function updateEventInfo(eventName, viewCode) {
+  eventStore.eventName = eventName;
+  eventStore.viewCode = viewCode;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
@@ -61,6 +68,7 @@ defineExpose({
   updateLogics,
   updateServerVersion,
   updateSidebarMessage,
+  updateEventInfo,
 });
 </script>
 

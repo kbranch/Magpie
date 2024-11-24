@@ -22,7 +22,7 @@ function sendState() {
 
     $.ajax({
         type: "POST",
-        url: sharingUrlPrefix() + "/playerState",
+        url: sharingUrlApiPrefix() + "/playerState",
         contentType: "application/json",
         data: JSON.stringify(state),
         success: () => {
@@ -68,7 +68,7 @@ function prepShareModal() {
 function checkPlayerId() {
     $.ajax({
         type: "POST",
-        url: sharingUrlPrefix() + "/playerId",
+        url: sharingUrlApiPrefix() + "/playerId",
         data: {
             'playerName': document.getElementById('playerName').value
         },
@@ -117,7 +117,7 @@ function updateShareUrls() {
 
         $.ajax({
             type: "GET",
-            url: sharingUrlPrefix() + "/eventInfo",
+            url: sharingUrlApiPrefix() + "/eventInfo",
             data: { 'eventName': eventBox.value },
             success: (response) => {
                 updateEventType(response);
@@ -195,7 +195,7 @@ function updatePlayerInventories() {
 
     $.ajax({
         type: "GET",
-        url: sharingUrlPrefix() + "/playerState",
+        url: sharingUrlApiPrefix() + "/playerState",
         data: {
             players: JSON.stringify(data),
         },
@@ -225,6 +225,10 @@ function updatePlayerInventories() {
 }
 
 function sharingUrlPrefix() {
+    return local ? 'https://magpietracker.us' : '';
+}
+
+function sharingUrlApiPrefix() {
     return local ? 'https://magpietracker.us' : rootPrefix;
 }
 
@@ -240,14 +244,14 @@ function eventAction() {
     else if (buttonAction == 'create') {
         $.ajax({
             type: "POST",
-            url: sharingUrlPrefix() + "/createEvent",
+            url: sharingUrlApiPrefix() + "/createEvent",
             data: {
                 'eventName': eventName,
                 'joinCode': joinCode,
                 'viewCode': viewCode,
             },
             success: (response) => {
-                location.href = sharingUrlPrefix() + `/event?eventName=${encodeURIComponent(eventName)}&viewCode=${encodeURIComponent(viewCode)}`;
+                vueApp.updateEventInfo(eventName, viewCode);
             },
             error: (response, error, status) => {
                 eventAlert.innerHTML = `Error creating event: ${response.responseText}`;
@@ -273,7 +277,7 @@ function eventNameInput() {
 
         $.ajax({
             type: "GET",
-            url: sharingUrlPrefix() + "/eventInfo",
+            url: sharingUrlApiPrefix() + "/eventInfo",
             // contentType: "application/json",
             data: {'eventName': eventBox.value },
             success: (response) => {

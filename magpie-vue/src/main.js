@@ -5,6 +5,7 @@ import App from './App.vue';
 import MapBroadcast from './views/MapBroadcast.vue';
 import ItemsBroadcast from './views/ItemsBroadcast.vue';
 import MainTracker from './views/MainTracker.vue';
+import EventRestream from './views/EventRestream.vue';
 
 function addCssLink(href, id='') {
   var link = document.createElement("link");
@@ -14,18 +15,19 @@ function addCssLink(href, id='') {
   link.rel = "stylesheet";
 
   document.getElementsByTagName("head")[0].appendChild(link);
-}
+};
 
 const routes = [
   { path: '/', component: MainTracker },
   { path: '/mapBroadcast', component: MapBroadcast },
   { path: '/itemsBroadcast', component: ItemsBroadcast },
-]
+  { path: '/event', component: EventRestream, props: route => ({ eventName: route.query.eventName, viewCode: route.query.viewCode }) },
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-})
+});
 
 const pinia = createPinia();
 let app = createApp(App);
@@ -33,7 +35,7 @@ let app = createApp(App);
 app.use(pinia);
 app.use(router);
 window.vueApp = app.mount('#app');
-app.config.globalProperties.window = window
+app.config.globalProperties.window = window;
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/vue-legacy.css");

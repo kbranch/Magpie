@@ -37,6 +37,9 @@ onMounted(() => {
       init();
     });
 });
+
+document.title = 'Magpie Tracker - Items Broadcast View'
+
 </script>
 
 <template>
@@ -59,7 +62,7 @@ onMounted(() => {
 </div>
 
 <div>
-    <NavBar :is-local="state.isLocal" :version="version" :remote-version="state.remoteVersion" />
+    <NavBar :is-local="state.isLocal" :version="version" :remote-version="state.remoteVersion" :show-share="false" />
 </div>
 
 <div v-if="!state.isLocal" class="pt-4">
