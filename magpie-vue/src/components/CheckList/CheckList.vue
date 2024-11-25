@@ -142,7 +142,7 @@ function sortByKey(arr, key) {
 <div class="row">
     <div class="col-auto">
         <ul id="tabButtons">
-            <li class="me-1" :class="['tab-button', { active: activeTab == 'dynamic' }]" @mouseenter="tip.tooltip('Checks', $event)">
+            <li class="me-0" :class="['tab-button', { active: activeTab == 'dynamic' }]" @mouseenter="tip.tooltip('Checks', $event)">
                 <button class="btn tab-link" type="button" @click="activeTab = 'dynamic'">
                     <div :class="`tooltip-check-graphic difficulty-0`">
                         <svg class="tooltip-check-graphic"><use :xlink:href="`#difficulty-0`"></use></svg>
