@@ -289,5 +289,6 @@ ul {
 
 #hideButton {
     align-content: center;
+    cursor: pointer;
 }
 </style>

@@ -73,7 +73,7 @@ defineProps({
 }
 
 .text-check {
-    cursor: default;
+    cursor: pointer;
 }
 
 .check-name {

@@ -157,4 +157,5 @@ onUpdated(() => {
     background-color: #ccc;
     border-radius: 5px;
 }
+
 </style>

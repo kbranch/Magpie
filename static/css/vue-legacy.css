@@ -14,6 +14,7 @@ nowrap {
 .itemWrapper {
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
 
 .itemImage {
@@ -1148,4 +1149,23 @@ img[data-status="error"] {
 
 input {
     margin-right: 0.51rem;
+}
+
+.difficulty-0,
+.difficulty-1,
+.difficulty-2,
+.difficulty-3,
+.difficulty-4,
+.difficulty-8,
+.difficulty-9,
+.difficulty-checked,
+.entrance-difficulty-0,
+.entrance-difficulty-1,
+.entrance-difficulty-2,
+.entrance-difficulty-3,
+.entrance-difficulty-4,
+.entrance-difficulty-8,
+.entrance-difficulty-9,
+.entrance-difficulty-checked {
+    cursor: pointer;
 }

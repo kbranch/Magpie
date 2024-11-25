@@ -145,6 +145,7 @@ span.logic-name {
     height: auto;
     opacity: 0.5;
     padding: 4px;
+    cursor: pointer;
 }
 
 .close-button:hover {

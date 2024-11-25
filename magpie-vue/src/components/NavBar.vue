@@ -89,7 +89,7 @@ async function sendSuggestion() {
                 </div>
             </template>
 
-            <div class="col text-end">
+            <div id="endButtons">
                 <button type="button" class="btn btn-secondary" @click="resetSession()" @mouseenter="tip.tooltip('Reset Checks and Inventory', $event)">
                     <img class="button-icon" src="/images/arrow-clockwise.svg">
                 </button>
@@ -130,3 +130,22 @@ async function sendSuggestion() {
         :initial-event-name="state.settings.eventName"
         :initial-join-code="state.settings.joinCode" />
 </template>
+
+<style scoped>
+.btn {
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.container {
+    justify-content: normal !important;
+    position: relative;
+}
+
+#endButtons {
+    display: flex;
+    position: absolute;
+    right: 0;
+}
+</style>
