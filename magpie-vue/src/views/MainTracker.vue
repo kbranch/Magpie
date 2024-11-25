@@ -95,7 +95,7 @@ onMounted(() => {
   </div>
 </div>
 
-<div class="row">
+<div class="row pb-4">
   <div id="checkList" class="col">
     <CheckList :logics="state.logics" :check-accessibility="state.checkAccessibility" />
   </div>
@@ -111,18 +111,19 @@ onMounted(() => {
     :argDescriptions="argDescriptions" />
 </div>
 
-<div class="row justify-content-end pt-4">
+<div class="pt-4"></div>
+<div class="bottom-right">
   <div class="col">
     <span class="hidden">{{hostname}}</span>
   </div>
 
-  <div class="col-auto">
+  <div class="col-auto pe-2">
     <div class="version">
       <span>Version: {{ version }}</span>
     </div>
   </div>
 
-  <div class="col-auto">
+  <div class="col-auto ps-2">
     <button type="button" class="btn btn-secondary" onclick="hardReset()">Hard reset state and settings</button>
   </div>
 </div>
@@ -181,3 +182,12 @@ onMounted(() => {
 </div>
 
 </template>
+
+<style scoped>
+.bottom-right {
+  position: absolute;
+  bottom: 12px;
+  right: 0;
+  display: flex;
+}
+</style>

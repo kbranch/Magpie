@@ -277,7 +277,7 @@ ul {
 }
 
 #noChecks {
-    font-size: larger;
+    font-size: xx-large;
     width: 100%;
     text-align: center;
 }

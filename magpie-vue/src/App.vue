@@ -196,6 +196,7 @@ defineExpose({
   height: 100%;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 #appInner {
@@ -203,5 +204,7 @@ defineExpose({
   width: 100%;
   padding-left: 12px;
   padding-right: 12px;
+  min-height: 100vh;
+  position: relative;
 }
 </style>
