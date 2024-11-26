@@ -29,6 +29,25 @@ const node = computed(() => allNodes.value[stateNode.value?.id()]);
 const show = computed(() => stateShow.value && (props.type == 'text' ? state.text : node.value) && stateElement.value && tipClean.value && parentClean.value);
 const tipLeft = computed(() => getTooltipLeft(parentRect.value, tipRect.value, rootRect.value));
 const tipTop = computed(() => getTooltipTop(parentRect.value, tipRect.value));
+const logicHintText = computed(() => {
+    if (!node.value?.logicHint) {
+        return null;
+    }
+
+    let metadata = node.value.logicHint.metadata;
+    let text = metadata.text;
+
+    if (metadata.extraText) {
+        try {
+            text += metadata.extraText();
+        }
+        catch (error) {
+            console.log(`Error processing metadata extraText: ${error}`);
+        }
+    }
+
+    return text;
+});
 
 const rootObserver = new IntersectionObserver(updateRoot, { threshold: 1.0 });
 const rootResizeObserver = new ResizeObserver(updateRoot, { threshold: 1.0 });
@@ -202,7 +221,7 @@ function watchMouseOut() {
                 <BossChunk v-if="node.boss" :node="node" />
 
                 <div v-if="node.logicHint" class='tooltip-text align-middle p-2'>
-                    {{ node.logicHint.metadata.text }}
+                    {{ logicHintText }}
                 </div>
             </div>
         </template>

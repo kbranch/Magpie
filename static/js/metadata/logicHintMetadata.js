@@ -32,6 +32,7 @@ var logicHintDict = {
     "BirdPits":{
       "id":"BirdPits",
       "text":"Fall Down a Bird Key Cave Pit",
+      "extraText": () => { return ` (found at ${entranceDict[entranceMap['bird_cave:inside']].name})` },
       "image": "bird_hole.svg",
       "condition": (flags, settings) => { return flags.entranceshuffle != 'none'; },
       "locations":[
