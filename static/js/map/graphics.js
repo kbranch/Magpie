@@ -28,27 +28,6 @@ function pickingEntrances() {
     return graphicalMapSource != null;
 }
 
-function drawTab(button, clear=false) {
-    if (isVue) {
-        return;
-    }
-
-    if (clear) {
-        removeNodes();
-        closeAllTooltips();
-    }
-
-    let mapName = getMapNameFromButton(button);
-    $('#mapContainer .tab.active').removeClass('active');
-    $('#mapContainer .tab-button.active').removeClass('active');
-    $(`#mapContainer .tab-button[data-mapname=${mapName}]`).addClass('active');
-    $(`#mapContainer .tab [data-mapname=${mapName}]`).closest('.map-container').addClass('active');
-
-    drawNodes(mapName, false);
-
-    broadcastMapTab(mapName);
-}
-
 function drawConnectorLines() {
     $('connection').connections('remove');
 }

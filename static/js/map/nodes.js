@@ -8,7 +8,6 @@ function removeNodes() {
         pinned = $('[data-pinned]').attr('data-node-id');
     }
 
-    removeNodeTooltips();
     $('.check-graphic').remove();
     $('#linkFace').remove();
 }
@@ -313,8 +312,6 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
             'class': classes.join(' '),
             'data-difficulty': node.difficulty,
         })
-
-        updateTooltip(node.graphic);
     }
 
     drawLocation();
@@ -343,11 +340,6 @@ function removeOldNodes() {
 
     for (const staleNodeId of oldNodeIds) {
         let node = $(`[data-node-id="${staleNodeId}"]`);
-        let tooltip = bootstrap.Tooltip.getInstance(node);
-
-        if (tooltip._isShown()) {
-            closeAllTooltips();
-        }
 
         $(node).removeClass('animate__bounceInDown');
         $(node).addClass('animate__fadeOut');

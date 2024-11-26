@@ -416,7 +416,6 @@ function applySettings(oldArgs=null) {
 
     checkAccessibility?.map(x => x.updateChecked());
     
-    setCustomDungeonItemsVisibility()
     setCustomDungeonItemsArgs();
 }
 
@@ -456,9 +455,7 @@ function setLocalStorage(key, value) {
     let prefix = settingsPrefix ?? '';
     localStorage.setItem(prefix + key, value);
 
-    if (isVue) {
-        debounce(uploadLocalStorage, 100);
-    }
+    debounce(uploadLocalStorage, 100);
 }
 
 function uploadLocalStorage() {

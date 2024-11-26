@@ -2,12 +2,9 @@
 
 function closeOtherTooltips(element) {
     let id = $(element).attr('data-node-id');
-    let nodeElements = $(`.check-graphic[data-node-id!="${id}"]:not(.animate__fadeOut)`);
     let secondaries = $('.helper');
 
     $(secondaries).tooltip('hide');
-    $(nodeElements).tooltip('hide');
-    $(nodeElements).removeAttr('data-pinned');
 
     Object.values(nodes).map(x => {
         if (x.id != id) {
@@ -15,32 +12,20 @@ function closeOtherTooltips(element) {
         }
     });
 
-    for (const node of nodeElements) {
-        updateTooltip(node);
-    }
 }
 
 function closeAllCheckTooltips() {
     let secondaries = $('.helper');
-    let nodeElements = $('.check-graphic');
 
     if (secondaries.length) {
         $(secondaries).tooltip('hide');
     }
-    if (nodeElements.length) {
-        $(nodeElements).tooltip('hide');
-    }
 
     $('connection.connector-line').connections('remove');
 
-    let pinnedNodes = $('.check-graphic[data-pinned]');
-    pinnedNodes.removeAttr('data-pinned');
 
     Object.values(nodes).map(x => x.pinned = false);
 
-    for (const node of pinnedNodes) {
-        updateTooltip(node);
-    }
 
     if (pickingEntrances()) {
         endGraphicalConnection();
@@ -67,70 +52,6 @@ function closeAllTooltips() {
 
     // No, really, everything
     $('.tooltip').remove();
-}
-
-function removeNodeTooltips() {
-    $('.check-graphic').each((i, e) => {
-        let oldTooltip = bootstrap.Tooltip.getInstance(e);
-        oldTooltip.dispose();
-    });
-}
-
-function updateTooltip(checkGraphic, hoveredCheckId=null) {
-    if (!checkGraphic) {
-        return;
-    }
-
-    let node = nodes[checkGraphic.dataset.nodeId]
-
-    if (node == undefined) {
-        return;
-    }
-
-    let pinned = checkGraphic.dataset.pinned;
-
-    let connectionType = 'none';
-
-    if (pickingEntrances()) {
-        connectionType = graphicalMapType;
-    }
-
-    let title = node.tooltipHtml(pinned, connectionType, hoveredCheckId);
-    let activated = checkGraphic.dataset.bsTitle != "";
-
-    checkGraphic.dataset.bsTitle = title;
-
-    let tooltip;
-
-    if (activated) {
-        tooltip = bootstrap.Tooltip.getInstance(checkGraphic);
-        tooltip._config.title = title;
-
-        if (tooltip._isShown()) {
-            closeOtherTooltips(checkGraphic);
-            tooltip.hide();
-            tooltip.show();
-        }
-    }
-    else {
-        tooltip = new bootstrap.Tooltip(checkGraphic, {popperConfig:getPopperConfig, sanitize: false});
-        checkGraphic.addEventListener('inserted.bs.tooltip', (e) => {
-            let tooltips = document.querySelectorAll('div.tooltip');
-            tooltips.forEach(tip => {
-                tip.addEventListener('contextmenu', () => { return false; });
-
-                const helpers = tip.querySelectorAll('.helper, button[data-bs-custom-class="secondary-tooltip"]');
-                [...helpers].forEach(helper => { 
-                    let helperTip = new bootstrap.Tooltip(helper, { popperConfig: getPopperConfig, animation: false, sanitize: false });
-
-                    // Janky fix for tooltips positioning themselves before the images load
-                    // Relies on animation being off
-                    helperTip.show();
-                    helperTip.hide();
-                })
-            });
-        })
-    }
 }
 
 function getPopperConfig(config) {

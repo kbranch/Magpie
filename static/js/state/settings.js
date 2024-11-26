@@ -4,17 +4,13 @@ function saveSettingsToStorage(args, localSettings) {
     if (argsAreValid(args)) {
         setLocalStorage('args', JSON.stringify(args));
 
-        if (isVue) {
-            vueApp.updateArgs(args);
-        }
+        vueApp.updateArgs(args);
     }
 
     if (settingsAreValid(localSettings)) {
         setLocalStorage('settings', JSON.stringify(localSettings));
 
-        if (isVue) {
-            vueApp.updateSettings(localSettings);
-        }
+        vueApp.updateSettings(localSettings);
     }
 }
 
@@ -46,54 +42,13 @@ function setInputValues(dataAttrName, values) {
             }
         }
     }
-
-    if (!isVue && dataAttrName == 'flag') {
-        setApVisibility(values.ap_logic);
-    }
 }
 
 function saveQuickSettings() {
-    quickSettingsToSettings();
-
-    if (!isVue) {
-        localSettings = getInputValues('setting', localSettings);
-    }
-
     saveSettingsToStorage(args, localSettings);
     applySettings();
     skipNextAnimation = true;
     drawActiveTab();
-    setTimeout(refreshTextChecks, 20);
-}
-
-function quickSettingsToSettings() {
-    if (isVue) {
-        return;
-    }
-
-    $('#mainEnableAutotracking').prop('checked', $('#enableAutotracking').prop('checked'));
-    $('#showOutOfLogic').prop('checked', $('#showOutOfLogicQuick').prop('checked'));
-    $('#showHigherLogic').prop('checked', $('#showHigherLogicQuick').prop('checked'));
-    $('#showChecked').prop('checked', $('#showCheckedQuick').prop('checked'));
-    $('#showVanilla').prop('checked', $('#showVanillaQuick').prop('checked'));
-    $('#showOwned').prop('checked', $('#showOwnedQuick').prop('checked'));
-    $('#showVanillaEntrances').prop('checked', $('#showVanillaEntrancesQuick').prop('checked'));
-    $('#showLogicHints').prop('checked', $('#showLogicHintsQuick').prop('checked'));
-}
-
-function settingsToQuickSettings() {
-    if (isVue) {
-        return;
-    }
-
-    $('#enableAutotracking').prop('checked', $('#mainEnableAutotracking').prop('checked'));
-    $('#showOutOfLogicQuick').prop('checked', $('#showOutOfLogic').prop('checked'));
-    $('#showHigherLogicQuick').prop('checked', $('#showHigherLogic').prop('checked'));
-    $('#showCheckedQuick').prop('checked', $('#showChecked').prop('checked'));
-    $('#showVanillaQuick').prop('checked', $('#showVanilla').prop('checked'));
-    $('#showOwnedQuick').prop('checked', $('#showOwned').prop('checked'));
-    $('#showVanillaEntrancesQuick').prop('checked', $('#showVanillaEntrances').prop('checked'));
-    $('#showLogicHintsQuick').prop('checked', $('#showLogicHints').prop('checked'));
 }
 
 function saveSettings() {
@@ -102,20 +57,11 @@ function saveSettings() {
         return;
     }
 
-    settingsToQuickSettings();
-
     let rawArgs = args;
 
-    if (isVue) {
-        rawArgs = vueApp.stripProxy(args);
-    }
+    rawArgs = vueApp.stripProxy(args);
 
     let oldArgs = structuredClone(rawArgs);
-
-    if (!isVue) {
-        args = getInputValues('flag', args);
-        localSettings = getInputValues('setting', localSettings);
-    }
 
     resetUndoRedo()
 
@@ -501,54 +447,19 @@ function pickCustomDungeonItemsPath(data) {
 }
 
 function resetColors() {
-    if (isVue) {
-        const settings = [
-            'diff0Color', 'diff0VColor', 'diff1Color', 'diff1VColor',
-            'diff2Color', 'diff2VColor', 'diff3Color', 'diff3VColor',
-            'diff8Color', 'diff8VColor', 'diff9Color', 'diff9VColor',
-            'diffCheckedColor', 'diff0Alpha', 'diff0VAlpha',
-            'diff1Alpha', 'diff1VAlpha', 'diff2Alpha', 'diff2VAlpha',
-            'diff3Alpha', 'diff3VAlpha', 'diff8Alpha', 'diff8VAlpha',
-            'diff9Alpha', 'diff9VAlpha', 'diffCheckedAlpha',
-            'bgColor', 'textColor', 'highlightColor',
-        ]
+    const settings = [
+        'diff0Color', 'diff0VColor', 'diff1Color', 'diff1VColor',
+        'diff2Color', 'diff2VColor', 'diff3Color', 'diff3VColor',
+        'diff8Color', 'diff8VColor', 'diff9Color', 'diff9VColor',
+        'diffCheckedColor', 'diff0Alpha', 'diff0VAlpha',
+        'diff1Alpha', 'diff1VAlpha', 'diff2Alpha', 'diff2VAlpha',
+        'diff3Alpha', 'diff3VAlpha', 'diff8Alpha', 'diff8VAlpha',
+        'diff9Alpha', 'diff9VAlpha', 'diffCheckedAlpha',
+        'bgColor', 'textColor', 'highlightColor',
+    ]
 
-        for (const setting of settings) {
-            localSettings[setting] = defaultSettings[setting];
-        }
-    }
-    else {
-        setInputValues('setting', {
-            "diff0Color": "#0066ff",
-            "diff0VColor": "#ffffff",
-            "diff1Color": "#ffff00",
-            "diff1VColor": "#ffffff",
-            "diff2Color": "#ff8800",
-            "diff2VColor": "#ffffff",
-            "diff3Color": "#ff0000",
-            "diff3VColor": "#ffffff",
-            "diff8Color": "#0066ff",
-            "diff8VColor": "#ffffff",
-            "diff9Color": "#444444",
-            "diff9VColor": "#aaaaaa",
-            "diffCheckedColor": "#00ff00",
-            "diff0Alpha": 1,
-            "diff0VAlpha": 1,
-            "diff1Alpha": 1,
-            "diff1VAlpha": 1,
-            "diff2Alpha": 1,
-            "diff2VAlpha": 1,
-            "diff3Alpha": 1,
-            "diff3VAlpha": 1,
-            "diff8Alpha": 1,
-            "diff8VAlpha": 1,
-            "diff9Alpha": 1,
-            "diff9VAlpha": 1,
-            "diffCheckedAlpha": 1,
-            "bgColor": "#212529",
-            "textColor": "#f8f9fa",
-            "highlightColor": "#444444",
-        });
+    for (const setting of settings) {
+        localSettings[setting] = defaultSettings[setting];
     }
 }
 
@@ -649,35 +560,5 @@ function setCustomDungeonItemsArgs() {
     let settings = getCustomDungeonItems(args.dungeon_items);
     for (const prop in settings) {
         args[prop] = settings[prop];
-    }
-}
-
-function setCustomDungeonItemsVisibility() {
-    if (isVue) {
-        return;
-    }
-
-    let e = document.getElementById("arg-dungeon_items");
-    let custom = document.getElementById('customDungeonItems');
-
-    if (e.value == 'custom') {
-        custom.classList.remove('hidden');
-    }
-    else {
-        custom.classList.add('hidden');
-
-        let small = document.getElementById("arg-shuffle_small");
-        let nightmare = document.getElementById("arg-shuffle_nightmare");
-        let maps = document.getElementById("arg-shuffle_maps");
-        let compasses = document.getElementById("arg-shuffle_compasses");
-        let beaks = document.getElementById("arg-shuffle_beaks");
-
-        let settings = getCustomDungeonItems(e.value);
-
-        small.checked = settings.shuffle_small;
-        nightmare.checked = settings.shuffle_nightmare;
-        maps.checked = settings.shuffle_maps;
-        compasses.checked = settings.shuffle_compasses;
-        beaks.checked = settings.shuffle_beaks;
     }
 }

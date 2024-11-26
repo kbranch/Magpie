@@ -57,12 +57,6 @@ function prepShareModal() {
     if (joinCode) {
         joinCode.value = localSettings.joinCode ?? '';
     }
-
-    if (!isVue) {
-        setElementHidden(document.getElementById('playerIdWarning'), true);
-
-        updateShareUrls();
-    }
 }
 
 function checkPlayerId() {

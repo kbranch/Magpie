@@ -68,7 +68,6 @@ var logicByCheck = {};
 var logicByEntrance = {};
 var broadcastMode;
 var rootPrefix = "";
-var isVue = true;
 
 const renamedItems = {
     "KEY9": "KEY0",

@@ -27,7 +27,6 @@ function toggleNode(node) {
     }
 
     drawActiveTab();
-    setTimeout(refreshTextChecks, 20);
 
     broadcastMap();
 
@@ -79,7 +78,6 @@ function toggleCheck(event, id, draw=true, pushUndo=true) {
 
     if (draw) {
         drawActiveTab();
-        setTimeout(refreshTextChecks, 20);
 
         if (itemsChanged) {
             refreshCheckList();
@@ -149,63 +147,6 @@ function moveCheckFromChecked(id, doLinked=false, updateDungeonCount=true) {
     }
 
     return itemsChanged;
-}
-
-function refreshTextChecks() {
-    if (isVue) {
-        return;
-    }
-
-    if (!checkAccessibility) {
-        return;
-    }
-
-    let checks = sortByKey(checkAccessibility, x => [x.metadata.area, x.metadata.name])
-                 .filter(x => (x.shouldDraw() || x.difficulty == 9));
-    for (const element of document.querySelectorAll('.row.grid[data-difficulty]')) {
-        let difficulty = element.dataset.difficulty;
-        element.innerHTML = '';
-
-        let lastArea = null;
-        let areaList = null;
-        let areas = [];
-        let logicChecks = checks.filter(x => ((x.isChecked() ? 'checked' : x.difficulty) == difficulty));
-
-        let accordion = document.getElementById(`difficulty${difficulty == 'checked' ? 'Checked' : difficulty}Accordion`);
-        setElementHidden(accordion, logicChecks.length == 0);
-
-        let statsSpan = accordion.querySelector('span.logic-stats')
-
-        let checkCount = new Set(checkAccessibility.filter(x => !x.isVanillaOwl() && x.id != 'egg' && !x.metadata.vanillaItem).map(x => x.id)).size;
-        let logicCount = logicChecks.length;
-        statsSpan.innerHTML = `${logicCount} (${(logicCount / checkCount * 100).toFixed(1)}%)`;
-
-        for (const check of logicChecks) {
-            let checkArea = coordDict[check.id].area;
-            if (checkArea != lastArea) {
-                let areaElement = createGroup(checkArea);
-                areas.push(areaElement);
-
-                areaList = areaElement.querySelector('ul.list-group')
-                lastArea = checkArea;
-            }
-
-            areaList.appendChild(createTextCheck(check));
-        }
-
-        for (const area of areas) {
-            element.appendChild(area);
-        }
-    }
-
-    $('.grid').masonry({
-        transitionDuration: 0,
-        columnWidth: '.text-check-card-wrapper:not(.hidden)',
-    });
-
-    if (typeof applyMasonry === "function") {
-        applyMasonry();
-    }
 }
 
 function populateCheckOptions(button) {

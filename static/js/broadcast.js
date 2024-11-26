@@ -156,12 +156,8 @@ function broadcastMap(buffer=true, force=false) {
         return;
     }
 
-    let contents = checkContents;
-
-    if (isVue) {
-        contents = {};
-        Object.assign(contents, checkContents);
-    }
+    let contents = {};
+    Object.assign(contents, checkContents);
 
     broadcastMessage({
         type: 'map',
@@ -266,9 +262,7 @@ function broadcastMessage(msg) {
         }
     }
     else {
-        if (isVue) {
-            msg.data = vueApp.stripProxy(msg.data);
-        }
+        msg.data = vueApp.stripProxy(msg.data);
 
         channel.postMessage(msg);
     }

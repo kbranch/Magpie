@@ -3,9 +3,7 @@
 function saveChecked() {
     setLocalStorage('checkedChecks', JSON.stringify([...checkedChecks]));
 
-    if (isVue) {
-        vueApp.updateChecked(checkedChecks);
-    }
+    vueApp.updateChecked(checkedChecks);
 
     if (typeof broadcastMap === 'function') {
         broadcastMap();
@@ -29,8 +27,6 @@ function saveLocations() {
 function loadLocations() {
     let checkedErrors = loadChecked() ?? [];
     let entranceErrors = loadEntrances() ?? [];
-
-    setTimeout(refreshTextChecks, 20);
 
     return checkedErrors.concat(entranceErrors);
 }

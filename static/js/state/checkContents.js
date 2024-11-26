@@ -4,9 +4,7 @@ function saveCheckContents() {
     setLocalStorage('checkContents', JSON.stringify(checkContents));
     updateItemLocations();
 
-    if (isVue) {
-        vueApp.updateCheckContents(checkContents);
-    }
+    vueApp.updateCheckContents(checkContents);
 }
 
 function loadCheckContents() {
@@ -80,7 +78,6 @@ function setCheckContents(checkId, contents, housekeeping=true) {
 
     if (housekeeping) {
         drawActiveTab();
-        setTimeout(refreshTextChecks, 20);
     }
 }
 

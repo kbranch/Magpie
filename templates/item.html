@@ -45,7 +45,7 @@
         {% set tooltip = primaryName.replace('_', ' ').replace('TRADING ITEM ', '')|title %}
     {% endif %}
 
-    {% set onmouseenter = "itemMouseEnter(this); if (isVue) { vueTooltip(`" + tooltip + "`, window.event, 500); }" %}
+    {% set onmouseenter = "itemMouseEnter(this); vueTooltip(`" + tooltip + "`, window.event, 500);" %}
 
     {% if classes == '"' %}
         {% set classes = "pt-2 px-1 col text-center" %}

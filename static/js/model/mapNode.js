@@ -674,12 +674,6 @@ class MapNode {
             'id': this.id(),
             'draggable': false,
             'data-node-id': this.id(),
-            'data-bs-toggle': 'tooltip',
-            'data-bs-trigger': 'manual',
-            'data-bs-html': 'true',
-            'data-bs-title': '',
-            'data-bs-animation': 'false',
-            'data-bs-container': 'body',
             css: `top: ${y}px;
                   left: ${x}px;
                   width: ${size}px;
@@ -711,9 +705,7 @@ class MapNode {
         $(this.graphic).on('mouseenter', (e) => {
             checkGraphicMouseEnter(e.currentTarget);
 
-            if (isVue) {
-                vueNodeTooltip(nodes[this.id()], e);
-            }
+            vueNodeTooltip(nodes[this.id()], e);
         });
         $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);

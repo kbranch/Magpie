@@ -7,16 +7,6 @@ function checkGraphicMouseEnter(element) {
         return;
     }
 
-    if (!isVue) {
-        let tooltip = bootstrap.Tooltip.getInstance(element);
-
-        if (tooltip._isShown()) {
-            return;
-        }
-
-        tooltip.show();
-    }
-
     let node = nodes[element.id];
     let connection = node.entrance?.mappedConnection();
     if (connection && !coupledEntrances()) {
@@ -43,11 +33,6 @@ function checkGraphicMouseEnter(element) {
 
 function checkGraphicMouseLeave(element) {
     if (!hasAttr(element, 'data-pinned')) {
-        if (!isVue) {
-            let tooltip = bootstrap.Tooltip.getInstance(element);
-            tooltip.hide();
-        }
-
         $('connection.connector-line').connections('remove');
     }
 
@@ -95,8 +80,6 @@ function nodePrimary(element, event) {
     }
     else {
         toggleNode(node);
-        let tooltip = bootstrap.Tooltip.getInstance(element);
-        tooltip.hide();
     }
 }
 
@@ -117,8 +100,6 @@ function nodeSecondary(element) {
     else {
         $(element).removeAttr('data-pinned');
     }
-
-    updateTooltip(element);
 }
 
 function nodeMiddle(element) {
