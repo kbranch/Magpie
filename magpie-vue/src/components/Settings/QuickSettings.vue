@@ -1,5 +1,5 @@
 <script setup>
-import { saveQuickSettings } from '@/moduleWrappers.js';
+import { saveQuickSettings, download, sortByKey } from '@/moduleWrappers.js';
 import { ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
@@ -46,6 +46,11 @@ function setRomRequested(value) {
 
 function switchTabs(e) {
     activeTabId.value = e.currentTarget.id;
+}
+
+function downloadSpoilerLog() {
+    state.spoilerLog.accessibleItems = sortByKey(state.spoilerLog.accessibleItems, x => [x.sphere, x.area])
+    download(`spoilerLog-${state.spoilerLog.seed}.json`, JSON.stringify(state.spoilerLog, null, 2));
 }
 
 window.addAutotrackerMessage = addAutotrackerMessage;
@@ -191,22 +196,27 @@ window.setRomRequested = setRomRequested;
                                 <p id="spoilerSeed"></p>
                             </div>
                         </div>
-                        <div class="row pb-2">
-                            <div class="col">
-                                <input type="button" id="spoilAllButton" class="btn btn-secondary hidden"
-                                    value="Spoil Everything" onclick="spoilAll();" />
+                        <div class="row">
+                            <div class="col pb-2 pe-0">
+                                <input type="button" id="spoilAllButton" class="btn btn-secondary hidden" value="Spoil Everything" onclick="spoilAll();" />
                             </div>
-                            <div class="col-auto">
-                                <input type="button" id="clearSpoilersButton" class="btn btn-secondary"
-                                    value="Clear" onclick="resetCheckContents();drawActiveTab();" />
+                            <div v-if="state.spoilerLog?.seed" class="col-auto pb-2 px-2">
+                                <button type="button" class="btn btn-secondary" @click="downloadSpoilerLog" @mouseenter="tip.tooltip('Download spoiler log', $event)">
+                                    <img class="invert" src="/images/download.svg">
+                                </button>
+                            </div>
+                            <div class="col-auto pb-2 px-0">
+                                <input type="button" id="clearSpoilersButton" class="btn btn-secondary" value="Clear" onclick="resetCheckContents();drawActiveTab();" />
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col even-col">
+                            <div id="spoilerFileLabel" class="col">
                                 <label for="spoilerInput" class="form-label pe-2">
                                     Select Spoiler File
                                     <img class="invert" src="/images/question-circle.svg" @mouseenter="tip.tooltip('Select either a JSON spoiler log file or a ROM file', $event)">
                                 </label>
+                            </div>
+                            <div class="col-auto px-0">
                                 <input type="file" accept=".json,.gbc" class="hidden" id="spoilerInput" onchange="loadLogFile(this)" />
                                 <input type="button" class="btn btn-secondary spoiler-browse" value="Browse..." onclick="document.getElementById('spoilerInput').click();" />
                             </div>
@@ -370,5 +380,11 @@ window.setRomRequested = setRomRequested;
     position: relative;
     width: 32px;
     height: 32px;
+}
+
+#spoilerFileLabel {
+    display: flex;
+    align-items: end;
+    justify-content: end;
 }
 </style>

@@ -23,6 +23,10 @@ function setSpoilerLabel(text) {
 }
 
 function loadLogContents(log, loadSettings=true) {
+    if (typeof log === 'string' || log instanceof String) {
+        log = JSON.parse(log);
+    }
+
     let isArchipelago = log.archipelago == true;
 
     setApLogic(isArchipelago);
@@ -38,6 +42,7 @@ function loadLogContents(log, loadSettings=true) {
     }
 
     spoilerLog = log;
+    vueApp.updateSpoilerLog(spoilerLog);
 
     fillVanillaLogEntrances();
 

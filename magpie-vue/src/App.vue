@@ -58,6 +58,10 @@ function updateEventInfo(eventName, viewCode) {
   eventStore.viewCode = viewCode;
 }
 
+function updateSpoilerLog(spoilerLog) {
+  state.spoilerLog = spoilerLog;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
@@ -69,6 +73,7 @@ defineExpose({
   updateServerVersion,
   updateSidebarMessage,
   updateEventInfo,
+  updateSpoilerLog,
 });
 </script>
 

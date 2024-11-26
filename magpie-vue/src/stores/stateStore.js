@@ -14,6 +14,7 @@ export const useStateStore = defineStore('state', () => {
     const sidebarMessage = ref(null);
     const graphicsOptions = ref([]);
     const argDescriptions = ref([]);
+    const spoilerLog = ref(null);
 
     return {
         settings,
@@ -28,5 +29,6 @@ export const useStateStore = defineStore('state', () => {
         sidebarMessage,
         graphicsOptions,
         argDescriptions,
+        spoilerLog,
     };
 });

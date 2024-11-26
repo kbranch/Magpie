@@ -218,6 +218,7 @@ function loadSettings() {
 
     if (localStorage.getItem("importedSpoilerLog")) {
         spoilerLog = JSON.parse(localStorage.getItem("importedSpoilerLog"));
+        vueApp.updateSpoilerLog(spoilerLog);
         localStorage.removeItem("importedSpoilerLog");
     }
     

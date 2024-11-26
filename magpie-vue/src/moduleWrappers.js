@@ -53,6 +53,9 @@ export let coupledEntrances = window.coupledEntrances;
 export let mapBoss = window.mapBoss;
 export let skipNextAnimation = window.skipNextAnimation;
 export let eventNameInput = window.eventNameInput;
+export let spoilerLog = window.spoilerLog;
+export let download = window.download;
+export let sortByKey = window.sortByKey;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;
