@@ -276,8 +276,13 @@ function processSlotDataMessage(message) {
     args['dungeon_items'] = 'custom';
     args['goal'] = String(args['goal']);
 
-    if (slotData.gfxmod) {
-        localSettings.graphicsPack = `/${slotData.gfxmod}`;
+    if ('gfxmod' in slotData) {
+        if (graphicsOptions.includes(slotData.gfxmod) || slotData.gfxmod == '') {
+            localSettings.graphicsPack = `/${slotData.gfxmod}`;
+        }
+        else {
+            console.log(`Invalid graphics pack: "${slotData.gfxmod}"`);
+        }
     }
 
     setInputValues('flag', args);
@@ -488,6 +493,11 @@ function processMessage(messageText) {
 function setGraphicsPack(gfx) {
     if (!autotrackerFeatures.includes('gfx')) {
         console.log("GFX feature disabled, ignoring")
+        return;
+    }
+
+    if (!graphicsOptions.includes(gfx) && gfx != '') {
+        console.log(`Invalid graphics pack: "${gfx}"`);
         return;
     }
 
