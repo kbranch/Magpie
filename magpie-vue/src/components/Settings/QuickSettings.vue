@@ -91,24 +91,24 @@ window.setRomRequested = setRomRequested;
         <div v-if="activeTabId == 'quicksettingsTab'" class="tab h-100">
             <div class="row h-100 align-items-end">
                 <div class="col quicksettings-col quick-bg">
-                    <div class="row pt-2 quicksettings-row">
-                        <div class="col-auto mb-4 quicksetting">
+                    <div class="row pt-2 pb-3 quicksettings-row">
+                        <div class="col-auto quicksetting">
                             <input id="showOutOfLogicQuick" type="checkbox" v-model="state.settings.showOutOfLogic" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showOutOfLogicQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show out of logic', $event)">
+                            <label for="showOutOfLogicQuick" :class="[state.settings.showOutOfLogic ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show out of logic', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-9"></use>
                                 </svg>
                             </label>
                         </div>
-                        <div id="higherLogicQuicksetting" class="col-auto mb-4 quicksetting">
+                        <div id="higherLogicQuicksetting" class="col-auto quicksetting">
                             <input id="showHigherLogicQuick" type="checkbox" v-model="state.settings.showHigherLogic" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showHigherLogicQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show higher logic levels', $event)">
+                            <label for="showHigherLogicQuick"  :class="[state.settings.showHigherLogic ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show higher logic levels', $event)">
                                 <img src="/images/higher-logic.svg" class="quicksettings-icon align-middle">
                             </label>
                         </div>
-                        <div id="checkedQuicksetting" class="col-auto mb-4 quicksetting">
+                        <div id="checkedQuicksetting" class="col-auto quicksetting">
                             <input id="showCheckedQuick" type="checkbox" v-model="state.settings.showChecked" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showCheckedQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show checked locations', $event)">
+                            <label for="showCheckedQuick"  :class="[state.settings.showChecked ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show checked locations', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-checked"></use>
                                 </svg>
@@ -118,7 +118,7 @@ window.setRomRequested = setRomRequested;
                     <div class="row quicksettings-row">
                         <div class="col-auto mb-0 quicksetting">
                             <input id="showVanillaQuick" type="checkbox" v-model="state.settings.showVanilla" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showVanillaQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla checks', $event)">
+                            <label for="showVanillaQuick" :class="[state.settings.showVanilla ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla checks', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-0-vanilla"></use>
                                 </svg>
@@ -126,7 +126,7 @@ window.setRomRequested = setRomRequested;
                         </div>
                         <div class="col-auto mb-0 quicksetting">
                             <input id="showOwnedQuick" type="checkbox" v-model="state.settings.showOwnedPickups" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showOwnedQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show owned vanilla pickups', $event)">
+                            <label for="showOwnedQuick" :class="[state.settings.showOwnedPickups ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show owned vanilla pickups', $event)">
                                 <div class="row ms-0 px-0">
                                     <div class="col-auto px-0">
                                         <div class="quicksettings-wrapper">
@@ -149,13 +149,13 @@ window.setRomRequested = setRomRequested;
                         </div>
                         <div class="col-auto mb-0 quicksetting">
                             <input id="showVanillaEntrancesQuick" type="checkbox" v-model="state.settings.showVanillaEntrances" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showVanillaEntrancesQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla entrances and dungeon stairs', $event)">
+                            <label for="showVanillaEntrancesQuick" :class="[state.settings.showVanillaEntrances ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla entrances and dungeon stairs', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/vanilla-entrance.svg">
                             </label>
                         </div>
                         <div class="col-auto mb-0 quicksetting">
                             <input id="showLogicHintsQuick" type="checkbox" v-model="state.settings.showLogicHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-                            <label for="showLogicHintsQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show logic hints', $event)">
+                            <label for="showLogicHintsQuick" :class="[state.settings.showLogicHints ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show logic hints', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/logicHints.svg">
                             </label>
                         </div>
@@ -333,10 +333,31 @@ window.setRomRequested = setRomRequested;
     margin-right: 4px;
     margin-top: 0px;
     margin-bottom: 0px;
+    display: none;
 }
 
 .quicksettings-label {
-    width: 32px;
+    width: 44px;
+    padding: 6px;
+    border-radius: 5px;
+}
+
+.quicksettings-label:hover {
+    background-color: rgba(255, 255, 255, 0.075);
+}
+
+.quicksettings-label.active {
+    background-color: #0d6efd;
+}
+
+.quicksettings-label.active:hover {
+    /* background-color: rgba(255, 255, 255, 0.15); */
+    background-color: #4daeff;
+}
+
+.quicksettings-label:active, .quicksettings-label.active:active {
+    /* background-color: rgba(255, 255, 255, 0.2); */
+    background-color: #7ddeff;
 }
 
 .quicktab-button.active .quicktab-link {
