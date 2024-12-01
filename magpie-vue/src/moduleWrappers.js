@@ -68,6 +68,7 @@ export function initGlobals(data) {
     window.refreshMap = data.refreshMap !== false;
     window.allowItems = Boolean(data.allowItems);
     window.keepQueryArgs = Boolean(data.keepQueryArgs);
+    window.graphicsOptions = data.graphicsOptions;
 
     if ('jsonSettingsOverrides' in data) {
         window.settingsOverrides = data.jsonSettingsOverrides;
