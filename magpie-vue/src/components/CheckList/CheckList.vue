@@ -173,8 +173,13 @@ function sortByKey(arr, key) {
             </li>
         </ul>
     </div>
-    <div class="col"></div>
-    <div id="checkStats" class="col-auto">
+    <div id="checkStats" class="col-auto ps-0">
+        <div id="hideButton">
+            <img :src="`/images/chevron-${state.settings.showStats ? 'left' : 'right'}.svg`" class="invert close-button ms-2"
+                @mouseenter="tip.tooltip(state.settings.showStats ? 'Hide stats' : 'Show stats', $event)"
+                @click="() => { state.settings.showStats = !state.settings.showStats; tip.clearTooltip(); }">
+        </div>
+
         <div id="statsWrapperWrapper">
             <Transition>
                 <div id="statsWrapper" v-if="state.settings.showStats">
@@ -189,12 +194,6 @@ function sortByKey(arr, key) {
                     <span>Total: {{ totalChecks }}</span>
                 </div>
             </Transition>
-        </div>
-
-        <div id="hideButton">
-            <img :src="`/images/chevron-${state.settings.showStats ? 'right' : 'left'}.svg`" class="invert close-button ms-2"
-                @mouseenter="tip.tooltip(state.settings.showStats ? 'Hide stats' : 'Show stats', $event)"
-                @click="() => { state.settings.showStats = !state.settings.showStats; tip.clearTooltip(); }">
         </div>
     </div>
 </div>
@@ -214,7 +213,7 @@ function sortByKey(arr, key) {
 
 #statsWrapper.v-enter-from,
 #statsWrapper.v-leave-to {
-    transform: translateX(100%);
+    transform: translateX(-100%);
 }
 
 .check-stat {

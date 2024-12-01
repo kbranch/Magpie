@@ -58,45 +58,75 @@ window.setRomRequested = setRomRequested;
 </script>
 
 <template>
+<ul v-if="!smallQuicksettings" id="quickTabs" class="nav pt-2">
+    <li :class="['quicktab-button', 'me-1', activeTabId == 'quicksettingsTab' ? 'active' : null]" @mouseenter="tip.tooltip('Quick Settings', $event)">
+        <button class="btn quicktab-link" id="quicksettingsTab" type="button" @click="switchTabs($event)">
+            <img class="quicksetting-icon" src="/images/ui-checks.svg">
+        </button>
+    </li>
+    <li :class="['quicktab-button', 'me-1', activeTabId == 'autotrackerTab' ? 'active' : null]" @mouseenter="tip.tooltip('Autotracking', $event)">
+        <button class="btn quicktab-link" id="autotrackerTab" type="button" @click="switchTabs($event)">
+            <img class="quicksetting-icon" src="/images/cpu.svg">
+        </button>
+    </li>
+    <li :class="['quicktab-button', 'me-1', activeTabId == 'spoilersTab' ? 'active' : null]" @mouseenter="tip.tooltip('Spoilers', $event)">
+        <button class="btn quicktab-link" id="spoilersTab" type="button" @click="switchTabs($event)">
+            <img class="quicksetting-icon" src="/images/eye.svg">
+        </button>
+    </li>
+    <li :class="['quicktab-button', 'me-1', activeTabId == 'plandoTab' ? 'active' : null]" @mouseenter="tip.tooltip('Plandomizer', $event)">
+        <button class="btn quicktab-link" id="plandoTab" type="button" @click="switchTabs($event)">
+            <img class="quicksetting-icon" src="/images/gift.svg">
+        </button>
+    </li>
+    <li :class="['quicktab-button', activeTabId == 'downloadsTab' ? 'active' : null]" @mouseenter="tip.tooltip('Downloads', $event)">
+        <button class="btn quicktab-link" id="downloadsTab" type="button" @click="switchTabs($event)">
+            <img class="quicksetting-icon" src="/images/file-arrow-down.svg">
+        </button>
+    </li>
+</ul>
+
 <div class="fill-box px-2_5 pt-1 item-width" id="quicksettings">
-    <div class="tabs h-100">
+    <div class="tabs">
         <div v-if="activeTabId == 'quicksettingsTab'" class="tab h-100">
             <div class="row h-100 align-items-end">
                 <div class="col quicksettings-col quick-bg">
-                    <div class="row pt-2">
-                        <div class="col-4 mb-4">
-                            <input id="showOutOfLogicQuick" type="checkbox" v-model="state.settings.showOutOfLogic" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showOutOfLogicQuick" class="" @mouseenter="tip.tooltip('Show out of logic', $event)">
+                    <div class="row pt-2 quicksettings-row">
+                        <div class="col-auto mb-4 quicksetting">
+                            <input id="showOutOfLogicQuick" type="checkbox" v-model="state.settings.showOutOfLogic" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showOutOfLogicQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show out of logic', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-9"></use>
                                 </svg>
                             </label>
                         </div>
-                        <div class="col-4 mb-4">
-                            <input id="showHigherLogicQuick" type="checkbox" v-model="state.settings.showHigherLogic" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showHigherLogicQuick" class="" @mouseenter="tip.tooltip('Show higher logic levels', $event)">
+                        <div id="higherLogicQuicksetting" class="col-auto mb-4 quicksetting">
+                            <input id="showHigherLogicQuick" type="checkbox" v-model="state.settings.showHigherLogic" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showHigherLogicQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show higher logic levels', $event)">
                                 <img src="/images/higher-logic.svg" class="quicksettings-icon align-middle">
                             </label>
                         </div>
-                        <div class="col-4 mb-4">
-                            <input id="showCheckedQuick" type="checkbox" v-model="state.settings.showChecked" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showCheckedQuick" class="" @mouseenter="tip.tooltip('Show checked locations', $event)">
+                        <div id="checkedQuicksetting" class="col-auto mb-4 quicksetting">
+                            <input id="showCheckedQuick" type="checkbox" v-model="state.settings.showChecked" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showCheckedQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show checked locations', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-checked"></use>
                                 </svg>
                             </label>
                         </div>
-                        <div class="col-3 pe-1 mb-0">
-                            <input id="showVanillaQuick" type="checkbox" v-model="state.settings.showVanilla" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showVanillaQuick" class="" @mouseenter="tip.tooltip('Show vanilla checks', $event)">
+                    </div>
+                    <div class="row quicksettings-row">
+                        <div class="col-auto mb-0 quicksetting">
+                            <input id="showVanillaQuick" type="checkbox" v-model="state.settings.showVanilla" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showVanillaQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla checks', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-0-vanilla"></use>
                                 </svg>
                             </label>
                         </div>
-                        <div class="col-3 px-1 mb-0">
-                            <input id="showOwnedQuick" type="checkbox" v-model="state.settings.showOwnedPickups" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showOwnedQuick" class="" @mouseenter="tip.tooltip('Show owned vanilla pickups', $event)">
+                        <div class="col-auto mb-0 quicksetting">
+                            <input id="showOwnedQuick" type="checkbox" v-model="state.settings.showOwnedPickups" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showOwnedQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show owned vanilla pickups', $event)">
                                 <div class="row ms-0 px-0">
                                     <div class="col-auto px-0">
                                         <div class="quicksettings-wrapper">
@@ -117,15 +147,15 @@ window.setRomRequested = setRomRequested;
                                 </div>
                             </label>
                         </div>
-                        <div class="col-3 px-1 mb-0">
-                            <input id="showVanillaEntrancesQuick" type="checkbox" v-model="state.settings.showVanillaEntrances" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showVanillaEntrancesQuick" class="" @mouseenter="tip.tooltip('Show vanilla entrances and dungeon stairs', $event)">
+                        <div class="col-auto mb-0 quicksetting">
+                            <input id="showVanillaEntrancesQuick" type="checkbox" v-model="state.settings.showVanillaEntrances" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showVanillaEntrancesQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla entrances and dungeon stairs', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/vanilla-entrance.svg">
                             </label>
                         </div>
-                        <div class="col-3 ps-1 mb-0">
-                            <input id="showLogicHintsQuick" type="checkbox" v-model="state.settings.showLogicHints" class="form-check-input" @change="saveQuickSettings()">
-                            <label for="showLogicHintsQuick" class="" @mouseenter="tip.tooltip('Show logic hints', $event)">
+                        <div class="col-auto mb-0 quicksetting">
+                            <input id="showLogicHintsQuick" type="checkbox" v-model="state.settings.showLogicHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showLogicHintsQuick" class="quicksettings-label" @mouseenter="tip.tooltip('Show logic hints', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/logicHints.svg">
                             </label>
                         </div>
@@ -279,42 +309,41 @@ window.setRomRequested = setRomRequested;
         </template>
     </div>
 </div>
-
-<ul v-if="!smallQuicksettings" class="nav px-2_5">
-    <li :class="['quicktab-button', 'me-1', activeTabId == 'quicksettingsTab' ? 'active' : null]" @mouseenter="tip.tooltip('Quick Settings', $event)">
-        <button class="btn quicktab-link" id="quicksettingsTab" type="button" @click="switchTabs($event)">
-            <img class="quicksetting-icon" src="/images/ui-checks.svg">
-        </button>
-    </li>
-    <li :class="['quicktab-button', 'me-1', activeTabId == 'autotrackerTab' ? 'active' : null]" @mouseenter="tip.tooltip('Autotracking', $event)">
-        <button class="btn quicktab-link" id="autotrackerTab" type="button" @click="switchTabs($event)">
-            <img class="quicksetting-icon" src="/images/cpu.svg">
-        </button>
-    </li>
-    <li :class="['quicktab-button', 'me-1', activeTabId == 'spoilersTab' ? 'active' : null]" @mouseenter="tip.tooltip('Spoilers', $event)">
-        <button class="btn quicktab-link" id="spoilersTab" type="button" @click="switchTabs($event)">
-            <img class="quicksetting-icon" src="/images/eye.svg">
-        </button>
-    </li>
-    <li :class="['quicktab-button', 'me-1', activeTabId == 'plandoTab' ? 'active' : null]" @mouseenter="tip.tooltip('Plandomizer', $event)">
-        <button class="btn quicktab-link" id="plandoTab" type="button" @click="switchTabs($event)">
-            <img class="quicksetting-icon" src="/images/gift.svg">
-        </button>
-    </li>
-    <li :class="['quicktab-button', activeTabId == 'downloadsTab' ? 'active' : null]" @mouseenter="tip.tooltip('Downloads', $event)">
-        <button class="btn quicktab-link" id="downloadsTab" type="button" @click="switchTabs($event)">
-            <img class="quicksetting-icon" src="/images/file-arrow-down.svg">
-        </button>
-    </li>
-</ul>
 </template>
 
 <style scoped>
+#quickTabs {
+    justify-content: center;
+}
+
+.quicksettings-row {
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.quicksetting {
+    display: flex;
+    align-items: center;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.quicksettings-input {
+    margin-right: 4px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.quicksettings-label {
+    width: 32px;
+}
+
 .quicktab-button.active .quicktab-link {
     color: #fff;
-    border-top: 3px;
-    border-top-color: rgba(255, 255, 255, 0.3);
-    border-top-style: solid;
+    border-bottom: 3px;
+    border-bottom-color: rgba(255, 255, 255, 0.3);
+    border-bottom-style: solid;
 }
 
 .quicktab-button:not(.active) .quicktab-link:hover {
@@ -322,19 +351,19 @@ window.setRomRequested = setRomRequested;
 }
 
 .quicktab-button {
-    border-radius: 0px 0px 5px 5px;
+    border-radius: 5px 5px 0px 0px;
     background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
 .quick-bg {
-    background-color: rgba(255, 255, 255, 0.03) !important;
+    /* background-color: rgba(255, 255, 255, 0.03) !important; */
     padding-bottom: 16px;
     padding-top: 8px;
     border-radius: 5px;
 }
 
 .quicktab-link {
-    border-radius: 0px 0px 5px 5px;
+    border-radius: 5px 5px 0px 0px;
 }
 
 .quicktab-link {
