@@ -1,5 +1,5 @@
 class Connection {
-    constructor(exteriors, connector, label=null, vanilla=false, map=null) {
+    constructor(exteriors, connector, label=null, vanilla=false, map=null, simple=false) {
         if (!exteriors) {
             return;
         }
@@ -7,14 +7,14 @@ class Connection {
         this.vanilla = vanilla;
         this.entrances = exteriors;
 
-        if (connector == null) {
+        if (connector == null && !simple) {
             this.connector = Connection.findConnector({ exterior: exteriors[0] });
         }
         else {
             this.connector = connector;
         }
 
-        this.map = map ?? this.connector.map;
+        this.map = map ?? this.connector?.map ?? 'overworld';
 
         if (label == null) {
             // this.connector = connectors.filter(x => x.entrances.includes(fromInterior))[0] || null;
@@ -174,10 +174,10 @@ class Connection {
         return connections.filter(x => x.entrances.includes(entranceId))[0] || null;
     }
 
-    static createConnection(entrances, vanilla=false, map=null) {
+    static createConnection(entrances, vanilla=false, map=null, simple=false) {
         let connector = null;
 
-        if (coupledEntrances() && inOutEntrances() && entrances.length >= 4) {
+        if (coupledEntrances() && inOutEntrances() && !simple) {
             connector = Connection.findConnector({ exterior: entrances[0] });
 
             let connection = Connection.existingConnection(connector);
@@ -193,7 +193,7 @@ class Connection {
             }
         }
 
-        connections.push(new Connection(entrances, connector, null, vanilla, map));
+        connections.push(new Connection(entrances, connector, null, vanilla, map, simple));
     }
 
     static advancedErConnection(entrances, map) {

@@ -339,12 +339,12 @@ function mapToLandfill(entranceId) {
     refreshCheckList();
 }
 
-function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save=true) {
+function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save=true, simple=false) {
     if (refresh) {
         pushUndoState();
     }
 
-    if (fromInterior && toInterior) {
+    if (!simple) {
         let connector = Connection.findConnector({ interior: fromInterior });
         let connection = Connection.existingConnection(connector);
     
@@ -361,6 +361,9 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
             }
         }
     }
+    else {
+        connectEntrances(from, to, false, save);
+    }
      
     let entrances = [from, to];
 
@@ -369,7 +372,7 @@ function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save
         entrances.push(entranceMap[to]);
     }
 
-    Connection.createConnection(entrances, Entrance.isVanilla(from));
+    Connection.createConnection(entrances, Entrance.isVanilla(from), null, simple);
 
     if (save) {
         saveEntrances();
