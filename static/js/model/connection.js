@@ -177,7 +177,7 @@ class Connection {
     static createConnection(entrances, vanilla=false, map=null) {
         let connector = null;
 
-        if (coupledEntrances() && inOutEntrances()) {
+        if (coupledEntrances() && inOutEntrances() && entrances.length >= 4) {
             connector = Connection.findConnector({ exterior: entrances[0] });
 
             let connection = Connection.existingConnection(connector);
