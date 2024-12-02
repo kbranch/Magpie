@@ -245,6 +245,7 @@ function processSlotDataMessage(message) {
         },
         'overworld': {
             'open_mabe': true,
+            'normal': false,
         }
     };
 
@@ -275,6 +276,7 @@ function processSlotDataMessage(message) {
 
     args['dungeon_items'] = 'custom';
     args['goal'] = String(args['goal']);
+    args['openmabe'] = args['openmabe'] === true;
 
     if ('gfxmod' in slotData) {
         if (graphicsOptions.includes(slotData.gfxmod) || slotData.gfxmod == '') {
