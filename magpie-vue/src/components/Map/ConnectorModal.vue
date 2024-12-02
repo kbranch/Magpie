@@ -134,3 +134,9 @@
     </div>
 </div>
 </template>
+
+<style scoped>
+#connectorModal {
+    z-index: 20002;
+}
+</style>
