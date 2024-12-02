@@ -127,7 +127,7 @@ window.setRomRequested = setRomRequested;
                         <div class="col-auto mb-0 quicksetting">
                             <input id="showOwnedQuick" type="checkbox" v-model="state.settings.showOwnedPickups" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
                             <label for="showOwnedQuick" :class="[state.settings.showOwnedPickups ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show owned vanilla pickups', $event)">
-                                <div class="row ms-0 px-0">
+                                <div id="ownedVanillaWrapper" class="row ms-0 px-0">
                                     <div class="col-auto px-0">
                                         <div class="quicksettings-wrapper">
                                             <div class="node-overlay-wrapper">
@@ -312,6 +312,10 @@ window.setRomRequested = setRomRequested;
 </template>
 
 <style scoped>
+#ownedVanillaWrapper {
+    width: 32px;
+}
+
 #quickTabs {
     justify-content: center;
 }
@@ -327,6 +331,7 @@ window.setRomRequested = setRomRequested;
     align-items: center;
     padding-left: 0px;
     padding-right: 0px;
+    box-sizing: content-box;
 }
 
 .quicksettings-input {
@@ -337,9 +342,13 @@ window.setRomRequested = setRomRequested;
 }
 
 .quicksettings-label {
-    width: 44px;
+    width: 32px;
+    box-sizing: content-box;
     padding: 6px;
     border-radius: 5px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
 .quicksettings-label:hover {
@@ -348,6 +357,7 @@ window.setRomRequested = setRomRequested;
 
 .quicksettings-label.active {
     background-color: #0d6efd;
+    /* border-style: none; */
 }
 
 .quicksettings-label.active:hover {
