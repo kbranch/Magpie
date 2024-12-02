@@ -262,7 +262,7 @@ function connectConnectors(simple=true) {
     let destination = $('#connectorModal').attr('data-destination');
 
     if (simple) {
-        connectExteriors(source, 'right_taltal_connector1:inside', destination, 'right_taltal_connector2:inside');
+        connectExteriors(source, null, destination, null, true, true, true);
     }
     else if (destination != 'deadEnd') {
         let uncheckedEntranceIds = $('#connectorDetailGrid .connector-item[data-type="entrance"]:not(.checked)')

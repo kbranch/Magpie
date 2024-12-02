@@ -339,35 +339,40 @@ function mapToLandfill(entranceId) {
     refreshCheckList();
 }
 
-function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save=true) {
+function connectExteriors(from, fromInterior, to, toInterior, refresh=true, save=true, simple=false) {
     if (refresh) {
         pushUndoState();
     }
 
-    let connector = Connection.findConnector({ interior: fromInterior });
-    let connection = Connection.existingConnection(connector);
+    if (!simple) {
+        let connector = Connection.findConnector({ interior: fromInterior });
+        let connection = Connection.existingConnection(connector);
     
-    if (connection == null || connector.id == 'outer_rainbow') {
-        connectEntrances(from, fromInterior, false, save);
-        connectEntrances(to, toInterior, false, save);
-    }
-    else {
-        if (connection.entrances.includes(from)) {
+        if (connection == null || connector.id == 'outer_rainbow') {
+            connectEntrances(from, fromInterior, false, save);
             connectEntrances(to, toInterior, false, save);
         }
         else {
-            connectEntrances(from, fromInterior, false, save);
+            if (connection.entrances.includes(from)) {
+                connectEntrances(to, toInterior, false, save);
+            }
+            else {
+                connectEntrances(from, fromInterior, false, save);
+            }
         }
+    }
+    else {
+        connectEntrances(from, to, false, save);
     }
      
     let entrances = [from, to];
 
-    if (coupledEntrances()) {
+    if (coupledEntrances() && fromInterior && toInterior) {
         entrances.push(entranceMap[from]);
         entrances.push(entranceMap[to]);
     }
 
-    Connection.createConnection(entrances, Entrance.isVanilla(from));
+    Connection.createConnection(entrances, Entrance.isVanilla(from), null, simple);
 
     if (save) {
         saveEntrances();
