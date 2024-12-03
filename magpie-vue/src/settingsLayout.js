@@ -9,7 +9,7 @@ const knownFlags = [
     'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
     'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
     'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette', 'accessibility',
-    'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies', 'keyholesanity',
+    'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies', 'keyholesanity', 'shopsanity', 'evilshop',
 ];
 
 function getUnknownArgs(argDescriptions) {
@@ -445,6 +445,18 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                                 'dungeon': 'In dungeons',
                                 'overworld': 'On the overworld',
                                 'both': 'Dungeons and overworld',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Shopsanity',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'shopsanity',
+                            icon: 'shop.png',
+                            options: {
+                                '': 'Disabled',
+                                'basic': 'Basic',
+                                'important': 'Important',
                             },
                         }),
                         new SettingsItem({

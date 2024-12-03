@@ -4931,6 +4931,342 @@ let vanillaCoordDict = {
        ],
       "condition": (flags, settings) => { return flags.keyholesanity; },
     },
+   "0x2CB-0": {
+      "id": "0x2CB-0",
+      "vanillaArea": "Mabe Village",
+      "vanillaName": "Mabe Extra Shop Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 404,
+            "y": 1494
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 396,
+            "y": 1542
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x2CB-1": {
+      "id": "0x2CB-1",
+      "vanillaArea": "Mabe Village",
+      "vanillaName": "Mabe Extra Shop Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 404,
+            "y": 1494
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 396,
+            "y": 1542
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x29B-0": {
+      "id": "0x29B-0",
+      "vanillaArea": "Goponga Swamp",
+      "vanillaName": "Swamp Shop Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 258,
+            "y": 454
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 234,
+            "y": 502
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x29B-1": {
+      "id": "0x29B-1",
+      "vanillaArea": "Goponga Swamp",
+      "vanillaName": "Swamp Shop Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 258,
+            "y": 454
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 234,
+            "y": 502
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x2B4-0": {
+      "id": "0x2B4-0",
+      "vanillaArea": "Koholint Prairie",
+      "vanillaName": "Shop East of Mabe Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 696,
+            "y": 1348
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 720,
+            "y": 1412
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x2B4-1": {
+      "id": "0x2B4-1",
+      "vanillaArea": "Koholint Prairie",
+      "vanillaName": "Shop East of Mabe Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 696,
+            "y": 1348
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 720,
+            "y": 1412
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x29C-0": {
+      "id": "0x29C-0",
+      "vanillaArea": "Koholint Prairie",
+      "vanillaName": "Central Koholint Shop Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1376,
+            "y": 1104
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1368,
+            "y": 1152
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x29C-1": {
+      "id": "0x29C-1",
+      "vanillaArea": "Koholint Prairie",
+      "vanillaName": "Central Koholint Shop Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1376,
+            "y": 1104
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1368,
+            "y": 1152
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x29D-0": {
+      "id": "0x29D-0",
+      "vanillaArea": "Martha's Bay",
+      "vanillaName": "Martha's Bay Shop Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1344,
+            "y": 1900
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1368,
+            "y": 1932
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x29D-1": {
+      "id": "0x29D-1",
+      "vanillaArea": "Martha's Bay",
+      "vanillaName": "Martha's Bay Shop Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1344,
+            "y": 1900
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1368,
+            "y": 1932
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x2CC-0": {
+      "id": "0x2CC-0",
+      "vanillaArea": "Kanalet Castle",
+      "vanillaName": "Kanalet Shop Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1846,
+            "y": 536
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1854,
+            "y": 762
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x2CC-1": {
+      "id": "0x2CC-1",
+      "vanillaArea": "Kanalet Castle",
+      "vanillaName": "Kanalet Shop Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1846,
+            "y": 536
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1854,
+            "y": 762
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x2E3-0": {
+      "id": "0x2E3-0",
+      "vanillaArea": "Animal Village",
+      "vanillaName": "Animal Village Shop Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1894,
+            "y": 1754
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1854,
+            "y": 1802
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x2E3-1": {
+      "id": "0x2E3-1",
+      "vanillaArea": "Animal Village",
+      "vanillaName": "Animal Village Shop Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 1894,
+            "y": 1754
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 1854,
+            "y": 1802
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
+   "0x299-0": {
+      "id": "0x299-0",
+      "vanillaArea": "Tal Tal Mountains",
+      "vanillaName": "Shop Near D8 Item 1",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 258,
+            "y": 162
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 234,
+            "y": 242
+         }
+      ],
+      "index": 1,
+      "requiredRupees": 100,
+   },
+   "0x299-1": {
+      "id": "0x299-1",
+      "vanillaArea": "Tal Tal Mountains",
+      "vanillaName": "Shop Near D8 Item 2",
+      "locations": [
+         {
+            "map": "vanillaOverworld",
+            "x": 258,
+            "y": 162
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 234,
+            "y": 242
+         }
+      ],
+      "index": 2,
+      "requiredRupees": 200,
+   },
 }
 
 let coordDict = vanillaCoordDict;
