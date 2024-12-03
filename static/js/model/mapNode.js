@@ -251,6 +251,16 @@ class MapNode {
         return tooltip.tooltipHtml(pinned, connectionType, hoveredCheckId);
     }
 
+    inFilter() {
+        for (const check of this.checks) {
+            if (check.inFilter) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     iconClasses() {
         let classes = ['check-graphic', 'animate__animated', 'check-glow'];
 
@@ -300,7 +310,7 @@ class MapNode {
         let items = this.checks.filter(x => x.item)
                                .map(x => x.item);
         let hoverItems = items.filter(x => hoveredItems.includes(x));
-        if (hoverItems.length > 0) {
+        if (hoverItems.length > 0 || this.inFilter()) {
             classes.push('spoiler-highlight');
         }
 

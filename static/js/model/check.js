@@ -11,6 +11,7 @@ class Check {
         this.requiredRupees = this.metadata.requiredRupees;
         this.hollow = false;
         this.source = checkInfo;
+        this.inFilter = false;
 
         if (!(this.id in allChecksById)) {
             allChecksById[this.id] = [];

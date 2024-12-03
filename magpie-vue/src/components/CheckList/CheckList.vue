@@ -1,10 +1,11 @@
 <script setup>
-import {$} from '@/moduleWrappers.js';
+import { $, drawActiveTab } from '@/moduleWrappers.js';
 import { computed, ref, onUpdated } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore.js';
 import MapLegend from './MapLegend.vue';
 import TextCheckArea from './TextCheckArea.vue';
+import { watch, nextTick } from 'vue';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
@@ -41,7 +42,10 @@ const activeChecks = computed(() => {
     // eslint-disable-next-line no-unused-vars
     let dummy = state.checkedChecks?.has('asdf');
 
-    props.checkAccessibility.map(x => x.updateChecked());
+    props.checkAccessibility.map(x => {
+        x.updateChecked();
+        x.inFilter = false;
+    });
 
     if (activeTab.value == 'dynamic') {
         checks = props.checkAccessibility.filter(check => (check.difficulty != 9
@@ -87,6 +91,7 @@ const activeChecks = computed(() => {
 
     if (searchText.value) {
         checks = checks.filter(x => x.metadata.name.toLowerCase().includes(searchText.value) || x.metadata.area.toLowerCase().includes(searchText.value));
+        checks.map(x => x.inFilter = true);
     }
 
     checks.map(x => {
@@ -113,6 +118,14 @@ const activeChecks = computed(() => {
 const checksByArea = computed(() => Object.groupBy(activeChecks.value, check => check.check.metadata.area));
 const checksByDifficulty = computed(() => Object.groupBy(countableChecks.value, check => check.difficulty));
 
+onUpdated(() => {
+    applyMasonry();
+});
+
+watch(searchText, () => {
+    nextTick(drawActiveTab);
+});
+
 function applyMasonry() {
     $(checksDiv.value).masonry('reloadItems')
                       .masonry('layout');
@@ -123,10 +136,6 @@ function applyMasonry() {
 // onBeforeMount(() => startTime = Date.now());
 // onBeforeUpdate(() => startTime = Date.now());
 // onMounted(() => console.log(`CheckList mounted in ${Date.now() - startTime}`));
-
-onUpdated(() => {
-    applyMasonry();
-});
 
 function compare(a, b) {
     if (a > b) {
