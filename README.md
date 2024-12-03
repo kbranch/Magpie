@@ -42,6 +42,7 @@ If you're not familiar with Git, you can download Magpie as zip files:
  - Copy everything from inside the `LADXR-master` folder into `Magpie-master/LADXR`
 
 #### Linux (and Mac?)
+ - Install [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#linux-or-other-operating-systems-node-installers)
  - Run `setup.sh` to create a python virtual environment and install the required packages
  - Run `startLocal.sh` to start as a local application - a browser window should open, and the application will exit when it is closed
    - If you're hosting your own instance without a WSGI server, just make sure `magpie.py` gets launched with the venv created above (e.g. `. .venv/bin/activate && python3 magpie.py`)
@@ -49,6 +50,7 @@ If you're not familiar with Git, you can download Magpie as zip files:
 #### Windows
  - Install [Python3](https://www.python.org/downloads/)
    - Make sure you check the checkbox to `Add Python 3.x to PATH`
+ - Install [`npm`](https://nodejs.org/en/download/prebuilt-installer)
  - Run `setup.bat`
  - Run `startLocal.bat`
  
