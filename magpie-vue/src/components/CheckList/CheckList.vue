@@ -16,6 +16,9 @@ const props = defineProps([
 
 const activeTab = ref('dynamic');
 const checksDiv = ref(null);
+const searchText = ref('');
+
+const textColor = computed(() => state.settings.textColor);
 
 const countableChecks = computed(() => {
     // This shouldn't be needed - check.checked isn't behaving reactive for some reason
@@ -80,6 +83,10 @@ const activeChecks = computed(() => {
                                                               && (!check.isOwnedVanillaPickup()
                                                                   || state.settings.showOwnedPickups)
                                                               && check.isEnabled());
+    }
+
+    if (searchText.value) {
+        checks = checks.filter(x => x.metadata.name.toLowerCase().includes(searchText.value) || x.metadata.area.toLowerCase().includes(searchText.value));
     }
 
     checks.map(x => {
@@ -196,16 +203,52 @@ function sortByKey(arr, key) {
             </Transition>
         </div>
     </div>
+    <div id="searchCol" class="col">
+        <img v-if="searchText" src="/images/arrow-clockwise.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Reset filter', $event)" @click="searchText = ''">
+        <img src="/images/search.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Filter checks', $event)">
+        <input v-model="searchText" id="searchBox" type="text" class="form-control">
+    </div>
 </div>
 
 <div ref="checksDiv" id="checks" onclick="preventDoubleClick(event)"
      data-masonry='{ "transitionDuration": 0, "columnWidth": ".text-check-card-wrapper" }'>
     <TextCheckArea v-for="area in Object.keys(checksByArea)" :key="area" :area="area" :checks="checksByArea[area]" />
-    <span v-if="Object.keys(checksByArea).length == 0" id="noChecks" class="ps-2">No checks!</span>
+    <span v-if="Object.keys(checksByArea).length == 0" id="noChecks" class="ps-2">{{ searchText ? 'Search found no checks!' : 'No checks!' }}</span>
 </div>
 </template>
 
 <style scoped>
+.search-button {
+    height: 24px;
+    filter: invert() brightness(0.3);
+    padding-right: 8px;
+}
+
+#searchBox:not(:focus) {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(0, 0, 0, 0.5);
+    color: v-bind(textColor);
+}
+
+#searchBox {
+    line-height: 1;
+    border-radius: 5px;
+    max-width: 175px;
+    min-width: 50px;
+    margin-right: 0px;
+}
+
+#searchCol {
+    justify-content: end;
+    align-items: center;
+    display: flex;
+    flex-basis: min-content;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
 #statsWrapper.v-enter-active,
 #statsWrapper.v-leave-active {
   transition: all 0.3s ease;

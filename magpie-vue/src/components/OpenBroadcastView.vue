@@ -17,8 +17,4 @@ const click = ref(props.type == 'items' ? openItemsBroadcastView : openMapBroadc
 </template>
 
 <style scoped>
-.dimvert {
-    filter: invert(1)
-            brightness(0.5);
-}
 </style>

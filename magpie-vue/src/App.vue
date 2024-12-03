@@ -212,4 +212,9 @@ defineExpose({
   min-height: 100vh;
   position: relative;
 }
+
+.dimvert {
+    filter: invert(1)
+            brightness(0.5);
+}
 </style>
