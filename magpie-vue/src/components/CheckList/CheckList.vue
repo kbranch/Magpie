@@ -234,7 +234,7 @@ function sortByKey(arr, key) {
 }
 
 #searchBox:not(:focus) {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
     border-color: rgba(0, 0, 0, 0.5);
     color: v-bind(textColor);
 }
