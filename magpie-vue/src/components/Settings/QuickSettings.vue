@@ -344,7 +344,7 @@ window.setRomRequested = setRomRequested;
 .quicksettings-label {
     width: 32px;
     box-sizing: content-box;
-    padding: 6px;
+    padding: 4px;
     border-radius: 5px;
     border-style: solid;
     border-width: 3px;
