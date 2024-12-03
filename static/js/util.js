@@ -417,6 +417,10 @@ function applySettings(oldArgs=null) {
     checkAccessibility?.map(x => x.updateChecked());
     
     setCustomDungeonItemsArgs();
+
+    if (!graphicsOptions.includes(localSettings.graphicsPack)) {
+        localSettings.graphicsPack = '';
+    }
 }
 
 function createElement(type, attrs) {
