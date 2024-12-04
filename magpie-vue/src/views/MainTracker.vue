@@ -12,8 +12,10 @@ import SidebarAlert from '@/components/SidebarAlert.vue';
 import { initGlobals, init } from '@/moduleWrappers.js';
 import { onMounted, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
 
 const state = useStateStore();
+const tip = useTextTooltipStore();
 
 const hostname = ref(null);
 const version = ref(null);
@@ -112,8 +114,13 @@ onMounted(() => {
 </div>
 
 <div class="pt-4"></div>
-<div class="bottom-right">
-  <div class="col">
+<div class="bottom-right row">
+  <div class="col footer">
+    <a href="https://github.com/kbranch/Magpie" target="_blank" @mouseover="tip.tooltip('Code, documentation and bug reports on GitHub', $event)"><img src="/images/github.svg" class="dimvert footer-image"></a>
+    <a href="https://ladxr.daid.eu/" target="_blank" @mouseover="tip.tooltip('LADX Randomizer', $event)"><img src="/images/ladxr.png" class="footer-image dim"></a>
+    <img id="discordIcon" src="/images/discord.svg" class="dimvert footer-image">
+    <a href="https://discord.gg/QhAKagk84e" target="_blank" @mouseover="tip.tooltip('Zelda 4 Randomizer Discord invite', $event)"><img src="/images/z4r-discord.png" class="footer-image dim"></a>
+    <a href="https://discord.gg/YYSXW2HvT4" target="_blank" @mouseover="tip.tooltip('Magpie Tracker Discord invite', $event)"><img src="/images/magpie-big.png" class="footer-image dim"></a>
     <span class="hidden">{{hostname}}</span>
   </div>
 
@@ -184,10 +191,27 @@ onMounted(() => {
 </template>
 
 <style scoped>
+#discordIcon {
+  padding-left: 6px;
+}
+
 .bottom-right {
   position: absolute;
   bottom: 12px;
   right: 0;
   display: flex;
+  width: 100%;
 }
+
+.footer-image {
+  height: 32px;
+  padding-right: 8px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  padding-left: 0px;
+}
+
 </style>

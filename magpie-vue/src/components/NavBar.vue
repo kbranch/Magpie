@@ -40,7 +40,7 @@ const aboutContents = `<p>The source is up on <a href='https://github.com/kbranc
         <li><a href='http://artemis251.fobby.net/zelda/index.php'>Artemis251</a> for the great map resources and screenshots</li>
         <li><a href='https://www.twitch.tv/dragonc0'>Dragonc0</a> for a ton of great logic additions, and for creating an <a href='https://www.twitch.tv/collections/GE492sZzKxdd3w'>amazing guide for higher logic tricks</a> (Twitch's UI for collections isn't great, but there are separate videos for each dungeon and the overworld)</li>
     </ul>
-    <p>Visit us on <a href='https://discord.gg/QhAKagk84e'>Discord</a>!</p>`;
+    <p>Visit us on either on the <a href='https://discord.gg/QhAKagk84e'>Z4R Discord</a> or the <a href='https://discord.gg/QhAKagk84e'>Magpie Discord</a>!</p>`;
 
 onMounted(() => {
     $('#bodyTextArea').summernote({
@@ -78,7 +78,7 @@ async function sendSuggestion() {
                 </button>
                 <img id="liveUpdateIcon" src="/images/broadcast-pin.svg" data-status="off" class="p-1" @mouseenter="tip.tooltip('Live sharing', $event)">
 
-                <div v-if="version != remoteVersion && remoteVersion" class="col-auto">
+                <div v-if="version != remoteVersion && remoteVersion && version != 'unknown'" class="col-auto">
                     <div class="version">
                         <a class="btn btn-success ms-1" role="button" 
                           @mouseenter="tip.tooltip(`${isLocal ? 'Download' : 'Refresh to'} update<br>Current version: ${version}<br>New Version: ${remoteVersion}`, $event)"
