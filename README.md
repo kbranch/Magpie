@@ -51,6 +51,7 @@ If you're not familiar with Git, you can download Magpie as zip files:
  - Install [Python3](https://www.python.org/downloads/)
    - Make sure you check the checkbox to `Add Python 3.x to PATH`
  - Install [`npm`](https://nodejs.org/en/download/prebuilt-installer)
+ - If using `git clone`, enable symlinks in git before cloning. The details probably depend on your system, but [this may help](https://stackoverflow.com/a/59761201)
  - Run `setup.bat`
  - Run `startLocal.bat`
  
