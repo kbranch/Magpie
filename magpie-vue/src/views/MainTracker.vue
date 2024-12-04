@@ -52,14 +52,14 @@ onMounted(() => {
       <MainMap :broadcast-mode="broadMode" />
     </div>
   </div>
-  <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container px-0 item-chunk">
+  <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container ps-0 pe-2 item-chunk">
     <div class="navbar-slot">
       <NavBar :is-local="state.isLocal" :version="version" :remote-version="state.remoteVersion" />
     </div>
     <div class="items-slot">
       <div id="itemContainer" class="pb-2"></div>
     </div>
-    <div class="row">
+    <div class="row mx-0">
       <div class="col"></div>
       <div class="col-auto">
         <OpenBroadcastView type="items" />
@@ -198,7 +198,7 @@ onMounted(() => {
 .bottom-right {
   position: absolute;
   bottom: 12px;
-  right: 0;
+  right: 12px;
   display: flex;
   width: 100%;
 }
@@ -211,7 +211,6 @@ onMounted(() => {
 .footer {
   display: flex;
   align-items: center;
-  padding-left: 0px;
 }
 
 </style>
