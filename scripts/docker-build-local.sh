@@ -31,6 +31,6 @@ cd ../linux
 zip -x \*__pycache__\* -r magpie-local-linux.zip magpie-data magpie.sh
 
 cd ../../
-zip -x magpie-vue/public -x magpie-vue/node_modules\* -x static/images/temp/\* -x \*__pycache__\* -x \*.gbc -x \*.venv/\* -r dist/magpie-source.zip autotracking LADXR static scripts templates magpie-vue version *.*
+zip -x magpie-vue/public -x magpie-vue/node_modules\* -x static/images/temp/\* -x \*__pycache__\* -x \*.gbc -x \*.venv/\* -r dist/magpie-source.zip autotracking LADXR static scripts templates magpie-vue version vue-dist/assets vue-dist/index.html *.*
 
 rm version
