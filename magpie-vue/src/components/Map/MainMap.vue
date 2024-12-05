@@ -5,6 +5,7 @@ import ConnectorModal from './ConnectorModal.vue';
 import { computed, onUpdated, ref } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
+import MapLegend from '@/components/Map/MapLegend.vue';
 
 const tip = useTextTooltipStore();
 const state = useStateStore();
@@ -76,6 +77,8 @@ onUpdated(() => {
             <img src="/images/chevron-down.svg" class="invert show-button" @mouseenter="tip.tooltip('Show legend', $event)" @click="state.settings.showLegend = true">
         </div>
     </Transition>
+
+    <MapLegend />
 </div>
 
 <ConnectorModal />

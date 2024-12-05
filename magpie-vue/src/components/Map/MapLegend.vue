@@ -6,8 +6,6 @@ import { computed, nextTick, onBeforeMount, ref, watch } from 'vue';
 const state = useStateStore();
 const tip = useTextTooltipStore();
 
-defineProps(['logics']);
-
 const legendWrapper = ref(null);
 const legendHeight = ref('unset');
 const showLegend = computed(() => state.settings.showLegend);
@@ -30,7 +28,7 @@ function updateLegendHeight() {
 <template>
 <div id="wrapper" class="pb-1">
 <Transition>
-<div ref="legendWrapper" v-if="state.settings.showLegend" id="legendWrapper" class="d-flex flex-wrap py-1">
+<div ref="legendWrapper" v-show="state.settings.showLegend" id="legendWrapper" class="d-flex flex-wrap py-1">
     <div class="flex-grow-1 d-flex flex-wrap justify-content-center">
         <div class="col-auto close-button-wrapper">
             <img src="/images/chevron-up.svg" class="invert close-button"
@@ -38,7 +36,7 @@ function updateLegendHeight() {
                  @click="() => { state.settings.showLegend = false; tip.clearTooltip(); }">
         </div>
         <div class="col"></div>
-        <div v-for="logic in logics" :key="logic.difficulty" class="col-auto pe-3">
+        <div v-for="logic in state.logics" :key="logic.difficulty" class="col-auto pe-3">
             <svg class="tooltip-check-graphic">
                 <use :xlink:href="`#difficulty-${logic.difficulty}`"></use>
             </svg>
@@ -83,11 +81,11 @@ function updateLegendHeight() {
                 <use xlink:href="#difficulty-0-vanilla"></use>
             </svg>: Vanilla
         </div>
-        <div class="col-auto pe-3">
+        <!-- <div class="col-auto pe-3">
             <svg class="tooltip-check-graphic">
                 <use xlink:href="#difficulty-9"></use>
             </svg>: Out of logic
-        </div>
+        </div> -->
         <div class="col-auto pe-3">
             <div class="tooltip-check-graphic left-click"></div>: Toggle
         </div>
@@ -97,12 +95,12 @@ function updateLegendHeight() {
         <div class="col-auto pe-3">
             Ctrl+Z: Undo
         </div>
-        <div class="col-auto">
+        <!-- <div class="col-auto">
             <div class="tooltip-check-graphic middle-click"></div> or Ctrl+
         </div>
         <div class="col-auto">
             <div class="tooltip-check-graphic left-click"></div>: View Dungeon
-        </div>
+        </div> -->
     </div>
     <div id="itemBlank"></div>
 </div>

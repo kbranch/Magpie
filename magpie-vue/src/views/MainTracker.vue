@@ -102,7 +102,7 @@ onMounted(() => {
 
 <div class="row pb-4">
   <div id="checkList" class="col">
-    <CheckList :logics="state.logics" :check-accessibility="state.checkAccessibility" />
+    <CheckList :check-accessibility="state.checkAccessibility" />
   </div>
 </div>
 

@@ -3,7 +3,6 @@ import { $, drawActiveTab } from '@/moduleWrappers.js';
 import { computed, ref, onUpdated } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore.js';
-import MapLegend from './MapLegend.vue';
 import TextCheckArea from './TextCheckArea.vue';
 import { watch, nextTick } from 'vue';
 
@@ -11,7 +10,6 @@ const state = useStateStore();
 const tip = useTextTooltipStore();
 
 const props = defineProps([
-    'logics',
     'checkAccessibility',
 ]);
 
@@ -153,8 +151,6 @@ function sortByKey(arr, key) {
 </script>
 
 <template>
-<MapLegend :logics="logics" />
-
 <div class="row">
     <div class="col-auto">
         <ul id="tabButtons">
