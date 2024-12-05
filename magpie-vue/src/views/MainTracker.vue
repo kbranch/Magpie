@@ -10,7 +10,7 @@ import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import VersionAlert from '@/components/VersionAlert.vue';
 import SidebarAlert from '@/components/SidebarAlert.vue';
 import { initGlobals, init } from '@/moduleWrappers.js';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 
@@ -22,6 +22,9 @@ const version = ref(null);
 const broadMode = ref('send');
 const graphicsOptions = ref([]);
 const argDescriptions = ref({});
+
+const itemsPaddingLeft = computed(() => state.settings.swapItemsAndMap ? '12px' : '0');
+const itemsPaddingRight = computed(() => state.settings.swapItemsAndMap ? '0' : '12px');
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/api/init')
@@ -52,7 +55,7 @@ onMounted(() => {
       <MainMap :broadcast-mode="broadMode" />
     </div>
   </div>
-  <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container ps-0 pe-2 item-chunk">
+  <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container item-chunk">
     <div class="navbar-slot">
       <NavBar :is-local="state.isLocal" :version="version" :remote-version="state.remoteVersion" />
     </div>
@@ -92,7 +95,7 @@ onMounted(() => {
       <VersionAlert :client-version="version" :remote-version="state.remoteVersion" :update-message="state.updateMessage" />
       <SidebarAlert :message="state.sidebarMessage" />
     </div>
-    <div class="col-auto px-0 quicksettings-container quicksettings-slot">
+    <div class="col-auto quicksettings-container quicksettings-slot">
     </div>
   </div>
 </div>
@@ -130,7 +133,7 @@ onMounted(() => {
     </div>
   </div>
 
-  <div class="col-auto ps-2">
+  <div class="col-auto ps-2 pe-0">
     <button type="button" class="btn btn-secondary" onclick="hardReset()">Hard reset state and settings</button>
   </div>
 </div>
@@ -197,20 +200,31 @@ onMounted(() => {
 
 .bottom-right {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 0px;
+  right: 0px;
   display: flex;
   width: 100%;
+  margin: 0px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+
 }
 
 .footer-image {
-  height: 32px;
+  height: 24px;
   padding-right: 8px;
 }
 
 .footer {
   display: flex;
-  align-items: center;
+  align-items: end;
+  padding-left: 0px;
+}
+
+#unstackedItems {
+  padding-right: v-bind(itemsPaddingRight);
+  padding-left: v-bind(itemsPaddingLeft);
 }
 
 </style>
