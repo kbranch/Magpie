@@ -518,7 +518,16 @@ function versionIsOlder(currentVersion, otherVersion) {
     return false;
 }
 
+let shownModals = new Set();
 function alertModal(header, body) {
+    let signature = header + body;
+    if (shownModals.has(signature)) {
+        return;
+    }
+    else {
+        shownModals.add(signature);
+    }
+
     document.getElementById('alertModalLabel').innerHTML = header;
     document.getElementById('alertBody').innerHTML = body;
 
