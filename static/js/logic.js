@@ -146,7 +146,7 @@ function openLogicViewer(nodeId, open=true) {
     </td>
     <td>${getLogicNodeName(otherEnd)}${connection.badWay ? ' <img class="logic-item invert" src="static/images/do-not-enter.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">' : ''}</td>
     <td>${iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)}</td>
-    <td>${connection.met ? "<img class='connection-met logic-accessibility' src='/static/images/check2-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>" : "<img class='connection-unmet logic-accessibility' src='/static/images/x-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>"}</td>
+    <td>${connection.met ? "<img class='connection-met logic-accessibility' src='/images/check2-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>" : "<img class='connection-unmet logic-accessibility' src='/images/x-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>"}</td>
     <td><button type="button" class="btn btn-secondary py-0" onclick="logicStack.push(\`${nodeId}\`); openLogicViewer(\`${otherEnd}\`, false);">View</button></td>
 </tr>
 `;
@@ -213,7 +213,7 @@ function iconifyRequirement(requirement) {
         .replaceAll("and['TRUE']", 'None')
         .replaceAll("or['FALSE']", 'Disabled')
         .replace(wrapperRegex, '($1)')
-        .replace(itemRegex, `$1<img class="logic-item" src="/static/images/$2_1.png">`)
+        .replace(itemRegex, `$1<img class="logic-item" src="/images/$2_1.png">`)
         .replace(quoteRegex, '/$1_1.png')
         .replaceAll("'", "")
         .replace(tooltipRegex, `<span data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='$2'>$1</span>`);

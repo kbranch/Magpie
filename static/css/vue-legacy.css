@@ -334,7 +334,7 @@ img {
     top: 50%;
     width: 90%;
     height: 90%;
-    background-image: url('/static/images/vector-rupee.svg');
+    background-image: url('/images/vector-rupee.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -349,7 +349,7 @@ img {
     top: 50%;
     width: 100%;
     height: 100%;
-    background-image: url('/static/images/lock-fill.svg');
+    background-image: url('/images/lock-fill.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -364,7 +364,7 @@ img {
     top: 105%;
     width: 100%;
     height: 100%;
-    background-image: url('/static/images/boss.svg');
+    background-image: url('/images/boss.svg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -400,7 +400,7 @@ img {
     top: 0px;
     width: 100%;
     height: 100%;
-    background-image: url('/static/images/partial-entrance.svg');
+    background-image: url('/images/partial-entrance.svg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -409,7 +409,7 @@ img {
 
 .entrance-only:not(.unmapped-entrance) {
     border-style: none;
-    background-image: url('/static/images/entrance.svg');
+    background-image: url('/images/entrance.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -418,7 +418,7 @@ img {
 
 .vanilla-entrance-only:not(.unmapped-entrance) {
     border-style: none;
-    background-image: url('/static/images/vanilla-entrance.svg');
+    background-image: url('/images/vanilla-entrance.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -426,7 +426,7 @@ img {
 }
 
 .one-way-out .one-way-out-overlay {
-    background-image: url('/static/images/one-way-out.svg');
+    background-image: url('/images/one-way-out.svg');
     background-size: 100%;
     width: 140%;
     height: 140%;
@@ -437,7 +437,7 @@ img {
 }
 
 .one-way-in .one-way-in-overlay {
-    background-image: url('/static/images/one-way-in.svg');
+    background-image: url('/images/one-way-in.svg');
     background-size: 100%;
     width: 140%;
     height: 140%;
@@ -449,7 +449,7 @@ img {
 
 .owl:not(.difficulty-checked) .owl-overlay {
     border-style: none;
-    background-image: url('/static/images/new-owl.svg');
+    background-image: url('/images/new-owl.svg');
     position: absolute;
     left: 50%;
     top: 50%;
@@ -464,7 +464,7 @@ img {
 
 .entrance-only.unmapped-entrance .unmapped-entrance-overlay {
     border-style: none;
-    background-image: url('/static/images/entrance.svg');
+    background-image: url('/images/entrance.svg');
     z-index: 3;
     position: absolute;
     left: 50%;
@@ -525,7 +525,7 @@ img.logic-item {
 
 .bk {
     border-style: none;
-    background-image: url('/static/images/BK.svg');
+    background-image: url('/images/BK.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -551,7 +551,7 @@ img.logic-item {
 .behind-tracker.tooltip-check-graphic .behind-tracker-overlay {
     z-index: 10;
     border-style: none;
-    background-image: url('/static/images/tracker-logic.svg');
+    background-image: url('/images/tracker-logic.svg');
     position: absolute;
     left: 85%;
     top: 25%;
@@ -748,21 +748,21 @@ button.nav-link.active {
 }
 
 .left-click {
-    background-image: url('/static/images/left-click.svg');
+    background-image: url('/images/left-click.svg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
 }
 
 .middle-click {
-    background-image: url('/static/images/middle-click.svg');
+    background-image: url('/images/middle-click.svg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
 }
 
 .right-click {
-    background-image: url('/static/images/left-click.svg');
+    background-image: url('/images/left-click.svg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
@@ -892,7 +892,7 @@ button.nav-link.active {
 
 .possible-start-location {
     border-style: none;
-    background-image: url('/static/images/house.svg');
+    background-image: url('/images/house.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -901,7 +901,7 @@ button.nav-link.active {
 
 .possible-start-location .possible-start-location-overlay {
     border-style: none;
-    background-image: url('/static/images/unmapped-entrance.svg');
+    background-image: url('/images/unmapped-entrance.svg');
     z-index: 3;
     position: absolute;
     left: 0px;
@@ -917,7 +917,7 @@ button.nav-link.active {
 
 .start-location.difficulty-checked {
     border-style: none;
-    background-image: url('/static/images/house.svg');
+    background-image: url('/images/house.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -926,7 +926,7 @@ button.nav-link.active {
 
 .start-location:not(.difficulty-checked) .start-location-overlay {
     content: '';
-    background-image: url('/static/images/house.svg');
+    background-image: url('/images/house.svg');
     background-size: 100%;
     width: 100%;
     height: 100%;

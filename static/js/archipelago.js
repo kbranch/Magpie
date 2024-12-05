@@ -5,7 +5,7 @@ import {
     ITEMS_HANDLING_FLAGS,
     SERVER_PACKET_TYPE,
     CLIENT_PACKET_TYPE,
-} from "/static/lib/archipelago.js/archipelago-1.0.js";
+} from "/lib/archipelago.js/archipelago-1.0.js";
 
 var itemMap = {
   10000000: "POWER_BRACELET",

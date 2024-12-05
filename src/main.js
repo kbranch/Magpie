@@ -40,7 +40,6 @@ app.config.globalProperties.window = window;
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/vue-legacy.css");
 addCssLink("/css/icons.css", "iconsSheet");
-addCssLink("/css/theme.css", "themeSheet");
 addCssLink("/css/animate.min.css");
 addCssLink("/lib/summernote/summernote-lite.css");
 

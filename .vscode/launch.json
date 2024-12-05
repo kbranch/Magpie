@@ -23,21 +23,41 @@
                 "25230",
             ],
             "jinja": true
-
-
-            // Sprite extractor script
-            // "program": "spriteExtractor.py",
-            // "console": "integratedTerminal",
-            // "justMyCode": true
-
-
-            // Local version
-            // "program": "magpie.py",
-            // "args": [
-            //     "--local",
-            // ],
-            // "console": "integratedTerminal",
-            // "justMyCode": true
-        }
+        },
+        {
+            "name": "Python: Local version",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "magpie.py",
+            "args": [
+                "--local",
+            ],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Sprite extractor",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "spriteExtractor.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "NPM Watch",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "watch"]
+          },
+          {
+            "name": "NPM Dev",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev"]
+          }
     ]
 }

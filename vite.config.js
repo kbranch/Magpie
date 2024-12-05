@@ -11,16 +11,11 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@', replacement: fileURLToPath(new URL('./src', import.meta.url)) },
-      { find: /\/static\/(.*)/, replacement: '/$1' },
     ],
   },
   build: {
-    outDir: '../vue-dist/',
+    outDir: 'vue-dist',
     emptyOutDir: true,
   },
-  // server: {
-  //   watch: {
-  //     ignored: ['**/static/**'],
-  //   },
-  // },
+  publicDir: "static",
 })

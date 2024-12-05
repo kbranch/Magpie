@@ -111,10 +111,26 @@
         "Wizzrobe",
         "xlink",
         "Yarna",
-        "Yoshi"
+        "Yoshi",
+        "debouncers",
+        "hardmode",
+        "notrade",
+        "openmabe",
+        "plando",
+        "Plandomizer",
+        "quicksetting",
+        "quicktab",
+        "sevenbysix",
+        "tabname"
     ],
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "python.formatting.provider": "none"
 }
