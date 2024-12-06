@@ -9,18 +9,17 @@ function replaceClass(selector, oldClass, newClass) {
 function snapMap() {
     replaceClass('.check-glow', 'check-glow', 'check-reglowme');
 
-    return htmlToImage.toPng(document.querySelector(".map-container.active"));
+    return htmlToImage.toJpeg(document.querySelector(".map-container.active"), { quality: 0.95 });
 }
 
 async function sendMapFrame() {
     let frame = await snapMap();
+    let data = new FormData();
+    data.append('data', frame);
 
-    $.ajax({
-        type: "POST",
-        url: "/api/mapBroadcastFrame",
-        data: {
-            data: frame,
-        },
+    fetch('/api/mapBroadcastFrame', {
+        method: 'POST',
+        body: data,
     });
 
     replaceClass('.check-reglowme', 'check-reglowme', 'check-glow');
@@ -34,13 +33,12 @@ function snapItems() {
 
 async function sendItemFrame() {
     let frame = await snapItems();
+    let data = new FormData();
+    data.append('data', frame);
 
-    $.ajax({
-        type: "POST",
-        url: "/api/itemsBroadcastFrame",
-        data: {
-            data: frame,
-        },
+    fetch('/api/itemsBroadcastFrame', {
+        method: 'POST',
+        body: data,
     });
 
     replaceClass('.reglowme', 'reglowme', 'glow');

@@ -11,7 +11,7 @@ import traceback
 import localSettings
 from jinja2 import Template
 from datetime import datetime
-from flask import Flask, render_template, request, make_response, send_from_directory
+from flask import Flask, render_template, request, make_response, send_from_directory, Request
 # from werkzeug.middleware.profiler import ProfilerMiddleware
 
 from version import *
@@ -25,6 +25,11 @@ try:
     import newrelic.agent
 except:
     pass
+
+class BigRequest(Request):
+    def __init__(self, *args, **kwargs):
+        super(BigRequest, self).__init__(*args, **kwargs)
+        self.max_form_memory_size = 1024*1024*50
 
 logging.basicConfig(
     filename="magpie.log",
@@ -48,10 +53,13 @@ app.jinja_options['lstrip_blocks'] = True
 
 app.config['hostname'] = socket.gethostname()
 app.config['local'] = False
+app.config['MAX_CONTENT_LENGTH'] = 1024*1024*50
+app.request_class = BigRequest
 
 mainThreadQueue = queue.Queue()
 itemsBroadcastView = None
 mapBroadcastView = None
+ndiEnabled = False
 
 # app.wsgi_app = ProfilerMiddleware(app.wsgi_app)
 
@@ -375,15 +383,21 @@ def suggestion():
 
 @app.route("/api/mapBroadcastFrame", methods=['POST'])
 def mapBroadcastFrame():
-    if not app.config['local']:
-        return "Broadcast view is only available in the offline version of Magpie"
+    try:
+        if not app.config['local']:
+            return "Broadcast view is only available in the offline version of Magpie"
 
-    data = request.form["data"]
-    pngBytes = base64.b64decode(data.split(',')[1])
-    
-    mapBroadcastView.updateImage(pngBytes)
+        data = request.form["data"]
+        pngBytes = base64.b64decode(data.split(',')[1])
+        
+        mapBroadcastView.updateImage(pngBytes)
 
-    return "OK"
+        return "OK"
+    except:
+        error = traceback.format_exc()
+        logging.error(f"Error in mapBroadcastFrame: {error}")
+
+        return json.dumps({'error': error})
 
 @app.route("/api/itemsBroadcastFrame", methods=['POST'])
 def itemsBroadcastFrame():
@@ -438,6 +452,7 @@ def getBasicInit():
         "remoteVersion": remoteVersion,
         "diskSettings": getDiskSettings(jsonify=False),
         "hostname": app.config["hostname"],
+        "ndiEnabled": ndiEnabled,
     })
 
 
@@ -685,5 +700,6 @@ def vueInit():
             "allowItems": True,
             "players": [""],
             "broadcastMode": "send",
+            "ndiEnabled": ndiEnabled,
         }
     )

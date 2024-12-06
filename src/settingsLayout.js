@@ -57,7 +57,7 @@ function getUnknownArgs(argDescriptions) {
     ];
 }
 
-export function getLayout(args, argDescriptions, settings, graphicsDict) {
+export function getLayout(args, argDescriptions, settings, graphicsDict, state) {
     let unknownArgs = getUnknownArgs(argDescriptions);
 
     return [
@@ -779,6 +779,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                             type: types.dropdown,
                             settingBase: 'settings',
                             settingName: 'broadcastItems',
+                            visibleCondition: () => state.ndiEnabled,
                             options: {
                                 'none': 'None',
                                 'native': 'Native window',
@@ -790,10 +791,33 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                             type: types.dropdown,
                             settingBase: 'settings',
                             settingName: 'broadcastMap',
+                            visibleCondition: () => state.ndiEnabled,
                             options: {
                                 'none': 'None',
                                 'native': 'Native window',
                                 'ndi': 'NDI',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Items',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'broadcastItems',
+                            visibleCondition: () => !state.ndiEnabled,
+                            options: {
+                                'none': 'None',
+                                'native': 'Native window',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Map',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'broadcastMap',
+                            visibleCondition: () => !state.ndiEnabled,
+                            options: {
+                                'none': 'None',
+                                'native': 'Native window',
                             },
                         }),
                         new SettingsItem({
@@ -807,10 +831,10 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                     ],
                 }),
                 new SettingsItem({
-                    title: 'Also try these as browser sources or window captures in OBS',
                     type: types.group,
                     includeRow: false,
-                    colSize: '5',
+                    colSize: 'auto',
+                    customHtml: `<h5 style="width: 325px; display: flex;">Also try these as browser sources or window captures in OBS</h5>`,
                     children: [
                         new SettingsItem({
                             title: new URL('/itemsBroadcast', document.baseURI).href,
@@ -825,6 +849,26 @@ export function getLayout(args, argDescriptions, settings, graphicsDict) {
                             headerSize: 6,
                             type: types.link,
                             href: '/mapBroadcast',
+                        }),
+                    ],
+                }),
+                new SettingsItem({
+                    title: 'NDI support is disabled',
+                    type: types.group,
+                    includeRow: false,
+                    colSize: 'auto',
+                    visibleCondition: () => !state.ndiEnabled,
+                    customHtml: `<h5 style="width: 325px; display: flex;">Separate downloads with NDI support are available below</h5>`,
+                    children: [
+                        new SettingsItem({
+                            title: 'Windows',
+                            type: types.link,
+                            href: 'https://magpietracker.us/static/builds/magpie-local-ndi.zip',
+                        }),
+                        new SettingsItem({
+                            title: 'Linux',
+                            type: types.link,
+                            href: 'https://magpietracker.us/static/builds/magpie-local-linux-ndi.zip',
                         }),
                     ],
                 }),

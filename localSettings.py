@@ -55,6 +55,7 @@ class LocalSettings:
         self.exportFilename = 'Magpie-state'
         self.showLegend = True
         self.showStats = True
+        self.ndiEnabled = False
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

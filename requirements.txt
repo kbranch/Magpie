@@ -8,3 +8,4 @@ flaskwebgui>1.0
 psycopg2-binary
 mysql.connector
 pillow
+waitress

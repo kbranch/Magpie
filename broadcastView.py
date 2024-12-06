@@ -1,11 +1,24 @@
 import io
 import time
+import logging
 import traceback
 import tkinter as tk
 from enum import Enum
 from queue import Queue
 from threading import Thread
 from PIL import Image, ImageTk
+
+import endpoints
+
+try:
+    import NDIlib as ndi
+    from ndi import NdiStream
+
+    endpoints.ndiEnabled = True
+    logging.info(f"NDI support enabled")
+except:
+    endpoints.ndiEnabled = False
+    logging.info(f"NDI support disabled: {traceback.format_exc()}")
 
 modes = Enum('Modes', ('none', 'native', 'ndi'))
 types = Enum('Types', ('items', 'map'))
@@ -105,8 +118,9 @@ class BroadcastView:
         self.root.update()
 
     def ndiTask(self):
-        import NDIlib as ndi
-        from ndi import NdiStream
+        if not endpoints.ndiEnabled:
+            logging.error(f"NDI support is not enabled")
+            return
 
         ndi.initialize()
 

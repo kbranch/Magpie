@@ -64,8 +64,30 @@ def startLocal(width, height, settings, debug):
             print(f'Found Chrome at {browserPath}')
             break
     
-    ui = FlaskUI(app=endpoints.app, server="flask", port=16114, width=width, height=height)
+    ui = FlaskUI(
+        server=startFlask,
+        server_kwargs={
+            "app": endpoints.app,
+            "port": 16114,
+        },
+        width=width,
+        height=height
+    )
+
     ui.run()
+
+def startFlask(**serverKwargs):
+    app = serverKwargs.pop("app", None)
+    serverKwargs.pop("debug", None)
+    serverKwargs['max_request_header_size'] = 1073741824
+    serverKwargs['max_request_body_size'] = 1073741824
+
+    try:
+        import waitress
+
+        waitress.serve(app, **serverKwargs)
+    except:
+        app.run(**serverKwargs)
 
 async def sendMessage(message, socket):
     await socket.send(json.dumps(message))

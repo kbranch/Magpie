@@ -15,6 +15,7 @@ export const useStateStore = defineStore('state', () => {
     const graphicsOptions = ref([]);
     const argDescriptions = ref([]);
     const spoilerLog = ref(null);
+    const ndiEnabled = ref(false);
 
     return {
         settings,
@@ -30,5 +31,6 @@ export const useStateStore = defineStore('state', () => {
         graphicsOptions,
         argDescriptions,
         spoilerLog,
+        ndiEnabled,
     };
 });

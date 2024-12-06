@@ -36,7 +36,7 @@ const graphicsDict = computed(() => {
         }, { '': 'Default' });
 })
 
-const layout = computed(() => getLayout(settings.value.args, props.argDescriptions, settings.value.settings, graphicsDict));
+const layout = computed(() => getLayout(settings.value.args, props.argDescriptions, settings.value.settings, graphicsDict, state));
 const settingsItems = computed(() => layout.value.reduce((acc, item) => acc.concat(extractBindables(item)), []));
 const settings = computed(() => {
     return { args: state.args, settings: state.settings };

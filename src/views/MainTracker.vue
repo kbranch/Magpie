@@ -31,6 +31,7 @@ onMounted(() => {
     .then(response => response.json())
     .then(data => {
       state.isLocal = data.local;
+      state.ndiEnabled = Boolean(data.ndiEnabled);
       hostname.value = data.hostname;
       version.value = data.version;
       state.remoteVersion = data.remoteVersion;
