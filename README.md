@@ -83,7 +83,7 @@ Here's a summary of your options:
 | - | - | - |
 | Browser window capture | Web | Capture the [items](https://magpietracker.us/itemsBroadcast) and [map](https://magpietracker.us/mapBroadcast) broadcast views. Will not work as a browser source in the web version |
 | [Browser source](https://obsproject.com/kb/browser-source) | Offline | Same as above, but it works as a browser source in the offline version |
-| [NDI](https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/) | Offline | Can be enabled in the settings pane in the offline version. See below for limitations. |
+| [NDI](https://obsproject.com/forum/resources/obs-ndi-newtek-ndi%E2%84%A2-integration-into-obs-studio.528/) | Offline w/NDI | Can be enabled in the settings pane in the offline version. See below for limitations. |
 | Non-browser window capture | Offline | Same as NDI, except the image loads into a native (non-browser) window instead |
 
 The best option for streaming is likely to be using the web-based broadcast views ([items](https://magpietracker.us/itemsBroadcast), [map](https://magpietracker.us/mapBroadcast)) in the **offline** version as an [OBS browser source](https://obsproject.com/kb/browser-source). Note that the broadcast views can have totally different settings for layout, color, visibility, etc. than the main UI.
@@ -93,6 +93,7 @@ Check out the [custom item layout documentation](/CustomItemLayouts.md) if you w
 The offline version also has NDI support and can display the items and map in native (non-browser) windows, but these options have some limitations:
  - Turning the page into images takes a lot of processing time, which means that Magpie will stutter briefly when updating
  - Unlike the web-based broadcast view, the layout must match the main UI
+ - NDI requires using a separate build with NDI support enabled ([Windows](https://magpietracker.us/static/builds/magpie-local-ndi.zip), [Linux](https://magpietracker.us/static/builds/magpie-local-linux-ndi.zip))
 
 You *could* mitigate these limitations by changing the web-based broadcast views' settings so that they're responsible for the NDI/native window support, but that seems like even more of a rube goldberg machine.
 
