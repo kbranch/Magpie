@@ -27,7 +27,7 @@ Several packages are available:
 
 ### From Source
 
-Note that due to a dependency that hasn't been updated, **Python 3.12 is not currently supported**. Python 3.10 is known to work, and Python 3.11 may or may not work.
+For NDI support, use `setup-ndi.(sh/bat)` instead of `setup.(sh/bat)`, below. NDI support also requires Python 3.10.
 
 #### Downloading
 The easiest option is to download the [source bundle](https://magpietracker.us/static/builds/magpie-source.zip).
@@ -51,10 +51,10 @@ If you're not familiar with Git, you can download Magpie as zip files:
  - Install [Python3](https://www.python.org/downloads/)
    - Make sure you check the checkbox to `Add Python 3.x to PATH`
  - Install [`npm`](https://nodejs.org/en/download/prebuilt-installer)
- - If using `git clone`, enable symlinks in git before cloning. The details probably depend on your system, but [this may help](https://stackoverflow.com/a/59761201)
+ - If using `git clone` and you run into problems, try enabling symlinks in git before cloning. The details probably depend on your system, but [this may help](https://stackoverflow.com/a/59761201)
  - Run `setup.bat`
  - Run `startLocal.bat`
- 
+
 ## Usage
 ### Items
 Items are tracked on the right side of the page. Left or right click on them to mark them as collected. Depending on the slot, right click will either mark an alternate item for that slot (e.g. red tunic, bomb capacity upgrade) or subtract one from the primary item.
