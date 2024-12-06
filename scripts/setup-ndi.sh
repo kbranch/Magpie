@@ -7,6 +7,6 @@ python3 -m venv .venv
 npm install
 npm run build
 
-pip install -r requirements-no-ndi.txt
+pip install -r requirements-ndi.txt
 
 cd scripts

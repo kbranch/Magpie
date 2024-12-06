@@ -6,6 +6,7 @@ rm -rf build dist
 
 rm a.spec
 ln -s magpie-data.spec a.spec
+cp requirements-no-ndi.txt requirements.txt
 
 git rev-list --count HEAD > version
 

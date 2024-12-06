@@ -1,0 +1,13 @@
+requests
+websockets
+Flask
+flaskwebgui>1.0
+psycopg2-binary
+mysql.connector
+pillow
+
+# Does not work with Python >3.10
+# Required for NDI support
+opencv-python
+ndi-python
+numpy==1.25.2
