@@ -19,7 +19,9 @@ Special thanks to:
 Several packages are available:
 - Local, offline version that should always match the [main site](https://magpietracker.us/)
   - [Windows](https://magpietracker.us/static/builds/magpie-local.zip)
+  - [Windows with NDI support](https://magpietracker.us/static/builds/magpie-local-ndi.zip)
   - [Linux](https://magpietracker.us/static/builds/magpie-local-linux.zip)
+  - [Linux with NDI support](https://magpietracker.us/static/builds/magpie-local-linux-ndi.zip)
   - [Source](https://magpietracker.us/static/builds/magpie-source.zip)
 - Autotracker
   - [Windows](https://magpietracker.us/static/builds/magpie-autotracker.exe)
