@@ -209,16 +209,24 @@ def fetchUpdate():
 
     try:
         headers = {'User-Agent': 'Magpie'}
+        path = 'update.zip'
         url = "https://magpietracker.us/static/builds/magpie-local.zip"
         # url = "https://dev.magpietracker.us/static/builds/magpie-local-dev.zip"
 
+        if ndiEnabled:
+            url = "https://magpietracker.us/static/builds/magpie-local-ndi.zip"
+
         if platform.system().lower() != 'windows':
+            path = '../update.zip'
             url = "https://magpietracker.us/static/builds/magpie-local-linux.zip"
             # url = "https://dev.magpietracker.us/static/builds/magpie-local-linux-dev.zip"
 
+            if ndiEnabled:
+                url = "https://magpietracker.us/static/builds/magpie-local-linux-ndi.zip"
+
         request = requests.get(url, headers=headers)
 
-        with open('update.zip', 'wb') as oFile:
+        with open(path, 'wb') as oFile:
             oFile.write(request.content)
 
         return "Update downloaded, restart Magpie to install"
