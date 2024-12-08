@@ -285,7 +285,7 @@ function transitionEnded(event) {
     align-items: center;
     background-color: rgba(255, 255, 255, .05);
     padding-right: 8px;
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .card-body {
@@ -301,7 +301,7 @@ function transitionEnded(event) {
 }
 
 #hintIcon, #starIcon {
-    height: 24px;
+    height: 16px;
 }
 
 #starIcon {
@@ -329,7 +329,7 @@ function transitionEnded(event) {
 
 .quicksettings-label {
     display: flex;
-    width: 24px;
+    width: 16px;
     box-sizing: content-box;
     padding: 4px;
     border-radius: 5px;
