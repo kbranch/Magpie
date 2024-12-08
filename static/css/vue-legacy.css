@@ -449,7 +449,7 @@ img {
 
 .owl:not(.difficulty-checked) .owl-overlay {
     border-style: none;
-    background-image: url('/images/signpost-fill.svg');
+    background-image: url('/images/lightbulb-fill.svg');
     position: absolute;
     left: 50%;
     top: 50%;

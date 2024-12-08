@@ -75,7 +75,7 @@ function transitionEnded(event) {
         <div class="col-auto quicksetting">
             <input id="showHints" type="checkbox" v-model="state.settings.showHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
             <label for="showHints" :class="[state.settings.showHints ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show available hints', $event)">
-                <img id="hintIcon" src="/images/signpost-fill.svg">
+                <img id="hintIcon" src="/images/lightbulb-fill.svg">
             </label>
         </div>
     </div>
