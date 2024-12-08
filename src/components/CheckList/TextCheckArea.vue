@@ -1,5 +1,7 @@
 <script setup>
-import { toggleCheck } from '@/moduleWrappers.js';
+import { toggleCheck, itemsByLocation } from '@/moduleWrappers.js';
+import { itemNames } from '@/metadata/itemNames';
+import { ref } from 'vue';
 
 defineProps({
     area: {
@@ -9,6 +11,8 @@ defineProps({
         required: true,
     },
 });
+
+const activatedGroups = ref(new Set());
 </script>
 
 <template>
@@ -51,8 +55,33 @@ defineProps({
                     <div class="col-auto ps-0 pe-0">
                         <div class="btn-group dropend">
                             <button type="button" class="btn hidden"></button>
-                            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" :data-check-id="group.id" onmousedown="populateCheckOptions(this)" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                            <ul :id="`text-${group.id}`" class="dropdown-menu text-dropdown"></ul>
+                            <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" :data-check-id="group.id" @click="activatedGroups.add(group.id)" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul :id="`text-${group.id}`" class="dropdown-menu text-dropdown">
+                                <li>
+                                    <button class="dropdown-item tooltip-item plando-item" type="button" data-item="" :onclick="`setCheckContents('${group.id}', '');`">
+                                        <div class="check-item-image-wrapper me-2">
+                                        </div>
+                                        Unknown
+                                    </button>
+                                </li>
+                                <li v-if="group.id in itemsByLocation">
+                                    <button class="dropdown-item tooltip-item plando-item" type="button" data-item="" :onclick="`spoilLocation('${group.id}')`">
+                                        <div class="check-item-image-wrapper me-2">
+                                        </div>
+                                        Load from spoiler log
+                                    </button>
+                                </li>
+                                <template v-if="activatedGroups.has(group.id)">
+                                    <li v-for="item in Object.keys(itemNames)" :key="item">
+                                        <button class="dropdown-item tooltip-item plando-item" type="button" :data-item="item" :onclick="`setCheckContents('${group.id}', '${item}');`">
+                                            <div class="check-item-image-wrapper me-2">
+                                                <img class="check-item-image" :src="`/images/${item}_1.png`">
+                                            </div>
+                                            {{ itemNames[item] }}
+                                        </button>
+                                    </li>
+                                </template>
+                            </ul>
                         </div>
                     </div>
                 </div>

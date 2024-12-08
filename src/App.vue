@@ -15,6 +15,11 @@ function updateChecked(checked) {
   state.checkedChecks = new Set(checked);
 }
 
+function updateHints(hints) {
+  state.hints = hints;
+  win.hints = state.hints;
+}
+
 function updateCheckContents(contents) {
   state.checkContents = contents;
   win.checkContents = state.checkContents;
@@ -74,6 +79,7 @@ defineExpose({
   updateSidebarMessage,
   updateEventInfo,
   updateSpoilerLog,
+  updateHints,
 });
 </script>
 

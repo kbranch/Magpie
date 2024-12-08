@@ -13,6 +13,7 @@ import { initGlobals, init } from '@/moduleWrappers.js';
 import { computed, onMounted, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
+import HintPanel from '@/components/HintPanel.vue';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
@@ -64,14 +65,24 @@ onMounted(() => {
       <div id="itemContainer" class="pb-2"></div>
     </div>
     <div class="row mx-0">
+      <div class="col-auto ps-0">
+        <div id="hideHintsButton">
+            <img :src="`/images/chevron-${state.settings.showHintPanel ? 'up' : 'down'}.svg`" class="invert close-button"
+                @mouseenter="tip.tooltip(state.settings.showHintPanel ? 'Hide hints' : 'Show hints', $event)"
+                @click="() => { state.settings.showHintPanel = !state.settings.showHintPanel; tip.clearTooltip(); }">
+        </div>
+      </div>
       <div class="col"></div>
-      <div class="col-auto">
+      <div class="col-auto pe-0">
         <OpenBroadcastView type="items" />
       </div>
     </div>
     <VersionAlert :client-version="version" :remote-version="state.remoteVersion" :update-message="state.updateMessage" />
     <SidebarAlert :message="state.sidebarMessage" />
-    <div class="quicksettings-container quicksettings-slot full-height">
+    <div id="unstackedHintWrapper">
+      <HintPanel />
+    </div>
+    <div class="quicksettings-container quicksettings-slot">
       <QuickSettings />
     </div>
   </div>
@@ -91,8 +102,16 @@ onMounted(() => {
     </div>
     <div class="col-auto mt-2">
       <OpenBroadcastView type="items" />
+      <div id="stackedHideHintsButton">
+          <img :src="`/images/chevron-${state.settings.showHintPanel ? 'up' : 'down'}.svg`" class="invert close-button"
+              @mouseenter="tip.tooltip(state.settings.showHintPanel ? 'Hide hints' : 'Show hints', $event)"
+              @click="() => { state.settings.showHintPanel = !state.settings.showHintPanel; tip.clearTooltip(); }">
+      </div>
     </div>
-    <div class="col p-0">
+    <div id="stackedHintWrapper" class="col p-0 pt-2" :class="{'window-pad-right': state.settings.showHintPanel}">
+      <HintPanel />
+    </div>
+    <div class="col-auto p-0">
       <VersionAlert :client-version="version" :remote-version="state.remoteVersion" :update-message="state.updateMessage" />
       <SidebarAlert :message="state.sidebarMessage" />
     </div>
@@ -195,6 +214,35 @@ onMounted(() => {
 </template>
 
 <style scoped>
+#hideButton {
+    align-content: center;
+    cursor: pointer;
+}
+
+#stackedHideHintsButton {
+  padding-top: 8px;
+  margin-left: -4px;
+}
+
+.close-button {
+    height: 24px;
+    opacity: 0.5;
+    padding: 4px;
+}
+
+.close-button:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.window-pad-right {
+  padding-right: 12px !important;
+}
+
+#unstackedHintWrapper {
+  padding-top: 8px;
+}
+
 #discordIcon {
   padding-left: 6px;
 }

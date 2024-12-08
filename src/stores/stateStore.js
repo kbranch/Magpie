@@ -1,5 +1,6 @@
+import { saveHints } from "@/moduleWrappers";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export const useStateStore = defineStore('state', () => {
     const args = ref({});
@@ -16,6 +17,19 @@ export const useStateStore = defineStore('state', () => {
     const argDescriptions = ref([]);
     const spoilerLog = ref(null);
     const ndiEnabled = ref(false);
+    const hints = ref([]);
+
+    watch(hints,
+        () => {
+            saveHints();
+        },
+        { deep: true },
+    );
+
+    function removeHint(hint) {
+        hints.value = hints.value.filter(x => x != hint);
+        window.hints = hints.value;
+    }
 
     return {
         settings,
@@ -32,5 +46,7 @@ export const useStateStore = defineStore('state', () => {
         argDescriptions,
         spoilerLog,
         ndiEnabled,
+        hints,
+        removeHint,
     };
 });

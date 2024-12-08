@@ -56,6 +56,7 @@ export let eventNameInput = window.eventNameInput;
 export let spoilerLog = window.spoilerLog;
 export let download = window.download;
 export let sortByKey = window.sortByKey;
+export let saveHints = window.saveHints;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

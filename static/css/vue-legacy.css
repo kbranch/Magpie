@@ -449,12 +449,12 @@ img {
 
 .owl:not(.difficulty-checked) .owl-overlay {
     border-style: none;
-    background-image: url('/images/new-owl.svg');
+    background-image: url('/images/signpost-fill.svg');
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 60%;
-    height: 60%;
+    width: 55%;
+    height: 55%;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;

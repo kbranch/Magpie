@@ -49,7 +49,10 @@ const activeChecks = computed(() => {
         checks = props.checkAccessibility.filter(check => (check.difficulty != 9
                                                            || state.settings.showOutOfLogic)
                                                           && (!check.isVanilla
-                                                              || state.settings.showVanilla)
+                                                              || state.settings.showVanilla
+                                                              || (check.isVanillaOwl() && state.settings.showHints))
+                                                          && (!check.isVanillaOwl()
+                                                              || state.settings.showHints)
                                                           && (!check.isOwnedVanillaPickup()
                                                               || state.settings.showOwnedPickups)
                                                           && (!check.isHigherLogic()
@@ -63,7 +66,10 @@ const activeChecks = computed(() => {
         checks = props.checkAccessibility.filter(check => check.isHigherLogic()
                                                           && !check.checked
                                                           && (!check.isVanilla
-                                                              || state.settings.showVanilla)
+                                                              || state.settings.showVanilla
+                                                              || (check.isVanillaOwl() && state.settings.showHints))
+                                                          && (!check.isVanillaOwl()
+                                                              || state.settings.showHints)
                                                           && (!check.isOwnedVanillaPickup()
                                                               || state.settings.showOwnedPickups)
                                                           && check.isEnabled());

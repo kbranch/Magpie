@@ -56,6 +56,9 @@ class LocalSettings:
         self.showLegend = True
         self.showStats = True
         self.ndiEnabled = False
+        self.showHints = True
+        self.starHints = False
+        self.showHintPanel = True
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

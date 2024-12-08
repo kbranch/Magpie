@@ -19,6 +19,7 @@ var reverseEntranceMap = {};
 var connections = [];
 var bossMap = {};
 var checkedChecks = new Set();
+var hints = [];
 var checkContents = {};
 var itemLocations = {};
 var hoveredItems = [];

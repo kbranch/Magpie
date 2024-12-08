@@ -86,7 +86,7 @@ window.setRomRequested = setRomRequested;
     </li>
 </ul>
 
-<div class="fill-box px-2_5 pt-1 item-width" id="quicksettings">
+<div class="px-2_5 pt-1 item-width" id="quicksettings">
     <div class="tabs">
         <div v-if="activeTabId == 'quicksettingsTab'" class="tab h-100">
             <div class="row h-100 align-items-end">

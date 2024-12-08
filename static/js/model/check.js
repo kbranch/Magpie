@@ -123,8 +123,10 @@ class Check {
     shouldDraw() {
         if ((this.difficulty == 9
               && !localSettings.showOutOfLogic)
-            || (this.isVanilla
+            || (this.isVanilla && !this.isVanillaOwl()
                 && !localSettings.showVanilla)
+            || (this.isVanillaOwl()
+                && !localSettings.showHints)
             || (this.isOwnedVanillaPickup()
                 && !localSettings.showOwnedPickups)
             || !this.isValid()) {

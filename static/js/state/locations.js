@@ -19,16 +19,24 @@ function saveEntrances() {
     }
 }
 
+function saveHints() {
+    setLocalStorage('hints', JSON.stringify([...hints]));
+
+    vueApp.updateHints(hints);
+}
+
 function saveLocations() {
     saveChecked();
     saveEntrances();
+    saveHints();
 }
 
 function loadLocations() {
     let checkedErrors = loadChecked() ?? [];
     let entranceErrors = loadEntrances() ?? [];
+    let hintErrors = loadHints() ?? [];
 
-    return checkedErrors.concat(entranceErrors);
+    return checkedErrors.concat(entranceErrors).concat(hintErrors);
 }
 
 function loadEntrances() {
@@ -104,9 +112,24 @@ function loadChecked() {
     updateState();
 }
 
+function loadHints() {
+    try {
+        hints = JSON.parse(getLocalStorage('hints'));
+    }
+    catch (err) {
+    }
+
+    if (hints == null) {
+        hints = [];
+    }
+
+    vueApp.updateHints(hints);
+}
+
 function resetLocations() {
     resetEntrances();
     resetChecks();
+    resetHints();
 }
 
 function resetEntrances() {
@@ -114,6 +137,11 @@ function resetEntrances() {
     reverseEntranceMap = {};
     connections = [];
     saveEntrances();
+}
+
+function resetHints() {
+    hints = [];
+    saveHints();
 }
 
 function resetChecks(resetVanillaOwls=true) {
