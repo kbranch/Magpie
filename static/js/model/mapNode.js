@@ -261,6 +261,16 @@ class MapNode {
         return false;
     }
 
+    hintHighlighted() {
+        for (const check of this.checks) {
+            if (check.hintHighlighted) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     iconClasses() {
         let classes = ['check-graphic', 'animate__animated', 'check-glow'];
 
@@ -310,7 +320,7 @@ class MapNode {
         let items = this.checks.filter(x => x.item)
                                .map(x => x.item);
         let hoverItems = items.filter(x => hoveredItems.includes(x));
-        if (hoverItems.length > 0 || this.inFilter()) {
+        if (hoverItems.length > 0 || this.inFilter() || this.hintHighlighted()) {
             classes.push('spoiler-highlight');
         }
 

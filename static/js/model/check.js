@@ -12,6 +12,7 @@ class Check {
         this.hollow = false;
         this.source = checkInfo;
         this.inFilter = false;
+        this.hintHighlighted = false;
 
         if (!(this.id in allChecksById)) {
             allChecksById[this.id] = [];

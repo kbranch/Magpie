@@ -1,9 +1,10 @@
 <script setup>
-import { saveQuickSettings } from '@/moduleWrappers.js';
+import { saveQuickSettings, drawActiveTab } from '@/moduleWrappers.js';
 import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue';
 import { itemNames } from '@/metadata/itemNames';
+import { debounce } from '@/main';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
@@ -37,6 +38,7 @@ const wrapper = ref(null);
 const hintsWrapper = ref(null);
 const wrapperHeight = ref('unset');
 const showHintPanel = computed(() => state.settings.showHintPanel);
+const highlightedChecks = ref([]);
 
 const rootResizeObserver = new ResizeObserver(() => nextTick(updateWrapperHeight), { threshold: 1.0 });
 
@@ -49,6 +51,14 @@ watch(showHintPanel, () => {
     nextTick(updateWrapperHeight);
 });
 
+watch(highlightedChecks, (newValue, oldValue) => {
+    console.log(newValue, oldValue);
+    oldValue?.map(x => x.hintHighlighted = false);
+    newValue?.map(x => x.hintHighlighted = true);
+
+    debounce(drawActiveTab, 50);
+})
+
 function updateWrapperHeight() {
     wrapperHeight.value = state.settings.showHintPanel ? `${hintsWrapper.value?.getBoundingClientRect().height}px` : '0px';
 }
@@ -57,6 +67,12 @@ function transitionEnded(event) {
     if (event.target == wrapper.value) {
         setTimeout(() => wrapper.value.classList.remove('transitioning'), 50);
     }
+}
+
+function highlightHint(location) {
+    location = location.toLowerCase();
+    highlightedChecks.value = state.checkAccessibility.filter(x => x.metadata.name.toLowerCase() == location 
+                                                                   || x.metadata.area.toLowerCase() == location);
 }
 
 </script>
@@ -80,7 +96,7 @@ function transitionEnded(event) {
         </div>
     </div>
     <div class="card-body">
-        <div v-for="hint in state.hints" :key="hint" class="hint-row">
+        <div v-for="hint in state.hints" :key="hint" class="hint-row" @mouseenter="highlightHint(hint.location)" @mouseleave="highlightedChecks = []">
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="dropdown-icon" :src="`/images/${hint.item}_1.png`">
