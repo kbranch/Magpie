@@ -9,11 +9,12 @@ import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import VersionAlert from '@/components/VersionAlert.vue';
 import SidebarAlert from '@/components/SidebarAlert.vue';
+import HintPanel from '@/components/HintPanel.vue';
 import { initGlobals, init } from '@/moduleWrappers.js';
 import { computed, onMounted, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
-import HintPanel from '@/components/HintPanel.vue';
+import { archipelagoInit } from '@/archipelago/client';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
@@ -43,6 +44,7 @@ onMounted(() => {
 
       initGlobals(data);
       init();
+      archipelagoInit();
     });
 });
 

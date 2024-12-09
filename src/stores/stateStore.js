@@ -19,9 +19,15 @@ export const useStateStore = defineStore('state', () => {
     const ndiEnabled = ref(false);
     const hints = ref([]);
 
+    let hintCallbacks = [];
+
     watch(hints,
         () => {
             saveHints();
+
+            for (let callback of hintCallbacks) {
+                callback();
+            }
         },
         { deep: true },
     );
@@ -29,6 +35,14 @@ export const useStateStore = defineStore('state', () => {
     function removeHint(hint) {
         hints.value = hints.value.filter(x => x != hint);
         window.hints = hints.value;
+    }
+
+    function onHintUpdate(callback) {
+        hintCallbacks.push(callback);
+    }
+
+    function offHintUpdate(callback) {
+        hintCallbacks = hintCallbacks.filter(x => x != callback);
     }
 
     return {
@@ -48,5 +62,7 @@ export const useStateStore = defineStore('state', () => {
         ndiEnabled,
         hints,
         removeHint,
+        onHintUpdate,
+        offHintUpdate,
     };
 });

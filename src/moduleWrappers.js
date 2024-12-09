@@ -57,6 +57,11 @@ export let spoilerLog = window.spoilerLog;
 export let download = window.download;
 export let sortByKey = window.sortByKey;
 export let saveHints = window.saveHints;
+export let processMessage = window.processMessage;
+export let alertModal = window.alertModal;
+export let coordDict = window.coordDict;
+export let bootstrap = window.bootstrap;
+export let autotrackerConnected = window.autotrackerConnected;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

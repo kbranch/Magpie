@@ -1,5 +1,5 @@
 <script setup>
-import { saveQuickSettings, drawActiveTab } from '@/moduleWrappers.js';
+import { saveQuickSettings, drawActiveTab, bootstrap } from '@/moduleWrappers.js';
 import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue';
@@ -34,6 +34,10 @@ watch(newHint,
     { deep: true },
 );
 
+const hintItemDropdowns = ref(null);
+const hintLocationDropdowns = ref(null);
+const newHintItemDropdown = ref(null);
+const newHintLocationDropdown = ref(null);
 const wrapper = ref(null);
 const hintsWrapper = ref(null);
 const wrapperHeight = ref('unset');
@@ -41,6 +45,8 @@ const showHintPanel = computed(() => state.settings.showHintPanel);
 const highlightedChecks = ref([]);
 
 const rootResizeObserver = new ResizeObserver(() => nextTick(updateWrapperHeight), { threshold: 1.0 });
+
+state.onHintUpdate(() => nextTick(processDropdowns));
 
 onBeforeMount(() => {
     rootResizeObserver.observe(document.body);
@@ -52,12 +58,44 @@ watch(showHintPanel, () => {
 });
 
 watch(highlightedChecks, (newValue, oldValue) => {
-    console.log(newValue, oldValue);
     oldValue?.map(x => x.hintHighlighted = false);
     newValue?.map(x => x.hintHighlighted = true);
 
     debounce(drawActiveTab, 50);
-})
+});
+
+function processDropdowns() {
+    if (hintItemDropdowns.value) {
+        for (const element of hintItemDropdowns.value) {
+            configureDropdown(element);
+        }
+    }
+
+    if (hintLocationDropdowns.value) {
+        for (const element of hintLocationDropdowns.value) {
+            configureDropdown(element);
+        }
+    }
+
+    if (newHintLocationDropdown.value) {
+        configureDropdown(newHintLocationDropdown.value);
+    }
+
+    if (newHintItemDropdown.value) {
+        configureDropdown(newHintItemDropdown.value);
+    }
+
+    updateWrapperHeight();
+}
+
+function configureDropdown(element) {
+    new bootstrap.Dropdown(element, {
+        popperConfig: { 
+            strategy: 'fixed',
+            placement: 'auto',
+        },
+    });
+}
 
 function updateWrapperHeight() {
     wrapperHeight.value = state.settings.showHintPanel ? `${hintsWrapper.value?.getBoundingClientRect().height}px` : '0px';
@@ -103,7 +141,7 @@ function removeHint(hint) {
     <div class="card-body">
         <div v-for="hint in state.hints" :key="hint" class="hint-row" @mouseenter="highlightHint(hint.location)" @mouseleave="highlightedChecks = []">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button ref="hintItemDropdowns" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="dropdown-icon" :src="`/images/${hint.item}_1.png`">
                 </button>
                 <ul class="dropdown-menu">
@@ -117,7 +155,7 @@ function removeHint(hint) {
             </div>
             <span class="at">at</span>
             <div class="dropdown location-dropdown">
-                <button class="btn btn-secondary dropdown-toggle location-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button ref="hintLocationDropdowns" class="btn btn-secondary dropdown-toggle location-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="location-text">{{ hint.location }}</div>
                 </button>
                 <ul class="dropdown-menu">
@@ -138,7 +176,7 @@ function removeHint(hint) {
 
         <div class="hint-row">
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button ref="newHintItemDropdown" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <template v-if="newHint.item">
                         <img class="dropdown-icon" :src="`/images/${newHint.item}_1.png`">
                     </template>
@@ -162,7 +200,7 @@ function removeHint(hint) {
             </div>
             <span class="at">at</span>
             <div class="dropdown location-dropdown">
-                <button class="btn btn-secondary dropdown-toggle location-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button ref="newHintLocationDropdown" class="btn btn-secondary dropdown-toggle location-dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <template v-if="newHint.location">
                         <div class="location-text">{{ newHint.location }}</div>
                     </template>
@@ -313,8 +351,10 @@ function removeHint(hint) {
 .card-body {
     background-color: rgba(255, 255, 255, .01);
     border-radius: 0px 0px 5px 5px;
-    margin-top: -8px;
     padding: 8px;
+    padding-top: 0px;
+    max-height: 200px;
+    overflow: scroll;
 }
 
 .card {
