@@ -75,6 +75,11 @@ function highlightHint(location) {
                                                                    || x.metadata.area.toLowerCase() == location);
 }
 
+function removeHint(hint) {
+    state.removeHint(hint);
+    highlightedChecks.value = [];
+}
+
 </script>
 
 <template>
@@ -124,7 +129,7 @@ function highlightHint(location) {
                 </ul>
             </div>
             <div class="dropdown">
-                <button class="btn btn-secondary close-button" type="button" @click="state.removeHint(hint)" @mouseover="tip.tooltip('Remove hint', $event)">
+                <button class="btn btn-secondary close-button" type="button" @click="removeHint(hint)" @mouseover="tip.tooltip('Remove hint', $event)">
                     <img class="invert" src="/images/x.svg">
                 </button>
             </div>
