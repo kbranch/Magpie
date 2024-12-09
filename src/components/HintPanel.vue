@@ -306,7 +306,8 @@ function removeHint(hint) {
     align-items: center;
     background-color: rgba(255, 255, 255, .05);
     padding-right: 8px;
-    font-size: 19px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .card-body {
