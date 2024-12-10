@@ -5267,6 +5267,26 @@ let vanillaCoordDict = {
       "index": 2,
       "requiredRupees": 200,
    },
+   "Library-Owl":{
+      "id":"Library-Owl",
+      "vanillaArea":"Mabe Village",
+      "vanillaName":"Library Book Hints",
+      "locations":[
+         {
+            "map":"vanillaOverworld",
+            "x":48,
+            "y":1462
+         }
+      ],
+      "underworldLocations": [
+         {
+            "map": "underworld",
+            "x": 72,
+            "y": 1486
+         }
+      ],
+      "index":29,
+   },
 }
 
 let coordDict = vanillaCoordDict;

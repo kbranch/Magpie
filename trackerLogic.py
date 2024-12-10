@@ -16,6 +16,15 @@ class VanillaItem(ItemInfo):
     def __init__(self, room):
         super().__init__(room)
 
+class VanillaHint(ItemInfo):
+    def __init__(self, id):
+        self.id = id
+        super().__init__(0)
+    
+    @property
+    def nameId(self):
+        return self.id
+
 class LogicHint(ItemInfo):
     def __init__(self, name):
         self.name = name
@@ -134,6 +143,7 @@ d0_bullshit_room = '0x307'
 d0_zol_chest = '0x306'
 damp_pit = 'Near Hole to Damp Cave'
 d7_plateau = 'D7 Plateau'
+library = 'Library'
 
 def updateVanilla(args):
     global vanillaIds
@@ -212,6 +222,10 @@ def applyTrackerLogic(log):
     if d8_lava_ledge in locs:
         locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER)
 
+    # Library book hints
+    if library in locs:
+        locs[library].add(VanillaHint('Library-Owl'))
+
     # Rooster across the river
     if animal_village in locs and ukuku in locs:
         river_rooster = Location().add(LogicHint('RiverRooster'))
@@ -273,6 +287,7 @@ def updateMetadata(table):
     table['0x23E2'] = CheckMetadata('Cracked Floor Flying Powder', 'Turtle Rock')
     table['0x2352'] = CheckMetadata('Lava Ledge Flying Powder', 'Turtle Rock')
     table['egg'] = CheckMetadata('Nightmare', 'Tal Tal Mountains')
+    table['Library-Owl'] = CheckMetadata('Library Book Hints', 'Mabe Village')
 
 def buildLogic(args, worldSetup, requirements=None):
     if worldSetup.goal == 'open':
