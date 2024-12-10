@@ -185,6 +185,12 @@ def applyTrackerLogic(log):
     log.requirements_settings.bush._OR__items.append(BOMB)
     log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
 
+    # We're in good boy mode, these actually work with SWORD 2
+    if SWORD not in log.requirements_settings.bush._OR__items:
+        log.requirements_settings.bush._OR__children.append(COUNT(SWORD, 2))
+        log.requirements_settings.pit_bush._OR__children.append(COUNT(SWORD, 2))
+        log.requirements_settings.hit_switch._OR__children.append(COUNT(SWORD, 2))
+
     locs = {}
 
     for loc in log.location_list:

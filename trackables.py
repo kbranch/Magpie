@@ -317,9 +317,6 @@ def addStartingItems(inventory, args, settings):
     inventory['RUPEES_500'] = 10
     inventory['TRUE'] = 1
 
-    if args.bowwow != 'normal':
-        inventory['SWORD'] = inventory['SWORD'] + 1
-
     if args.dungeon_items == 'keysy':
         for i in range(9):
             for amount, item_name in ((9, "KEY"), (1, "NIGHTMARE_KEY")):
