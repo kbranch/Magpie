@@ -221,6 +221,10 @@ onMounted(() => {
     cursor: pointer;
 }
 
+#hideHintsButton, #stackedHideHintsButton {
+  cursor: pointer;
+}
+
 #stackedHideHintsButton {
   padding-top: 8px;
   margin-left: -4px;
