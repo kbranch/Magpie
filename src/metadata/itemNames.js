@@ -110,5 +110,5 @@ export let itemNames = {
     "ARROWS_10": "10 Arrows",
     "GEL": "Zol",
     "MESSAGE": "Master Stalfos' Message",
-    "OTHER": 'Other',
+    "GOOD": 'Something Good',
 };

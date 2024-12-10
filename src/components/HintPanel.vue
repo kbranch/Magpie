@@ -18,7 +18,7 @@ const items = [
     'SHIELD', 'SWORD', 'MAGIC_POWDER', 'SHOVEL', 'BOMB', 'BOW', 'FEATHER', 'POWER_BRACELET', 'PEGASUS_BOOTS', 
     'FLIPPERS', 'HOOKSHOT', 'MAGIC_ROD', 'ROOSTER', 'OCARINA', 'SONG1', 'SONG2', 'SONG3', 'BOWWOW', 'BOOMERANG', 
     'TAIL_KEY', 'ANGLER_KEY', 'FACE_KEY', 'BIRD_KEY', 'SLIME_KEY', 'GOLD_LEAF', 
-    'OTHER'
+    'GOOD'
 ];
 
 const areas = computed(() => [... new Set(state.checkAccessibility.map(x => x.metadata.area))].sort());
@@ -89,12 +89,18 @@ function processDropdowns() {
 }
 
 function configureDropdown(element) {
+    if (element.popperConfigured) {
+        return;
+    }
+    
     new bootstrap.Dropdown(element, {
         popperConfig: { 
             strategy: 'fixed',
             placement: 'auto',
         },
     });
+
+    element.popperConfigured = true;
 }
 
 function updateWrapperHeight() {
@@ -107,10 +113,15 @@ function transitionEnded(event) {
     }
 }
 
-function highlightHint(location) {
-    location = location.toLowerCase();
-    highlightedChecks.value = state.checkAccessibility.filter(x => x.metadata.name.toLowerCase() == location 
-                                                                   || x.metadata.area.toLowerCase() == location);
+function highlightHint(hint) {
+    if (hint.locationId) {
+        highlightedChecks.value = state.checkAccessibility.filter(x => x.id.toLowerCase() == hint.locationId.toLowerCase());
+        return;
+    }
+
+    let locationName = hint.location.toLowerCase();
+    highlightedChecks.value = state.checkAccessibility.filter(x => x.metadata.name.toLowerCase() == locationName
+                                                                   || x.metadata.area.toLowerCase() == locationName);
 }
 
 function removeHint(hint) {
@@ -129,17 +140,22 @@ function removeHint(hint) {
     <div class="card-header">
         <span id="headerText">Hints</span>
         
-        <!-- <img id="starIcon" :src="`/images/${state.starHints ? 'star-fill' : 'star'}.svg`" class="invert" @click="state.starHints = !state.starHints" @mouseenter="tip.tooltip('Star hinted locations', $event)"> -->
+
+        <button id="clearHintsButton" class="btn btn-secondary dimvert header-button" type="button" @click="state.hints.map(x => state.removeHint(x))" @mouseenter="tip.tooltip('Clear hints', $event)">
+            <img class="header-icon" src="/images/arrow-clockwise.svg">
+        </button>
+
+        <!-- <img :src="`/images/${state.starHints ? 'star-fill' : 'star'}.svg`" class="invert header-icon" @click="state.starHints = !state.starHints" @mouseenter="tip.tooltip('Star hinted locations', $event)"> -->
 
         <div class="col-auto quicksetting">
             <input id="showHints" type="checkbox" v-model="state.settings.showHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
             <label for="showHints" :class="[state.settings.showHints ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show available hints', $event)">
-                <img id="hintIcon" src="/images/lightbulb-fill.svg">
+                <img class="header-icon" src="/images/lightbulb-fill.svg">
             </label>
         </div>
     </div>
     <div class="card-body">
-        <div v-for="hint in state.hints" :key="hint" class="hint-row" @mouseenter="highlightHint(hint.location)" @mouseleave="highlightedChecks = []">
+        <div v-for="hint in state.hints" :key="hint" class="hint-row" @mouseenter="highlightHint(hint)" @mouseleave="highlightedChecks = []">
             <div class="dropdown">
                 <button ref="hintItemDropdowns" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <img class="dropdown-icon" :src="`/images/${hint.item}_1.png`">
@@ -231,6 +247,11 @@ function removeHint(hint) {
 </template>
 
 <style scoped>
+#clearHintsButton {
+    margin-right: 8px;
+    padding: 6px;
+}
+
 #hintsWrapper.v-enter-active,
 #hintsWrapper.v-leave-active {
     transition: transform 0.3s ease;
@@ -305,7 +326,8 @@ function removeHint(hint) {
 }
 
 .dropdown-icon {
-    width: 24px;
+    max-width: 24px;
+    height: 24px;
     margin-right: 4px;
     display: flex;
     justify-content: center;
@@ -362,7 +384,7 @@ function removeHint(hint) {
     border-radius: 5px 5px 5px 5px;
 }
 
-#hintIcon, #starIcon {
+.header-icon {
     height: 16px;
 }
 

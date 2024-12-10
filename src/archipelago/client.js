@@ -1,6 +1,6 @@
 import { itemMap, checkMap } from './tables';
 import { useStateStore } from '@/stores/stateStore';
-import { processMessage, alertModal, autotrackerConnected } from '@/moduleWrappers';
+import { processMessage, alertModal, autotrackerConnected, setCheckContents } from '@/moduleWrappers';
 import { Client, itemsHandlingFlags, } from "/node_modules/archipelago.js/dist/index.js";
 
 let state;
@@ -23,16 +23,30 @@ export function archipelagoInit() {
     window.archipelagoClient = client;
 }
 
+function clearApHints() {
+    for (const hint of [... state.hints]) {
+        if (hint.source == 'AP') {
+            state.removeHint(hint);
+        }
+    }
+}
+
 function initHints(hints) {
+    clearApHints();
+
     hints.map(processHint);
 }
 
 function processHint(hint) {
     try {
-        let item = itemMap[hint.item.id];
+        if (hint.item.sender.slot != client.players.self.slot) {
+            return;
+        }
+
+        let item = itemMap[hint.item.id] ?? 'GOOD';
         let locationId = checkMap[hint.item.locationId];
 
-        if (!item || !locationId || !(locationId in coordDict)) {
+        if (!locationId || !(locationId in coordDict)) {
             console.log(`Invalid hint, item '${hint.item.id}', location '${hint.item.locationId}'/${locationId}`);
             return;
         }
@@ -40,11 +54,16 @@ function processHint(hint) {
         let locationName = coordDict[locationId].name;
         let existingHints = state.hints.filter(x => x.item == item && x.location == locationName);
 
+        if (item != 'GOOD' || hint.item.progression) {
+            setCheckContents(locationId, item);
+        }
+
         if (hint.found && existingHints.length) {
             existingHints.map(state.removeHint);
         }
-        else if (!hint.found && !existingHints.length) {
-            state.hints.push({ item: item, location: locationName });
+        else if (!hint.found && hint.item.progression && !existingHints.length) {
+            state.checkContents[locationId] = item;
+            state.hints.push({ item: item, location: locationName, source: 'AP', locationId: locationId });
         }
     }
     catch(err) {
