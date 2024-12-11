@@ -1,4 +1,4 @@
-import { saveHints } from "@/moduleWrappers";
+import { saveHints, saveSettingsToStorage } from "@/moduleWrappers";
 import { defineStore } from "pinia";
 import { ref, watch } from "vue";
 
@@ -31,6 +31,24 @@ export const useStateStore = defineStore('state', () => {
         },
         { deep: true },
     );
+
+    watch(args, 
+        (value, oldValue) => {
+            if (value.ap_logic && Object.keys(oldValue).length) {
+                if (!['none', 'simple'].includes(value.entranceshuffle)) {
+                    value.entranceshuffle = 'none';
+                }
+
+                value.shufflewater = value.entranceshuffle == 'simple';
+                value.randomstartlocation = false;
+                value.shufflejunk = false;
+                value.shuffleannoying = false;
+            }
+
+            saveSettingsToStorage(value, settings.value);
+        },
+        { deep: true },
+    )
 
     function removeHint(hint) {
         hints.value = hints.value.filter(x => x != hint);
