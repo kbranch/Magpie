@@ -290,6 +290,10 @@ function fixArgs(args) {
     else {
         startHouse = 'start_house:inside';
     }
+
+    if (!('shopsanity' in args)) {
+        args.shopsanity = "";
+    }
 }
 
 function getState(addAp=true) {
