@@ -94,7 +94,8 @@ const activeChecks = computed(() => {
     }
 
     if (searchText.value) {
-        checks = checks.filter(x => x.metadata.name.toLowerCase().includes(searchText.value) || x.metadata.area.toLowerCase().includes(searchText.value));
+        let search = searchText.value.toLowerCase();
+        checks = checks.filter(x => x.metadata.name.toLowerCase().includes(search) || x.metadata.area.toLowerCase().includes(search));
         checks.map(x => x.inFilter = true);
     }
 
