@@ -511,25 +511,6 @@ function setGraphicsPack(gfx) {
     drawActiveTab();
 }
 
-function loadRom(element) {
-    if (element.files.length == 0) {
-        return;
-    }
-
-    let file = element.files[0];
-    let reader = new FileReader();
-
-    reader.onload = () => sendRom(reader.result);
-    reader.readAsBinaryString(file);
-}
-
-function sendRom(bytes) {
-    sendMessage({
-        'type': 'rom',
-        'rom': btoa(bytes),
-    });
-}
-
 function sendHandshake() {
     sendMessage({
         'type': 'handshake',

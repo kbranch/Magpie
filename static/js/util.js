@@ -90,7 +90,6 @@ function sortByKey(arr, key) {
 }
 
 function disconnectAutotracker() {
-    $('#romRow').hide();
     if (autotrackerSocket != null && autotrackerSocket.readyState == 1) {
         autotrackerSocket.close();
         addAutotrackerMessage("Disconnecting...")

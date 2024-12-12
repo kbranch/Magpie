@@ -1,5 +1,5 @@
 <script setup>
-import { saveQuickSettings, download, sortByKey } from '@/moduleWrappers.js';
+import { saveQuickSettings, download, sortByKey, sendMessage } from '@/moduleWrappers.js';
 import { ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
@@ -19,14 +19,26 @@ const activeTabId = ref('quicksettingsTab');
 const autotrackerLog = ref('');
 const romRequested = ref(false);
 const romInput = ref(null);
+const romFile = ref(null);
+const romContents = ref(null);
+const romEverRequested = ref(false);
 
 watch(romRequested, (newValue) => {
     if (newValue) {
-        activeTabId.value = 'autotrackerTab';
-
-        if (romInput.value) {
-            romInput.value.value = null;
+        if (!romEverRequested.value) {
+            activeTabId.value = 'autotrackerTab';
+            romEverRequested.value = true;
         }
+
+        if (romContents.value) {
+            sendRom(romContents.value);
+        }
+    }
+});
+
+watch(romContents, (newValue) => {
+    if (romRequested.value) {
+        sendRom(newValue);
     }
 });
 
@@ -51,6 +63,25 @@ function switchTabs(e) {
 function downloadSpoilerLog() {
     state.spoilerLog.accessibleItems = sortByKey(state.spoilerLog.accessibleItems, x => [x.sphere, x.area])
     download(`spoilerLog-${state.spoilerLog.seed}.json`, JSON.stringify(state.spoilerLog, null, 2));
+}
+
+function loadRom() {
+    if (romInput.value.files.length == 0) {
+        return;
+    }
+
+    romFile.value = romInput.value.files[0];
+    let reader = new FileReader();
+
+    reader.onload = () => romContents.value = reader.result;
+    reader.readAsBinaryString(romFile.value);
+}
+
+function sendRom(bytes) {
+    sendMessage({
+        'type': 'rom',
+        'rom': btoa(bytes),
+    });
 }
 
 window.addAutotrackerMessage = addAutotrackerMessage;
@@ -168,14 +199,24 @@ window.setRomRequested = setRomRequested;
             <div v-if="activeTabId == 'autotrackerTab'" class="tab h-100">
                 <div class="row h-100 justify-content-center align-items-end">
                     <div class="col quick-bg">
-                        <div v-if="romRequested" class="row py-2 animate__animated animate__flash" id="romRow">
+                        <div v-if="romEverRequested" :class="{animate__flash: !romContents}" class="row pb-2 animate__animated">
                             <div class="col even-col">
-                                <label for="romInput" class="form-label">
+                                <span v-if="!romFile">
                                     Select ROM File
                                     <img class="invert" src="/images/question-circle.svg" 
                                         @mouseenter="tip.tooltip('The autotracker requires a copy of the ROM file before entrances can be tracked', $event)">
-                                </label>
-                                <input type="file" accept=".gbc" class="hidden" id="romInput" ref="romInput" onchange="loadRom(this)" />
+                                </span>
+                                <div v-if="romFile" id="romSelectedText">
+                                    <div class="small-text">
+                                        Select ROM File
+                                        <img class="invert small-icon" src="/images/question-circle.svg" 
+                                            @mouseenter="tip.tooltip('The autotracker requires a copy of the ROM file before entrances can be tracked', $event)">
+                                    </div>
+                                    <div id="romName" @mouseenter="tip.tooltip(romFile.name, $event)">
+                                        {{ romFile.name }}
+                                    </div>
+                                </div>
+                                <input type="file" accept=".gbc" class="hidden" id="romInput" ref="romInput" @change="loadRom()" />
                                 <input type="button" id="romButton" class="btn btn-secondary" value="Browse..." onclick="document.getElementById('romInput').click();" />
                             </div>
                         </div>
@@ -312,6 +353,19 @@ window.setRomRequested = setRomRequested;
 </template>
 
 <style scoped>
+#romName {
+    max-width: 160px;
+    overflow: hidden;
+}
+
+.small-text {
+    font-size: 13px;
+}
+
+.small-icon {
+    height: 13px;
+}
+
 #ownedVanillaWrapper {
     width: 32px;
 }
