@@ -196,7 +196,8 @@ function distributeChecks(unclaimedChecks) {
            && inOutEntrances()
            && coupledEntrances()
            && node.checks.some(x => x.id in connectorsByCheckId)) {
-            let connector = connectorsByCheckId[node.checks[0].id];
+            let check = node.checks.filter(x => x.id in connectorsByCheckId)[0];
+            let connector = connectorsByCheckId[check.id];
             node.entrance = new Entrance(connector.entrances[0]);
             node.hideMe = true;
         }
