@@ -172,11 +172,11 @@ function parseCheckedChecks(apCheckIds, diff) {
     processMessage(JSON.stringify(message));
 }
 
-function archipelagoConnect(hostname, port, slotName, password) {
+function archipelagoConnect(server, slotName, password, gameName="Links Awakening DX") {
     client.login(
-        `${hostname}:${port}`,
+        server,
         slotName,
-        "Links Awakening DX",
+        gameName,
         {
             password: password,
             tags: ['Tracker'],

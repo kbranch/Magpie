@@ -289,7 +289,18 @@ function processSlotDataMessage(message) {
 
     setInputValues('flag', args);
     setInputValues('setting', localSettings);
+
+    if ('server_address' in slotData) {
+        localSettings.apServer = slotData.server_address;
+        localSettings.apSlot = slotData.slot_name;
+        localSettings.apPassword = slotData.password ?? '';
+    }
+
     saveSettings();
+
+    if ('server_address' in slotData) {
+        archipelagoConnect(localSettings.apServer, localSettings.apSlot, localSettings.apPassword, slotData.game_name ?? 'Links Awakening DX');
+    }
 }
 
 function processHandshAckMessage(message) {
@@ -547,12 +558,8 @@ function refreshFromArchipelago(server, slot, password) {
         localSettings.apPassword = password;
 
         saveSettingsToStorage(args, localSettings);
-
-        let serverPieces = server.split(':');
-        let hostname = serverPieces[0];
-        let port = Number(serverPieces[1]);
         
-        archipelagoConnect(hostname, port, slot, password);
+        archipelagoConnect(server, slot, password);
     }
     catch(err) {
         console.log('Error connecting to Archipelago:', err);
