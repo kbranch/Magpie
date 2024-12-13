@@ -194,6 +194,7 @@ function processSlotDataMessage(message) {
         },
         'goal': {
             'instruments': null,
+            'specific': null,
         },
         'instrument_count': {
             'random': "8",
@@ -279,8 +280,9 @@ function processSlotDataMessage(message) {
     args['openmabe'] = args['openmabe'] === true;
 
     if ('gfxmod' in slotData) {
-        if (graphicsOptions.includes(slotData.gfxmod) || slotData.gfxmod == '') {
-            localSettings.graphicsPack = `/${slotData.gfxmod}`;
+        let gfxPack = slotData.gfxmod.split('.')[0];
+        if (graphicsOptions.includes(gfxPack) || gfxPack == '') {
+            localSettings.graphicsPack = `/${gfxPack}`;
         }
         else {
             console.log(`Invalid graphics pack: "${slotData.gfxmod}"`);
