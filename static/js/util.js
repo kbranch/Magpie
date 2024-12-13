@@ -417,7 +417,7 @@ function applySettings(oldArgs=null) {
     
     setCustomDungeonItemsArgs();
 
-    if (!graphicsOptions.includes(localSettings.graphicsPack)) {
+    if (!graphicsOptions.includes(localSettings.graphicsPack.replace('/', ''))) {
         localSettings.graphicsPack = '';
     }
 }
