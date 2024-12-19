@@ -269,7 +269,9 @@ function applySettings(oldArgs=null) {
 
     let reconnectAutotracker = oldFeatures.length != autotrackerFeatures.length 
                                || !oldFeatures.every((x) => autotrackerFeatures.includes(x))
-                               || (oldArgs && oldArgs.goal != args.goal);
+                               || (oldArgs
+                                   && [oldArgs.goal, args.goal].includes('seashells')
+                                   && args.goal != oldArgs.goal);
 
     if (reconnectAutotracker) {
         disconnectAutotracker();
