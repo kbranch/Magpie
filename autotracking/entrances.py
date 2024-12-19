@@ -171,4 +171,3 @@ def readEntrances(gb, state):
                 state.entrancesByName[sourceEntrance[0]].map(destEntrance)
         
         state.roomChanged = False
-

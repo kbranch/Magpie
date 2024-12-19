@@ -313,6 +313,8 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 'open': 'Egg open',
                                 'seashells': 'Seashell hunt (20)',
                                 'bingo': 'Bingo!',
+                                'bingo-double': 'Double Bingo!',
+                                'bingo-triple': 'Triple Bingo!',
                                 'bingo-full': 'Bingo-25!',
                             },
                         }),
