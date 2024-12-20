@@ -132,11 +132,11 @@ def getItems(args, trimDungeonItems=True):
                 for item_name in ("KEY", "NIGHTMARE_KEY"):
                     item_name = f"{item_name}{n}"
                     pool[item_name] = 0
-            if args.goal not in ('bingo', 'bingo-full'):
+            if 'bingo' not in args.goal:
                 for item_name in ("MAP", "COMPASS"):
                     item_name = f"{item_name}{n}"
                     pool[item_name] = 0
-            if args.owlstatues not in ('both', 'dungeon') and args.goal not in ('bingo', 'bingo-full'):
+            if args.owlstatues not in ('both', 'dungeon') and 'bingo' not in args.goal:
                 pool[f'STONE_BEAK{n}'] = 0
 
         pool[f'ITEM{n}'] = 0

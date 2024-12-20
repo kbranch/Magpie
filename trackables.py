@@ -324,7 +324,7 @@ def addStartingItems(inventory, args, settings):
                 inventory[item_name] = amount
     
     if (args.owlstatues not in ['both', 'dungeon']
-        and args.goal not in ['bingo', 'bingo-full']
+        and 'bingo' not in args.goal
         and ('enableAutotracking' not in settings
              or not settings['enableAutotracking'])):
         for i in range(9):

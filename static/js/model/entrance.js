@@ -181,7 +181,7 @@ class Entrance {
         else {
             options = randomizedEntrances.filter(x => (!requireSimple || entranceDict[x].type != 'connector')
                                                       && ((!requireSimple && args.shufflejunk) || entranceDict[x].type != 'dummy')
-                                                      && (['bingo', 'bingo-full'].includes(args.goal)
+                                                      && (args.goal.includes('bingo')
                                                           || args.shufflejunk
                                                           || entranceDict[x].type != 'bingo')
                                                       && (args.tradequest
