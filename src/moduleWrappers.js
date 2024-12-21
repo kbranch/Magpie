@@ -61,7 +61,7 @@ export let processMessage = window.processMessage;
 export let alertModal = window.alertModal;
 export let coordDict = window.coordDict;
 export let bootstrap = window.bootstrap;
-export let autotrackerConnected = window.autotrackerConnected;
+export let autotrackerIsConnected = window.autotrackerIsConnected;
 export let sendMessage = window.sendMessage;
 
 export function initGlobals(data) {

@@ -1,6 +1,6 @@
 import { itemMap, checkMap } from './tables';
 import { useStateStore } from '@/stores/stateStore';
-import { processMessage, alertModal, autotrackerConnected, setCheckContents } from '@/moduleWrappers';
+import { processMessage, alertModal, autotrackerIsConnected, setCheckContents } from '@/moduleWrappers';
 import { Client, itemsHandlingFlags, } from "/node_modules/archipelago.js/dist/index.js";
 
 let state;
@@ -84,7 +84,7 @@ function connected(slotData) {
 }
 
 function receivedItems(items, index) {
-    if (autotrackerConnected()) {
+    if (autotrackerIsConnected()) {
         return;
     }
 
@@ -135,7 +135,7 @@ function parseSlotData(slotData) {
 }
 
 function roomUpdate(checkedLocations) {
-    if (autotrackerConnected()) {
+    if (autotrackerIsConnected()) {
         return;
     }
 

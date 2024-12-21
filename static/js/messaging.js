@@ -331,8 +331,13 @@ function processHandshAckMessage(message) {
         addAutotrackerMessage('Consider updating');
     }
 
-    if (localSettings.autotrackSettings && remoteName == 'magpie-autotracker') {
-        setApLogic(false);
+    if (localSettings.autotrackSettings) {
+        if (remoteName == 'magpie-autotracker') {
+            setApLogic(false);
+        }
+        else if (remoteName == 'archipelago-ladx-client') {
+            setApLogic(true);
+        }
     }
 
     loadFromAutotracker();
