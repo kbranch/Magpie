@@ -180,9 +180,9 @@ function archipelagoConnect(server, slotName, password, gameName="Links Awakenin
         return;
     }
 
-    if (client.socket.connected) {
-        archipelagoDisconnect();
-    }
+    // if (client.socket.connected) {
+    //     archipelagoDisconnect();
+    // }
 
     connectionInProgress = true;
     client.login(

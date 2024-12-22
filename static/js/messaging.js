@@ -397,9 +397,9 @@ function processMessage(messageText) {
         message = JSON.parse(messageText);
         console.log(`Received a '${message.type}' message`);
 
-        if (!('source' in message) || message.source != 'archipelago') {
-            archipelagoDisconnect();
-        }
+        // if (!('source' in message) || message.source != 'archipelago') {
+        //     archipelagoDisconnect();
+        // }
     }
     catch(err) {
         console.log(`Invalid message JSON: ${err}`);
