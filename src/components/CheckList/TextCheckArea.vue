@@ -24,6 +24,7 @@ const activatedGroups = ref(new Set());
         <div class="card-body">
             <ul class="list-group list-group-flush px-2">
                 <div v-for="group in checks" :key="group.check.signature()" class="row">
+                    <hr v-if="group != checks[0]">
                     <div class="text-check-col col pe-0">
                         <li class="text-check" @click="toggleCheck($event, group.check.id)">
                             <div class="check-name">
@@ -92,6 +93,19 @@ const activatedGroups = ref(new Set());
 </template>
 
 <style scoped>
+.text-icon-item {
+    margin-left: -4px;
+    margin-right: 4px;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
 .text-check-col:hover {
     background-color: rgba(255, 255, 255, .1);
     border-radius: 3px;
@@ -103,10 +117,13 @@ const activatedGroups = ref(new Set());
 
 .text-check {
     cursor: pointer;
+    height: 100%
 }
 
 .check-name {
     display: flex;
+    align-items: center;
+    height: 100%
 }
 
 .text-check-graphic-wrapper {
@@ -115,11 +132,12 @@ const activatedGroups = ref(new Set());
     display: inline-block;
     margin: 0px;
     padding-right: 0px;
-    transform: translate(0%, 25%);
 }
 
 .check-text {
     padding-left: 8px;
+    display: flex;
+    align-items: center;
 }
 
 .text-check-graphic {
