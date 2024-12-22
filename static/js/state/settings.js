@@ -302,6 +302,7 @@ function getState(addAp=true) {
     state.settings = localSettings;
     state.args = args;
     state.checkedChecks = [...checkedChecks];
+    state.hints = [...hints];
     state.entranceMap = entranceMap;
     state.connections = connections;
     state.checkContents = checkContents;
