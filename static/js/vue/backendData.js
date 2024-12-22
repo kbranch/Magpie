@@ -65,75 +65,99 @@ function refreshCheckList() {
         return;
     }
 
-    let tempInventory = structuredClone(inventory);
+    rateLimit(() => {
+        console.log(`${Date.now()}: Refreshing check lists`);
 
-    // Kiki is logically important since they open the bridge
-    if (Check.isChecked('0x07B-Trade')) {
-        tempInventory['TRADING_ITEM_BANANAS'] = 1;
-    }
+        let tempInventory = structuredClone(inventory);
 
-    let bossList = getBossList();
-    let minibossMap = getMinibossMap();
-    let data = {
-        args: JSON.stringify(args),
-        inventory: JSON.stringify(tempInventory),
-        entranceMap: JSON.stringify(entranceMap),
-        bossList: JSON.stringify(bossList),
-        minibossMap: JSON.stringify(minibossMap),
-        localSettings: JSON.stringify(localSettings),
-    }
+        // Kiki is logically important since they open the bridge
+        if (Check.isChecked('0x07B-Trade')) {
+            tempInventory['TRADING_ITEM_BANANAS'] = 1;
+        }
 
-    $.ajax({
-        type: "POST",
-        url: rootPrefix + "/api/checkList",
-        data: data,
-        success: (response) => {
-            console.log("Received checkList response");
-            pruneEntranceMap();
+        let bossList = getBossList();
+        let minibossMap = getMinibossMap();
+        let data = {
+            args: JSON.stringify(args),
+            inventory: JSON.stringify(tempInventory),
+            entranceMap: JSON.stringify(entranceMap),
+            bossList: JSON.stringify(bossList),
+            minibossMap: JSON.stringify(minibossMap),
+            localSettings: JSON.stringify(localSettings),
+        }
 
-            randomizedEntrances = response.randomizedEntrances;
-            startLocations = response.startLocations;
-            entranceAccessibility = response.accessibility.entrances;
-            checksById = {};
-            allChecksById = {};
-            checkAccessibility = response.accessibility.checks.map(x => {
-                let check = new Check(x);
-                checksById[x.id] = check;
+        $.ajax({
+            type: "POST",
+            url: rootPrefix + "/api/checkList",
+            data: data,
+            success: (response) => {
+                console.log("Received checkList response");
+                pruneEntranceMap();
 
-                return check;
-            });
+                let newEntrances = false;
+                if (autotrackerIsConnected() && response.randomizedEntrances?.length) {
+                    newEntrances = true;
+                    if (randomizedEntrances) {
+                        newEntrances = false;
 
-            logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
-            logicGraph = response.accessibility.graph;
-            logicByCheck = {}
-
-            for (const loc in logicGraph) {
-                for (const check of logicGraph[loc].checks) {
-                    logicByCheck[check] = logicGraph[loc];
-                }
-
-                if ('entrances' in logicGraph[loc]) {
-                    for (const entrance of logicGraph[loc].entrances) {
-                        logicByEntrance[entrance] = logicGraph[loc];
+                        for (const entrance of response.randomizedEntrances) {
+                            if (!(randomizedEntrances.includes(entrance))) {
+                                newEntrances = true;
+                                break;
+                            }
+                        }
                     }
                 }
+
+                randomizedEntrances = response.randomizedEntrances;
+                startLocations = response.startLocations;
+                entranceAccessibility = response.accessibility.entrances;
+                checksById = {};
+                allChecksById = {};
+                checkAccessibility = response.accessibility.checks.map(x => {
+                    let check = new Check(x);
+                    checksById[x.id] = check;
+
+                    return check;
+                });
+
+                logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
+                logicGraph = response.accessibility.graph;
+                logicByCheck = {}
+
+                for (const loc in logicGraph) {
+                    for (const check of logicGraph[loc].checks) {
+                        logicByCheck[check] = logicGraph[loc];
+                    }
+
+                    if ('entrances' in logicGraph[loc]) {
+                        for (const entrance of logicGraph[loc].entrances) {
+                            logicByEntrance[entrance] = logicGraph[loc];
+                        }
+                    }
+                }
+
+                pruneEntranceMap();
+                fillVanillaLogEntrances();
+                updateEntrances();
+
+                broadcastMap();
+
+                if (newEntrances) {
+                    // We have at least one new entrance, ask the autotracker to resend entrances
+                    loadFromAutotracker();
+                }
+
+                setTimeout(drawActiveTab);
+                setTimeout(() => {
+                    vueApp.updateCheckAccessibility(checkAccessibility);
+                    vueApp.updateLogics(response.logics);
+                    vueApp.updateServerVersion(response.version, response.updateMessage);
+                    vueApp.updateSidebarMessage(response.sidebarMessage);
+                }, 20);
             }
-
-            pruneEntranceMap();
-            fillVanillaLogEntrances();
-            updateEntrances();
-
-            broadcastMap();
-
-            setTimeout(drawActiveTab);
-            setTimeout(() => {
-                vueApp.updateCheckAccessibility(checkAccessibility);
-                vueApp.updateLogics(response.logics);
-                vueApp.updateServerVersion(response.version, response.updateMessage);
-                vueApp.updateSidebarMessage(response.sidebarMessage);
-            }, 20);
-        }
-    });
+        });
+    }, 500);
 }
 
 function loadShortString(saveOnLoad=false) {

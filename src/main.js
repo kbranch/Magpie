@@ -35,6 +35,8 @@ let app = createApp(App);
 app.use(pinia);
 app.use(router);
 window.vueApp = app.mount('#app');
+window.rateLimit = rateLimit;
+window.debounce = debounce;
 app.config.globalProperties.window = window;
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");

@@ -72,6 +72,8 @@ function processHint(hint) {
 }
 
 function connected(slotData) {
+    connectionInProgress = false;
+
     console.log("Connected to AP server: ", slotData);
 
     try {
@@ -172,7 +174,17 @@ function parseCheckedChecks(apCheckIds, diff) {
     processMessage(JSON.stringify(message));
 }
 
+let connectionInProgress = false;
 function archipelagoConnect(server, slotName, password, gameName="Links Awakening DX") {
+    if (connectionInProgress) {
+        return;
+    }
+
+    if (client.socket.connected) {
+        archipelagoDisconnect();
+    }
+
+    connectionInProgress = true;
     client.login(
         server,
         slotName,
@@ -185,15 +197,11 @@ function archipelagoConnect(server, slotName, password, gameName="Links Awakenin
     )
     .then(connected)
     .catch((err) => {
-            console.error("Failed to connect to AP:", err);
-            alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
+        console.error("Failed to connect to AP:", err);
+        alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
     });
 }
 
 function archipelagoDisconnect() {
-    // if (client.status == "Connected") {
-    //     addAutotrackerMessage("Disconnecting from Archipelago");
-    // }
-
-    // client.disconnect();
+    client.socket.disconnect();
 }
