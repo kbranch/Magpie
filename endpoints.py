@@ -641,7 +641,7 @@ if sharingEnabled:
 @app.route("/event")
 @app.route("/player/<string:fullPath>")
 @app.route("/route/<path:filename>")
-def vueRoot(fullPath):
+def vueRoot(fullPath=None):
     return send_from_directory("vue-dist", "index.html")
 
 @app.route('/assets/<path:filename>')
