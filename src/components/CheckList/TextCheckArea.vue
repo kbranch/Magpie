@@ -47,7 +47,7 @@ const activatedGroups = ref(new Set());
                                     </div>
                                 </div>
                                 <div class="check-text" onmousedown="preventDoubleClick(event)">
-                                    <img v-if="group.check.item" class="text-icon-item" :src="`static/images/${group.check.item}_1.png`">
+                                    <img v-if="group.check.item" class="text-icon-item" :src="`/images/${group.check.item}_1.png`">
                                     {{ group.check.metadata.name }}
                                 </div>
                             </div>

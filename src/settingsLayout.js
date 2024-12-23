@@ -669,7 +669,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                                         <svg class="icon static-difficulty hollow">
                                                             <use xlink:href="#difficulty-0-hollow"></use>
                                                         </svg>
-                                                        <img src="static/images/MAGIC_POWDER_1.png" class="node-item-overlay" data-node-item="MAGIC_POWDER" onmousedown="preventDoubleClick(event)">
+                                                        <img src="/images/MAGIC_POWDER_1.png" class="node-item-overlay" data-node-item="MAGIC_POWDER" onmousedown="preventDoubleClick(event)">
                                                     </div>
                                                 </div>
                                             </div>

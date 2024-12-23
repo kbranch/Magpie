@@ -341,9 +341,9 @@ function applySettings(oldArgs=null) {
     }
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
-        let mapPath = localSettings.colorAssistMaps ? `static/images/colorAssist/${mapName}.png` : `static/images/${mapName}.png`;
+        let mapPath = localSettings.colorAssistMaps ? `/images/colorAssist/${mapName}.png` : `/images/${mapName}.png`;
         if (args.overworld == 'alttp' && mapName == 'overworld') {
-            mapPath =  'static/images/alttp-overworld.png';
+            mapPath =  '/images/alttp-overworld.png';
         }
 
         $(`img[data-mapname=${mapName}]`).attr('src', mapPath);

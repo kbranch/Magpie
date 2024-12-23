@@ -31,7 +31,7 @@ function setImgSrc(img, item, player='') {
         }
 
         let gfx = applyGfx ? localSettings.graphicsPack : '';
-        $(img).attr('src', `static/images${gfx}/${item}_${Math.min(number, max)}.png`);
+        $(img).attr('src', `/images${gfx}/${item}_${Math.min(number, max)}.png`);
     }
 
     let element = img.length == 1 ? img[0] : img;
@@ -182,16 +182,16 @@ function jumpSrc(player) {
     let rooster = inv['ROOSTER'] > 0;
 
     if (!feather && !rooster) {
-        return `static/images${localSettings.graphicsPack}/NO_JUMP.png`;
+        return `/images${localSettings.graphicsPack}/NO_JUMP.png`;
     }
     if (!feather && rooster) {
-        return `static/images${localSettings.graphicsPack}/ROOSTER.png`;
+        return `/images${localSettings.graphicsPack}/ROOSTER.png`;
     }
     if (feather && !rooster) {
-        return `static/images${localSettings.graphicsPack}/FEATHER.png`;
+        return `/images${localSettings.graphicsPack}/FEATHER.png`;
     }
 
-    return `static/images${localSettings.graphicsPack}/BOTH_JUMP.png`;
+    return `/images${localSettings.graphicsPack}/BOTH_JUMP.png`;
 }
 
 function tunicSrc(player)
@@ -203,18 +203,18 @@ function tunicSrc(player)
 
     if (!blue && !red)
     {
-        return `static/images${gfx}/GREEN_TUNIC.png`;
+        return `/images${gfx}/GREEN_TUNIC.png`;
     }
     if (blue && !red)
     {
-        return `static/images${gfx}/BLUE_TUNIC.png`;
+        return `/images${gfx}/BLUE_TUNIC.png`;
     }
     if (!blue && red)
     {
-        return `static/images${gfx}/RED_TUNIC.png`;
+        return `/images${gfx}/RED_TUNIC.png`;
     }
     
-    return `static/images${gfx}/BLUERED_TUNIC.png`;
+    return `/images${gfx}/BLUERED_TUNIC.png`;
 }
 
 function calculateDungeonChecks() {

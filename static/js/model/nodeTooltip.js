@@ -27,8 +27,8 @@ class NodeTooltip {
         </div>
     </div>
 </li>`;
-        const helperTemplate = `<img class='helper' src='static/images/light-question-circle.svg'>`;
-        const helperTooltipTemplate = ` data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='<img src="static/images/checks/{id}.png">'`;
+        const helperTemplate = `<img class='helper' src='/images/light-question-circle.svg'>`;
+        const helperTooltipTemplate = ` data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='<img src="/images/checks/{id}.png">'`;
 
         let uniqueIds = this.node.uniqueCheckIds();
         let areaHtml = '';
@@ -101,7 +101,7 @@ class NodeTooltip {
 
         return `<div class="btn-group dropend">
         <button type="button" class="btn tooltip-item text-start p-0" onclick="${action}"${helperTooltipAttrs}>${title}</button>
-        <div class="col-auto"><button type="button" class="btn btn-secondary p-1 logic-button" onclick="openCheckLogicViewer('${checkId}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="static/images/diagram-2-fill.svg"></button></div>
+        <div class="col-auto"><button type="button" class="btn btn-secondary p-1 logic-button" onclick="openCheckLogicViewer('${checkId}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="/images/diagram-2-fill.svg"></button></div>
         <button type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false" data-parent-node-id="${this.node.id()}"${onmouseover}></button>
         <ul class="dropdown-menu">
             ${items}
@@ -132,7 +132,7 @@ class NodeTooltip {
             let bossTemplate = `<li>
                                     <button class="dropdown-item tooltip-item boss-item" type="button" onclick="{action}">
                                         <div class="boss-menu-image-wrapper me-2">
-                                            <img class="boss-menu-image" src="static/images/{bossId}.png">
+                                            <img class="boss-menu-image" src="/images/{bossId}.png">
                                         </div>
                                         {name}
                                     </button>
@@ -159,14 +159,14 @@ class NodeTooltip {
 
     getEntranceHtml(connectionType) {
         const interiorImageTemplate = `<div>
-            <img src="static/images/entrances/{image}.png">
+            <img src="/images/entrances/{image}.png">
         </div>`
         const entranceTemplate = `<div class='text-start tooltip-item d-flex p-1 mb-0 align-items-center' data-entrance-id='{entrance-id}' oncontextmenu='return false;'>
         {graphic}
         <div class='tooltip-text align-middle ps-2'>
             {name}
         </div>
-        <button type="button" class="btn btn-secondary p-1 logic-button" onclick="openEntranceLogicViewer('${this.node?.entrance?.id}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="static/images/diagram-2-fill.svg"></button>
+        <button type="button" class="btn btn-secondary p-1 logic-button" onclick="openEntranceLogicViewer('${this.node?.entrance?.id}')" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='View Logic'><img class="invert" src="/images/diagram-2-fill.svg"></button>
     </div>`;
         const connectionTemplate = `<li class="list-group-item text-start tooltip-item">
     <div class='tooltip-text text-start align-middle'>
@@ -272,7 +272,7 @@ class NodeTooltip {
             if (coupledEntrances() && inOutEntrances()) {
                 if (entrance.type == "connector" || args.entranceshuffle == 'mixed') {
                     if (!entrance.isMapped() || entrance.isIncompleteConnection()) {
-                        let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="static/images/light-question-circle.svg">';
+                        let text = 'Connect to via connector... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can access at least two entrances of a connector" src="/images/light-question-circle.svg">';
                         pinnedHtml += menuItemTemplate.replace('{action}', action.replace('{type}', 'connector'))
                                                     .replace('{text}', text)
                                                     .replace('{classes}', '')
@@ -280,7 +280,7 @@ class NodeTooltip {
                     }
 
                     if (!entrance.isMapped()) {
-                        let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="static/images/light-question-circle.svg">';
+                        let text = 'Connect one connector end... <img class="helper" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="Used when you can only access one entrance of a connector" src="/images/light-question-circle.svg">';
                         pinnedHtml += menuItemTemplate.replace('{action}', `openDeadEndDialog('${entrance.id}')`)
                                                     .replace('{text}', text)
                                                     .replace('{classes}', '')
@@ -354,8 +354,8 @@ class NodeTooltip {
     }
 
     static createEntranceDropdown(title, sourceId, action, options) {
-        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='static/images/light-question-circle.svg'>`;
-        const helperTitleTemplate = `<img src="static/images/entrances/{id}.png">`;
+        const helperTemplate = `<img class='helper' data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='{title}' src='/images/light-question-circle.svg'>`;
+        const helperTitleTemplate = `<img src="/images/entrances/{id}.png">`;
         let itemTemplate = `<li><button class="dropdown-item tooltip-item" type="button" data-value="{value}" onclick="{action}">{name}</button></li>`;
         let items = '';
 
@@ -546,7 +546,7 @@ class NodeTooltip {
             ['MESSAGE', "Master Stalfos' Message"]
         ];
 
-        let imageTemplate = `<img class="check-item-image" src="static/images/{item}_1.png">`;
+        let imageTemplate = `<img class="check-item-image" src="/images/{item}_1.png">`;
         let itemTemplate = `<li><button class="dropdown-item tooltip-item plando-item" type="button" data-item="{item}" onclick="setCheckContents('${checkId}', '{item}');"><div class="check-item-image-wrapper me-2">{image}</div>{name}</button></li>`;
         let spoilerTemplate = `<li><button class="dropdown-item tooltip-item plando-item" type="button" data-item="" onclick="spoilLocation('${checkId}');"><div class="check-item-image-wrapper me-2">{image}</div>{name}</button></li>`
 

@@ -17,5 +17,5 @@ export default defineConfig({
     outDir: 'vue-dist',
     emptyOutDir: true,
   },
-  publicDir: "static",
+  publicDir: 'static',
 })

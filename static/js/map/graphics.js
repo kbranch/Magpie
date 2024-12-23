@@ -115,7 +115,7 @@ function drawLocation() {
         $(mapContainer).find('div.map-wrapper').append(linkFace);
     }
 
-    linkFace.attr('src', `static/images${localSettings.graphicsPack}/linkface.png`);
+    linkFace.attr('src', `/images${localSettings.graphicsPack}/linkface.png`);
 
     linkFace.css({
                 'top': Math.round(roomY * scaling.y + scaling.offset.y),

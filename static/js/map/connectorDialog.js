@@ -147,7 +147,7 @@ function fillConnectorGrid(connectors) {
 `
     const imageTemplate = `
 <div class="col-auto">
-    <img src="static/images/{entranceImage}.png">
+    <img src="/images/{entranceImage}.png">
 </div>
     `
 
@@ -196,7 +196,7 @@ function setModalPage(pageNo) {
 function connectorDetail(connectorId) {
     const imageTemplate = `
 <div class="col-auto connector-item p-3 m-1 {hidden}" onclick="toggleConnectorItem('{type}', '{id}')" data-type="{type}" data-id="{id}">
-    <img class="" src="static/images/{image}.png">
+    <img class="" src="/images/{image}.png">
 </div>`
 
     let isDeadEnd = $('#connectorModal').attr('data-destination') == 'deadEnd';

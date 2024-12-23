@@ -144,7 +144,7 @@ function openLogicViewer(nodeId, open=true) {
         </div>
     </div>
     </td>
-    <td>${getLogicNodeName(otherEnd)}${connection.badWay ? ' <img class="logic-item invert" src="static/images/do-not-enter.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">' : ''}</td>
+    <td>${getLogicNodeName(otherEnd)}${connection.badWay ? ' <img class="logic-item invert" src="/images/do-not-enter.svg" data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">' : ''}</td>
     <td>${iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)}</td>
     <td>${connection.met ? "<img class='connection-met logic-accessibility' src='/images/check2-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>" : "<img class='connection-unmet logic-accessibility' src='/images/x-circle.svg' data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>"}</td>
     <td><button type="button" class="btn btn-secondary py-0" onclick="logicStack.push(\`${nodeId}\`); openLogicViewer(\`${otherEnd}\`, false);">View</button></td>

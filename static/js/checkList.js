@@ -199,7 +199,7 @@ function createTextCheck(check) {
     </div>
 </div>
 </div>
-${check.item ? `<img src="static/images/${check.item}_1.png" class="text-icon-item"></img>` : ''}
+${check.item ? `<img src="/images/${check.item}_1.png" class="text-icon-item"></img>` : ''}
 `;
 
     return parseHtml(

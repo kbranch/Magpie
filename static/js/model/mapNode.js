@@ -596,7 +596,7 @@ class MapNode {
 
         if (this.boss) {
             let itemOverlay = createElement('img', {
-                src: `static/images/${this.boss.mappedTo}.png`,
+                src: `/images/${this.boss.mappedTo}.png`,
                 class: "node-boss-overlay",
                 onmousedown: "preventDoubleClick(event)"
             });
@@ -606,7 +606,7 @@ class MapNode {
 
         if (this.logicHint) {
             let itemOverlay = createElement('img', {
-                src: `static/images/${this.logicHint.metadata.image}`,
+                src: `/images/${this.logicHint.metadata.image}`,
                 class: "node-logic-hint-overlay",
                 style: `transform: scale(${this.scaling.x}) translate(-50%, -50%) translate(${this.logicHint.locations[0].offsetX}px, ${this.logicHint.locations[0].offsetY}px); transform-origin: top left;`,
                 onmousedown: "preventDoubleClick(event)"
@@ -617,7 +617,7 @@ class MapNode {
 
         if (this.item) {
             let itemOverlay = createElement('img', {
-                src: `static/images/${this.item}_1.png`,
+                src: `/images/${this.item}_1.png`,
                 class: "node-item-overlay",
                 'data-node-item': this.item,
                 onmousedown: "preventDoubleClick(event)"

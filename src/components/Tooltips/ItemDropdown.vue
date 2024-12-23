@@ -153,7 +153,7 @@ const itemList = [
         <li v-for="item in itemList" :key="item[0]">
             <button class="dropdown-item tooltip-item plando-item" type="button" :data-item="item[0]" @click="setCheckContents(checkId, item[0])">
                 <div class="check-item-image-wrapper me-2">
-                    <img class="check-item-image" :src="`static/images/${item[0]}_1.png`">
+                    <img class="check-item-image" :src="`/images/${item[0]}_1.png`">
                 </div>
                 {{ item[1] }}
             </button>
