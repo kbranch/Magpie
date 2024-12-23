@@ -61,9 +61,7 @@ async function getEventInfo() {
     }
 
     try {
-        let response = await fetch(`${sharingUrlApiPrefix.value}/api/eventInfo?${new URLSearchParams({ eventName: eventName.value })}`, {
-            method: 'GET',
-        });
+        let response = await fetch(`${sharingUrlApiPrefix.value}/api/eventInfo?${new URLSearchParams({ eventName: eventName.value })}`);
         if (!(response?.ok)) {
             eventError.value = await response.text();
             console.log(`Error getting event info: ${eventError.value}`);

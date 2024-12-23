@@ -458,6 +458,11 @@ function setLocalStorage(key, value) {
     }
 
     let prefix = settingsPrefix ?? '';
+
+    if (key in prefixOverrides) {
+        prefix = prefixOverrides[key];
+    }
+
     localStorage.setItem(prefix + key, value);
 
     debounce(uploadLocalStorage, 100);
@@ -481,6 +486,11 @@ function getLocalStorage(key) {
     }
 
     let prefix = settingsPrefix ?? '';
+
+    if (key in prefixOverrides) {
+        prefix = prefixOverrides[key];
+    }
+
     return localStorage.getItem(prefix + key);
 }
 

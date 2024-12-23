@@ -25,10 +25,6 @@ const props = defineProps(['eventName', 'viewCode']);
 
 document.title = 'Magpie Tracker - Event Restream';
 
-onBeforeMount(() => {
-    window.settingsPrefix = 'mapBroadcast_';
-});
-
 onMounted(() => {
   let params = new URLSearchParams();
 
@@ -57,6 +53,7 @@ onMounted(() => {
       data.refreshMap = false;
       data.allowItems = true;
       data.keepQueryArgs = true;
+      data.settingsPrefix = 'mapBroadcast_';
 
       players.value = data.players;
       eventStore.eventName = data.eventName;

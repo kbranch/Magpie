@@ -6,6 +6,7 @@ import MapBroadcast from './views/MapBroadcast.vue';
 import ItemsBroadcast from './views/ItemsBroadcast.vue';
 import MainTracker from './views/MainTracker.vue';
 import EventRestream from './views/EventRestream.vue';
+import PlayerShare from './views/PlayerShare.vue';
 
 function addCssLink(href, id='') {
   var link = document.createElement("link");
@@ -22,6 +23,7 @@ const routes = [
   { path: '/mapBroadcast', component: MapBroadcast },
   { path: '/itemsBroadcast', component: ItemsBroadcast },
   { path: '/event', component: EventRestream, props: route => ({ eventName: route.query.eventName, viewCode: route.query.viewCode }) },
+  { path: '/player/:playerName', component: PlayerShare },
 ];
 
 const router = createRouter({

@@ -142,7 +142,6 @@ function refreshImages() {
         }
     }
 
-    sharingLiveUpdate();
     refreshItemNdi();
 }
 

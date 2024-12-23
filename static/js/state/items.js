@@ -16,6 +16,8 @@ function resetInventory() {
 function saveInventory() {
     setLocalStorage("inventory", JSON.stringify(inventory));
 
+    rateLimit(sharingLiveUpdate, 1000);
+
     if (typeof broadcastItems === 'function') {
         broadcastItems();
     }
@@ -73,7 +75,6 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
         updateOverlay(item);
         saveInventory();
 
-        sharingLiveUpdate();
         refreshItemNdi();
 
         if (item.startsWith('UNUSED_KEY') && inventory[item] == 0) {

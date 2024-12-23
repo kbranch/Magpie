@@ -628,11 +628,6 @@ if sharingEnabled:
         except:
             return renderTraceback()
 
-    @app.route("/player")
-    def player():
-
-        return "OK"
-
     def validateJson(json, keys):
         for key in keys:
             if not tryGetValue(json, key):
@@ -644,8 +639,9 @@ if sharingEnabled:
 @app.route("/mapBroadcast")
 @app.route("/itemsBroadcast")
 @app.route("/event")
+@app.route("/player/<string:fullPath>")
 @app.route("/route/<path:filename>")
-def vueRoot():
+def vueRoot(fullPath):
     return send_from_directory("vue-dist", "index.html")
 
 @app.route('/assets/<path:filename>')

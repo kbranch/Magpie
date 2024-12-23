@@ -167,7 +167,7 @@ def getState(player, timestamp, delaySeconds=0):
 
     cursor.execute(query, {
         'player': player,
-        'timestamp': timestamp,
+        'timestamp': timestamp or 0,
         'delaySeconds': delaySeconds,
     })
 

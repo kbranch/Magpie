@@ -227,6 +227,10 @@ function requestUpdate() {
 }
 
 function broadcastInit() {
+    if (broadcastMode == 'none') {
+        return;
+    }
+
     if (local) {
         connectToBroadcaster();
         setInterval(connectToBroadcaster, 3 * 1000);

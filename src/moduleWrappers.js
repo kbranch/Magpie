@@ -63,6 +63,8 @@ export let coordDict = window.coordDict;
 export let bootstrap = window.bootstrap;
 export let autotrackerIsConnected = window.autotrackerIsConnected;
 export let sendMessage = window.sendMessage;
+export let prefixOverrides = window.prefixOverrides;
+export let hydrateConnections = window.hydrateConnections;
 
 export function initGlobals(data) {
     window.defaultArgs = data.args;

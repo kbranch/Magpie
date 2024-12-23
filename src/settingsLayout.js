@@ -64,7 +64,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
         new SettingsItem({
             type: types.column,
             includeCol: false,
-            visibleCondition: () => { return window.broadcastMode == 'send' },
+            visibleCondition: () => { return ['send', 'none'].includes(window.broadcastMode) },
             children: [
                 new SettingsItem({
                     header: 'Randomizer Flags',
@@ -94,7 +94,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
         new SettingsItem({
             type: types.column,
             includeCol: false,
-            visibleCondition: () => { return window.broadcastMode == 'send' },
+            visibleCondition: () => { return ['send', 'none'].includes(window.broadcastMode) },
             children: [
                 new SettingsItem({
                     type: types.column,

@@ -4,6 +4,8 @@ function saveSettingsToStorage(args, localSettings) {
     if (argsAreValid(args)) {
         setLocalStorage('args', JSON.stringify(args));
 
+        rateLimit(sharingLiveUpdate, 1000);
+
         vueApp.updateArgs(args);
     }
 
@@ -344,7 +346,7 @@ function exportState(filename, addTime, addAp) {
     download(filename, JSON.stringify(state));
 }
 
-function importState(data) {
+function importState(data, includeLocalSettings=true, reload=true) {
     let errorMessage = "The selected file does not appear to be a valid Magpie state file";
 
     try {
@@ -356,13 +358,21 @@ function importState(data) {
                 inventory = state.inventory;
                 checkedChecks = state.checkedChecks;
                 entranceMap = state.entranceMap;
-                connections = state.connections;
+                connections = hydrateConnections(state.connections);
                 checkContents = state.checkContents;
+                args = state.args;
+                hints = state.hints;
+
+                if (includeLocalSettings) {
+                    localSettings = state.localSettings;
+                }
+
                 updateState();
                 saveCheckContents();
                 saveLocations();
                 saveInventory();
-                saveSettingsToStorage(state.args, state.settings);
+                saveHints();
+                saveSettingsToStorage(state.args, includeLocalSettings ? state.settings : null);
 
                 if ('undos' in state) {
                     setLocalStorage('importedUndos', JSON.stringify(state.undos));
@@ -374,7 +384,18 @@ function importState(data) {
 
                 uploadLocalStorage();
 
-                location.reload();
+                if (reload) {
+                    location.reload();
+                }
+                else {
+                    vueApp.updateArgs(args);
+                    vueApp.updateSettings(localSettings);
+                    vueApp.updateCheckContents(checkContents);
+                    vueApp.updateChecked(checkedChecks);
+                    vueApp.updateHints(hints);
+                    refreshImages();
+                    refreshCheckList();
+                }
         }
         else {
             alert(errorMessage);

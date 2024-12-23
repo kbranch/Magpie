@@ -4,6 +4,8 @@ function saveCheckContents() {
     setLocalStorage('checkContents', JSON.stringify(checkContents));
     updateItemLocations();
 
+    rateLimit(sharingLiveUpdate, 1000);
+
     vueApp.updateCheckContents(checkContents);
 }
 

@@ -5,6 +5,8 @@ function saveChecked() {
 
     vueApp.updateChecked(checkedChecks);
 
+    rateLimit(sharingLiveUpdate, 1000);
+
     if (typeof broadcastMap === 'function') {
         broadcastMap();
     }
@@ -14,6 +16,8 @@ function saveEntrances() {
     setLocalStorage('entranceMap', JSON.stringify(entranceMap));
     setLocalStorage('connections', JSON.stringify(connections));
 
+    rateLimit(sharingLiveUpdate, 1000);
+
     if (typeof broadcastMap === 'function') {
         broadcastMap();
     }
@@ -21,6 +25,8 @@ function saveEntrances() {
 
 function saveHints() {
     setLocalStorage('hints', JSON.stringify([...hints]));
+
+    rateLimit(sharingLiveUpdate, 1000);
 
     vueApp.updateHints(hints);
 }
@@ -73,17 +79,8 @@ function loadEntrances() {
 
         if (raw) {
             let dehydratedConnections = JSON.parse(raw);
-            for (const conn of dehydratedConnections) {
-                if (updateInsideEntrances) {
-                    for (const entrance of [...conn.entrances]) {
-                        conn.entrances.push(entranceMap[entrance]);
-                    }
-                }
-
-                connections.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
-            }
+            connections = hydrateConnections(dehydratedConnections);
         }
-
     }
     catch (err) {
         errors.push(err);
@@ -96,6 +93,22 @@ function loadEntrances() {
     updateInsideEntrances = false;
 
     return errors;
+}
+
+function hydrateConnections(dehydratedConnections) {
+    let hydrated = [];
+
+    for (const conn of dehydratedConnections) {
+        if (updateInsideEntrances) {
+            for (const entrance of [...conn.entrances]) {
+                conn.entrances.push(entranceMap[entrance]);
+            }
+        }
+
+        hydrated.push(new Connection(conn.entrances, null, conn.label, conn.vanilla, conn.map));
+    }
+
+    return hydrated;
 }
 
 function loadChecked() {

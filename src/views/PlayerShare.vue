@@ -5,55 +5,96 @@ import QuickSettings from '@/components/Settings/QuickSettings.vue'
 import MainMap from '@/components/Map/MainMap.vue'
 import SettingsPane from '@/components/Settings/SettingsPane.vue';
 import CheckList from '@/components/CheckList/CheckList.vue';
-import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import VersionAlert from '@/components/VersionAlert.vue';
 import SidebarAlert from '@/components/SidebarAlert.vue';
 import HintPanel from '@/components/HintPanel.vue';
 import FooterRow from '@/components/FooterRow.vue';
 import AlertModal from '@/components/AlertModal.vue';
-import { initGlobals, init } from '@/moduleWrappers.js';
+import { initGlobals, init, prefixOverrides, importState } from '@/moduleWrappers.js';
 import { computed, onMounted, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
-import { archipelagoInit } from '@/archipelago/client';
+import { useRoute } from 'vue-router';
 
+document.title = 'Magpie Tracker - Player Share';
+
+const route = useRoute();
 const state = useStateStore();
 const tip = useTextTooltipStore();
 
+let refreshInterval = null;
+
 const hostname = ref(null);
 const version = ref(null);
-const broadMode = ref('send');
+const broadMode = ref('none');
 const graphicsOptions = ref([]);
 const argDescriptions = ref({});
+const lastTimestamp = ref(null);
+const delaySeconds = ref(0);
 
 const itemsPaddingLeft = computed(() => state.settings.swapItemsAndMap ? '12px' : '0');
 const itemsPaddingRight = computed(() => state.settings.swapItemsAndMap ? '0' : '12px');
 
 onMounted(() => {
-  fetch(import.meta.env.VITE_API_URL + '/api/init')
-    .then(response => response.json())
-    .then(data => {
-      state.isLocal = data.local;
-      state.ndiEnabled = Boolean(data.ndiEnabled);
-      hostname.value = data.hostname;
-      version.value = data.version;
-      state.remoteVersion = data.remoteVersion;
-      graphicsOptions.value = data.graphicsOptions;
-      argDescriptions.value = data.flags;
+    fetch(import.meta.env.VITE_API_URL + '/api/init')
+        .then(response => response.json())
+        .then(data => {
+            state.isLocal = data.local;
+            state.ndiEnabled = Boolean(data.ndiEnabled);
+            hostname.value = data.hostname;
+            version.value = data.version;
+            state.remoteVersion = data.remoteVersion;
+            graphicsOptions.value = data.graphicsOptions;
+            argDescriptions.value = data.flags;
 
-      graphicsOptions.value.sort();
+            graphicsOptions.value.sort();
 
-      initGlobals(data);
-      init();
-      archipelagoInit();
-    });
+            data.broadcastMode = 'none';
+            data.settingsPrefix = 'playerShare_'
+            data.allowAutotracking = false;
+
+            prefixOverrides['settings'] = '';
+
+            initGlobals(data);
+            init();
+
+            getPlayerState();
+            refreshInterval = setInterval(getPlayerState, 1000);
+        });
 });
+
+function getPlayerState() {
+    let players = {};
+    players[route.params.playerName] = {
+        'timestamp': lastTimestamp.value,
+        'delaySeconds': delaySeconds.value,
+    }
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/playerState?${new URLSearchParams({players: JSON.stringify(players)})}`)
+        .then(response => response.json())
+        .then(data => {
+            let player = data[route.params.playerName];
+            if (player) {
+                lastTimestamp.value = player.timestamp;
+                importState(player.state, false, false)
+            }
+        });
+}
 
 </script>
 
 <template>
+
+<template v-if="false">
+</template>
+
+<template v-else>
 <DifficultyIcons />
+
+<div id="banner">
+    <span id="bannerText">Viewing player {{ route.params.playerName }}</span>
+</div>
 
 <div id="unstackedContainer" class="row" data-player="">
   <div id="unstackedMap" class="col-xs-12 col-md map-slot map-chunk">
@@ -63,7 +104,7 @@ onMounted(() => {
   </div>
   <div id="unstackedItems" class="col-xs col-md-auto quicksettings-container item-chunk">
     <div class="navbar-slot">
-      <NavBar :is-local="state.isLocal" :version="version" :remote-version="state.remoteVersion" />
+      <NavBar :is-local="state.isLocal" :version="version" :remote-version="state.remoteVersion" :show-share="false" />
     </div>
     <div class="items-slot">
       <div id="itemContainer" class="pb-2"></div>
@@ -77,9 +118,6 @@ onMounted(() => {
         </div>
       </div>
       <div class="col"></div>
-      <div class="col-auto pe-0">
-        <OpenBroadcastView type="items" />
-      </div>
     </div>
     <VersionAlert :client-version="version" :remote-version="state.remoteVersion" :update-message="state.updateMessage" />
     <SidebarAlert :message="state.sidebarMessage" />
@@ -87,7 +125,7 @@ onMounted(() => {
       <HintPanel />
     </div>
     <div class="quicksettings-container quicksettings-slot">
-      <QuickSettings />
+      <QuickSettings :small-quicksettings="true" />
     </div>
   </div>
 </div>
@@ -105,7 +143,6 @@ onMounted(() => {
     <div class="col-xs col-md-auto items-slot px-0">
     </div>
     <div class="col-auto mt-2">
-      <OpenBroadcastView type="items" />
       <div id="stackedHideHintsButton">
           <img :src="`/images/chevron-${state.settings.showHintPanel ? 'up' : 'down'}.svg`" class="invert close-button"
               @mouseenter="tip.tooltip(state.settings.showHintPanel ? 'Hide hints' : 'Show hints', $event)"
@@ -148,39 +185,25 @@ onMounted(() => {
   <input class="form-check-input hidden" type="checkbox" checked id="lightSwitch" />
 </div>
 
-<div class="modal fade" id="archipelagoModal" tabindex="-1" aria-labelledby="archipelagoModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-m">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h6 class="modal-title" id="archipelagoModalLabel">Refresh from Archipelago</h6>
-        <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label for="apHostname" class="form-label">Server</label>
-          <input type="text" class="form-control" id="apHostname">
-        </div>
-        <div class="mb-3">
-          <label for="apSlotName" class="form-label">Slot name</label>
-          <input type="text" class="form-control" id="apSlotName">
-        </div>
-        <div class="mb-3">
-          <label for="apPassword" class="form-label">Password</label>
-          <input type="password" class="form-control" id="apPassword">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button id="connectToApButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal"
-          onclick="refreshFromArchipelago(document.getElementById('apHostname').value, document.getElementById('apSlotName').value, document.getElementById('apPassword').value)">Connect</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+</template>
 </template>
 
 <style scoped>
+#banner {
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.05);
+    margin-top: 6px;
+    /* border-bottom: 2px;
+    border-bottom-style: solid;
+    border-color: rgba(255, 255, 255, 0.25); */
+}
+
+#bannerText {
+    font-size: 30px;
+}
+
 #hideButton {
     align-content: center;
     cursor: pointer;

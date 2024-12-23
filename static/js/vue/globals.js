@@ -69,6 +69,7 @@ var logicByCheck = {};
 var logicByEntrance = {};
 var broadcastMode;
 var rootPrefix = "";
+var prefixOverrides = {};
 
 const renamedItems = {
     "KEY9": "KEY0",
