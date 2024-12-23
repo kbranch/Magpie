@@ -140,13 +140,24 @@ function checkGraphicRightClick(event) {
 
 function connectorMouseMove(event) {
     let mouseTracker = $('#mouseTracker');
+    let offsetX;
+    let offsetY;
+
+    try {
+        let appInnerRect = document.getElementById('appInner')?.getClientRects()[0];
+        offsetX = appInnerRect?.left;
+        offsetY = appInnerRect?.top;
+    }
+    catch(e) {
+        console.log(`Error getting offset coords: ${e}`)
+    }
 
     if (mouseTracker.length == 0) {
         mouseTracker = $('<div>', {
             id: 'mouseTracker',
             css: {
-                left: event.pageX,
-                top: event.pageY,
+                left: event.pageX - offsetX,
+                top: event.pageY - offsetY,
                 position: 'absolute',
                 'pointer-events': 'none',
                 width: 1,
@@ -162,8 +173,8 @@ function connectorMouseMove(event) {
     }
 
     $(mouseTracker).css({
-        left: event.pageX,
-        top: event.pageY,
+        left: event.pageX - offsetX,
+        top: event.pageY - offsetY,
     });
 
     $(mouseTracker).connections('update');

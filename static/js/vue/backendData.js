@@ -66,8 +66,6 @@ function refreshCheckList() {
     }
 
     rateLimit(() => {
-        console.log(`${Date.now()}: Refreshing check lists`);
-
         let tempInventory = structuredClone(inventory);
 
         // Kiki is logically important since they open the bridge
