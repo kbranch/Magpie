@@ -12,7 +12,7 @@ import HintPanel from '@/components/HintPanel.vue';
 import FooterRow from '@/components/FooterRow.vue';
 import AlertModal from '@/components/AlertModal.vue';
 import { initGlobals, init, prefixOverrides, importState } from '@/moduleWrappers.js';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useRoute } from 'vue-router';
@@ -32,6 +32,7 @@ const graphicsOptions = ref([]);
 const argDescriptions = ref({});
 const lastTimestamp = ref(null);
 const delaySeconds = ref(0);
+const liveUpdate = ref(false);
 
 const itemsPaddingLeft = computed(() => state.settings.swapItemsAndMap ? '12px' : '0');
 const itemsPaddingRight = computed(() => state.settings.swapItemsAndMap ? '0' : '12px');
@@ -60,9 +61,17 @@ onMounted(() => {
             init();
 
             getPlayerState();
-            refreshInterval = setInterval(getPlayerState, 1000);
         });
 });
+
+watch(liveUpdate, (value) => {
+    if (value) {
+        refreshInterval = setInterval(getPlayerState, 1000);
+    }
+    else {
+        clearInterval(refreshInterval);
+    }
+})
 
 function getPlayerState() {
     let players = {};
@@ -92,8 +101,21 @@ function getPlayerState() {
 <template v-else>
 <DifficultyIcons />
 
-<div id="banner">
-    <span id="bannerText">Viewing player {{ route.params.playerName }}</span>
+<div id="banner" class="row">
+    <div class="col"></div>
+    <div class="col-auto">
+        <span id="bannerText">Viewing player {{ route.params.playerName }}</span>
+    </div>
+    <div id="controls" class="col">
+        <div class="control pe-2">
+            <label for="delayInput" class="pe-2">Delay (seconds)</label>
+            <input v-model="delaySeconds" id="delayInput" type="number" min="0" max="7200" value="0" class="">
+        </div>
+        <div class="control">
+            <input id="liveUpdateInput" v-model="liveUpdate" type="checkbox" class="form-check-input">
+            <label for="liveUpdateInput" class="">Live update</label>
+        </div>
+    </div>
 </div>
 
 <div id="unstackedContainer" class="row" data-player="">
@@ -189,15 +211,32 @@ function getPlayerState() {
 </template>
 
 <style scoped>
+#liveUpdateInput {
+    margin-top: 0;
+}
+
+#controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: end;
+}
+
+.control {
+    display: flex;
+    align-items: center;
+}
+
 #banner {
+    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.05);
     margin-top: 6px;
-    /* border-bottom: 2px;
-    border-bottom-style: solid;
-    border-color: rgba(255, 255, 255, 0.25); */
+    margin-left: 0;
+    margin-right: 0;
 }
 
 #bannerText {

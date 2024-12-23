@@ -2,7 +2,7 @@
 import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import SettingsPane from '@/components/Settings/SettingsPane.vue';
 import NavBar from '@/components/NavBar.vue';
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { initGlobals, init, eventNameInput } from '@/moduleWrappers';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useEventStore } from '@/stores/eventStore.js';
