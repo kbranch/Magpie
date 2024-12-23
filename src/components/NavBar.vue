@@ -141,6 +141,7 @@ async function sendSuggestion() {
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
+    justify-content: center;
 }
 
 .container {
