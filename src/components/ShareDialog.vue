@@ -57,7 +57,7 @@ function checkPlayerIdTaken() {
 }
 
 async function getEventInfo() {
-    if (!document.getElementById('shareModal').checkVisibility()) {
+    if (!document.getElementById('shareModal').checkVisibility() || !eventName.value) {
         return;
     }
 
@@ -94,7 +94,7 @@ async function getEventInfo() {
                         <div>
                             <label for="playerName" class="form-label">Player name</label>
                             <input v-model="playerName" type="text" id="playerName" class="form-control" maxlength="80" placeholder="Required" aria-label="Player Name">
-                            <div id="playerLink" class="pt-1">
+                            <div v-if="playerName" id="playerLink" class="pt-1">
                                 <span class="pe-2">Player link:</span><a id="playerUrl" :href="playerUrl">{{ playerUrl }}</a>
                             </div>
                             <div v-if="playerIdTaken" id="playerIdWarning" class="alert alert-warning py-2 my-2" role="alert">Warning: A player with this name already exists. Consider using another name.</div>
