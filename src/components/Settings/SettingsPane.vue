@@ -57,6 +57,8 @@ onMounted(() => {
 });
 
 watch(props, refresh);
+watch(state.settings, refresh);
+watch(state.args, refresh);
 watch(settings, refresh);
 
 refreshSettingsItems(settings.value);
