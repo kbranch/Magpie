@@ -16,6 +16,7 @@ const playerName = ref('');
 const sharingUrlApiPrefix = computed(() => props.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
 const sharingUrlPrefix = computed(() => props.isLocal ? 'https://magpietracker.us' : "");
 const eventUrl = computed(() => `${sharingUrlPrefix.value}/event?eventName=${encodeURIComponent(eventName.value)}`);
+const playerUrl = computed(() => `${sharingUrlPrefix.value}/player/${encodeURIComponent(playerName.value)}`);
 const newEventUrl = computed(() => props.isLocal ? 'https://magpietracker.us/event' : '/event');
 
 onMounted(() => {
@@ -93,9 +94,9 @@ async function getEventInfo() {
                         <div>
                             <label for="playerName" class="form-label">Player name</label>
                             <input v-model="playerName" type="text" id="playerName" class="form-control" maxlength="80" placeholder="Required" aria-label="Player Name">
-                            <!-- <div id="playerLink" class="pt-1">
-                            <span class="pe-2">Player link:</span><a id="playerUrl" href="/player">asdf</a>
-                        </div> -->
+                            <div id="playerLink" class="pt-1">
+                                <span class="pe-2">Player link:</span><a id="playerUrl" :href="playerUrl">{{ playerUrl }}</a>
+                            </div>
                             <div v-if="playerIdTaken" id="playerIdWarning" class="alert alert-warning py-2 my-2" role="alert">Warning: A player with this name already exists. Consider using another name.</div>
                         </div>
                         <div class="pt-3">
