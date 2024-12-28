@@ -70,6 +70,7 @@ var logicByEntrance = {};
 var broadcastMode;
 var rootPrefix = "";
 var prefixOverrides = {};
+var locationHistory = [];
 
 const renamedItems = {
     "KEY9": "KEY0",

@@ -499,6 +499,24 @@ if sharingEnabled:
 
         return str(timestamp)
 
+    @app.route("/api/playerLocation", methods=['POST'])
+    def playerLocationPost():
+        try:
+            data = request.json
+        except:
+            data = None
+
+        if not data:
+            return json.dumps({'success': False, 'message': '"history" is required'}), 400
+
+        for required in ('playerName', 'sessionId', 'history'):
+            if required not in data:
+                return json.dumps({ 'success': False, 'message': f'"{required}" is required' }), 400
+
+        sharing.writeLocationHistory(data['playerName'], data['sessionId'], data['history'])
+
+        return json.dumps({'success': True}), 200
+
     @app.route("/playerState", methods=['GET'])
     @app.route("/api/playerState", methods=['GET'])
     def playerStateGet():
@@ -512,6 +530,20 @@ if sharingEnabled:
         for playerName, data in players.items():
             playerResult = sharing.getState(playerName, data['timestamp'], data['delaySeconds'])
             result[playerName] = playerResult
+
+        if len(players) == 1:
+            playerName = next(iter(players))
+            player = players[playerName]
+            if 'sessionId' in player:
+                historyResult = sharing.getLocationHistory(playerName, player['sessionId'], player['locationTimestamp'], player['delaySeconds'])
+                if historyResult:
+                    playerResult = result[playerName]
+
+                    if not playerResult:
+                        playerResult = {}
+                        result[playerName] = playerResult
+
+                    result[playerName]['locationHistory'] = historyResult
 
         return json.dumps(result)
 

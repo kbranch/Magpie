@@ -138,6 +138,86 @@ def writeState(player, playerId, event, state):
 
     return timestamp
 
+def writeLocationHistory(playerName, sessionId, history):
+    if not dbConfigured():
+        return
+
+    query = """
+        insert into location_sharing (player_name, session_id, room, x, y, timestamp)
+        values (%(player)s, %(session)s, %(room)s, %(x)s, %(y)s, %(timestamp)s)
+    """
+
+    with writeLock:
+        conn = getDbConnection()
+        cursor = getCursor(conn)
+        for point in history:
+            cursor.execute(query, { 
+                'player': playerName,
+                'session': sessionId,
+                'room': point['room'],
+                'x': point['x'],
+                'y': point['y'],
+                'timestamp': point['timestamp'],
+            })
+        
+        cursor.close()
+        conn.commit()
+        conn.close()
+
+def getLocationHistory(playerName, sessionId, timestamp, delaySeconds=0):
+    if not dbConfigured():
+        return
+
+    query = """
+        select location_sharing.room
+              ,location_sharing.x
+              ,location_sharing.y
+              ,location_sharing.timestamp
+        from location_sharing
+        where location_sharing.timestamp > %(timestamp)s
+              and location_sharing.player_name = %(player)s
+              and location_sharing.session_id = %(session)s
+              and (%(delaySeconds)s = 0 or location_sharing.creation_time <= date_add(current_timestamp(), interval (-1 * %(delaySeconds)s) second))
+	    order by location_sharing.timestamp
+    """ if dbType == 'mysql' else """
+        select location_sharing.room
+              ,location_sharing.x
+              ,location_sharing.y
+              ,location_sharing.timestamp
+        from location_sharing
+        where location_sharing.timestamp > %(timestamp)s
+              and location_sharing.player_name = %(player)s
+              and location_sharing.session_id = %(session)s
+              and (%(delaySeconds)s = 0 or location_sharing.creation_time <= (current_timestamp - interval '1 second' * %(delaySeconds)s))
+	    order by location_sharing.timestamp
+    """
+
+    conn = getDbConnection()
+    cursor = getCursor(conn)
+
+    cursor.execute(query, { 
+        'player': playerName,
+        'session': sessionId,
+        'timestamp': timestamp,
+        'delaySeconds': delaySeconds,
+    })
+
+    result = cursor.fetchall()
+    
+    points = []
+    for row in result:
+        points.append({
+            'room': row[0],
+            'x': row[1],
+            'y': row[2],
+            'timestamp': float(row[3]),
+        })
+    
+    cursor.close()
+    conn.close()
+
+    return { 'timestamp': points[-1]['timestamp'], 'points': points } if points else None
+
 def getState(player, timestamp, delaySeconds=0):
     if not dbConfigured():
         return None

@@ -150,6 +150,22 @@ CREATE SEQUENCE public."sharing_sharingId_seq"
 ALTER SEQUENCE public."sharing_sharingId_seq" OWNED BY public.sharing.sharing_id;
 
 
+CREATE TABLE public.location_sharing
+(
+    location_sharing_id bigserial NOT NULL,
+    player_name character varying(80) NOT NULL,
+    session_id uuid NOT NULL,
+    room character varying(10) NOT NULL,
+    x integer NOT NULL,
+    y integer NOT NULL,
+    "timestamp" numeric(23, 3) NOT NULL,
+    creation_time timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (location_sharing_id)
+);
+
+ALTER TABLE IF EXISTS public.location_sharing
+    OWNER to postgres;
+
 --
 -- TOC entry 2819 (class 2604 OID 17979)
 -- Name: events event_id; Type: DEFAULT; Schema: public; Owner: -

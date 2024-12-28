@@ -161,6 +161,10 @@ function processLocationMessage(message) {
     currentX = message.x;
     currentY = message.y;
 
+    locationHistory.push({room: room, x: message.x, y: message.y, timestamp: Date.now()});
+
+    saveLocationHistory();
+
     if (newMap != null) {
         lastValidMap = newMap;
     }

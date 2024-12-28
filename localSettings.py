@@ -59,6 +59,8 @@ class LocalSettings:
         self.showHints = True
         self.starHints = False
         self.showHintPanel = True
+        self.sessionId = None
+        self.playerId = None
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

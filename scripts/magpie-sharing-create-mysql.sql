@@ -86,6 +86,21 @@ CREATE TABLE `sharing` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+DROP TABLE IF EXISTS `location_sharing`;
+
+CREATE TABLE `location_sharing`
+(
+    `location_sharing_id` bigint NOT NULL AUTO_INCREMENT,
+    `player_name` varchar(80) NOT NULL,
+    `session_id` varchar(36) NOT NULL,
+    `room` varchar(10) NOT NULL,
+    `x` int NOT NULL,
+    `y` int NOT NULL,
+    `timestamp` decimal(23,3) NOT NULL,
+    `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`location_sharing_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
+
 --
 -- Dumping data for table `sharing`
 --

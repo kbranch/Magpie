@@ -49,6 +49,36 @@ function sharingLiveUpdate() {
     shareTimeout = setTimeout(sendState, 250);
 }
 
+let locationTimestamp = Date.now();
+function sharingLiveUpdateLocation() {
+    if (!liveUpdate || !localSettings.playerName) {
+        return;
+    }
+
+    let data = {
+        playerName: localSettings.playerName,
+        sessionId: localSettings.sessionId,
+        history: locationHistory.filter(x => x.timestamp > locationTimestamp),
+    };
+
+    locationTimestamp = Date.now();
+
+    $.ajax({
+        type: "POST",
+        url: sharingUrlApiPrefix() + "/api/playerLocation",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: () => {
+            let status = liveUpdate ? 'on' : 'off';
+            document.getElementById('liveUpdateIcon').setAttribute('data-status', status);
+        },
+        error: (request) => {
+            document.getElementById('liveUpdateIcon').setAttribute('data-status', 'error');
+            console.log(request.responseText);
+        }
+    });
+}
+
 function prepShareModal() {
     document.getElementById('playerName').value = localSettings.playerName;
     document.getElementById('eventName').value = localSettings.eventName;

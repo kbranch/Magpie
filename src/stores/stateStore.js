@@ -18,6 +18,7 @@ export const useStateStore = defineStore('state', () => {
     const spoilerLog = ref(null);
     const ndiEnabled = ref(false);
     const hints = ref([]);
+    const locationHistory = ref([]);
 
     let hintCallbacks = [];
 
@@ -79,6 +80,7 @@ export const useStateStore = defineStore('state', () => {
         spoilerLog,
         ndiEnabled,
         hints,
+        locationHistory,
         removeHint,
         onHintUpdate,
         offHintUpdate,

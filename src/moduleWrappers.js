@@ -1,4 +1,5 @@
 import { debounce } from "./main";
+import { useStateStore } from "./stores/stateStore";
 
 export let toggleCheck = window.toggleCheck
 export let $ = window.$;
@@ -67,6 +68,10 @@ export let prefixOverrides = window.prefixOverrides;
 export let hydrateConnections = window.hydrateConnections;
 
 export function initGlobals(data) {
+    let state = useStateStore();
+
+    window.locationHistory = state.locationHistory;
+
     window.defaultArgs = data.args;
     window.defaultSettings = data.defaultSettings;
     window.diskSettings = data.diskSettings;

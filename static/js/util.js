@@ -163,16 +163,24 @@ function moveChildren(source, dest) {
     dest.append(...source.childNodes);
 }
 
+function getUuid() {
+    try {
+        return crypto.randomUUID();
+    }
+    catch {
+        return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+            (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+    }
+}
+
 function applySettings(oldArgs=null) {
     if (!localSettings.playerId) {
-        try {
-            localSettings.playerId = crypto.randomUUID();
-        }
-        catch {
-            localSettings.playerId = ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-            );
-        }
+        localSettings.playerId = getUuid();
+    }
+
+    if (!localSettings.sessionId) {
+        localSettings.sessionId = getUuid();
     }
 
     let stacked = document.getElementById('stackedContainer');

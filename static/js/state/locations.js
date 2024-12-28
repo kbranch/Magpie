@@ -31,18 +31,47 @@ function saveHints() {
     vueApp.updateHints(hints);
 }
 
+function saveLocationHistory() {
+    setLocalStorage('locationHistory', JSON.stringify([...locationHistory]));
+
+    rateLimit(sharingLiveUpdateLocation, 1000);
+}
+
 function saveLocations() {
     saveChecked();
     saveEntrances();
     saveHints();
+    saveLocationHistory();
 }
 
 function loadLocations() {
     let checkedErrors = loadChecked() ?? [];
     let entranceErrors = loadEntrances() ?? [];
     let hintErrors = loadHints() ?? [];
+    let historyErrors = loadLocationHistory() ?? [];
 
-    return checkedErrors.concat(entranceErrors).concat(hintErrors);
+    return checkedErrors.concat(entranceErrors).concat(hintErrors).concat(historyErrors);
+}
+
+function loadLocationHistory() {
+    let errors = [];
+    let storedHistory = null;
+
+    try {
+        storedHistory = JSON.parse(getLocalStorage('locationHistory'));
+    }
+    catch (err) {
+        errors.push(err);
+    }
+
+    if (storedHistory == null) {
+        storedHistory = [];
+    }
+
+    locationHistory.length = 0;
+    storedHistory.map(x => locationHistory.push(x));
+
+    return errors;
 }
 
 function loadEntrances() {

@@ -519,6 +519,8 @@ function resetSession() {
 
     refreshImages();
     refreshCheckList();
+
+    localSettings.sessionId = getUuid();
 }
 
 function updateState() {

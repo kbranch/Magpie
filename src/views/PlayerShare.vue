@@ -31,6 +31,7 @@ const broadMode = ref('none');
 const graphicsOptions = ref([]);
 const argDescriptions = ref({});
 const lastTimestamp = ref(null);
+const lastLocationTimestamp = ref(0);
 const delaySeconds = ref(0);
 const liveUpdate = ref(false);
 
@@ -38,57 +39,69 @@ const itemsPaddingLeft = computed(() => state.settings.swapItemsAndMap ? '12px' 
 const itemsPaddingRight = computed(() => state.settings.swapItemsAndMap ? '0' : '12px');
 
 onMounted(() => {
-    fetch(import.meta.env.VITE_API_URL + '/api/init')
-        .then(response => response.json())
-        .then(data => {
-            state.isLocal = data.local;
-            state.ndiEnabled = Boolean(data.ndiEnabled);
-            hostname.value = data.hostname;
-            version.value = data.version;
-            state.remoteVersion = data.remoteVersion;
-            graphicsOptions.value = data.graphicsOptions;
-            argDescriptions.value = data.flags;
+  fetch(import.meta.env.VITE_API_URL + '/api/init')
+    .then(response => response.json())
+    .then(data => {
+      state.isLocal = data.local;
+      state.ndiEnabled = Boolean(data.ndiEnabled);
+      hostname.value = data.hostname;
+      version.value = data.version;
+      state.remoteVersion = data.remoteVersion;
+      graphicsOptions.value = data.graphicsOptions;
+      argDescriptions.value = data.flags;
 
-            graphicsOptions.value.sort();
+      graphicsOptions.value.sort();
 
-            data.broadcastMode = 'none';
-            data.settingsPrefix = 'playerShare_'
-            data.allowAutotracking = false;
+      data.broadcastMode = 'none';
+      data.settingsPrefix = 'playerShare_'
+      data.allowAutotracking = false;
 
-            prefixOverrides['settings'] = '';
+      prefixOverrides['settings'] = '';
 
-            initGlobals(data);
-            init();
+      initGlobals(data);
+      init();
 
-            getPlayerState();
-        });
+      getPlayerState();
+    });
 });
 
 watch(liveUpdate, (value) => {
-    if (value) {
-        refreshInterval = setInterval(getPlayerState, 1000);
-    }
-    else {
-        clearInterval(refreshInterval);
-    }
+  if (value) {
+    refreshInterval = setInterval(getPlayerState, 1000);
+  }
+  else {
+    clearInterval(refreshInterval);
+  }
 })
 
 function getPlayerState() {
-    let players = {};
-    players[route.params.playerName] = {
-        'timestamp': lastTimestamp.value,
-        'delaySeconds': delaySeconds.value,
-    }
+  let players = {};
+  players[route.params.playerName] = {
+    'timestamp': lastTimestamp.value,
+    'delaySeconds': delaySeconds.value,
+    'sessionId': state.settings.sessionId,
+    'locationTimestamp': lastLocationTimestamp.value,
+  }
 
-    fetch(`${import.meta.env.VITE_API_URL}/api/playerState?${new URLSearchParams({players: JSON.stringify(players)})}`)
-        .then(response => response.json())
-        .then(data => {
-            let player = data[route.params.playerName];
-            if (player) {
-                lastTimestamp.value = player.timestamp;
-                importState(player.state, false, false)
-            }
-        });
+  fetch(`${import.meta.env.VITE_API_URL}/api/playerState?${new URLSearchParams({ players: JSON.stringify(players) })}`)
+    .then(response => response.json())
+    .then(data => {
+      let player = data[route.params.playerName];
+      if (player) {
+        if (player.state) {
+          lastTimestamp.value = player.timestamp;
+          importState(player.state, false, false);
+        }
+
+        if (player.locationHistory) {
+          lastLocationTimestamp.value = player.locationHistory.timestamp;
+
+          for (const point of player.locationHistory.points) {
+            state.locationHistory.push(point);
+          }
+        }
+      }
+    });
 }
 
 </script>
