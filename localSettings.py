@@ -61,6 +61,12 @@ class LocalSettings:
         self.showHintPanel = True
         self.sessionId = None
         self.playerId = None
+        self.linkPathEnabled = True
+        self.linkPathLength = 150
+        self.linkPathColor = '#ffd236'
+        self.linkPathBorder = '#000000'
+        self.linkPathAlpha = 100
+        self.linkPathWidth = 4
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

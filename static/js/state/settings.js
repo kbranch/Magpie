@@ -482,7 +482,8 @@ function resetColors() {
         'diff1Alpha', 'diff1VAlpha', 'diff2Alpha', 'diff2VAlpha',
         'diff3Alpha', 'diff3VAlpha', 'diff8Alpha', 'diff8VAlpha',
         'diff9Alpha', 'diff9VAlpha', 'diffCheckedAlpha',
-        'bgColor', 'textColor', 'highlightColor',
+        'bgColor', 'textColor', 'highlightColor', 'linkPathColor',
+        'linkPathAlpha', 'linkPathBorder'
     ]
 
     for (const setting of settings) {

@@ -32,7 +32,7 @@ function drawConnectorLines() {
     $('connection').connections('remove');
 }
 
-function getMapScaling(map) {
+function getMapScaling(map, offsetCheckSize=true) {
     let scaling = {};
     let img = $(map).find('.map')[0];
     let elementAspect = img.width / img.height;
@@ -60,10 +60,40 @@ function getMapScaling(map) {
 
     scaling.offset = {};
 
-    scaling.offset.x = (16 * scaling.x - checkSize) / 2 + x;
-    scaling.offset.y = (16 * scaling.y - checkSize) / 2 + y;
+    let checkOffset = offsetCheckSize ? checkSize : 0;
+    scaling.offset.x = (16 * scaling.x - checkOffset) / 2 + x;
+    scaling.offset.y = (16 * scaling.y - checkOffset) / 2 + y;
 
     return scaling;
+}
+
+function getLocationCoords(room, x, y) {
+    let roomMap = mapFromRoom(room);
+
+    let roomX;
+    let roomY;
+    
+    if (roomMap == 'overworld') {
+        let coords = room.split('0x')[1];
+        roomX = Number('0x' + coords[1]) * 162 + x * 16;// + 72;
+        roomY = Number('0x' + coords[0]) * 130 + y * 16;// + 58;
+    }
+    else {
+        if (!(room in roomDict)) {
+            return;
+        }
+
+        let roomInfo = roomDict[room];
+        roomX = roomInfo.x * 160 + x * 16;// + 72;
+        roomY = roomInfo.y * 128 + x * 16;// + 58;
+
+        if (roomMap == 'underworld') {
+            roomX += 2 + roomInfo.x * 2;
+            roomY += 2 + roomInfo.y * 2;
+        }
+    }
+
+    return { x: roomX, y: roomY, map: roomMap };
 }
 
 function drawLocation() {
@@ -80,28 +110,10 @@ function drawLocation() {
 
     let mapContainer = $(`img[data-mapname=${activeMap}]`).closest('.map-container');
     let scaling = getMapScaling(mapContainer);
+    let coords = getLocationCoords(currentRoom, currentX, currentY);
 
-    let roomX;
-    let roomY;
-    
     if (activeMap == 'overworld') {
-        let coords = overworldRoom.split('0x')[1];
-        roomX = Number('0x' + coords[1]) * 162 + overworldX * 16;// + 72;
-        roomY = Number('0x' + coords[0]) * 130 + overworldY * 16;// + 58;
-    }
-    else {
-        if (!(currentRoom in roomDict)) {
-            return;
-        }
-
-        let room = roomDict[currentRoom];
-        roomX = room.x * 160 + currentX * 16;// + 72;
-        roomY = room.y * 128 + currentY * 16;// + 58;
-
-        if (activeMap == 'underworld') {
-            roomX += 2 + room.x * 2;
-            roomY += 2 + room.y * 2;
-        }
+        coords = getLocationCoords(overworldRoom, overworldX, overworldY);
     }
 
     let linkFace = $('#linkFace');
@@ -118,8 +130,8 @@ function drawLocation() {
     linkFace.attr('src', `/images${localSettings.graphicsPack}/linkface.png`);
 
     linkFace.css({
-                'top': Math.round(roomY * scaling.y + scaling.offset.y),
-                'left': Math.round(roomX * scaling.x + scaling.offset.x),
+                'top': Math.round(coords.y * scaling.y + scaling.offset.y),
+                'left': Math.round(coords.x * scaling.x + scaling.offset.x),
                 'width': checkSize,
                 'max-width': checkSize,
                 'min-width': checkSize,

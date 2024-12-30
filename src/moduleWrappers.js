@@ -66,6 +66,8 @@ export let autotrackerIsConnected = window.autotrackerIsConnected;
 export let sendMessage = window.sendMessage;
 export let prefixOverrides = window.prefixOverrides;
 export let hydrateConnections = window.hydrateConnections;
+export let getLocationCoords  = window.getLocationCoords;
+export let getMapScaling = window.getMapScaling;
 
 export function initGlobals(data) {
     let state = useStateStore();
