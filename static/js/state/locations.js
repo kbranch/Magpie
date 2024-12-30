@@ -172,6 +172,12 @@ function resetLocations() {
     resetEntrances();
     resetChecks();
     resetHints();
+    resetLocationHistory();
+}
+
+function resetLocationHistory() {
+    locationHistory.length = 0;
+    saveLocationHistory();
 }
 
 function resetEntrances() {

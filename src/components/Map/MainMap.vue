@@ -92,7 +92,7 @@ const historyPaths = computed(() => {
             points.push({
                 x: coords.x * scaling.x + scaling.offset.x,
                 y: coords.y * scaling.y + scaling.offset.y,
-                alpha: 1 - 3 ** (-10 * (0.5 * (i / length) ** 3)),
+                alpha: 1 - 3 ** (-10 * (0.5 * (i / length) ** 2)),
             });
 
             i++;
