@@ -80,7 +80,7 @@ function getLocationCoords(room, x, y) {
     }
     else {
         if (!(room in roomDict)) {
-            return;
+            return { x: 0, y: 0, map: 'unknown' };
         }
 
         let roomInfo = roomDict[room];

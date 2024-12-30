@@ -253,7 +253,13 @@ var roomDict = {
         y: 2,
         entrances: ['d2'],
     },
-    '0x12BF': {
+    '0x12B': {
+        map: 'd2',
+        x: 5,
+        y: 2,
+        entrances: ['d2'],
+    },
+    '0x12BF': { // Probably a typo
         map: 'd2',
         x: 5,
         y: 2,

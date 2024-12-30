@@ -26,9 +26,10 @@ const mapTooltips = {
     'd0': 'Color Dungeon'
 };
 
+const imageLoaded = ref(false);
 const mapSize = ref({ width: 0, height: 0 });
 const tabWrapper = ref(null);
-const mapImage = ref(null);
+const mapContainer = ref(null);
 const canvas = ref(null);
 const activeTab = ref('overworld');
 const mapPaths = computed(() => maps.reduce((acc, x) => {
@@ -49,9 +50,11 @@ const mapScaling = computed(() => {
                 && state.settings.linkPathEnabled
                 && state.settings.linkPathWidth
                 && state.settings.enableAutotracking
+                && activeTab.value
+                && imageLoaded.value
 
-    if (mapImage.value) {
-        const scaling = getMapScaling(mapImage.value, false);
+    if (mapContainer.value) {
+        const scaling = getMapScaling(mapContainer.value, false);
         return scaling;
     }
 
@@ -74,27 +77,33 @@ const historyPaths = computed(() => {
         }
 
         let length = history.length;
+        let lastCoord = null;
 
         for (const point of history) {
-            let coords = getLocationCoords(point.room, point.x, point.y);
+            let coord = getLocationCoords(point.room, point.x, point.y);
 
-            if (coords.map != activeTab.value) {
+            if (coord.map != activeTab.value
+                || (lastCoord
+                    && pointDistance(lastCoord, coord) > 100)) {
+
                 if (points.length) {
                     points = [];
                     paths.push(points);
                 }
 
+                lastCoord = coord;
                 i++;
 
                 continue;
             }
 
             points.push({
-                x: coords.x * scaling.x + scaling.offset.x,
-                y: coords.y * scaling.y + scaling.offset.y,
+                x: coord.x * scaling.x + scaling.offset.x,
+                y: coord.y * scaling.y + scaling.offset.y,
                 alpha: 1.15 - 3 ** (-10 * (0.5 * (i / length) ** 2)),
             });
 
+            lastCoord = coord;
             i++;
         }
     }
@@ -102,7 +111,10 @@ const historyPaths = computed(() => {
     return paths;
 });
 
-watch(historyPaths, () => { setTimeout(drawPaths, 250) });
+watch(historyPaths, () => {
+    let tempPaths = [...historyPaths.value];
+    setTimeout(() => drawPaths(tempPaths), 250)
+});
 
 onMounted(() => {
     mapResizeObserver.observe(tabWrapper.value);
@@ -153,7 +165,7 @@ function rgbaStr(c) {
     return `rgba(${c.r}, ${c.g}, ${c.b}, ${c.a})`;
 }
 
-function drawPaths() {
+function drawPaths(paths) {
     let context;
 
     if (canvas.value) {
@@ -165,8 +177,6 @@ function drawPaths() {
         || (window.allowAutotracking && !state.settings.enableAutotracking)) {
         return;
     }
-
-    let paths = historyPaths.value;
 
     context.globalCompositeOperation = 'copy';
     context.lineCap = "round";
@@ -200,13 +210,17 @@ function drawPath(points, color, width, context) {
     }
 }
 
-// This is dumb, but the only way I could find to get the alpha behavior I wanted
-function drawSegment(start, end, width, context) {
+function pointDistance(start, end) {
     let diffX = Math.abs(end.x - start.x);
     let diffY = Math.abs(end.y - start.y);
-    let distance = Math.sqrt(diffX * diffX + diffY * diffY);
+    return Math.sqrt(diffX * diffX + diffY * diffY);
+}
+
+// This is dumb, but the only way I could find to get the alpha behavior I wanted
+function drawSegment(start, end, width, context) {
     let step = 2;
     let position = 0;
+    let distance = pointDistance(start, end);
 
     // Stamp a circle over and over to fake a line
     while (position <= distance) {
@@ -240,10 +254,10 @@ function drawSegment(start, end, width, context) {
 
 <div class="tabs" id="tabContents">
     <div ref="tabWrapper" id="tabWrapper">
-        <div ref="mapImage" :class="['tab', 'map-container', 'text-center', 'active']" :id="`${activeTab}TabContent`">
+        <div ref="mapContainer" :class="['tab', 'map-container', 'text-center', 'active']" :id="`${activeTab}TabContent`">
             <div class="map-wrapper">
                 <img class="map" :data-mapname="activeTab" :src="mapPaths[activeTab]" width="2592" height="2079"
-                    @click="closeAllTooltips();" @contextmenu.prevent="" draggable="false">
+                    @click="closeAllTooltips();" @contextmenu.prevent="" @load="imageLoaded = !imageLoaded" draggable="false">
             </div>
         </div>
         <Transition>
