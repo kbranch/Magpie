@@ -85,7 +85,7 @@ function getLocationCoords(room, x, y) {
 
         let roomInfo = roomDict[room];
         roomX = roomInfo.x * 160 + x * 16;// + 72;
-        roomY = roomInfo.y * 128 + x * 16;// + 58;
+        roomY = roomInfo.y * 128 + y * 16;// + 58;
 
         if (roomMap == 'underworld') {
             roomX += 2 + roomInfo.x * 2;
