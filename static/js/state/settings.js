@@ -296,6 +296,11 @@ function fixArgs(args) {
     if (!('shopsanity' in args)) {
         args.shopsanity = "";
     }
+
+    if ('gfxmod' in args && localSettings.autotrackGraphicsPack) {
+        localSettings.graphicsPack = `/${args.gfxmod.split('.')[0]}`;
+        delete args.gfxmod;
+    }
 }
 
 function getState(addAp=true) {

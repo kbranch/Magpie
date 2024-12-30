@@ -17,9 +17,11 @@ import { computed, onMounted, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { archipelagoInit } from '@/archipelago/client';
+import { useRoute } from 'vue-router';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
+const route = useRoute();
 
 const hostname = ref(null);
 const version = ref(null);
@@ -31,7 +33,13 @@ const itemsPaddingLeft = computed(() => state.settings.swapItemsAndMap ? '12px' 
 const itemsPaddingRight = computed(() => state.settings.swapItemsAndMap ? '0' : '12px');
 
 onMounted(() => {
-  fetch(import.meta.env.VITE_API_URL + '/api/init')
+  let url = `${import.meta.env.VITE_API_URL}/api/init`;
+
+  if (Object.keys(route.query).length) {
+    url = `${url}?${new URLSearchParams(route.query)}`;
+  }
+
+  fetch(url)
     .then(response => response.json())
     .then(data => {
       state.isLocal = data.local;

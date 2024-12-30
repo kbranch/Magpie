@@ -114,7 +114,7 @@ onUpdated(() => {
 
     drawNodes(activeTab.value, false);
 
-    if (props.broadcastMode == 'send') {
+    if (props.broadcastMode == 'send' && win.broadcastMapTab) {
         win.broadcastMapTab(activeTab.value);
     }
 })
