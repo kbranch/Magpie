@@ -39,6 +39,8 @@ const mapPaths = computed(() => maps.reduce((acc, x) => {
 const mapResizeObserver = new ResizeObserver(updateMapSize, { threshold: 1.0 });
 
 const mapScaling = computed(() => {
+    // Dumb way to get things to react to the things we want it to
+    // eslint-disable-next-line no-unused-vars
     let dummy = mapSize.value.width
                 && mapSize.value.width
                 && state.settings.linkPathAlpha
@@ -46,6 +48,7 @@ const mapScaling = computed(() => {
                 && state.settings.linkPathColor
                 && state.settings.linkPathEnabled
                 && state.settings.linkPathWidth
+                && state.settings.enableAutotracking
 
     if (mapImage.value) {
         const scaling = getMapScaling(mapImage.value, false);
@@ -150,7 +153,8 @@ function drawPaths() {
         context.clearRect(0, 0, canvas.value.width, canvas.value.height);
     }
 
-    if (!state.settings.linkPathEnabled) {
+    if (!state.settings.linkPathEnabled
+        || (window.allowAutotracking && !state.settings.enableAutotracking)) {
         return;
     }
 

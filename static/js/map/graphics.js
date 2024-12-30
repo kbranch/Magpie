@@ -103,7 +103,8 @@ function drawLocation() {
     if ((roomMap != activeMap
          && (activeMap != 'overworld'
              || overworldRoom == null))
-        || !localSettings.linkFace) {
+        || !localSettings.linkFace
+        || (allowAutotracking && !localSettings.enableAutotracking)) {
         $('#linkFace').remove();
         return;
     }
