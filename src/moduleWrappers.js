@@ -12,6 +12,7 @@ export let closeAllTooltips = window.closeAllTooltips;
 export let removeNodes = window.removeNodes;
 export let drawNodes = window.drawNodes;
 export let drawActiveTab = window.drawActiveTab;
+export let drawLocation = window.drawLocation;
 export let resetSession = window.resetSession;
 export let saveQuickSettings = window.saveQuickSettings;
 export let saveSettings = window.saveSettings;
@@ -68,6 +69,7 @@ export let prefixOverrides = window.prefixOverrides;
 export let hydrateConnections = window.hydrateConnections;
 export let getLocationCoords  = window.getLocationCoords;
 export let getMapScaling = window.getMapScaling;
+export let setCurrentLocation = window.setCurrentLocation;
 
 export function initGlobals(data) {
     let state = useStateStore();

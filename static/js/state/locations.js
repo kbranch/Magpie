@@ -481,3 +481,17 @@ function uncheckCheck(id) {
         }
     }
 }
+
+function setCurrentLocation(room, x, y) {
+    let newMap = mapFromRoom(room);
+
+    if (newMap == 'overworld') {
+        overworldRoom = room;
+        overworldX = x;
+        overworldY = y;
+    }
+
+    currentRoom = room;
+    currentX = x;
+    currentY = y;
+}

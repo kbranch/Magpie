@@ -151,19 +151,11 @@ function processLocationMessage(message) {
         message.y = 3.625;
     }
 
-    if (newMap == 'overworld') {
-        overworldRoom = room;
-        overworldX = message.x;
-        overworldY = message.y;
-    }
-
-    currentRoom = room;
-    currentX = message.x;
-    currentY = message.y;
+    setCurrentLocation(room, message.x, message.y);
 
     locationHistory.push({room: room, x: message.x, y: message.y, timestamp: Date.now()});
-
     saveLocationHistory();
+
 
     if (newMap != null) {
         lastValidMap = newMap;

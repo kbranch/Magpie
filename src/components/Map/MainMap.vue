@@ -2,7 +2,7 @@
 import { closeAllTooltips, removeNodes, drawNodes, win, getMapScaling, getLocationCoords } from '@/moduleWrappers.js';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
-import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue';
+import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
 import MapLegend from '@/components/Map/MapLegend.vue';
@@ -102,7 +102,7 @@ const historyPaths = computed(() => {
     return paths;
 });
 
-watch(historyPaths, () => { nextTick(drawPaths) });
+watch(historyPaths, () => { setTimeout(drawPaths, 250) });
 
 onMounted(() => {
     mapResizeObserver.observe(tabWrapper.value);
