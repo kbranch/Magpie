@@ -9,7 +9,7 @@ import MapLegend from '@/components/Map/MapLegend.vue';
 
 const tip = useTextTooltipStore();
 const state = useStateStore();
-defineProps(['broadcastMode']);
+const props = defineProps(['broadcastMode']);
 
 const maps = ['overworld', 'underworld', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd0'];
 const mapTooltips = {
@@ -113,7 +113,10 @@ onUpdated(() => {
     closeAllTooltips();
 
     drawNodes(activeTab.value, false);
-    win.broadcastMapTab(activeTab.value);
+
+    if (props.broadcastMode == 'send') {
+        win.broadcastMapTab(activeTab.value);
+    }
 })
 
 function getMapPath(map) {

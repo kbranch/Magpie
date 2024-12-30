@@ -164,8 +164,33 @@ def writeLocationHistory(playerName, sessionId, history):
         conn.commit()
         conn.close()
 
-def getLocationHistory(playerName, sessionId, timestamp, delaySeconds=0):
+def getNewestSession(playerName):
+    query = """
+        select location_sharing.session_id
+        from location_sharing
+        where location_sharing.player_name = %(player)s
+        order by location_sharing.timestamp desc
+        limit 1
+    """
+
+    conn = getDbConnection()
+    cursor = getCursor(conn)
+
+    cursor.execute(query, { 
+        'player': playerName,
+    })
+
+    result = cursor.fetchone()
+
+    return result[0] if result else None
+
+def getLocationHistory(playerName, timestamp, delaySeconds=0):
     if not dbConfigured():
+        return
+
+    sessionId = getNewestSession(playerName)
+    
+    if not sessionId:
         return
 
     query = """
@@ -216,7 +241,7 @@ def getLocationHistory(playerName, sessionId, timestamp, delaySeconds=0):
     cursor.close()
     conn.close()
 
-    return { 'timestamp': points[-1]['timestamp'], 'points': points } if points else None
+    return { 'timestamp': points[-1]['timestamp'], 'points': points, 'sessionId': sessionId } if points else None
 
 def getState(player, timestamp, delaySeconds=0):
     if not dbConfigured():

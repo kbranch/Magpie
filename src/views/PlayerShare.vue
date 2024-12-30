@@ -61,6 +61,8 @@ onMounted(() => {
       initGlobals(data);
       init();
 
+      state.locationHistory.length = 0;
+
       getPlayerState();
     });
 });
@@ -79,7 +81,6 @@ function getPlayerState() {
   players[route.params.playerName] = {
     'timestamp': lastTimestamp.value,
     'delaySeconds': delaySeconds.value,
-    'sessionId': state.settings.sessionId,
     'locationTimestamp': lastLocationTimestamp.value,
   }
 
