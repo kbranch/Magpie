@@ -273,6 +273,7 @@ function drawSegment(start, end, width, context) {
     position: absolute;
     left: 0px;
     top: 0px;
+    pointer-events: none;
 }
 
 .v-enter-active,
