@@ -69,7 +69,7 @@ const historyPaths = computed(() => {
         let i = 0;
         let history = state.locationHistory;
 
-        if (history.length > maxPoints) {
+        if (history.length > maxPoints && maxPoints < 1000) {
             history = history.slice(maxPoints * -1);
         }
 
@@ -92,7 +92,7 @@ const historyPaths = computed(() => {
             points.push({
                 x: coords.x * scaling.x + scaling.offset.x,
                 y: coords.y * scaling.y + scaling.offset.y,
-                alpha: 1 - 3 ** (-10 * (0.5 * (i / length) ** 2)),
+                alpha: 1.15 - 3 ** (-10 * (0.5 * (i / length) ** 2)),
             });
 
             i++;
@@ -130,6 +130,11 @@ function getMapPath(map) {
 
 function updateMapSize() {
     let rect = tabWrapper.value?.getBoundingClientRect();
+
+    if (!rect) {
+        return;
+    }
+
     mapSize.value.width = rect.width;
     mapSize.value.height = rect.height;
 }
