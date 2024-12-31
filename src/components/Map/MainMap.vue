@@ -31,6 +31,7 @@ const mapSize = ref({ width: 0, height: 0 });
 const tabWrapper = ref(null);
 const mapContainer = ref(null);
 const canvas = ref(null);
+const borderCanvas = ref(null);
 const activeTab = ref('overworld');
 const mapPaths = computed(() => maps.reduce((acc, x) => {
     acc[x] = getMapPath(x);
@@ -167,6 +168,7 @@ function rgbaStr(c) {
 }
 
 function drawPaths(paths) {
+    let borderContext;
     let context;
 
     if (canvas.value) {
@@ -174,18 +176,23 @@ function drawPaths(paths) {
         context.clearRect(0, 0, canvas.value.width, canvas.value.height);
     }
 
+    if (borderCanvas.value) {
+        borderContext = borderCanvas.value.getContext("2d");
+        borderContext.clearRect(0, 0, borderCanvas.value.width, borderCanvas.value.height);
+    }
+
     if (!state.settings.linkPathEnabled
         || (!state.linkFaceShowing)) {
         return;
     }
 
-    // context.globalCompositeOperation = 'copy';
-    // context.lineCap = "round";
+    context.lineCap = "round";
+    borderContext.lineCap = "round";
 
     let width = Number(state.settings.linkPathWidth);
 
     for (const path of paths) {
-        drawPath(path, hexToRgba(state.settings.linkPathBorder), width + 4, context);
+        drawPath(path, hexToRgba(state.settings.linkPathBorder), width + 4, borderContext);
         drawPath(path, hexToRgba(state.settings.linkPathColor), width, context);
     }
 }
@@ -195,6 +202,7 @@ function drawPath(points, color, width, context) {
     let globalAlpha = Number(state.settings.linkPathAlpha) / 100;
 
     context.lineWidth = width;
+    context.fillStyle = '#fff';
 
     for (const point of points) {
         if (lastPoint){
@@ -202,9 +210,9 @@ function drawPath(points, color, width, context) {
             let segmentColor = structuredClone(color);
             segmentColor.a = alpha;
 
-            context.fillStyle = rgbaStr(segmentColor);
+            context.strokeStyle = rgbaStr(segmentColor);
 
-            drawSegment(lastPoint, point, width, context);
+            drawSegment(lastPoint, point, width, context, alpha);
         }
 
         lastPoint = point;
@@ -217,24 +225,21 @@ function pointDistance(start, end) {
     return Math.sqrt(diffX * diffX + diffY * diffY);
 }
 
-// This is dumb, but the only way I could find to get the alpha behavior I wanted
-function drawSegment(start, end, width, context) {
-    let step = 2;
-    let position = 0;
-    let distance = pointDistance(start, end);
-
-    // Stamp a circle over and over to fake a line
-    while (position <= distance) {
-        let progress = Math.min(1, position / distance);
-
-        let x = start.x + (end.x - start.x) * progress;
-        let y = start.y + (end.y - start.y) * progress;
-
+function drawSegment(start, end, width, context, alpha) {
+    // Clearing the end cap makes the nodes look a little less weird overall
+    // Alpha threshold chosen by trial and error - doing this makes the line look weird at high alpha values
+    if (alpha < 0.85) {
         context.beginPath();
-        context.arc(x, y, width / 2, 0, Math.PI * 2);
+        context.globalCompositeOperation = 'destination-out';
+        context.arc(start.x, start.y, width / 2, 0, Math.PI * 2);
         context.fill();
-        position += step;
+        context.globalCompositeOperation = 'source-over';
     }
+
+    context.beginPath();
+    context.moveTo(start.x, start.y);
+    context.lineTo(end.x, end.y);
+    context.stroke();
 }
 
 </script>
@@ -267,6 +272,7 @@ function drawSegment(start, end, width, context) {
             </div>
         </Transition>
         <div id="mapCanvas">
+            <canvas ref="borderCanvas" :width="mapSize.width" :height="mapSize.height"></canvas>
             <canvas ref="canvas" :width="mapSize.width" :height="mapSize.height"></canvas>
         </div>
     </div>
@@ -280,6 +286,10 @@ function drawSegment(start, end, width, context) {
 <style scoped>
 #tabWrapper {
     position: relative;
+}
+
+canvas {
+    position: absolute;
 }
 
 #mapCanvas {
