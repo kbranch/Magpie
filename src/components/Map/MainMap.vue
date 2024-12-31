@@ -179,8 +179,8 @@ function drawPaths(paths) {
         return;
     }
 
-    context.globalCompositeOperation = 'copy';
-    context.lineCap = "round";
+    // context.globalCompositeOperation = 'copy';
+    // context.lineCap = "round";
 
     let width = Number(state.settings.linkPathWidth);
 
