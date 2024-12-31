@@ -3,6 +3,8 @@ import sys
 import json
 import time
 import queue
+import asyncio
+import logging
 import traceback
 import threading
 import argparse
@@ -92,50 +94,52 @@ def startFlask(**serverKwargs):
 async def sendMessage(message, socket):
     await socket.send(json.dumps(message))
 
-messageLock = threading.Lock()
+messageLock = asyncio.Lock()
 masterMessages = {}
-async def broadcastLoop(socket):
-    import asyncio
-
+async def broadcastLoop(socket, sharedMessages):
     print("Started broadcaster loop")
 
     lastMessages = {}
 
     while True:
-        messageLock.acquire()
+        try:
+            async with messageLock:
+                try:
+                    messageText = await asyncio.wait_for(socket.recv(), timeout=0.1)
+                    message = None
 
-        while socket.messages:
-            messageText = await socket.recv()
-            message = None
+                    try:
+                        message = json.loads(messageText)
+                    except:
+                        print(f'Error parsing message: {traceback.format_exc()}')
+                        print(f'Message text: {messageText}')
+                    
+                    message['time'] = time.time()
+                    sharedMessages[message['type']] = message
+                    lastMessages[message['type']] = message['time']
+                except asyncio.TimeoutError:
+                    pass
 
-            try:
-                message = json.loads(messageText)
-            except Exception as e:
-                print(f'Error parsing message: {traceback.format_exc()}')
-                print(f'Message text: {messageText}')
-            
-            message['time'] = time.time()
-            masterMessages[message['type']] = message
-            lastMessages[message['type']] = message['time']
-        
-        for type,msg in masterMessages.items():
-            if type not in lastMessages or lastMessages[type] < msg['time']:
-                await sendMessage(msg, socket)
-                lastMessages[type] = msg['time']
-
-        messageLock.release()
+                for type,msg in sharedMessages.items():
+                    if type not in lastMessages or lastMessages[type] < msg['time']:
+                        await sendMessage(msg, socket)
+                        lastMessages[type] = msg['time']
+        except:
+            error = traceback.format_exc()
+            logging.error(f'Error in broadcastLoop: {error}')
+            await asyncio.sleep(1)
 
         await asyncio.sleep(0.1)
 
 async def broadcaster():
     import websockets
-    import asyncio
+    import functools
 
-    async with websockets.serve(broadcastLoop, host=None, port=17025, max_size=1024*1024*10):
+    broadcastPartial = functools.partial(broadcastLoop, sharedMessages=masterMessages)
+    async with websockets.serve(broadcastPartial, host=None, port=17025, max_size=1024*1024*10):
         await asyncio.Future()
 
 def startBroadcaster():
-    import asyncio
     asyncio.run(broadcaster())
 
 def main():
