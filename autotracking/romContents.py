@@ -87,7 +87,8 @@ gfxDict = {
    "b4b1f305eef4c9979495ce71e69c923dfe2f1cf8":"NESLink",
    "9afa1326949285418c69309cf6436d9693354985":"Ninten",
    "ae96c94db9ec82e08d9f7ab1f4efc9072e0b72ed":"MarinAlpha",
-   "3a15a793cc29c31271c1ea117141b9810a52a687": "X",
+   "3a15a793cc29c31271c1ea117141b9810a52a687":"X",
+   "44883f23bf4e80f6f7b0e56919892e85d59fff49":"Ricky",
 }
 
 def getGfx(gfxData):
