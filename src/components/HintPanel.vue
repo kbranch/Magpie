@@ -376,7 +376,7 @@ function removeHint(hint) {
     padding: 8px;
     padding-top: 0px;
     max-height: 200px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .card {

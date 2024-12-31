@@ -247,7 +247,7 @@ function broadcastInit() {
 }
 
 function broadcastMessage(msg) {
-    if (!channel) {
+    if (!channel && !broadcastSocket) {
         return;
     }
 
