@@ -67,6 +67,10 @@ function updateSpoilerLog(spoilerLog) {
   state.spoilerLog = spoilerLog;
 }
 
+function updateLinkFace(showing) {
+  state.linkFaceShowing = showing;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
@@ -80,6 +84,7 @@ defineExpose({
   updateEventInfo,
   updateSpoilerLog,
   updateHints,
+  updateLinkFace,
 });
 </script>
 
