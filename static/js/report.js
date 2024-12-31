@@ -32,6 +32,7 @@ async function getStateZip() {
     state.messageLog = messageLog;
     state.undos = getRecentUndos();
     state.spoilerLog = spoilerLog;
+    state.locationHistory = locationHistory;
 
     state.undos.map(x => x.checkedChecks = [...x.checkedChecks]);
 
