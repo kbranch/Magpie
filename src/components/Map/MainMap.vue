@@ -50,6 +50,7 @@ const mapScaling = computed(() => {
                 && state.settings.linkPathEnabled
                 && state.settings.linkPathWidth
                 && state.settings.enableAutotracking
+                && state.linkFaceShowing
                 && activeTab.value
                 && imageLoaded.value
 
@@ -174,7 +175,7 @@ function drawPaths(paths) {
     }
 
     if (!state.settings.linkPathEnabled
-        || (window.allowAutotracking && !state.settings.enableAutotracking)) {
+        || (!state.linkFaceShowing)) {
         return;
     }
 

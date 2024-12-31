@@ -9,6 +9,7 @@ function shareState() {
     saveSettingsToStorage(args, localSettings);
 
     sendState();
+    sendLocation();
 }
 
 function sendState() {
@@ -49,17 +50,25 @@ function sharingLiveUpdate() {
     shareTimeout = setTimeout(sendState, 250);
 }
 
-let locationTimestamp = Date.now();
 function sharingLiveUpdateLocation() {
     if (!liveUpdate || !localSettings.playerName) {
         return;
     }
 
+    sendLocation();
+}
+
+let locationTimestamp = Date.now();
+function sendLocation() {
     let data = {
         playerName: localSettings.playerName,
         sessionId: localSettings.sessionId,
         history: locationHistory.filter(x => x.timestamp > locationTimestamp),
     };
+
+    if (!data.history.length) {
+        return;
+    }
 
     locationTimestamp = Date.now();
 

@@ -106,6 +106,7 @@ function drawLocation() {
         || !localSettings.linkFace
         || (allowAutotracking && !localSettings.enableAutotracking)) {
         $('#linkFace').remove();
+        vueApp.updateLinkFace(false);
         return;
     }
 
@@ -126,6 +127,7 @@ function drawLocation() {
         });
 
         $(mapContainer).find('div.map-wrapper').append(linkFace);
+        vueApp.updateLinkFace(true);
     }
 
     linkFace.attr('src', `/images${localSettings.graphicsPack}/linkface.png`);

@@ -95,6 +95,8 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
 def fixArgs(args):
     if args.goal == '':
         args.goal = '8'
+    if args.overworld == 'dungeonchain':
+        args.overworld = 'normal'
 
 def tryCopyValue(source, target, name, default=False):
     if hasattr(source, name):
