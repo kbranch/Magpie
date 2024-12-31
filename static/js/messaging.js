@@ -47,6 +47,11 @@ function processCheckMessage(message) {
     saveChecked();
     updateDungeonItems();
 
+    // Assume we're starting a new seed if the autotracker just told us that Tarin's Gift isn't checked yet
+    if (message.checks.some(x => x.id == '0x2A3') && !checkedChecks.has('0x2A3')) {
+        resetLocationHistory();
+    }
+
     if (message.refresh) {
         drawActiveTab();
 
