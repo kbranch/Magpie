@@ -100,13 +100,16 @@ function drawLocation() {
     let roomMap = mapFromRoom(currentRoom);
     let activeMap = getActiveMap();
 
+    vueApp.updateLinkFace(localSettings.linkFace && (!allowAutotracking || localSettings.enableAutotracking));
+
     if ((roomMap != activeMap
          && (activeMap != 'overworld'
              || overworldRoom == null))
         || !localSettings.linkFace
         || (allowAutotracking && !localSettings.enableAutotracking)) {
+
         $('#linkFace').remove();
-        vueApp.updateLinkFace(false);
+
         return;
     }
 
@@ -127,7 +130,6 @@ function drawLocation() {
         });
 
         $(mapContainer).find('div.map-wrapper').append(linkFace);
-        vueApp.updateLinkFace(true);
     }
 
     linkFace.attr('src', `/images${localSettings.graphicsPack}/linkface.png`);

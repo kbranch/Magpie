@@ -2,7 +2,7 @@
 import { closeAllTooltips, removeNodes, drawNodes, win, getMapScaling, getLocationCoords } from '@/moduleWrappers.js';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
-import { computed, onMounted, onUpdated, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch, nextTick } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
 import MapLegend from '@/components/Map/MapLegend.vue';
@@ -52,8 +52,6 @@ const mapScaling = computed(() => {
                 && state.settings.linkPathWidth
                 && state.settings.enableAutotracking
                 && state.linkFaceShowing
-                && activeTab.value
-                && imageLoaded.value
 
     if (mapContainer.value) {
         const scaling = getMapScaling(mapContainer.value, false);
@@ -113,23 +111,25 @@ const historyPaths = computed(() => {
     return paths;
 });
 
-watch(historyPaths, () => {
-    let tempPaths = [...historyPaths.value];
-    setTimeout(() => drawPaths(tempPaths), 250)
-});
-
 onMounted(() => {
     mapResizeObserver.observe(tabWrapper.value);
 });
 
-onUpdated(() => {
+watch(historyPaths, () => {
+    let tempPaths = [...historyPaths.value];
+    if (imageLoaded.value) {
+        setTimeout(() => drawPaths(tempPaths), 250);
+    }
+});
+
+watch(activeTab, (newValue) => {
     removeNodes();
     closeAllTooltips();
 
-    drawNodes(activeTab.value, false);
+    imageLoaded.value = false;
 
     if (props.broadcastMode == 'send' && win.broadcastMapTab) {
-        win.broadcastMapTab(activeTab.value);
+        win.broadcastMapTab(newValue);
     }
 })
 
@@ -174,6 +174,9 @@ function drawPaths(paths) {
     if (canvas.value) {
         context = canvas.value.getContext("2d");
         context.clearRect(0, 0, canvas.value.width, canvas.value.height);
+    }
+    else {
+        return;
     }
 
     if (borderCanvas.value) {
@@ -242,6 +245,14 @@ function drawSegment(start, end, width, context, alpha) {
     context.stroke();
 }
 
+function imageLoadedEvent() {
+    imageLoaded.value = true;
+    drawNodes(activeTab.value, false);
+    nextTick(() => {
+        drawPaths(historyPaths.value);
+    });
+}
+
 </script>
 
 <template>
@@ -263,7 +274,7 @@ function drawSegment(start, end, width, context, alpha) {
         <div ref="mapContainer" :class="['tab', 'map-container', 'text-center', 'active']" :id="`${activeTab}TabContent`">
             <div class="map-wrapper">
                 <img class="map" :data-mapname="activeTab" :src="mapPaths[activeTab]" width="2592" height="2079"
-                    @click="closeAllTooltips();" @contextmenu.prevent="" @load="imageLoaded = !imageLoaded" draggable="false">
+                    @click="closeAllTooltips();" @contextmenu.prevent="" @load="imageLoadedEvent" draggable="false">
             </div>
         </div>
         <Transition>
@@ -271,7 +282,7 @@ function drawSegment(start, end, width, context, alpha) {
                 <img src="/images/chevron-down.svg" class="invert show-button" @mouseenter="tip.tooltip('Show legend', $event)" @click="state.settings.showLegend = true">
             </div>
         </Transition>
-        <div id="mapCanvas">
+        <div id="mapCanvas" v-if="imageLoaded">
             <canvas ref="borderCanvas" :width="mapSize.width" :height="mapSize.height"></canvas>
             <canvas ref="canvas" :width="mapSize.width" :height="mapSize.height"></canvas>
         </div>
