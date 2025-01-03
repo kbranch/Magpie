@@ -53,8 +53,8 @@ onMounted(() => {
       graphicsOptions.value.sort();
 
       initGlobals(data);
-      init();
       archipelagoInit();
+      init();
     });
 });
 
