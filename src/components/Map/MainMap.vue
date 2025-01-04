@@ -1,11 +1,12 @@
 <script setup>
-import { closeAllTooltips, removeNodes, drawNodes, win, getMapScaling, getLocationCoords } from '@/moduleWrappers.js';
+import { closeAllTooltips, removeNodes, drawNodes, win } from '@/moduleWrappers.js';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
-import { computed, onMounted, ref, watch, nextTick } from 'vue';
+import { computed, ref } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
 import MapLegend from '@/components/Map/MapLegend.vue';
+import HerosPath from './HerosPath.vue';
 
 const tip = useTextTooltipStore();
 const state = useStateStore();
@@ -26,113 +27,27 @@ const mapTooltips = {
     'd0': 'Color Dungeon'
 };
 
+const mapImage = ref(null);
 const imageLoaded = ref(false);
-const mapSize = ref({ width: 0, height: 0 });
-const tabWrapper = ref(null);
 const mapContainer = ref(null);
-const canvas = ref(null);
-const borderCanvas = ref(null);
 const activeTab = ref('overworld');
 const mapPaths = computed(() => maps.reduce((acc, x) => {
     acc[x] = getMapPath(x);
     return acc;
 }, {}));
 
-const mapResizeObserver = new ResizeObserver(updateMapSize, { threshold: 1.0 });
+function setActiveTab(newTab) {
+    activeTab.value = newTab;
 
-const mapScaling = computed(() => {
-    // Dumb way to get things to react to the things we want it to
-    // eslint-disable-next-line no-unused-vars
-    let dummy = mapSize.value.width
-                && mapSize.value.width
-                && state.settings.linkPathAlpha
-                && state.settings.linkPathBorder
-                && state.settings.linkPathColor
-                && state.settings.linkPathEnabled
-                && state.settings.linkPathWidth
-                && state.settings.enableAutotracking
-                && state.linkFaceShowing
-                && imageLoaded.value
-
-    if (mapContainer.value) {
-        const scaling = getMapScaling(mapContainer.value, false);
-        return scaling;
-    }
-
-    return null;
-});
-
-const historyPaths = computed(() => {
-    let maxPoints = state.settings.linkPathLength;
-    let points = [];
-    let paths = [points];
-
-    let scaling = mapScaling.value;
-
-    if (scaling) {
-        let i = 0;
-        let history = state.locationHistory;
-
-        if (history.length > maxPoints && maxPoints < 1000) {
-            history = history.slice(maxPoints * -1);
-        }
-
-        let length = history.length;
-        let lastCoord = null;
-
-        for (const point of history) {
-            let coord = getLocationCoords(point.room, point.x, point.y);
-
-            if (coord.map != activeTab.value
-                || (lastCoord
-                    && pointDistance(lastCoord, coord) > 100)) {
-
-                if (points.length) {
-                    points = [];
-                    paths.push(points);
-                }
-
-                lastCoord = coord;
-                i++;
-
-                continue;
-            }
-
-            points.push({
-                x: coord.x * scaling.x + scaling.offset.x,
-                y: coord.y * scaling.y + scaling.offset.y,
-                alpha: 1.15 - 3 ** (-10 * (0.5 * (i / length) ** 2)),
-            });
-
-            lastCoord = coord;
-            i++;
-        }
-    }
-
-    return paths;
-});
-
-onMounted(() => {
-    mapResizeObserver.observe(tabWrapper.value);
-});
-
-watch(historyPaths, () => {
-    let tempPaths = [...historyPaths.value];
-    if (imageLoaded.value) {
-        setTimeout(() => drawPaths(tempPaths), 250);
-    }
-});
-
-watch(activeTab, (newValue) => {
     removeNodes();
     closeAllTooltips();
 
     imageLoaded.value = false;
 
     if (props.broadcastMode == 'send' && win.broadcastMapTab) {
-        win.broadcastMapTab(newValue);
+        win.broadcastMapTab(newTab);
     }
-})
+}
 
 function getMapPath(map) {
     let mapPath = state.settings.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
@@ -143,115 +58,9 @@ function getMapPath(map) {
     return mapPath;
 }
 
-function updateMapSize() {
-    let rect = tabWrapper.value?.getBoundingClientRect();
-
-    if (!rect) {
-        return;
-    }
-
-    mapSize.value.width = rect.width;
-    mapSize.value.height = rect.height;
-}
-
-// Requires #RRGGBB format
-function hexToRgba(hex) {
-    return {
-        r: parseInt(hex.slice(1, 3), 16),
-        g: parseInt(hex.slice(3, 5), 16),
-        b: parseInt(hex.slice(5, 7), 16),
-        a: 1,
-    };
-}
-
-function rgbaStr(c) {
-    return `rgba(${c.r}, ${c.g}, ${c.b}, ${c.a})`;
-}
-
-function drawPaths(paths) {
-    let borderContext;
-    let context;
-
-    if (canvas.value) {
-        context = canvas.value.getContext("2d");
-        context.clearRect(0, 0, canvas.value.width, canvas.value.height);
-    }
-    else {
-        return;
-    }
-
-    if (borderCanvas.value) {
-        borderContext = borderCanvas.value.getContext("2d");
-        borderContext.clearRect(0, 0, borderCanvas.value.width, borderCanvas.value.height);
-    }
-
-    if (!state.settings.linkPathEnabled
-        || (!state.linkFaceShowing)) {
-        return;
-    }
-
-    context.lineCap = "round";
-    borderContext.lineCap = "round";
-
-    let width = Number(state.settings.linkPathWidth);
-
-    for (const path of paths) {
-        drawPath(path, hexToRgba(state.settings.linkPathBorder), width + 4, borderContext);
-        drawPath(path, hexToRgba(state.settings.linkPathColor), width, context);
-    }
-}
-
-function drawPath(points, color, width, context) {
-    let lastPoint = null;
-    let globalAlpha = Number(state.settings.linkPathAlpha) / 100;
-
-    context.lineWidth = width;
-    context.fillStyle = '#fff';
-
-    for (const point of points) {
-        if (lastPoint){
-            let alpha = point.alpha * globalAlpha;
-            let segmentColor = structuredClone(color);
-            segmentColor.a = alpha;
-
-            context.strokeStyle = rgbaStr(segmentColor);
-
-            drawSegment(lastPoint, point, width, context, alpha);
-        }
-
-        lastPoint = point;
-    }
-}
-
-function pointDistance(start, end) {
-    let diffX = Math.abs(end.x - start.x);
-    let diffY = Math.abs(end.y - start.y);
-    return Math.sqrt(diffX * diffX + diffY * diffY);
-}
-
-function drawSegment(start, end, width, context, alpha) {
-    // Clearing the end cap makes the nodes look a little less weird overall
-    // Alpha threshold chosen by trial and error - doing this makes the line look weird at high alpha values
-    if (alpha < 0.85) {
-        context.beginPath();
-        context.globalCompositeOperation = 'destination-out';
-        context.arc(start.x, start.y, width / 2, 0, Math.PI * 2);
-        context.fill();
-        context.globalCompositeOperation = 'source-over';
-    }
-
-    context.beginPath();
-    context.moveTo(start.x, start.y);
-    context.lineTo(end.x, end.y);
-    context.stroke();
-}
-
 function imageLoadedEvent() {
     imageLoaded.value = true;
     drawNodes(activeTab.value, false);
-    nextTick(() => {
-        drawPaths(historyPaths.value);
-    });
 }
 
 </script>
@@ -259,7 +68,7 @@ function imageLoadedEvent() {
 <template>
 <ul class="nav" id="mapTabs">
     <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == activeTab }]" :data-mapname="map" @mouseenter="tip.tooltip(mapTooltips[map], $event)">
-        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="activeTab = map">
+        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="setActiveTab(map)">
             {{ map }}
         </button>
     </li>
@@ -271,10 +80,10 @@ function imageLoadedEvent() {
 </ul>
 
 <div class="tabs" id="tabContents">
-    <div ref="tabWrapper" id="tabWrapper">
+    <div id="tabWrapper">
         <div ref="mapContainer" :class="['tab', 'map-container', 'text-center', 'active']" :id="`${activeTab}TabContent`">
             <div class="map-wrapper">
-                <img class="map" :data-mapname="activeTab" :src="mapPaths[activeTab]" width="2592" height="2079"
+                <img ref="mapImage" class="map" :data-mapname="activeTab" :src="mapPaths[activeTab]" width="2592" height="2079"
                     @click="closeAllTooltips();" @contextmenu.prevent="" @load="imageLoadedEvent" draggable="false">
             </div>
         </div>
@@ -283,10 +92,7 @@ function imageLoadedEvent() {
                 <img src="/images/chevron-down.svg" class="invert show-button" @mouseenter="tip.tooltip('Show legend', $event)" @click="state.settings.showLegend = true">
             </div>
         </Transition>
-        <div id="mapCanvas" v-if="imageLoaded">
-            <canvas ref="borderCanvas" :width="mapSize.width" :height="mapSize.height"></canvas>
-            <canvas ref="canvas" :width="mapSize.width" :height="mapSize.height"></canvas>
-        </div>
+        <HerosPath v-if="imageLoaded" :map-image="mapImage" :map-container="mapContainer" :active-map="activeTab" />
     </div>
 
     <MapLegend />
@@ -298,19 +104,6 @@ function imageLoadedEvent() {
 <style scoped>
 #tabWrapper {
     position: relative;
-}
-
-canvas {
-    position: absolute;
-}
-
-#mapCanvas {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    pointer-events: none;
 }
 
 .v-enter-active,
