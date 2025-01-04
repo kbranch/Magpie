@@ -52,6 +52,7 @@ const mapScaling = computed(() => {
                 && state.settings.linkPathWidth
                 && state.settings.enableAutotracking
                 && state.linkFaceShowing
+                && imageLoaded.value
 
     if (mapContainer.value) {
         const scaling = getMapScaling(mapContainer.value, false);
