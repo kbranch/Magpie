@@ -27,7 +27,7 @@ jobs:
         with:
           submodules: recursive
       - name: Remove LADXR gfx
-        run: del /s /q LADXR/gfx
+        run: rm -r -fo LADXR/gfx
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
