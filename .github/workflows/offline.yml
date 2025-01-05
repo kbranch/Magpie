@@ -1,0 +1,53 @@
+name: Build offline version
+
+on: workflow_dispatch
+
+jobs:
+  build-offline-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout all the submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Remove LADXR gfx
+        run: rm -rf LADXR/gfx
+      - name: Create executable
+        uses: sayyid5416/pyinstaller@v1
+        with:
+          python_ver: '3.12'
+          spec: 'magpie-data.spec'
+          requirements: 'requirements.txt'
+          upload_exe_with_name: 'magpie-offline-linux'
+  build-offline-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout all the submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Remove LADXR gfx
+        run: rm -r -fo LADXR/gfx
+      - name: Create executable
+        uses: sayyid5416/pyinstaller@v1
+        with:
+          python_ver: '3.12'
+          spec: 'magpie-data.spec'
+          requirements: 'requirements.txt'
+          upload_exe_with_name: 'magpie-offline-windows'
+  build-offline-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout all the submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Remove LADXR gfx
+        run: rm -rf LADXR/gfx
+      - name: Create executable
+        uses: sayyid5416/pyinstaller@v1
+        with:
+          python_ver: '3.12'
+          spec: 'magpie-data.spec'
+          requirements: 'requirements.txt'
+          upload_exe_with_name: 'magpie-offline-macos'
