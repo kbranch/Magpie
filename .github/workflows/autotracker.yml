@@ -35,7 +35,7 @@ jobs:
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
           upload_exe_with_name: 'magpie-autotracker'
-  build-autotracker-windows:
+  build-autotracker-macos:
     runs-on: macos-latest
     steps:
       - name: Checkout all the submodules
