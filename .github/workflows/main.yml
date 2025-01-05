@@ -6,10 +6,12 @@ jobs:
   build-autotracker-linux:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout all the submodules
+      - name: Checkout all the submodules
         uses: actions/checkout@v2
         with:
           submodules: recursive
+      - name: Remove LADXR gfx
+        run: rm -rf LADXR/gfx
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
@@ -24,6 +26,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
+      - name: Remove LADXR gfx
+        run: rm -rf LADXR/gfx
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
