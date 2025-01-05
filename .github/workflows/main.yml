@@ -6,6 +6,10 @@ jobs:
   build-autotracker-linux:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout all the submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Create Executable
         uses: sayyid5416/pyinstaller@v1
         with:
