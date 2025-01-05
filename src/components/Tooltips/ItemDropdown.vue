@@ -20,6 +20,8 @@ watch(props, () => {
 })
 
 const itemList = [
+    ['GOOD', 'Something Good'],
+    ['AP_ITEM', 'Archipelago Item'],
     ['SHIELD', 'Shield'],
     ['SWORD', 'Sword'],
     ['TOADSTOOL', 'Toadstool'],
