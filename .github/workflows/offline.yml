@@ -14,7 +14,7 @@ jobs:
       #   run: npm install && npm run build
       - name: Remove cruft
         run: rm -rf LADXR/gfx node_modules
-        run: touch vue-dist
+      - run: touch vue-dist
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
