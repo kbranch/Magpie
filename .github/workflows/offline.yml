@@ -13,12 +13,14 @@ jobs:
       - name: Build Vue
         run: npm install && npm run build
       - name: Remove cruft
-        run: rm -rf LADXR/gfx/* node_modules
+        run: rm -rf LADXR/gfx node_modules
+      - run: mkdir LADXR/gfx
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
           name: magpie
           path: '.'
+
   build-offline-linux:
     needs: prep-magpie
     runs-on: ubuntu-latest
@@ -61,7 +63,7 @@ jobs:
           spec: 'magpie-data.spec'
           requirements: 'requirements.txt'
           clean_checkout: false
-      - run: copy scripts\magpie.sh dist
+      - run: copy scripts\magpie.bat dist
       - name: Upload the whole thing
         uses: actions/upload-artifact@v4
         with:
