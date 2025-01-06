@@ -15,6 +15,7 @@ jobs:
       - name: Remove cruft
         run: rm -rf LADXR/gfx node_modules
       - run: mkdir LADXR/gfx
+      - run: touch LADXR/gfx/keepme
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
