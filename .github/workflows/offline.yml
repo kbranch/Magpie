@@ -36,7 +36,13 @@ jobs:
           spec: 'magpie-data.spec'
           requirements: 'requirements.txt'
           clean_checkout: false
-          upload_exe_with_name: 'magpie-offline-linux'
+      - run: cp scripts/magpie.sh dist
+      - name: Upload the whole thing
+        uses: actions/upload-artifact@v4
+        with:
+          name: magpie-offline-linux
+          path: 'dist'
+
   build-offline-windows:
     needs: prep-magpie
     runs-on: windows-latest
