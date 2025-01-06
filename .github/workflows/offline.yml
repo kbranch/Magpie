@@ -3,7 +3,7 @@ name: Build offline version
 on: workflow_dispatch
 
 jobs:
-  build-offline-linux:
+  prep-magpie:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout all the submodules
@@ -14,8 +14,20 @@ jobs:
         run: rm -rf LADXR/gfx
       - name: Build Vue
         run: npm install && npm run build
-      - name: Debug
-        run: chmod -R 755 vue-dist
+      - name: Upload Magpie
+        uses: actions/upload-artifact@v4
+        with:
+          name: magpie
+          path: '.'
+  build-offline-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
+        with:
+          name: magpie
+          path: '.'
+      - run: ls -Rl .
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
