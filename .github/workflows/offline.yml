@@ -14,6 +14,8 @@ jobs:
         run: rm -rf LADXR/gfx
       - name: Build Vue
         run: npm install && npm run build
+      - name: Debug
+        run: ls -R vue-dist
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
