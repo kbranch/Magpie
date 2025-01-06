@@ -19,8 +19,9 @@ jobs:
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
-          name: magpie
+          name: magpie-source
           path: '.'
+          include-hidden-files: true
 
   build-offline-linux:
     needs: prep-magpie
@@ -29,7 +30,7 @@ jobs:
       - name: Download Magpie
         uses: actions/download-artifact@v4
         with:
-          name: magpie
+          name: magpie-source
           path: '.'
       - name: Create executable
         uses: kbranch/pyinstaller-action@main
@@ -54,7 +55,7 @@ jobs:
       - name: Download Magpie
         uses: actions/download-artifact@v4
         with:
-          name: magpie
+          name: magpie-source
           path: '.'
       - name: Create executable
         uses: kbranch/pyinstaller-action@main
@@ -78,7 +79,7 @@ jobs:
       - name: Download Magpie
         uses: actions/download-artifact@v4
         with:
-          name: magpie
+          name: magpie-source
           path: '.'
       - name: Create executable
         uses: kbranch/pyinstaller-action@main
