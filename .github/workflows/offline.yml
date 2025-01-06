@@ -145,28 +145,3 @@ jobs:
         with:
           name: magpie-offline-windows-ndi
           path: 'dist'
-
-  build-offline-macos-ndi:
-    needs: prep-magpie
-    runs-on: macos-latest
-    steps:
-      - name: Download Magpie
-        uses: actions/download-artifact@v4
-        with:
-          name: magpie-source
-          path: '.'
-      - name: Create executable
-        uses: kbranch/pyinstaller-action@main
-        with:
-          python_ver: '3.10'
-          pyinstaller_ver: '==5.13.2'
-          spec: 'magpie-data.spec'
-          requirements: 'requirements-ndi.txt'
-          clean_checkout: false
-      - run: cp scripts/magpie.sh dist
-      - run: chmod +x dist/magpie.sh
-      - name: Upload the whole thing
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-offline-macos-ndi
-          path: 'dist'
