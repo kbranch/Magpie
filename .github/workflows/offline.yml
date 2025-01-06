@@ -15,7 +15,7 @@ jobs:
       - name: Build Vue
         run: npm install && npm run build
       - name: Debug
-        run: ls -Rl /home/runner/work/Magpie/Magpie/vue-dist
+        run: chmod -R 755 vue-dist
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
