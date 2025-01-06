@@ -33,7 +33,6 @@ jobs:
       - run: ls -Rl .
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
-        working-directory: 'magpie-built'
         with:
           python_ver: '3.12'
           spec: 'magpie-data.spec'
