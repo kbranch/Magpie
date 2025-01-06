@@ -32,7 +32,7 @@ jobs:
       - run: chmod -R 755 .
       - run: ls -Rl vue-dist
       - name: Create executable
-        uses: sayyid5416/pyinstaller@v1
+        uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
           spec: 'magpie-data.spec'
