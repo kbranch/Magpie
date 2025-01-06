@@ -29,7 +29,8 @@ jobs:
           name: magpie
           path: '.'
       - run: pwd
-      - run: ls -Rl .
+      - run: chmod -R 755 vue-dist
+      - run: ls -Rl vue-dist
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
