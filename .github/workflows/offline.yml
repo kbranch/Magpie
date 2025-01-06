@@ -10,10 +10,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Remove LADXR gfx
-        run: rm -rf LADXR/gfx
       - name: Build Vue
         run: npm install && npm run build
+      - name: Remove cruft
+        run: rm -rf LADXR/gfx node_modules
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
@@ -27,10 +27,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: magpie
-          path: '.'
+          path: 'magpie-built'
+      - run: pwd
+      - run: ls -Rl magpie-built
       - run: ls -Rl .
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
+        working-directory: 'magpie-built'
         with:
           python_ver: '3.12'
           spec: 'magpie-data.spec'
