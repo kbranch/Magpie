@@ -20,6 +20,7 @@ jobs:
           name: magpie
           path: '.'
   build-offline-linux:
+    needs: prep-magpie
     runs-on: ubuntu-latest
     steps:
       - name: Download Magpie
@@ -36,6 +37,7 @@ jobs:
           requirements: 'requirements.txt'
           upload_exe_with_name: 'magpie-offline-linux'
   build-offline-windows:
+    needs: prep-magpie
     runs-on: windows-latest
     steps:
       - name: Checkout all the submodules
@@ -54,6 +56,7 @@ jobs:
           requirements: 'requirements.txt'
           upload_exe_with_name: 'magpie-offline-windows'
   build-offline-macos:
+    needs: prep-magpie
     runs-on: macos-latest
     steps:
       - name: Checkout all the submodules
