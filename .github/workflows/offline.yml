@@ -10,10 +10,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-      - name: Build Vue
-        run: npm install && npm run build
+      # - name: Build Vue
+      #   run: npm install && npm run build
       - name: Remove cruft
         run: rm -rf LADXR/gfx node_modules
+        run: touch vue-dist
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
