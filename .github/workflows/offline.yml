@@ -32,6 +32,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
+          pyinstaller_ver: '==5.7'
           spec: 'magpie-data.spec'
           requirements: 'requirements.txt'
           clean_checkout: false
