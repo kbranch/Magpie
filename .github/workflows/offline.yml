@@ -27,10 +27,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: magpie
-          path: '~/build'
+          path: '.'
       - run: pwd
-      - run: chmod -R 755 ~/build
-      - run: ls -Rl ~/build/vue-dist
+      - run: chmod -R 755 .
+      - run: ls -Rl vue-dist
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
