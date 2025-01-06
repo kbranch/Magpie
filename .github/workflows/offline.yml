@@ -13,7 +13,7 @@ jobs:
       - name: Build Vue
         run: npm install && npm run build
       - name: Remove cruft
-        run: rm -rf LADXR/gfx node_modules
+        run: rm -rf LADXR/gfx/* node_modules
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
@@ -37,6 +37,7 @@ jobs:
           requirements: 'requirements.txt'
           clean_checkout: false
       - run: cp scripts/magpie.sh dist
+      - run: chmod +x dist/magpie.sh
       - name: Upload the whole thing
         uses: actions/upload-artifact@v4
         with:
@@ -56,10 +57,17 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
+          pyinstaller_ver: '==5.13.2'
           spec: 'magpie-data.spec'
           requirements: 'requirements.txt'
           clean_checkout: false
-          upload_exe_with_name: 'magpie-offline-windows'
+      - run: copy scripts\magpie.sh dist
+      - name: Upload the whole thing
+        uses: actions/upload-artifact@v4
+        with:
+          name: magpie-offline-windows
+          path: 'dist'
+
   build-offline-macos:
     needs: prep-magpie
     runs-on: macos-latest
@@ -73,7 +81,14 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
+          pyinstaller_ver: '==5.13.2'
           spec: 'magpie-data.spec'
           requirements: 'requirements.txt'
           clean_checkout: false
-          upload_exe_with_name: 'magpie-offline-macos'
+      - run: cp scripts/magpie.sh dist
+      - run: chmod +x dist/magpie.sh
+      - name: Upload the whole thing
+        uses: actions/upload-artifact@v4
+        with:
+          name: magpie-offline-macos
+          path: 'dist'
