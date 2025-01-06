@@ -8,7 +8,7 @@ a = Analysis(
     ['magpie.py'],
     pathex=[],
     binaries=[],
-    datas=[('magpie-built/LADXR', 'LADXR/'), ('magpie-built/templates', 'templates/'), ('magpie-built/static', 'static/'), ('magpie-built/version', '.'), ('magpie-built/vue-dist', 'vue-dist/')],
+    datas=[('LADXR', '.'), ('templates', '.'), ('static', '.'), ('version', '.'), ('vue-dist', '.')],
     hiddenimports=['tkinter', 'PIL._tkinter_finder'],
     hookspath=[],
     hooksconfig={},

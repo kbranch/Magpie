@@ -27,9 +27,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: magpie
-          path: 'magpie-built'
+          path: '.'
       - run: pwd
-      - run: ls -Rl magpie-built
       - run: ls -Rl .
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
