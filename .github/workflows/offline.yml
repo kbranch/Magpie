@@ -12,6 +12,8 @@ jobs:
           submodules: recursive
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
+      - name: Build Vue
+        run: npm install && npm run build
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
@@ -28,6 +30,8 @@ jobs:
           submodules: recursive
       - name: Remove LADXR gfx
         run: rm -r -fo LADXR/gfx
+      - name: Build Vue
+        run: npm install; npm run build
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
@@ -44,6 +48,8 @@ jobs:
           submodules: recursive
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
+      - name: Build Vue
+        run: npm install && npm run build
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
