@@ -22,6 +22,7 @@ jobs:
         id: create-release
         with:
           draft: true
+
   build-autotracker-linux:
     runs-on: ubuntu-latest
     needs: parse-version
@@ -40,7 +41,8 @@ jobs:
           requirements: 'autotracking/requirements.txt'
           # upload_exe_with_name: ${{ format('magpie-autotracker-linux-{0}', needs.parse-version.outputs.version) }}
       - run: mv dist/magpie-autotracker dist/magpie-autotracker-linux
-      - run: ${{ format('gh upload {0} dist/magpie-autotracker-linux', github.ref_name) }}
+      - run: ${{ format('gh release upload {0} dist/magpie-autotracker-linux', github.ref_name) }}
+
   build-autotracker-windows:
     runs-on: windows-latest
     needs: parse-version
@@ -59,7 +61,8 @@ jobs:
           requirements: 'autotracking/requirements.txt'
           # upload_exe_with_name: ${{ format('magpie-autotracker-windows-{0}', needs.parse-version.outputs.version) }}
       - run: mv dist/magpie-autotracker dist\magpie-autotracker-linux
-      - run: ${{ format('gh upload {0} dist\magpie-autotracker-linux', github.ref_name) }}
+      - run: ${{ format('gh release upload {0} dist\magpie-autotracker-linux', github.ref_name) }}
+
   build-autotracker-macos:
     runs-on: macos-latest
     needs: parse-version
@@ -78,4 +81,4 @@ jobs:
           requirements: 'autotracking/requirements.txt'
           # upload_exe_with_name: ${{ format('magpie-autotracker-macos-{0}', needs.parse-version.outputs.version) }}
       - run: mv dist/magpie-autotracker dist/magpie-autotracker-linux
-      - run: ${{ format('gh upload {0} dist/magpie-autotracker-linux', github.ref_name) }}
+      - run: ${{ format('gh release upload {0} dist/magpie-autotracker-linux', github.ref_name) }}
