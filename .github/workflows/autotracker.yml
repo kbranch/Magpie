@@ -17,6 +17,7 @@ jobs:
           submodules: recursive
       - id: get-version
         run: tag=`git describe --exact-match --tags`; version="${tag/autotracker-/}"
+      - run: echo $version
   build-autotracker-linux:
     runs-on: ubuntu-latest
     needs: parse-version
@@ -27,6 +28,7 @@ jobs:
           submodules: recursive
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
+      - run: ${{ format('echo {0}', needs.parse-version.outputs.version) }}
       - name: Create executable
         uses: sayyid5416/pyinstaller@v1
         with:
