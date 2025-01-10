@@ -34,16 +34,17 @@ jobs:
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
       - name: Create executable
+        id: build
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: mv dist/magpie-autotracker dist/magpie-autotracker-linux
+      - run: ${{ format('mv "{0}" magpie-autotracker-linux', steps.build.outputs.executable_path) }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ${{ format('gh release upload {0} dist/magpie-autotracker-linux', github.ref_name) }}
+        run: ${{ format('gh release upload {0} magpie-autotracker-linux', github.ref_name) }}
 
   build-autotracker-windows:
     runs-on: windows-latest
@@ -56,16 +57,17 @@ jobs:
       - name: Remove LADXR gfx
         run: rm -r -fo LADXR/gfx
       - name: Create executable
+        id: build
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: mv dist/magpie-autotracker dist\magpie-autotracker-windows
+      - run: ${{ format('mv "{0}" magpie-autotracker-windows', steps.build.outputs.executable_path) }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ${{ format('gh release upload {0} dist/magpie-autotracker-windows', github.ref_name) }}
+        run: ${{ format('gh release upload {0} magpie-autotracker-windows', github.ref_name) }}
 
   build-autotracker-macos:
     runs-on: macos-latest
@@ -78,13 +80,14 @@ jobs:
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
       - name: Create executable
+        id: build
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: mv dist/magpie-autotracker dist/magpie-autotracker-macos
+      - run: ${{ format('mv "{0}" magpie-autotracker-macos', steps.build.outputs.executable_path) }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ${{ format('gh release upload {0} dist/magpie-autotracker-macos', github.ref_name) }}
+        run: ${{ format('gh release upload {0} magpie-autotracker-macos', github.ref_name) }}
