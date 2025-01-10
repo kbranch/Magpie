@@ -56,106 +56,111 @@ jobs:
           clean_checkout: false
       - run: cp scripts/magpie.sh dist
       - run: chmod +x dist/magpie.sh
-      - name: Upload the whole thing
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-offline-linux
-          path: 'dist'
+      - run: cd dist; zip -r magpie-local-linux.zip .
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} dist/magpie-local-linux.zip', github.ref_name) }}
+      # - name: Upload the whole thing
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: magpie-offline-linux
+      #     path: 'dist'
 
-  build-offline-windows:
-    needs: prep-magpie
-    runs-on: windows-latest
-    steps:
-      - name: Download Magpie
-        uses: actions/download-artifact@v4
-        with:
-          name: magpie-source
-          path: '.'
-      - name: Create executable
-        uses: kbranch/pyinstaller-action@main
-        with:
-          python_ver: '3.12'
-          pyinstaller_ver: '==5.13.2'
-          spec: 'magpie-data.spec'
-          requirements: 'requirements-no-ndi.txt'
-          clean_checkout: false
-      - run: copy scripts\magpie.bat dist
-      - name: Upload the whole thing
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-offline-windows
-          path: 'dist'
+  # build-offline-windows:
+  #   needs: prep-magpie
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Download Magpie
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: magpie-source
+  #         path: '.'
+  #     - name: Create executable
+  #       uses: kbranch/pyinstaller-action@main
+  #       with:
+  #         python_ver: '3.12'
+  #         pyinstaller_ver: '==5.13.2'
+  #         spec: 'magpie-data.spec'
+  #         requirements: 'requirements-no-ndi.txt'
+  #         clean_checkout: false
+  #     - run: copy scripts\magpie.bat dist
+  #     - name: Upload the whole thing
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: magpie-offline-windows
+  #         path: 'dist'
 
-  build-offline-macos:
-    needs: prep-magpie
-    runs-on: macos-latest
-    steps:
-      - name: Download Magpie
-        uses: actions/download-artifact@v4
-        with:
-          name: magpie-source
-          path: '.'
-      - name: Create executable
-        uses: kbranch/pyinstaller-action@main
-        with:
-          python_ver: '3.12'
-          pyinstaller_ver: '==5.13.2'
-          spec: 'magpie-data.spec'
-          requirements: 'requirements-no-ndi.txt'
-          clean_checkout: false
-      - run: cp scripts/magpie.sh dist
-      - run: chmod +x dist/magpie.sh
-      - name: Upload the whole thing
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-offline-macos
-          path: 'dist'
+  # build-offline-macos:
+  #   needs: prep-magpie
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Download Magpie
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: magpie-source
+  #         path: '.'
+  #     - name: Create executable
+  #       uses: kbranch/pyinstaller-action@main
+  #       with:
+  #         python_ver: '3.12'
+  #         pyinstaller_ver: '==5.13.2'
+  #         spec: 'magpie-data.spec'
+  #         requirements: 'requirements-no-ndi.txt'
+  #         clean_checkout: false
+  #     - run: cp scripts/magpie.sh dist
+  #     - run: chmod +x dist/magpie.sh
+  #     - name: Upload the whole thing
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: magpie-offline-macos
+  #         path: 'dist'
 
-  build-offline-linux-ndi:
-    needs: prep-magpie
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Magpie
-        uses: actions/download-artifact@v4
-        with:
-          name: magpie-source
-          path: '.'
-      - name: Create executable
-        uses: kbranch/pyinstaller-action@main
-        with:
-          python_ver: '3.10'
-          pyinstaller_ver: '==5.13.2'
-          spec: 'magpie-data.spec'
-          requirements: 'requirements-ndi.txt'
-          clean_checkout: false
-      - run: cp scripts/magpie.sh dist
-      - run: chmod +x dist/magpie.sh
-      - name: Upload the whole thing
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-offline-linux-ndi
-          path: 'dist'
+  # build-offline-linux-ndi:
+  #   needs: prep-magpie
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Download Magpie
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: magpie-source
+  #         path: '.'
+  #     - name: Create executable
+  #       uses: kbranch/pyinstaller-action@main
+  #       with:
+  #         python_ver: '3.10'
+  #         pyinstaller_ver: '==5.13.2'
+  #         spec: 'magpie-data.spec'
+  #         requirements: 'requirements-ndi.txt'
+  #         clean_checkout: false
+  #     - run: cp scripts/magpie.sh dist
+  #     - run: chmod +x dist/magpie.sh
+  #     - name: Upload the whole thing
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: magpie-offline-linux-ndi
+  #         path: 'dist'
 
-  build-offline-windows-ndi:
-    needs: prep-magpie
-    runs-on: windows-latest
-    steps:
-      - name: Download Magpie
-        uses: actions/download-artifact@v4
-        with:
-          name: magpie-source
-          path: '.'
-      - name: Create executable
-        uses: kbranch/pyinstaller-action@main
-        with:
-          python_ver: '3.10'
-          pyinstaller_ver: '==5.13.2'
-          spec: 'magpie-data.spec'
-          requirements: 'requirements-ndi.txt'
-          clean_checkout: false
-      - run: copy scripts\magpie.bat dist
-      - name: Upload the whole thing
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-offline-windows-ndi
-          path: 'dist'
+  # build-offline-windows-ndi:
+  #   needs: prep-magpie
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Download Magpie
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: magpie-source
+  #         path: '.'
+  #     - name: Create executable
+  #       uses: kbranch/pyinstaller-action@main
+  #       with:
+  #         python_ver: '3.10'
+  #         pyinstaller_ver: '==5.13.2'
+  #         spec: 'magpie-data.spec'
+  #         requirements: 'requirements-ndi.txt'
+  #         clean_checkout: false
+  #     - run: copy scripts\magpie.bat dist
+  #     - name: Upload the whole thing
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: magpie-offline-windows-ndi
+  #         path: 'dist'
