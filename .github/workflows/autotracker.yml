@@ -9,16 +9,14 @@ jobs:
   parse-version:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get-version.outputs.versionNo }}
+      version: ${{ steps.get-version.outputs.version }}
     steps:
       - name: Checkout all the submodules
         uses: actions/checkout@v2
         with:
           submodules: recursive
       - id: get-version
-        run: tag=`git describe --exact-match --tags`; versionNo="${tag/autotracker-/}"
-      - run: echo $versionNo
-      - run: echo $tag
+        run: tag=`git describe --exact-match --tags`; echo "version=${tag/autotracker-/}" >> "$GITHUB_OUTPUT"
   build-autotracker-linux:
     runs-on: ubuntu-latest
     needs: parse-version
