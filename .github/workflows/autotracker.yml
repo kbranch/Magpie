@@ -40,7 +40,7 @@ jobs:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: ${{ format('mv "{0}/magpie-autotracker" magpie-autotracker-linux', steps.build.outputs.executable_path) }}
+      - run: ${{ format('mv "{0}/magpie-autotracker" ./magpie-autotracker-linux', steps.build.outputs.executable_path) }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -63,7 +63,7 @@ jobs:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: ${{ format('mv "{0}\magpie-autotracker" magpie-autotracker-windows', steps.build.outputs.executable_path) }}
+      - run: ${{ format('mv "{0}\magpie-autotracker" .\magpie-autotracker-windows', steps.build.outputs.executable_path) }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -86,7 +86,7 @@ jobs:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: ${{ format('mv "{0}/magpie-autotracker" magpie-autotracker-macos', steps.build.outputs.executable_path) }}
+      - run: ${{ format('mv "{0}/magpie-autotracker" ./magpie-autotracker-macos', steps.build.outputs.executable_path) }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
