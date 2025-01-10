@@ -28,7 +28,7 @@ jobs:
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: ${{ format('gh release upload {0} . #magpie-source', github.ref_name) }}
+        run: ${{ format('gh release upload {0} . \#magpie-source', github.ref_name) }}
       - name: Upload Magpie
         uses: actions/upload-artifact@v4
         with:
