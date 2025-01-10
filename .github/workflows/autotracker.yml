@@ -11,6 +11,10 @@ jobs:
     outputs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
+      - name: Checkout all the submodules
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - id: get-version
         run: tag=`git describe --exact-match --tags`; version="${tag/autotracker-/}"
   build-autotracker-linux:
