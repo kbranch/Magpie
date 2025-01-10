@@ -61,7 +61,7 @@ jobs:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: mv dist/magpie-autotracker dist\magpie-autotracker-linux
+      - run: mv dist/magpie-autotracker dist\magpie-autotracker-windows
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -83,7 +83,7 @@ jobs:
           python_ver: '3.12'
           spec: 'magpie-autotracker.spec'
           requirements: 'autotracking/requirements.txt'
-      - run: mv dist/magpie-autotracker dist/magpie-autotracker-linux
+      - run: mv dist/magpie-autotracker dist/magpie-autotracker-macos
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
