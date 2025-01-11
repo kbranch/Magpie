@@ -124,7 +124,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.10'
-          pyinstaller_ver: '==6.6.0'
+          pyinstaller_ver: '==6.3.0'
           spec: 'magpie-data.spec'
           requirements: 'requirements-ndi.txt'
           clean_checkout: false
