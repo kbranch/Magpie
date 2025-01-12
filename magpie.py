@@ -13,7 +13,8 @@ try:
     from flaskwebgui import FlaskUI
     webGuiLoaded = True
 except:
-    webGuiLoaded = True
+    logging.error(f'Error importing flaskwebgui: {traceback.format_exc()}')
+    webGuiLoaded = False
 
 import endpoints
 import localSettings

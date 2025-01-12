@@ -19,8 +19,11 @@ jobs:
         run: rm -rf LADXR/gfx node_modules
       - run: mkdir LADXR/gfx
       - run: touch LADXR/gfx/keepme
-      - id: get-version
+      - id: version
         run: tag=`git describe --exact-match --tags`; echo "version=${tag/autotracker-/}" >> "$GITHUB_OUTPUT"
+      - id: build
+        run: echo build=`git rev-list --count HEAD` >> "$GITHUB_OUTPUT"
+      - run: ${{ format('echo "{ \"build\":\"{0}\",\"version\":\"{1}\" }" > version', steps.build.outputs.build, steps.version.outputs.version) }}
       - run: zip -r magpie-source.zip .
       - uses: ncipollo/release-action@v1
         id: create-release
