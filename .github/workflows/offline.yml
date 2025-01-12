@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout all the submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
+          fetch-depth: 0
       - name: Build Vue
         run: npm install && npm run build
       - name: Remove cruft
@@ -20,7 +21,7 @@ jobs:
       - run: mkdir LADXR/gfx
       - run: touch LADXR/gfx/keepme
       - id: version
-        run: tag=`git describe --exact-match --tags`; echo "version=${tag/autotracker-/}" >> "$GITHUB_OUTPUT"
+        run: tag=`git describe --exact-match --tags`; echo "version=${tag/magpie-/}" >> "$GITHUB_OUTPUT"
       - id: build
         run: echo build=`git rev-list --count HEAD` >> "$GITHUB_OUTPUT"
       - run: echo { "build":"${{ steps.build.outputs.build }}","version":"${{ steps.version.outputs.version }}" } > version
