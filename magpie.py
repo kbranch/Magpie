@@ -8,7 +8,13 @@ import logging
 import traceback
 import threading
 import argparse
-from flaskwebgui import FlaskUI
+
+try:
+    from flaskwebgui import FlaskUI
+    webGuiLoaded = True
+except:
+    logging.error(f'Error importing flaskwebgui: {traceback.format_exc()}')
+    webGuiLoaded = False
 
 import endpoints
 import localSettings
@@ -35,7 +41,7 @@ if sys.platform.lower().startswith('win'):
         if whnd != 0:
             ctypes.windll.user32.ShowWindow(whnd, 1)
 
-def startLocal(width, height, settings, debug):
+def startLocal(width, height, settings, debug, noGui):
     if width == None:
         width = settings['width']
     else:
@@ -66,17 +72,23 @@ def startLocal(width, height, settings, debug):
             print(f'Found Chrome at {browserPath}')
             break
     
-    ui = FlaskUI(
-        server=startFlask,
-        server_kwargs={
-            "app": endpoints.app,
-            "port": 16114,
-        },
-        width=width,
-        height=height
-    )
+    if webGuiLoaded and not noGui:
+        ui = FlaskUI(
+            server=startFlask,
+            server_kwargs={
+                "app": endpoints.app,
+                "port": 16114,
+            },
+            width=width,
+            height=height
+        )
 
-    ui.run()
+        ui.run()
+    else:
+        startFlask(app=endpoints.app, port=16114)
+        
+        while True:
+            time.sleep(1)
 
 def startFlask(**serverKwargs):
     app = serverKwargs.pop("app", None)
@@ -145,7 +157,9 @@ def startBroadcaster():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
+    parser.add_argument('--no-gui', dest='noGui', action='store_true', help='Skip the GUI when running as a local application')
     parser.add_argument('--nested', dest='nested', action='store_true', help='Magpie is being run from a directory one level higher up the tree')
+    parser.add_argument('--double-nested', dest='doubleNested', action='store_true', help='Magpie is being run from a directory two levels higher up the tree')
     parser.add_argument('--debug', dest='debug', action='store_true', help='Prevent the command prompt from being hidden')
     parser.add_argument('--width', dest='width', action='store', type=int, help='Local application starting window width')
     parser.add_argument('--height', dest='height', action='store', type=int, help='Local application starting window height')
@@ -153,6 +167,7 @@ def main():
 
     endpoints.app.config['local'] = args.local
     localSettings.nested = args.nested
+    localSettings.doubleNested = args.doubleNested
 
     if endpoints.app.config['local']:
         import broadcastView
@@ -162,7 +177,7 @@ def main():
 
         settings = localSettings.readSettings()
 
-        thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug))
+        thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug, args.noGui))
         thread.start()
 
         broadcastThread = threading.Thread(target=startBroadcaster)

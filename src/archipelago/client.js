@@ -175,7 +175,7 @@ function parseCheckedChecks(apCheckIds, diff) {
 }
 
 let connectionInProgress = false;
-function archipelagoConnect(server, slotName, password, gameName="Links Awakening DX") {
+function archipelagoConnect(server, slotName, password, gameName="Links Awakening DX Beta") {
     if (connectionInProgress) {
         return;
     }

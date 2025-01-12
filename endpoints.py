@@ -187,7 +187,9 @@ def renderItems():
 def serveVersion():
     try:
         version = {}
-        version['magpie'] = getVersion()
+        magpieVersion = getVersion()
+        version['magpie'] = magpieVersion['version']
+        version['magpieBuild'] = magpieVersion['build']
         version['autotracker'] = getAutotrackerVersion()
         version['api'] = '1.32'
 
@@ -717,24 +719,22 @@ def vueInit():
         if remoteVersion:
             remoteVersion = remoteVersion['magpie']
 
-    return json.dumps(
-        {
-            "flags": [x.__dict__ for x in flags],
-            "args": args.__dict__,
-            "defaultSettings": defaultSettings.__dict__,
-            "jsonSettingsOverrides": settingsOverrides,
-            "jsonArgsOverrides": argsOverrides,
-            "local": app.config["local"],
-            "graphicsOptions": LocalSettings.graphicsPacks(),
-            "version": version,
-            "remoteVersion": remoteVersion,
-            "diskSettings": getDiskSettings(jsonify=False),
-            "hostname": app.config["hostname"],
-            "allowAutotracking": True,
-            "allowMap": True,
-            "allowItems": True,
-            "players": [""],
-            "broadcastMode": "send",
-            "ndiEnabled": ndiEnabled,
-        }
-    )
+    return json.dumps({
+        "flags": [x.__dict__ for x in flags],
+        "args": args.__dict__,
+        "defaultSettings": defaultSettings.__dict__,
+        "jsonSettingsOverrides": settingsOverrides,
+        "jsonArgsOverrides": argsOverrides,
+        "local": app.config["local"],
+        "graphicsOptions": LocalSettings.graphicsPacks(),
+        "version": version,
+        "remoteVersion": remoteVersion,
+        "diskSettings": getDiskSettings(jsonify=False),
+        "hostname": app.config["hostname"],
+        "allowAutotracking": True,
+        "allowMap": True,
+        "allowItems": True,
+        "players": [""],
+        "broadcastMode": "send",
+        "ndiEnabled": ndiEnabled,
+    })

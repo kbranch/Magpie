@@ -1,53 +1,215 @@
 name: Build offline version
 
-on: workflow_dispatch
+on:
+  push:
+    tags:
+      - magpie-*
 
 jobs:
-  build-offline-linux:
+  prep-magpie:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout all the submodules
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: recursive
-      - name: Remove LADXR gfx
-        run: rm -rf LADXR/gfx
+          fetch-depth: 0
+      - name: Build Vue
+        run: npm install && npm run build
+      - name: Remove cruft
+        run: rm -rf LADXR/gfx node_modules
+      - run: mkdir LADXR/gfx
+      - run: touch LADXR/gfx/keepme
+      - id: version
+        run: tag=`git describe --exact-match --tags`; echo "version=${tag/magpie-/}" >> "$GITHUB_OUTPUT"
+      - id: build
+        run: echo build=`git rev-list --count HEAD` >> "$GITHUB_OUTPUT"
+      - run: echo { \"build\":\"${{ steps.build.outputs.build }}\",\"version\":\"${{ steps.version.outputs.version }}\" } > version
+      - run: zip -r magpie-source.zip .
+      - uses: ncipollo/release-action@v1
+        id: create-release
+        with:
+          draft: true
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} magpie-source.zip', github.ref_name) }}
+      - name: Upload Magpie
+        uses: actions/upload-artifact@v4
+        with:
+          name: magpie-source
+          path: '.'
+          include-hidden-files: true
+
+  build-offline-linux:
+    needs: prep-magpie
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
+        with:
+          name: magpie-source
+          path: '.'
       - name: Create executable
-        uses: sayyid5416/pyinstaller@v1
+        uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
+          pyinstaller_ver: '==6.11.1'
           spec: 'magpie-data.spec'
-          requirements: 'requirements.txt'
-          upload_exe_with_name: 'magpie-offline-linux'
+          requirements: 'requirements-no-ndi.txt'
+          clean_checkout: false
+      - run: cp scripts/magpie.sh dist
+      - run: chmod +x dist/magpie.sh
+      - run: cd dist; zip -r magpie-local-linux.zip .
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} dist/magpie-local-linux.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
   build-offline-windows:
+    needs: prep-magpie
     runs-on: windows-latest
     steps:
-      - name: Checkout all the submodules
-        uses: actions/checkout@v2
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
         with:
-          submodules: recursive
-      - name: Remove LADXR gfx
-        run: rm -r -fo LADXR/gfx
+          name: magpie-source
+          path: '.'
       - name: Create executable
-        uses: sayyid5416/pyinstaller@v1
+        uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
+          pyinstaller_ver: '==5.13.2'
           spec: 'magpie-data.spec'
-          requirements: 'requirements.txt'
-          upload_exe_with_name: 'magpie-offline-windows'
+          requirements: 'requirements-no-ndi.txt'
+          clean_checkout: false
+      - run: copy scripts\magpie.bat dist
+      - run: cd dist; Compress-Archive -Path ./* -Destination magpie-local-windows.zip
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} dist/magpie-local-windows.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
   build-offline-macos:
+    needs: prep-magpie
     runs-on: macos-latest
     steps:
-      - name: Checkout all the submodules
-        uses: actions/checkout@v2
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
         with:
-          submodules: recursive
-      - name: Remove LADXR gfx
-        run: rm -rf LADXR/gfx
+          name: magpie-source
+          path: '.'
       - name: Create executable
-        uses: sayyid5416/pyinstaller@v1
+        uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
+          pyinstaller_ver: '==6.11.1'
           spec: 'magpie-data.spec'
-          requirements: 'requirements.txt'
-          upload_exe_with_name: 'magpie-offline-macos'
+          requirements: 'requirements-no-ndi.txt'
+          clean_checkout: false
+      - run: cp scripts/magpie.sh dist
+      - run: chmod +x dist/magpie.sh
+      - run: cd dist; zip -r magpie-local-macos.zip .
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} dist/magpie-local-macos.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
+  build-offline-linux-ndi:
+    needs: prep-magpie
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
+        with:
+          name: magpie-source
+          path: '.'
+      - name: Create executable
+        uses: kbranch/pyinstaller-action@main
+        with:
+          python_ver: '3.10'
+          pyinstaller_ver: '==6.11.1'
+          spec: 'magpie-data.spec'
+          requirements: 'requirements-ndi.txt'
+          clean_checkout: false
+      - run: cp scripts/magpie.sh dist
+      - run: chmod +x dist/magpie.sh
+      - run: cd dist; zip -r magpie-local-linux-ndi.zip .
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} dist/magpie-local-linux-ndi.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
+  build-offline-windows-ndi:
+    needs: prep-magpie
+    runs-on: windows-latest
+    steps:
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
+        with:
+          name: magpie-source
+          path: '.'
+      - name: Create executable
+        uses: kbranch/pyinstaller-action@main
+        with:
+          python_ver: '3.10'
+          pyinstaller_ver: '==5.13.2'
+          spec: 'magpie-data.spec'
+          requirements: 'requirements-ndi.txt'
+          clean_checkout: false
+      - run: copy scripts\magpie.bat dist
+      - run: cd dist; Compress-Archive -Path ./* -Destination magpie-local-windows-ndi.zip
+      - name: Upload to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} dist/magpie-local-windows-ndi.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true

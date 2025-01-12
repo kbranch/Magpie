@@ -20,7 +20,7 @@ defineProps(["version", "hostname"]);
 
     <div class="col-auto pe-2">
         <div class="version">
-        <span>Version: {{ version }}</span>
+        <span>v{{ version?.version }} b{{ version?.build }}</span>
         </div>
     </div>
 
