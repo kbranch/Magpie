@@ -62,6 +62,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-linux.zip', github.ref_name) }}
 
+      - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -96,6 +97,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-windows.zip', github.ref_name) }}
 
+      - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -131,6 +133,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-macos.zip', github.ref_name) }}
 
+      - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -166,6 +169,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-linux-ndi.zip', github.ref_name) }}
 
+      - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -200,6 +204,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-windows-ndi.zip', github.ref_name) }}
 
+      - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
