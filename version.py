@@ -31,11 +31,11 @@ def getRemoteVersion():
         request = requests.get('https://magpietracker.us/api/version')
         version = json.loads(request.text)
 
-        if 'magpieBuild' in version:
-            version['magpie'] = { 'version': version['magpie'], 'build': version['magpieBuild'] }
-            del version['magpieBuild']
+        if 'magpieDisplay' in version:
+            version['magpie'] = { 'version': version['magpieDisplay'], 'build': version['magpie'] }
+            del version['magpieDisplay']
         else:
-            version['magpieBuild'] = version['magpie']
+            version['magpie'] = { 'version': version['magpie'], 'build': version['magpie'] }
 
         return version
     except:

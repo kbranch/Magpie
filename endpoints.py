@@ -188,8 +188,8 @@ def serveVersion():
     try:
         version = {}
         magpieVersion = getVersion()
-        version['magpie'] = magpieVersion['version']
-        version['magpieBuild'] = magpieVersion['build']
+        version['magpie'] = magpieVersion['build']
+        version['magpieDisplay'] = magpieVersion['version']
         version['autotracker'] = getAutotrackerVersion()
         version['api'] = '1.32'
 
