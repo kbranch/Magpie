@@ -45,11 +45,12 @@ def startOffline():
 
         yield
     finally:
-        if proc:
-            os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
-            proc.wait()
+        pass
+        # if proc:
+        #     os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+        #     proc.wait()
 
-        os.remove(settingsPath)
+        # os.remove(settingsPath)
     
     assert started
 
