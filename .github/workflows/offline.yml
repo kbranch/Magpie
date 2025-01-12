@@ -24,7 +24,7 @@ jobs:
         run: tag=`git describe --exact-match --tags`; echo "version=${tag/magpie-/}" >> "$GITHUB_OUTPUT"
       - id: build
         run: echo build=`git rev-list --count HEAD` >> "$GITHUB_OUTPUT"
-      - run: echo { "build":"${{ steps.build.outputs.build }}","version":"${{ steps.version.outputs.version }}" } > version
+      - run: echo { \"build\":\"${{ steps.build.outputs.build }}\",\"version\":\"${{ steps.version.outputs.version }}\" } > version
       - run: zip -r magpie-source.zip .
       - uses: ncipollo/release-action@v1
         id: create-release
