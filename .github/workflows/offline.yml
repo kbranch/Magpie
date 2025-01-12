@@ -62,6 +62,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-linux.zip', github.ref_name) }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
   build-offline-windows:
     needs: prep-magpie
     runs-on: windows-latest
@@ -85,6 +95,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-windows.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
 
   build-offline-macos:
     needs: prep-magpie
@@ -111,6 +131,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-macos.zip', github.ref_name) }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
   build-offline-linux-ndi:
     needs: prep-magpie
     runs-on: ubuntu-latest
@@ -136,6 +166,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-linux-ndi.zip', github.ref_name) }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
+
   build-offline-windows-ndi:
     needs: prep-magpie
     runs-on: windows-latest
@@ -159,3 +199,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-windows-ndi.zip', github.ref_name) }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      - run: pip install pytest pytest-md pytest-emoji
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
