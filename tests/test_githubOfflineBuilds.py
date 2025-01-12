@@ -69,7 +69,7 @@ def testInitSucceeds(initJson):
     assert 'args' in initJson and 'defaultSettings' in initJson
 
 def testVersionSet(initJson):
-    assert initJson['version'] != 'unknown'
+    assert initJson['version']['build'] != 'unknown'
 
 def testIsLocal(initJson):
     assert initJson['local']

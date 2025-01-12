@@ -13,7 +13,7 @@ watch(() => props.remoteVersion, (newValue, oldValue) => {
 </script>
 
 <template>
-    <div class="wrapper" v-if="!alertShown && clientVersion != remoteVersion && updateMessage">
+    <div class="wrapper" v-if="!alertShown && clientVersion?.version != remoteVersion?.version && updateMessage">
         <div class="row">
             <div class="col">
                 <p class="message" v-html="updateMessage"></p>

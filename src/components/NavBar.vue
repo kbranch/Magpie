@@ -44,7 +44,7 @@ const aboutContents = `<p>The source is up on <a href='https://github.com/kbranc
     <p>Visit us on either on the <a href='https://discord.gg/QhAKagk84e'>Z4R Discord</a> or the <a href='https://discord.gg/QhAKagk84e'>Magpie Discord</a>!</p>`;
 
 const updateAvailable = computed(() => {
-    return isNumeric(props.version) && isNumeric(props.remoteVersion) && props.remoteVersion > props.version;
+    return isNumeric(props.version?.build) && isNumeric(props.remoteVersion?.build) && props.remoteVersion?.build > props.version?.build;
 });
 
 onMounted(() => {
@@ -86,7 +86,7 @@ async function sendSuggestion() {
                 <div v-if="updateAvailable" class="col-auto">
                     <div class="version">
                         <a class="btn btn-success ms-1" role="button" 
-                          @mouseenter="tip.tooltip(`${isLocal ? 'Download' : 'Refresh to'} update<br>Current version: ${version}<br>New Version: ${remoteVersion}`, $event)"
+                          @mouseenter="tip.tooltip(`${isLocal ? 'Download' : 'Refresh to'} update<br>Current version: ${version?.version}<br>New Version: ${remoteVersion?.version}`, $event)"
                           @click="() => isLocal ? window.location.href = '/fetchupdate' : window.location.reload()">
                             <img src="/images/file-arrow-down.svg">
                         </a>
