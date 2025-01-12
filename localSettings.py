@@ -126,9 +126,18 @@ class LocalSettings:
         # return options
 
 nested = False
+doubleNested = False
 
 def settingsPath():
-    return 'settings.json' if not nested else os.path.join('..', 'settings.json')
+    path = 'settings.json'
+
+    if nested:
+        path = os.path.join('..', path)
+
+    if doubleNested:
+        path = os.path.join('..', '..', path)
+
+    return  path
 
 def updateSettings(argsText=None, settingsText=None, localStorage=None, prefix=''):
     settings = readSettings()

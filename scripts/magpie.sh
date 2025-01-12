@@ -8,5 +8,5 @@ then
 
 fi
 
-cd magpie-data
-./magpie-data --local --nested
+cd magpie-data/_internal
+../magpie-data --local --double-nested $@

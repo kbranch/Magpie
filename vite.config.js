@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import del from "rollup-plugin-delete";
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -16,6 +17,11 @@ export default defineConfig({
   build: {
     outDir: 'vue-dist',
     emptyOutDir: true,
+    rollupOptions: {
+      plugins: [
+        del({ targets: ['vue-dist/images', 'vue-dist/js', 'vue-dist/lib', 'vue-dist/multiworld', 'vue-dist/css', 'vue-dist/favicon.ico'], hook: 'generateBundle' })
+      ]
+    }
   },
   publicDir: 'static',
 })
