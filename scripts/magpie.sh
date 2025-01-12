@@ -9,4 +9,4 @@ then
 fi
 
 cd magpie-data/_internal
-../magpie-data --local --nested $@
+../magpie-data --local --double-nested $@

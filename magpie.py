@@ -159,6 +159,7 @@ def main():
     parser.add_argument('--local', dest='local', action='store_true', help='Start as a local application')
     parser.add_argument('--no-gui', dest='noGui', action='store_true', help='Skip the GUI when running as a local application')
     parser.add_argument('--nested', dest='nested', action='store_true', help='Magpie is being run from a directory one level higher up the tree')
+    parser.add_argument('--double-nested', dest='doubleNested', action='store_true', help='Magpie is being run from a directory two levels higher up the tree')
     parser.add_argument('--debug', dest='debug', action='store_true', help='Prevent the command prompt from being hidden')
     parser.add_argument('--width', dest='width', action='store', type=int, help='Local application starting window width')
     parser.add_argument('--height', dest='height', action='store', type=int, help='Local application starting window height')
@@ -166,6 +167,7 @@ def main():
 
     endpoints.app.config['local'] = args.local
     localSettings.nested = args.nested
+    localSettings.doubleNested = args.doubleNested
 
     if endpoints.app.config['local']:
         import broadcastView
