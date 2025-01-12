@@ -15,6 +15,7 @@ def startOffline():
     # proc = None
     started = False
     distPath = './dist'
+    # distPath = './dist/linux'
 
     if platform.system() == 'Linux':
         scriptPath = './magpie.sh'
@@ -23,10 +24,10 @@ def startOffline():
     else:
         scriptPath = './magpie.sh'
 
-    settingsPath = os.path.join(distPath, 'settings.json')
+    # settingsPath = os.path.join(distPath, 'settings.json')
 
     try:
-        proc = subprocess.Popen(scriptPath, start_new_session=True, shell=True, cwd=distPath)
+        proc = subprocess.Popen(f'{scriptPath} --no-gui', start_new_session=True, shell=True, cwd=distPath)
 
         startTime = time.time()
         while time.time() < startTime + 15:

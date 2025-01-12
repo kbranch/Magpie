@@ -62,11 +62,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-linux.zip', github.ref_name) }}
 
-      - id: chrome
-        uses: browser-actions/setup-chrome@v1
-      - run: ${{ format('ls -l /usr/bin/google-chrome {0}', steps.chrome.outputs.chrome-path) }}
-      - run: rm /usr/bin/google-chrome
-      - run: ${{ format('ln {0} /usr/bin/google-chrome', steps.chrome.outputs.chrome-path) }}
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -101,7 +96,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-windows.zip', github.ref_name) }}
 
-      # - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -137,7 +131,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-macos.zip', github.ref_name) }}
 
-      - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -173,11 +166,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-linux-ndi.zip', github.ref_name) }}
 
-      - id: chrome
-        uses: browser-actions/setup-chrome@v1
-      - run: ${{ format('ls -l /usr/bin/google-chrome {0}', steps.chrome.outputs.chrome-path) }}
-      - run: rm /usr/bin/google-chrome
-      - run: ${{ format('ln {0} /usr/bin/google-chrome', steps.chrome.outputs.chrome-path) }}
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -212,7 +200,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} dist/magpie-local-windows-ndi.zip', github.ref_name) }}
 
-      # - uses: browser-actions/setup-chrome@v1
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
