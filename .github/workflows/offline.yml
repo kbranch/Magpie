@@ -171,8 +171,8 @@ jobs:
 
       - id: chrome
         uses: browser-actions/setup-chrome@v1
-      - run: ${{ format('ls {0}', steps.chrome.outputs.chrome-path) }}
-      - run: ${{ format('ln {0} /usr/bin/google-chrome', steps.chrome.outputs.chrome-path) }}
+      - run: ${{ format('ls -l /usr/bin/google-chrome {0}', steps.chrome.outputs.chrome-path) }}
+      # - run: ${{ format('ln {0} /usr/bin/google-chrome', steps.chrome.outputs.chrome-path) }}
       - name: Set up Python
         uses: actions/setup-python@v4
         with:

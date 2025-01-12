@@ -12,14 +12,14 @@ url = 'http://localhost:16114/'
 
 @pytest.fixture(autouse=True, scope='session')
 def startOffline():
-    proc = None
+    # proc = None
     started = False
     distPath = './dist'
 
     if platform.system() == 'Linux':
         scriptPath = './magpie.sh'
     elif platform.system() == 'Windows':
-        scriptPath = './magpie.bat'
+        scriptPath = r'.\magpie.bat'
     else:
         scriptPath = './magpie.sh'
 
