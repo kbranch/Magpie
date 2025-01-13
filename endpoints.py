@@ -218,13 +218,17 @@ def fetchUpdate():
         if ndiEnabled:
             url = "https://magpietracker.us/static/builds/magpie-local-ndi.zip"
 
-        if platform.system().lower() != 'windows':
+        if platform.system().lower() == 'linux':
             path = '../update.zip'
             url = "https://magpietracker.us/static/builds/magpie-local-linux.zip"
             # url = "https://dev.magpietracker.us/static/builds/magpie-local-linux-dev.zip"
 
             if ndiEnabled:
                 url = "https://magpietracker.us/static/builds/magpie-local-linux-ndi.zip"
+        elif platform.system().lower() != 'windows':
+            path = '../update.zip'
+            url = "https://magpietracker.us/static/builds/magpie-local-macos.zip"
+            # url = "https://dev.magpietracker.us/static/builds/magpie-local-macos-dev.zip"
 
         request = requests.get(url, headers=headers)
 

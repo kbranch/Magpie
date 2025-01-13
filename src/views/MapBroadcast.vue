@@ -74,7 +74,7 @@ document.title = 'Magpie Tracker - Map Broadcast View'
 </div>
 
 <div v-if="!state.isLocal" class="pt-4">
-    <h3>Streaming? Try the offline version for browser source support: <a href="https://magpietracker.us/static/builds/magpie-local.zip">Windows</a>, <a href="https://magpietracker.us/static/builds/magpie-local-linux.zip">Linux</a>, <a href="https://magpietracker.us/static/builds/magpie-source.zip">Source bundle</a></h3>
+    <h3>Streaming? Try the <a href="https://github.com/kbranch/Magpie/releases/latest/">offline version</a> for browser source support</h3>
 </div>
 
 <VueTooltip type="text" :text-color="state.settings.textColor" />

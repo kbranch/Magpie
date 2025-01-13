@@ -232,26 +232,26 @@ window.setRomRequested = setRomRequested;
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-3 px-1">
+                            <div id="autotrackerActions" class="col-auto px-1">
                                 <button class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Reload items from autotracker', $event)" onclick="loadFromAutotracker()" type="button">
                                     <img src="/images/arrow-clockwise.svg" class="autotracker-button-icon">
                                 </button>
-                            </div>
-                            <div class="col-3 px-1">
                                 <button class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Refresh from Archipelago', $event)" onclick="showArchipelagoModal()" type="button">
                                     <img src="/images/archipelago-icon.svg" class="autotracker-button-icon">
                                 </button>
                             </div>
-                            <div class="col-3 px-1">
+                            <div id="autotrackerDownloads" class="col">
                                 <a href="https://magpietracker.us/static/builds/magpie-autotracker.exe"
                                     class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Download Windows autotracker', $event)" role="button">
                                     <img src="/images/windows.svg" class="autotracker-button-icon">
                                 </a>
-                            </div>
-                            <div class="col-3 px-1">
                                 <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux"
                                     class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Download Linux autotracker', $event)" role="button">
                                     <img src="/images/tux.svg" class="autotracker-button-icon">
+                                </a>
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-macos"
+                                    class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Download macOS autotracker', $event)" role="button">
+                                    <img src="/images/apple.svg" class="autotracker-button-icon">
                                 </a>
                             </div>
                         </div>
@@ -308,19 +308,14 @@ window.setRomRequested = setRomRequested;
             <div v-if="activeTabId == 'downloadsTab'" class="tab h-100">
                 <div class="row h-100 align-items-end">
                     <div class="col rom-col quick-bg">
-                        <h6 class="mb-0">Offline version</h6>
-                        <ul class="mb-1">
-                            <li><a href="https://magpietracker.us/static/builds/magpie-local.zip">Windows</a>, <a
-                                    href="https://magpietracker.us/static/builds/magpie-local-linux.zip">Linux</a>
-                            </li>
-                            <li><a href="https://magpietracker.us/static/builds/magpie-source.zip">Source bundle</a>
-                            </li>
-                        </ul>
+                        <h6 class="mb-2"><a href="https://github.com/kbranch/Magpie/releases/latest/">Offline version</a></h6>
 
                         <h6 class="mb-0">Autotracker</h6>
                         <ul class="mb-1">
-                            <li><a href="https://magpietracker.us/static/builds/magpie-autotracker.exe">Windows</a>,
-                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux">Linux</a>
+                            <li>
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker.exe">Windows</a>,
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux">Linux</a>,
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-macos">macOS</a>
                             </li>
                         </ul>
 
@@ -353,6 +348,16 @@ window.setRomRequested = setRomRequested;
 </template>
 
 <style scoped>
+#autotrackerActions {
+    display: flex;
+    width: 135px;
+}
+
+#autotrackerDownloads {
+    display: flex;
+    padding-left: 2px;
+}
+
 #romName {
     max-width: 160px;
     overflow: hidden;
@@ -466,6 +471,12 @@ window.setRomRequested = setRomRequested;
 
 .autotracker-button {
     width: 100%;
+    margin-left: 6px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .autotracker-button-icon {
