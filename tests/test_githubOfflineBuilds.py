@@ -12,19 +12,31 @@ url = 'http://localhost:16114/'
 
 @pytest.fixture(autouse=True, scope='session')
 def startOffline():
-    # proc = None
+    proc = None
     started = False
-    distPath = './dist'
-    # distPath = './dist/linux'
 
-    if platform.system() == 'Linux':
-        scriptPath = './magpie.sh'
-    elif platform.system() == 'Windows':
-        scriptPath = r'.\magpie.bat'
+    if os.getenv('CI'):
+        distPath = './dist'
+
+        if platform.system() == 'Linux':
+            scriptPath = './magpie.sh'
+        elif platform.system() == 'Windows':
+            scriptPath = r'.\magpie.bat'
+        else:
+            scriptPath = './magpie.sh'
+
+        settingsPath = os.path.join(distPath, 'settings.json')
     else:
-        scriptPath = './magpie.sh'
+        distPath = './scripts'
 
-    # settingsPath = os.path.join(distPath, 'settings.json')
+        if platform.system() == 'Linux':
+            scriptPath = './startLocal.sh'
+        elif platform.system() == 'Windows':
+            scriptPath = r'.\startLocal.bat'
+        else:
+            scriptPath = './startLocal.sh'
+
+        settingsPath = 'settings.json'
 
     try:
         proc = subprocess.Popen(f'{scriptPath} --no-gui', start_new_session=True, shell=True, cwd=distPath)
@@ -46,12 +58,16 @@ def startOffline():
 
         yield
     finally:
-        pass
-        # if proc:
-        #     os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
-        #     proc.wait()
+        if proc:
+            try:
+                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+            except:
+                proc.kill()
 
-        # os.remove(settingsPath)
+            proc.wait()
+
+        if os.path.isfile(settingsPath):
+            os.remove(settingsPath)
     
     assert started
 
@@ -69,7 +85,7 @@ def testInitSucceeds(initJson):
     assert 'args' in initJson and 'defaultSettings' in initJson
 
 def testVersionSet(initJson):
-    assert initJson['version']['build'] != 'unknown'
+    assert initJson['version'].lower() != 'unknown'
 
 def testIsLocal(initJson):
     assert initJson['local']
