@@ -47,9 +47,9 @@ function updateCheckAccessibility(accessibility) {
   state.checkAccessibility = accessibility;
 }
 
-function updateServerVersion(newVersion, message=null) {
+function updateServerVersion(newVersion, newBuild, message=null) {
   if (!state.isLocal) {
-    state.remoteVersion = newVersion;
+    state.remoteVersion = { version: newVersion ?? newBuild, build: newBuild };
     state.updateMessage = message;
   }
 }

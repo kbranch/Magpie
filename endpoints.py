@@ -308,6 +308,7 @@ def renderCheckList():
         logics = getCachedLogics(logicHash, args, entranceMap, bossList, minibossMap)
         allChecks = loadChecks(getLogicWithoutER(args), allItems, True)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
+        version = getVersion()
 
         result = {
             'accessibility': {
@@ -323,7 +324,8 @@ def renderCheckList():
             } for x in logics['stock']],
             'randomizedEntrances': entrances,
             'startLocations': getStartLocations(args),
-            'version': getVersion(),
+            'version': version['build'],
+            'versionDisplay': version['version'],
             'updateMessage': getUpdateMessage(),
             'sidebarMessage': getSidebarMessage(),
         }
@@ -458,7 +460,8 @@ def getBasicInit():
         "defaultSettings": defaultSettings.__dict__,
         "local": app.config["local"],
         "graphicsOptions": LocalSettings.graphicsPacks(),
-        "version": version,
+        "version": version['build'],
+        "versionDisplay": version['version'],
         "remoteVersion": remoteVersion,
         "diskSettings": getDiskSettings(jsonify=False),
         "hostname": app.config["hostname"],
@@ -727,7 +730,8 @@ def vueInit():
         "jsonArgsOverrides": argsOverrides,
         "local": app.config["local"],
         "graphicsOptions": LocalSettings.graphicsPacks(),
-        "version": version,
+        "version": version['build'],
+        "versionDisplay": version['version'],
         "remoteVersion": remoteVersion,
         "diskSettings": getDiskSettings(jsonify=False),
         "hostname": app.config["hostname"],
