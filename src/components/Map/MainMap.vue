@@ -2,7 +2,7 @@
 import { closeAllTooltips, removeNodes, drawNodes, win } from '@/moduleWrappers.js';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
 import MapLegend from '@/components/Map/MapLegend.vue';
@@ -36,9 +36,7 @@ const mapPaths = computed(() => maps.reduce((acc, x) => {
     return acc;
 }, {}));
 
-function setActiveTab(newTab) {
-    activeTab.value = newTab;
-
+watch(activeTab, (newTab) => {
     removeNodes();
     closeAllTooltips();
 
@@ -47,7 +45,7 @@ function setActiveTab(newTab) {
     if (props.broadcastMode == 'send' && win.broadcastMapTab) {
         win.broadcastMapTab(newTab);
     }
-}
+})
 
 function getMapPath(map) {
     let mapPath = state.settings.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
@@ -68,7 +66,7 @@ function imageLoadedEvent() {
 <template>
 <ul class="nav" id="mapTabs">
     <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == activeTab }]" :data-mapname="map" @mouseenter="tip.tooltip(mapTooltips[map], $event)">
-        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="setActiveTab(map)">
+        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="activeTab = map">
             {{ map }}
         </button>
     </li>
