@@ -30,6 +30,7 @@ jobs:
         id: create-release
         with:
           draft: true
+          name: Magpie ${{ steps.version.outputs.version }}
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}
