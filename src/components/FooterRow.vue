@@ -1,9 +1,16 @@
 <script setup>
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
+import { computed } from 'vue';
 
 const tip = useTextTooltipStore();
 
-defineProps(["version", "hostname"]);
+const props = defineProps(["version", "hostname"]);
+
+const versionString = computed(() => {
+  return props.version?.version == props.version?.build ?
+    `b${props.version?.build}` :
+    `v${props.version?.version} b${props.version?.build}`;
+});
 </script>
 
 <template>
@@ -20,7 +27,7 @@ defineProps(["version", "hostname"]);
 
     <div class="col-auto pe-2">
         <div class="version">
-        <span>v{{ version?.version }} b{{ version?.build }}</span>
+        <span>{{ versionString }}</span>
         </div>
     </div>
 
