@@ -44,7 +44,7 @@ jobs:
 
       # Make the mac version, which is just source with a script
       - run: mkdir magpie-source
-      - run: mv . magpie-source
+      - run: shopt -s dotglob; mv ./* magpie-source
       - run: mkdir dist
       - run: mv magpie-source dist
       - run: cp ./dist/magpie-source/scripts/magpie.command ./dist/
