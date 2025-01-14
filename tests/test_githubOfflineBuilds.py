@@ -23,7 +23,7 @@ def startOffline():
         elif platform.system() == 'Windows':
             scriptPath = r'.\magpie.bat'
         else:
-            scriptPath = './magpie.sh'
+            scriptPath = './magpie.command'
 
         settingsPath = os.path.join(distPath, 'settings.json')
     else:
