@@ -2,13 +2,17 @@ import io
 import time
 import logging
 import traceback
-import tkinter as tk
 from enum import Enum
 from queue import Queue
 from threading import Thread
-from PIL import Image, ImageTk
 
 import endpoints
+
+try:
+    import tkinter as tk
+    from PIL import Image, ImageTk
+except:
+    logging.info(f'Native window support failed: {traceback.format_exc()}')
 
 try:
     import NDIlib as ndi
@@ -18,7 +22,7 @@ try:
     logging.info(f"NDI support enabled")
 except:
     endpoints.ndiEnabled = False
-    logging.info(f"NDI support disabled: {traceback.format_exc()}")
+    logging.info(f'NDI support disabled: {traceback.format_exc()}')
 
 modes = Enum('Modes', ('none', 'native', 'ndi'))
 types = Enum('Types', ('items', 'map'))

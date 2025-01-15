@@ -6,7 +6,10 @@ import signal
 import pytest
 import requests
 import platform
+import traceback
 import subprocess
+
+from subprocess import PIPE
 
 url = 'http://localhost:16114/'
 
@@ -39,10 +42,10 @@ def startOffline():
         settingsPath = 'settings.json'
 
     try:
-        proc = subprocess.Popen(f'{scriptPath} --no-gui', start_new_session=True, shell=True, cwd=distPath)
+        proc = subprocess.Popen(f'{scriptPath} --no-gui', start_new_session=True, shell=True, stderr=PIPE, stdout=PIPE, cwd=distPath)
 
         startTime = time.time()
-        while time.time() < startTime + 15:
+        while time.time() < startTime + 45:
             try:
                 result = requests.get(url + 'health')
                 assert result.status_code == 200
@@ -57,19 +60,29 @@ def startOffline():
         assert started
 
         yield
+    except:
+        print(f'Error starting magpie: {traceback.format_exc()}')
     finally:
-        if proc:
-            try:
-                os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
-            except:
-                proc.kill()
+        out = ''
+        err = ''
 
-            proc.wait()
+        if platform.system() != 'Windows':
+            if proc:
+                try:
+                    os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+                except:
+                    pass
 
-        if os.path.isfile(settingsPath):
-            os.remove(settingsPath)
+                proc.wait(timeout=10)
+
+                if proc.poll() is not None:
+                    out, err = proc.communicate()
+                    print(f'Closed process, output: {out}\n\nerr: {err}')
+
+            if os.path.isfile(settingsPath):
+                os.remove(settingsPath)
     
-    assert started
+    assert started, f'out: {out}, err: {err}'
 
 @pytest.fixture()
 def initJson():

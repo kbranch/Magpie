@@ -25,6 +25,12 @@ jobs:
       - id: build
         run: echo build=`git rev-list --count HEAD` >> "$GITHUB_OUTPUT"
       - run: echo { \"build\":\"${{ steps.build.outputs.build }}\",\"version\":\"${{ steps.version.outputs.version }}\" } > version
+      - name: Upload Magpie
+        uses: actions/upload-artifact@v4
+        with:
+          name: magpie-source
+          path: '.'
+          include-hidden-files: true
       - run: zip -r magpie-source.zip .
       - uses: ncipollo/release-action@v1
         id: create-release
@@ -35,35 +41,27 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: ${{ format('gh release upload {0} magpie-source.zip', github.ref_name) }}
-      - name: Upload Magpie
-        uses: actions/upload-artifact@v4
-        with:
-          name: magpie-source
-          path: '.'
-          include-hidden-files: true
+      - run: rm magpie-source.zip
 
       # Make the mac version, which is just source with a script
       - run: mkdir magpie-source
-      - run: shopt -s dotglob; mv ./* magpie-source
+      - run: shopt -s dotglob; mv ./* magpie-source || true
       - run: mkdir dist
       - run: mv magpie-source dist
+      - run: mv ./dist/magpie-source/.git .
       - run: cp ./dist/magpie-source/scripts/magpie.command ./dist/
-      - name: Upload macOS version
+      - run: chmod +x ./dist/magpie.command
+      - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
         with:
           name: magpie-local-macos
           path: './dist/'
           include-hidden-files: true
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-      - run: pip install pytest pytest-md pytest-emoji
-      - name: Run pytest
-        uses: pavelzw/pytest-action@v2
-        with:
-          job-summary: true
+      - run: cd ./dist; zip -r ../magpie-local-macos.zip .
+      - name: Upload macOS version to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ${{ format('gh release upload {0} magpie-local-macos.zip', github.ref_name) }}
 
   build-offline-linux:
     needs: prep-magpie
@@ -134,40 +132,29 @@ jobs:
         with:
           job-summary: true
 
-  # build-offline-macos:
-  #   needs: prep-magpie
-  #   runs-on: macos-latest
-  #   steps:
-  #     - name: Download Magpie
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: magpie-source
-  #         path: '.'
-  #     - name: Create executable
-  #       uses: kbranch/pyinstaller-action@main
-  #       with:
-  #         python_ver: '3.12'
-  #         pyinstaller_ver: '==6.11.1'
-  #         spec: 'magpie-data.spec'
-  #         requirements: 'requirements-no-ndi.txt'
-  #         clean_checkout: false
-  #     - run: cp scripts/magpie.sh dist
-  #     - run: chmod +x dist/magpie.sh
-  #     - run: cd dist; zip -r magpie-local-macos.zip .
-  #     - name: Upload to release
-  #       env:
-  #         GH_TOKEN: ${{ github.token }}
-  #       run: ${{ format('gh release upload {0} dist/magpie-local-macos.zip', github.ref_name) }}
+  build-offline-macos:
+    needs: prep-magpie
+    runs-on: macos-latest
+    steps:
+      - run: mkdir dist
+      - name: Download Magpie
+        uses: actions/download-artifact@v4
+        with:
+          name: magpie-local-macos
+          path: './dist'
+      - run: ln -s ./dist/magpie-source/* .
+      - run: chmod +x ./scripts/*
+      - run: chmod +x ./dist/magpie.command
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: 3.12
-  #     - run: pip install pytest pytest-md pytest-emoji
-  #     - name: Run pytest
-  #       uses: pavelzw/pytest-action@v2
-  #       with:
-  #         job-summary: true
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - run: pip install pytest pytest-md pytest-emoji requests
+      - name: Run pytest
+        uses: pavelzw/pytest-action@v2
+        with:
+          job-summary: true
 
   build-offline-linux-ndi:
     needs: prep-magpie
