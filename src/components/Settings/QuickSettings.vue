@@ -250,7 +250,7 @@ window.setRomRequested = setRomRequested;
                                     <img src="/images/tux.svg" class="autotracker-button-icon">
                                 </a>
                                 <a href="https://magpietracker.us/static/builds/magpie-autotracker-macos"
-                                    class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Download macOS autotracker', $event)" role="button">
+                                    class="btn btn-secondary autotracker-button" @mouseenter="tip.tooltip('Download macOS (Apple silicon only) autotracker', $event)" role="button">
                                     <img src="/images/apple.svg" class="autotracker-button-icon">
                                 </a>
                             </div>
@@ -315,7 +315,7 @@ window.setRomRequested = setRomRequested;
                             <li>
                                 <a href="https://magpietracker.us/static/builds/magpie-autotracker.exe">Windows</a>,
                                 <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux">Linux</a>,
-                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-macos">macOS</a>
+                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-macos">macOS (Apple silicon only)</a>
                             </li>
                         </ul>
 
@@ -333,9 +333,15 @@ window.setRomRequested = setRomRequested;
                             <li>
                                 <a href="https://www.retroarch.com/?page=platforms">Retroarch</a> (cross platform)
                                 <ul>
-                                    <li>Must <a
-                                            href="https://docs.libretro.com/development/retroarch/network-control-interface/">enable
-                                            networking</a></li>
+                                    <li>
+                                        Must 
+                                        <a href="https://docs.libretro.com/development/retroarch/network-control-interface/">
+                                            enable networking
+                                        </a>
+                                        <a href="https://archipelago.gg/tutorial/Links%20Awakening%20DX/setup/en#retroarch-1.10.3-or-newer">
+                                            (AP instructions)
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
