@@ -158,7 +158,7 @@ function sortByKey(arr, key) {
 </script>
 
 <template>
-<div class="row">
+<div id="headerRow" class="row">
     <div class="col-auto">
         <ul id="tabButtons">
             <li class="me-0" :class="['tab-button', { active: activeTab == 'dynamic' }]" @mouseenter="tip.tooltip('Checks', $event)">
@@ -192,9 +192,14 @@ function sortByKey(arr, key) {
             </li>
         </ul>
     </div>
+    <div id="searchCol" class="col pe-2">
+        <img v-if="searchText" src="/images/arrow-clockwise.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Reset filter', $event)" @click="searchText = ''">
+        <img src="/images/search.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Filter checks', $event)">
+        <input v-model="searchText" id="searchBox" type="text" class="form-control">
+    </div>
     <div id="checkStats" class="col-auto ps-0">
         <div id="hideButton">
-            <img :src="`/images/chevron-${state.settings.showStats ? 'left' : 'right'}.svg`" class="invert close-button ms-2"
+            <img :src="`/images/chevron-${state.settings.showStats ? 'left' : 'right'}.svg`" class="invert close-button ms-0"
                 @mouseenter="tip.tooltip(state.settings.showStats ? 'Hide stats' : 'Show stats', $event)"
                 @click="() => { state.settings.showStats = !state.settings.showStats; tip.clearTooltip(); }">
         </div>
@@ -215,11 +220,6 @@ function sortByKey(arr, key) {
             </Transition>
         </div>
     </div>
-    <div id="searchCol" class="col">
-        <img v-if="searchText" src="/images/arrow-clockwise.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Reset filter', $event)" @click="searchText = ''">
-        <img src="/images/search.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Filter checks', $event)">
-        <input v-model="searchText" id="searchBox" type="text" class="form-control">
-    </div>
 </div>
 
 <div ref="checksDiv" id="checks" onclick="preventDoubleClick(event)"
@@ -230,6 +230,10 @@ function sortByKey(arr, key) {
 </template>
 
 <style scoped>
+#headerRow {
+    align-items: center;
+}
+
 .search-button {
     height: 24px;
     filter: invert() brightness(0.3);
@@ -259,6 +263,7 @@ function sortByKey(arr, key) {
     flex-shrink: 1;
     padding-top: 6px;
     padding-bottom: 6px;
+    max-width: 231px;
 }
 
 #statsWrapper.v-enter-active,
