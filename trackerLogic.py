@@ -180,6 +180,13 @@ def patchRequirements():
     setattr(COUNTS, 'shortName', otherShortName)
     setattr(FOUND, 'shortName', otherShortName)
 
+def applyExtraLogic(location):
+    name = location.friendlyName()
+
+    # Library book hints
+    if name == library:
+        location.add(VanillaHint('Library-Owl'))
+
 def applyTrackerLogic(log):
     # Bomb as bush breaker
     log.requirements_settings.bush._OR__items.append(BOMB)
@@ -227,10 +234,6 @@ def applyTrackerLogic(log):
         locs[d8_upper_center].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER)
     if d8_lava_ledge in locs:
         locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER)
-
-    # Library book hints
-    if library in locs:
-        locs[library].add(VanillaHint('Library-Owl'))
 
     # Rooster across the river
     if animal_village in locs and ukuku in locs:
@@ -327,6 +330,8 @@ def buildLogic(args, worldSetup, requirements=None):
     log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
     for loc in log.location_list:
+        applyExtraLogic(loc)
+
         for ii in [x for x in loc.items if len(x.OPTIONS) == 1]:
             ii.item = ii.OPTIONS[0]
         # for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:

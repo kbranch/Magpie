@@ -18,7 +18,6 @@ from version import *
 from trackables import *
 from localSettings import LocalSettings, updateSettings
 from args import Args
-from trackerLogic import applyTrackerLogic
 from ladxrInterface import *
 
 try:
