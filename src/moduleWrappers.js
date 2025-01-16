@@ -1,4 +1,5 @@
 import { debounce } from "./main";
+import { useAlertStore } from "./stores/alertStore";
 import { useStateStore } from "./stores/stateStore";
 
 export let toggleCheck = window.toggleCheck
@@ -73,7 +74,9 @@ export let setCurrentLocation = window.setCurrentLocation;
 
 export function initGlobals(data) {
     let state = useStateStore();
+    let alertStore = useAlertStore();
 
+    window.alertModal = alertStore.show;
     window.locationHistory = state.locationHistory;
 
     window.defaultArgs = data.args;

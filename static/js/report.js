@@ -30,6 +30,7 @@ async function sendError() {
 async function getStateZip() {
     let state = getState();
     state.messageLog = messageLog;
+    state.alertLog = alertLog;
     state.undos = getRecentUndos();
     state.spoilerLog = spoilerLog;
     state.locationHistory = locationHistory;

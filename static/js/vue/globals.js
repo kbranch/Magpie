@@ -61,7 +61,7 @@ var players;
 var playerInventories = {};
 var lastViewport = viewportSnapshot();
 var messageLog = [];
-var maxMessageLogSize = 1000;
+var maxMessageLogSize = 10000;
 var updateInsideEntrances = false;
 var stickyBehindKeys = false;
 var logicGraph = null;
