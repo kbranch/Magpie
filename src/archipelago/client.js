@@ -175,7 +175,7 @@ function parseCheckedChecks(apCheckIds, diff) {
 }
 
 let connectionInProgress = false;
-function archipelagoConnect(server, slotName, password, gameName="Links Awakening DX Beta") {
+function archipelagoConnect(server, slotName, password, gameName="Links Awakening DX", tryAlternateName=true) {
     if (connectionInProgress) {
         return;
     }
@@ -197,8 +197,22 @@ function archipelagoConnect(server, slotName, password, gameName="Links Awakenin
     )
     .then(connected)
     .catch((err) => {
-        console.error("Failed to connect to AP:", err);
-        alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
+        connectionInProgress = false;
+
+        if (err.errors && err.errors.includes('InvalidGame') && tryAlternateName) {
+            let baseName = 'Links Awakening DX';
+
+            if (gameName.includes('Beta')) {
+                archipelagoConnect(server, slotName, password, baseName, false);
+            }
+            else {
+                archipelagoConnect(server, slotName, password, `${baseName} Beta`, false);
+            }
+        }
+        else {
+            console.error("Failed to connect to AP:", err);
+            alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
+        }
     });
 }
 
