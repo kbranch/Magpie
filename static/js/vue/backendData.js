@@ -205,15 +205,33 @@ function spoilerLogExists() {
 }
 
 function errorHandler(e) {
-    errorLog.push({
-        col: e.colno,
-        line: e.lineno,
-        message: e.error ? e.error.message : e.message,
-        stack: e.error ? e.error.stack : e.message,
-        filename: e.filename,
-        eventTime: e.timeStamp,
-        unixTime: Date.now(),
-    });
+    let entry = null
+
+    if (e.reason) {
+        entry = {
+            type: e.reason.name,
+            col: e.reason.columnNumber,
+            line: e.reason.lineNumber,
+            message: e.reason.message,
+            stack: e.reason.stack,
+            filename: e.reason.fileName,
+        };
+    }
+    else {
+        entry = {
+            type: e.error?.name,
+            col: e.colno,
+            line: e.lineno,
+            message: e.error ? e.error.message : e.message,
+            stack: e.error ? e.error.stack : e.message,
+            filename: e.filename,
+        };
+    }
+
+    entry.eventTime = e.timeStamp;
+    entry.unixTime = Date.now();
+
+    errorLog.push(entry);
 }
 
 function openItemsBroadcastView() {
@@ -240,6 +258,7 @@ function init() {
     }
 
     window.addEventListener('error', errorHandler);
+    window.addEventListener('unhandledrejection', errorHandler);
 
     modifyTooltipAllowList();
     initKnownItems();
