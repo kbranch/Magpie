@@ -1,5 +1,5 @@
 <script setup>
-import { saveQuickSettings, drawActiveTab, bootstrap } from '@/moduleWrappers.js';
+import { drawActiveTab, bootstrap } from '@/moduleWrappers.js';
 import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue';
@@ -146,13 +146,6 @@ function removeHint(hint) {
         </button>
 
         <!-- <img :src="`/images/${state.starHints ? 'star-fill' : 'star'}.svg`" class="invert header-icon" @click="state.starHints = !state.starHints" @mouseenter="tip.tooltip('Star hinted locations', $event)"> -->
-
-        <div class="col-auto quicksetting">
-            <input id="showHints" type="checkbox" v-model="state.settings.showHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
-            <label for="showHints" :class="[state.settings.showHints ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show available hints', $event)">
-                <img class="header-icon" src="/images/lightbulb-fill.svg">
-            </label>
-        </div>
     </div>
     <div class="card-body">
         <div v-for="hint in state.hints" :key="hint" class="hint-row" @mouseenter="highlightHint(hint)" @mouseleave="highlightedChecks = []">

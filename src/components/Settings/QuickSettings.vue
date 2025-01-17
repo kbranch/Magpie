@@ -145,14 +145,20 @@ window.setRomRequested = setRomRequested;
                                 </svg>
                             </label>
                         </div>
-                    </div>
-                    <div class="row quicksettings-row">
-                        <div class="col-auto mb-0 quicksetting">
+                        <div class="col-auto quicksetting">
                             <input id="showVanillaQuick" type="checkbox" v-model="state.settings.showVanilla" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
                             <label for="showVanillaQuick" :class="[state.settings.showVanilla ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show vanilla checks', $event)">
                                 <svg class="quicksettings-icon align-middle">
                                     <use xlink:href="#difficulty-0-vanilla"></use>
                                 </svg>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row quicksettings-row">
+                        <div class="col-auto mb-0 quicksetting">
+                            <input id="showHints" type="checkbox" v-model="state.settings.showHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showHints" :class="[state.settings.showHints ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show available hints', $event)">
+                                <img class="quicksettings-icon" src="/images/lightbulb-fill.svg">
                             </label>
                         </div>
                         <div class="col-auto mb-0 quicksetting">
@@ -188,6 +194,12 @@ window.setRomRequested = setRomRequested;
                             <input id="showLogicHintsQuick" type="checkbox" v-model="state.settings.showLogicHints" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
                             <label for="showLogicHintsQuick" :class="[state.settings.showLogicHints ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show logic hints', $event)">
                                 <img class="quicksettings-icon align-middle" src="/images/logicHints.svg">
+                            </label>
+                        </div>
+                        <div class="col-auto mb-0 quicksetting">
+                            <input id="showHerosPath" type="checkbox" v-model="state.settings.linkPathEnabled" class="form-check-input quicksettings-input" @change="saveQuickSettings()">
+                            <label for="showHerosPath" :class="[state.settings.linkPathEnabled ? 'active' : '']" class="quicksettings-label" @mouseenter="tip.tooltip('Show Hero\'s Path', $event)">
+                                <img class="quicksettings-icon" src="/images/showherospath.svg">
                             </label>
                         </div>
                     </div>
