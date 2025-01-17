@@ -538,6 +538,12 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             step: 1,
                         }),
                         new SettingsItem({
+                            title: 'Interact with unpinned tooltips',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'unpinnedInteract',
+                        }),
+                        new SettingsItem({
                             title: 'Swap mouse buttons',
                             type: types.checkbox,
                             settingBase: 'settings',
@@ -688,6 +694,13 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             settingBase: 'settings',
                             settingName: 'showLogicHints',
                             icon: 'logicHints.svg',
+                        }),
+                        new SettingsItem({
+                            title: 'Show available hints',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showHints',
+                            icon: 'lightbulb-fill.svg',
                         }),
                     ],
                 }),

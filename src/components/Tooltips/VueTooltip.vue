@@ -7,10 +7,12 @@ import CheckItem from '@/components/Tooltips/CheckItem.vue';
 import PinnedChunk from '@/components/Tooltips/PinnedChunk.vue';
 import EntranceChunk from './EntranceChunk.vue';
 import BossChunk from './BossChunk.vue';
+import { useStateStore } from '@/stores/stateStore';
 
 const props = defineProps(['type', 'textColor']);
+const tip = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
+const state = useStateStore();
 
-const state = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
 const tooltip = ref(null);
 const rootRect = ref(null);
 const parentRect = ref(null);
@@ -18,9 +20,9 @@ const tipRect = ref(null);
 const parentClean = ref(false);
 const tipClean = ref(false);
 const allNodes = ref(nodes);
-const stateNode = computed(() => props.type == 'node' ? state.node : state.auxNode);
-const stateShow = computed(() => props.type == 'auxNode' ? state.auxShow : state.show);
-const stateElement = computed(() => props.type == 'auxNode' ? state.auxElement : state.element);
+const stateNode = computed(() => props.type == 'node' ? tip.node : tip.auxNode);
+const stateShow = computed(() => props.type == 'auxNode' ? tip.auxShow : tip.show);
+const stateElement = computed(() => props.type == 'auxNode' ? tip.auxElement : tip.element);
 const zIndex = computed(() => node?.value?.pinned ? 20010 : 1000);
 
 window.nodes = allNodes.value;
@@ -31,7 +33,7 @@ const hovered = ref(false);
 const node = computed(() => allNodes.value[stateNode.value?.id()]);
 const show = computed(() => {
     return stateShow.value
-           && (props.type == 'text' ? state.text : node.value)
+           && (props.type == 'text' ? tip.text : node.value)
            && stateElement.value
            && tipClean.value
            && parentClean.value
@@ -242,7 +244,7 @@ function getTooltipTop(parentRect, tipRect) {
 }
 
 function forceClear() {
-    state.clearTooltip(props.type);
+    tip.clearTooltip(props.type);
     hovered.value = false
     closing.value = false;
     closed.value = true;
@@ -282,7 +284,7 @@ function itemDropdownOpened(button) {
     }
 
     node.value.pinned = true;
-    state.tooltip(node.value, { currentTarget: node.value.graphic });
+    tip.tooltip(node.value, { currentTarget: node.value.graphic });
 
     setTimeout(() => new window.bootstrap.Dropdown(document.getElementById(button.id)).show(), 50);
 }
@@ -291,7 +293,7 @@ function itemDropdownOpened(button) {
 <template>
     <div ref="tooltip" class="vue-tooltip"
         :class="{
-            'closed': !show && (closed || type == 'text'),
+            'closed': !show && (closed || type == 'text' || !state.settings.unpinnedInteract),
             'text-tooltip': type == 'text',
             'node-tooltip': type != 'text',
             'pinned': node?.pinned,
@@ -302,7 +304,7 @@ function itemDropdownOpened(button) {
         >
 
         <template v-if="type == 'text'">
-            <span class="tooltipText" v-html="state.text"></span>
+            <span class="tooltipText" v-html="tip.text"></span>
         </template>
 
         <template v-else-if="node">
