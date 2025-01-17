@@ -207,12 +207,6 @@ img {
     max-width: 100%;
 }
 
-.tooltip-body {
-    display: inline-block;
-    position: relative;
-    pointer-events: auto;
-}
-
 .tooltip {
     opacity: 1 !important;
 }

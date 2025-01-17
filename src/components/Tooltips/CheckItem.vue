@@ -4,7 +4,8 @@ import { toggleSingleNodeCheck, openCheckLogicViewer, getPopperConfig } from '@/
 import { onMounted, onUpdated, ref, computed } from 'vue';
 import ItemDropdown from '@/components/Tooltips/ItemDropdown.vue';
 
-const props = defineProps(['uniqueCheck', 'show'])
+const props = defineProps(['uniqueCheck', 'show']);
+const emit = defineEmits(['dropdown_opened']);
 
 const tip = useTextTooltipStore();
 
@@ -77,5 +78,5 @@ function updateHelper() {
         <img class="invert" src="/images/diagram-2-fill.svg">
     </button>
 </div>
-<ItemDropdown :active="show" :check-id="uniqueCheck.id" />
+<ItemDropdown :active="show" :check-id="uniqueCheck.id" @dropdown_opened="(button) => emit('dropdown_opened', button)" />
 </template>

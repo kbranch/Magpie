@@ -24,6 +24,10 @@ export const useNodeTooltipStore = defineStore('nodeTooltip', () => {
         let timeout = aux ? auxDelayTimeout : delayTimeout;
         let s = aux ? auxShow : show;
 
+        if (type == 'auxNode' && Node == node.value) {
+            return;
+        }
+
         if (event.currentTarget) {
             el.value = event.currentTarget;
         }

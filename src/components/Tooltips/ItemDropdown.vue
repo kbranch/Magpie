@@ -2,7 +2,8 @@
 import { setCheckContents, spoilLocation, itemsByLocation } from '@/moduleWrappers.js';
 import { onMounted, ref, watch } from 'vue';
 
-const props = defineProps(['active', 'checkId']);
+const props = defineProps(['active', 'checkId', 'node']);
+const emit = defineEmits(['dropdown_opened']);
 
 const includeItems = ref(false);
 const button = ref(null);
@@ -10,6 +11,7 @@ const button = ref(null);
 onMounted(() => {
     button.value.addEventListener('show.bs.dropdown', () => {
         includeItems.value = true;
+        emit('dropdown_opened', button.value);
     });
     button.value.addEventListener('hide.bs.dropdown', () => {
     });
@@ -137,7 +139,10 @@ const itemList = [
 </script>
 
 <template>
-<button ref="button" type="button" class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end" data-bs-toggle="dropdown" aria-expanded="false"></button>
+<button ref="button" type="button" :id="`itemDropdown${checkId}`"
+  class="btn tooltip-item dropdown-toggle dropdown-toggle-split ps-4 pe-2 text-end"
+  data-bs-toggle="dropdown" aria-expanded="false"></button>
+
 <ul class="dropdown-menu">
     <template v-if="includeItems">
         <li>
