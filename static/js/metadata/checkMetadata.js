@@ -5289,10 +5289,10 @@ let vanillaCoordDict = {
    },
 }
 
-let coordDict = vanillaCoordDict;
+window.coordDict = vanillaCoordDict;
 let linkedChecks = {};
 
-Object.values(coordDict).map((x) => {
+Object.values(window.coordDict).map((x) => {
   if (x.linkedItem) {
     if (!linkedChecks[x.linkedItem]) {
       linkedChecks[x.linkedItem] = [];

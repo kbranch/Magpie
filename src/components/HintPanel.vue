@@ -5,9 +5,11 @@ import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed, nextTick, onBeforeMount, ref, watch } from 'vue';
 import { itemNames } from '@/metadata/itemNames';
 import { debounce } from '@/main';
+import { useAccessibilityStore } from '@/stores/accessibilityStore';
 
 const state = useStateStore();
 const tip = useTextTooltipStore();
+const accessibility = useAccessibilityStore();
 
 const newHint = ref({});
 
@@ -21,7 +23,7 @@ const items = [
     'GOOD'
 ];
 
-const areas = computed(() => [... new Set(state.checkAccessibility.map(x => x.metadata.area))].sort());
+const areas = computed(() => [... new Set(accessibility.checks.map(x => x.metadata.area))].sort());
 
 watch(newHint,
     (newValue) => {
@@ -115,12 +117,12 @@ function transitionEnded(event) {
 
 function highlightHint(hint) {
     if (hint.locationId) {
-        highlightedChecks.value = state.checkAccessibility.filter(x => x.id.toLowerCase() == hint.locationId.toLowerCase());
+        highlightedChecks.value = accessibility.checks.filter(x => x.id.toLowerCase() == hint.locationId.toLowerCase());
         return;
     }
 
     let locationName = hint.location.toLowerCase();
-    highlightedChecks.value = state.checkAccessibility.filter(x => x.metadata.name.toLowerCase() == locationName
+    highlightedChecks.value = accessibility.checks.filter(x => x.metadata.name.toLowerCase() == locationName
                                                                    || x.metadata.area.toLowerCase() == locationName);
 }
 

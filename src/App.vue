@@ -1,11 +1,16 @@
 <script setup>
 import { win } from '@/moduleWrappers.js';
-import { computed, toRaw } from 'vue';
+import { computed, isProxy, toRaw } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useEventStore } from '@/stores/eventStore';
+import LogicViewer from './components/LogicViewer/LogicViewer.vue';
+import { useLogicViewerStore } from './stores/logicViewerStore';
+import { useAccessibilityStore } from './stores/accessibilityStore';
 
 const state = useStateStore();
 const eventStore = useEventStore();
+const logicStore = useLogicViewerStore();
+const accessibility = useAccessibilityStore();
 
 const bgColor = computed(() => state.settings.bgColor);
 const textColor = computed(() => state.settings.textColor);
@@ -35,7 +40,19 @@ function updateArgs(args) {
   win.args = state.args;
 }
 
-function stripProxy(obj) {
+function stripProxy(obj, level=0) {
+  // Arbitrary limit to prevent loops
+  if (level < 5) {
+    for(const key in obj) {
+      if (isProxy(obj[key])) {
+        obj[key] = toRaw(obj[key]);
+      }
+
+      // Recursively strip members too
+      stripProxy(obj[key], level + 1);
+    }
+  }
+
   return toRaw(obj);
 }
 
@@ -43,8 +60,9 @@ function updateLogics(newLogics) {
   state.logics = newLogics;
 }
 
-function updateCheckAccessibility(accessibility) {
-  state.checkAccessibility = accessibility;
+function updateAccessibility(newAccessibility) {
+  accessibility.loadChecks(newAccessibility.checks);
+  accessibility.loadEntrances(newAccessibility.entrances);
 }
 
 function updateServerVersion(newVersion, newBuild, message=null) {
@@ -71,13 +89,17 @@ function updateLinkFace(showing) {
   state.linkFaceShowing = showing;
 }
 
+function updateLogicGraph(graph) {
+  logicStore.graph = graph;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
   updateSettings,
   updateArgs,
   stripProxy,
-  updateCheckAccessibility,
+  updateAccessibility,
   updateLogics,
   updateServerVersion,
   updateSidebarMessage,
@@ -85,6 +107,7 @@ defineExpose({
   updateSpoilerLog,
   updateHints,
   updateLinkFace,
+  updateLogicGraph,
 });
 </script>
 
@@ -92,6 +115,8 @@ defineExpose({
 <div id="appWrapper" class="magpie-colors">
 <div id="appInner">
   <RouterView />
+
+  <LogicViewer />
 
   <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
@@ -118,33 +143,6 @@ defineExpose({
         <div class="modal-footer">
           <button id="sendErrorButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal"
             onclick="sendError()">Send Bug Report</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="logicModal" tabindex="-1" aria-labelledby="logicModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-l">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title" id="logicModalLabel"></h6>
-          <button id="logicModalClose" type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="logicBody">
-        </div>
-        <div class="modal-footer">
-          <div class="row justify-content-end big-button">
-            <div class="col-auto">
-              <button id="logicModalBackButton" type="button" class="btn btn-secondary"
-                onclick="openLogicViewer(logicStack.pop(), false)"><span id="backNodeName"></span></button>
-            </div>
-            <div class="col"></div>
-            <div class="col-auto">
-              <button id="logicModalCloseButton" type="button" class="btn btn-primary"
-                data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

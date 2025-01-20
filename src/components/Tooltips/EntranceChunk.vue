@@ -1,7 +1,8 @@
 <script setup>
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
-import { openEntranceLogicViewer, graphicalMapType, graphicalMapSource, coupledEntrances, inOutEntrances } from '@/moduleWrappers';
+import { graphicalMapType, graphicalMapSource, coupledEntrances, inOutEntrances } from '@/moduleWrappers';
 import { computed, onMounted, onUpdated, ref } from 'vue';
+import { useLogicViewerStore } from '@/stores/logicViewerStore';
 
 const props = defineProps(['node']);
 
@@ -9,6 +10,7 @@ const helper = ref(null);
 const mapType = ref(graphicalMapType);
 const mapSource = ref(graphicalMapSource);
 const tip = useTextTooltipStore();
+const logic = useLogicViewerStore();
 
 const entrance = computed(() => props.node?.entrance);
 const connection = computed(() => entrance?.value?.connectedToMetadata());
@@ -63,7 +65,7 @@ function updateHelpers() {
     <div class='tooltip-text align-middle ps-2'>
         {{ entrance.metadata.name }}
     </div>
-    <button type="button" class="btn btn-secondary p-1 logic-button" @click="openEntranceLogicViewer(entrance.id)" @mouseenter="tip.tooltip('View Logic', $event)">
+    <button type="button" class="btn btn-secondary p-1 logic-button" @click="logic.inspectEntrance(entrance.id)" @mouseenter="tip.tooltip('View Logic', $event)">
         <img class="invert" src="/images/diagram-2-fill.svg">
     </button>
 </div>

@@ -109,31 +109,10 @@ function refreshCheckList() {
 
                 randomizedEntrances = response.randomizedEntrances;
                 startLocations = response.startLocations;
-                entranceAccessibility = response.accessibility.entrances;
-                checksById = {};
-                allChecksById = {};
-                checkAccessibility = response.accessibility.checks.map(x => {
-                    let check = new Check(x);
-                    checksById[x.id] = check;
-
-                    return check;
-                });
+                vueApp.updateAccessibility(response.accessibility);
 
                 logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
-                logicGraph = response.accessibility.graph;
-                logicByCheck = {}
-
-                for (const loc in logicGraph) {
-                    for (const check of logicGraph[loc].checks) {
-                        logicByCheck[check] = logicGraph[loc];
-                    }
-
-                    if ('entrances' in logicGraph[loc]) {
-                        for (const entrance of logicGraph[loc].entrances) {
-                            logicByEntrance[entrance] = logicGraph[loc];
-                        }
-                    }
-                }
+                vueApp.updateLogicGraph(response.accessibility.graph);
 
                 pruneEntranceMap();
                 fillVanillaLogEntrances();
@@ -148,7 +127,6 @@ function refreshCheckList() {
 
                 setTimeout(drawActiveTab);
                 setTimeout(() => {
-                    vueApp.updateCheckAccessibility(checkAccessibility);
                     vueApp.updateLogics(response.logics);
                     vueApp.updateServerVersion(response.versionDisplay, response.version, response.updateMessage);
                     vueApp.updateSidebarMessage(response.sidebarMessage);

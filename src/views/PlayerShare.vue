@@ -16,11 +16,13 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useRoute } from 'vue-router';
+import { useAccessibilityStore } from '@/stores/accessibilityStore';
 
 document.title = 'Magpie Tracker - Player Share';
 
 const route = useRoute();
 const state = useStateStore();
+const accessibility = useAccessibilityStore();
 const tip = useTextTooltipStore();
 
 let refreshInterval = null;
@@ -203,7 +205,7 @@ function getPlayerState() {
 
 <div class="row pb-4">
   <div id="checkList" class="col">
-    <CheckList :check-accessibility="state.checkAccessibility" />
+    <CheckList :check-accessibility="accessibility.checks" />
   </div>
 </div>
 

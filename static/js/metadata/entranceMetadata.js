@@ -1,6 +1,6 @@
 "use strict"
 
-let entranceDict = {
+window.entranceDict = {
 	"d0": {
 		"id": "d0",
 		"name": "D0: Color Dungeon",

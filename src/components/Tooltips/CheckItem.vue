@@ -1,13 +1,15 @@
 <script setup>
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
-import { toggleSingleNodeCheck, openCheckLogicViewer, getPopperConfig } from '@/moduleWrappers.js';
+import { toggleSingleNodeCheck, getPopperConfig } from '@/moduleWrappers.js';
 import { onMounted, onUpdated, ref, computed } from 'vue';
 import ItemDropdown from '@/components/Tooltips/ItemDropdown.vue';
+import { useLogicViewerStore } from '@/stores/logicViewerStore';
 
 const props = defineProps(['uniqueCheck', 'show']);
 const emit = defineEmits(['dropdown_opened']);
 
 const tip = useTextTooltipStore();
+const logic = useLogicViewerStore();
 
 const button = ref(null);
 
@@ -74,7 +76,7 @@ function updateHelper() {
     </li>
 </button>
 <div class="col-auto">
-    <button type="button" class="btn btn-secondary p-1 logic-button" @click="openCheckLogicViewer(uniqueCheck.id)" @mouseenter="tip.tooltip('View Logic', $event)">
+    <button type="button" class="btn btn-secondary p-1 logic-button" @click="logic.inspectCheck(uniqueCheck.id)" @mouseenter="tip.tooltip('View Logic', $event)">
         <img class="invert" src="/images/diagram-2-fill.svg">
     </button>
 </div>

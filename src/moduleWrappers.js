@@ -29,8 +29,6 @@ export let applySettings = window.applySettings;
 export let refreshItems = window.refreshItems;
 export let broadcastArgs = window.broadcastArgs;
 export let toggleSingleNodeCheck = window.toggleSingleNodeCheck;
-export let openCheckLogicViewer = window.openCheckLogicViewer;
-export let openEntranceLogicViewer = window.openEntranceLogicViewer;
 export let nodes = window.nodes;
 export let setCheckContents = window.setCheckContents;
 export let spoilLocation = window.spoilLocation;
@@ -71,6 +69,7 @@ export let hydrateConnections = window.hydrateConnections;
 export let getLocationCoords  = window.getLocationCoords;
 export let getMapScaling = window.getMapScaling;
 export let setCurrentLocation = window.setCurrentLocation;
+export let entranceDict = window.entranceDict;
 
 export function initGlobals(data) {
     let state = useStateStore();
