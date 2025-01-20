@@ -33,7 +33,6 @@ watch(node, (value, oldValue) => {
 onMounted(() => {
     modal.value.addEventListener('hide.bs.modal', () => {
         logic.clearNode();
-        console.log("cleared node");
     });
 });
 
@@ -46,27 +45,40 @@ onUpdated(() => {
 
 <template>
 
-<div ref="modal" class="modal fade" id="logicModal" tabindex="-1" aria-labelledby="logicModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-l">
+<div ref="modal" class="modal fade" tabindex="-1" aria-labelledby="logicModalLabel" aria-hidden="true" data-bs-keyboard="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header py-2">
                 <h6 class="modal-title" id="logicModalLabel">
+                    <div v-if="logic.stack?.length > 0" id="backSection">
+                        <button type="button" class="btn btn-secondary me-2"
+                            @click="logic.popStack()">
+
+                            <img src="/images/chevron-left.svg" class="invert pe-1">
+                            Back
+                        </button>
+                        <span>to {{ logic.stackTop }}</span>
+                    </div>
                     <template v-if="node == 'bad-check'">Check not found</template>
                     <template v-else-if="node == 'bad-entrance'">Entrance not found</template>
                     <template v-else-if="node">Viewing node '{{ logic.getLogicNodeName(node.id) }}'</template>
                 </h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close invert" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div ref="body" class="modal-body" id="logicBody">
+            <div ref="body" class="modal-body">
                 <template v-if="node == 'bad-check'">Check not found in logic graph. You may need to connect additional entrances.</template>
                 <template v-else-if="node == 'bad-entrance'">Entrance not found in logic graph. You may need to connect additional entrances.</template>
 
                 <template v-else-if="node">
                 <h5>
                     <div class="text-start d-flex p-1 mb-0 align-items-center">
-                        <div class="tooltip-check-graphic difficulty-${node.diff ?? '9'} align-middle">
+                        <div class="tooltip-check-graphic align-middle" 
+                            :class="{ [`difficulty-${node.diff ?? '9'}`]: true }">
+
                             <div class="tooltip-check-graphic icon-wrapper">
-                                <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-${node.diff ?? '9'}"></use></svg>
+                                <svg class="tooltip-check-graphic align-middle">
+                                    <use :xlink:href="`#difficulty-${node.diff ?? '9'}`"></use>
+                                </svg>
                             </div>
                         </div>
                         <div class="ps-2">
@@ -76,14 +88,14 @@ onUpdated(() => {
                 </h5>
                 <h6>Checks:</h6>
                 <div>
-                    <template v-if="node.checks?.length === 0">None</template>
+                    <template v-if="(node.checks?.length ?? 0) == 0">None</template>
 
                     <LogicViewerCheck v-else v-for="(check, index) in nodeChecks" :key="check.id"
                         v-model="nodeChecks[index]" />
                 </div>
                 <h6 class="pt-3">Entrances:</h6>
                 <div>
-                    <template v-if="node.entrances?.length === 0">None</template>
+                    <template v-if="(node.entrances?.length ?? 0) == 0">None</template>
 
                     <LogicViewerEntrance v-else v-for="(entrance, index) in nodeEntrances" :key="entrance.id"
                         v-model="nodeEntrances[index]" />
@@ -109,17 +121,8 @@ onUpdated(() => {
                 </template>
             </div>
             <div class="modal-footer">
-                <div class="row justify-content-end big-button">
-                    <div class="col-auto">
-                        <button v-if="logic.stack?.length > 0" type="button" class="btn btn-secondary"
-                            @click="logic.popStack()">
-                            <span>Back to {{ logic.stackTop }}</span>
-                        </button>
-                    </div>
-                    <div class="col"></div>
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                <div class="display-flex justify-content-end">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -129,4 +132,28 @@ onUpdated(() => {
 </template>
 
 <style scoped>
+
+table {
+    height: 1px; /* Ugly hack to allow for 100% sizing inside cells */
+}
+
+#logicModalLabel {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 12px;
+    width: 100%;
+}
+
+#backSection {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 8px;
+}
+
+.modal-header {
+    min-height: 56px;
+}
+
 </style>

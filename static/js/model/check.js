@@ -185,3 +185,5 @@ class Check {
         return Check.isOwl(id) && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
     }
 }
+
+window.Check = Check;

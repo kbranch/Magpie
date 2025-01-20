@@ -1,3 +1,4 @@
+import { Check } from "@/moduleWrappers";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 

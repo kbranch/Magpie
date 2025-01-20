@@ -34,35 +34,82 @@ function iconifyRequirement(requirement) {
 <template>
 
 <tr>
-    <td>
-        <div class="text-start d-flex p-1 mb-0 align-items-center">
-            <div class="tooltip-check-graphic difficulty-${connection.diff} align-middle">
-                <div class="tooltip-check-graphic icon-wrapper">
-                    <svg class="tooltip-check-graphic align-middle"><use xlink:href="#difficulty-${connection.diff}"></use></svg>
+    <td class="pe-0">
+        <div class="cell-wrapper">
+            <div class="text-start d-flex p-1 mb-0 align-items-center">
+                <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${connection.diff}`]: true}">
+                    <div class="tooltip-check-graphic icon-wrapper">
+                        <svg class="tooltip-check-graphic align-middle">
+                            <use :xlink:href="`#difficulty-${connection.diff}`"></use>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
     </td>
     <td>
-        {{ logic.getLogicNodeName(otherEnd) }}
-        <img v-if="connection.badWay" class="logic-item invert" src="/images/do-not-enter.svg"
-            data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">
-    </td>
-    <td v-html="iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)"> </td>
-    <td>
-        <img v-if="connection.met" class='connection-met logic-accessibility' src='/images/check2-circle.svg'
-            data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>
-        <img v-else class='connection-unmet logic-accessibility' src='/images/x-circle.svg'
-            data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>
+        <div class="cell-wrapper">
+            {{ logic.getLogicNodeName(otherEnd) }}
+            <img v-if="connection.badWay" class="logic-item invert ps-2" src="/images/do-not-enter.svg"
+                data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">
+        </div>
     </td>
     <td>
-        <button type="button" class="btn btn-secondary py-0" @click="logic.pushStack(nodeId, otherEnd)">
-            View
-        </button>
+        <div class="cell-wrapper" v-html="iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)">
+        </div>
+    </td>
+    <td>
+        <div class="cell-wrapper center-cell">
+            <img v-if="connection.met" class='connection-met logic-accessibility' src='/images/check2-circle.svg'
+                data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>
+            <img v-else class='connection-unmet logic-accessibility' src='/images/x-circle.svg'
+                data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>
+        </div>
+    </td>
+    <td>
+        <div class="cell-wrapper end-cell">
+            <button type="button" class="btn btn-secondary view-button py-0" @click="logic.pushStack(nodeId, otherEnd)">
+                View
+            </button>
+        </div>
     </td>
 </tr>
 
 </template>
 
 <style scoped>
+
+td {
+    height: 100%;
+}
+
+.cell-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+}
+
+.center-cell {
+    justify-content: center;
+}
+
+.end-cell {
+    justify-content: end;
+}
+
+.connection-unmet {
+    background-color: #900;
+}
+
+.connection-met {
+    background-color: #090;
+}
+
+.logic-accessibility {
+    border-radius: 5px;
+    padding: 2px;
+}
+
 </style>

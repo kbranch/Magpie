@@ -1016,19 +1016,6 @@ img.button-icon {
     display: flex;
 }
 
-.logic-accessibility {
-    border-radius: 5px;
-    padding: 2px;
-}
-
-.connection-unmet {
-    background-color: #900;
-}
-
-.connection-met {
-    background-color: #090;
-}
-
 .boss-menu-image {
     max-height: 32px;
     max-width: 32px;
