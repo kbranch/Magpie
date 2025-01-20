@@ -5,6 +5,7 @@ import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import ShareDialog from './ShareDialog.vue';
 import { useStateStore } from '@/stores/stateStore';
 import { isNumeric } from '@/main';
+import CheckStats from './CheckList/CheckStats.vue';
 
 const state = useStateStore();
 
@@ -93,6 +94,8 @@ async function sendSuggestion() {
                     </div>
                 </div>
             </template>
+
+            <CheckStats v-if="state.settings.stacked" />
 
             <div id="endButtons">
                 <button type="button" class="btn btn-secondary" @click="resetSession()" @mouseenter="tip.tooltip('Reset Checks and Inventory', $event)">
