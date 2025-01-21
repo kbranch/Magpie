@@ -78,6 +78,22 @@ except:
     sharingEnabled = False
     logging.info(f"Sharing disabled: {traceback.format_exc()}")
 
+try:
+    import tips
+    app.config.from_pyfile('config.py')
+    tips.setDbInfo(tryGetValue(app.config, 'TIPS_SERVER'),
+                   tryGetValue(app.config, 'TIPS_PORT'),
+                   tryGetValue(app.config, 'TIPS_DB'),
+                   tryGetValue(app.config, 'TIPS_USERNAME'),
+                   tryGetValue(app.config, 'TIPS_PASSWORD'),
+                   tryGetValue(app.config, 'TIPS_DBTYPE'))
+
+    tipsEnabled = True
+    logging.info("Tips enabled")
+except:
+    tipsEnabled = False
+    logging.info(f"Tips disabled: {traceback.format_exc()}")
+
 def renderTraceback():
     return json.dumps({
         'error': traceback.format_exc(),
@@ -471,10 +487,34 @@ def getBasicInit():
         "ndiEnabled": ndiEnabled,
     })
 
+if tipsEnabled:
+    @app.route('/api/tips', methods=['GET'])
+    def getTips():
+        connectionIdsJson = request.args.get('connectionIds')
+        if not connectionIdsJson:
+            return "Connection ID list is required", 400
+
+        connectionIds = json.loads(connectionIdsJson)
+
+        return json.dumps(tips.getTips(connectionIds))
+
+    @app.route('/api/newTip', methods=['POST'])
+    def newTip():
+        try:
+            tip = request.json
+        except:
+            tip = None
+
+        if not tip or 'connectionId' not in tip:
+            return 'Invalid request', 400
+        
+        tips.addTip(tip)
+
+        return 'ok'
 
 if sharingEnabled:
-    @app.route("/playerState", methods=['POST'])
-    @app.route("/api/playerState", methods=['POST'])
+    @app.route('/playerState', methods=['POST'])
+    @app.route('/api/playerState', methods=['POST'])
     def playerStatePost():
         try:
             state = request.json
@@ -482,7 +522,7 @@ if sharingEnabled:
             state = None
 
         if not state or 'settings' not in state or not validateJson(state['settings'], ['playerName', 'playerId']):
-            return "Invalid request", 400
+            return 'Invalid request', 400
 
         settings = state['settings']
 
@@ -496,9 +536,9 @@ if sharingEnabled:
 
                 if not join:
                     if code:
-                        return "Invalid joinCode", 403
+                        return 'Invalid joinCode', 403
 
-                    return "A joinCode is required", 401
+                    return 'A joinCode is required', 401
 
         timestamp = sharing.writeState(settings['playerName']
                                     ,settings['playerId']

@@ -166,6 +166,34 @@ CREATE TABLE public.location_sharing
 ALTER TABLE IF EXISTS public.location_sharing
     OWNER to postgres;
 
+CREATE TABLE public.tips
+(
+    tip_id bigserial NOT NULL,
+    connection_id character varying(100) NOT NULL,
+    body character varying(10000) NOT NULL,
+    attribution character varying(200) NOT NULL,
+    language character varying(10) NOT NULL,
+    approved boolean NOT NULL DEFAULT FALSE,
+    show boolean NOT NULL DEFAULT TRUE,
+    creation_time timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (tip_id)
+);
+
+CREATE TABLE public.tip_attachments
+(
+    tip_attachment_id bigserial NOT NULL,
+    tip_id bigint NOT NULL,
+    filename character varying(255) NOT NULL,
+    show boolean NOT NULL DEFAULT TRUE,
+    creation_time timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (tip_attachment_id),
+    CONSTRAINT tip_attachment_tip_id_fk FOREIGN KEY (tip_id)
+        REFERENCES public.tips (tip_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
 --
 -- TOC entry 2819 (class 2604 OID 17979)
 -- Name: events event_id; Type: DEFAULT; Schema: public; Owner: -
