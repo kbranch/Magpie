@@ -188,7 +188,7 @@ function processSlotDataMessage(message) {
         'experimental_entrance_shuffle': 'entranceshuffle',
         'hard_mode': 'hardmode',
         'overworld': 'openmabe',
-        'prerelease': 'prerelease',
+        'pre_release': 'prerelease',
     };
     const valueLookup = {
         'logic': {
