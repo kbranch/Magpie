@@ -43,16 +43,18 @@ async function fetchTips() {
 }
 
 watch(node, async (value, oldValue) => {
-    if (value != null && oldValue == null) {
-        closeAllTooltips();
-
+    if (value != null) {
         connections.value = node.value.connections?.filter(conn => conn.to in logic.graph);
 
-        nextTick(() => { 
-            new window.bootstrap.Modal(modal.value).show();
-        });
+        // fetchTips();
 
-        fetchTips();
+        if (oldValue == null) {
+            closeAllTooltips();
+
+            nextTick(() => { 
+                new window.bootstrap.Modal(modal.value).show();
+            });
+        }
     }
 });
 
