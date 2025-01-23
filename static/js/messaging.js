@@ -1,5 +1,8 @@
 "use strict"
 
+const apClientName = 'archipelago-ladx-client';
+var remoteName = null;
+
 function processCheckMessage(message) {
     if (!autotrackerFeatures.includes('checks')) {
         console.log("Checks feature disabled, ignoring")
@@ -93,7 +96,9 @@ function processEntranceMessage(message) {
 
     if (!message.diff) {
         console.log('Receiving full autotracker entrances');
-        // resetEntrances();
+        if (remoteName == apClientName) { // Only Archipelago currently has fool-proof knowledge of visited entrances
+            resetEntrances();
+        }
     }
 
     pushUndoState();
@@ -313,7 +318,7 @@ function processHandshAckMessage(message) {
     ];
     
     let remoteVersion = 'Unknown';
-    let remoteName = 'Unknown';
+    remoteName = 'Unknown';
 
     if ('version' in message) {
         remoteVersion = message.version;
@@ -337,7 +342,8 @@ function processHandshAckMessage(message) {
         if (remoteName == 'magpie-autotracker') {
             setApLogic(false);
         }
-        else if (remoteName == 'archipelago-ladx-client') {
+        else if (remoteName == apClientName) {
+            resetEntrances(); // Hack until the AP client sends diff correctly
             setApLogic(true);
         }
     }
