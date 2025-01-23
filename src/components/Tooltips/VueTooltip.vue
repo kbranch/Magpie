@@ -293,7 +293,7 @@ function itemDropdownOpened(button) {
 <template>
     <div ref="tooltip" class="vue-tooltip"
         :class="{
-            'closed': !show && (closed || type == 'text' || !state.settings.unpinnedInteract),
+            'closed': !show && (closed || type == 'text' || !state.settings.unpinnedInteract || state.connectionType),
             'text-tooltip': type == 'text',
             'node-tooltip': type != 'text',
             'pinned': node?.pinned,
