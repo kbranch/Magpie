@@ -68,6 +68,7 @@ class LocalSettings:
         self.linkPathAlpha = 100
         self.linkPathWidth = 4
         self.unpinnedInteract = True
+        self.adjustDifficultyIcons = True
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

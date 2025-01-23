@@ -75,6 +75,12 @@ function refreshCheckList() {
 
         let bossList = getBossList();
         let minibossMap = getMinibossMap();
+        let originalLogic = args.logic;
+
+        if (!localSettings.adjustDifficultyIcons) {
+            args.logic = '';
+        }
+
         let data = {
             args: JSON.stringify(args),
             inventory: JSON.stringify(tempInventory),
@@ -83,6 +89,8 @@ function refreshCheckList() {
             minibossMap: JSON.stringify(minibossMap),
             localSettings: JSON.stringify(localSettings),
         }
+
+        args.logic = originalLogic;
 
         $.ajax({
             type: "POST",

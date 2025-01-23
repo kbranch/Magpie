@@ -155,7 +155,8 @@ function saveSettings(settings) {
     applySettings(lastSettings.args);
 
     window.skipNextAnimation = true;
-    argsChanged = JSON.stringify(settings.args) != JSON.stringify(lastSettings.args);
+    argsChanged = JSON.stringify(settings.args) != JSON.stringify(lastSettings.args)
+                  || settings.settings.adjustDifficultyIcons != lastSettings.settings.adjustDifficultyIcons;
 
     debounce(() => refreshItems(argsChanged), 500);
 

@@ -568,6 +568,12 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             settingBase: 'settings',
                             settingName: 'showLegend',
                         }),
+                        new SettingsItem({
+                            title: 'Combine in-logic difficulty icons',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'adjustDifficultyIcons',
+                        }),
                     ],
                 }),
                 new SettingsItem ({
