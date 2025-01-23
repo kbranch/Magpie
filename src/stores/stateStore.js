@@ -20,6 +20,8 @@ export const useStateStore = defineStore('state', () => {
     const hints = ref([]);
     const locationHistory = ref([]);
     const linkFaceShowing = ref(false);
+    const connectionSource = ref(null);
+    const connectionType = ref(null);
 
     let hintCallbacks = [];
 
@@ -83,6 +85,8 @@ export const useStateStore = defineStore('state', () => {
         hints,
         locationHistory,
         linkFaceShowing,
+        connectionType,
+        connectionSource,
         removeHint,
         onHintUpdate,
         offHintUpdate,

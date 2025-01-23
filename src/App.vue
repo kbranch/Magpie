@@ -93,6 +93,11 @@ function updateLogicGraph(graph) {
   logicStore.graph = graph;
 }
 
+function updateEntranceConnection(type, source) {
+  state.connectionSource = source;
+  state.connectionType = type;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
@@ -108,6 +113,7 @@ defineExpose({
   updateHints,
   updateLinkFace,
   updateLogicGraph,
+  updateEntranceConnection,
 });
 </script>
 

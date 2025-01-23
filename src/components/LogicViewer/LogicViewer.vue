@@ -6,9 +6,9 @@ import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue';
 import LogicViewerConnection from './LogicViewerConnection.vue';
 import LogicViewerEntrance from './LogicViewerEntrance.vue';
 import LogicViewerCheck from './LogicViewerCheck.vue';
-import { useStateStore } from '@/stores/stateStore';
+// import { useStateStore } from '@/stores/stateStore';
 
-const state = useStateStore();
+// const state = useStateStore();
 const logic = useLogicViewerStore();
 const accessibility = useAccessibilityStore();
 
@@ -16,7 +16,7 @@ const modal = ref(null);
 const body = ref(null);
 const connections = ref([]);
 
-const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
+// const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
 
 const node = computed(() => logic.inspectedNode);
 const checks = computed(() => node.value.checks?.filter(checkId => checkId in accessibility.checksById)
@@ -24,23 +24,23 @@ const checks = computed(() => node.value.checks?.filter(checkId => checkId in ac
 const entrances = computed(() => node.value.entrances?.filter(entranceId => entranceId in accessibility.entrances)
                                                          .map(entranceId => accessibility.entrances[entranceId]));
 
-async function fetchTips() {
-    let connectionIds = JSON.stringify(connections.value.map(x => x.id));
-    let response = await fetch(`${tipsUrlPrefix.value}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
+// async function fetchTips() {
+//     let connectionIds = JSON.stringify(connections.value.map(x => x.id));
+//     let response = await fetch(`${tipsUrlPrefix.value}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
 
-    if (!(response?.ok)) {
-        let error = await response.text();
-        console.log(`Error getting connection tips: ${error}`);
+//     if (!(response?.ok)) {
+//         let error = await response.text();
+//         console.log(`Error getting connection tips: ${error}`);
         
-        return;
-    }
+//         return;
+//     }
 
-    let tips = await response.json();
+//     let tips = await response.json();
 
-    for (const conn of connections.value) {
-        conn.tips = tips.filter(x => x.connectionId == conn.id);
-    }
-}
+//     for (const conn of connections.value) {
+//         conn.tips = tips.filter(x => x.connectionId == conn.id);
+//     }
+// }
 
 watch(node, async (value, oldValue) => {
     if (value != null) {

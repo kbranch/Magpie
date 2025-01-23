@@ -16,6 +16,7 @@ function startGraphicalConnection(entranceId, type) {
 
     graphicalMapType = type;
     graphicalMapSource = entranceId;
+    vueApp.updateEntranceConnection(graphicalMapType, graphicalMapSource);
     graphicalMapChoices = new Set(Entrance.validConnections(entranceId, type).map(x => x[0]));
     graphicalMapChoices.delete('bk_shop');
     $('#overworldTabContent').mousemove(connectorMouseMove);
@@ -29,6 +30,7 @@ function endGraphicalConnection(destId = null) {
 
     graphicalMapSource = null;
     graphicalMapChoices = null;
+    vueApp.updateEntranceConnection(graphicalMapType, graphicalMapSource);
 
     $('#mouseTracker').connections('remove');
     $('#underworldTabContent').off('mousemove');
@@ -60,6 +62,7 @@ function openDeadEndDialog(entranceId) {
     closeAllTooltips();
     graphicalMapType = "connector";
     graphicalMapSource = entranceId;
+    vueApp.updateEntranceConnection(graphicalMapType, graphicalMapSource);
     openConnectorDialog('deadEnd');
 }
 
@@ -78,6 +81,7 @@ function openConnectorDialog(entranceId) {
             if (unmappedEntrances.length == 1) {
                 if (Entrance.isMapped(graphicalMapSource)) {
                     graphicalMapSource = entranceId;
+                    vueApp.updateEntranceConnection(graphicalMapType, graphicalMapSource);
                 }
 
                 entranceId = 'deadEnd';

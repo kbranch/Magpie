@@ -1,22 +1,22 @@
 <script setup>
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
-import { graphicalMapType, graphicalMapSource, coupledEntrances, inOutEntrances } from '@/moduleWrappers';
+import { coupledEntrances, inOutEntrances } from '@/moduleWrappers';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
+import { useStateStore } from '@/stores/stateStore';
 
+const state = useStateStore();
 const props = defineProps(['node']);
 
 const helper = ref(null);
-const mapType = ref(graphicalMapType);
-const mapSource = ref(graphicalMapSource);
 const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
 const entrance = computed(() => props.node?.entrance);
 const connection = computed(() => entrance?.value?.connectedToMetadata());
-const connectionType = computed(() => mapSource.value != null ? mapType.value : 'none');
+const connectionType = computed(() => state.connectionSource != null ? state.connectionType : 'none');
 const interiorImage = computed(() => {
-    if (connectionType.value == 'simple' && entrance.value.metadata.interiorImage) {
+    if (['simple', 'connector'].includes(connectionType.value) && entrance.value.metadata.interiorImage) {
         return `/images/entrances/${entrance.value.metadata.interiorImage}.png`;
     }
     else if(connectionType.value == 'none'
