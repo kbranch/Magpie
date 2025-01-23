@@ -1,6 +1,6 @@
 import { itemMap, checkMap } from './tables';
 import { useStateStore } from '@/stores/stateStore';
-import { processMessage, alertModal, autotrackerIsConnected, setCheckContents } from '@/moduleWrappers';
+import { processMessage, alertModal, autotrackerIsConnected, setCheckContents, coordDict } from '@/moduleWrappers';
 import { Client, itemsHandlingFlags, } from "/node_modules/archipelago.js/dist/index.js";
 
 let state;
@@ -71,7 +71,23 @@ function processHint(hint) {
     }
 }
 
-function connected(slotData) {
+function processFoundEntrances(entranceMap, diff=true) {
+    if (autotrackerIsConnected()) {
+        return;
+    }
+
+    let message = {
+        type: 'entrance',
+        refresh: true,
+        source: 'archipelago',
+        diff: diff,
+        entranceMap: entranceMap,
+    };
+
+    processMessage(JSON.stringify(message));
+}
+
+async function connected(slotData) {
     connectionInProgress = false;
 
     console.log("Connected to AP server: ", slotData);
@@ -83,6 +99,19 @@ function connected(slotData) {
     catch(err) {
         console.log(`Error processing AP slot data: ${err}`);
     }
+
+    const entranceKey = `${client.name}_found_entrances`;
+
+    try {
+        processFoundEntrances(await client.storage.fetch(entranceKey, false), false);
+    }
+    catch(err) {
+        console.log(`Error fetching found entrances: ${err}`);
+    }
+    
+    await client.storage.notify([entranceKey], (_, value) => {
+        processFoundEntrances(value);
+    })
 }
 
 function receivedItems(items, index) {
