@@ -1,60 +1,23 @@
 <script setup>
 import { closeAllTooltips } from '@/moduleWrappers';
-import { useAccessibilityStore } from '@/stores/accessibilityStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue';
-import LogicViewerConnection from './LogicViewerConnection.vue';
-import LogicViewerEntrance from './LogicViewerEntrance.vue';
-import LogicViewerCheck from './LogicViewerCheck.vue';
-// import { useStateStore } from '@/stores/stateStore';
+import NodeSection from './NodeSection.vue';
 
-// const state = useStateStore();
 const logic = useLogicViewerStore();
-const accessibility = useAccessibilityStore();
 
 const modal = ref(null);
 const body = ref(null);
-const connections = ref([]);
-
-// const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
 
 const node = computed(() => logic.inspectedNode);
-const checks = computed(() => node.value.checks?.filter(checkId => checkId in accessibility.checksById)
-                                                   .map(checkId => accessibility.checksById[checkId]));
-const entrances = computed(() => node.value.entrances?.filter(entranceId => entranceId in accessibility.entrances)
-                                                         .map(entranceId => accessibility.entrances[entranceId]));
-
-// async function fetchTips() {
-//     let connectionIds = JSON.stringify(connections.value.map(x => x.id));
-//     let response = await fetch(`${tipsUrlPrefix.value}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
-
-//     if (!(response?.ok)) {
-//         let error = await response.text();
-//         console.log(`Error getting connection tips: ${error}`);
-        
-//         return;
-//     }
-
-//     let tips = await response.json();
-
-//     for (const conn of connections.value) {
-//         conn.tips = tips.filter(x => x.connectionId == conn.id);
-//     }
-// }
 
 watch(node, async (value, oldValue) => {
-    if (value != null) {
-        connections.value = node.value.connections?.filter(conn => conn.to in logic.graph);
+    if (value != null && oldValue == null) {
+        closeAllTooltips();
 
-        // fetchTips();
-
-        if (oldValue == null) {
-            closeAllTooltips();
-
-            nextTick(() => { 
-                new window.bootstrap.Modal(modal.value).show();
-            });
-        }
+        nextTick(() => { 
+            new window.bootstrap.Modal(modal.value).show();
+        });
     }
 });
 
@@ -96,57 +59,7 @@ onUpdated(() => {
             <div ref="body" class="modal-body">
                 <template v-if="node == 'bad-check'">Check not found in logic graph. You may need to connect additional entrances.</template>
                 <template v-else-if="node == 'bad-entrance'">Entrance not found in logic graph. You may need to connect additional entrances.</template>
-
-                <template v-else-if="node">
-                <h5>
-                    <div class="text-start d-flex p-1 mb-0 align-items-center">
-                        <div class="tooltip-check-graphic align-middle" 
-                            :class="{ [`difficulty-${node.diff ?? '9'}`]: true }">
-
-                            <div class="tooltip-check-graphic icon-wrapper">
-                                <svg class="tooltip-check-graphic align-middle">
-                                    <use :xlink:href="`#difficulty-${node.diff ?? '9'}`"></use>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="ps-2">
-                            {{ node.id }}
-                        </div>
-                    </div>
-                </h5>
-                <h6>Checks:</h6>
-                <div>
-                    <template v-if="(node.checks?.length ?? 0) == 0">None</template>
-
-                    <LogicViewerCheck v-else v-for="(check, index) in checks" :key="check.id"
-                        v-model="checks[index]" />
-                </div>
-                <h6 class="pt-3">Entrances:</h6>
-                <div>
-                    <template v-if="(node.entrances?.length ?? 0) == 0">None</template>
-
-                    <LogicViewerEntrance v-else v-for="(entrance, index) in entrances" :key="entrance.id"
-                        v-model="entrances[index]" />
-                </div>
-                <h6 class="pt-3">Connections:</h6>
-                <div>
-                    <table class="table table-dark table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">To</th>
-                                <th scope="col">Requirements</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <LogicViewerConnection v-for="(connection, index) in connections" :key="connection"
-                                v-model="connections[index]" :node-id="node.id" />
-                        </tbody>
-                    </table>
-                </div>
-                </template>
+                <NodeSection v-else-if="node" />
             </div>
             <div class="modal-footer">
                 <div class="display-flex justify-content-end">
