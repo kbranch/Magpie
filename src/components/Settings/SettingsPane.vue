@@ -71,7 +71,7 @@ function refresh() {
     }
 
     refreshSettingsItems(settings.value);
-    saveSettings(settings.value);
+    debounce(() => saveSettings(settings.value), 100);
 }
 
 function cloneSettings(obj) {

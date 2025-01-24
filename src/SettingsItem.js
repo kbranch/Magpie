@@ -42,6 +42,7 @@ export class SettingsItem {
     colSize;
     settingBind;
     padding;
+    detents;
 
     constructor(obj) {
         obj && Object.assign(this, obj);

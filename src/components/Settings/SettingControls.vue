@@ -32,7 +32,12 @@ defineProps(['item']);
     </select>
 
     <!-- Slider -->
-    <input v-if="item.type == types.slider && item.settingBind" v-model="model[item.settingName]" :id="`${item.settingName}-setting`" type="range" :min="item.min" :max="item.max" class="form-range">
+    <template v-if="item.type == types.slider && item.settingBind">
+        <input v-model="model[item.settingName]" :id="`${item.settingName}-setting`" type="range" :min="item.min" :max="item.max" class="form-range" :list="`${item.settingName}-detents`">
+        <datalist v-if="item.detents" :id="`${item.settingName}-detents`">
+            <option v-for="detent in item.detents" :key="detent" :value="detent"></option>
+        </datalist>
+    </template>
 
     <!-- Text -->
     <input v-if="item.type == types.text && item.settingBind" v-model="model[item.settingName]" :id="`${item.settingName}-setting`" type="text" class="form-control" :placeholder="item.placeholder">

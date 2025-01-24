@@ -15,6 +15,7 @@ const accessibility = useAccessibilityStore();
 const bgColor = computed(() => state.settings.bgColor);
 const textColor = computed(() => state.settings.textColor);
 const highlightColor = computed(() => state.settings.highlightColor);
+const containerWidth = computed(() => state.settings.maxContainerWidth ? `${state.settings.maxContainerWidth}px` : '1500px');
 
 function updateChecked(checked) {
   state.checkedChecks = new Set(checked);
@@ -220,7 +221,7 @@ defineExpose({
 }
 
 #appInner {
-  max-width: 1500px;
+  max-width: v-bind(containerWidth);
   width: 100%;
   padding-left: 12px;
   padding-right: 12px;

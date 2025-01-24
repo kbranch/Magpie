@@ -536,6 +536,17 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             min: 25,
                             max: 100,
                             step: 1,
+                            detents: [25, 50, 75, 100]
+                        }),
+                        new SettingsItem({
+                            title: 'Max page width',
+                            type: types.slider,
+                            settingBase: 'settings',
+                            settingName: 'maxContainerWidth',
+                            min: 960,
+                            max: 3840,
+                            step: 1,
+                            detents: [1280, 1500, 1920, 2560, 3840],
                         }),
                         new SettingsItem({
                             title: 'Interact with unpinned tooltips',
