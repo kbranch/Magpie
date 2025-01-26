@@ -200,9 +200,14 @@ defineExpose({
     height: 100%;
 }
 
-.magpie-colors, .bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed), tab-button.active, .tab-link {
+.magpie-colors, .bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed),
+tab-button.active, .tab-link, .modal-content, .modal-header, .modal-footer, .table {
   background-color: v-bind(bgColor) !important;
+  background: v-bind(bgColor) !important;
   color: v-bind(textColor) !important;
+  --bs-table-bg: v-bind(bgColor) !important;
+  --bs-table-hover-bg: v-bind(bgColor) !important;
+  --bs-table-hover-color: v-bind(textColor) !important;
 }
 
 .owned-item-square:not(.secondary), .owned-item-square.highlight-owned-secondary {

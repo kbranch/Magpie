@@ -1,8 +1,10 @@
 <script setup>
 import { closeAllTooltips } from '@/moduleWrappers';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
-import { computed, nextTick, onMounted, onUpdated, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import NodeSection from './NodeSection.vue';
+import NewTipForm from './NewTipForm.vue';
+import ViewTips from './ViewTips.vue';
 
 const logic = useLogicViewerStore();
 
@@ -27,11 +29,6 @@ onMounted(() => {
     });
 });
 
-onUpdated(() => {
-    let tooltipTriggerList = body.value.querySelectorAll('[data-bs-toggle="tooltip"]');
-    [...tooltipTriggerList].map(tooltipTriggerEl => new window.bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }));
-});
-
 </script>
 
 <template>
@@ -52,6 +49,8 @@ onUpdated(() => {
                     </div>
                     <template v-if="node == 'bad-check'">Check not found</template>
                     <template v-else-if="node == 'bad-entrance'">Entrance not found</template>
+                    <template v-else-if="node == 'submission-form'">Submit a tip for '{{ logic.getLogicNodeName(logic.stackTop) }}'</template>
+                    <template v-else-if="node == 'tips'">Viewing tips for '{{ logic.getLogicNodeName(logic.stackTop) }}'</template>
                     <template v-else-if="node">Viewing node '{{ logic.getLogicNodeName(node.id) }}'</template>
                 </h6>
                 <button type="button" class="btn-close invert" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -59,9 +58,11 @@ onUpdated(() => {
             <div ref="body" class="modal-body">
                 <template v-if="node == 'bad-check'">Check not found in logic graph. You may need to connect additional entrances.</template>
                 <template v-else-if="node == 'bad-entrance'">Entrance not found in logic graph. You may need to connect additional entrances.</template>
+                <NewTipForm v-else-if="node == 'submission-form'" />
+                <ViewTips v-else-if="node == 'tips'" />
                 <NodeSection v-else-if="node" />
             </div>
-            <div class="modal-footer">
+            <div v-if="node != 'submission-form'" class="modal-footer">
                 <div class="display-flex justify-content-end">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -73,10 +74,6 @@ onUpdated(() => {
 </template>
 
 <style scoped>
-
-table {
-    height: 1px; /* Ugly hack to allow for 100% sizing inside cells */
-}
 
 #logicModalLabel {
     display: flex;

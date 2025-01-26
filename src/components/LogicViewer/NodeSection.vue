@@ -115,4 +115,9 @@ async function fetchTips() {
 </template>
 
 <style scoped>
+
+table {
+    height: 1px; /* Ugly hack to allow for 100% sizing inside cells */
+}
+
 </style>

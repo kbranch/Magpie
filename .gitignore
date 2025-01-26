@@ -49,3 +49,4 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+static/images/tips/

@@ -20,11 +20,13 @@
     "watch": "npm-watch build"
   },
   "dependencies": {
+    "@textabledev/langs-flags-list": "^1.0.0",
     "archipelago.js": "^2.0.4",
     "bootstrap": "^5.3.3",
     "date-fns": "^4.1.0",
     "jquery": "^3.7.1",
     "jszip": "^3.10.1",
+    "md-editor-v3": "^5.2.1",
     "npm-watch": "^0.11.0",
     "pinia": "^2.1.7",
     "rollup-plugin-delete": "^2.1.0",

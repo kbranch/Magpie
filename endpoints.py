@@ -135,7 +135,7 @@ def afterRequest(response):
     elif request.path in corsEndpoints or '/api/' in request.path:
         response.headers.add('Access-Control-Allow-Origin', '*')
     
-    if request.path in jsonEndpoints or '/api/' in request.path:
+    if request.path in jsonEndpoints or '/api/' in request.path and response.mimetype == 'text/html':
         response.mimetype = 'application/json'
 
     return response
@@ -507,10 +507,46 @@ if tipsEnabled:
 
         if not tip or 'connectionId' not in tip:
             return 'Invalid request', 400
-        
-        tips.addTip(tip)
+
+        try:
+            tips.addTip(tip)
+        except:
+            return traceback.format_exc(), 500
 
         return 'ok'
+    
+    @app.route('/api/tipImage', methods=['POST'])
+    def tipImage():
+        if 'file' not in request.files:
+            return '"file" is required', 400
+        for field in ('filename', 'connectionId'):
+            if field not in request.form:
+                return f'"{field}" is required', 400
+        
+        publicPath = 'static/'
+        tipPath = 'images/tips/'
+
+        file = request.files['file'].read()
+        base, extension = os.path.splitext(request.form['filename'])
+        connectionId = request.form['connectionId']
+        copyNumber = 0
+
+        while True:
+            copyPortion = f'-{copyNumber}' if copyNumber else ''
+            urlPath = os.path.join(tipPath, f'{connectionId}-{base}{copyPortion}{extension}')
+            writePath = os.path.join(publicPath, urlPath)
+            if not os.path.isfile(writePath):
+                with open(writePath, 'wb') as oFile:
+                    oFile.write(file)
+
+                break
+
+            copyNumber += 1
+
+        response = make_response(urlPath)
+        response.mimetype = 'text/plain'
+
+        return response
 
 if sharingEnabled:
     @app.route('/playerState', methods=['POST'])

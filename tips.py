@@ -68,13 +68,8 @@ def getCursor(conn):
 
 def addTip(tip: dict):
     insertQuery = """
-insert into tips (connection_id, body, attribution, language, approved, show)
-values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true)
-returning tip_id
-"""
-    insertAttachmentQuery = """
-insert into tip_attachments (tip_id, filename, show)
-values (%(tipId)s, %(filename)s, true)
+insert into tips (connection_id, body, attribution, language, approved, show, title)
+values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true, %(title)s)
 """
 
     conn = getDbConnection()
@@ -86,15 +81,8 @@ values (%(tipId)s, %(filename)s, true)
             'body':tip['body'],
             'attribution': tip['attribution'],
             'language': tip['language'],
+            'title': tip['title'],
         })
-
-        tipId = cursor.fetchone()[0]
-
-        for attachment in tip['attachments']:
-            cursor.execute(insertAttachmentQuery, {
-                'tipId': tipId,
-                'filename': attachment['filename'],
-            })
         
         conn.commit()
 

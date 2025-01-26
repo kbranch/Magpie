@@ -1,39 +1,31 @@
 <script setup>
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
-import { computed } from 'vue';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
+import { computed, onMounted, onUpdated, ref } from 'vue';
 
 const connection = defineModel();
 defineProps(['nodeId']);
 
+const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
+
+const tr = ref(null);
 
 const otherEnd = computed(() => connection.value?.badWay ? connection.value.from: connection.value.to);
 
-function iconifyRequirement(requirement) {
-    const itemRegex = /([^/A-Z_1-8]|^)('?[A-Z_1-8]{3,}'?)/g;
-    const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
-    const tooltipRegex = /(\w+)\(([^)]+)\)/g;
-    const wrapperRegex = /\((?:and|or)\[('[A-Z_1-8]{3,}')\]\)/g;
+onMounted(initTooltips);
+onUpdated(initTooltips);
 
-    requirement = requirement
-        .replaceAll('\\', '')
-        .replaceAll('"', '')
-        .replaceAll("and['TRUE']", 'None')
-        .replaceAll("or['FALSE']", 'Disabled')
-        .replace(wrapperRegex, '($1)')
-        .replace(itemRegex, `$1<img class="logic-item" src="/images/$2_1.png">`)
-        .replace(quoteRegex, '/$1_1.png')
-        .replaceAll("'", "")
-        .replace(tooltipRegex, `<span data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='$2'>$1</span>`);
-
-    return requirement
+function initTooltips() {
+    let tooltipTriggerList = tr.value.querySelectorAll('[data-bs-toggle="tooltip"]');
+    [...tooltipTriggerList].map(tooltipTriggerEl => new window.bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }));
 }
 
 </script>
 
 <template>
 
-<tr>
+<tr ref="tr">
     <td class="pe-0">
         <div class="cell-wrapper">
             <div class="text-start d-flex p-1 mb-0 align-items-center">
@@ -51,25 +43,35 @@ function iconifyRequirement(requirement) {
         <div class="cell-wrapper">
             {{ logic.getLogicNodeName(otherEnd) }}
             <img v-if="connection.badWay" class="logic-item invert ps-2" src="/images/do-not-enter.svg"
-                data-bs-toggle="tooltip" data-bs-custom-class="secondary-tooltip" data-bs-title="One-way">
+                @mouseover="tip.tooltip('One-way', $event)">
         </div>
     </td>
     <td>
-        <div class="cell-wrapper" v-html="iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)">
+        <div class="cell-wrapper" v-html="logic.iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)">
         </div>
     </td>
     <td>
         <div class="cell-wrapper center-cell">
             <img v-if="connection.met" class='connection-met logic-accessibility' src='/images/check2-circle.svg'
-                data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement met'>
+                @mouseover="tip.tooltip('Requirement met', $event)">
             <img v-else class='connection-unmet logic-accessibility' src='/images/x-circle.svg'
-                data-bs-toggle='tooltip' data-bs-custom-class='secondary-tooltip' data-bs-title='Requirement not met'>
+                @mouseover="tip.tooltip('Requirement not met', $event)">
         </div>
     </td>
     <td>
         <div class="cell-wrapper end-cell">
-            <button type="button" class="btn btn-secondary view-button py-0" @click="logic.pushStack(nodeId, otherEnd)">
-                View
+            <button v-if="connection.tips?.length > 0" type="button" class="btn btn-secondary view-button me-2"
+                @click="logic.viewTips(connection)" @mouseover="tip.tooltip('View tips', $event)">
+                <img src="/images/info-circle.svg" class="invert">
+            </button>
+            <button v-else type="button" class="btn btn-secondary view-button me-2"
+                @click="logic.startTipForm(connection)" @mouseover="tip.tooltip('Suggest a tip', $event)">
+                <img src="/images/plus-lg.svg" class="invert">
+            </button>
+
+            <button type="button" class="btn btn-secondary view-button py-0" @click="logic.pushStack(nodeId, otherEnd)"
+                @mouseover="tip.tooltip('View node', $event)">
+                <img src="/images/chevron-right.svg" class="invert">
             </button>
         </div>
     </td>
@@ -78,6 +80,14 @@ function iconifyRequirement(requirement) {
 </template>
 
 <style scoped>
+
+.view-button {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    padding-right: 6px;
+    height: 100%;
+}
 
 td {
     height: 100%;
@@ -97,6 +107,7 @@ td {
 
 .end-cell {
     justify-content: end;
+    flex-wrap: nowrap;
 }
 
 .connection-unmet {
