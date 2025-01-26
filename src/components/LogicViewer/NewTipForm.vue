@@ -85,7 +85,7 @@ async function uploadFile(file) {
     data.append('filename', file.name);
     data.append('connectionId', logic.inspectedConnection.id);
 
-    return fetch(`${logic.tipsUrlPrefix.value}/api/tipImage`, {
+    return fetch(`${logic.tipsUrlPrefix}/api/tipImage`, {
         method: 'POST',
         body: data,
     })
@@ -350,10 +350,6 @@ span.alert {
 .lang-icon {
     background-image: url('/images/lang-flags.png');
     margin-right: 6px;
-}
-
-.lang-icon-zh {
-  background-position: -550px -105px;
 }
 
 .dropdown-menu {

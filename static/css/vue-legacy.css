@@ -1073,10 +1073,6 @@ body {
     height: 21px;
 }
 
-.accordion-collapse {
-    transition: none !important;
-}
-
 .animate__fadeOut {
     pointer-events: none;
 }

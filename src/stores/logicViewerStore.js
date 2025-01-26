@@ -93,6 +93,10 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     }
 
     function startTipForm(connection) {
+        if (inspectedNodeId.value == 'tips') {
+            popStack();
+        }
+
         pushStack(inspectedNodeId.value, 'submission-form');
         inspectedConnection.value = connection;
     }

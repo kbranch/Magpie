@@ -200,8 +200,8 @@ defineExpose({
     height: 100%;
 }
 
-.magpie-colors, .bg-dark, .text-bg-dark, .accordion-button, .accordion-body, .accordion-button:not(.collapsed),
-tab-button.active, .tab-link, .modal-content, .modal-header, .modal-footer, .table {
+.magpie-colors, .bg-dark, .text-bg-dark, tab-button.active, .tab-link, .modal-content, .modal-header, .modal-footer,
+.table {
   background-color: v-bind(bgColor) !important;
   background: v-bind(bgColor) !important;
   color: v-bind(textColor) !important;

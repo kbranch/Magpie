@@ -95,19 +95,13 @@ def getTips(connectionIds: list[str]):
     tipQuery = """
 select tips.tip_id
       ,tips.connection_id
+      ,tips.title
       ,tips.body
       ,tips.attribution
       ,tips.language
 from tips
 where tips.connection_id in %(ids)s
       and approved = true
-      and show = true
-    """
-
-    attachmentQuery = """
-select filename
-from tip_attachments
-where tip_attachments.tip_id = %(tipId)s
       and show = true
     """
 
@@ -126,27 +120,11 @@ where tip_attachments.tip_id = %(tipId)s
         tips.append({
             'tipId': row[0],
             'connectionId': row[1],
-            'body': row[2],
-            'attribution': row[3],
-            'language': row[4],
+            'title': row[2],
+            'body': row[3],
+            'attribution': row[4],
+            'language': row[5],
         })
-
-    for tip in tips:
-        cursor = conn.cursor()
-
-        cursor.execute(attachmentQuery, {
-            'tipId': tip['tipId'],
-        })
-
-        result = cursor.fetchall()
-
-        cursor.close()
-
-        tip['attachments'] = []
-        for row in result:
-            tip['attachments'].append({
-                'filename': row[0],
-            })
 
     conn.close()
 
