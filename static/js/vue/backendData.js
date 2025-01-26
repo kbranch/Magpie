@@ -283,9 +283,6 @@ function init() {
         $('#bodyTextArea').summernote({
             height: 320,
         });
-        $('#errorTextArea').summernote({
-            height: 200,
-        });
 
         broadcastInit();
     });

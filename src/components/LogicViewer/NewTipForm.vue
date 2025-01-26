@@ -47,6 +47,7 @@ const attribution = ref('');
 const title = ref('');
 const anonymous = ref(false);
 const permission = ref(false);
+const parentId = ref(null);
 
 const uploading = ref(false);
 const invalidFields = ref([]);
@@ -68,6 +69,15 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
+    if (logic.parentTip) {
+        language.value = logic.parentTip.language;
+        body.value = logic.parentTip.body;
+        attribution.value = logic.parentTip.attribution;
+        title.value = logic.parentTip.title;
+        anonymous.value = !attribution.value;
+        parentId.value = logic.parentTip.tipId;
+    }
+
     configureDropdown(languageDropdown.value);
     initTooltips();
 });
@@ -143,7 +153,8 @@ async function submit() {
         attribution.value,
         title.value,
         anonymous.value,
-        permission.value
+        permission.value,
+        parentId.value,
     );
 
     if ('invalidFields' in result) {

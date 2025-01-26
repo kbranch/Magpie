@@ -12,9 +12,8 @@ async function sendSuggestion() {
     });
 }
 
-async function sendError() {
-    let payload = JSON.parse($('#errorModalPayload').text());
-    payload['userComments'] = $('#errorTextArea').summernote('code');
+async function sendError(payload, comments) {
+    payload.userComments = comments;
 
     $.ajax({
         type: "POST",
@@ -60,10 +59,4 @@ function getRecentUndos() {
     }
 
     return undos;
-}
-
-function showErrorDialog(message, payload) {
-    $('#errorModalMessage').text(message);
-    $('#errorModalPayload').text(payload);
-    new bootstrap.Modal('#errorModal', null).show();
 }

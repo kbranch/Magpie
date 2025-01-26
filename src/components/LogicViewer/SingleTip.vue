@@ -3,8 +3,14 @@ import { computed } from 'vue';
 import '@textabledev/langs-flags-list/lang-flags.css';
 import { useStateStore } from '@/stores/stateStore';
 import { MdPreview } from 'md-editor-v3';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
+import { useLogicViewerStore } from '@/stores/logicViewerStore';
+import { useReportStore } from '@/stores/reportStore';
 
 const state = useStateStore();
+const logic = useLogicViewerStore();
+const report = useReportStore();
+const tipStore = useTextTooltipStore();
 
 const tip = defineModel();
 
@@ -21,16 +27,28 @@ const textColor = computed(() => state.settings.textColor);
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${id}`" aria-expanded="false" :aria-controls="id">
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
             <span class="title-span">{{ tip.title }}</span>
-            <span class="attribution">
-                <MdPreview v-model="tip.attribution" id="attributionPreview" language="en-US" theme="dark"
-                    class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
-            </span>
         </button>
     </h2>
     <div :id="id" class="accordion-collapse collapse">
         <div class="accordion-body">
             <MdPreview v-model="tip.body" id="bodyPreview" language="en-US" theme="dark"
                 class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
+
+            <div class="footer">
+                <span class="attribution">
+                    <span class="pe-2">Credit: </span>
+                    <MdPreview v-model="tip.attribution" id="attributionPreview" language="en-US" theme="dark"
+                        class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
+                </span>
+                <button class="btn btn-secondary me-2"
+                    @mouseover="tipStore.tooltip('Suggest an edit', $event)" @click="logic.editTip(tip)">
+                    <img class="invert" src="/images/pencil-square.svg">
+                </button>
+                <button class="btn btn-secondary" @mouseover="tipStore.tooltip('Report a problem', $event)"
+                    @click="report.show('tip-report', tip)">
+                    <img class="invert" src="/images/flag-fill.svg">
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -39,9 +57,25 @@ const textColor = computed(() => state.settings.textColor);
 
 <style scoped>
 
+.btn {
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.footer {
+    display: flex;
+    height: 24px;
+    align-items: center;
+}
+
 .attribution {
     padding-right: 10px;
     padding-left: 10px;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
 }
 
 .title-span {
@@ -78,8 +112,8 @@ const textColor = computed(() => state.settings.textColor);
 .accordion-button {
     display: flex;
     align-items: center;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .lang-icon {
@@ -91,7 +125,7 @@ const textColor = computed(() => state.settings.textColor);
 
 <style>
 
-.md-editor-preview-wrapper {
+.md-editor-previewOnly .md-editor-preview-wrapper {
     padding: 0;
 }
 

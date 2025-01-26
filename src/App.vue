@@ -6,6 +6,7 @@ import { useEventStore } from '@/stores/eventStore';
 import LogicViewer from './components/LogicViewer/LogicViewer.vue';
 import { useLogicViewerStore } from './stores/logicViewerStore';
 import { useAccessibilityStore } from './stores/accessibilityStore';
+import ReportModal from './components/ReportModal.vue';
 
 const state = useStateStore();
 const eventStore = useEventStore();
@@ -125,35 +126,7 @@ defineExpose({
 
   <LogicViewer />
 
-  <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h6 class="modal-title" id="errorModalLabel">Error</h6>
-          <button id="modalClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <h5 id="errorModalMessage"></h5>
-          <h6>Please report this error so it can be fixed!</h6>
-          <div class="mb-3">
-            <label for="errorEmail" class="form-label">Email address (optional)</label>
-            <input type="email" class="form-control" id="errorEmail" placeholder="Optional">
-          </div>
-
-          <div>
-            <div id="errorTextArea" name="editordata"></div>
-          </div>
-
-          <p>Error details:</p>
-          <pre id="errorModalPayload"></pre>
-        </div>
-        <div class="modal-footer">
-          <button id="sendErrorButton" type="button" class="btn btn-primary big-button" data-bs-dismiss="modal"
-            onclick="sendError()">Send Bug Report</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <ReportModal />
 
   <div class="modal fade" id="exportModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-m">

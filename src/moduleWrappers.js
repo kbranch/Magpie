@@ -71,6 +71,7 @@ export let getMapScaling = window.getMapScaling;
 export let setCurrentLocation = window.setCurrentLocation;
 export let entranceDict = window.entranceDict;
 export let Check = window.Check;
+export let sendError = window.sendError;
 
 export function initGlobals(data) {
     let state = useStateStore();

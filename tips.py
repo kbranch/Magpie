@@ -68,8 +68,8 @@ def getCursor(conn):
 
 def addTip(tip: dict):
     insertQuery = """
-insert into tips (connection_id, body, attribution, language, approved, show, title)
-values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true, %(title)s)
+insert into tips (connection_id, body, attribution, language, approved, show, title, parent_id)
+values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true, %(title)s, %(parentId)s)
 """
 
     conn = getDbConnection()
@@ -82,6 +82,7 @@ values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true, 
             'attribution': tip['attribution'],
             'language': tip['language'],
             'title': tip['title'],
+            'parentId': tip['parentId'] if 'parentId' in tip else None,
         })
         
         conn.commit()

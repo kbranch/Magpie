@@ -12,6 +12,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     const inspectedNodeId = ref(null);
     const inspectedConnection = ref(null);
     const stack = ref([]);
+    const parentTip = ref(null);
     
     const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
 
@@ -42,6 +43,20 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         }
     });
 
+    function getConnectionById(connectionId) {
+        try {
+            let nodes = Object.values(graph.value)
+                .filter(n => n.connections.filter(c => c.id == connectionId).length);
+
+            return nodes[0].connections.filter(c => c.id == connectionId)[0];
+        }
+        catch(err) {
+            console.log(`Error finding connection with id '${connectionId}'`, err);
+        }
+
+        return null;
+    }
+
     function clearNode() {
         inspectedNodeId.value = null;
         inspectedConnection.value = null;
@@ -50,11 +65,13 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     function clearStack() {
         stack.value = [];
         inspectedConnection.value = null;
+        parentTip.value = null;
     }
 
     function popStack() {
         inspectedNodeId.value = stack.value.pop();
         inspectedConnection.value = null;
+        parentTip.value = null;
     }
 
     function pushStack(currentId, newId) {
@@ -106,6 +123,16 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         inspectedConnection.value = connection;
     }
 
+    function editTip(tip) {
+        clearStack();
+
+        let connection = getConnectionById(tip.connectionId);
+
+        parentTip.value = tip;
+        pushStack(connection.from, 'submission-form')
+        inspectedConnection.value = connection;
+    }
+
     function iconifyRequirement(requirement) {
         const itemRegex = /([^/A-Z_1-8]|^)('?[A-Z_1-8]{3,}'?)/g;
         const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
@@ -126,7 +153,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         return requirement
     }
 
-    async function submitTip(connectionId, language, body, attribution, title, anonymous, permission) {
+    async function submitTip(connectionId, language, body, attribution, title, anonymous, permission, parentId) {
         const invalidFields = [];
 
         if (!body) {
@@ -168,6 +195,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
                     body: body,
                     attribution: attribution,
                     title: title,
+                    parentId: parentId,
                 })
             });
         }
@@ -193,6 +221,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         stackTop,
         stack,
         inspectedConnection,
+        parentTip,
         clearNode,
         popStack,
         pushStack,
@@ -203,5 +232,6 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         viewTips,
         iconifyRequirement,
         submitTip,
+        editTip,
     };
 });
