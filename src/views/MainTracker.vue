@@ -52,6 +52,8 @@ onMounted(() => {
       graphicsOptions.value = data.graphicsOptions;
       argDescriptions.value = data.flags;
 
+      state.tipAdmin = import.meta.env.VITE_TIP_ADMIN === '1' && !state.isLocal;
+
       graphicsOptions.value.sort();
 
       initGlobals(data);

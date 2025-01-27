@@ -101,6 +101,23 @@ CREATE TABLE `location_sharing`
     PRIMARY KEY (`location_sharing_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 
+CREATE TABLE `tips` (
+  `tip_id` bigint NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint DEFAULT NULL,
+  `connection_id` varchar(100) NOT NULL,
+  `title` varchar(75) NOT NULL,
+  `body` varchar(10000) NOT NULL,
+  `attribution` varchar(200) NOT NULL,
+  `language` varchar(10) NOT NULL,
+  `approved` tinyint(1) NOT NULL DEFAULT '0',
+  `deleted` bit(1) NOT NULL DEFAULT b'1',
+  `creation_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`tip_id`),
+  KEY `fki_tips_parent_id_fk` (`parent_id`),
+  CONSTRAINT `tips_parent_id_fk` FOREIGN KEY (`parent_id`) REFERENCES `tips` (`tip_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
 --
 -- Dumping data for table `sharing`
 --

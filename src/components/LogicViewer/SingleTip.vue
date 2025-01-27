@@ -12,6 +12,7 @@ const logic = useLogicViewerStore();
 const report = useReportStore();
 const tipStore = useTextTooltipStore();
 
+const emit = defineEmits('updatedTips');
 const tip = defineModel();
 
 const id = computed(() => `tip-${tip.value.tipId}`);
@@ -24,7 +25,8 @@ const textColor = computed(() => state.settings.textColor);
 
 <div class="accordion-item">
     <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${id}`" aria-expanded="false" :aria-controls="id">
+        <button class="accordion-button collapsed" :class="{'unapproved': !tip.approved}" type="button" data-bs-toggle="collapse" :data-bs-target="`#${id}`"
+            aria-expanded="false" :aria-controls="id">
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
             <span class="title-span">{{ tip.title }}</span>
         </button>
@@ -36,10 +38,39 @@ const textColor = computed(() => state.settings.textColor);
 
             <div class="footer">
                 <span class="attribution">
-                    <span class="pe-2">Credit: </span>
-                    <MdPreview v-model="tip.attribution" id="attributionPreview" language="en-US" theme="dark"
-                        class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
+                    <template v-if="tip.attribution?.length">
+                        <span class="pe-2">Credit: </span>
+                        <MdPreview v-model="tip.attribution" id="attributionPreview" language="en-US" theme="dark"
+                            class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
+                    </template>
                 </span>
+                <template v-if="state.tipAdmin">
+                    <button class="btn btn-secondary me-2"
+                        @mouseover="tipStore.tooltip('Delete this tip', $event)"
+                        @click="async () => { await logic.deleteTip(tip); emit('updatedTips'); }">
+
+                        <img class="invert" src="/images/trash3-fill.svg">
+                    </button>
+                    <button class="btn btn-secondary me-2"
+                        @mouseover="tipStore.tooltip('Approve this tip', $event)"
+                        @click="async () => { await logic.approveTip(tip, true); emit('updatedTips'); }">
+
+                        <img class="invert" src="/images/hand-thumbs-up-fill.svg">
+                    </button>
+                    <button class="btn btn-secondary me-2"
+                        @mouseover="tipStore.tooltip('Unapprove this tip', $event)"
+                        @click="async () => { await logic.approveTip(tip, false); emit('updatedTips'); }">
+
+                        <img class="invert" src="/images/hand-thumbs-down-fill.svg">
+                    </button>
+                    <button class="btn btn-secondary me-2"
+                        @mouseover="tipStore.tooltip('Revert edit', $event)"
+                        @click="async () => { await logic.revertTipEdit(tip); emit('updatedTips'); }">
+                        
+                        <img class="invert" src="/images/arrow-clockwise.svg">
+                    </button>
+                </template>
+
                 <button class="btn btn-secondary me-2"
                     @mouseover="tipStore.tooltip('Suggest an edit', $event)" @click="logic.editTip(tip)">
                     <img class="invert" src="/images/pencil-square.svg">
@@ -56,6 +87,10 @@ const textColor = computed(() => state.settings.textColor);
 </template>
 
 <style scoped>
+
+.unapproved {
+    background-color: goldenrod;
+}
 
 .btn {
     display: flex;

@@ -3,7 +3,7 @@ websockets
 Flask
 flaskwebgui>1.0
 psycopg2-binary
-mysql.connector
+mysql-connector-python
 pillow
 waitress
 

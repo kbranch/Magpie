@@ -212,6 +212,37 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         };
     }
 
+    async function approveTip(tip, newApproval) {
+        let form = new FormData();
+        form.append('tipId', tip.tipId);
+        form.append('newApproval', newApproval);
+
+        await fetch(`${tipsUrlPrefix.value}/api/approveTip`, {
+            method: 'POST',
+            body: form,
+        });
+    }
+
+    async function deleteTip(tip) {
+        let form = new FormData();
+        form.append('tipId', tip.tipId);
+
+        await fetch(`${tipsUrlPrefix.value}/api/deleteTip`, {
+            method: 'POST',
+            body: form,
+        });
+    }
+
+    async function revertTipEdit(tip) {
+        let form = new FormData();
+        form.append('tipId', tip.tipId);
+
+        await fetch(`${tipsUrlPrefix.value}/api/revertTipEdit`, {
+            method: 'POST',
+            body: form,
+        });
+    }
+
     return {
         tipsUrlPrefix,
         graph, 
@@ -233,5 +264,8 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         iconifyRequirement,
         submitTip,
         editTip,
+        approveTip,
+        deleteTip,
+        revertTipEdit,
     };
 });

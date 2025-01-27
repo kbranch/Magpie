@@ -21,6 +21,22 @@ function initTooltips() {
     [...tooltipTriggerList].map(tooltipTriggerEl => new window.bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }));
 }
 
+async function updateTips() {
+    let connectionIds = JSON.stringify([connection.value.id]);
+    let response = await fetch(`${logic.tipsUrlPrefix}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
+
+    if (!(response?.ok)) {
+        let error = await response.text();
+        console.log(`Error getting connection tips: ${error}`);
+        
+        return;
+    }
+
+    let tips = await response.json();
+
+    connection.value.tips = tips;
+}
+
 </script>
 
 <template>
@@ -53,7 +69,8 @@ function initTooltips() {
     </div>
 
     <div class="accordion mt-2">
-        <SingleTip v-for="(tip, index) in connection.tips" :key="tip" v-model="connection.tips[index]" />
+        <SingleTip v-for="(tip, index) in connection.tips" :key="tip" v-model="connection.tips[index]"
+            @updatedTips="updateTips()" />
     </div>
 
 </template>

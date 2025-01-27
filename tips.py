@@ -2,15 +2,7 @@ import logging
 import traceback
 import threading
 
-postgresInstalled = False
 mysqlInstalled = False
-
-try:
-    import psycopg2
-    postgresInstalled = True
-    logging.info('Postgres support enabled')
-except:
-    logging.info(f'Postgres support disabled: {traceback.format_exc()}')
 
 try:
     import mysql.connector
@@ -24,16 +16,13 @@ port = None
 db = None
 username = None
 password = None
-dbType = None
 
 writeLock = threading.Lock()
 
-def setDbInfo(newServer, newPort, newDb, newUsername, newPassword, newDbType):
-    global server, port, db, username, password, dbType
+def setDbInfo(newServer, newPort, newDb, newUsername, newPassword):
+    global server, port, db, username, password
 
-    if ((newDbType == 'mysql' and not mysqlInstalled)
-        or (newDbType == 'postgres' and not postgresInstalled)
-        or newDbType not in ('mysql', 'postgres')):
+    if not mysqlInstalled:
         return
 
     server = newServer
@@ -41,35 +30,24 @@ def setDbInfo(newServer, newPort, newDb, newUsername, newPassword, newDbType):
     db = newDb
     username = newUsername
     password = newPassword
-    dbType = newDbType
 
 def dbConfigured():
     return bool(server)
 
 def getDbConnection():
-    if dbType == 'mysql':
-        return mysql.connector.connect(database=db,
-                                host=server,
-                                user=username,
-                                password=password,
-                                port=port)
-    elif dbType == 'postgres':
-        return psycopg2.connect(database=db,
+    return mysql.connector.connect(database=db,
                             host=server,
                             user=username,
                             password=password,
                             port=port)
 
 def getCursor(conn):
-    if dbType == 'mysql':
-        return conn.cursor(buffered=True)
-    else:
-        return conn.cursor()
+    return conn.cursor(buffered=True)
 
 def addTip(tip: dict):
     insertQuery = """
-insert into tips (connection_id, body, attribution, language, approved, show, title, parent_id)
-values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true, %(title)s, %(parentId)s)
+insert into tips (connection_id, body, attribution, language, approved, deleted, title, parent_id)
+values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, 0, 0, %(title)s, %(parentId)s)
 """
 
     conn = getDbConnection()
@@ -88,8 +66,97 @@ values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, false, true, 
         conn.commit()
 
     conn.close()
+
+def approveTip(tipId: int, newApproval: bool):
+    query = """
+update tips
+set approved = %(approved)s
+where tips.tip_id = %(tipId)s
+"""
+
+    deleteQuery = """
+update tips join tips parent on (tips.parent_id = parent.tip_id)
+set parent.deleted = 1
+where tips.tip_id = %(tipId)s
+"""
+
+    conn = getDbConnection()
+    cursor = getCursor(conn)
     
-def getTips(connectionIds: list[str]):
+    with writeLock:
+        cursor.execute(query, {
+            'tipId': tipId,
+            'approved': 1 if newApproval else 0,
+        })
+
+        if newApproval:
+            cursor.execute(deleteQuery, {
+                'tipId': tipId,
+            })
+        
+        conn.commit()
+
+    conn.close()
+
+def deleteTip(tipId: int):
+    deleteQuery = """
+update tips
+set deleted = 1
+where tips.tip_id = %(tipId)s
+"""
+
+    conn = getDbConnection()
+    cursor = getCursor(conn)
+    
+    with writeLock:
+        cursor.execute(deleteQuery, {
+            'tipId': tipId,
+        })
+        
+        conn.commit()
+
+    conn.close()
+
+def revertEdit(tipId: int):
+    parentQuery = """
+select tips.parent_id
+from tips
+where tips.tip_id = %(tipId)s
+"""
+
+    deleteQuery = """
+update tips
+set deleted = %(deleted)s
+where tips.tip_id = %(tipId)s
+"""
+
+    conn = getDbConnection()
+    cursor = getCursor(conn)
+    
+    with writeLock:
+        cursor.execute(parentQuery, {
+            'tipId': tipId,
+        })
+
+        result = cursor.fetchone()
+        if result:
+            parentId = result[0]
+
+            cursor.execute(deleteQuery, {
+                'tipId': tipId,
+                'deleted': 1,
+            })
+
+            cursor.execute(deleteQuery, {
+                'tipId': parentId,
+                'deleted': 0,
+            })
+        
+            conn.commit()
+
+    conn.close()
+    
+def getTips(connectionIds: list[str], includeUnapproved):
     if not dbConfigured():
         return
 
@@ -100,19 +167,22 @@ select tips.tip_id
       ,tips.body
       ,tips.attribution
       ,tips.language
+      ,tips.approved
 from tips
-where tips.connection_id in %(ids)s
-      and approved = true
-      and show = true
+where tips.connection_id in ({})
+      and (approved = 1 or %s = 1)
+      and deleted = 0
     """
 
-    connectionIds = tuple(connectionIds)
+    tipQuery = tipQuery.format(','.join(['%s'] * len(connectionIds)))
+    parameters = list(connectionIds)
+    parameters.append(1 if includeUnapproved else 0)
     tips = []
 
     conn = getDbConnection()
     cursor = getCursor(conn)
 
-    cursor.execute(tipQuery, { 'ids': connectionIds })
+    cursor.execute(tipQuery, parameters)
     result = cursor.fetchall()
 
     cursor.close()
@@ -125,6 +195,7 @@ where tips.connection_id in %(ids)s
             'body': row[3],
             'attribution': row[4],
             'language': row[5],
+            'approved': row[6],
         })
 
     conn.close()

@@ -80,19 +80,19 @@ except:
 
 try:
     import tips
-    app.config.from_pyfile('config.py')
     tips.setDbInfo(tryGetValue(app.config, 'TIPS_SERVER'),
                    tryGetValue(app.config, 'TIPS_PORT'),
                    tryGetValue(app.config, 'TIPS_DB'),
                    tryGetValue(app.config, 'TIPS_USERNAME'),
-                   tryGetValue(app.config, 'TIPS_PASSWORD'),
-                   tryGetValue(app.config, 'TIPS_DBTYPE'))
+                   tryGetValue(app.config, 'TIPS_PASSWORD'))
 
     tipsEnabled = True
     logging.info("Tips enabled")
 except:
     tipsEnabled = False
     logging.info(f"Tips disabled: {traceback.format_exc()}")
+
+showUnapprovedTips = tryGetValue(app.config, 'SHOW_UNAPPROVED_TIPS')
 
 def renderTraceback():
     return json.dumps({
@@ -496,7 +496,7 @@ if tipsEnabled:
 
         connectionIds = json.loads(connectionIdsJson)
 
-        return json.dumps(tips.getTips(connectionIds))
+        return json.dumps(tips.getTips(connectionIds, showUnapprovedTips))
 
     @app.route('/api/newTip', methods=['POST'])
     def newTip():
@@ -547,6 +547,47 @@ if tipsEnabled:
         response.mimetype = 'text/plain'
 
         return response
+    
+    if showUnapprovedTips:
+        @app.route('/api/approveTip', methods=['POST'])
+        def approveTip():
+            if 'tipId' not in request.form:
+                return f'"tipId" is required', 400
+            if 'newApproval' not in request.form:
+                return f'"newApproval" is required', 400
+            
+            newApproval = request.form['newApproval'].lower() == 'true'
+
+            try:
+                tips.approveTip(request.form['tipId'], newApproval)
+            except:
+                return traceback.format_exc(), 500
+
+            return 'ok'
+
+        @app.route('/api/deleteTip', methods=['POST'])
+        def deleteTip():
+            if 'tipId' not in request.form:
+                return f'"tipId" is required', 400
+
+            try:
+                tips.deleteTip(request.form['tipId'])
+            except:
+                return traceback.format_exc(), 500
+
+            return 'ok'
+
+        @app.route('/api/revertTipEdit', methods=['POST'])
+        def revertTipEdit():
+            if 'tipId' not in request.form:
+                return f'"tipId" is required', 400
+
+            try:
+                tips.revertEdit(request.form['tipId'])
+            except:
+                return traceback.format_exc(), 500
+
+            return 'ok'
 
 if sharingEnabled:
     @app.route('/playerState', methods=['POST'])
