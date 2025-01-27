@@ -523,7 +523,7 @@ if tipsEnabled:
             if field not in request.form:
                 return f'"{field}" is required', 400
         
-        publicPath = 'static/'
+        publicPath = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'static/')
         tipPath = 'images/tips/'
 
         file = request.files['file'].read()
