@@ -70,7 +70,7 @@ async function updateTips() {
 
     <div class="accordion mt-2">
         <SingleTip v-for="(tip, index) in connection.tips" :key="tip" v-model="connection.tips[index]"
-            @updatedTips="updateTips()" />
+            @updatedTips="updateTips()" :expanded="connection.tips.length == 1" />
     </div>
 
 </template>

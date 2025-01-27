@@ -12,8 +12,9 @@ const logic = useLogicViewerStore();
 const report = useReportStore();
 const tipStore = useTextTooltipStore();
 
-const emit = defineEmits('updatedTips');
 const tip = defineModel();
+defineProps(['expanded']);
+const emit = defineEmits('updatedTips');
 
 const id = computed(() => `tip-${tip.value.tipId}`);
 
@@ -25,13 +26,15 @@ const textColor = computed(() => state.settings.textColor);
 
 <div class="accordion-item">
     <h2 class="accordion-header">
-        <button class="accordion-button collapsed" :class="{'unapproved': !tip.approved}" type="button" data-bs-toggle="collapse" :data-bs-target="`#${id}`"
-            aria-expanded="false" :aria-controls="id">
+        <button class="accordion-button" :class="{ 'unapproved': !tip.approved, 'collapsed': !expanded }"
+            type="button" data-bs-toggle="collapse" :data-bs-target="`#${id}`"
+            :aria-expanded="expanded ? 'true' : 'false'" :aria-controls="id">
+
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
             <span class="title-span">{{ tip.title }}</span>
         </button>
     </h2>
-    <div :id="id" class="accordion-collapse collapse">
+    <div :id="id" class="accordion-collapse collapse" :class="{ 'show': expanded }">
         <div class="accordion-body">
             <MdPreview v-model="tip.body" id="bodyPreview" language="en-US" theme="dark"
                 class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
@@ -51,19 +54,19 @@ const textColor = computed(() => state.settings.textColor);
 
                         <img class="invert" src="/images/trash3-fill.svg">
                     </button>
-                    <button class="btn btn-secondary me-2"
+                    <button v-if="!tip.approved" class="btn btn-secondary me-2"
                         @mouseover="tipStore.tooltip('Approve this tip', $event)"
                         @click="async () => { await logic.approveTip(tip, true); emit('updatedTips'); }">
 
                         <img class="invert" src="/images/hand-thumbs-up-fill.svg">
                     </button>
-                    <button class="btn btn-secondary me-2"
+                    <button v-else class="btn btn-secondary me-2"
                         @mouseover="tipStore.tooltip('Unapprove this tip', $event)"
                         @click="async () => { await logic.approveTip(tip, false); emit('updatedTips'); }">
 
                         <img class="invert" src="/images/hand-thumbs-down-fill.svg">
                     </button>
-                    <button class="btn btn-secondary me-2"
+                    <button v-if="tip.parentId" class="btn btn-secondary me-2"
                         @mouseover="tipStore.tooltip('Revert edit', $event)"
                         @click="async () => { await logic.revertTipEdit(tip); emit('updatedTips'); }">
                         

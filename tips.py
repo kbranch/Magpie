@@ -168,6 +168,7 @@ select tips.tip_id
       ,tips.attribution
       ,tips.language
       ,tips.approved
+      ,tips.parent_id
 from tips
 where tips.connection_id in ({})
       and (approved = 1 or %s = 1)
@@ -196,6 +197,7 @@ where tips.connection_id in ({})
             'attribution': row[4],
             'language': row[5],
             'approved': row[6],
+            'parentId': row[7],
         })
 
     conn.close()
