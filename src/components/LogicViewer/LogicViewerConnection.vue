@@ -69,7 +69,7 @@ function initTooltips() {
                 <img src="/images/plus-lg.svg" class="invert">
             </button>
 
-            <button type="button" class="btn btn-secondary view-button py-0" @click="logic.pushStack(nodeId, otherEnd)"
+            <button type="button" class="btn btn-secondary view-button" @click="logic.pushStack(nodeId, otherEnd)"
                 @mouseover="tip.tooltip('View node', $event)">
                 <img src="/images/chevron-right.svg" class="invert">
             </button>

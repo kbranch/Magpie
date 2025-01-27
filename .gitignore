@@ -50,3 +50,4 @@ coverage
 
 *.tsbuildinfo
 static/images/tips/
+static/images/tips

@@ -14,7 +14,7 @@ const tipStore = useTextTooltipStore();
 
 const tip = defineModel();
 defineProps(['expanded']);
-const emit = defineEmits('updatedTips');
+const emit = defineEmits(['updatedTips']);
 
 const id = computed(() => `tip-${tip.value.tipId}`);
 

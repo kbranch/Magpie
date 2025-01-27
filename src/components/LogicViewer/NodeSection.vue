@@ -5,15 +5,13 @@ import LogicViewerCheck from './LogicViewerCheck.vue';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useAccessibilityStore } from '@/stores/accessibilityStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
-import { useStateStore } from '@/stores/stateStore';
+import { sortByKey } from '@/moduleWrappers';
 
-const state = useStateStore();
 const logic = useLogicViewerStore();
 const accessibility = useAccessibilityStore();
 
 const connections = ref([]);
 
-const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
 const node = computed(() => logic.inspectedNode);
 const checks = computed(() => node.value.checks?.filter(checkId => checkId in accessibility.checksById)
                                                    .map(checkId => accessibility.checksById[checkId]));
@@ -21,7 +19,7 @@ const entrances = computed(() => node.value.entrances?.filter(entranceId => entr
                                                          .map(entranceId => accessibility.entrances[entranceId]));
 
 onMounted(async () => {
-        updateConnections();
+    updateConnections();
 });
 
 watch(node, async () => {
@@ -33,14 +31,42 @@ async function updateConnections() {
         return;
     }
 
-    connections.value = node.value.connections?.filter(conn => conn.to in logic.graph);
+    let conns = node.value.connections?.filter(conn => conn.to in logic.graph);
+
+    let connectionsByName = {};
+    conns.map(x => connectionsByName[x.from + x.to] = []);
+    conns.map(x => connectionsByName[x.from + x.to].push(x));
+
+    for (const name in connectionsByName) {
+        let lastReq = null;
+        for (const conn of sortByKey(connectionsByName[name], x => x.diff)) {
+            let originalReq = conn.shortReq ? conn.shortReq : conn.req;
+
+            if (lastReq) {
+                if (conn.shortReq) {
+                    conn.shortReq = conn.shortReq.replaceAll('\\', '');
+                    conn.shortReq = conn.shortReq.replace(`, "${lastReq}"`, '');
+                    conn.shortReq = conn.shortReq.replace(`, '${lastReq}'`, '');
+                }
+                else {
+                    conn.req = conn.req.replace(`, ${lastReq}`, '');
+                }
+            }
+
+            if (conn.req.includes('and[') || conn.req.includes('or[')) {
+                lastReq = originalReq.replaceAll('\\', '');
+            }
+        }
+    }
+
+    connections.value = conns;
 
     await fetchTips();
 }
 
 async function fetchTips() {
     let connectionIds = JSON.stringify(connections.value.map(x => x.id));
-    let response = await fetch(`${tipsUrlPrefix.value}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
+    let response = await fetch(`${logic.tipsUrlPrefix}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
 
     if (!(response?.ok)) {
         let error = await response.text();
