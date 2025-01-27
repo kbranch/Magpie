@@ -1,12 +1,13 @@
 <script setup>
 import { bootstrap, sortByKey } from '@/moduleWrappers.js';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
-import { computed, onBeforeMount, onMounted, onUpdated, ref } from 'vue';
+import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore';
-import { MdEditor } from 'md-editor-v3';
 import languages from '@textabledev/langs-flags-list/lang-flags.json';
 import '@textabledev/langs-flags-list/lang-flags.css';
 import 'md-editor-v3/lib/style.css';
+
+const MdEditor = defineAsyncComponent(() => import('md-editor-v3').then((module) => module.MdEditor));
 
 const state = useStateStore();
 const logic = useLogicViewerStore();

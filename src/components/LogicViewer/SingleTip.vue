@@ -1,11 +1,12 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, defineAsyncComponent } from 'vue';
 import '@textabledev/langs-flags-list/lang-flags.css';
 import { useStateStore } from '@/stores/stateStore';
-import { MdPreview } from 'md-editor-v3';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { useReportStore } from '@/stores/reportStore';
+
+const MdPreview = defineAsyncComponent(() => import('md-editor-v3').then((module) => module.MdPreview));
 
 const state = useStateStore();
 const logic = useLogicViewerStore();
