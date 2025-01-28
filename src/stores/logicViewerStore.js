@@ -137,13 +137,21 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     }
 
     function editTip(tip) {
-        clearStack();
-
-        let connection = getConnectionById(tip.connectionId);
+        let isTrick = Boolean(inspectedTrick.value);
 
         parentTip.value = tip;
-        pushStack(connection.from, 'submission-form')
-        inspectedConnection.value = connection;
+
+        if (isTrick) {
+            pushStack('trick', 'submission-form');
+        }
+        else {
+            clearStack();
+
+            let connection = getConnectionById(tip.connectionId);
+
+            pushStack(connection.from, 'submission-form');
+            inspectedConnection.value = connection;
+        }
     }
 
     function viewTrick(name, requirements) {

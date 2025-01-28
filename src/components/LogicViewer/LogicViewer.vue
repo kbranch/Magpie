@@ -34,7 +34,7 @@ onMounted(() => {
 
 <template>
 
-<div ref="modal" class="modal fade" tabindex="-1" aria-labelledby="logicModalLabel" aria-hidden="true" data-bs-keyboard="true">
+<div ref="modal" class="modal fade" tabindex="-1" aria-labelledby="logicModalLabel" aria-hidden="true" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
             <div class="modal-header py-2">
