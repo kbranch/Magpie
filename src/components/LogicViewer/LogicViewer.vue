@@ -5,6 +5,7 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 import NodeSection from './NodeSection.vue';
 import NewTipForm from './NewTipForm.vue';
 import ViewTips from './ViewTips.vue';
+import ViewTrickTips from './ViewTrickTips.vue';
 
 const logic = useLogicViewerStore();
 
@@ -45,12 +46,14 @@ onMounted(() => {
                             <img src="/images/chevron-left.svg" class="invert pe-1">
                             Back
                         </button>
-                        <span>to {{ logic.stackTop }}</span>
+                        <span>to {{ logic.inspectedTrick && logic.stackTop == 'trick' ? logic.inspectedTrick.name : logic.stackTop }}</span>
                     </div>
                     <template v-if="node == 'bad-check'">Check not found</template>
                     <template v-else-if="node == 'bad-entrance'">Entrance not found</template>
+                    <template v-else-if="node == 'submission-form' && logic.stackTop == 'trick'">Submit a tip for '{{ logic.inspectedTrick.name }}'</template>
                     <template v-else-if="node == 'submission-form'">Submit a tip for '{{ logic.getLogicNodeName(logic.stackTop) }}'</template>
                     <template v-else-if="node == 'tips'">Viewing tips for '{{ logic.getLogicNodeName(logic.stackTop) }}'</template>
+                    <template v-else-if="node == 'trick'">Viewing trick '{{ logic.inspectedTrick.name }}'</template>
                     <template v-else-if="node">Viewing node '{{ logic.getLogicNodeName(node.id) }}'</template>
                 </h6>
                 <button type="button" class="btn-close invert" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -60,6 +63,7 @@ onMounted(() => {
                 <template v-else-if="node == 'bad-entrance'">Entrance not found in logic graph. You may need to connect additional entrances.</template>
                 <NewTipForm v-else-if="node == 'submission-form'" />
                 <ViewTips v-else-if="node == 'tips'" />
+                <ViewTrickTips v-else-if="node == 'trick'" />
                 <NodeSection v-else-if="node" />
             </div>
             <div v-if="node != 'submission-form'" class="modal-footer">

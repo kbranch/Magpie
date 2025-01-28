@@ -2,6 +2,7 @@
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed, onMounted, onUpdated, ref } from 'vue';
+import LogicRequirements from './LogicRequirements.vue';
 
 const connection = defineModel();
 defineProps(['nodeId']);
@@ -47,7 +48,8 @@ function initTooltips() {
         </div>
     </td>
     <td>
-        <div class="cell-wrapper" v-html="logic.iconifyRequirement(connection.shortReq ? connection.shortReq : connection.req)">
+        <div class="cell-wrapper">
+            <LogicRequirements :subject="connection" />
         </div>
     </td>
     <td>

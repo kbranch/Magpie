@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
-import { coordDict } from "@/moduleWrappers";
+import { closeAllTooltips, coordDict } from "@/moduleWrappers";
 import { useStateStore } from "./stateStore";
 
 export const useLogicViewerStore = defineStore('logicViewer', () => {
@@ -10,6 +10,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     const logicByCheck = ref({});
     const logicByEntrance = ref({});
     const inspectedNodeId = ref(null);
+    const inspectedTrick = ref(null);
     const inspectedConnection = ref(null);
     const stack = ref([]);
     const parentTip = ref(null);
@@ -65,6 +66,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     function clearStack() {
         stack.value = [];
         inspectedConnection.value = null;
+        inspectedTrick.value = null;
         parentTip.value = null;
     }
 
@@ -72,11 +74,19 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         inspectedNodeId.value = stack.value.pop();
         inspectedConnection.value = null;
         parentTip.value = null;
+
+        if (inspectedNodeId.value != 'trick') {
+            inspectedTrick.value = null;
+        }
+
+        closeAllTooltips();
     }
 
     function pushStack(currentId, newId) {
         stack.value.push(currentId);
         inspectedNodeId.value = newId;
+
+        closeAllTooltips();
     }
 
     function inspectCheck(checkId) {
@@ -109,13 +119,16 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         return nodeId;
     }
 
-    function startTipForm(connection) {
+    function startTipForm(subject) {
         if (inspectedNodeId.value == 'tips') {
             popStack();
         }
 
         pushStack(inspectedNodeId.value, 'submission-form');
-        inspectedConnection.value = connection;
+
+        if (!inspectedTrick.value) {
+            inspectedConnection.value = subject;
+        }
     }
 
     function viewTips(connection) {
@@ -133,24 +146,16 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         inspectedConnection.value = connection;
     }
 
-    function iconifyRequirement(requirement) {
-        const itemRegex = /([^/A-Z_1-8]|^)('?[A-Z_1-8]{3,}'?)/g;
-        const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
-        const tooltipRegex = /(\w+)\(([^)]+)\)/g;
-        const wrapperRegex = /\((?:and|or)\[('[A-Z_1-8]{3,}')\]\)/g;
+    function viewTrick(name, requirements) {
+        if (inspectedConnection.value) {
+            popStack();
+        }
 
-        requirement = requirement
-            .replaceAll('\\', '')
-            .replaceAll('"', '')
-            .replaceAll("and['TRUE']", 'None')
-            .replaceAll("or['FALSE']", 'Disabled')
-            .replace(wrapperRegex, '($1)')
-            .replace(itemRegex, `$1<img class="logic-item" src="/images/$2_1.png">`)
-            .replace(quoteRegex, '/$1_1.png')
-            .replaceAll("'", "")
-            .replace(tooltipRegex, `<span data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true' data-bs-title='$2'>$1</span>`);
-
-        return requirement
+        pushStack(inspectedNodeId.value, `trick`);
+        inspectedTrick.value = {
+            name: name,
+            requirements: requirements,
+        };
     }
 
     async function submitTip(connectionId, language, body, attribution, title, anonymous, permission, parentId) {
@@ -249,6 +254,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         logicByCheck,
         logicByEntrance,
         inspectedNode,
+        inspectedTrick,
         stackTop,
         stack,
         inspectedConnection,
@@ -261,11 +267,11 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         getLogicNodeName,
         startTipForm,
         viewTips,
-        iconifyRequirement,
         submitTip,
         editTip,
         approveTip,
         deleteTip,
         revertTipEdit,
+        viewTrick,
     };
 });

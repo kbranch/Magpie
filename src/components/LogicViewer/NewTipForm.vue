@@ -6,6 +6,7 @@ import { useStateStore } from '@/stores/stateStore';
 import languages from '@textabledev/langs-flags-list/lang-flags.json';
 import '@textabledev/langs-flags-list/lang-flags.css';
 import 'md-editor-v3/lib/style.css';
+import LogicRequirements from './LogicRequirements.vue';
 
 const MdEditor = defineAsyncComponent(() => import('md-editor-v3').then((module) => module.MdEditor));
 
@@ -55,6 +56,8 @@ const invalidFields = ref([]);
 const complete = ref(false);
 const error = ref(null);
 
+const subject = computed(() => logic.inspectedTrick ? logic.inspectedTrick : logic.inspectedConnection);
+const connectionId = computed(() => logic.inspectedTrick ? logic.inspectedTrick.name : logic.inspectedConnection.id);
 const fromName = computed(() => logic.getLogicNodeName(logic.inspectedConnection?.from));
 const toName = computed(() => logic.getLogicNodeName(logic.inspectedConnection?.to));
 const languageCodes = computed(() => sortByKey(
@@ -94,7 +97,7 @@ async function uploadFile(file) {
     let data = new FormData();
     data.append('file', file);
     data.append('filename', file.name);
-    data.append('connectionId', logic.inspectedConnection.id);
+    data.append('connectionId', connectionId.value);
 
     return fetch(`${logic.tipsUrlPrefix}/api/tipImage`, {
         method: 'POST',
@@ -148,7 +151,7 @@ async function submit() {
     }
 
     let result = await logic.submitTip(
-        logic.inspectedConnection.id,
+        connectionId.value,
         language.value,
         body.value,
         attribution.value,
@@ -174,7 +177,7 @@ async function submit() {
 </script>
 
 <template>
-    <h5 class="d-flex align-items-center">
+    <h5 v-if="fromName" class="d-flex align-items-center">
         <div class="text-start d-flex p-1 mb-0 align-items-center">
             <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${logic.inspectedConnection?.diff}`]: true}">
                 <div class="tooltip-check-graphic icon-wrapper">
@@ -188,10 +191,8 @@ async function submit() {
     </h5>
     <div ref="requirementsDiv">
         <label for="requirementsIcons" class="form-label mt-2">Requirements</label>
-        <div id="requirementsIcons" class="cell-wrapper"
-            v-html="logic.iconifyRequirement(logic.inspectedConnection?.shortReq
-                ? logic.inspectedConnection?.shortReq
-                : logic.inspectedConnection?.req)">
+        <div id="requirementsIcons" class="cell-wrapper">
+            <LogicRequirements :subject="subject" />
         </div>
     </div>
 
