@@ -15,7 +15,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     const stack = ref([]);
     const parentTip = ref(null);
     
-    const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_API_URL);
+    const tipsUrlPrefix = computed(() => state.isLocal ? 'https://magpietracker.us' : import.meta.env.VITE_TIPS_URL);
 
     const inspectedNode = computed(() => {
         if (inspectedNodeId.value in graph.value) {
@@ -227,10 +227,32 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         };
     }
 
+    async function fetchTips(ids) {
+        let params = {
+            connectionIds: JSON.stringify(ids),
+        };
+
+        if (import.meta.env.VITE_TIP_ADMIN === '1') {
+            params.includeUnapproved = true;
+        }
+
+        let response = await fetch(`${tipsUrlPrefix.value}/api/tips?${new URLSearchParams(params)}`);
+
+        if (!(response?.ok)) {
+            let error = await response.text();
+            console.log(`Error getting connection tips: ${error}`);
+            
+            return;
+        }
+
+        return await response.json();
+    }
+
     async function approveTip(tip, newApproval) {
         let form = new FormData();
         form.append('tipId', tip.tipId);
         form.append('newApproval', newApproval);
+        form.append('adminKey', import.meta.env.VITE_TIP_ADMIN_KEY);
 
         await fetch(`${tipsUrlPrefix.value}/api/approveTip`, {
             method: 'POST',
@@ -241,6 +263,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     async function deleteTip(tip) {
         let form = new FormData();
         form.append('tipId', tip.tipId);
+        form.append('adminKey', import.meta.env.VITE_TIP_ADMIN_KEY);
 
         await fetch(`${tipsUrlPrefix.value}/api/deleteTip`, {
             method: 'POST',
@@ -251,6 +274,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     async function revertTipEdit(tip) {
         let form = new FormData();
         form.append('tipId', tip.tipId);
+        form.append('adminKey', import.meta.env.VITE_TIP_ADMIN_KEY);
 
         await fetch(`${tipsUrlPrefix.value}/api/revertTipEdit`, {
             method: 'POST',
@@ -283,5 +307,6 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         deleteTip,
         revertTipEdit,
         viewTrick,
+        fetchTips,
     };
 });

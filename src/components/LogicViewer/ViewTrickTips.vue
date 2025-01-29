@@ -26,19 +26,7 @@ function initTooltips() {
 }
 
 async function updateTips() {
-    let connectionIds = JSON.stringify([trick.value.name]);
-    let response = await fetch(`${logic.tipsUrlPrefix}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
-
-    if (!(response?.ok)) {
-        let error = await response.text();
-        console.log(`Error getting connection tips: ${error}`);
-        
-        return;
-    }
-
-    let serverTips = await response.json();
-
-    tips.value = serverTips;
+    tips.value = await logic.fetchTips([trick.value.name]);
 }
 
 </script>

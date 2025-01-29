@@ -65,17 +65,7 @@ async function updateConnections() {
 }
 
 async function fetchTips() {
-    let connectionIds = JSON.stringify(connections.value.map(x => x.id));
-    let response = await fetch(`${logic.tipsUrlPrefix}/api/tips?${new URLSearchParams({ connectionIds: connectionIds })}`);
-
-    if (!(response?.ok)) {
-        let error = await response.text();
-        console.log(`Error getting connection tips: ${error}`);
-        
-        return;
-    }
-
-    let tips = await response.json();
+    let tips = await logic.fetchTips(connections.value.map(x => x.id));
 
     for (const conn of connections.value) {
         conn.tips = tips.filter(x => x.connectionId == conn.id);
