@@ -137,10 +137,18 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     }
 
     function editTip(tip) {
-        let isTrick = Boolean(inspectedTrick.value);
+        let connection = getConnectionById(tip.connectionId);
 
+        let isTrick = !connection;
 
         if (isTrick) {
+            if (!inspectedTrick.value) {
+                inspectedTrick.value = {
+                    name: tip.connectionId,
+                    requirements: 'unknown'
+                };
+            }
+
             parentTip.value = tip;
             pushStack('trick', 'submission-form');
         }
@@ -148,8 +156,6 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
             clearStack();
 
             parentTip.value = tip;
-
-            let connection = getConnectionById(tip.connectionId);
 
             pushStack(connection.from, 'submission-form');
             inspectedConnection.value = connection;
@@ -248,6 +254,21 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         return await response.json();
     }
 
+    async function fetchApprovalQueue() {
+        let response = await fetch(`${tipsUrlPrefix.value}/api/tipApprovalQueue`);
+
+        return await response.json();
+    }
+
+    function editFirstInQueue() {
+        fetchApprovalQueue()
+            .then((tips) => {
+                if(tips) { 
+                    editTip(tips[0]);
+                }
+            });
+    }
+
     async function approveTip(tip, newApproval) {
         let form = new FormData();
         form.append('tipId', tip.tipId);
@@ -281,6 +302,8 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
             body: form,
         });
     }
+
+    window.editFirstInQueue = editFirstInQueue;
 
     return {
         tipsUrlPrefix,

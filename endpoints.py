@@ -498,6 +498,10 @@ if tipsEnabled:
 
         return json.dumps(tips.getTips(connectionIds, showUnapprovedTips))
 
+    @app.route('/api/tipApprovalQueue', methods=['GET'])
+    def getTipApprovalQueue():
+        return json.dumps(tips.getUnapprovedTips())
+
     @app.route('/api/newTip', methods=['POST'])
     def newTip():
         try:

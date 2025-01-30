@@ -203,3 +203,47 @@ where tips.connection_id in ({})
     conn.close()
 
     return tips
+
+def getUnapprovedTips():
+    if not dbConfigured():
+        return
+
+    tipQuery = """
+select tips.tip_id
+      ,tips.connection_id
+      ,tips.title
+      ,tips.body
+      ,tips.attribution
+      ,tips.language
+      ,tips.approved
+      ,tips.parent_id
+from tips
+where approved = 0
+      and deleted = 0
+    """
+
+    tips = []
+
+    conn = getDbConnection()
+    cursor = getCursor(conn)
+
+    cursor.execute(tipQuery)
+    result = cursor.fetchall()
+
+    cursor.close()
+
+    for row in result:
+        tips.append({
+            'tipId': row[0],
+            'connectionId': row[1],
+            'title': row[2],
+            'body': row[3],
+            'attribution': row[4],
+            'language': row[5],
+            'approved': row[6],
+            'parentId': row[7],
+        })
+
+    conn.close()
+
+    return tips
