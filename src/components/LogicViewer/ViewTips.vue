@@ -49,6 +49,8 @@ async function updateTips() {
                 <LogicRequirements :subject="connection" />
             </div>
         </div>
+
+        <span class="pe-2">Suggest a new tip</span>
         <button type="button" class="btn btn-secondary view-button"
             @click="logic.startTipForm(connection)" @mouseover="tip.tooltip('Suggest a tip', $event)">
             <img src="/images/plus-lg.svg" class="invert">

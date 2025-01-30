@@ -33,6 +33,10 @@ const textColor = computed(() => state.settings.textColor);
 
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
             <span class="title-span">{{ tip.title }}</span>
+            <span class="title-attribution">
+                <MdPreview v-if="tip.attribution?.length" v-model="tip.attribution" id="titleAttribution"
+                    language="en-US" theme="dark" class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
+            </span>
         </button>
     </h2>
     <div :id="id" class="accordion-collapse collapse" :class="{ 'show': expanded }">
@@ -117,6 +121,13 @@ const textColor = computed(() => state.settings.textColor);
     flex-grow: 1;
 }
 
+.title-attribution {
+    padding-right: 10px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
 .title-span {
     flex-grow: 1;
 }
@@ -168,8 +179,13 @@ const textColor = computed(() => state.settings.textColor);
     padding: 0;
 }
 
-#bodyPreview.md-editor, #attributionPreview.md-editor {
+#bodyPreview.md-editor, #attributionPreview.md-editor, #titleAttribution.md-editor {
     background-color: initial;
+}
+
+#titleAttribution {
+    margin-top: -8px;
+    margin-bottom: -8px;
 }
 
 </style>
