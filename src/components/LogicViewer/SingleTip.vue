@@ -96,8 +96,8 @@ const textColor = computed(() => state.settings.textColor);
 
 <style scoped>
 
-.unapproved {
-    background-color: goldenrod;
+.unapproved, .accordion-button:not(.collapsed).unapproved {
+    background-color: goldenrod !important;
 }
 
 .btn {

@@ -63,6 +63,7 @@ function initTooltips() {
     <td>
         <div class="cell-wrapper end-cell">
             <button v-if="connection.tips?.length > 0" type="button" class="btn btn-secondary view-button me-2"
+                :class="{ 'unapproved': connection.tips?.some(x => !x.approved) }"
                 @click="logic.viewTips(connection)" @mouseover="tip.tooltip('View tips', $event)">
                 <img src="/images/info-circle.svg" class="invert">
             </button>
@@ -82,6 +83,10 @@ function initTooltips() {
 </template>
 
 <style scoped>
+
+.unapproved {
+    background-color: goldenrod;
+}
 
 .view-button {
     display: flex;
