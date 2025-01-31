@@ -29,7 +29,9 @@ Several packages are available:
 
 ### From Source
 
-For NDI support, use `setup-ndi.(sh/bat)` instead of `setup.(sh/bat)`, below. NDI support also requires Python 3.10.
+If pulling updates, make sure you also do a `git submodule update` to keep Magpie in sync with LADXR.
+
+For NDI support, use `setup-ndi.(sh/bat)` instead of `setup.(sh/bat)`, below. NDI support also requires Python <=3.10 (to a point, I'm not sure how old you can go).
 
 #### Downloading
 The easiest option is to download the [source bundle](https://magpietracker.us/static/builds/magpie-source.zip).
@@ -40,7 +42,7 @@ If you're not familiar with Git, you can download Magpie as zip files:
  - Download the Magpie [zip file](https://github.com/kbranch/Magpie/archive/refs/heads/master.zip)
  - Download LADXR as a [separate zip](https://github.com/kbranch/LADXR/archive/refs/heads/master.zip)
    - Note that it's hard to determine which branch of LADXR is required for any given version of Magpie. Use the [source bundle](https://magpietracker.us/static/builds/magpie-source.zip) to avoid that issue.
- - Extract both zip files to separate folders (e.g. `Magpie-master` and `LADXR-master`
+ - Extract both zip files to separate folders (e.g. `Magpie-master` and `LADXR-master`)
  - Copy everything from inside the `LADXR-master` folder into `Magpie-master/LADXR`
 
 #### Linux (and Mac?)
