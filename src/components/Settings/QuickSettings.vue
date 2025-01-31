@@ -321,6 +321,7 @@ window.setRomRequested = setRomRequested;
                 <div class="row h-100 align-items-end">
                     <div class="col rom-col quick-bg">
                         <h6 class="mb-2"><a href="https://github.com/kbranch/Magpie/releases/latest/">Offline version</a></h6>
+                        <h6 class="mb-2"><a href="https://magpietracker.us/static/tips-backup.zip">Tips database</a></h6>
 
                         <h6 class="mb-0">Autotracker</h6>
                         <ul class="mb-1">
