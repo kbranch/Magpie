@@ -8,6 +8,7 @@ import logging
 import traceback
 import threading
 import argparse
+import websockets
 
 try:
     from flaskwebgui import FlaskUI
@@ -136,7 +137,9 @@ async def broadcastLoop(socket, sharedMessages):
                     if type not in lastMessages or lastMessages[type] < msg['time']:
                         await sendMessage(msg, socket)
                         lastMessages[type] = msg['time']
-        except:
+        except websockets.exceptions.ConnectionClosedOK:
+            pass
+        except Exception as e:
             error = traceback.format_exc()
             logging.error(f'Error in broadcastLoop: {error}')
             await asyncio.sleep(1)

@@ -17,19 +17,19 @@ function handleBroadcastMessage(msg) {
     // console.log(msg);
 
     try {
-        if (msg.type == 'items') {
+        if (msg.type == 'items' && broadcastMode == 'receive') {
             receiveItems(msg.data);
         }
-        else if (msg.type == 'map') {
+        else if (msg.type == 'map' && broadcastMode == 'receive') {
             receiveMap(msg.data);
         }
-        else if (msg.type == 'args') {
+        else if (msg.type == 'args' && broadcastMode == 'receive') {
             receiveArgs(msg.data);
         }
-        else if (msg.type == 'mapTab') {
+        else if (msg.type == 'mapTab' && broadcastMode == 'receive') {
             openTab(msg.data);
         }
-        else if (msg.type == 'location') {
+        else if (msg.type == 'location' && broadcastMode == 'receive') {
             receiveLocation(msg.data);
         }
         else if (msg.type == 'send' && broadcastMode == 'send') {

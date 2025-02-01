@@ -18,13 +18,15 @@ def getVersion():
             }
 
         return json.loads(contents)
-    except:
+    except FileNotFoundError:
+        logging.error(f'Error reading Magpie\'s version: file "version" not found')
+    except Exception as e:
         logging.error(f'Error reading Magpie\'s version: {traceback.format_exc()}')
 
-        return {
-            "version": "Unknown",
-            "build": "Unknown"
-        }
+    return {
+        "version": "Unknown",
+        "build": "Unknown"
+    }
 
 def getRemoteVersion():
     try:
