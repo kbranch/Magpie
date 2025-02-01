@@ -584,6 +584,14 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             type: types.checkbox,
                             settingBase: 'settings',
                             settingName: 'adjustDifficultyIcons',
+                            helperText: 'When turned off, each logic level will have distinct icons, regardless of what logic level the seed was created on'
+                        }),
+                        new SettingsItem({
+                            title: 'Show logic',
+                            type: types.checkbox,
+                            settingBase: 'settings',
+                            settingName: 'showLogic',
+                            helperText: 'When turned off, all checks will be marked as out of logic, and all entrances will be in logic. Useful for tracking entrances without Magpie doing all the thinking for you.'
                         }),
                     ],
                 }),

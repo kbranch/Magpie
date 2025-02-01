@@ -70,6 +70,7 @@ class LocalSettings:
         self.unpinnedInteract = True
         self.adjustDifficultyIcons = True
         self.maxContainerWidth = 1500
+        self.showLogic = True
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

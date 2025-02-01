@@ -9,6 +9,11 @@ class Entrance {
         if (!localSettings.showHigherLogic && this.difficulty > 0) {
             this.difficulty = 9;
         }
+
+        if (!localSettings.showLogic) {
+            this.difficulty = 0;
+            this.behindTrackerLogic = false;
+        }
     }
 
     connectedTo() {

@@ -174,7 +174,7 @@ function getUuid() {
     }
 }
 
-function applySettings(oldArgs=null) {
+function applySettings(oldArgs=null, oldSettings=null) {
     if (!localSettings.playerId) {
         localSettings.playerId = getUuid();
     }
@@ -429,6 +429,10 @@ function applySettings(oldArgs=null) {
 
     if (!graphicsOptions.includes(localSettings.graphicsPack.replace('/', ''))) {
         localSettings.graphicsPack = '';
+    }
+
+    if (oldSettings && oldSettings.showLogic !== localSettings.showLogic) {
+        refreshCheckList();
     }
 }
 

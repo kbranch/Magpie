@@ -152,7 +152,7 @@ function saveSettings(settings) {
     fixArgs(settings.args);
     saveSettingsToStorage(settings.args, settings.settings);
 
-    applySettings(lastSettings.args);
+    applySettings(lastSettings.args, lastSettings.settings);
 
     window.skipNextAnimation = true;
     argsChanged = JSON.stringify(settings.args) != JSON.stringify(lastSettings.args)

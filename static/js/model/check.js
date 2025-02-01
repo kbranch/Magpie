@@ -58,6 +58,13 @@ class Check {
                                 || !('RUPEE_COUNT' in inventory)
                                 || inventory['RUPEE_COUNT'] < this.requiredRupees);
 
+        if (!localSettings.showLogic) {
+            this.baseDifficulty = 9;
+            this.behindRupees = false;
+            this.behindKeys = false;
+            this.behindTrackerLogic = false;
+        }
+
         if (this.behindKeys || this.behindRupees || this.behindTrackerLogic) {
             this.hollow = true;
         }
