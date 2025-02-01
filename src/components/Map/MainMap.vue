@@ -38,7 +38,7 @@ const mapPaths = computed(() => maps.reduce((acc, x) => {
 
 watch(activeTab, (newTab) => {
     removeNodes();
-    closeAllTooltips();
+    closeAllTooltips(false);
 
     imageLoaded.value = false;
 

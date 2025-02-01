@@ -14,7 +14,7 @@ function closeOtherTooltips(element) {
 
 }
 
-function closeAllCheckTooltips() {
+function closeAllCheckTooltips(stopEntrances=true) {
     let secondaries = $('.helper');
 
     if (secondaries.length) {
@@ -27,7 +27,7 @@ function closeAllCheckTooltips() {
     Object.values(nodes).map(x => x.pinned = false);
 
 
-    if (pickingEntrances()) {
+    if (pickingEntrances() && stopEntrances) {
         endGraphicalConnection();
     }
 }
@@ -40,8 +40,8 @@ function closeUnpinnedTooltips() {
     }
 }
 
-function closeAllTooltips() {
-    closeAllCheckTooltips();
+function closeAllTooltips(stopEntrances=true) {
+    closeAllCheckTooltips(stopEntrances);
 
     // Nuke everything else to be safe
     let tooltipElements = $('[data-bs-toggle="tooltip"]');
