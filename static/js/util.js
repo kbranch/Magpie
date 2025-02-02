@@ -434,6 +434,20 @@ function applySettings(oldArgs=null, oldSettings=null) {
     if (oldSettings && oldSettings.showLogic !== localSettings.showLogic) {
         refreshCheckList();
     }
+
+    if (args.boss == 'default') {
+        // Reset bosses to default
+        Object.keys(bossMap)
+            .filter(x => x.startsWith('b'))
+            .map(x => bossMap[x] = x);
+    }
+
+    if (args.miniboss == 'default') {
+        // Reset minibosses to default
+        Object.keys(bossMap)
+            .filter(x => !x.startsWith('b'))
+            .map(x => bossMap[x] = x);
+    }
 }
 
 function createElement(type, attrs) {
