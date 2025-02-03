@@ -30,7 +30,6 @@ function endGraphicalConnection(destId = null) {
 
     graphicalMapSource = null;
     graphicalMapChoices = null;
-    graphicalMapType = null;
     vueApp.updateEntranceConnection(graphicalMapType, graphicalMapSource);
 
     $('#mouseTracker').connections('remove');
