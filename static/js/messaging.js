@@ -362,8 +362,12 @@ function connectToAutotracker() {
         addAutotrackerMessage('Connecting...');
         const defaultAddress = '127.0.0.1';
         let address = localSettings.autotrackerAddress ? localSettings.autotrackerAddress : defaultAddress;
+        
+        if (!address.includes(':')) {
+            address += ':17026';
+        }
 
-        autotrackerSocket = new WebSocket(`ws://${address}:17026/`);
+        autotrackerSocket = new WebSocket(`ws://${address}/`);
 
         autotrackerSocket.onopen = autotrackerConnected;
         autotrackerSocket.onmessage = (event) => processMessage(event.data);
