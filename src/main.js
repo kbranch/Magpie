@@ -7,6 +7,12 @@ import ItemsBroadcast from './views/ItemsBroadcast.vue';
 import MainTracker from './views/MainTracker.vue';
 import EventRestream from './views/EventRestream.vue';
 import PlayerShare from './views/PlayerShare.vue';
+import { Check } from './model/check';
+import { Boss } from './model/boss';
+import { Connection } from './model/connection';
+import { Entrance } from './model/entrance';
+import { LogicHint } from './model/logicHint';
+import { MapNode } from './model/mapNode';
 
 function addCssLink(href, id='') {
   var link = document.createElement("link");
@@ -40,6 +46,17 @@ window.vueApp = app.mount('#app');
 window.rateLimit = rateLimit;
 window.debounce = debounce;
 app.config.globalProperties.window = window;
+
+Check.init();
+Entrance.init();
+MapNode.init();
+Connection.init();
+window.Check = Check;
+window.Boss = Boss;
+window.Connection = Connection;
+window.Entrance = Entrance;
+window.LogicHint = LogicHint;
+window.MapNode = MapNode;
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/vue-legacy.css");

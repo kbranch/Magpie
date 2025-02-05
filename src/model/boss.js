@@ -1,4 +1,6 @@
-class Boss {
+import { bossDataDict, bosses } from "@/moduleWrappers";
+
+export class Boss {
     constructor(metadata) {
         Object.assign(this, metadata);
         this.mappedTo = this.id;

@@ -1,4 +1,8 @@
-class Check {
+import { coordDict, setCheckContents } from "@/moduleWrappers";
+import { useAccessibilityStore } from "@/stores/accessibilityStore";
+import { useStateStore } from "@/stores/stateStore";
+
+export class Check {
     constructor(checkInfo) {
         this.id = checkInfo.id;
         this.metadata = coordDict[this.id];
@@ -6,7 +10,7 @@ class Check {
         this.behindTrackerLogic = checkInfo.behindTrackerLogic;
         this.isVanilla = checkInfo.vanilla || (this.metadata.vanilla ?? false);
         this.locations = this.metadata.locations;
-        this.item = checkContents[this.id];
+        this.item = Check.state.checkContents[this.id];
         this.baseDifficulty = checkInfo.difficulty;
         this.requiredRupees = this.metadata.requiredRupees;
         this.hollow = false;
@@ -14,12 +18,12 @@ class Check {
         this.inFilter = false;
         this.hintHighlighted = false;
 
-        if (!(this.id in allChecksById)) {
-            allChecksById[this.id] = [];
+        if (!(this.id in Check.accessibility.allChecksById)) {
+            Check.accessibility.allChecksById[this.id] = [];
         }
 
-        if (!(this.id in allChecksById[this.id])) {
-            allChecksById[this.id].push(this);
+        if (!(this.id in Check.accessibility.allChecksById[this.id])) {
+            Check.accessibility.allChecksById[this.id].push(this);
         }
 
         let dungeonMaps = this.locations.map(x => x.map)
@@ -32,15 +36,15 @@ class Check {
         }
 
         if (this.behindKeys 
-            && localSettings.enableAutotracking
-            && localSettings.autotrackItems
+            && Check.state.settings.enableAutotracking
+            && Check.state.settings.autotrackItems
             && this.isDungeon()) {
             let key = `KEY${this.dungeonNumber()}`
             let unusedKey = `UNUSED_KEY${this.dungeonNumber()}`
-            if (inventory[key] <= 0
-                || (unusedKey in inventory
-                    && inventory[unusedKey] <= 0)
-                    && !stickyBehindKeys) {
+            if (Check.state.inventory[key] <= 0
+                || (unusedKey in Check.state.inventory
+                    && Check.state.inventory[unusedKey] <= 0)
+                    && !Check.state.stickyBehindKeys) {
                 this.baseDifficulty = 9;
             }
         }
@@ -53,12 +57,12 @@ class Check {
         this.updateChecked();
 
         this.behindRupees = this.requiredRupees
-                            && (!localSettings.enableAutotracking
-                                || !localSettings.autotrackItems
-                                || !('RUPEE_COUNT' in inventory)
-                                || inventory['RUPEE_COUNT'] < this.requiredRupees);
+                            && (!Check.state.settings.enableAutotracking
+                                || !Check.state.settings.autotrackItems
+                                || !('RUPEE_COUNT' in Check.state.inventory)
+                                || Check.state.inventory['RUPEE_COUNT'] < this.requiredRupees);
 
-        if (!localSettings.showLogic) {
+        if (!Check.state.settings.showLogic) {
             this.baseDifficulty = 9;
             this.behindRupees = false;
             this.behindKeys = false;
@@ -71,7 +75,7 @@ class Check {
     }
 
     signature() {
-        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}-${this.id in checkContents ? checkContents[this.id] : ''}-${this.checked}`;
+        return `${this.id}-${this.behindKeys}-${this.behindTrackerLogic}-${this.isVanilla}-${this.item}-${this.id in Check.state.checkContents ? Check.state.checkContents[this.id] : ''}-${this.checked}`;
     }
 
     nodeDifficulty() {
@@ -84,7 +88,7 @@ class Check {
 
     updateChecked() {
         let difficulty = Number(this.baseDifficulty);
-        if (!localSettings.showHigherLogic && difficulty > 0) {
+        if (!Check.state.settings.showHigherLogic && difficulty > 0) {
             difficulty = 9;
         }
 
@@ -117,11 +121,11 @@ class Check {
     isOwnedVanillaPickup() {
         let vanillaItem = this.metadata.vanillaItem;
 
-        return inventory[vanillaItem] ?? false
+        return Check.state.inventory[vanillaItem] ?? false
     }
 
     isValid() {
-        return !(this.metadata.condition) || this.metadata.condition(args, localSettings);
+        return !(this.metadata.condition) || this.metadata.condition(Check.state.args, Check.state.settings);
     }
 
     fullName() {
@@ -130,13 +134,13 @@ class Check {
 
     shouldDraw() {
         if ((this.difficulty == 9
-              && !localSettings.showOutOfLogic)
+              && !Check.state.settings.showOutOfLogic)
             || (this.isVanilla && !this.isVanillaOwl()
-                && !localSettings.showVanilla)
+                && !Check.state.settings.showVanilla)
             || (this.isVanillaOwl()
-                && !localSettings.showHints)
+                && !Check.state.settings.showHints)
             || (this.isOwnedVanillaPickup()
-                && !localSettings.showOwnedPickups)
+                && !Check.state.settings.showOwnedPickups)
             || !this.isValid()) {
 
             return false;
@@ -146,11 +150,11 @@ class Check {
     }
 
     isEnabled() {
-        return !this.metadata.condition || this.metadata.condition(args, localSettings);
+        return !this.metadata.condition || this.metadata.condition(Check.state.args, Check.state.settings);
     }
 
     mapLocations(mapName) {
-        return this.locations.filter(x => x.map == mapName && (!('condition' in x) || x.condition(args, localSettings)));
+        return this.locations.filter(x => x.map == mapName && (!('condition' in x) || x.condition(Check.state.args, Check.state.settings)));
     }
 
     itemOverlay() {
@@ -175,12 +179,19 @@ class Check {
         return this.baseDifficulty > 0 && this.baseDifficulty < 9 && !this.checked;
     }
 
+    static init() {
+        if (!Check.state) {
+            Check.state = useStateStore();
+            Check.accessibility = useAccessibilityStore();
+        }
+    }
+
     static fullName(area, name) {
         return `${area}-${name}`;
     }
 
     static isChecked(id) {
-        return checkedChecks.has(id);
+        return Check.state.checkedChecks.has(id);
     }
 
     static isOwl(id) {
@@ -189,8 +200,23 @@ class Check {
 
     static isVanillaOwl(id) {
         let isOverworld = id.includes('0x0');
-        return Check.isOwl(id) && (args.owlstatues == '' || (args.owlstatues == 'dungeon' && isOverworld) || (args.owlstatues == 'overworld' && !isOverworld))
+        return Check.isOwl(id) && (Check.state.args.owlstatues == '' || (Check.state.args.owlstatues == 'dungeon' && isOverworld) || (Check.state.args.owlstatues == 'overworld' && !isOverworld))
+    }
+
+    static loadChecks(bareChecks) {
+        Check.accessibility.checksById = {};
+        Check.accessibility.allChecksById = {};
+
+        window.allChecksById = Check.accessibility.allChecksById;
+        window.checksById = Check.accessibility.checksById;
+
+        Check.accessibility.checks = bareChecks.map(x => {
+            let check = new Check(x);
+            Check.accessibility.checksById[x.id] = check;
+
+            return check;
+        });
+
+        window.checkAccessibility = Check.accessibility.checks;
     }
 }
-
-window.Check = Check;

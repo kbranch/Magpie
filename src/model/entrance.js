@@ -1,16 +1,21 @@
-class Entrance {
+import { connectors, connectorsMixed, coupledEntrances, inOutEntrances, vanillaConnectors } from "@/moduleWrappers";
+import { useStateStore } from "@/stores/stateStore";
+import { Connection } from "./connection";
+import { useAccessibilityStore } from "@/stores/accessibilityStore";
+
+export class Entrance {
     constructor(id) {
         this.id = id;
-        this.metadata = entranceDict[id];
+        this.metadata = Entrance.state.entranceDict[id];
         this.type = this.metadata.type;
-        this.difficulty = entranceAccessibility[id]?.difficulty ?? -1;
-        this.behindTrackerLogic = entranceAccessibility[id]?.behindTrackerLogic ?? false;
+        this.difficulty = Entrance.accessibility.entrances[id]?.difficulty ?? -1;
+        this.behindTrackerLogic = Entrance.accessibility.entrances[id]?.behindTrackerLogic ?? false;
 
-        if (!localSettings.showHigherLogic && this.difficulty > 0) {
+        if (!Entrance.state.settings.showHigherLogic && this.difficulty > 0) {
             this.difficulty = 9;
         }
 
-        if (!localSettings.showLogic) {
+        if (!Entrance.state.settings.showLogic) {
             this.difficulty = 0;
             this.behindTrackerLogic = false;
         }
@@ -23,7 +28,7 @@ class Entrance {
     connectedToMetadata() {
         let to = this.connectedTo();
 
-        return to ? entranceDict[this.connectedTo()] : null;
+        return to ? Entrance.state.entranceDict[this.connectedTo()] : null;
     }
 
     connectedToDummy() {
@@ -80,11 +85,11 @@ class Entrance {
     }
 
     isMappedToSelf() {
-        if (args.randomstartlocation
-            && args.entranceshuffle == 'none'
-            && startHouse in entranceMap
-            && !(this.id in reverseEntranceMap)
-            && !(this.id in entranceMap))
+        if (Entrance.state.args.randomstartlocation
+            && Entrance.state.args.entranceshuffle == 'none'
+            && Entrance.state.startHouse in Entrance.state.entranceMap
+            && !(this.id in Entrance.state.reverseEntranceMap)
+            && !(this.id in Entrance.state.entranceMap))
         {
             return true;
         }
@@ -98,7 +103,7 @@ class Entrance {
     }
 
     canBeStart() {
-        return startLocations.includes(this.id);
+        return Entrance.state.startLocations.includes(this.id);
     }
 
     isOneWayBlocked() {
@@ -107,11 +112,11 @@ class Entrance {
 
     shouldDraw() {
         if (this.difficulty == 9
-              && !localSettings.showOutOfLogic
-              && (!args.randomstartlocation || Entrance.isMapped(startHouse) || this.isMixedConnector())
-              && this.connectedTo() != startHouse
+              && !Entrance.state.settings.showOutOfLogic
+              && (!Entrance.state.args.randomstartlocation || Entrance.isMapped(Entrance.state.startHouse) || this.isMixedConnector())
+              && this.connectedTo() != Entrance.state.startHouse
               && !this.isConnected()
-              && (args.entranceshuffle == 'none' || (this.isConnector() && !this.isMixedConnector()))) {
+              && (Entrance.state.args.entranceshuffle == 'none' || (this.isConnector() && !this.isMixedConnector()))) {
             return false;
         }
 
@@ -140,7 +145,7 @@ class Entrance {
     }
 
     canBeLandfill() {
-        return !this.isVanilla() && !['landfill', startHouse].includes(this.connectedTo());
+        return !this.isVanilla() && !['landfill', Entrance.state.startHouse].includes(this.connectedTo());
     }
 
     canBeCleared() {
@@ -156,17 +161,17 @@ class Entrance {
             return null;
         }
 
-        let connection = entranceDict[this.connectedFrom()];
+        let connection = Entrance.state.entranceDict[this.connectedFrom()];
 
         if (inOutEntrances()) {
-            connection = entranceDict[Entrance.connectedFrom(Entrance.getInside(this.id))];
+            connection = Entrance.state.entranceDict[Entrance.connectedFrom(Entrance.getInside(this.id))];
         }
 
         return connection;
     }
 
     isRandomized() {
-        return randomizedEntrances.includes(this.id);
+        return Entrance.state.randomizedEntrances.includes(this.id);
     }
     
     static validConnections(sourceId, type) {
@@ -175,23 +180,23 @@ class Entrance {
         let requireSimple = type == "simple" || (!connectorsMixed() && !Entrance.isConnector(sourceId));
         let options = [];
         if (requireConnector) {
-            options = randomizedEntrances.filter(x => entranceDict[x].type == 'connector'
+            options = Entrance.state.randomizedEntrances.filter(x => Entrance.state.entranceDict[x].type == 'connector'
                                                       && (!Entrance.isConnected(x)
                                                           || Connection.isIncomplete({ exterior: x }))
                                                       && Entrance.connectedTo(x) != 'landfill'
                                                       && Entrance.isInside(x) == isUnderworld
                                                       && x != sourceId)
-                                         .map(x => [x, entranceDict[x].name]);
+                                         .map(x => [x, Entrance.state.entranceDict[x].name]);
         }
         else {
-            options = randomizedEntrances.filter(x => (!requireSimple || entranceDict[x].type != 'connector')
-                                                      && ((!requireSimple && args.shufflejunk) || entranceDict[x].type != 'dummy')
-                                                      && (args.goal.includes('bingo')
-                                                          || args.shufflejunk
-                                                          || entranceDict[x].type != 'bingo')
-                                                      && (args.tradequest
-                                                          || args.shufflejunk
-                                                          || entranceDict[x].type != 'trade')
+            options = Entrance.state.randomizedEntrances.filter(x => (!requireSimple || Entrance.state.entranceDict[x].type != 'connector')
+                                                      && ((!requireSimple && Entrance.state.args.shufflejunk) || Entrance.state.entranceDict[x].type != 'dummy')
+                                                      && (Entrance.state.args.goal.includes('bingo')
+                                                          || Entrance.state.args.shufflejunk
+                                                          || Entrance.state.entranceDict[x].type != 'bingo')
+                                                      && (Entrance.state.args.tradequest
+                                                          || Entrance.state.args.shufflejunk
+                                                          || Entrance.state.entranceDict[x].type != 'trade')
                                                       && Entrance.isInside(x) == isUnderworld
                                                       && ((coupledEntrances()
                                                            && ((requireSimple && ((Entrance.isInside(sourceId) && !Entrance.isMapped(x))
@@ -203,20 +208,20 @@ class Entrance {
                                                               && !Entrance.isFound(x)
                                                               /*&& !Entrance.isMapped(x)*/))
                                                 )
-                                         .map(x => [x, entranceDict[x].name]);
+                                         .map(x => [x, Entrance.state.entranceDict[x].name]);
 
-            options.push(['bk_shop', entranceDict['bk_shop'].name])
+            options.push(['bk_shop', Entrance.state.entranceDict['bk_shop'].name])
         }
 
         return options;
     }
 
     static isShuffledConnector(id) {
-        return ['split', 'mixed', 'chaos', 'insane'].includes(args.entranceshuffle) && Entrance.isConnector(id);
+        return ['split', 'mixed', 'chaos', 'insane'].includes(Entrance.state.args.entranceshuffle) && Entrance.isConnector(id);
     }
 
     static isMixedConnector(id) {
-        return ['mixed', 'chaos', 'insane'].includes(args.entranceshuffle) && Entrance.isConnector(id);
+        return ['mixed', 'chaos', 'insane'].includes(Entrance.state.args.entranceshuffle) && Entrance.isConnector(id);
     }
 
     static usefulConnectors() {
@@ -224,29 +229,29 @@ class Entrance {
     }
 
     static isMapped(id) {
-        return id in entranceMap;
+        return id in Entrance.state.entranceMap;
     }
 
     static isFound(id) {
-        if (args.randomstartlocation
-            && args.entranceshuffle == 'none'
-            && (args.dungeonshuffle && !Entrance.isDungeon(id))
-            && startHouse in entranceMap)
+        if (Entrance.state.args.randomstartlocation
+            && Entrance.state.args.entranceshuffle == 'none'
+            && (Entrance.state.args.dungeonshuffle && !Entrance.isDungeon(id))
+            && Entrance.state.startHouse in Entrance.state.entranceMap)
         {
             return true;
         }
 
-        if (!randomizedEntrances.includes(id)) {
+        if (!Entrance.state.randomizedEntrances.includes(id)) {
             return true;
         }
 
         if (coupledEntrances()
-            && (args.entranceshuffle != 'none' || args.dungeonshuffle)
+            && (Entrance.state.args.entranceshuffle != 'none' || Entrance.state.args.dungeonshuffle)
             && !Entrance.isInside(id)) {
             id = Entrance.getInsideOut(id);
         }
 
-        return id in reverseEntranceMap;
+        return id in Entrance.state.reverseEntranceMap;
     }
 
     static isDungeon(id) {
@@ -260,11 +265,11 @@ class Entrance {
     }
 
     static isConnector(id) {
-        return ['connector', 'stairs'].includes(entranceDict[Entrance.getOutside(id)].type);
+        return ['connector', 'stairs'].includes(Entrance.state.entranceDict[Entrance.getOutside(id)].type);
     }
 
     static isStairs(id) {
-        return entranceDict[Entrance.getOutside(id)].type == 'stairs';
+        return Entrance.state.entranceDict[Entrance.getOutside(id)].type == 'stairs';
     }
 
     static isConnected(id) {
@@ -272,32 +277,32 @@ class Entrance {
                 || (Entrance.connectedTo(id) != null
                     && (Entrance.isConnector(Entrance.connectedTo(id))
                         || !inOutEntrances())))
-               && connections.some(x => x.containsEntrance(id));
+               && Entrance.state.connections.some(x => x.containsEntrance(id));
     }
 
     static mappedConnection(id) {
-        return connections.filter(x => x.containsEntrance(id))[0];
+        return Entrance.state.connections.filter(x => x.containsEntrance(id))[0];
     }
 
     static connectedTo(id) {
-        if (!(id in entranceMap)) {
+        if (!(id in Entrance.state.entranceMap)) {
             return null;
         }
 
-        return entranceMap[id];
+        return Entrance.state.entranceMap[id];
     }
 
     static connectedFrom(id) {
-        if (!(id in reverseEntranceMap)) {
+        if (!(id in Entrance.state.reverseEntranceMap)) {
             return null;
         }
 
-        return reverseEntranceMap[id];
+        return Entrance.state.reverseEntranceMap[id];
     }
 
     static connectedToDummy(id) {
         let entrance = Entrance.connectedTo(id);
-        return entranceDict[entrance].type == 'dummy';
+        return Entrance.state.entranceDict[entrance].type == 'dummy';
     }
 
     static isVanilla(id) {
@@ -323,5 +328,12 @@ class Entrance {
     static getInside(id) {
         let outside = Entrance.getOutside(id);
         return !outside ? outside : outside + ':inside';
+    }
+
+    static init() {
+        if (!Entrance.state) {
+            Entrance.state = useStateStore();
+            Entrance.accessibility = useAccessibilityStore();
+        }
     }
 }

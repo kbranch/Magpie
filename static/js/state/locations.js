@@ -74,11 +74,27 @@ function loadLocationHistory() {
     return errors;
 }
 
+function copyToEntranceMap(obj) {
+    copyToObject(obj, entranceMap);
+}
+
+function clearEntranceMap() {
+    clearObject(entranceMap);
+}
+
+function copyToReverseEntranceMap(obj) {
+    copyToObject(obj, reverseEntranceMap);
+}
+
+function clearReverseEntranceMap() {
+    clearObject(reverseEntranceMap);
+}
+
 function loadEntrances() {
     let errors = [];
 
     try {
-        entranceMap = JSON.parse(getLocalStorage('entranceMap'));
+        copyToEntranceMap(JSON.parse(getLocalStorage('entranceMap')));
 
         if (updateInsideEntrances) {
             for (const entrance in entranceMap) {
@@ -97,26 +113,18 @@ function loadEntrances() {
         errors.push(err);
     }
 
-    if (entranceMap == null) {
-        entranceMap = {};
-    }
-
     try {
-        connections = [];
+        connections.length = 0;
 
         let raw = getLocalStorage('connections');
 
         if (raw) {
             let dehydratedConnections = JSON.parse(raw);
-            connections = hydrateConnections(dehydratedConnections);
+            hydrateConnections(dehydratedConnections)?.map(x => connections.push(x));
         }
     }
     catch (err) {
         errors.push(err);
-    }
-
-    if (connections == null) {
-        connections = [];
     }
 
     updateInsideEntrances = false;
@@ -181,9 +189,9 @@ function resetLocationHistory() {
 }
 
 function resetEntrances() {
-    entranceMap = {};
-    reverseEntranceMap = {};
-    connections = [];
+    clearEntranceMap();
+    clearReverseEntranceMap();
+    connections.length = 0;
     saveEntrances();
 }
 
@@ -254,8 +262,8 @@ function pruneEntranceMap() {
 }
 
 function updateReverseMap() {
-    reverseEntranceMap = Object.entries(entranceMap)
-                               .reduce((rev, [key, value]) => (rev[value] = key, rev), {});
+    copyToReverseEntranceMap(Object.entries(entranceMap)
+                               .reduce((rev, [key, value]) => (rev[value] = key, rev), {}));
 }
 
 function connectOneEndConnector(outdoors, indoors, refresh=true) {

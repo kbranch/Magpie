@@ -293,6 +293,8 @@ function fixArgs(args) {
         startHouse = 'start_house:inside';
     }
 
+    vueApp.updateStartHouse(startHouse);
+
     if (!('shopsanity' in args)) {
         args.shopsanity = "";
     }
@@ -360,10 +362,13 @@ function importState(data, includeLocalSettings=true, reload=true) {
         if ('BOMB' in state.inventory
             && 'checkSize' in state.settings
             && 'logic' in state.args) {
-                inventory = state.inventory;
+                copyToObject(state.inventory, inventory);
                 checkedChecks = state.checkedChecks;
-                entranceMap = state.entranceMap;
-                connections = hydrateConnections(state.connections);
+                copyToEntranceMap(state.entranceMap);
+
+                connections.length = 0;
+                hydrateConnections(state.connections)?.map(x => connections.push(x));
+
                 checkContents = state.checkContents;
                 args = state.args;
                 hints = state.hints;

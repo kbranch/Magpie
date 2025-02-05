@@ -1,4 +1,6 @@
-class LogicHint {
+import { logicHintDict } from "@/moduleWrappers";
+
+export class LogicHint {
     constructor(hintInfo) {
         this.id = hintInfo.id;
         this.metadata = logicHintDict[this.id];
@@ -22,9 +24,5 @@ class LogicHint {
         if (this.behindKeys || this.requiredRupees || this.behindTrackerLogic) {
             this.hollow = true;
         }
-    }
-
-    visible() {
-        return (localSettings.showHigherLogic || difficulty == 0);
     }
 }

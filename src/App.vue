@@ -7,6 +7,7 @@ import LogicViewer from './components/LogicViewer/LogicViewer.vue';
 import { useLogicViewerStore } from './stores/logicViewerStore';
 import { useAccessibilityStore } from './stores/accessibilityStore';
 import ReportModal from './components/ReportModal.vue';
+import { Check } from './model/check';
 
 const state = useStateStore();
 const eventStore = useEventStore();
@@ -63,7 +64,7 @@ function updateLogics(newLogics) {
 }
 
 function updateAccessibility(newAccessibility) {
-  accessibility.loadChecks(newAccessibility.checks);
+  Check.loadChecks(newAccessibility.checks);
   accessibility.loadEntrances(newAccessibility.entrances);
 }
 
@@ -100,6 +101,14 @@ function updateEntranceConnection(type, source) {
   state.connectionType = type;
 }
 
+function updateStartHouse(house) {
+  state.startHouse = house;
+}
+
+function updateStickyBehindKeys(sticky) {
+  state.stickyBehindKeys = sticky;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
@@ -116,6 +125,8 @@ defineExpose({
   updateLinkFace,
   updateLogicGraph,
   updateEntranceConnection,
+  updateStartHouse,
+  updateStickyBehindKeys,
 });
 </script>
 

@@ -169,7 +169,7 @@ function setHighlightedItems(items) {
         return;
     }
 
-    hoveredItems = [].concat(items);
+    copyToArray(items, hoveredItems);
 
     drawActiveTab(false);
 }

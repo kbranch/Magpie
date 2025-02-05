@@ -17,8 +17,9 @@ function getUndoState() {
 
 function applyUndoState(state) {
     checkedChecks = state.checkedChecks;
-    entranceMap = state.entranceMap;
-    connections = state.connections;
+    copyToEntranceMap(state.entranceMap);
+    connections.length = 0;
+    state.connections?.map(x => connections.push(x));
     checkContents = state.checkContents;
 
     pruneEntranceMap();

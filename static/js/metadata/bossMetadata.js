@@ -298,3 +298,6 @@ var bossDataDict = {};
 for (const boss of bosses) {
     bossDataDict[boss.id] = boss;
 }
+
+window.bosses = bosses;
+window.bossDataDict = bossDataDict;

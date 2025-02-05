@@ -1,4 +1,14 @@
-class MapNode {
+import { useStateStore } from "@/stores/stateStore";
+import { Boss } from "./boss";
+import { Connection } from "./connection";
+import { Entrance } from "./entrance";
+import { advancedER, checkGraphicLeftClick, checkGraphicMouseEnter, checkGraphicMouseLeave, checkGraphicRightClick, connectorsMixed, coupledEntrances, createElement, inOutEntrances, nodeMiddle, pickingEntrances, sortByKey } from "@/moduleWrappers";
+import { useAccessibilityStore } from "@/stores/accessibilityStore";
+import { useNodeTooltipStore } from "@/stores/nodeTooltipStore";
+
+const $ = window.$;
+
+export class MapNode {
     constructor(location, scaling, entranceId=null, bossMetadata=null, logicHint=null) {
         this.x = Math.round(location.x * scaling.x + scaling.offset.x);
         this.y = Math.round(location.y * scaling.y + scaling.offset.y);
@@ -188,10 +198,10 @@ class MapNode {
 
         let connectedTo = this.entranceConnectedTo();
 
-        if (!localSettings.showChecked
+        if (!MapNode.state.settings.showChecked
             && this.isChecked
             && (this.entrance == null
-                || (connectedTo != startHouse
+                || (connectedTo != MapNode.state.startHouse
                     && ((!Entrance.isConnector(connectedTo) && coupledEntrances()))
                         || connectedTo == 'landfill'))) {
             return true;
@@ -201,18 +211,18 @@ class MapNode {
             return false;
         }
 
-        if (args.randomstartlocation
-            && args.entranceshuffle == 'none'
-            && Entrance.isMapped(startHouse)
-            && this.entrance.connectedTo() != startHouse
+        if (MapNode.state.args.randomstartlocation
+            && MapNode.state.args.entranceshuffle == 'none'
+            && Entrance.isMapped(MapNode.state.startHouse)
+            && this.entrance.connectedTo() != MapNode.state.startHouse
             && this.checks.length == 0
             && !this.entrance.isVanilla()) {
 
-            if (!args.dungeonshuffle) {
+            if (!MapNode.state.args.dungeonshuffle) {
                 return true;
             }
 
-            if (args.dungeonshuffle
+            if (MapNode.state.args.dungeonshuffle
                 && this.entrance.canBeStart()) {
                 return true;
             }
@@ -246,9 +256,10 @@ class MapNode {
         });
     }
 
-    tooltipHtml(pinned, connectionType, hoveredCheckId=null) {
-        let tooltip = new NodeTooltip(this);
-        return tooltip.tooltipHtml(pinned, connectionType, hoveredCheckId);
+    tooltipHtml(/*pinned, connectionType, hoveredCheckId=null*/) {
+        return '';
+        // let tooltip = new NodeTooltip(this);
+        // return tooltip.tooltipHtml(pinned, connectionType, hoveredCheckId);
     }
 
     inFilter() {
@@ -319,7 +330,7 @@ class MapNode {
 
         let items = this.checks.filter(x => x.item)
                                .map(x => x.item);
-        let hoverItems = items.filter(x => hoveredItems.includes(x));
+        let hoverItems = items.filter(x => MapNode.state.hoveredItems.includes(x));
         if (hoverItems.length > 0 || this.inFilter() || this.hintHighlighted()) {
             classes.push('spoiler-highlight');
         }
@@ -336,8 +347,8 @@ class MapNode {
                     mappedEntrance = this.entrance;
                 }
 
-                if (args.randomstartlocation 
-                    && mappedEntrance.id == startHouse) {
+                if (MapNode.state.args.randomstartlocation 
+                    && mappedEntrance.id == MapNode.state.startHouse) {
                     classes.push('start-location');
                 }
 
@@ -390,14 +401,14 @@ class MapNode {
                 }
             }
             else if (this.difficulty == 'checked') {
-                if (!args.randomstartlocation 
-                    || Entrance.isMapped(startHouse)
+                if (!MapNode.state.args.randomstartlocation 
+                    || Entrance.isMapped(MapNode.state.startHouse)
                     || (!connectorsMixed() && this.entrance.isConnector())) {
                     classes.push('entrance-only');
                     classes.push('unmapped-entrance');
                     classes.push(`entrance-difficulty-${this.entrance.difficulty}`);
 
-                    if (entranceAccessibility[this.entrance.id]?.behindTrackerLogic) {
+                    if (MapNode.accessibility.entrances[this.entrance.id]?.behindTrackerLogic) {
                         classes.push('entrance-behind-tracker')
                     }
                 }
@@ -494,7 +505,7 @@ class MapNode {
         }
     }
 
-    shouldUpdateOverlay(hideDifficulty, vanilla, difficulty, pickingEntrance, activeMap) {
+    shouldUpdateOverlay(hideDifficulty, vanilla, difficulty, pickingEntrance/*, activeMap*/) {
         let wrapper = this.graphic.querySelector('.node-overlay-wrapper');
 
         if (!wrapper) {
@@ -504,7 +515,7 @@ class MapNode {
         let label = wrapper.querySelector('.node-overlay')?.innerHTML ?? '';
         let data = wrapper.dataset;
 
-        return data.checksize != String(checkSize)
+        return data.checksize != String(MapNode.state.checkSize)
                || data.difficulty != difficulty
                || data.hidedifficulty != String(hideDifficulty)
                || data.vanilla != vanilla
@@ -513,12 +524,12 @@ class MapNode {
                || data.pickingentrance != String(pickingEntrance)
                || data.activemap != this.activeMap
                || data.behindKeys != this.behindKeys
-               || data.behindRupees != behindRupees
+               || data.behindRupees != this.behindRupees
                || label != (this.isDungeon() ? this.dungeonName(pickingEntrance)[1]
                                                            : (this.connectorLabel ?? ''))
     }
 
-    updateOverlay(activeMap, pickingEntrance, difficulty, classes) {
+    updateOverlay(activeMap, pickingEntrance, difficulty/*, classes*/) {
         let hideDifficulty = pickingEntrance;
         hideDifficulty |= this.checks.length == 0
                           && this.entrance?.isMapped()
@@ -530,12 +541,12 @@ class MapNode {
                           && (this.entrance.isConnectedToConnector()
                               || !inOutEntrances()
                               || !coupledEntrances());
-        hideDifficulty |= !localSettings.showChecked
+        hideDifficulty |= !MapNode.state.settings.showChecked
                           && difficulty == 'checked';
-        hideDifficulty |= args.randomstartlocation
-                          && !Entrance.isMapped(startHouse);
-        hideDifficulty |= args.randomstartlocation
-                          && this.entrance?.connectedTo() == startHouse
+        hideDifficulty |= MapNode.state.args.randomstartlocation
+                          && !Entrance.isMapped(MapNode.state.startHouse);
+        hideDifficulty |= MapNode.state.args.randomstartlocation
+                          && this.entrance?.connectedTo() == MapNode.state.startHouse
                           && this.difficulty == 'checked';
         hideDifficulty |= this.boss != null;
 
@@ -547,7 +558,7 @@ class MapNode {
 
         let overlay = createElement('div', {
             class: 'node-overlay-wrapper',
-            'data-checkSize': checkSize,
+            'data-checkSize': MapNode.state.checkSize,
             'data-difficulty': difficulty,
             'data-hideDifficulty': hideDifficulty,
             'data-vanilla': vanilla,
@@ -560,14 +571,14 @@ class MapNode {
 
         if (!hideDifficulty) {
             let iconWrapper = createElement('div', {
-                class: `icon-wrapper icon-difficulty-${difficulty} check-size-${checkSize} check-vanilla-${vanilla}`,
-                css: `width: ${checkSize}px;
-                      height: ${checkSize}px;`,
+                class: `icon-wrapper icon-difficulty-${difficulty} check-size-${MapNode.state.checkSize} check-vanilla-${vanilla}`,
+                css: `width: ${MapNode.state.checkSize}px;
+                      height: ${MapNode.state.checkSize}px;`,
             });
             let svg = createElement('svg', {
                 class: 'icon',
-                css: `width: ${checkSize}px;
-                      height: ${checkSize}px;`,
+                css: `width: ${MapNode.state.checkSize}px;
+                      height: ${MapNode.state.checkSize}px;`,
             });
             let use = createElement('use', {
                 'xlink:href': `#difficulty-${difficulty}${vanilla}`,
@@ -578,8 +589,8 @@ class MapNode {
             if (this.behindKeys || this.behindRupees || this.behindTrackerLogic) {
                 let hollowSvg = createElement('svg', {
                     class: 'icon hollow',
-                    css: `width: ${checkSize}px;
-                        height: ${checkSize}px;`,
+                    css: `width: ${MapNode.state.checkSize}px;
+                        height: ${MapNode.state.checkSize}px;`,
                 });
                 let hollowUse = createElement('use', {
                     'xlink:href': `#difficulty-${difficulty}-hollow`,
@@ -630,7 +641,7 @@ class MapNode {
             || (this.isDungeon(pickingEntrance)
                 && activeMap == 'overworld')) {
 
-            let shadowSize = 1 / (localSettings.checkSize / checkSize);
+            let shadowSize = 1 / (MapNode.state.settings.checkSize / MapNode.state.checkSize);
             let connectorLabel = this.connectorLabel;
 
             if (!coupledEntrances()) {
@@ -643,7 +654,7 @@ class MapNode {
             let connectorOverlay = createElement('p', {
                 class: "node-overlay",
                 'data-connector-label': connectorLabel,
-                css: `font-size: ${checkSize * 0.72}px;
+                css: `font-size: ${MapNode.state.checkSize * 0.72}px;
                       text-shadow: -${shadowSize}px -${shadowSize}px 0 black,  
                                     ${shadowSize}px -${shadowSize}px 0 black,
                                     -${shadowSize}px  ${shadowSize}px 0 black,
@@ -679,12 +690,12 @@ class MapNode {
 
     createGraphic() {
         let coords = MapNode.coordsFromId(this.id());
-        let size = Number(checkSize);
+        let size = Number(MapNode.state.checkSize);
         let x = coords.x;
         let y = coords.y;
 
         if (this.boss) {
-            let extra = checkSize * 0.5;
+            let extra = MapNode.state.checkSize * 0.5;
             size += extra;
             x -= extra / 2;
             y -= extra / 2;
@@ -725,7 +736,8 @@ class MapNode {
         $(this.graphic).on('mouseenter', (e) => {
             checkGraphicMouseEnter(e.currentTarget);
 
-            vueNodeTooltip(nodes[this.id()], e);
+            MapNode.tip.tooltip(this, e);
+            // vueNodeTooltip(nodes[this.id()], e);
         });
         $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);
@@ -735,38 +747,38 @@ class MapNode {
     entranceOptions() {
         let options = null;
 
-        if (args.entranceshuffle == 'none'
-            && args.dungeonshuffle
+        if (MapNode.state.args.entranceshuffle == 'none'
+            && MapNode.state.args.dungeonshuffle
             && this.entrance.isDungeon()) {
 
-            options = randomizedEntrances.filter(x => Entrance.isDungeon(x)
+            options = MapNode.state.randomizedEntrances.filter(x => Entrance.isDungeon(x)
                 && !Entrance.isFound(x)
                 && !Entrance.isInside(x))
-                .map(x => [x, entranceDict[x].name]);
+                .map(x => [x, MapNode.state.entranceDict[x].name]);
             options = sortByKey(options, x => [x[0]])
         }
-        else if (args.entranceshuffle != 'none'
+        else if (MapNode.state.args.entranceshuffle != 'none'
                  && this.entrance.type != 'stairs'
                  && coupledEntrances()
                  && inOutEntrances()
                  && (this.entrance.type != "connector"
-                     || args.entranceshuffle == 'mixed')
+                     || MapNode.state.args.entranceshuffle == 'mixed')
                  && !this.entrance.isMapped()) {
 
             options = Entrance.validConnections(this.entrance.id, "simple");
             options = sortByKey(options, x => [x[1]]);
         }
 
-        return options?.map(x => entranceDict[x[0]]);
+        return options?.map(x => MapNode.state.entranceDict[x[0]]);
     }
 
     usesConnectorDialog() {
         return coupledEntrances() && inOutEntrances()
-            && (this.entrance.type == "connector" || args.entranceshuffle == 'mixed');
+            && (this.entrance.type == "connector" || MapNode.state.args.entranceshuffle == 'mixed');
     }
 
     usesAdvancedEr() {
-        return args.entranceshuffle != 'none'
+        return MapNode.state.args.entranceshuffle != 'none'
             && this.entrance.type != 'stairs'
             && advancedER();
     }
@@ -786,5 +798,13 @@ class MapNode {
             x: Number(chunks[0]),
             y: Number(chunks[1])
         };
+    }
+
+    static init() {
+        if (!MapNode.state) {
+            MapNode.state = useStateStore();
+            MapNode.tip = useNodeTooltipStore();
+            MapNode.accessibility = useAccessibilityStore();
+        }
     }
 }

@@ -46,7 +46,7 @@ function handleBroadcastMessage(msg) {
 }
 
 function receiveItems(data) {
-    inventory = data;
+    copyToObject(data, inventory);
 
     saveInventory();
     refreshImages();

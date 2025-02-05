@@ -109,7 +109,7 @@ function removeVanillaConnectors(save=true) {
         }
     }
 
-    connections = connections.filter(x => !x.vanilla);
+    copyToArray(connections.filter(x => !x.vanilla), connections);
 
     if (save) {
         saveEntrances();
@@ -567,4 +567,26 @@ function startIsSet() {
 
 function getInsideOutEntrance(id) {
     return Entrance.getInsideOut(id);
+}
+
+function clearObject(obj) {
+    Object.keys(obj).forEach(key => delete obj[key]);
+}
+
+function copyToObject(source, dest) {
+    clearObject(dest);
+
+    if (source) {
+        Object.keys(source).forEach(key => dest[key] = source[key]);
+    }
+}
+
+function clearArray(arr) {
+    arr.length = 0;
+}
+
+function copyToArray(source, dest) {
+    clearArray(dest);
+
+    source.map(dest.push(source));
 }

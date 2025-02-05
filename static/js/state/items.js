@@ -1,7 +1,7 @@
 "use strict"
 
 function resetInventory() {
-    inventory = {};
+    clearObject(inventory);
     for (const item in maxInventory) {
         inventory[item] = 0;
     }
@@ -24,7 +24,7 @@ function saveInventory() {
 }
 
 function loadInventory() {
-    inventory = JSON.parse(getLocalStorage("inventory"));
+    copyToObject(JSON.parse(getLocalStorage("inventory")), inventory);
 
     if (inventory == null) {
         resetInventory();
@@ -79,6 +79,7 @@ function addItem(item, qty, wrap=true, refresh=true, player='', doLinked=true) {
 
         if (item.startsWith('UNUSED_KEY') && inventory[item] == 0) {
             stickyBehindKeys = true;
+            vueApp.updateStickyBehindKeys(stickyBehindKeys);
         }
 
         if (refresh) {

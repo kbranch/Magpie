@@ -7,6 +7,7 @@ import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
 import MapLegend from '@/components/Map/MapLegend.vue';
 import HerosPath from './HerosPath.vue';
+import MapIcons from './MapIcons.vue';
 
 const tip = useTextTooltipStore();
 const state = useStateStore();
@@ -83,6 +84,7 @@ function imageLoadedEvent() {
             <div class="map-wrapper">
                 <img ref="mapImage" class="map" :data-mapname="activeTab" :src="mapPaths[activeTab]" width="2592" height="2079"
                     @click="closeAllTooltips();" @contextmenu.prevent="" @load="imageLoadedEvent" draggable="false">
+                <MapIcons />
             </div>
         </div>
         <Transition>

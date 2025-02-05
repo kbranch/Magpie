@@ -1,11 +1,11 @@
 import { saveHints, saveSettingsToStorage } from "@/moduleWrappers";
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 export const useStateStore = defineStore('state', () => {
     const args = ref({});
     const settings = ref({});
-    const checkedChecks = ref(null);
+    const checkedChecks = ref(new Set());
     const checkContents = ref({});
     const logics = ref([]);
     const checkAccessibility = ref([]);
@@ -23,8 +23,28 @@ export const useStateStore = defineStore('state', () => {
     const connectionSource = ref(null);
     const connectionType = ref(null);
     const tipAdmin = ref(false);
+    const connections = ref([]);
+    const entranceMap = ref({});
+    const reverseEntranceMap = ref({});
+    const startHouse = ref('start_house:inside');
+    const randomizedEntrances = ref([]);
+    const startLocations = ref([]);
+    const stickyBehindKeys = ref(false);
+    const inventory = ref([]);
+    const hoveredItems = ref([]);
+
+    const checkSize = computed(() => settings.value.checkSize / window.visualViewport.scale);
 
     let hintCallbacks = [];
+
+    window.connections = connections.value;
+    window.entranceMap = entranceMap.value;
+    window.reverseEntranceMap = entranceMap.value;
+    window.startHouse = startHouse.value;
+    window.randomizedEntrances = randomizedEntrances.value;
+    window.startLocations = startLocations.value;
+    window.inventory = inventory.value;
+    window.hoveredItems = hoveredItems.value;
 
     watch(hints,
         () => {
@@ -54,6 +74,15 @@ export const useStateStore = defineStore('state', () => {
         },
         { deep: true },
     )
+
+    watch(connections, () => window.connections = connections.value, { deep: false });
+    watch(entranceMap, () => window.entranceMap = entranceMap.value, { deep: false });
+    watch(reverseEntranceMap, () => window.reverseEntranceMap = reverseEntranceMap.value, { deep: false });
+    watch(startHouse, () => window.startHouse = startHouse.value, { deep: false });
+    watch(randomizedEntrances, () => window.randomizedEntrances = randomizedEntrances.value, { deep: false });
+    watch(startLocations, () => window.startLocations = startLocations.value, { deep: false });
+    watch(inventory, () => window.inventory = inventory.value, { deep: false });
+    watch(hoveredItems, () => window.hoveredItems = hoveredItems.value, { deep: false });
 
     function removeHint(hint) {
         hints.value = hints.value.filter(x => x != hint);
@@ -89,6 +118,15 @@ export const useStateStore = defineStore('state', () => {
         connectionType,
         connectionSource,
         tipAdmin,
+        connections,
+        entranceMap,
+        reverseEntranceMap,
+        startHouse,
+        randomizedEntrances,
+        startLocations,
+        stickyBehindKeys,
+        checkSize,
+        hoveredItems,
         removeHint,
         onHintUpdate,
         offHintUpdate,

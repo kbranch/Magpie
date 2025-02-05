@@ -1,4 +1,8 @@
-class Connection {
+import { useStateStore } from "@/stores/stateStore";
+import { Entrance } from "./entrance";
+import { connectors, coupledEntrances, entranceDict, inOutEntrances } from "@/moduleWrappers";
+
+export class Connection {
     constructor(exteriors, connector, label=null, vanilla=false, map=null, simple=false) {
         if (!exteriors) {
             return;
@@ -28,7 +32,7 @@ class Connection {
             //     }
             // }
 
-            let labelSet = new Set(connections.filter(x => x.map == this.map 
+            let labelSet = new Set(Connection.state.connections.filter(x => x.map == this.map 
                                                       || (['overworld', 'underworld'].includes(x.map)
                                                           && ['overworld', 'underworld'].includes(this.map)))
                                               .map(x => x.label));
@@ -58,16 +62,16 @@ class Connection {
         let newEntrances = [];
         let head = this.entrances[0];
         let i = 0;
-        while (head in reverseEntranceMap && i < this.entrances.length) {
-            head = reverseEntranceMap[head];
+        while (head in Connection.state.reverseEntranceMap && i < this.entrances.length) {
+            head = Connection.state.reverseEntranceMap[head];
             i++;
         }
 
         i = 0;
-        while (head in entranceMap && i < this.entrances.length - 1) {
+        while (head in Connection.state.entranceMap && i < this.entrances.length - 1) {
             newEntrances.push(head);
 
-            head = entranceMap[head];
+            head = Connection.state.entranceMap[head];
             i++;
         }
 
@@ -113,13 +117,13 @@ class Connection {
             return;
         }
 
-        let connection = connections.filter(x => x.containsEntrance(entranceId));
+        let connection = Connection.state.connections.filter(x => x.containsEntrance(entranceId));
         if (connection.length > 0) {
             connection = connection[0];
 
             if (!coupledEntrances()) {
                 if (connection.entrances.length <= 2) {
-                    connections = connections.filter(x => x != connection);
+                    Connection.state.connections = Connection.state.connections.filter(x => x != connection);
                     return;
                 }
 
@@ -138,7 +142,7 @@ class Connection {
                 connection.entrances = connection.entrances.filter(x => !newChain.includes(x));
 
                 if (connection.entrances.length <= 1) {
-                    connections = connections.filter(x => x != connection);
+                    Connection.state.connections = Connection.state.connections.filter(x => x != connection);
                 }
 
                 if (newChain.length > 1) {
@@ -146,14 +150,14 @@ class Connection {
                 }
             }
             else if(!inOutEntrances()) {
-                connections = connections.filter(x => x != connection);
+                Connection.state.connections = Connection.state.connections.filter(x => x != connection);
             }
             else {
                 if (connection.entrances.length > 4) {
-                    connection.entrances = connection.entrances.filter(x => x != entranceId && x != entranceMap[entranceId]);
+                    connection.entrances = connection.entrances.filter(x => x != entranceId && x != Connection.state.entranceMap[entranceId]);
                 }
                 else {
-                    connections = connections.filter(x => x != connection);
+                    Connection.state.connections = Connection.state.connections.filter(x => x != connection);
                 }
             }
         }
@@ -167,11 +171,11 @@ class Connection {
     }
 
     static existingConnection(connector) {
-        return connections.filter(x => x.connector == connector)[0] || null;
+        return Connection.state.connections.filter(x => x.connector == connector)[0] || null;
     }
 
     static existingConnectionByEntrance(entranceId) {
-        return connections.filter(x => x.entrances.includes(entranceId))[0] || null;
+        return Connection.state.connections.filter(x => x.entrances.includes(entranceId))[0] || null;
     }
 
     static createConnection(entrances, vanilla=false, map=null, simple=false) {
@@ -186,14 +190,14 @@ class Connection {
                 connection.entrances.push(newEntrance);
 
                 if (coupledEntrances()) {
-                    connection.entrances.push(entranceMap[newEntrance]);
+                    connection.entrances.push(Connection.state.entranceMap[newEntrance]);
                 }
 
                 return;
             }
         }
 
-        connections.push(new Connection(entrances, connector, null, vanilla, map, simple));
+        Connection.state.connections.push(new Connection(entrances, connector, null, vanilla, map, simple));
     }
 
     static advancedErConnection(entrances, map) {
@@ -210,7 +214,7 @@ class Connection {
                 }
 
                 if (sourceChain != destChain) {
-                    connections = connections.filter(x => x !== destChain);
+                    Connection.state.connections = Connection.state.connections.filter(x => x !== destChain);
                 }
             }
             else if (sourceChain) {
@@ -263,5 +267,11 @@ class Connection {
         let otherInsideData = entranceDict[otherId];
 
         return Entrance.isInside(connectedTo) && (otherInsideData?.oneWayBlocked ?? false);
+    }
+
+    static init() {
+        if (!Connection.state) {
+            Connection.state = useStateStore();
+        }
     }
 }

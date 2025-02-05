@@ -68,7 +68,7 @@ function createNodes(map, mapName) {
     createBossNodes(scaling, mapName);
     createLogicHintNodes(scaling, mapName);
 
-    let checks = checkAccessibility.filter(x => x.shouldDraw());
+    let checks = checkAccessibility?.filter(x => x.shouldDraw()) ?? [];
     let unclaimedChecks = {};
 
     for (const check of checks) {
@@ -288,6 +288,7 @@ function drawNodes(mapName, animate=true, updateNdi=true) {
 
     if (['overworld', 'underworld'].includes(mapName)) {
         stickyBehindKeys = false;
+        vueApp.updateStickyBehindKeys(stickyBehindKeys);
     }
 
     $('.check-graphic.animate__fadeOut').remove();
