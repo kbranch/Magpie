@@ -265,7 +265,7 @@ function distributeChecks(unclaimedChecks) {
 }
 
 function drawNodes(mapName, animate=true, updateNdi=true) {
-    if (!randomizedEntrances) {
+    if (!randomizedEntrances || !localSettings) {
         return;
     }
 

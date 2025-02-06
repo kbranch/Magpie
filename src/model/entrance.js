@@ -1,4 +1,4 @@
-import { connectors, connectorsMixed, coupledEntrances, inOutEntrances, vanillaConnectors } from "@/moduleWrappers";
+import { connectors, connectorsMixed, coupledEntrances, entranceDict, inOutEntrances, vanillaConnectors } from "@/moduleWrappers";
 import { useStateStore } from "@/stores/stateStore";
 import { Connection } from "./connection";
 import { useAccessibilityStore } from "@/stores/accessibilityStore";
@@ -6,7 +6,7 @@ import { useAccessibilityStore } from "@/stores/accessibilityStore";
 export class Entrance {
     constructor(id) {
         this.id = id;
-        this.metadata = Entrance.state.entranceDict[id];
+        this.metadata = entranceDict[id];
         this.type = this.metadata.type;
         this.difficulty = Entrance.accessibility.entrances[id]?.difficulty ?? -1;
         this.behindTrackerLogic = Entrance.accessibility.entrances[id]?.behindTrackerLogic ?? false;
@@ -28,7 +28,7 @@ export class Entrance {
     connectedToMetadata() {
         let to = this.connectedTo();
 
-        return to ? Entrance.state.entranceDict[this.connectedTo()] : null;
+        return to ? entranceDict[this.connectedTo()] : null;
     }
 
     connectedToDummy() {
@@ -161,10 +161,10 @@ export class Entrance {
             return null;
         }
 
-        let connection = Entrance.state.entranceDict[this.connectedFrom()];
+        let connection = entranceDict[this.connectedFrom()];
 
         if (inOutEntrances()) {
-            connection = Entrance.state.entranceDict[Entrance.connectedFrom(Entrance.getInside(this.id))];
+            connection = entranceDict[Entrance.connectedFrom(Entrance.getInside(this.id))];
         }
 
         return connection;
@@ -180,23 +180,23 @@ export class Entrance {
         let requireSimple = type == "simple" || (!connectorsMixed() && !Entrance.isConnector(sourceId));
         let options = [];
         if (requireConnector) {
-            options = Entrance.state.randomizedEntrances.filter(x => Entrance.state.entranceDict[x].type == 'connector'
+            options = Entrance.state.randomizedEntrances.filter(x => entranceDict[x].type == 'connector'
                                                       && (!Entrance.isConnected(x)
                                                           || Connection.isIncomplete({ exterior: x }))
                                                       && Entrance.connectedTo(x) != 'landfill'
                                                       && Entrance.isInside(x) == isUnderworld
                                                       && x != sourceId)
-                                         .map(x => [x, Entrance.state.entranceDict[x].name]);
+                                         .map(x => [x, entranceDict[x].name]);
         }
         else {
-            options = Entrance.state.randomizedEntrances.filter(x => (!requireSimple || Entrance.state.entranceDict[x].type != 'connector')
-                                                      && ((!requireSimple && Entrance.state.args.shufflejunk) || Entrance.state.entranceDict[x].type != 'dummy')
+            options = Entrance.state.randomizedEntrances.filter(x => (!requireSimple || entranceDict[x].type != 'connector')
+                                                      && ((!requireSimple && Entrance.state.args.shufflejunk) || entranceDict[x].type != 'dummy')
                                                       && (Entrance.state.args.goal.includes('bingo')
                                                           || Entrance.state.args.shufflejunk
-                                                          || Entrance.state.entranceDict[x].type != 'bingo')
+                                                          || entranceDict[x].type != 'bingo')
                                                       && (Entrance.state.args.tradequest
                                                           || Entrance.state.args.shufflejunk
-                                                          || Entrance.state.entranceDict[x].type != 'trade')
+                                                          || entranceDict[x].type != 'trade')
                                                       && Entrance.isInside(x) == isUnderworld
                                                       && ((coupledEntrances()
                                                            && ((requireSimple && ((Entrance.isInside(sourceId) && !Entrance.isMapped(x))
@@ -208,9 +208,9 @@ export class Entrance {
                                                               && !Entrance.isFound(x)
                                                               /*&& !Entrance.isMapped(x)*/))
                                                 )
-                                         .map(x => [x, Entrance.state.entranceDict[x].name]);
+                                         .map(x => [x, entranceDict[x].name]);
 
-            options.push(['bk_shop', Entrance.state.entranceDict['bk_shop'].name])
+            options.push(['bk_shop', entranceDict['bk_shop'].name])
         }
 
         return options;
@@ -265,11 +265,11 @@ export class Entrance {
     }
 
     static isConnector(id) {
-        return ['connector', 'stairs'].includes(Entrance.state.entranceDict[Entrance.getOutside(id)].type);
+        return ['connector', 'stairs'].includes(entranceDict[Entrance.getOutside(id)].type);
     }
 
     static isStairs(id) {
-        return Entrance.state.entranceDict[Entrance.getOutside(id)].type == 'stairs';
+        return entranceDict[Entrance.getOutside(id)].type == 'stairs';
     }
 
     static isConnected(id) {
@@ -302,7 +302,7 @@ export class Entrance {
 
     static connectedToDummy(id) {
         let entrance = Entrance.connectedTo(id);
-        return Entrance.state.entranceDict[entrance].type == 'dummy';
+        return entranceDict[entrance].type == 'dummy';
     }
 
     static isVanilla(id) {

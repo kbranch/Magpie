@@ -171,7 +171,7 @@ export class Connection {
     }
 
     static existingConnection(connector) {
-        return Connection.state.connections.filter(x => x.connector == connector)[0] || null;
+        return Connection.state.connections.filter(x => x.connector.id == connector?.id)[0] || null;
     }
 
     static existingConnectionByEntrance(entranceId) {

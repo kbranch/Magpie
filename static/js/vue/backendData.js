@@ -66,7 +66,8 @@ function refreshCheckList() {
     }
 
     rateLimit(() => {
-        let tempInventory = inventory.map(x => x);
+        let tempInventory = {}
+        Object.keys(inventory).forEach(k => tempInventory[k] = inventory[k]);
 
         // Kiki is logically important since they open the bridge
         if (Check.isChecked('0x07B-Trade')) {
@@ -115,7 +116,7 @@ function refreshCheckList() {
                     }
                 }
 
-                copyToObject(response.randomizedEntrances, randomizedEntrances);
+                copyToArray(response.randomizedEntrances, randomizedEntrances);
                 copyToObject(response.startLocations, startLocations);
                 vueApp.updateAccessibility(response.accessibility);
 

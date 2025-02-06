@@ -30,7 +30,7 @@ export const useStateStore = defineStore('state', () => {
     const randomizedEntrances = ref([]);
     const startLocations = ref([]);
     const stickyBehindKeys = ref(false);
-    const inventory = ref([]);
+    const inventory = ref({});
     const hoveredItems = ref([]);
 
     const checkSize = computed(() => settings.value.checkSize / window.visualViewport.scale);
@@ -127,6 +127,7 @@ export const useStateStore = defineStore('state', () => {
         stickyBehindKeys,
         checkSize,
         hoveredItems,
+        inventory,
         removeHint,
         onHintUpdate,
         offHintUpdate,

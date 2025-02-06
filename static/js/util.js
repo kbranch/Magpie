@@ -588,5 +588,5 @@ function clearArray(arr) {
 function copyToArray(source, dest) {
     clearArray(dest);
 
-    source.map(dest.push(source));
+    source.map(x => dest.push(x));
 }
