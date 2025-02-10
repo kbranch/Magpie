@@ -179,6 +179,10 @@ const textColor = computed(() => state.settings.textColor);
     padding: 0;
 }
 
+.md-editor-preview {
+    word-break: unset !important;
+}
+
 #bodyPreview.md-editor, #attributionPreview.md-editor, #titleAttribution.md-editor {
     background-color: initial;
 }
