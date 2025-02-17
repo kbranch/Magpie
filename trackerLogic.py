@@ -326,6 +326,69 @@ def buildLogic(args, worldSetup, requirements=None):
         req = requirements.__dict__[name]
 
         requirements.names[req] = name
+    
+    for enemy, req in requirements.enemy_requirements.items():
+        newReq = req
+        if type(req) == type(True):
+            if req:
+                newReq = AND(req, 'TRUE')
+            else:
+                newReq = OR(req, 'FALSE')
+        if type(req) == type(''):
+            newReq = AND(req)
+        else:
+            newReq = OR(req)
+
+        requirements.enemy_requirements[enemy] = newReq
+
+        requirements.names[newReq] = f'kill_{enemy.lower()}'
+    
+    for miniboss, req in requirements.miniboss_requirements.items():
+        newReq = req
+        if type(req) == type(True):
+            if req:
+                newReq = AND(req, 'TRUE')
+            else:
+                newReq = OR(req, 'FALSE')
+        if type(req) == type(''):
+            newReq = AND(req)
+        else:
+            newReq = OR(req)
+
+        requirements.miniboss_requirements[miniboss] = newReq
+
+        requirements.names[newReq] = f'kill_{miniboss.lower()}'
+    
+    bossNames = {
+        0: "moldorm",
+        1: "genie",
+        2: "slime_eye",
+        3: "angler_fish",
+        4: "slime_eel",
+        5: "facade",
+        6: "evil_eagle",
+        7: "hothead",
+        8: "hardhit_beetle",
+    }
+    for boss, req in requirements.boss_requirements.items():
+        newReq = req
+        if type(req) == type(True):
+            if req:
+                newReq = AND(req, 'TRUE')
+            else:
+                newReq = OR(req, 'FALSE')
+        if type(req) == type(''):
+            newReq = AND(req)
+        else:
+            newReq = OR(req)
+
+        requirements.boss_requirements[boss] = newReq
+
+        name = boss
+        if boss in bossNames:
+            name = bossNames[boss]
+
+        requirements.names[newReq] = f'kill_{name.lower()}'
 
     log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
