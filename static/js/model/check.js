@@ -34,6 +34,7 @@ class Check {
         if (this.behindKeys 
             && localSettings.enableAutotracking
             && localSettings.autotrackItems
+            && args.shuffle_small
             && this.isDungeon()) {
             let key = `KEY${this.dungeonNumber()}`
             let unusedKey = `UNUSED_KEY${this.dungeonNumber()}`
