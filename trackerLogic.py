@@ -190,7 +190,7 @@ def applyExtraLogic(location):
 def applyTrackerLogic(log):
     # Bomb as bush breaker
     log.requirements_settings.bush._OR__items.append(BOMB)
-    log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
+    log.requirements_settings.enemy_requirements["WIZROBE"]._OR__items.append(BOW)
 
     # We're in good boy mode, these actually work with SWORD 2
     if SWORD not in log.requirements_settings.bush._OR__items:
