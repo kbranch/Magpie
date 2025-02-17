@@ -411,7 +411,7 @@ def buildLogic(args, worldSetup, requirements=None):
 
     if args.ap_logic and not args.prerelease:
         # Always allow bow for killing wizrobes
-        log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
+        # log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
 
         # Elephant statue is always there
         if bird_cave in locs and bird_key in locs:
