@@ -41,10 +41,10 @@ const requirement = computed(() => {
 });
 
 const reqChunks = computed(() => {
-    const itemRegex = /([^/A-Z_1-8]|^)('?[A-Z_1-8]{3,}'?)/g;
-    const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
+    const itemRegex = /([^/A-Z_0-8]|^)('?[A-Z_0-8]{3,}'?)/g;
+    const quoteRegex = /\/'([A-Z_0-8]{2,})'_1\.png/g;
     const tooltipRegex = /(\w+)\(([^)]+)\)/g;
-    const wrapperRegex = /\((?:and|or)\[('[A-Z_1-8]{3,}')\]\)/g;
+    const wrapperRegex = /\((?:and|or)\[('[A-Z_0-8]{3,}')\]\)/g;
 
     let req = requirement.value
         .replaceAll('\\', '')
