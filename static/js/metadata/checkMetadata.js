@@ -2365,6 +2365,11 @@ let vanillaCoordDict = {
              "y":32
           },
           {
+            "map":"d7",
+            "x":1088,
+            "y":544
+         },
+          {
              "map":"vanillaOverworld",
              "x":2348,
              "y":32

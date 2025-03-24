@@ -65,9 +65,9 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     if allEntrances:
         entranceAccessibility = getEntranceAccessibility(allEntrances, logics['stock'], inventory.copy())
 
-    graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
-
     getCheckTrackerAccessibility(logics['tracker'], inventory, keyInventory, checkAccessibility)
+
+    graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
 
     if allEntrances:
         getEntranceTrackerAccessibility(logics['tracker'], inventory.copy(), entranceAccessibility)
@@ -193,6 +193,9 @@ def getGraphAccessibility(logics, inventory):
                     
                     if not matchingConnections:
                         newConnection['oneWay'] = True
+
+                    if hasattr(logic, 'lastInventory'):
+                        inventory = logic.lastInventory
                     
                     if testRequirement(requirement, inventory):
                         newConnection['met'] = True
