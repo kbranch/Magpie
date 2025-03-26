@@ -165,7 +165,8 @@ def getGraphAccessibility(logics, inventory):
                 accLoc['diff'] = i
 
             for connection in loc.simple_connections + loc.gated_connections:
-                toName = connection[0].friendlyName()
+                to = connection[0]
+                toName = to.friendlyName()
                 requirement = connection[1]
                 id = None if len(connection) < 3 else connection[2]
                 fullReqName = str(requirement)
@@ -175,7 +176,6 @@ def getGraphAccessibility(logics, inventory):
                     shortReqName = requirement.shortName(logic)
 
                 if connId not in accLoc['connections']:
-                    to = connection[0]
                     matchingConnections = [x for x in to.simple_connections + to.gated_connections if str(x[1]) == fullReqName]
 
                     newConnection = {
