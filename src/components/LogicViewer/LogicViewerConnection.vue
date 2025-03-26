@@ -12,7 +12,11 @@ const logic = useLogicViewerStore();
 
 const tr = ref(null);
 
+const thisEnd = computed(() => connection.value?.badWay ? connection.value.to: connection.value.from);
 const otherEnd = computed(() => connection.value?.badWay ? connection.value.from: connection.value.to);
+
+const thisName = computed(() => logic.getLogicNodeName(thisEnd.value));
+const otherName = computed(() => logic.getLogicNodeName(otherEnd.value));
 
 onMounted(initTooltips);
 onUpdated(initTooltips);
@@ -42,9 +46,13 @@ function initTooltips() {
     </td>
     <td>
         <div class="cell-wrapper">
-            {{ logic.getLogicNodeName(otherEnd) }}
-            <img v-if="connection.badWay" class="logic-item invert ps-2" src="/images/do-not-enter.svg"
-                @mouseover="tip.tooltip('One-way', $event)">
+            <img v-if="connection.badWay" class="logic-item invert pe-2" src="/images/arrow-return-left.svg"
+                @mouseover="tip.tooltip(`From '${otherName}' to '${thisName}'`, $event)">
+            <img v-else-if="connection.oneWay" class="logic-item invert pe-2" src="/images/arrow-right.svg"
+                @mouseover="tip.tooltip(`From '${thisName}' to '${otherName}'`, $event)">
+            <img v-else class="logic-item invert pe-2" src="/images/arrow-left-right.svg"
+                @mouseover="tip.tooltip('Both ways', $event)">
+            {{ otherName }}
         </div>
     </td>
     <td>
