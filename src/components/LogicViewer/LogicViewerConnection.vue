@@ -45,14 +45,16 @@ function initTooltips() {
         </div>
     </td>
     <td>
-        <div class="cell-wrapper">
+        <div class="cell-wrapper check-column">
             <img v-if="connection.badWay" class="logic-item invert pe-2" src="/images/arrow-return-left.svg"
                 @mouseover="tip.tooltip(`From '${otherName}' to '${thisName}'`, $event)">
             <img v-else-if="connection.oneWay" class="logic-item invert pe-2" src="/images/arrow-right.svg"
                 @mouseover="tip.tooltip(`From '${thisName}' to '${otherName}'`, $event)">
             <img v-else class="logic-item invert pe-2" src="/images/arrow-left-right.svg"
                 @mouseover="tip.tooltip('Both ways', $event)">
-            {{ otherName }}
+            <span class="check-name">
+                {{ otherName }}
+            </span>
         </div>
     </td>
     <td>
@@ -114,6 +116,14 @@ td {
     width: 100%;
     height: 100%;
     flex-wrap: wrap;
+}
+
+.check-column {
+    flex-wrap: nowrap;
+}
+
+.check-name {
+    white-space: normal;
 }
 
 .center-cell {
