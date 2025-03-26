@@ -46,7 +46,7 @@ function initTooltips() {
     </td>
     <td>
         <div class="cell-wrapper check-column">
-            <img v-if="connection.badWay" class="logic-item invert pe-2" src="/images/arrow-return-left.svg"
+            <img v-if="connection.badWay" class="logic-item invert pe-2" src="/images/do-not-enter.svg"
                 @mouseover="tip.tooltip(`From '${otherName}' to '${thisName}'`, $event)">
             <img v-else-if="connection.oneWay" class="logic-item invert pe-2" src="/images/arrow-right.svg"
                 @mouseover="tip.tooltip(`From '${thisName}' to '${otherName}'`, $event)">
