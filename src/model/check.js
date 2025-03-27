@@ -38,6 +38,7 @@ export class Check {
         if (this.behindKeys 
             && Check.state.settings.enableAutotracking
             && Check.state.settings.autotrackItems
+            && Check.state.args.shuffle_small
             && this.isDungeon()) {
             let key = `KEY${this.dungeonNumber()}`
             let unusedKey = `UNUSED_KEY${this.dungeonNumber()}`

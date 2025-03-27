@@ -267,7 +267,7 @@ def visitLogic(logic, inventory):
     e = explorer.Explorer()
 
     for item in inventory:
-        if item == 'id':
+        if item in {'id', 'RUPEES_USED'}:
             continue
 
         count = inventory[item]
@@ -293,6 +293,7 @@ def loadChecks(logic, inventory, leaveInstruments=False):
             del inventory[instrument]
 
     e = visitLogic(logic, inventory)
+    logic.lastInventory = e._Explorer__inventory
 
     if not leaveInstruments:
         # Do some gymnastics to avoid vanilla instruments getting double counted

@@ -190,7 +190,7 @@ def applyExtraLogic(location):
 def applyTrackerLogic(log):
     # Bomb as bush breaker
     log.requirements_settings.bush._OR__items.append(BOMB)
-    log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
+    log.requirements_settings.enemy_requirements["WIZROBE"]._OR__items.append(BOW)
 
     # We're in good boy mode, these actually work with SWORD 2
     if SWORD not in log.requirements_settings.bush._OR__items:
@@ -326,6 +326,69 @@ def buildLogic(args, worldSetup, requirements=None):
         req = requirements.__dict__[name]
 
         requirements.names[req] = name
+    
+    for enemy, req in requirements.enemy_requirements.items():
+        newReq = req
+        if type(req) == type(True):
+            if req:
+                newReq = AND(req, 'TRUE')
+            else:
+                newReq = OR(req, 'FALSE')
+        if type(req) == type(''):
+            newReq = AND(req)
+        else:
+            newReq = OR(req)
+
+        requirements.enemy_requirements[enemy] = newReq
+
+        requirements.names[newReq] = f'kill_{enemy.lower()}'
+    
+    for miniboss, req in requirements.miniboss_requirements.items():
+        newReq = req
+        if type(req) == type(True):
+            if req:
+                newReq = AND(req, 'TRUE')
+            else:
+                newReq = OR(req, 'FALSE')
+        if type(req) == type(''):
+            newReq = AND(req)
+        else:
+            newReq = OR(req)
+
+        requirements.miniboss_requirements[miniboss] = newReq
+
+        requirements.names[newReq] = f'kill_{miniboss.lower()}'
+    
+    bossNames = {
+        0: "moldorm",
+        1: "genie",
+        2: "slime_eye",
+        3: "angler_fish",
+        4: "slime_eel",
+        5: "facade",
+        6: "evil_eagle",
+        7: "hothead",
+        8: "hardhit_beetle",
+    }
+    for boss, req in requirements.boss_requirements.items():
+        newReq = req
+        if type(req) == type(True):
+            if req:
+                newReq = AND(req, 'TRUE')
+            else:
+                newReq = OR(req, 'FALSE')
+        if type(req) == type(''):
+            newReq = AND(req)
+        else:
+            newReq = OR(req)
+
+        requirements.boss_requirements[boss] = newReq
+
+        name = boss
+        if boss in bossNames:
+            name = bossNames[boss]
+
+        requirements.names[newReq] = f'kill_{name.lower()}'
 
     log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
@@ -348,7 +411,7 @@ def buildLogic(args, worldSetup, requirements=None):
 
     if args.ap_logic and not args.prerelease:
         # Always allow bow for killing wizrobes
-        log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
+        # log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
 
         # Elephant statue is always there
         if bird_cave in locs and bird_key in locs:

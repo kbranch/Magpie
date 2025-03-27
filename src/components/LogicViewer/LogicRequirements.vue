@@ -41,10 +41,11 @@ const requirement = computed(() => {
 });
 
 const reqChunks = computed(() => {
-    const itemRegex = /([^/A-Z_1-8]|^)('?[A-Z_1-8]{3,}'?)/g;
-    const quoteRegex = /\/'([A-Z_1-8]{2,})'_1\.png/g;
+    const itemRegex = /([^/A-Z_0-8]|^)('?[A-Z_0-8]{3,}'?)/g;
+    const quoteRegex = /\/'([A-Z_0-8]{2,})'_1\.png/g;
     const tooltipRegex = /(\w+)\(([^)]+)\)/g;
-    const wrapperRegex = /\((?:and|or)\[('[A-Z_1-8]{3,}')\]\)/g;
+    const wrapperRegex = /\((?:and|or)\[('[A-Z_0-8]{3,}')\]\)/g;
+    const killRegex = /kill_([\w_]+)/g
 
     let req = requirement.value
         .replaceAll('\\', '')
@@ -55,7 +56,8 @@ const reqChunks = computed(() => {
         .replace(itemRegex, `$1<img class="logic-item" src="/images/$2_1.png">`)
         .replace(quoteRegex, '/$1_1.png')
         .replaceAll("'", "")
-        .replace(tooltipRegex, '|$1%$2|');
+        .replace(tooltipRegex, '|$1%$2|')
+        .replace(killRegex, `<img class="logic-item" src="/images/$1.png">`);
 
     const chunks = [];
     for (const chunk of req.split('|')) {
@@ -65,7 +67,8 @@ const reqChunks = computed(() => {
             chunks.push({
                 name: halves[0],
                 details: halves[1],
-                isTrick: !nonTricks.includes(halves[0]),
+                isTrick: !nonTricks.includes(halves[0]) && !halves[0].includes('<img'),
+                isEnemy: halves[0].includes('<img'),
             });
         }
         else {
@@ -87,6 +90,9 @@ const reqChunks = computed(() => {
             :data-bs-title="chunk.details">
             {{ chunk.name }}
         </a>
+        <span v-else-if="chunk.isEnemy" v-html="chunk.name" data-bs-toggle='tooltip'
+            data-bs-custom-class="secondary-tooltip" data-bs-html='true' :data-bs-title="chunk.details">
+        </span>
         <span v-else-if="chunk.name" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip"
             data-bs-html='true' :data-bs-title="chunk.details">
             {{ chunk.name }}
