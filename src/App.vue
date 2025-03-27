@@ -109,6 +109,10 @@ function updateStickyBehindKeys(sticky) {
   state.stickyBehindKeys = sticky;
 }
 
+function setErrorMessage(message) {
+  state.errorMessage = message;
+}
+
 defineExpose({
   updateChecked,
   updateCheckContents,
@@ -127,12 +131,19 @@ defineExpose({
   updateEntranceConnection,
   updateStartHouse,
   updateStickyBehindKeys,
+  setErrorMessage,
 });
 </script>
 
 <template>
 <div id="appWrapper" class="magpie-colors">
 <div id="appInner">
+  <div v-if="state.errorMessage" class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+    <strong>Error:</strong>
+    <pre>{{ state.errorMessage }}</pre>
+    <button @click="state.errorMessage = null" type="button" class="btn-close" aria-label="Close"></button>
+  </div>
+
   <RouterView />
 
   <LogicViewer />
