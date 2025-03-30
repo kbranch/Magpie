@@ -282,11 +282,8 @@ function connectToBroadcaster() {
 
         broadcastSocket.onmessage = (event) => handleBroadcastMessage(JSON.parse(event.data));
         broadcastSocket.onerror = (event) => console.log(event);
-        broadcastSocket.onclose = (event) => {
-            currentRoom = null;
-            currentX = null;
-            currentY = null;
-
+        broadcastSocket.onclose = () => {
+            setCurrentLocation(null, null, null);
             drawLocation();
         };
     }

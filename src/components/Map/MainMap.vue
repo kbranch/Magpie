@@ -8,9 +8,11 @@ import { useStateStore } from '@/stores/stateStore';
 import MapLegend from '@/components/Map/MapLegend.vue';
 import HerosPath from './HerosPath.vue';
 import MapIcons from './MapIcons.vue';
+import { useLocationStore } from '@/stores/locationStore';
 
 const tip = useTextTooltipStore();
 const state = useStateStore();
+const loc = useLocationStore();
 const props = defineProps(['broadcastMode']);
 
 const maps = ['overworld', 'underworld', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd0'];
@@ -31,13 +33,12 @@ const mapTooltips = {
 const mapImage = ref(null);
 const imageLoaded = ref(false);
 const mapContainer = ref(null);
-const activeTab = ref('overworld');
 const mapPaths = computed(() => maps.reduce((acc, x) => {
     acc[x] = getMapPath(x);
     return acc;
 }, {}));
 
-watch(activeTab, (newTab) => {
+watch(() => loc.activeMap, (newTab) => {
     removeNodes();
     closeAllTooltips(false);
 
@@ -46,7 +47,11 @@ watch(activeTab, (newTab) => {
     if (props.broadcastMode == 'send' && win.broadcastMapTab) {
         win.broadcastMapTab(newTab);
     }
-})
+});
+
+watch(mapContainer, (value) => {
+    loc.mapContainer = value;
+});
 
 function getMapPath(map) {
     let mapPath = state.settings.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
@@ -59,15 +64,15 @@ function getMapPath(map) {
 
 function imageLoadedEvent() {
     imageLoaded.value = true;
-    drawNodes(activeTab.value, false);
+    drawNodes(loc.activeMap, false);
 }
 
 </script>
 
 <template>
 <ul class="nav" id="mapTabs">
-    <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == activeTab }]" :data-mapname="map" @mouseenter="tip.tooltip(mapTooltips[map], $event)">
-        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="activeTab = map">
+    <li v-for="map in maps" :key="map" :class="['tab-button', { active: map == loc.activeMap }]" :data-mapname="map" @mouseenter="tip.tooltip(mapTooltips[map], $event)">
+        <button class="btn map-button" :id="`${map}Tab`" type="button" @click="loc.activeMap = map">
             {{ map }}
         </button>
     </li>
@@ -80,9 +85,9 @@ function imageLoadedEvent() {
 
 <div class="tabs" id="tabContents">
     <div id="tabWrapper">
-        <div ref="mapContainer" :class="['tab', 'map-container', 'text-center', 'active']" :id="`${activeTab}TabContent`">
+        <div ref="mapContainer" :class="['tab', 'map-container', 'text-center', 'active']" :id="`${loc.activeMap}TabContent`">
             <div class="map-wrapper">
-                <img ref="mapImage" class="map" :data-mapname="activeTab" :src="mapPaths[activeTab]" width="2592" height="2079"
+                <img ref="mapImage" class="map" :data-mapname="loc.activeMap" :src="mapPaths[loc.activeMap]" width="2592" height="2079"
                     @click="closeAllTooltips();" @contextmenu.prevent="" @load="imageLoadedEvent" draggable="false">
                 <MapIcons />
             </div>
@@ -92,7 +97,7 @@ function imageLoadedEvent() {
                 <img src="/images/chevron-down.svg" class="invert show-button" @mouseenter="tip.tooltip('Show legend', $event)" @click="state.settings.showLegend = true">
             </div>
         </Transition>
-        <HerosPath v-if="imageLoaded" :map-image="mapImage" :map-container="mapContainer" :active-map="activeTab" />
+        <HerosPath v-if="imageLoaded" :map-image="mapImage" :map-container="mapContainer" :active-map="loc.activeMap" />
     </div>
 
     <MapLegend />

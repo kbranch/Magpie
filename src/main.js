@@ -13,6 +13,7 @@ import { Connection } from './model/connection';
 import { Entrance } from './model/entrance';
 import { LogicHint } from './model/logicHint';
 import { MapNode } from './model/mapNode';
+import { useLocationStore } from './stores/locationStore';
 
 function addCssLink(href, id='') {
   var link = document.createElement("link");
@@ -57,6 +58,7 @@ window.Connection = Connection;
 window.Entrance = Entrance;
 window.LogicHint = LogicHint;
 window.MapNode = MapNode;
+useLocationStore();
 
 addCssLink("/lib/bootstrap/css/bootstrap.min.css");
 addCssLink("/css/vue-legacy.css");

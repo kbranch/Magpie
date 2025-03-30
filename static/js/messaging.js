@@ -377,10 +377,7 @@ function connectToAutotracker() {
                 addAutotrackerMessage('Disconnected');
             }
 
-            currentRoom = null;
-            currentX = null;
-            currentY = null;
-
+            setCurrentLocation(null, null, null);
             drawLocation();
 
             console.log(event);

@@ -13,6 +13,7 @@ export const useStateStore = defineStore('state', () => {
     const remoteVersion = ref(null);
     const updateMessage = ref(null);
     const sidebarMessage = ref(null);
+    const errorMessage = ref(null);
     const graphicsOptions = ref([]);
     const argDescriptions = ref([]);
     const spoilerLog = ref(null);
@@ -32,7 +33,6 @@ export const useStateStore = defineStore('state', () => {
     const stickyBehindKeys = ref(false);
     const inventory = ref({});
     const hoveredItems = ref([]);
-    const errorMessage = ref(null);
 
     const checkSize = computed(() => settings.value.checkSize / window.visualViewport.scale);
 
@@ -130,6 +130,7 @@ export const useStateStore = defineStore('state', () => {
         hoveredItems,
         inventory,
         errorMessage,
+        location,
         removeHint,
         onHintUpdate,
         offHintUpdate,

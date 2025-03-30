@@ -83,6 +83,9 @@ export let nodeMiddle = window.nodeMiddle;
 export let checkGraphicRightClick = window.checkGraphicRightClick;
 export let checkGraphicMouseEnter = window.checkGraphicMouseEnter;
 export let checkGraphicMouseLeave = window.checkGraphicMouseLeave;
+export let broadcastMode = window.broadcastMode;
+export let allowAutotracking = window.allowAutotracking;
+export let broadcastLocation = window.broadcastLocation;
 
 export function initGlobals(data) {
     let state = useStateStore();

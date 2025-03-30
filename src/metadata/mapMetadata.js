@@ -1,6 +1,4 @@
-"use strict"
-
-var roomDict = {
+export const roomDict = {
     '0x117': {
         map: 'd1',
         x: 3,
