@@ -10,6 +10,8 @@ import threading
 import argparse
 import websockets
 
+from pathlib import Path
+
 try:
     from flaskwebgui import FlaskUI
     webGuiLoaded = True
@@ -179,6 +181,14 @@ def main():
         endpoints.mapBroadcastView = BroadcastView(endpoints.mainThreadQueue, broadcastView.types.map)
 
         settings = localSettings.readSettings()
+
+        if args.width == None and args.height == None:
+            sizePath = Path(localSettings.settingsPath()).parent / 'windowSize.json'
+            if sizePath.is_file():
+                with open(sizePath, 'r') as file:
+                    size = json.load(file)
+                    args.width = size['width']
+                    args.height = size['height']
 
         thread = threading.Thread(target=startLocal, args=(args.width, args.height, settings, args.debug, args.noGui))
         thread.start()
