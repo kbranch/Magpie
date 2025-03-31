@@ -158,6 +158,10 @@ def getGraphAccessibility(logics, inventory):
                 accessibility[name]['connections'] = {}
                 accessibility[name]['checks'] = [x.nameId for x in loc.items]
                 accessibility[name]['id'] = name
+
+                forcedItems = [x.item or x.forced_item or x.OPTIONS[0] for x in loc.items if x.forced_item or len(x.OPTIONS) == 1]
+                if forcedItems:
+                    accessibility[name]['forcedItems'] = forcedItems
             
             accLoc = accessibility[name]
 
