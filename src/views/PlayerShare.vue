@@ -11,15 +11,17 @@ import SidebarAlert from '@/components/SidebarAlert.vue';
 import HintPanel from '@/components/HintPanel.vue';
 import FooterRow from '@/components/FooterRow.vue';
 import AlertModal from '@/components/AlertModal.vue';
-import { initGlobals, init, prefixOverrides, importState, setCurrentLocation, drawLocation } from '@/moduleWrappers.js';
+import { initGlobals, init, prefixOverrides, importState, drawLocation } from '@/moduleWrappers.js';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useStateStore } from '@/stores/stateStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useRoute } from 'vue-router';
 import { useAccessibilityStore } from '@/stores/accessibilityStore';
+import { useLocationStore } from '@/stores/locationStore';
 
 document.title = 'Magpie Tracker - Player Share';
 
+const loc = useLocationStore();
 const route = useRoute();
 const state = useStateStore();
 const accessibility = useAccessibilityStore();
@@ -104,7 +106,7 @@ function getPlayerState() {
           }
 
           let lastLocation = state.locationHistory[state.locationHistory.length - 1];
-          setCurrentLocation(lastLocation.room, lastLocation.x, lastLocation.y);
+          loc.setCurrentLocation(lastLocation.room, lastLocation.x, lastLocation.y);
           drawLocation();
         }
       }

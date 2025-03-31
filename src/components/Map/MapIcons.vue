@@ -7,14 +7,14 @@ const state = useStateStore();
 const loc = useLocationStore();
 
 const linkFaceLeft = computed(() => {
-    return Math.round(loc.locationCoords.x * loc.scaling.x + loc.scaling.offset.x);
+    return `${Math.round(loc.locationCoords.x * loc.mapScaling?.x + loc.mapScaling?.offset.x)}px`;
 });
 const linkFaceTop = computed(() => {
-    return Math.round(loc.locationCoords.y * loc.scaling.y + loc.scaling.offset.y);
+    return `${Math.round(loc.locationCoords.y * loc.mapScaling?.y + loc.mapScaling?.offset.y)}px`;
 });
 
 const checkSize = computed(() => {
-    return state.checkSize;
+    return `${state.checkSize}px`;
 });
 
 const drawLink = computed(() => {
@@ -44,5 +44,11 @@ const drawLink = computed(() => {
     height: v-bind(checkSize);
     max-height: v-bind(checkSize);
     min-height: v-bind(checkSize);
+
+    position: absolute;
+    filter: drop-shadow(0px 0px 5px #ccc) drop-shadow(0px 0px 5px #ccc);
+    transition: all .5s linear;
+    z-index: 1;
+    transform: translate(-50%, -50%);
 }
 </style>

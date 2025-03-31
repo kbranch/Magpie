@@ -9,7 +9,6 @@ function removeNodes() {
     }
 
     $('.check-graphic').remove();
-    $('#linkFace').remove();
 }
 
 function updateCheckSize() {

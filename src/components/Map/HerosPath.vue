@@ -1,11 +1,13 @@
 <script setup>
 
-import { getLocationCoords, getMapScaling } from '@/moduleWrappers';
+import { getMapScaling } from '@/moduleWrappers';
+import { useLocationStore } from '@/stores/locationStore';
 import { useStateStore } from '@/stores/stateStore';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 
 const props = defineProps(['mapImage', 'mapContainer', 'activeMap']);
 
+const loc = useLocationStore();
 const state = useStateStore();
 
 const mapSize = ref({ width: 0, height: 0 });
@@ -37,6 +39,8 @@ const mapScaling = computed(() => {
     return null;
 });
 
+watch(mapScaling, () => loc.mapScaling = mapScaling.value)
+
 function pointDistance(start, end) {
     let diffX = Math.abs(end.x - start.x);
     let diffY = Math.abs(end.y - start.y);
@@ -62,7 +66,7 @@ const historyPaths = computed(() => {
         let lastCoord = null;
 
         for (const point of history) {
-            let coord = getLocationCoords(point.room, point.x, point.y);
+            let coord = loc.getLocationCoords(point.room, point.x, point.y);
 
             if (coord.map != props.activeMap
                 || (lastCoord

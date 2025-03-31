@@ -15,6 +15,7 @@ export const useLocationStore = defineStore('location', () => {
     const overworldX = ref(null);
     const overworldY = ref(null);
     const activeMap = ref('overworld');
+    const mapScaling = ref(null);
     const mapContainer = ref(null);
 
     const locationCoords = computed(() => {
@@ -23,14 +24,6 @@ export const useLocationStore = defineStore('location', () => {
         }
 
         return getLocationCoords(currentRoom.value, currentX.value, currentY.value);
-    });
-
-    const scaling = computed(() => {
-        if (!mapContainer.value) {
-            return { x: 0, y: 0, offset: { x: 0, y: 0 } };
-        }
-
-        return getMapScaling(mapContainer.value);
     });
 
     const playerMap = computed(() => {
@@ -149,6 +142,7 @@ export const useLocationStore = defineStore('location', () => {
     window.drawLocation = drawLocation;
     window.getLocationCoords = getLocationCoords;
     window.mapFromRoom = mapFromRoom;
+    window.setCurrentLocation = setCurrentLocation;
 
     watch(currentRoom, () => {
         window.currentRoom = currentRoom.value;
@@ -180,7 +174,7 @@ export const useLocationStore = defineStore('location', () => {
         activeMap,
         playerMap,
         mapContainer,
-        scaling,
+        mapScaling,
         getLocationCoords,
         mapFromRoom,
         setCurrentLocation,
