@@ -1,8 +1,10 @@
 <script setup>
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed } from 'vue';
 import BaseChunk from './BaseChunk.vue';
 
+const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
 const props = defineProps(['subject']);
@@ -93,15 +95,12 @@ const reqChunks = computed(() => {
 <div>
     <template v-for="chunk in reqChunks" :key="chunk">
         <a v-if="chunk.isTrick" @click="logic.viewTrick(chunk.name, chunk.details)" href="#"
-            data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true'
-            :data-bs-title="chunk.details">
+            @mouseover="tip.tooltip(chunk.details, $event)">
             {{ chunk.name }}
         </a>
-        <span v-else-if="chunk.isEnemy" v-html="chunk.name" data-bs-toggle='tooltip'
-            data-bs-custom-class="secondary-tooltip" data-bs-html='true' :data-bs-title="chunk.details">
+        <span v-else-if="chunk.isEnemy" v-html="chunk.name" @mouseover="tip.tooltip(chunk.details, $event)">
         </span>
-        <span v-else-if="chunk.name" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip"
-            data-bs-html='true' :data-bs-title="chunk.details">
+        <span v-else-if="chunk.name" @mouseover="tip.tooltip(chunk.details, $event)">
             {{ chunk.name }}
         </span>
         <BaseChunk v-else :chunk="chunk" />

@@ -1,7 +1,9 @@
 <script setup>
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed } from 'vue';
 
+const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
 const props = defineProps(['chunk']);
@@ -27,12 +29,12 @@ const subChunks = computed(() => {
 
     <template v-for="subChunk in subChunks" :key="subChunk.contents">
         <a v-if="subChunk.forcedItemSource" href="#" @click="logic.pushStack(logic.inspectedNode.id, subChunk.forcedItemSource)">
-            <img class="logic-item" :src="`/images/${subChunk.contents}_1.png`" data-bs-toggle='tooltip'
-                data-bs-custom-class="secondary-tooltip" :data-bs-title="subChunk.contents" />
+            <img class="logic-item" :src="`/images/${subChunk.contents}_1.png`"
+                @mouseover="tip.tooltip(subChunk.contents, $event)" />
         </a>
 
         <img v-else-if="subChunk.isItem" class="logic-item" :src="`/images/${subChunk.contents}_1.png`"
-            data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" :data-bs-title="subChunk.contents" />
+            @mouseover="tip.tooltip(subChunk.contents, $event)" />
 
         <span v-else v-html="subChunk.contents"></span>
     </template>
