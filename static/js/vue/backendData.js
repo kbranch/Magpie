@@ -98,6 +98,14 @@ function refreshCheckList() {
             data: data,
             success: (response) => {
                 console.log("Received checkList response");
+
+                if (response.error) {
+                    console.error("Error retrieving check list", response.error);
+                    errorLog.push(response.error);
+                    vueApp.setErrorMessage(response.error);
+                    return;
+                }
+
                 pruneEntranceMap();
 
                 let newEntrances = false;

@@ -1,6 +1,6 @@
 import os
 import json
-import logging
+import time
 import threading
 
 fileLock = threading.Lock()
@@ -166,15 +166,17 @@ def writeSettings(settings):
         print(f"Error writing settings: {e}")
 
 def readSettings():
-    try:
-        with fileLock:
-            with open(settingsPath(), 'r') as file:
-                text = file.read()
-                parsed = json.loads(text)
-                return parsed
-    except Exception as e:
-        print(f"Error reading settings, loading defaults: {e}")
-        return defaultSettings()
+    with fileLock:
+        for _ in range(5):
+            try:
+                with open(settingsPath(), 'r') as file:
+                    return json.load(file)
+            except Exception as e:
+                print(f"Error reading settings, retrying: {e}")
+                time.sleep(0.25)
+
+    print(f"Error reading settings, loading defaults")
+    return defaultSettings()
 
 def defaultSettings():
     return {

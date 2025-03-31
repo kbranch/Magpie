@@ -1,6 +1,7 @@
 <script setup>
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { computed } from 'vue';
+import BaseChunk from './BaseChunk.vue';
 
 const logic = useLogicViewerStore();
 
@@ -41,32 +42,38 @@ const requirement = computed(() => {
 });
 
 const reqChunks = computed(() => {
-    const itemRegex = /([^/A-Z_0-8]|^)('?[A-Z_0-8]{3,}'?)/g;
+    const itemRegex = /([^/A-Z_0-8]|^)('?[A-Z][A-Z_0-8]{2,}'?)/g;
     const quoteRegex = /\/'([A-Z_0-8]{2,})'_1\.png/g;
     const tooltipRegex = /(\w+)\(([^)]+)\)/g;
     const wrapperRegex = /\((?:and|or)\[('[A-Z_0-8]{3,}')\]\)/g;
     const killRegex = /kill_([\w_]+)/g
 
-    let req = requirement.value
-        .replaceAll('\\', '')
-        .replaceAll('"', '')
-        .replaceAll("and['TRUE']", 'None')
-        .replaceAll("or['FALSE']", 'Disabled')
-        .replace(wrapperRegex, '($1)')
-        .replace(itemRegex, `$1<img class="logic-item" src="/images/$2_1.png">`)
-        .replace(quoteRegex, '/$1_1.png')
-        .replaceAll("'", "")
-        .replace(tooltipRegex, '|$1%$2|')
-        .replace(killRegex, `<img class="logic-item" src="/images/$1.png">`);
+    let req = requirement.value;
+
+    // Tricks have already had their requirements parsed
+    if (!logic.inspectedTrick) {
+        req = requirement.value
+            .replaceAll('\\', '')
+            .replaceAll('"', '')
+            .replaceAll("and['TRUE']", 'None')
+            .replaceAll("or['FALSE']", 'Disabled')
+            .replace(wrapperRegex, '($1)')
+            .replace(itemRegex, `$1~$2~`)
+            .replace(quoteRegex, '/$1_1.png')
+            .replaceAll("'", "")
+            .replace(tooltipRegex, '|$1%$2|')
+            .replace(killRegex, `<img class="logic-item" src="/images/$1.png">`);
+    }
 
     const chunks = [];
     for (const chunk of req.split('|')) {
         if (chunk.includes('%')) {
+            const itemChunkRegex = /~([A-Z][A-Z_0-8]{2,})~/g;
             const halves = chunk.split('%');
 
             chunks.push({
                 name: halves[0],
-                details: halves[1],
+                details: halves[1].replace(itemChunkRegex, '<img class="logic-item" src="/images/$1_1.png">'),
                 isTrick: !nonTricks.includes(halves[0]) && !halves[0].includes('<img'),
                 isEnemy: halves[0].includes('<img'),
             });
@@ -97,7 +104,7 @@ const reqChunks = computed(() => {
             data-bs-html='true' :data-bs-title="chunk.details">
             {{ chunk.name }}
         </span>
-        <span v-else v-html="chunk"></span>
+        <BaseChunk v-else :chunk="chunk" />
     </template>
 </div>
 

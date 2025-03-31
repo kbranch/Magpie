@@ -9,6 +9,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     const graph = ref({});
     const logicByCheck = ref({});
     const logicByEntrance = ref({});
+    const logicByForcedItem = ref({});
     const inspectedNodeId = ref(null);
     const inspectedTrick = ref(null);
     const inspectedConnection = ref(null);
@@ -30,15 +31,24 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     watch(graph, () => {
         logicByCheck.value = {};
         logicByEntrance.value = {};
+        logicByForcedItem.value = {};
 
         for (const loc in graph.value) {
-            for (const check of graph.value[loc].checks) {
-                logicByCheck.value[check] = graph.value[loc];
+            const node = graph.value[loc];
+
+            for (const check of node.checks) {
+                logicByCheck.value[check] = node;
             }
 
-            if ('entrances' in graph.value[loc]) {
-                for (const entrance of graph.value[loc].entrances) {
-                    logicByEntrance.value[entrance] = graph.value[loc];
+            if ('entrances' in node) {
+                for (const entrance of node.entrances) {
+                    logicByEntrance.value[entrance] = node;
+                }
+            }
+
+            if (node.forcedItems) {
+                for (const item of node.forcedItems) {
+                    logicByForcedItem.value[item] = node;
                 }
             }
         }
@@ -310,6 +320,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         graph, 
         logicByCheck,
         logicByEntrance,
+        logicByForcedItem,
         inspectedNode,
         inspectedTrick,
         stackTop,
