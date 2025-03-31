@@ -6,7 +6,9 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useAccessibilityStore } from '@/stores/accessibilityStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { sortByKey } from '@/moduleWrappers';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
 
+const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 const accessibility = useAccessibilityStore();
 
@@ -95,11 +97,17 @@ async function fetchTips() {
 
 <h6>Checks:</h6>
 <div>
-    <template v-if="(node.checks?.length ?? 0) == 0">None</template>
+    <template v-if="(checks?.length ?? 0) == 0">None</template>
 
     <LogicViewerCheck v-else v-for="(check, index) in checks" :key="check.id"
         v-model="checks[index]" />
 </div>
+
+<template v-if="node.forcedItems">
+    <h6 class="pt-2">Forced or special items:</h6>
+    <img v-for="item in node.forcedItems" :key="item" class="logic-item" :src="`/images/${item}_1.png`"
+        @mouseover="tip.tooltip(item, $event)" />
+</template>
 
 <h6 class="pt-3">Entrances:</h6>
 <div>
