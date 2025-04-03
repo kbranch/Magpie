@@ -85,16 +85,17 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     args.multiworld = None
     args.boomerang = 'gift'
 
-    if args.goal == 'specific':
-        args.goal = '4'
-
     fixArgs(args)
 
     return args
 
 def fixArgs(args):
+    if args.goal.isnumeric():
+        args.goalcount = args.goal
+        args.goal = 'instruments'
     if args.goal == '':
-        args.goal = '8'
+        args.goal = 'instruments'
+        args.goalcount = '8'
     if args.overworld == 'dungeonchain':
         args.overworld = 'normal'
 
