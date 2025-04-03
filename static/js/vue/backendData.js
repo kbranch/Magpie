@@ -128,9 +128,6 @@ function refreshCheckList() {
                 copyToObject(response.startLocations, startLocations);
                 vueApp.updateAccessibility(response.accessibility);
 
-                logicHintAccessibility = response.accessibility.logicHints.map(x => new LogicHint(x));
-                vueApp.updateLogicGraph(response.accessibility.graph);
-
                 pruneEntranceMap();
                 fillVanillaLogEntrances();
                 updateEntrances();

@@ -66,4 +66,3 @@ function getMapScaling(map, offsetCheckSize=true) {
 
     return scaling;
 }
-

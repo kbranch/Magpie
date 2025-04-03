@@ -26,6 +26,7 @@ export const useStateStore = defineStore('state', () => {
     const tipAdmin = ref(false);
     const connections = ref([]);
     const entranceMap = ref({});
+    const bossMap = ref({});
     const reverseEntranceMap = ref({});
     const startHouse = ref('start_house:inside');
     const randomizedEntrances = ref([]);
@@ -40,7 +41,8 @@ export const useStateStore = defineStore('state', () => {
 
     window.connections = connections.value;
     window.entranceMap = entranceMap.value;
-    window.reverseEntranceMap = entranceMap.value;
+    window.reverseEntranceMap = reverseEntranceMap.value;
+    window.bossMap = bossMap.value;
     window.startHouse = startHouse.value;
     window.randomizedEntrances = randomizedEntrances.value;
     window.startLocations = startLocations.value;
@@ -121,6 +123,7 @@ export const useStateStore = defineStore('state', () => {
         tipAdmin,
         connections,
         entranceMap,
+        bossMap,
         reverseEntranceMap,
         startHouse,
         randomizedEntrances,

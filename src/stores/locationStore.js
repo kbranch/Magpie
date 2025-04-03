@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref, watch } from "vue";
 
-import { allowAutotracking, getMapScaling, broadcastLocation, broadcastMode } from "@/moduleWrappers";
+import { allowAutotracking, broadcastLocation, broadcastMode } from "@/moduleWrappers";
 import { roomDict } from "@/metadata/mapMetadata.js";
 import { useStateStore } from "./stateStore";
 
@@ -86,10 +86,6 @@ export const useLocationStore = defineStore('location', () => {
     }
 
     function drawLocation() {
-        // let roomMap = mapFromRoom(currentRoom);
-        // let activeMap = getActiveMap();
-    
-        // vueApp.updateLinkFace(localSettings.linkFace && (!allowAutotracking || localSettings.enableAutotracking));
         state.linkFaceShowing = state.settings.linkFace && (!allowAutotracking || state.settings.enableAutotracking);
     
         if ((playerMap.value != activeMap.value
@@ -97,43 +93,9 @@ export const useLocationStore = defineStore('location', () => {
                  || overworldRoom.value == null))
             || !state.linkFaceShowing) {
     
-            // $('#linkFace').remove();
-    
             return;
         }
-    
-        // let mapContainer = $(`img[data-mapname=${activeMap.value}]`).closest('.map-container');
-        // let scaling = getMapScaling(mapContainer.value);
-        // let coords = getLocationCoords(currentRoom.value, currentX.value, currentY.value);
-    
-        // if (activeMap.value == 'overworld') {
-        //     coords = getLocationCoords(overworldRoom.value, overworldX.value, overworldY.value);
-        // }
-    
-        // let linkFace = $('#linkFace');
-    
-        // if (linkFace.length == 0) {
-        //     linkFace = $('<img>', {
-        //         'id': 'linkFace',
-        //         'draggable': false,
-        //     });
-    
-        //     $(mapContainer).find('div.map-wrapper').append(linkFace);
-        // }
-    
-        // linkFace.attr('src', `/images${localSettings.graphicsPack}/linkface.png`);
-    
-        // linkFace.css({
-        //             'top': Math.round(coords.y * scaling.y + scaling.offset.y),
-        //             'left': Math.round(coords.x * scaling.x + scaling.offset.x),
-        //             'width': checkSize,
-        //             'max-width': checkSize,
-        //             'min-width': checkSize,
-        //             'height': checkSize,
-        //             'max-height': checkSize,
-        //             'min-height': checkSize,
-        //         });
-        
+
         if (broadcastMode == 'send') {
             broadcastLocation();
         }

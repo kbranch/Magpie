@@ -11,7 +11,6 @@ function closeOtherTooltips(element) {
             x.pinned = false;
         }
     });
-
 }
 
 function closeAllCheckTooltips(stopEntrances=true) {

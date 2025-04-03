@@ -737,7 +737,6 @@ export class MapNode {
             checkGraphicMouseEnter(e.currentTarget);
 
             MapNode.tip.tooltip(this, e);
-            // vueNodeTooltip(nodes[this.id()], e);
         });
         $(this.graphic).on('mouseleave', (e) => {
             checkGraphicMouseLeave(e.currentTarget);

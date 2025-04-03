@@ -66,6 +66,8 @@ function updateLogics(newLogics) {
 function updateAccessibility(newAccessibility) {
   Check.loadChecks(newAccessibility.checks);
   accessibility.loadEntrances(newAccessibility.entrances);
+  accessibility.loadLogicHints(newAccessibility.logicHints);
+  logicStore.graph = newAccessibility.graph;
 }
 
 function updateServerVersion(newVersion, newBuild, message=null) {
@@ -90,10 +92,6 @@ function updateSpoilerLog(spoilerLog) {
 
 function updateLinkFace(showing) {
   state.linkFaceShowing = showing;
-}
-
-function updateLogicGraph(graph) {
-  logicStore.graph = graph;
 }
 
 function updateEntranceConnection(type, source) {
@@ -127,7 +125,6 @@ defineExpose({
   updateSpoilerLog,
   updateHints,
   updateLinkFace,
-  updateLogicGraph,
   updateEntranceConnection,
   updateStartHouse,
   updateStickyBehindKeys,

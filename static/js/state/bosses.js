@@ -5,7 +5,7 @@ function saveBosses() {
 }
 
 function loadBosses() {
-    bossMap = JSON.parse(getLocalStorage("bossMap"));
+    copyToBossMap(JSON.parse(getLocalStorage("bossMap")));
 
     if (bossMap == null) {
         resetBosses();
@@ -13,7 +13,7 @@ function loadBosses() {
 }
 
 function resetBosses() {
-    bossMap = {};
+    clearBossMap();
 
     for (const boss of bosses) {
         bossMap[boss.id] = boss.id;

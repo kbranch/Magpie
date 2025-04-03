@@ -90,6 +90,14 @@ function clearReverseEntranceMap() {
     clearObject(reverseEntranceMap);
 }
 
+function copyToBossMap(obj) {
+    copyToObject(obj, bossMap);
+}
+
+function clearBossMap() {
+    clearObject(bossMap);
+}
+
 function loadEntrances() {
     let errors = [];
 

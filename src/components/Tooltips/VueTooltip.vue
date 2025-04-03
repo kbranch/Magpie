@@ -1,17 +1,18 @@
 <script setup>
 import { useNodeTooltipStore } from '@/stores/nodeTooltipStore.js';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
-import { nodes } from '@/moduleWrappers.js';
 import { computed, onBeforeMount, onBeforeUpdate, onMounted, ref, watch } from 'vue';
 import CheckItem from '@/components/Tooltips/CheckItem.vue';
 import PinnedChunk from '@/components/Tooltips/PinnedChunk.vue';
 import EntranceChunk from './EntranceChunk.vue';
 import BossChunk from './BossChunk.vue';
 import { useStateStore } from '@/stores/stateStore';
+import { useMapNodeStore } from '@/stores/mapNodeStore';
 
 const props = defineProps(['type', 'textColor']);
 const tip = props.type == 'text' ? useTextTooltipStore() : useNodeTooltipStore();
 const state = useStateStore();
+const map = useMapNodeStore();
 
 const tooltip = ref(null);
 const rootRect = ref(null);
@@ -19,18 +20,15 @@ const parentRect = ref(null);
 const tipRect = ref(null);
 const parentClean = ref(false);
 const tipClean = ref(false);
-const allNodes = ref(nodes);
 const stateNode = computed(() => props.type == 'node' ? tip.node : tip.auxNode);
 const stateShow = computed(() => props.type == 'auxNode' ? tip.auxShow : tip.show);
 const stateElement = computed(() => props.type == 'auxNode' ? tip.auxElement : tip.element);
 const zIndex = computed(() => node?.value?.pinned ? 20010 : 1000);
 
-window.nodes = allNodes.value;
-
 const closed = ref(true);
 const closing = ref(false);
 const hovered = ref(false);
-const node = computed(() => allNodes.value[stateNode.value?.id()]);
+const node = computed(() => map.nodes[stateNode.value?.id()]);
 const show = computed(() => {
     return stateShow.value
            && (props.type == 'text' ? tip.text : node.value)
