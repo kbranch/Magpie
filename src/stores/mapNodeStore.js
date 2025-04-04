@@ -20,6 +20,7 @@ export const useMapNodeStore = defineStore('mapNode', () => {
 
     function updateCheckSize() {
         finalCheckSize.value = state.settings.checkSize / window.visualViewport.scale;
+        window.checkSize = finalCheckSize.value;
     }
 
     function createNodes(map, mapName) {

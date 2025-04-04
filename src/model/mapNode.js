@@ -2,7 +2,7 @@ import { useStateStore } from "@/stores/stateStore";
 import { Boss } from "./boss";
 import { Connection } from "./connection";
 import { Entrance } from "./entrance";
-import { advancedER, checkGraphicLeftClick, checkGraphicMouseEnter, checkGraphicMouseLeave, checkGraphicRightClick, connectorsMixed, coupledEntrances, createElement, inOutEntrances, nodeMiddle, pickingEntrances, sortByKey } from "@/moduleWrappers";
+import { advancedER, checkGraphicLeftClick, checkGraphicMouseEnter, checkGraphicMouseLeave, checkGraphicRightClick, connectorsMixed, coupledEntrances, createElement, entranceDict, inOutEntrances, nodeMiddle, pickingEntrances, sortByKey } from "@/moduleWrappers";
 import { useAccessibilityStore } from "@/stores/accessibilityStore";
 import { useNodeTooltipStore } from "@/stores/nodeTooltipStore";
 
@@ -753,7 +753,7 @@ export class MapNode {
             options = MapNode.state.randomizedEntrances.filter(x => Entrance.isDungeon(x)
                 && !Entrance.isFound(x)
                 && !Entrance.isInside(x))
-                .map(x => [x, MapNode.state.entranceDict[x].name]);
+                .map(x => [x, entranceDict[x].name]);
             options = sortByKey(options, x => [x[0]])
         }
         else if (MapNode.state.args.entranceshuffle != 'none'
@@ -768,7 +768,7 @@ export class MapNode {
             options = sortByKey(options, x => [x[1]]);
         }
 
-        return options?.map(x => MapNode.state.entranceDict[x[0]]);
+        return options?.map(x => entranceDict[x[0]]);
     }
 
     usesConnectorDialog() {
