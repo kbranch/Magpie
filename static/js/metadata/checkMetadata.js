@@ -2747,7 +2747,7 @@ let vanillaCoordDict = {
     "0x1D1":{
        "id":"0x1D1",
        "vanillaArea":"Face Shrine",
-       "vanillaName":"Four Wizzrobe Ledge Chest",
+       "vanillaName":"Four Wizrobe Ledge Chest",
        "locations":[
           {
              "map":"d6",
@@ -2824,7 +2824,7 @@ let vanillaCoordDict = {
     "0x1B4":{
        "id":"0x1B4",
        "vanillaArea":"Face Shrine",
-       "vanillaName":"Two Wizzrobe Key",
+       "vanillaName":"Two Wizrobe Key",
        "locations":[
           {
              "map":"d6",
@@ -2878,7 +2878,7 @@ let vanillaCoordDict = {
     "0x1C0":{
        "id":"0x1C0",
        "vanillaArea":"Face Shrine",
-       "vanillaName":"Three Wizzrobe, Switch Chest",
+       "vanillaName":"Three Wizrobe, Switch Chest",
        "locations":[
           {
              "map":"d6",
@@ -3083,7 +3083,7 @@ let vanillaCoordDict = {
     "0x188":{
        "id":"0x188",
        "vanillaArea":"Catfish's Maw",
-       "vanillaName":"Swort Stalfos, Star, Bridge Chest",
+       "vanillaName":"Sword Stalfos, Star, Bridge Chest",
        "locations":[
           {
              "map":"d5",
