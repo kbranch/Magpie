@@ -2,6 +2,7 @@
 
 const apClientName = 'archipelago-ladx-client';
 var remoteName = null;
+var trustEntrances = false;
 
 function processCheckMessage(message) {
     if (!autotrackerFeatures.includes('checks')) {
@@ -96,7 +97,7 @@ function processEntranceMessage(message) {
 
     if (!message.diff) {
         console.log('Receiving full autotracker entrances');
-        if (remoteName == apClientName) { // Only Archipelago currently has fool-proof knowledge of visited entrances
+        if (trustEntrances) { // Only Archipelago currently has fool-proof knowledge of visited entrances
             resetEntrances();
         }
     }
@@ -307,6 +308,8 @@ function processSlotDataMessage(message) {
 
     saveSettings();
 
+    trustEntrances = 'version' in slotData;
+
     if ('server_address' in slotData) {
         archipelagoConnect(localSettings.apServer, localSettings.apSlot, localSettings.apPassword, slotData.game_name ?? 'Links Awakening DX');
     }
@@ -343,7 +346,7 @@ function processHandshAckMessage(message) {
             setApLogic(false);
         }
         else if (remoteName == apClientName) {
-            resetEntrances(); // Hack until the AP client sends diff correctly
+            // resetEntrances(); // Hack until the AP client sends diff correctly, but the released version of 0.6.1 uses this name and isn't trustworthy
             setApLogic(true);
         }
     }
@@ -358,6 +361,8 @@ function connectToAutotracker() {
     }
 
     if (autotrackerSocket == null || autotrackerSocket.readyState == 3) {
+        trustEntrances = false;
+
         setRomRequested(false);
         addAutotrackerMessage('Connecting...');
         const defaultAddress = '127.0.0.1';
