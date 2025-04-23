@@ -791,6 +791,14 @@ export class MapNode {
         return `${Math.round(location.x * scaling.x + scaling.offset.x)},${Math.round(location.y * scaling.y + scaling.offset.y)}`;
     }
 
+    static nodeX(location, scaling) {
+        return Math.round(location.x * scaling.x + scaling.offset.x);
+    }
+
+    static nodeY(location, scaling) {
+        return Math.round(location.y * scaling.y + scaling.offset.y);
+    }
+
     static coordsFromId(id) {
         let chunks = id.split(',');
         return {

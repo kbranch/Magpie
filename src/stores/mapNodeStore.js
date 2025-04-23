@@ -3,10 +3,12 @@ import { defineStore } from "pinia";
 import { MapNode } from "@/model/mapNode";
 import { useStateStore } from "./stateStore";
 import { useAccessibilityStore } from "./accessibilityStore";
-import { bosses, connectEntrances, connectorDict, connectors, coupledEntrances, entranceDict, getMapScaling, inOutEntrances, pickingEntrances, vanillaConnectors } from "@/moduleWrappers";
+import { bosses, connectEntrances, connectorDict, connectors, coupledEntrances, entranceDict, getMapScaling, inOutEntrances, pickingEntrances, refreshMapNdi, updateNdi, updateReverseMap, vanillaConnectors, win } from "@/moduleWrappers";
 import { Entrance } from "@/model/entrance";
+import { useLocationStore } from "./locationStore";
 
 export const useMapNodeStore = defineStore('mapNode', () => {
+    const loc = useLocationStore();
     const state = useStateStore();
     const accessibility = useAccessibilityStore();
 
@@ -17,6 +19,20 @@ export const useMapNodeStore = defineStore('mapNode', () => {
     // watch(finalCheckSize, () => {
     //     window.checkSize = finalCheckSize.value;
     // });
+
+    function drawNodes() {
+        if (state.args == null || state.args == undefined || win.args == null || win.args == undefined) {
+            return;
+        }
+
+        updateReverseMap();
+
+        createNodes(loc.mapContainer, loc.activeMap);
+
+        if (!pickingEntrances() && updateNdi) {
+            refreshMapNdi();
+        }
+    }
 
     function updateCheckSize() {
         finalCheckSize.value = state.settings.checkSize / window.visualViewport.scale;
@@ -39,7 +55,7 @@ export const useMapNodeStore = defineStore('mapNode', () => {
     
         // We're in the special entrance connecting mode
         if (pickingEntrances()) {
-            createEntranceNodes(graphicalMapChoices, scaling, true);
+            createEntranceNodes(win.graphicalMapChoices, scaling, true);
             return;
         }
     
@@ -271,6 +287,7 @@ export const useMapNodeStore = defineStore('mapNode', () => {
         }
     }
 
+    window.drawNodes = drawNodes;
     window.createNodes = createNodes;
     window.nodes = nodes.value;
 

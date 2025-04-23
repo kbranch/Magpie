@@ -11,76 +11,76 @@ function removeNodes() {
     $('.check-graphic').remove();
 }
 
-function drawNodes(mapName, animate=true, updateNdi=true) {
-    if (!randomizedEntrances || !localSettings) {
-        return;
-    }
+// function drawNodes(mapName, animate=true, updateNdi=true) {
+//     if (!randomizedEntrances || !localSettings) {
+//         return;
+//     }
 
-    let mapImg = document.querySelector(`img[data-mapname="${mapName}"]`);
+//     let mapImg = document.querySelector(`img[data-mapname="${mapName}"]`);
 
-    if ($(mapImg).width() <= 100) {
-        $(mapImg).on('load', function () { drawNodes(mapName, animate); });
-        return;
-    }
+//     if ($(mapImg).width() <= 100) {
+//         $(mapImg).on('load', function () { drawNodes(mapName, animate); });
+//         return;
+//     }
 
-    if (typeof randomizedEntrances == 'undefined' || randomizedEntrances === null) {
-        return;
-    }
+//     if (typeof randomizedEntrances == 'undefined' || randomizedEntrances === null) {
+//         return;
+//     }
 
-    animate = animate
-              && localSettings.animateChecks
-              && !skipNextAnimation;
+//     animate = animate
+//               && localSettings.animateChecks
+//               && !skipNextAnimation;
     
-    skipNextAnimation = false;
+//     skipNextAnimation = false;
 
-    if (['overworld', 'underworld'].includes(mapName)) {
-        stickyBehindKeys = false;
-        vueApp.updateStickyBehindKeys(stickyBehindKeys);
-    }
+//     if (['overworld', 'underworld'].includes(mapName)) {
+//         stickyBehindKeys = false;
+//         vueApp.updateStickyBehindKeys(stickyBehindKeys);
+//     }
 
-    $('.check-graphic.animate__fadeOut').remove();
+//     $('.check-graphic.animate__fadeOut').remove();
 
-    updateReverseMap();
+//     updateReverseMap();
 
-    let activeMap = getActiveMap();
-    let map = $(mapImg).closest('div.map-container');
-    let parent = $(map).find('div.map-wrapper');
+//     let activeMap = getActiveMap();
+//     let map = $(mapImg).closest('div.map-container');
+//     let parent = $(map).find('div.map-wrapper');
 
-    createNodes(map, mapName);
+//     createNodes(map, mapName);
 
-    for (const nodeId in nodes) {
-        let node = nodes[nodeId];
-        let classes = node.iconClasses();
-        let difficulty = classes.includes('unmapped-entrance') ? node.entrance.difficulty : node.difficulty;
+//     for (const nodeId in nodes) {
+//         let node = nodes[nodeId];
+//         let classes = node.iconClasses();
+//         let difficulty = classes.includes('unmapped-entrance') ? node.entrance.difficulty : node.difficulty;
 
-        node.updateAnimationClasses(classes, parent, animate);
-        node.updateEntranceAttrs();
-        node.updateOverlay(activeMap, graphicalMapSource != null, difficulty, classes);
+//         node.updateAnimationClasses(classes, parent, animate);
+//         node.updateEntranceAttrs();
+//         node.updateOverlay(activeMap, graphicalMapSource != null, difficulty, classes);
 
-        $(node.graphic).attr({
-            'class': classes.join(' '),
-            'data-difficulty': node.difficulty,
-        })
-    }
+//         $(node.graphic).attr({
+//             'class': classes.join(' '),
+//             'data-difficulty': node.difficulty,
+//         })
+//     }
 
-    drawLocation();
+//     drawLocation();
 
-    removeOldNodes();
+//     removeOldNodes();
 
-    if (pinned != null){
-        let toPin = $(`[data-node-id="${pinned}"]`);
+//     if (pinned != null){
+//         let toPin = $(`[data-node-id="${pinned}"]`);
 
-        if (toPin && toPin[0]) {
-            nodeSecondary(toPin[0]);
-        }
+//         if (toPin && toPin[0]) {
+//             nodeSecondary(toPin[0]);
+//         }
 
-        pinned = null;
-    }
+//         pinned = null;
+//     }
 
-    if (!pickingEntrances() && updateNdi) {
-        refreshMapNdi();
-    }
-}
+//     if (!pickingEntrances() && updateNdi) {
+//         refreshMapNdi();
+//     }
+// }
 
 function removeOldNodes() {
     let oldNodeIds = $('.check-graphic').toArray()

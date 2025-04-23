@@ -878,7 +878,7 @@ button.nav-link.active {
     z-index: 20011 !important;
 }
 
-.possible-start-location {
+/* .possible-start-location {
     border-style: none;
     background-image: url('/images/house.svg');
     background-size: contain;
@@ -901,7 +901,7 @@ button.nav-link.active {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-}
+} */
 
 .start-location.difficulty-checked {
     border-style: none;

@@ -1,5 +1,5 @@
 <script setup>
-import { closeAllTooltips, removeNodes, drawNodes, win } from '@/moduleWrappers.js';
+import { closeAllTooltips, removeNodes, win } from '@/moduleWrappers.js';
 import OpenBroadcastView from '@/components/OpenBroadcastView.vue';
 import ConnectorModal from './ConnectorModal.vue';
 import { computed, ref, watch } from 'vue';
@@ -64,7 +64,7 @@ function getMapPath(map) {
 
 function imageLoadedEvent() {
     imageLoaded.value = true;
-    drawNodes(loc.activeMap, false);
+    win.drawNodes(loc.activeMap, false);
 }
 
 </script>

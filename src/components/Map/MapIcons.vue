@@ -1,10 +1,13 @@
 <script setup>
 import { useLocationStore } from '@/stores/locationStore';
+import { useMapNodeStore } from '@/stores/mapNodeStore';
 import { useStateStore } from '@/stores/stateStore';
 import { computed } from 'vue';
+import MapNode from './MapNode.vue';
 
 const state = useStateStore();
 const loc = useLocationStore();
+const map = useMapNodeStore();
 
 const linkFaceLeft = computed(() => {
     return `${Math.round(loc.locationCoords.x * loc.mapScaling?.x + loc.mapScaling?.offset.x)}px`;
@@ -29,12 +32,12 @@ const drawLink = computed(() => {
 <template>
 
 <img v-if="drawLink" id="linkFace" :src="`/images${state.settings.graphicsPack}/linkface.png`" />
-<!-- <div>
-</div> -->
+<MapNode v-for="node in map.nodes" :key="node.id()" :node="node" :check-size="state.checkSize" />
 
 </template>
 
 <style scoped>
+
 #linkFace {
     top: v-bind(linkFaceTop);
     left: v-bind(linkFaceLeft);
@@ -51,4 +54,5 @@ const drawLink = computed(() => {
     z-index: 1;
     transform: translate(-50%, -50%);
 }
+
 </style>

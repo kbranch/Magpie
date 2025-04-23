@@ -13,7 +13,6 @@ export let closeAllTooltips = window.closeAllTooltips;
 export let removeNodes = window.removeNodes;
 export let drawNodes = window.drawNodes;
 export let drawActiveTab = window.drawActiveTab;
-export let drawLocation = window.drawLocation;
 export let resetSession = window.resetSession;
 export let saveQuickSettings = window.saveQuickSettings;
 export let saveSettings = window.saveSettings;
@@ -84,6 +83,9 @@ export let checkGraphicMouseLeave = window.checkGraphicMouseLeave;
 export let broadcastMode = window.broadcastMode;
 export let allowAutotracking = window.allowAutotracking;
 export let broadcastLocation = window.broadcastLocation;
+export let updateReverseMap = window.updateReverseMap;
+export let refreshMapNdi = window.refreshMapNdi;
+export let updateNdi = window.updateNdi;
 
 export function initGlobals(data) {
     let state = useStateStore();

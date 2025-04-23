@@ -32,7 +32,7 @@ const mapScaling = computed(() => {
                 && imageLoaded.value
 
     if (props.mapContainer) {
-        const scaling = getMapScaling(props.mapContainer, false);
+        const scaling = getMapScaling(props.mapContainer);
         return scaling;
     }
 

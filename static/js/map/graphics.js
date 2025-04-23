@@ -32,7 +32,7 @@ function drawConnectorLines() {
     $('connection').connections('remove');
 }
 
-function getMapScaling(map, offsetCheckSize=true) {
+function getMapScaling(map) {
     let scaling = {};
     let img = $(map).find('.map')[0];
     let elementAspect = img.width / img.height;
@@ -60,9 +60,8 @@ function getMapScaling(map, offsetCheckSize=true) {
 
     scaling.offset = {};
 
-    let checkOffset = offsetCheckSize ? checkSize : 0;
-    scaling.offset.x = (16 * scaling.x - checkOffset) / 2 + x;
-    scaling.offset.y = (16 * scaling.y - checkOffset) / 2 + y;
+    scaling.offset.x = (8 * scaling.x) + x;
+    scaling.offset.y = (8 * scaling.y) + y;
 
     return scaling;
 }
