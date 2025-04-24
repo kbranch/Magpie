@@ -16,6 +16,7 @@ var allChecksById = {};
 var localSettings = null;
 var entranceMap = {};
 var reverseEntranceMap = {};
+var entranceBackup = {};
 var connections = [];
 var bossMap = {};
 var checkedChecks = new Set();
