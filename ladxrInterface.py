@@ -422,4 +422,10 @@ def getDungeonItemCount(args):
     return itemCount
 
 def loadSpoilerLog(romData):
-    return getSpoilerLog(romData)
+    log = json.loads(getSpoilerLog(romData))
+
+    # Crappy workaround for the custom graphics pack confusing the settings reader
+    if 'shortSettings' in log:
+        log['shortSettings'] = log['shortSettings'].replace("ccustom.png>", "")
+
+    return json.dumps(log)
