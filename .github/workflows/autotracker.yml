@@ -33,6 +33,7 @@ jobs:
           submodules: recursive
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
+      - run: mkdir -p ./pyevilemu/evilemu/ 
       - name: Create executable
         id: build
         uses: kbranch/pyinstaller-action@main
@@ -62,8 +63,8 @@ jobs:
           repository: 'kbranch/pyevilemu'
           ref: 'magpie'
           path: 'pyevilemu'
-      - name: Build pyevilemu
-        run: cd pyevilemu; python3 setup.py install
+      # - name: Build pyevilemu
+      #   run: cd pyevilemu; python3 setup.py install
       - name: Create executable
         id: build
         uses: kbranch/pyinstaller-action@main
@@ -85,6 +86,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
+      - run: mkdir -p ./pyevilemu/evilemu/ 
       - name: Remove LADXR gfx
         run: rm -rf LADXR/gfx
       - name: Create executable
