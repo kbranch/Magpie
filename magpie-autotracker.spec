@@ -8,7 +8,7 @@ a = Analysis(
     ['autotracking/autotracker.py'],
     pathex=[],
     binaries=[],
-    datas=[('./LADXR/', 'LADXR/'), ('./autotracking/autotracker-version', '.'), ('./pyevilemu/', 'evilemu/')],
+    datas=[('./LADXR/', 'LADXR/'), ('./autotracking/autotracker-version', '.'), ('./pyevilemu/evilemu/', 'evilemu/')],
     hiddenimports=[],
     hookspath=[],
     runtime_hooks=[],
