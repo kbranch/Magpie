@@ -140,6 +140,10 @@ function loadEntrances() {
 }
 
 function refreshEntranceBackup() {
+    if (!randomizedEntrances || !entranceMap) {
+        return;
+    }
+
     for (const entrance of randomizedEntrances) {
         if (entrance in entranceMap) {
             if (Entrance.isConnected(entrance)) {
