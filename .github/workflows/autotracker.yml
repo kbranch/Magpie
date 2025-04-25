@@ -61,6 +61,9 @@ jobs:
         with:
           repository: 'kbranch/pyevilemu'
           ref: 'magpie'
+          path: 'pyevilemu'
+      - name: Build pyevilemu
+        run: cd pyevilemu; python3 setup.py install
       - name: Create executable
         id: build
         uses: kbranch/pyinstaller-action@main
