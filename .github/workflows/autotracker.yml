@@ -56,6 +56,11 @@ jobs:
           submodules: recursive
       - name: Remove LADXR gfx
         run: rm -r -fo LADXR/gfx
+      - name: Checkout pyevilemu
+        uses: actions/checkout@v4
+        with:
+          repository: 'kbranch/pyevilemu'
+          ref: 'magpie'
       - name: Create executable
         id: build
         uses: kbranch/pyinstaller-action@main
