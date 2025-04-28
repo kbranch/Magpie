@@ -26,6 +26,7 @@ Several packages are available:
 - Autotracker
   - [Windows](https://magpietracker.us/static/builds/magpie-autotracker.exe)
   - [Linux](https://magpietracker.us/static/builds/magpie-autotracker-linux)
+  - [macOS](https://magpietracker.us/static/builds/magpie-autotracker-macos)
 
 ### From Source
 
@@ -110,7 +111,7 @@ Settings are available in the main Magpie UI to control what data gets pulled fr
 
 Check out the [API](https://github.com/kbranch/Magpie/wiki/Autotracker-API) for 3rd party tools.
 
-The autotracker itself has been moved to its own repo: [https://github.com/kbranch/Magpie-LADX-Autotracker]
+The autotracker itself has been moved to its own repo: https://github.com/kbranch/Magpie-LADX-Autotracker
 
 ## Spoiler Log
 
