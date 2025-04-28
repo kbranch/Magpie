@@ -1,25 +1,27 @@
+import io
 import os
 import sys
+import uuid
+import json
 import copy
 import random
+import traceback
 from xmlrpc.client import boolean
 from trackerLogic import buildLogic
 import trackerLogic
 import trackables
 from datetime import datetime
-from autotracking.romContents import *
 
 sys.path.append(os.path.abspath('LADXR/'))
 
 import explorer
 import itempool
-import logic
-import locations
 from args import Args
 from worldSetup import WorldSetup, start_locations
 from LADXR.settings import *
 from checkMetadata import checkMetadataTable
 from romTables import ROMWithTables
+from spoilerLog import SpoilerLog, RaceRomException
 
 allChecks = {}
 
@@ -429,3 +431,36 @@ def loadSpoilerLog(romData):
         log['shortSettings'] = log['shortSettings'].replace("ccustom.png>", "")
 
     return json.dumps(log)
+
+class SpoilerArgs:
+    def __init__(self):
+        self.dump = False
+        self.test = False
+        self.spoilerformat = 'json'
+
+def getSpoilerLog(romData):
+    rom = ROMWithTables(io.BytesIO(romData))
+    args = SpoilerArgs()
+    shortSettings = rom.readShortSettings()
+    settings = Settings()
+    settings.loadShortString(shortSettings)
+    
+    filename = f'log-{uuid.uuid4()}.json'
+    logJson = {}
+
+    try:
+        log = SpoilerLog(settings, args, [rom])
+        log.outputJson(filename)
+        logJson = json.loads(open(filename, 'r').read())
+        os.remove(filename)
+    except RaceRomException:
+        logJson['raceRom'] = True
+    except Exception as e:
+        message = f'Error loading spoiler log: {traceback.format_exc()}'
+        logJson['error'] = message
+        print(message)
+
+    logJson['shortSettings'] = shortSettings
+    logJson['archipelago'] = not romData[0x134:0x143].startswith(b'LADXR')
+
+    return json.dumps(logJson)
