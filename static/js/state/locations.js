@@ -13,7 +13,10 @@ function saveChecked() {
 }
 
 function saveEntrances() {
+    refreshEntranceBackup();
+
     setLocalStorage('entranceMap', JSON.stringify(entranceMap));
+    setLocalStorage('entranceBackup', JSON.stringify(entranceBackup));
     setLocalStorage('connections', JSON.stringify(connections));
 
     rateLimit(sharingLiveUpdate, 1000);
@@ -137,7 +140,38 @@ function loadEntrances() {
 
     updateInsideEntrances = false;
 
+    try {
+        entranceBackup = JSON.parse(getLocalStorage('entranceBackup'));
+
+        if (entranceBackup == null) {
+            entranceBackup = {};
+            refreshEntranceBackup();
+        }
+    }
+    catch (err) {
+        entranceBackup = structuredClone(entranceMap);
+    }
+
     return errors;
+}
+
+function refreshEntranceBackup() {
+    if (!randomizedEntrances || !entranceMap) {
+        return;
+    }
+
+    for (const entrance of randomizedEntrances) {
+        if (entrance in entranceMap) {
+            if (Entrance.isConnected(entrance)) {
+                let conn = Entrance.mappedConnection(entrance);
+                if (conn.vanilla) {
+                    continue;
+                }
+            }
+
+            entranceBackup[entrance] = entranceMap[entrance];
+        }
+    }
 }
 
 function hydrateConnections(dehydratedConnections) {
@@ -200,6 +234,7 @@ function resetEntrances() {
     clearEntranceMap();
     clearReverseEntranceMap();
     connections.length = 0;
+    entranceBackup = {};
     saveEntrances();
 }
 
@@ -364,34 +399,42 @@ function setStartLocation(entranceId) {
     refreshCheckList();
 }
 
-function clearEntranceMapping(entranceId, housekeeping=true) {
+function deleteMapping(entranceId, clearBackup) {
+    delete entranceMap[entranceId];
+
+    if (clearBackup && entranceId in entranceBackup) {
+        delete entranceBackup[entranceId];
+    }
+}
+
+function clearEntranceMapping(entranceId, housekeeping=true, clearBackup=true) {
     if (housekeeping) {
         pushUndoState();
     }
 
     if (args.entranceshuffle == 'none'
         && entranceMap[entranceId] == startHouse) {
-        delete entranceMap[startHouse];
+        deleteMapping(startHouse, clearBackup);
     }
 
     if (Entrance.isConnected(entranceId)) {
         let conn = Entrance.mappedConnection(entranceId);
         if (coupledEntrances() && conn.entrances.length == 4) {
-            delete entranceMap[entranceMap[conn.otherSide(entranceId)]];
-            delete entranceMap[conn.otherSide(entranceId)];
+            deleteMapping(entranceMap[conn.otherSide(entranceId)], clearBackup);
+            deleteMapping(conn.otherSide(entranceId), clearBackup);
         }
     }
 
     Connection.disconnect(entranceId);
     if (coupledEntrances()) {
-        delete entranceMap[entranceMap[entranceId]];
+        deleteMapping(entranceMap[entranceId], clearBackup);
     }
 
     if (entranceId in entranceMap) {
-        delete entranceMap[entranceId];
+        deleteMapping(entranceId, clearBackup);
     }
     else {
-        delete entranceMap[reverseEntranceMap[entranceId]];
+        deleteMapping(reverseEntranceMap[entranceId], clearBackup);
     }
 
 

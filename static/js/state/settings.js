@@ -329,6 +329,7 @@ function getState(addAp=true) {
     state.checkedChecks = [...checkedChecks];
     state.hints = [...hints];
     state.entranceMap = entranceMap;
+    state.entranceBackup = entranceBackup;
     state.connections = connections;
     state.checkContents = checkContents;
     state.errorLog = errorLog;
@@ -385,6 +386,7 @@ function importState(data, includeLocalSettings=true, reload=true) {
                 connections.length = 0;
                 hydrateConnections(state.connections)?.map(x => connections.push(x));
 
+                entranceBackup = state.entranceBackup ?? {};
                 checkContents = state.checkContents;
                 args = state.args;
                 hints = state.hints;

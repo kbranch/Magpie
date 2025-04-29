@@ -104,7 +104,7 @@ function removeVanillaConnectors(save=true) {
     for (const connection of [...connections]) {
         if (connection.vanilla) {
             for (const exterior of connection.entrances) {
-                clearEntranceMapping(exterior, false);
+                clearEntranceMapping(exterior, false, false);
             }
         }
     }
@@ -119,9 +119,11 @@ function removeVanillaConnectors(save=true) {
 function updateEntrances() {
     for (const entrance in entranceMap) {
         if (!randomizedEntrances?.includes(entrance)) {
-            clearEntranceMapping(entrance, false);
+            clearEntranceMapping(entrance, false, false);
         }
     }
+
+    connections = connections.filter(x => x.entrances.some(y => y in entranceMap));
 
     removeVanillaConnectors(false);
     for (const connectorId in connectorDict) {
