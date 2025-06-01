@@ -307,10 +307,6 @@ def buildLogic(args, worldSetup, requirements=None):
     
     requirements.names = {}
 
-    if args.ap_logic and not args.prerelease:
-        # AP doesn't require the magnifier for anything
-        requirements.shuffled_magnifier = None
-
     for name, req in requirements.__dict__.items():
         if type(req) not in (type(True), type(''), AND, OR):
             continue
@@ -370,6 +366,7 @@ def buildLogic(args, worldSetup, requirements=None):
         7: "hothead",
         8: "hardhit_beetle",
     }
+
     for boss, req in requirements.boss_requirements.items():
         newReq = req
         if type(req) == type(True):
@@ -415,49 +412,7 @@ def buildLogic(args, worldSetup, requirements=None):
     if args.openmabe:
         locs[ukuku].connect(locs[mabe], log.requirements_settings.bush)
 
-    if args.ap_logic and not args.prerelease:
-        # Always allow bow for killing wizrobes
-        # log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
-
-        # Elephant statue is always there
-        if bird_cave in locs and bird_key in locs:
-            locs[bird_cave].connect(locs[bird_key], AND(FEATHER, COUNT(POWER_BRACELET, 2)))
-        
-        # Put bomb three of a kinds back into all logic
-        if d1_three_of_a_kind in locs and d1_right_side in locs:
-            locs[d1_three_of_a_kind].connect(locs[d1_right_side], OR(log.requirements_settings.attack_hookshot, SHIELD))
-        
-        if d7_three_of_a_kind in locs and d7_topright_pillar_area in locs:
-            locs[d7_three_of_a_kind].connect(locs[d7_topright_pillar_area], OR(log.requirements_settings.attack_hookshot, AND(OR(BOMB, FEATHER), SHIELD)))
-
-        # Put killing gibdos on the cracked floors with hookshot without magic rod back into all logics
-        if d8_cracked_floor in locs and d8_upper_center in locs:
-            locs[d8_cracked_floor].connect(locs[d8_upper_center], log.requirements_settings.attack_skeleton)
-        
-        # Put a dicey bomb route back in normal logic
-        if args.logic not in ['casual', ''] and d8_vire_drop_key in locs and d8_entrance_left in locs:
-            locs[d8_vire_drop_key].connect(locs[d8_entrance_left], BOMB)
-        
-        # Put itemless armos maze back into all logics
-        if armos_maze in locs and outside_armos_cave in locs and outside_armos_temple in locs:
-            locs[armos_maze].connect(locs[outside_armos_cave], None)
-            locs[armos_maze].connect(locs[outside_armos_temple], None)
-        
-        # Left of the castle, 5 holes turned into 3
-        if 'castle_jump_cave' in log.world.entrances:
-            log.world._addEntranceRequirement("castle_jump_cave", AND(FEATHER, PEGASUS_BOOTS))
-
-            # ER has already been applied at this point, we have to track down where it got connected and add a new connection
-            entrance = log.world.entrances['castle_jump_cave']
-            roosterLocs = [x[0] for x in entrance.location.simple_connections if x[1] == 'ROOSTER']
-            if roosterLocs:
-                roosterLocs[0].connect(entrance.location, AND(FEATHER, PEGASUS_BOOTS))
-        
-        # Remove the bracelet requirement for the color ball dudes
-        if d0_stone_beak in locs:
-            locs[d0_stone_beak].connect(locs[d0_lower_small_key], log.requirements_settings.attack_hookshot)
-
-        if d0_bullshit_room in locs:
-            locs[d0_bullshit_room].connect(locs[d0_zol_chest], log.requirements_settings.attack_hookshot)
+    if args.ap_logic:
+        requirements.bush._OR__items.append(BOMB)
     
     return log
