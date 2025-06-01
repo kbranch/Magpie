@@ -238,24 +238,24 @@ def applyTrackerLogic(log):
     # Rooster across the river
     if animal_village in locs and ukuku in locs:
         river_rooster = Location().add(LogicHint('RiverRooster'))
-        locs[animal_village].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
-        locs[ukuku].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
+        locs[animal_village].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
+        locs[ukuku].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
 
     # Fly from staircase to staircase on the north side of the moat
     if angler_keyhole in locs and kanalet_side in locs:
         kanalet_rooster = Location().add(LogicHint('KanaletRooster'))
-        locs[angler_keyhole].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
-        locs[kanalet_side].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True)
+        locs[angler_keyhole].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
+        locs[kanalet_side].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
 
     # Drop in a hole at bird cave
     if log.name != "casual" and bird_cave in locs:
         bird_pits = Location().add(LogicHint('BirdPits'))
-        locs[bird_cave].connect(bird_pits, None, one_way=True)
+        locs[bird_cave].connect(bird_pits, None, back=False)
     
     # Fall down Lanmola's pit
     if desert in locs:
         lanmola_pit = Location().add(LogicHint('LanmolaPit'))
-        locs[desert].connect(lanmola_pit, None, one_way=True)
+        locs[desert].connect(lanmola_pit, None, back=False)
     
     # Fall down the damp cave pit
     if damp_pit in locs or d7_plateau in locs:
@@ -267,19 +267,19 @@ def applyTrackerLogic(log):
                                                          log.name == 'hell',
                                                          AND(log.name == 'glitched',
                                                              'FEATHER'))
-                ), one_way=True)
+                ), back=False)
         if d7_plateau in locs:
             locs[d7_plateau].connect(damp_cave_pit, AND(log.name != 'casual',
                                                       OR('FLIPPERS',
                                                          log.name == 'hell',
                                                          AND(log.name == 'glitched',
                                                              'FEATHER'))
-                ), one_way=True)
+                ), back=False)
     
     # Alternative flame skip methods
     if log.name not in ('casual', 'normal') and fire_cave_north in locs and fire_cave_south in locs:
         locs[fire_cave_north].connect(locs[fire_cave_south], 'MEDICINE2')
-        locs[fire_cave_south].connect(locs[fire_cave_north], log.requirements_settings.damage_boost, one_way=True) # flame skip without boots
+        locs[fire_cave_south].connect(locs[fire_cave_north], log.requirements_settings.damage_boost, back=False) # flame skip without boots
     
     # D4 tektite crystal chest with a jesus jump superjump
     if log.name in ('glitched', 'hell') and d4_tektite_crystal in locs and d4_right_of_entrance in locs:
