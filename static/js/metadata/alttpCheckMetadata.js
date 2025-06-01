@@ -2237,7 +2237,7 @@ let alttpCoordDict = {
     "0x1D1":{
        "id":"0x1D1",
        "area":"Face Shrine",
-       "name":"Four Wizzrobe Ledge Chest",
+       "name":"Four Wizrobe Ledge Chest",
        "locations":[
           {
              "map":"d6",
@@ -2305,7 +2305,7 @@ let alttpCoordDict = {
     "0x1B4":{
        "id":"0x1B4",
        "area":"Face Shrine",
-       "name":"Two Wizzrobe Key",
+       "name":"Two Wizrobe Key",
        "locations":[
           {
              "map":"d6",
@@ -2356,7 +2356,7 @@ let alttpCoordDict = {
     "0x1C0":{
        "id":"0x1C0",
        "area":"Face Shrine",
-       "name":"Three Wizzrobe, Switch Chest",
+       "name":"Three Wizrobe, Switch Chest",
        "locations":[
           {
              "map":"d6",
@@ -2548,7 +2548,7 @@ let alttpCoordDict = {
     "0x188":{
        "id":"0x188",
        "area":"Catfish's Maw",
-       "name":"Swort Stalfos, Star, Bridge Chest",
+       "name":"Sword Stalfos, Star, Bridge Chest",
        "locations":[
           {
              "map":"d5",
