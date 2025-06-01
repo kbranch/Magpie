@@ -120,7 +120,7 @@ const bossBeatable = computed(() => {
 });
 
 const hintIcon = computed(() => {
-    return props.node.isOnlyVanillaOwls() && props.node.checks.length > 0;
+    return props.node.isOnlyVanillaOwls && props.node.checks.length > 0;
 });
 
 const difficulty = computed(() => {

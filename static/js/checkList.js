@@ -8,7 +8,7 @@ function toggleNode(node) {
     let toggleList = new Set(node.checks.filter(x => (x.nodeDifficulty() == node.difficulty
                                                       && x.behindKeys == node.behindKeys
                                                       && !x.isChecked()
-                                                      && (!x.isVanillaOwl() || node.isOnlyVanillaOwls()))
+                                                      && (!x.isVanillaOwl() || node.isOnlyVanillaOwls))
                                                      || (x.isChecked() && node.isChecked)
                                                      )
                                         .map(x => x.id));

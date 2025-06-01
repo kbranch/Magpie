@@ -5,6 +5,7 @@ import { Entrance } from "./entrance";
 import { advancedER, checkGraphicLeftClick, checkGraphicMouseEnter, checkGraphicMouseLeave, checkGraphicRightClick, connectorsMixed, coupledEntrances, createElement, entranceDict, inOutEntrances, nodeMiddle, pickingEntrances, sortByKey } from "@/moduleWrappers";
 import { useAccessibilityStore } from "@/stores/accessibilityStore";
 import { useNodeTooltipStore } from "@/stores/nodeTooltipStore";
+import { computed, reactive } from "vue";
 
 const $ = window.$;
 
@@ -15,15 +16,174 @@ export class MapNode {
         this.location = location;
         this.scaling = scaling;
         this.hideMe = false;
-        this.item = null;
         this.connectorLabel = null;
-        this.bossBeatable = false;
         this.pinned = false;
 
         this.checks = [];
         this.entrance = entranceId == null ? null : new Entrance(entranceId);
         this.boss = bossMetadata == null ? null : new Boss(bossMetadata);
         this.logicHint = logicHint;
+
+        this.refs = reactive({});
+        this.refs.difficulty = computed(() => {
+            let difficulty = this.logicHint ? this.logicHint.baseDifficulty : 'checked';
+
+            for (const check of this.checks) {
+                if (!check.isChecked() && (!check.isVanillaOwl() || this.isOnlyVanillaOwls)) {
+                    if ((check.difficulty < difficulty || difficulty == 'checked')) {
+                        difficulty = check.difficulty;
+                    }
+                }
+            }
+
+            return difficulty;
+        });
+
+        this.refs.isOnlyVanillaOwls = computed(() => {
+            return this.checks.filter(x => x.isVanillaOwl()).length == this.checks.length;
+        });
+
+        this.refs.itemChecks = computed(() => {
+            return this.checks.filter(x => !x.isVanillaOwl() || this.isOnlyVanillaOwls);
+        });
+
+        this.refs.uncheckedChecks = computed(() => {
+            return this.checks.filter(x => x.difficulty == this.difficulty
+                                           && !x.isChecked()
+                                           && (!x.isVanillaOwl() || this.isOnlyVanillaOwls));
+        });
+
+        this.refs.uncheckedRandomizedChecks = computed(() => {
+            return this.uncheckedChecks.filter(x => !x.metadata.vanilla);
+        });
+
+        this.refs.isChecked = computed(() => {
+            return (this.itemChecks.length > 0
+                    && this.itemChecks.every(x => x.isChecked()))
+                   || this.entranceConnectedTo() == 'landfill';
+        });
+
+        this.refs.behindKeys = computed(() => {
+            return this.uncheckedChecks.length > 0 
+                   && this.uncheckedChecks.every(x => x.behindKeys);
+        });
+
+        this.refs.behindTrackerLogic = computed(() => {
+            return this.uncheckedChecks.length > 0 
+                   && this.uncheckedChecks.every(x => x.behindTrackerLogic);
+        });
+
+        this.refs.behindRupees = computed(() => {
+            return this.uncheckedRandomizedChecks.length > 0 
+                   && this.uncheckedRandomizedChecks.every(x => x.behindRupees);
+        });
+
+        this.refs.requiresRupees = computed(() => {
+            return this.uncheckedRandomizedChecks.length > 0 
+                   && this.uncheckedRandomizedChecks.every(x => x.requiredRupees);
+        });
+
+        this.refs.isVanilla = computed(() => {
+            return (this.checks.length > 0
+                    && this.checks.filter(x => x.difficulty == this.difficulty
+                                               && x.behindKeys == this.behindKeys
+                                               && x.isChecked() == this.isChecked
+                                               && (!x.isVanillaOwl() || this.checks.length == 1))
+                                  .every(x => x.isVanilla))
+                         || this.logicHint;
+        });
+        
+        this.refs.isNightmare = computed(() => {
+            return this.boss && this.boss.type == 'boss';
+        });
+
+        this.refs.isMiniboss = computed(() => {
+            return this.boss && this.boss.type == 'miniboss';
+        });
+
+        this.refs.item = computed(() => {
+            let checks = this.checks.sort((a, b) => a.difficulty - b.difficulty || a.isVanilla - b.isVanilla);
+            let uncheckedChecks = checks.filter(x => !x.isChecked());
+            let itemedChecks = checks.filter(x => x.item);
+            let uncheckedItems = itemedChecks.filter(x => !x.isChecked());
+
+            if (uncheckedItems.length > 0 && (!uncheckedItems[0].isVanilla || uncheckedChecks[0].isVanilla)) {
+                return uncheckedItems[0].item;
+            }
+            else if (itemedChecks.length == 1 && this.checks.length == 1) {
+                return itemedChecks[0].item;
+            }
+
+            return null;
+        });
+
+        this.refs.bossBeatable = computed(() => {
+            return this.checks.some(x => x.difficulty == this.difficulty
+                                         && x.difficulty < 9
+                                         && x.behindKeys == this.behindKeys
+                                         && (x.metadata.name.includes("Heart Container")
+                                             || x.metadata.name.includes("Tunic Fairy")));
+        });
+    }
+
+    get difficulty() {
+        return this.refs.difficulty;
+    }
+
+    get isChecked() {
+        return this.refs.isChecked;
+    }
+
+    get isOnlyVanillaOwls() {
+        return this.refs.isOnlyVanillaOwls;
+    }
+
+    get itemChecks() {
+        return this.refs.itemChecks;
+    }
+    
+    get uncheckedChecks() {
+        return this.refs.uncheckedChecks;
+    }
+
+    get uncheckedRandomizedChecks() {
+        return this.refs.uncheckedRandomizedChecks;
+    }
+
+    get isVanilla() {
+        return this.refs.isVanilla;
+    }
+
+    get isNightmare() {
+        return this.refs.isNightmare;
+    }
+
+    get isMiniboss() {
+        return this.refs.isMiniboss;
+    }
+
+    get behindKeys() {
+        return this.refs.behindKeys;
+    }
+
+    get behindTrackerLogic() {
+        return this.refs.behindTrackerLogic;
+    }
+
+    get behindRupees() {
+        return this.refs.behindRupees;
+    }
+
+    get requiresRupees() {
+        return this.refs.requiresRupees;
+    }
+
+    get item() {
+        return this.refs.item;
+    }
+
+    get bossBeatable() {
+        return this.refs.bossBeatable;
     }
 
     id() {
@@ -74,121 +234,8 @@ export class MapNode {
             .map.toUpperCase();
     }
 
-    isNightmare() {
-        return this.boss && this.boss.type == 'boss';
-    }
-
-    isMiniboss() {
-        return this.boss && this.boss.type == 'miniboss';
-    }
-
-    isOnlyVanillaOwls() {
-        return this.checks.filter(x => x.isVanillaOwl()).length == this.checks.length;
-    }
-
-    updateBehindKeys() {
-        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
-                                                      && !x.isChecked()
-                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
-
-        this.behindKeys = uncheckedChecks.length > 0 
-                          && uncheckedChecks.every(x => x.behindKeys);
-    }
-
-    updateBehindTrackerLogic() {
-        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
-                                                      && !x.isChecked()
-                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
-
-        this.behindTrackerLogic = uncheckedChecks.length > 0 
-                          && uncheckedChecks.every(x => x.behindTrackerLogic);
-    }
-
-    updateBehindRupees() {
-        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
-                                                      && !x.isChecked()
-                                                      && !x.metadata.vanilla
-                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
-
-        this.behindRupees = uncheckedChecks.length > 0 
-                            && uncheckedChecks.every(x => x.behindRupees);
-    }
-
-    updateRequiresRupees() {
-        let uncheckedChecks = this.checks.filter(x => x.difficulty == this.difficulty
-                                                      && !x.isChecked()
-                                                      && !x.metadata.vanilla
-                                                      && (!x.isVanillaOwl() || this.isOnlyVanillaOwls()))
-
-        this.requiresRupees = uncheckedChecks.length > 0 
-                              && uncheckedChecks.every(x => x.requiredRupees);
-    }
-
-    updateDifficulty() {
-        this.difficulty = this.logicHint ? this.logicHint.baseDifficulty : 'checked';
-
-        for (const check of this.checks) {
-            if (!check.isChecked() && (!check.isVanillaOwl() || this.isOnlyVanillaOwls())) {
-                if ((check.difficulty < this.difficulty || this.difficulty == 'checked')) {
-                    this.difficulty = check.difficulty;
-                }
-            }
-        }
-    }
-
-    updateIsChecked() {
-        let checks = this.checks.filter(x => !x.isVanillaOwl() || this.isOnlyVanillaOwls());
-
-        this.isChecked = (checks.length > 0
-                          && checks.every(x => x.isChecked()))
-                         || this.entranceConnectedTo() == 'landfill';
-    }
-
-    updateIsVanilla() {
-        this.isVanilla = (this.checks.length > 0
-                          && this.checks.filter(x => x.difficulty == this.difficulty
-                                                     && x.behindKeys == this.behindKeys
-                                                     && x.isChecked() == this.isChecked
-                                                     && (!x.isVanillaOwl() || this.checks.length == 1))
-                                        .every(x => x.isVanilla))
-                         || this.logicHint;
-    }
-    
-    updateItem() {
-        this.item = null;
-
-        let checks = this.checks.sort((a, b) => a.difficulty - b.difficulty || a.isVanilla - b.isVanilla);
-        let uncheckedChecks = checks.filter(x => !x.isChecked());
-        let itemedChecks = checks.filter(x => x.item);
-        let uncheckedItems = itemedChecks.filter(x => !x.isChecked());
-
-        if (uncheckedItems.length > 0 && (!uncheckedItems[0].isVanilla || uncheckedChecks[0].isVanilla)) {
-            this.item = uncheckedItems[0].item;
-        }
-        else if (itemedChecks.length == 1 && this.checks.length == 1) {
-            this.item = itemedChecks[0].item;
-        }
-    }
-
-    updateBossBeatable() {
-        this.bossBeatable = this.checks.some(x => x.difficulty == this.difficulty
-                                             && x.difficulty < 9
-                                             && x.behindKeys == this.behindKeys
-                                             && (x.metadata.name.includes("Heart Container")
-                                                 || x.metadata.name.includes("Tunic Fairy")));
-    }
-
     update() {
-        this.updateDifficulty();
-        this.updateBehindKeys();
-        this.updateBehindTrackerLogic();
-        this.updateBehindRupees();
-        this.updateRequiresRupees();
-        this.updateIsChecked();
-        this.updateIsVanilla();
-        this.updateItem();
         this.sortChecks();
-        this.updateBossBeatable();
     }
 
     canBeHidden() {
@@ -320,7 +367,7 @@ export class MapNode {
 
         if (this.checks.length > 0
             && ((this.checks.length == 1 && this.checks[0].id.includes('Owl'))
-                && this.isOnlyVanillaOwls())) {
+                && this.isOnlyVanillaOwls)) {
             classes.push('owl');
         }
 
