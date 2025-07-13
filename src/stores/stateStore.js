@@ -23,6 +23,7 @@ export const useStateStore = defineStore('state', () => {
     const connectionSource = ref(null);
     const connectionType = ref(null);
     const tipAdmin = ref(false);
+    const errorMessage = ref(null);
 
     let hintCallbacks = [];
 
@@ -89,6 +90,7 @@ export const useStateStore = defineStore('state', () => {
         connectionType,
         connectionSource,
         tipAdmin,
+        errorMessage,
         removeHint,
         onHintUpdate,
         offHintUpdate,

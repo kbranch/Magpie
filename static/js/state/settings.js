@@ -260,15 +260,31 @@ function updateSettings() {
 
 function fixArgs(args) {
     if (['egg', 'random', '5-8', 'maze'].includes(args.goal)) {
-        args.goal = '8';
+        args.goal = 'instruments';
+        args.goalcount = '8';
     }
 
     if (args.goal == 'open-4') {
-        args.goal = '4';
+        args.goal = 'instruments';
+        args.goalcount = '4';
     }
 
     if (args.logic == 'normal') {
         args.logic = '';
+    }
+
+    if (isNumeric(args.goal)) {
+        if (args.goal == '8') {
+            args.goal = 'vanilla';
+        }
+        else {
+            args.goalcount = args.goal;
+            args.goal = 'instruments';
+        }
+    }
+
+    if (['instruments', 'specific'].includes(args.goal) && !isNumeric(args.goalcount)) {
+        args.goalcount = '8';
     }
 
     if (args.dungeon_items == 'standard') {
@@ -311,6 +327,7 @@ function getState(addAp=true) {
     state.checkedChecks = [...checkedChecks];
     state.hints = [...hints];
     state.entranceMap = entranceMap;
+    state.entranceBackup = entranceBackup;
     state.connections = connections;
     state.checkContents = checkContents;
     state.errorLog = errorLog;
@@ -363,6 +380,7 @@ function importState(data, includeLocalSettings=true, reload=true) {
                 inventory = state.inventory;
                 checkedChecks = state.checkedChecks;
                 entranceMap = state.entranceMap;
+                entranceBackup = state.entranceBackup ?? {};
                 connections = hydrateConnections(state.connections);
                 checkContents = state.checkContents;
                 args = state.args;

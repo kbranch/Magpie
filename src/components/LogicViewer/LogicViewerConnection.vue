@@ -4,15 +4,18 @@ import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed, onMounted, onUpdated, ref } from 'vue';
 import LogicRequirements from './LogicRequirements.vue';
 
-const connection = defineModel();
-defineProps(['nodeId']);
+const props = defineProps(['connection', 'nodeId']);
 
 const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
 const tr = ref(null);
 
-const otherEnd = computed(() => connection.value?.badWay ? connection.value.from: connection.value.to);
+const thisEnd = computed(() => props.connection?.badWay ? props.connection.to: props.connection.from);
+const otherEnd = computed(() => props.connection?.badWay ? props.connection.from: props.connection.to);
+
+const thisName = computed(() => logic.getLogicNodeName(thisEnd.value));
+const otherName = computed(() => logic.getLogicNodeName(otherEnd.value));
 
 onMounted(initTooltips);
 onUpdated(initTooltips);
@@ -26,74 +29,56 @@ function initTooltips() {
 
 <template>
 
-<tr ref="tr">
-    <td class="pe-0">
-        <div class="cell-wrapper">
-            <div class="text-start d-flex p-1 mb-0 align-items-center">
-                <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${connection.diff}`]: true}">
-                    <div class="tooltip-check-graphic icon-wrapper">
-                        <svg class="tooltip-check-graphic align-middle">
-                            <use :xlink:href="`#difficulty-${connection.diff}`"></use>
-                        </svg>
-                    </div>
+<div ref="tr" class="row py-2">
+    <div class="col-auto">
+        <div class="text-start d-flex pe-2 mb-0 align-items-center">
+            <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${connection.diff}`]: true}">
+                <div class="tooltip-check-graphic icon-wrapper">
+                    <svg class="tooltip-check-graphic align-middle">
+                        <use :xlink:href="`#difficulty-${connection.diff}`"></use>
+                    </svg>
                 </div>
             </div>
         </div>
-    </td>
-    <td>
-        <div class="cell-wrapper">
-            {{ logic.getLogicNodeName(otherEnd) }}
-            <img v-if="connection.badWay" class="logic-item invert ps-2" src="/images/do-not-enter.svg"
-                @mouseover="tip.tooltip('One-way', $event)">
-        </div>
-    </td>
-    <td>
-        <div class="cell-wrapper">
-            <LogicRequirements :subject="connection" />
-        </div>
-    </td>
-    <td>
-        <div class="cell-wrapper center-cell">
-            <img v-if="connection.met" class='connection-met logic-accessibility' src='/images/check2-circle.svg'
-                @mouseover="tip.tooltip('Requirement met', $event)">
-            <img v-else class='connection-unmet logic-accessibility' src='/images/x-circle.svg'
-                @mouseover="tip.tooltip('Requirement not met', $event)">
-        </div>
-    </td>
-    <td>
-        <div class="cell-wrapper end-cell">
-            <button v-if="connection.tips?.length > 0" type="button" class="btn btn-secondary view-button me-2"
-                :class="{ 'unapproved': connection.tips?.some(x => !x.approved) }"
-                @click="logic.viewTips(connection)" @mouseover="tip.tooltip('View tips', $event)">
-                <img src="/images/info-circle.svg" class="invert">
-            </button>
-            <button v-else type="button" class="btn btn-secondary view-button me-2"
-                @click="logic.startTipForm(connection)" @mouseover="tip.tooltip('Suggest a tip', $event)">
-                <img src="/images/plus-lg.svg" class="invert">
-            </button>
 
-            <button type="button" class="btn btn-secondary view-button" @click="logic.pushStack(nodeId, otherEnd)"
-                @mouseover="tip.tooltip('View node', $event)">
-                <img src="/images/chevron-right.svg" class="invert">
-            </button>
-        </div>
-    </td>
-</tr>
+        <img v-if="connection.met" class='connection-met logic-accessibility me-2' src='/images/check2-circle.svg'
+            @mouseover="tip.tooltip('Requirement met', $event)">
+        <img v-else class='connection-unmet logic-accessibility me-2' src='/images/x-circle.svg'
+            @mouseover="tip.tooltip('Requirement not met', $event)">
+
+        <img v-if="connection.badWay" class="logic-item invert pe-2" src="/images/do-not-enter.svg"
+            @mouseover="tip.tooltip(`From '${otherName}' to '${thisName}'`, $event)">
+        <img v-else-if="connection.oneWay" class="logic-item invert pe-2" src="/images/arrow-right.svg"
+            @mouseover="tip.tooltip(`From '${thisName}' to '${otherName}'`, $event)">
+        <img v-else class="logic-item invert pe-2" src="/images/arrow-left-right.svg"
+            @mouseover="tip.tooltip('Both ways', $event)">
+    </div>
+
+    <div class="col">
+        <LogicRequirements :subject="connection" />
+    </div>
+</div>
+
+<hr class="my-0">
 
 </template>
 
 <style scoped>
 
-.unapproved {
-    background-color: goldenrod;
-}
-
-.view-button {
+.col-auto {
     display: flex;
     align-items: center;
-    padding-left: 6px;
-    padding-right: 6px;
-    height: 100%;
+    justify-content: center;
+}
+
+.multi-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.unapproved {
+    background-color: goldenrod;
 }
 
 td {
@@ -103,9 +88,15 @@ td {
 .cell-wrapper {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 100%;
     flex-wrap: wrap;
+}
+
+.check-column {
+    flex-wrap: nowrap;
+}
+
+.check-name {
+    white-space: normal;
 }
 
 .center-cell {

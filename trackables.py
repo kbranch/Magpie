@@ -65,9 +65,9 @@ def getAccessibility(allChecks, allEntrances, logics, inventory):
     if allEntrances:
         entranceAccessibility = getEntranceAccessibility(allEntrances, logics['stock'], inventory.copy())
 
-    graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
-
     getCheckTrackerAccessibility(logics['tracker'], inventory, keyInventory, checkAccessibility)
+
+    graphAccessibility = getGraphAccessibility(logics['tracker'], inventory)
 
     if allEntrances:
         getEntranceTrackerAccessibility(logics['tracker'], inventory.copy(), entranceAccessibility)
@@ -158,6 +158,11 @@ def getGraphAccessibility(logics, inventory):
                 accessibility[name]['connections'] = {}
                 accessibility[name]['checks'] = [x.nameId for x in loc.items]
                 accessibility[name]['id'] = name
+
+                forcedItems = [x.item or x.forced_item or x.OPTIONS[0] for x in loc.items
+                               if x.forced_item or len(x.OPTIONS) == 1]
+                if forcedItems:
+                    accessibility[name]['forcedItems'] = forcedItems
             
             accLoc = accessibility[name]
 
@@ -165,7 +170,8 @@ def getGraphAccessibility(logics, inventory):
                 accLoc['diff'] = i
 
             for connection in loc.simple_connections + loc.gated_connections:
-                toName = connection[0].friendlyName()
+                to = connection[0]
+                toName = to.friendlyName()
                 requirement = connection[1]
                 id = None if len(connection) < 3 else connection[2]
                 fullReqName = str(requirement)
@@ -175,8 +181,8 @@ def getGraphAccessibility(logics, inventory):
                     shortReqName = requirement.shortName(logic)
 
                 if connId not in accLoc['connections']:
-                    to = connection[0]
-                    matchingConnections = [x for x in to.simple_connections + to.gated_connections if str(x[1]) == fullReqName]
+                    matchingConnections = [x for x in to.simple_connections + to.gated_connections 
+                                           if str(x[1]) == fullReqName and x[0].friendlyName() == name]
 
                     newConnection = {
                         'from': name,
@@ -193,6 +199,9 @@ def getGraphAccessibility(logics, inventory):
                     
                     if not matchingConnections:
                         newConnection['oneWay'] = True
+
+                    if hasattr(logic, 'lastInventory'):
+                        inventory = logic.lastInventory
                     
                     if testRequirement(requirement, inventory):
                         newConnection['met'] = True

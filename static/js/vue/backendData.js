@@ -98,10 +98,18 @@ function refreshCheckList() {
             data: data,
             success: (response) => {
                 console.log("Received checkList response");
+
+                if (response.error) {
+                    console.error("Error retrieving check list", response.error);
+                    errorLog.push(response.error);
+                    vueApp.setErrorMessage(response.error);
+                    return;
+                }
+
                 pruneEntranceMap();
 
                 let newEntrances = false;
-                if (autotrackerIsConnected() && response.randomizedEntrances?.length) {
+                if (response.randomizedEntrances?.length) {
                     newEntrances = true;
                     if (randomizedEntrances) {
                         newEntrances = false;
@@ -129,8 +137,39 @@ function refreshCheckList() {
                 broadcastMap();
 
                 if (newEntrances) {
-                    // We have at least one new entrance, ask the autotracker to resend entrances
-                    loadFromAutotracker();
+                    // We have at least one new entrance, do our best to reload old mappings
+                    let reload = false;
+
+                    for (const entrance of randomizedEntrances) {
+                        if (!(entrance in entranceMap) && entrance in entranceBackup) {
+                            if (!advancedER() && Entrance.isConnector(entranceBackup[entrance])) {
+                                connectOneEndConnector(entrance, entranceBackup[entrance], false);
+                            }
+                            else {
+                                connectEntrances(entrance, entranceBackup[entrance], false);
+                                updateReverseMap();
+
+                                if (advancedER()) {
+                                    Connection.advancedErConnection([entrance, entranceBackup[entrance]], 'overworld');
+                                }
+                            }
+
+                            updateReverseMap();
+
+                            reload = true;
+                        }
+                    }
+
+                    if (reload) {
+                        saveEntrances();
+
+                        // This will get rate limited, don't have to worry about recursion
+                        refreshCheckList();
+                    }
+
+                    if (autotrackerIsConnected()) {
+                        loadFromAutotracker();
+                    }
                 }
 
                 setTimeout(drawActiveTab);

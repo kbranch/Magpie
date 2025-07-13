@@ -26,6 +26,7 @@ Several packages are available:
 - Autotracker
   - [Windows](https://magpietracker.us/static/builds/magpie-autotracker.exe)
   - [Linux](https://magpietracker.us/static/builds/magpie-autotracker-linux)
+  - [macOS](https://magpietracker.us/static/builds/magpie-autotracker-macos)
 
 ### From Source
 
@@ -106,26 +107,11 @@ You *could* mitigate these limitations by changing the web-based broadcast views
 Magpie also has a restreaming page, where the items from multiple players are displayed and automatically updated based on those players' trackers. Each player must use the sharing button to connect to the same event name (make sure `Live Update` is checked). The sharing button also provides a link to the event page that the restreamer would capture.
 
 ## Autotracker
-Magpie uses a separate autotracker program that runs locally and communicates with the site via websockets. The latest packaged autotracker is always available at [https://magpietracker.us/static/builds/magpie-autotracker.exe](https://magpietracker.us/static/builds/magpie-autotracker.exe) or from a link in the autotracker mini tab on the site.
-
-No setup should be required beyond enabling autotracking in Magpie - just start the autotracker and a compatible emulator.
-
 Settings are available in the main Magpie UI to control what data gets pulled from the autotracker.
 
 Check out the [API](https://github.com/kbranch/Magpie/wiki/Autotracker-API) for 3rd party tools.
 
-### Linux (and Mac?)
-Autotracking should work on any vaguely recent version of Linux that can also run a [compatible emulator](#emulator-compatibility). Mac support is untested but probably similar.
-
-Setup is similar to the local version of Magpie:
- - [Download the source](#downloading)
- - Run [autotracker/setup.sh](https://github.com/kbranch/Magpie/blob/master/autotracking/setup.sh) to set up the environment
- - Run [autotracker/start.sh](https://github.com/kbranch/Magpie/blob/master/autotracking/start.sh) to start the autotracker
-
-### Emulator Compatibility
-Currently, [BGB](https://bgb.bircd.org/), [RetroArch](https://www.retroarch.com/) and [Bizhawk](https://tasvideos.org/Bizhawk) are supported. BGB works under Windows and on Linux via Wine (the autotracker exe must also be run with Wine), while RetroArch works natively on both Windows and Linux. RetroArch requires the [Network Control Interface](https://docs.libretro.com/development/retroarch/network-control-interface/) to be turned on (Archipelago has a [good guide](https://archipelago.gg/tutorial/Links%20Awakening%20DX/setup/en#retroarch-1.10.3-or-newer)). Bizhawk requires a [LUA script](https://magpietracker.us/static/bizhawk-ladxr.zip) (taken from [Archipelago](https://github.com/ArchipelagoMW/Archipelago)).
-
-The autotracker requires a copy of the ROM for some features to work. When it is not able to pull the ROM directly from the emulator, it will request a copy from the user in the main Magpie UI.
+The autotracker itself has been moved to its own repo: https://github.com/kbranch/Magpie-LADX-Autotracker
 
 ## Spoiler Log
 

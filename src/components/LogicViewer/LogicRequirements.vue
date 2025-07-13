@@ -1,7 +1,10 @@
 <script setup>
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { computed } from 'vue';
+import BaseChunk from './BaseChunk.vue';
 
+const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
 const props = defineProps(['subject']);
@@ -41,31 +44,40 @@ const requirement = computed(() => {
 });
 
 const reqChunks = computed(() => {
-    const itemRegex = /([^/A-Z_0-8]|^)('?[A-Z_0-8]{3,}'?)/g;
+    const itemRegex = /([^/A-Z_0-8]|^)('?[A-Z][A-Z_0-8]{2,}'?)/g;
     const quoteRegex = /\/'([A-Z_0-8]{2,})'_1\.png/g;
     const tooltipRegex = /(\w+)\(([^)]+)\)/g;
     const wrapperRegex = /\((?:and|or)\[('[A-Z_0-8]{3,}')\]\)/g;
+    const killRegex = /kill_([\w_]+)/g
 
-    let req = requirement.value
-        .replaceAll('\\', '')
-        .replaceAll('"', '')
-        .replaceAll("and['TRUE']", 'None')
-        .replaceAll("or['FALSE']", 'Disabled')
-        .replace(wrapperRegex, '($1)')
-        .replace(itemRegex, `$1<img class="logic-item" src="/images/$2_1.png">`)
-        .replace(quoteRegex, '/$1_1.png')
-        .replaceAll("'", "")
-        .replace(tooltipRegex, '|$1%$2|');
+    let req = requirement.value;
+
+    // Tricks have already had their requirements parsed
+    if (!logic.inspectedTrick) {
+        req = requirement.value
+            .replaceAll('\\', '')
+            .replaceAll('"', '')
+            .replaceAll("and['TRUE']", 'None')
+            .replaceAll("or['FALSE']", 'Disabled')
+            .replace(wrapperRegex, '($1)')
+            .replace(itemRegex, `$1~$2~`)
+            .replace(quoteRegex, '/$1_1.png')
+            .replaceAll("'", "")
+            .replace(tooltipRegex, '|$1%$2|')
+            .replace(killRegex, `<img class="logic-item" src="/images/$1.png">`);
+    }
 
     const chunks = [];
     for (const chunk of req.split('|')) {
         if (chunk.includes('%')) {
+            const itemChunkRegex = /~([A-Z][A-Z_0-8]{2,})~/g;
             const halves = chunk.split('%');
 
             chunks.push({
                 name: halves[0],
-                details: halves[1],
-                isTrick: !nonTricks.includes(halves[0]),
+                details: halves[1].replace(itemChunkRegex, '<img class="logic-item" src="/images/$1_1.png">'),
+                isTrick: !nonTricks.includes(halves[0]) && !halves[0].includes('<img'),
+                isEnemy: halves[0].includes('<img'),
             });
         }
         else {
@@ -83,15 +95,15 @@ const reqChunks = computed(() => {
 <div>
     <template v-for="chunk in reqChunks" :key="chunk">
         <a v-if="chunk.isTrick" @click="logic.viewTrick(chunk.name, chunk.details)" href="#"
-            data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip" data-bs-html='true'
-            :data-bs-title="chunk.details">
+            @mouseover="tip.tooltip(chunk.details, $event)">
             {{ chunk.name }}
         </a>
-        <span v-else-if="chunk.name" data-bs-toggle='tooltip' data-bs-custom-class="secondary-tooltip"
-            data-bs-html='true' :data-bs-title="chunk.details">
+        <span v-else-if="chunk.isEnemy" v-html="chunk.name" @mouseover="tip.tooltip(chunk.details, $event)">
+        </span>
+        <span v-else-if="chunk.name" @mouseover="tip.tooltip(chunk.details, $event)">
             {{ chunk.name }}
         </span>
-        <span v-else v-html="chunk"></span>
+        <BaseChunk v-else :chunk="chunk" />
     </template>
 </div>
 

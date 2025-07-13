@@ -323,15 +323,7 @@ window.setRomRequested = setRomRequested;
                         <h6 class="mb-2"><a href="https://github.com/kbranch/Magpie/releases/latest/">Offline version</a></h6>
                         <h6 class="mb-2"><a href="https://magpietracker.us/static/tips-backup.zip">Tips database</a></h6>
 
-                        <h6 class="mb-0">Autotracker</h6>
-                        <ul class="mb-1">
-                            <li>
-                                <a href="https://magpietracker.us/static/builds/magpie-autotracker.exe">Windows</a>,
-                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-linux">Linux</a>,
-                                <a href="https://magpietracker.us/static/builds/magpie-autotracker-macos">macOS (Apple silicon only)</a>
-                            </li>
-                        </ul>
-
+                        <h6 class="mb-2"><a href="https://github.com/kbranch/Magpie-LADX-Autotracker/releases/latest/">Autotracker</a></h6>
                         <h6 class="mb-0">Compatible emulators</h6>
                         <ul class="mb-0">
                             <li><a href="https://bgb.bircd.org/#downloads">BGB</a> (Windows, others via Wine)</li>

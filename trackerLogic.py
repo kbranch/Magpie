@@ -205,57 +205,57 @@ def applyTrackerLogic(log):
 
     # Fishing game without bush
     if fishing_item in locs and mabe in locs:
-        locs[fishing_item].connect(locs[mabe], COUNT('RUPEES', 20), id='tracker-d')
+        locs[fishing_item].connect(locs[mabe], COUNT('RUPEES', 20))
     
     # Fisher under the bridge without feather - not bad as listed when the photo mouse isn't there
     if fisher in locs and bay_water in locs:
         if log.name in ("hard", "glitched", "hell"):
-            locs[fisher].connect(locs[bay_water], AND(TRADING_ITEM_FISHING_HOOK, OR(SWORD, BOW), FLIPPERS), id='tracker-e')
+            locs[fisher].connect(locs[bay_water], AND(TRADING_ITEM_FISHING_HOOK, OR(SWORD, BOW), FLIPPERS))
 
         if log.name in ("glitched", "hell"):
-            locs[fisher].connect(locs[bay_water], AND(log.requirements_settings.bomb_trigger, FLIPPERS), id='tracker-f')
+            locs[fisher].connect(locs[bay_water], AND(log.requirements_settings.bomb_trigger, FLIPPERS))
 
     # A bunch of powder pickups
     if trendy in locs:
-        locs[trendy].connect(Location().add(VanillaItem(0x2A0)), COUNT('RUPEES', 10), id='tracker-g')
+        locs[trendy].connect(Location().add(VanillaItem(0x2A0)), COUNT('RUPEES', 10))
     if witch in locs:
-        locs[witch].connect(Location().add(VanillaItem(0x2A22)), POWER_BRACELET, id='tracker-h')
+        locs[witch].connect(Location().add(VanillaItem(0x2A22)), POWER_BRACELET)
     if raft_game in locs:
-        locs[raft_game].connect(Location().add(VanillaItem(0x07F)), OR(FEATHER, ROOSTER), id='tracker-i')
+        locs[raft_game].connect(Location().add(VanillaItem(0x07F)), OR(FEATHER, ROOSTER))
     if d0_entrance in locs:
-        locs[d0_entrance].connect(Location(dungeon=0).add(VanillaItem(0x30E)), POWER_BRACELET, id='tracker-j')
+        locs[d0_entrance].connect(Location(dungeon=0).add(VanillaItem(0x30E)), POWER_BRACELET)
     if d2_pit_chest in locs:
-        locs[d2_pit_chest].connect(Location(dungeon=2).add(VanillaItem(0x1392)), FEATHER, id='tracker-k')
+        locs[d2_pit_chest].connect(Location(dungeon=2).add(VanillaItem(0x1392)), FEATHER)
     if d2_outside_boo in locs:
-        locs[d2_outside_boo].connect(Location(dungeon=2).add(VanillaItem(0x1212)), FEATHER, id='tracker-l')
+        locs[d2_outside_boo].connect(Location(dungeon=2).add(VanillaItem(0x1212)), FEATHER)
     if d8_pot in locs:
-        locs[d8_pot].connect(Location(dungeon=8).add(VanillaItem(0x258)), AND(POWER_BRACELET, FEATHER), id='tracker-m')
+        locs[d8_pot].connect(Location(dungeon=8).add(VanillaItem(0x258)), AND(POWER_BRACELET, FEATHER))
     if d8_cracked_floor in locs:
-        locs[d8_upper_center].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER, id='tracker-n')
+        locs[d8_upper_center].connect(Location(dungeon=8).add(VanillaItem(0x23E2)), FEATHER)
     if d8_lava_ledge in locs:
-        locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER, id='tracker-o')
+        locs[d8_lava_ledge].connect(Location(dungeon=8).add(VanillaItem(0x2352)), FEATHER)
 
     # Rooster across the river
     if animal_village in locs and ukuku in locs:
         river_rooster = Location().add(LogicHint('RiverRooster'))
-        locs[animal_village].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True, id='tracker-p')
-        locs[ukuku].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True, id='tracker-q')
+        locs[animal_village].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
+        locs[ukuku].connect(river_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
 
     # Fly from staircase to staircase on the north side of the moat
     if angler_keyhole in locs and kanalet_side in locs:
         kanalet_rooster = Location().add(LogicHint('KanaletRooster'))
-        locs[angler_keyhole].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True, id='tracker-r')
-        locs[kanalet_side].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), one_way=True, id='tracker-s')
+        locs[angler_keyhole].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
+        locs[kanalet_side].connect(kanalet_rooster, AND(ROOSTER, NOT(FLIPPERS)), back=False)
 
     # Drop in a hole at bird cave
     if log.name != "casual" and bird_cave in locs:
         bird_pits = Location().add(LogicHint('BirdPits'))
-        locs[bird_cave].connect(bird_pits, None, one_way=True, id='tracker-t')
+        locs[bird_cave].connect(bird_pits, None, back=False)
     
     # Fall down Lanmola's pit
     if desert in locs:
         lanmola_pit = Location().add(LogicHint('LanmolaPit'))
-        locs[desert].connect(lanmola_pit, None, one_way=True, id='tracker-u')
+        locs[desert].connect(lanmola_pit, None, back=False)
     
     # Fall down the damp cave pit
     if damp_pit in locs or d7_plateau in locs:
@@ -267,23 +267,23 @@ def applyTrackerLogic(log):
                                                          log.name == 'hell',
                                                          AND(log.name == 'glitched',
                                                              'FEATHER'))
-                ), one_way=True, id='tracker-v')
+                ), back=False)
         if d7_plateau in locs:
             locs[d7_plateau].connect(damp_cave_pit, AND(log.name != 'casual',
                                                       OR('FLIPPERS',
                                                          log.name == 'hell',
                                                          AND(log.name == 'glitched',
                                                              'FEATHER'))
-                ), one_way=True, id='tracker-w')
+                ), back=False)
     
     # Alternative flame skip methods
     if log.name not in ('casual', 'normal') and fire_cave_north in locs and fire_cave_south in locs:
-        locs[fire_cave_north].connect(locs[fire_cave_south], 'MEDICINE2', id='tracker-x')
-        locs[fire_cave_south].connect(locs[fire_cave_north], log.requirements_settings.damage_boost, one_way=True, id='tracker-y') # flame skip without boots
+        locs[fire_cave_north].connect(locs[fire_cave_south], 'MEDICINE2')
+        locs[fire_cave_south].connect(locs[fire_cave_north], log.requirements_settings.damage_boost, back=False) # flame skip without boots
     
     # D4 tektite crystal chest with a jesus jump superjump
     if log.name in ('glitched', 'hell') and d4_tektite_crystal in locs and d4_right_of_entrance in locs:
-        locs[d4_tektite_crystal].connect(locs[d4_right_of_entrance], AND(log.requirements_settings.super_jump_feather, NOT(FLIPPERS), SHIELD, log.requirements_settings.attack_hookshot_powder), id='tracker-z')
+        locs[d4_tektite_crystal].connect(locs[d4_right_of_entrance], AND(log.requirements_settings.super_jump_feather, NOT(FLIPPERS), SHIELD, log.requirements_settings.attack_hookshot_powder))
 
 def updateMetadata(table):
     table['0x2A0'] = CheckMetadata('Trendy Powder', 'Mabe Village')
@@ -306,10 +306,6 @@ def buildLogic(args, worldSetup, requirements=None):
         requirements = RequirementsSettings(args)
     
     requirements.names = {}
-
-    if args.ap_logic and not args.prerelease:
-        # AP doesn't require the magnifier for anything
-        requirements.shuffled_magnifier = None
 
     for name, req in requirements.__dict__.items():
         if type(req) not in (type(True), type(''), AND, OR):
@@ -370,6 +366,7 @@ def buildLogic(args, worldSetup, requirements=None):
         7: "hothead",
         8: "hardhit_beetle",
     }
+
     for boss, req in requirements.boss_requirements.items():
         newReq = req
         if type(req) == type(True):
@@ -392,6 +389,12 @@ def buildLogic(args, worldSetup, requirements=None):
 
     log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
+    log.world.entrances['library'].location = Location("Library")
+
+    for name, entrance in log.world.entrances.items():
+        if entrance.location is None:
+            entrance.location = Location(name)
+
     for loc in log.location_list:
         applyExtraLogic(loc)
 
@@ -407,51 +410,9 @@ def buildLogic(args, worldSetup, requirements=None):
 
     # AP patch to turn the Mabe quarantine rocks into bushes
     if args.openmabe:
-        locs[ukuku].connect(locs[mabe], log.requirements_settings.bush, id='tracker-1')
+        locs[ukuku].connect(locs[mabe], log.requirements_settings.bush)
 
-    if args.ap_logic and not args.prerelease:
-        # Always allow bow for killing wizrobes
-        # log.requirements_settings.attack_wizrobe._OR__items.append(BOW)
-
-        # Elephant statue is always there
-        if bird_cave in locs and bird_key in locs:
-            locs[bird_cave].connect(locs[bird_key], AND(FEATHER, COUNT(POWER_BRACELET, 2)), id='tracker-2')
-        
-        # Put bomb three of a kinds back into all logic
-        if d1_three_of_a_kind in locs and d1_right_side in locs:
-            locs[d1_three_of_a_kind].connect(locs[d1_right_side], OR(log.requirements_settings.attack_hookshot, SHIELD), id='tracker-3')
-        
-        if d7_three_of_a_kind in locs and d7_topright_pillar_area in locs:
-            locs[d7_three_of_a_kind].connect(locs[d7_topright_pillar_area], OR(log.requirements_settings.attack_hookshot, AND(OR(BOMB, FEATHER), SHIELD)), id='tracker-4')
-
-        # Put killing gibdos on the cracked floors with hookshot without magic rod back into all logics
-        if d8_cracked_floor in locs and d8_upper_center in locs:
-            locs[d8_cracked_floor].connect(locs[d8_upper_center], log.requirements_settings.attack_skeleton, id='tracker-5')
-        
-        # Put a dicey bomb route back in normal logic
-        if args.logic not in ['casual', ''] and d8_vire_drop_key in locs and d8_entrance_left in locs:
-            locs[d8_vire_drop_key].connect(locs[d8_entrance_left], BOMB, id='tracker-6')
-        
-        # Put itemless armos maze back into all logics
-        if armos_maze in locs and outside_armos_cave in locs and outside_armos_temple in locs:
-            locs[armos_maze].connect(locs[outside_armos_cave], None, id='tracker-7')
-            locs[armos_maze].connect(locs[outside_armos_temple], None, id='tracker-8')
-        
-        # Left of the castle, 5 holes turned into 3
-        if 'castle_jump_cave' in log.world.entrances:
-            log.world._addEntranceRequirement("castle_jump_cave", AND(FEATHER, PEGASUS_BOOTS), id='tracker-9')
-
-            # ER has already been applied at this point, we have to track down where it got connected and add a new connection
-            entrance = log.world.entrances['castle_jump_cave']
-            roosterLocs = [x[0] for x in entrance.location.simple_connections if x[1] == 'ROOSTER']
-            if roosterLocs:
-                roosterLocs[0].connect(entrance.location, AND(FEATHER, PEGASUS_BOOTS), id='tracker-a')
-        
-        # Remove the bracelet requirement for the color ball dudes
-        if d0_stone_beak in locs:
-            locs[d0_stone_beak].connect(locs[d0_lower_small_key], log.requirements_settings.attack_hookshot, id='tracker-b')
-
-        if d0_bullshit_room in locs:
-            locs[d0_bullshit_room].connect(locs[d0_zol_chest], log.requirements_settings.attack_hookshot, id='tracker-c')
+    if args.ap_logic:
+        requirements.bush._OR__items.append(BOMB)
     
     return log
