@@ -37,7 +37,7 @@ function createNodes(map, mapName) {
     }
 
     let entrances = [...randomizedEntrances];
-    if (localSettings.showVanillaEntrances && (mapName != 'overworld' || args.overworld != 'alttp')) {
+    if (localSettings.showVanillaEntrances && (mapName != 'overworld' || !['alttp', 'dungeondive'].includes(args.overworld))) {
         entrances = entrances.concat(Object.keys(entranceMap).filter(x => !Entrance.isInside(x)));
     }
 
