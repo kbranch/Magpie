@@ -1275,11 +1275,6 @@ let dungeonDiveCoordDict = {
         "x": 112,
         "y": 0
       },
-      {
-        "map": "overworld",
-        "x": 1992,
-        "y": 1080
-      }
     ],
     "index": 151
   },
