@@ -156,11 +156,14 @@ where tips.tip_id = %(tipId)s
 
     conn.close()
     
-def getTips(connectionIds: list[str], includeUnapproved):
+def getTips(node: str, includeUnapproved: bool):
     if not dbConfigured():
         return
 
     tipQuery = """
+set @node = %s;
+set @includeUnapproved = %s;
+
 select tips.tip_id
       ,tips.connection_id
       ,tips.title
@@ -170,14 +173,13 @@ select tips.tip_id
       ,tips.approved
       ,tips.parent_id
 from tips
-where tips.connection_id in ({})
-      and (approved = 1 or %s = 1)
+where (tips.node1 = @node
+       or tips.node2 = @node)
+      and (approved = 1 or @includeUnapproved = 1)
       and deleted = 0
     """
 
-    tipQuery = tipQuery.format(','.join(['%s'] * len(connectionIds)))
-    parameters = list(connectionIds)
-    parameters.append(1 if includeUnapproved else 0)
+    parameters = [node, 1 if includeUnapproved else 0]
     tips = []
 
     conn = getDbConnection()
