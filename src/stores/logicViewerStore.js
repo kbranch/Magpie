@@ -32,6 +32,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         logicByCheck.value = {};
         logicByEntrance.value = {};
         logicByForcedItem.value = {};
+        let connectionNodes = {};
 
         for (const loc in graph.value) {
             const node = graph.value[loc];
@@ -51,7 +52,15 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
                     logicByForcedItem.value[item] = node;
                 }
             }
+
+            for (const connection of node.connections) {
+                if (!(connection.id in connectionNodes)) {
+                    connectionNodes[connection.id] = [connection.from, connection.to, connection.diff];
+                }
+            }
         }
+
+        console.log(JSON.stringify(connectionNodes));
     });
 
     function getConnectionById(connectionId) {

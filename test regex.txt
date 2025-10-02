@@ -1,0 +1,3 @@
+ +\"([\w\d\-_]+)\": \[\s*\"([^\"]+)\",\s*\"([^\"]+)\",\s*(\d)\s*\]\s*,?
+
+ update tips set node1 = ~\2~, node2 = ~\3~, difficulty = \4 where connection_id = ~\1~
