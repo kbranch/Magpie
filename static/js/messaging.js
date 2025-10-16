@@ -346,7 +346,7 @@ function processHandshAckMessage(message) {
             setApLogic(false);
         }
         else if (remoteName == apClientName) {
-            // resetEntrances(); // Hack until the AP client sends diff correctly, but the released version of 0.6.1 uses this name and isn't trustworthy
+            resetEntrances(); // Hack until the AP client sends diff correctly
             setApLogic(true);
         }
     }

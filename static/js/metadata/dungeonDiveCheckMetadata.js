@@ -3085,5 +3085,17 @@ let dungeonDiveCoordDict = {
     ],
     "index": 11,
     "linkedItem": "GREAT_FAIRY"
-  }
+  },
+  "egg": {
+    "id": "egg",
+    "area": "Tal Tal Mountains",
+    "name": "Nightmare",
+    "locations": [
+      {
+        "map": "overworld",
+        "x": 226,
+        "y": 292
+      },
+    ],
+  },
 }

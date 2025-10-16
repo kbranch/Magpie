@@ -106,6 +106,11 @@ function imageLoadedEvent() {
 </template>
 
 <style scoped>
+
+.tabs {
+    overflow: hidden;
+}
+
 #tabWrapper {
     position: relative;
 }
