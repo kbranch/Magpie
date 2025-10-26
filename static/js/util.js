@@ -352,8 +352,14 @@ function applySettings(oldArgs=null, oldSettings=null) {
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {
         let mapPath = localSettings.colorAssistMaps ? `/images/colorAssist/${mapName}.png` : `/images/${mapName}.png`;
-        if (args.overworld == 'alttp' && mapName == 'overworld') {
-            mapPath =  '/images/alttp-overworld.png';
+        if (mapName == 'overworld')
+        {
+            if (args.overworld == 'alttp') {
+                mapPath =  '/images/alttp-overworld.png';
+            }
+            else if (args.overworld == 'dungeondive') {
+                mapPath =  '/images/DungeonDiveMap.png';
+            }
         }
 
         $(`img[data-mapname=${mapName}]`).attr('src', mapPath);
@@ -384,6 +390,19 @@ function applySettings(oldArgs=null, oldSettings=null) {
 
             vanilla.name = alttp.name;
             vanilla.area = alttp.area;
+        });
+    }
+    else if (args.overworld == 'dungeondive') {
+        Object.keys(dungeonDiveCoordDict).map(x => {
+            let dive = dungeonDiveCoordDict[x];
+            let diveLocs = dive.locations.filter(y => y.map == "overworld");
+            let vanilla = coordDict[x];
+
+            vanilla.locations = vanilla.locations.filter(y => y.map != "overworld");
+            diveLocs.map(y => vanilla.locations.push(y));
+
+            vanilla.name = dive.name;
+            vanilla.area = dive.area;
         });
     }
     else {

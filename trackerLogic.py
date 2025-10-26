@@ -389,7 +389,8 @@ def buildLogic(args, worldSetup, requirements=None):
 
     log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
-    log.world.entrances['library'].location = Location("Library")
+    if 'library' in log.world.entrances:
+        log.world.entrances['library'].location = Location("Library")
 
     for name, entrance in log.world.entrances.items():
         if entrance.location is None:

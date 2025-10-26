@@ -194,7 +194,7 @@ function getTileCoords(event, element) {
     x /= xScale;
     y /= yScale;
 
-    if (['overworld', 'underworld'].includes(map)) {
+    if (['overworld', 'underworld', 'dive'].includes(map)) {
         x -= Math.floor(x / 160) * 2;
         y -= Math.floor(y / 128) * 2;
     }
@@ -202,7 +202,7 @@ function getTileCoords(event, element) {
     let targetX = Math.floor(x / 8) * 8;
     let targetY = Math.floor(y / 8) * 8;
 
-    if (['overworld', 'underworld'].includes(map)) {
+    if (['overworld', 'underworld', 'dive'].includes(map)) {
         let xOffset = Math.floor(x / 160) * 2;
         let yOffset = Math.floor(y / 128) * 2;
 
