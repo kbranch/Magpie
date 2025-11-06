@@ -117,7 +117,7 @@ class LocalSettings:
         return obj
     
     def graphicsPacks():
-        return ["Subrosian", "Mario", "Rooster", "Rosa", "Kirby", "Martha", "Meme", "Bunny", "Matty", "Bowwow", "Luigi", "Tarin", "AgesGirl", "Marin", "GrandmaUlrira", "Richard", "NESLink", "Ninten", "MarinAlpha", "X", "Ricky"]
+        return ["Subrosian", "Mario", "Rooster", "Rosa", "Kirby", "Martha", "Meme", "Bunny", "Matty", "Bowwow", "Luigi", "Tarin", "AgesGirl", "Marin", "GrandmaUlrira", "Richard", "NESLink", "Ninten", "MarinAlpha", "X", "Ricky", "Sig"]
         # gfxPath = 'LADXR/gfx/'
 
         # options = []

@@ -49,8 +49,14 @@ watch(activeTab, (newTab) => {
 
 function getMapPath(map) {
     let mapPath = state.settings.colorAssistMaps ? `/images/colorAssist/${map}.png` : `/images/${map}.png`;
-    if (state.args.overworld == 'alttp' && map == 'overworld') {
-        mapPath = '/images/alttp-overworld.png';
+    if (map == 'overworld')
+    {
+        if (state.args.overworld == 'alttp') {
+            mapPath =  '/images/alttp-overworld.png';
+        }
+        else if (state.args.overworld == 'dungeondive') {
+            mapPath =  '/images/DungeonDiveMap.png';
+        }
     }
 
     return mapPath;
@@ -100,6 +106,11 @@ function imageLoadedEvent() {
 </template>
 
 <style scoped>
+
+.tabs {
+    overflow: hidden;
+}
+
 #tabWrapper {
     position: relative;
 }

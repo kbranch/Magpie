@@ -51,3 +51,6 @@ coverage
 *.tsbuildinfo
 static/images/tips/
 static/images/tips
+
+# Local Settings
+settings.json

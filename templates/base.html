@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="dark">
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/bootstrap/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icons.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/theme.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lib/summernote/summernote-lite.css') }}">
+
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+        <title>Magpie{{extraTitle}}</title>
+    </head>
+
+    <body>
+        <div class="container body-content{% if fullContainer %} full-container{% endif %}">
+            {% for message in get_flashed_messages() %}
+                <div class="flash">{{ message }}</div>
+            {% endfor %}
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+
+    {% block otherContent %}{% endblock %}
+</html>

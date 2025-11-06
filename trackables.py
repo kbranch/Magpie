@@ -182,7 +182,8 @@ def getGraphAccessibility(logics, inventory):
 
                 if connId not in accLoc['connections']:
                     matchingConnections = [x for x in to.simple_connections + to.gated_connections 
-                                           if str(x[1]) == fullReqName and x[0].friendlyName() == name]
+                                           if str(x[1]) == fullReqName and x[0].friendlyName() == name
+                                              and (not hasattr(requirement, 'shortName') or shortReqName == x[1].shortName(logic))]
 
                     newConnection = {
                         'from': name,

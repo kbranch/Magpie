@@ -75,8 +75,21 @@ function getLocationCoords(room, x, y) {
     
     if (roomMap == 'overworld') {
         let coords = room.split('0x')[1];
-        roomX = Number('0x' + coords[1]) * 162 + x * 16;// + 72;
-        roomY = Number('0x' + coords[0]) * 130 + y * 16;// + 58;
+        let xCoord = Number('0x' + coords[1]);
+        let yCoord = Number('0x' + coords[0]);
+
+        if (args.overworld == 'dungeondive') {
+            yCoord -= 6;
+            xCoord -= 1;
+        }
+
+        roomX = xCoord * 162 + x * 16;// + 72;
+        roomY = yCoord * 130 + y * 16;// + 58;
+
+        if (xCoord < 0 || yCoord < 0) {
+            roomX = 0;
+            roomY = 0;
+        }
     }
     else {
         if (!(room in roomDict)) {

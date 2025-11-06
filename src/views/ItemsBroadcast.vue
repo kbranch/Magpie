@@ -5,17 +5,12 @@ import VueTooltip from '@/components/Tooltips/VueTooltip.vue';
 import { initGlobals, init } from '@/moduleWrappers';
 import { useStateStore } from '@/stores/stateStore';
 import { onMounted } from 'vue';
-import { onBeforeMount } from 'vue';
 import { ref } from 'vue';
 
 const state = useStateStore();
 
 const broadMode = ref('receive');
 const version = ref(null);
-
-onBeforeMount(() => {
-    window.settingsPrefix = 'itemsBroadcast_';
-});
 
 onMounted(() => {
   fetch(import.meta.env.VITE_API_URL + '/api/basicInit')
@@ -32,6 +27,7 @@ onMounted(() => {
       data.allowMap = false;
       data.refreshMap = false;
       data.allowItems = true;
+      data.settingsPrefix = 'itemsBroadcast_';
 
       initGlobals(data);
       init();
