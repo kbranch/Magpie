@@ -489,14 +489,14 @@ def getBasicInit():
 if tipsEnabled:
     @app.route('/api/tips', methods=['GET'])
     def getTips():
-        connectionIdsJson = request.args.get('connectionIds')
+        node = request.args.get('node')
         showUnapprovedTips = request.args.get('includeUnapproved') == 'true'
-        if not connectionIdsJson:
-            return "Connection ID list is required", 400
+        if not node:
+            return "Node ID is required", 400
+        
+        result = tips.getTips(node, showUnapprovedTips)
 
-        connectionIds = json.loads(connectionIdsJson)
-
-        return json.dumps(tips.getTips(connectionIds, showUnapprovedTips))
+        return json.dumps(result)
 
     @app.route('/api/tipApprovalQueue', methods=['GET'])
     def getTipApprovalQueue():

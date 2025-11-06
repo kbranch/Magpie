@@ -81,7 +81,7 @@ async function updateConnections() {
 }
 
 async function fetchTips() {
-    let tips = await logic.fetchTips(connections.value.map(x => x.id));
+    let tips = await logic.fetchTips(node.value.id);
 
     for (const conn of connections.value) {
         conn.tips = tips.filter(x => x.connectionId == conn.id);

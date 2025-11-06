@@ -252,9 +252,9 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         };
     }
 
-    async function fetchTips(ids) {
+    async function fetchTips(nodeId) {
         let params = {
-            connectionIds: JSON.stringify(ids),
+            node: nodeId,
         };
 
         if (import.meta.env.VITE_TIP_ADMIN === '1') {
