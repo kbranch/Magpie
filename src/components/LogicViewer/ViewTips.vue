@@ -10,9 +10,9 @@ const logic = useLogicViewerStore();
 
 const requirementsDiv = ref(null);
 
-const connection = computed(() => logic.inspectedConnection);
-const fromName = computed(() => logic.getLogicNodeName(connection.value?.from));
-const toName = computed(() => logic.getLogicNodeName(connection.value?.to));
+// const connection = computed(() => logic.inspectedConnection);
+const fromName = computed(() => logic.getLogicNodeName(logic.stackTop));
+const toName = computed(() => logic.getLogicNodeName(logic.inspectedOtherNodeId));
 
 onMounted(initTooltips);
 onUpdated(initTooltips);
@@ -23,7 +23,8 @@ function initTooltips() {
 }
 
 async function updateTips() {
-    connection.value.tips = await logic.fetchTips([connection.value.id]);
+    console.log("need to implement updating tips");
+    // connection.value.tips = await logic.fetchTips([connection.value.id]);
 }
 
 </script>
@@ -31,7 +32,7 @@ async function updateTips() {
 <template>
 
     <h5 class="d-flex align-items-center">
-        <div class="text-start d-flex p-1 mb-0 align-items-center">
+        <!-- <div class="text-start d-flex p-1 mb-0 align-items-center">
             <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${connection?.diff}`]: true}">
                 <div class="tooltip-check-graphic icon-wrapper">
                     <svg class="tooltip-check-graphic align-middle">
@@ -39,15 +40,15 @@ async function updateTips() {
                     </svg>
                 </div>
             </div>
-        </div>
-        Connection from '{{ fromName }}' to '{{ toName }}'
+        </div> -->
+        Connections between '{{ fromName }}' and '{{ toName }}'
     </h5>
     <div class="d-flex align-items-center">
         <div ref="requirementsDiv" id="requirementsDiv">
-            <label for="requirementsIcons" class="form-label mt-2">Requirements</label>
+            <!-- <label for="requirementsIcons" class="form-label mt-2">Requirements</label>
             <div id="requirementsIcons" class="cell-wrapper">
                 <LogicRequirements :subject="connection" />
-            </div>
+            </div> -->
         </div>
 
         <span class="pe-2">Suggest a new tip</span>
@@ -58,8 +59,8 @@ async function updateTips() {
     </div>
 
     <div class="accordion mt-2">
-        <SingleTip v-for="(tip, index) in connection.tips" :key="tip" v-model="connection.tips[index]"
-            @updatedTips="updateTips()" :expanded="connection.tips.length == 1" />
+        <SingleTip v-for="(tip, index) in logic.activeTips" :key="tip" v-model="logic.activeTips[index]"
+            @updatedTips="updateTips()" :expanded="logic.activeTips.length == 1" />
     </div>
 
 </template>

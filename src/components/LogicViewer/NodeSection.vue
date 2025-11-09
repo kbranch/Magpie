@@ -28,6 +28,7 @@ const connectedNodes = computed(() => {
     return nodeConnections;
 });
 
+const tips = ref([]);
 const node = computed(() => logic.inspectedNode);
 const checks = computed(() => node.value.checks?.filter(checkId => checkId in accessibility.checksById)
                                                    .map(checkId => accessibility.checksById[checkId]));
@@ -81,11 +82,11 @@ async function updateConnections() {
 }
 
 async function fetchTips() {
-    let tips = await logic.fetchTips(node.value.id);
+    tips.value = await logic.fetchTips(node.value.id);
 
-    for (const conn of connections.value) {
-        conn.tips = tips.filter(x => x.connectionId == conn.id);
-    }
+    // for (const conn of connections.value) {
+    //     conn.tips = tips.filter(x => x.node1 == conn.to || x.node2 == conn.to || x.node1 == conn.from || x.node2 == conn.from);
+    // }
 }
 
 </script>
@@ -134,7 +135,8 @@ async function fetchTips() {
 <h5 class="pt-3">Connected nodes:</h5>
 <div>
     <ConnectedNode v-for="otherNode in Object.keys(connectedNodes)" :key="otherNode"
-        :otherName="otherNode" :source="node.id" :connections="connectedNodes[otherNode]" />
+        :otherName="otherNode" :source="node.id" :connections="connectedNodes[otherNode]"
+        :tips="tips.filter(x => x.node1 == otherNode || x.node2 == otherNode)" />
 </div>
 
 </template>

@@ -161,9 +161,6 @@ def getTips(node: str, includeUnapproved: bool):
         return
 
     tipQuery = """
-set @node = %s;
-set @includeUnapproved = %s;
-
 select tips.tip_id
       ,tips.connection_id
       ,tips.title
@@ -172,14 +169,17 @@ select tips.tip_id
       ,tips.language
       ,tips.approved
       ,tips.parent_id
+      ,tips.node1
+      ,tips.node2
+      ,tips.difficulty
 from tips
-where (tips.node1 = @node
-       or tips.node2 = @node)
-      and (approved = 1 or @includeUnapproved = 1)
+where (tips.node1 = %s
+       or tips.node2 = %s)
+      and (approved = 1 or %s)
       and deleted = 0
     """
 
-    parameters = [node, 1 if includeUnapproved else 0]
+    parameters = [node, node, 1 if includeUnapproved else 0]
     tips = []
 
     conn = getDbConnection()
@@ -194,12 +194,15 @@ where (tips.node1 = @node
         tips.append({
             'tipId': row[0],
             'connectionId': row[1],
+            'node1': row[8],
+            'node2': row[9],
             'title': row[2],
             'body': row[3],
             'attribution': row[4],
             'language': row[5],
             'approved': row[6],
             'parentId': row[7],
+            'difficulty': row[10],
         })
 
     conn.close()

@@ -32,6 +32,17 @@ const textColor = computed(() => state.settings.textColor);
             :aria-expanded="expanded ? 'true' : 'false'" :aria-controls="id">
 
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
+            
+            <div class="text-start d-flex p-1 mb-0 align-items-center">
+                <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${tip.difficulty-1}`]: true}">
+                    <div class="tooltip-check-graphic icon-wrapper">
+                        <svg class="tooltip-check-graphic align-middle">
+                            <use :xlink:href="`#difficulty-${tip.difficulty-1}`"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
             <span class="title-span">{{ tip.title }}</span>
             <span class="title-attribution">
                 <MdPreview v-if="tip.attribution?.length" v-model="tip.attribution" id="titleAttribution"

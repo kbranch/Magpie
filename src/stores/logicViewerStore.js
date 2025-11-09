@@ -12,7 +12,9 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     const logicByForcedItem = ref({});
     const inspectedNodeId = ref(null);
     const inspectedTrick = ref(null);
-    const inspectedConnection = ref(null);
+    const inspectedOtherNodeId = ref(null);
+    const activeTips = ref([]);
+    // const inspectedConnection = ref(null);
     const stack = ref([]);
     const parentTip = ref(null);
     
@@ -79,19 +81,19 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
 
     function clearNode() {
         inspectedNodeId.value = null;
-        inspectedConnection.value = null;
+        inspectedOtherNodeId.value = null;
     }
 
     function clearStack() {
         stack.value = [];
-        inspectedConnection.value = null;
+        inspectedOtherNodeId.value = null;
         inspectedTrick.value = null;
         parentTip.value = null;
     }
 
     function popStack() {
         inspectedNodeId.value = stack.value.pop();
-        inspectedConnection.value = null;
+        inspectedOtherNodeId.value = null;
         parentTip.value = null;
 
         if (inspectedNodeId.value != 'trick') {
@@ -146,13 +148,15 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         pushStack(inspectedNodeId.value, 'submission-form');
 
         if (!inspectedTrick.value) {
+            throw new Error("tips not updated");
             inspectedConnection.value = subject;
         }
     }
 
-    function viewTips(connection) {
+    function viewTips(otherId, tips) {
         pushStack(inspectedNodeId.value, 'tips');
-        inspectedConnection.value = connection;
+        inspectedOtherNodeId.value = otherId;
+        activeTips.value = tips;
     }
 
     function editTip(tip) {
@@ -177,12 +181,13 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
             parentTip.value = tip;
 
             pushStack(connection.from, 'submission-form');
+            throw new Error("tips not updated");
             inspectedConnection.value = connection;
         }
     }
 
     function viewTrick(name, requirements) {
-        if (inspectedConnection.value) {
+        if (inspectedOtherNodeId.value) {
             popStack();
         }
 
@@ -331,11 +336,12 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         logicByEntrance,
         logicByForcedItem,
         inspectedNode,
+        inspectedOtherNodeId,
         inspectedTrick,
         stackTop,
         stack,
-        inspectedConnection,
         parentTip,
+        activeTips,
         clearNode,
         popStack,
         pushStack,
