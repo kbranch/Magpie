@@ -5,6 +5,7 @@ import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { useReportStore } from '@/stores/reportStore';
+import LogicRequirements from './LogicRequirements.vue';
 
 const MdPreview = defineAsyncComponent(() => import('md-editor-v3').then((module) => module.MdPreview));
 
@@ -44,6 +45,7 @@ const textColor = computed(() => state.settings.textColor);
             </div>
 
             <span class="title-span">{{ tip.title }}</span>
+            <LogicRequirements v-if="tip.requirement" :subject="tip" />
             <span class="title-attribution">
                 <MdPreview v-if="tip.attribution?.length" v-model="tip.attribution" id="titleAttribution"
                     language="en-US" theme="dark" class="md-outer-editor" :no-mermaid="true" :no-katex="true" />

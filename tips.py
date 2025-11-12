@@ -172,6 +172,7 @@ select tips.tip_id
       ,tips.node1
       ,tips.node2
       ,tips.difficulty
+      ,tips.requirement
 from tips
 where (tips.node1 = %s
        or tips.node2 = %s)
@@ -203,6 +204,7 @@ where (tips.node1 = %s
             'approved': row[6],
             'parentId': row[7],
             'difficulty': row[10],
+            'requirement': row[11],
         })
 
     conn.close()

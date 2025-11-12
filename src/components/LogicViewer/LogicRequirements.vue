@@ -40,6 +40,10 @@ const requirement = computed(() => {
         return props.subject.requirements;
     }
 
+    if (props.subject.requirement) {
+        return props.subject.requirement;
+    }
+
     return props.subject.shortReq ? props.subject.shortReq : props.subject.req;
 });
 
