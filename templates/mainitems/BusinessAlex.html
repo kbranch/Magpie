@@ -1,0 +1,372 @@
+{# Magpie is built with a width of 294 in mind - change with caution #}
+{% set width = 320 %}
+
+<style>
+    .horizontal-bar {
+        width: 100%;
+        height: 8px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+        background-image: url("static/images/BusinessAlex/horizontal-dash.png");
+        background-repeat: repeat-x;
+    }
+
+    .vertical-bar {
+        width: 6px;
+        height: 100%;
+        margin-left: 4px;
+        margin-right: 4px;
+        background-image: url("static/images/BusinessAlex/vertical-dash.png");
+        background-repeat: repeat-y;
+    }
+
+    .bullet-point {
+        height: 32px;
+        width: 8px;
+        background-image: url("static/images/BusinessAlex/bullet-point.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-left: 12px;
+    }
+
+    .music {
+        height: 32px;
+        width: 16px;
+        background-image: url("static/images/BusinessAlex/music.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-left: 6px;
+    }
+
+    .song {
+        margin-left: 1px;
+        margin-right: 1px;
+    }
+
+    .medicine {
+        margin-left: 4px;
+        margin-right: 16px;
+        margin-top: 4px;
+    }
+
+    .passive-item {
+        margin-left: 1px;
+        margin-right: 1px;
+        margin-top: 4px;
+    }
+
+    .instrument-block {
+        width: 32px;
+        height: 32px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .instrument {
+        margin-left: 8px;
+        margin-right: 8px;
+    }
+
+    .button-bracket {
+        margin-bottom: 4px;
+    }
+
+    .dungeon-wrapper {
+        margin-bottom: 8px;
+        padding-left: 4px;
+        padding-right: 4px;
+        justify-items: center;
+        display: grid;
+    }
+
+    .dungeon-item-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 48px;
+    }
+
+    .small {
+        margin-left: 2px;
+        margin-right: 2px;
+        margin-bottom: 4px;
+    }
+
+    #AlexWrapper {
+        background-color: #ffffad;
+    }
+
+    #AlexHeader {
+        display: flex;
+    }
+
+    #AlexInventory {
+        display: flex;
+    }
+
+    #AlexEquip {
+        display: flex;
+        flex-wrap: wrap;
+        width: 134px;
+    }
+
+    #AlexPassives {
+        width: 180px;
+    }
+
+    #AlexUpgrades {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #AlexInstruments {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 48px;
+        padding-left: 6px;
+        padding-right: 6px;
+        position: relative;
+    }
+
+    #AlexInstrumentMiddle {
+        margin-top: 16px;
+        width: 100%;
+    }
+
+    #AlexTrade {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 4px;
+        padding-left: 19px;
+        padding-right: 19px;
+    }
+
+    #AlexDungeons {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 4px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+</style>
+
+<div id="AlexWrapper" class="row" style="width: {{width}}px;">
+    <div id="AlexHeader">
+        <img class="button-bracket" src="static/images/BusinessAlex/B.png">
+        {{ item("SWORD", max="2", classes="p-1") }}
+        <img class="button-bracket pe-2" src="static/images/BusinessAlex/close-bracket.png">
+
+        <img class="button-bracket" src="static/images/BusinessAlex/A.png">
+        {{ item('SHIELD', max="2", classes="p-1") }}
+        <img class="button-bracket pe-2" src="static/images/BusinessAlex/close-bracket.png">
+
+        {% if args.overworld == 'alttp' %}
+            {{ item("HAMMER", max="1", classes="p-1") }}
+        {% else %}
+            {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc('${player}')", highlightOwnedSecondary=True, classes="p-1") }}
+        {% endif %}
+    </div>
+    <div class="horizontal-bar"></div>
+    <div id="AlexInventory">
+        <div id="AlexEquip">
+            <div class="bullet-point"></div>
+            {{ item("FEATHER", max="1", classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("PEGASUS_BOOTS", max="1", classes="p-1") }}
+
+            <div class="bullet-point"></div>
+            {{ item("POWER_BRACELET", max="2", classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("MAGIC_POWDER", max="1", secondary="MAX_POWDER_UPGRADE", classes="p-1") }}
+
+            <div class="bullet-point"></div>
+            {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE", classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE", classes="p-1") }}
+
+            <div class="bullet-point"></div>
+            {{ item("BOOMERANG", max="1", classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("HOOKSHOT", max="1", classes="p-1") }}
+
+            <div class="bullet-point"></div>
+            {{ item("OCARINA", max="1", classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("SHOVEL", max="1", classes="p-1") }}
+
+            <div class="bullet-point"></div>
+            {{ item("ROOSTER", max="1", condition=allItems['ROOSTER'] >= 1, classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("MAGIC_ROD", max="1", classes="p-1") }}
+
+            <div class="bullet-point"></div>
+            {{ item("BOWWOW", max="1", classes="p-1") }}
+            <div class="bullet-point"></div>
+            {{ item("TOADSTOOL", secondary="TOADSTOOL_CHECKED", secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+
+            <div class="music"></div>
+            {{ item("SONG1", max="1", classes="song") }}
+            {{ item("SONG2", max="1", classes="song") }}
+            {{ item("SONG3", max="1", classes="song") }}
+        </div>
+        <div class="vertical-bar"></div>
+        <div id="AlexPassives">
+            <div id="AlexUpgrades">
+                {{ item("FLIPPERS", max="1", classes="passive-item") }}
+                {{ item("MEDICINE", max="1", classes="medicine") }}
+                {{ item("GOLD_LEAF", max_image="1", overlay_count="GOLD_LEAF", classes="passive-item") }}
+                {{ item("SEASHELL", max_image="1", overlay_count="SEASHELL", classes="passive-item") }}
+                {{ item("TAIL_KEY", max="1", classes="passive-item") }}
+                {{ item("ANGLER_KEY", max="1", classes="passive-item") }}
+                {{ item("FACE_KEY", max="1", classes="passive-item") }}
+                {{ item("BIRD_KEY", max="1", classes="passive-item") }}
+                {{ item("SLIME_KEY", max="1", classes="passive-item") }}
+            </div>
+            <div id="AlexInstruments">
+                {{ item("GO_MODE", max="2", width="32px", height="32px", top="50%", left="50%", classes="parent-center") }}
+                <div class="instrument-block"></div>
+                {{ item("INSTRUMENT8", max="1", secondary="REQ8", classes="instrument") }}
+                {{ item("INSTRUMENT1", max="1", secondary="REQ1", classes="instrument") }}
+                <div class="instrument-block"></div>
+
+                {{ item("INSTRUMENT7", max="1", secondary="REQ7", classes="instrument") }}
+                <div class="instrument-block"></div>
+                <div class="instrument-block"></div>
+                {{ item("INSTRUMENT2", max="1", secondary="REQ2", classes="instrument") }}
+
+                <div id="AlexInstrumentMiddle"></div>
+
+                {{ item("INSTRUMENT6", max="1", secondary="REQ6", classes="instrument") }}
+                <div class="instrument-block"></div>
+                <div class="instrument-block"></div>
+                {{ item("INSTRUMENT3", max="1", secondary="REQ3", classes="instrument") }}
+
+                <div class="instrument-block"></div>
+                {{ item("INSTRUMENT5", max="1", secondary="REQ5", classes="instrument") }}
+                {{ item("INSTRUMENT4", max="1", secondary="REQ4", classes="instrument") }}
+                <div class="instrument-block"></div>
+            </div>
+        </div>
+    </div>
+    <div class="horizontal-bar mt-2"></div>
+
+{% if args.tradequest %}
+    <div id="AlexTrade">
+        {{ item('TRADING_ITEM_YOSHI_DOLL', max="1", secondary='TRADING_ITEM_YOSHI_DOLL_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_RIBBON', max="1", secondary='TRADING_ITEM_RIBBON_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_DOG_FOOD', max="1", secondary='TRADING_ITEM_DOG_FOOD_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_BANANAS', max="1", secondary='TRADING_ITEM_BANANAS_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_STICK', max="1", secondary='TRADING_ITEM_STICK_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_HONEYCOMB', max="1", secondary='TRADING_ITEM_HONEYCOMB_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_PINEAPPLE', max="1", secondary='TRADING_ITEM_PINEAPPLE_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_HIBISCUS', max="1", secondary='TRADING_ITEM_HIBISCUS_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_LETTER', max="1", secondary='TRADING_ITEM_LETTER_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_BROOM', max="1", secondary='TRADING_ITEM_BROOM_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_FISHING_HOOK', max="1", secondary='TRADING_ITEM_FISHING_HOOK_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_NECKLACE', max="1", secondary='TRADING_ITEM_NECKLACE_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_SCALE', max="1", secondary='TRADING_ITEM_SCALE_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item('TRADING_ITEM_MAGNIFYING_GLASS', max="1", secondary='TRADING_ITEM_MAGNIFYING_GLASS_CHECKED', secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+    </div>
+
+    <div class="horizontal-bar mt-2"></div>
+
+    <div id="AlexDungeons">
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L1.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY1", width="12px", height="21px", max_image="1", overlay_count="KEY1", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L2.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY2", width="12px", height="21px", max_image="1", overlay_count="KEY2", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L3.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY3", width="12px", height="21px", max_image="1", overlay_count="KEY3", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L4.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY4", width="12px", height="21px", max_image="1", overlay_count="KEY4", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/MAP.png">
+            <div class="dungeon-item-wrapper" style="width: 40px;">
+                <img src="/static/images/BusinessAlex/big-map.png">
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L5.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY5", width="12px", height="21px", max_image="1", overlay_count="KEY5", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L6.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY6", width="12px", height="21px", max_image="1", overlay_count="KEY6", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L7.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY7", width="12px", height="21px", max_image="1", overlay_count="KEY7", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L8.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY8", width="12px", height="21px", max_image="1", overlay_count="KEY8", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+        <div class="dungeon-wrapper">
+            <img class="dungeon-number" src="/static/images/BusinessAlex/L0.png">
+            <div class="dungeon-item-wrapper">
+                {{ item("MAP0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("COMPASS0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("STONE_BEAK0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("KEY0", width="12px", height="21px", max_image="1", overlay_count="KEY0", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+                {{ item("NIGHTMARE_KEY0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True, gfx=False) }}
+            </div>
+        </div>
+    </div>
+{% endif %}
+</div>

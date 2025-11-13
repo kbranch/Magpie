@@ -970,6 +970,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 'default.html': 'Classic',
                                 'notrade.html': 'No trade items',
                                 'empty.html': 'Empty',
+                                'BusinessAlex.html': 'BusinessAlex',
                                 'custom': 'Custom',
                             }
                         }),
