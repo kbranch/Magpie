@@ -13,6 +13,39 @@ const knownFlags = [
     'dungeonchainlength', 'dungeon_keys', 'dungeon_maps', 'nightmare_keys', 'dungeon_beaks',
 ];
 
+const mainTemplateCredits = {
+    'BusinessAlex.html': 'Created by <strong>BusinessAlex</strong>',
+};
+
+const dungeonTemplateCredits = {
+};
+
+const graphicsCredits = {
+    'BusinessAlex': 'Created by <strong>BusinessAlex</strong>',
+    'Sig': 'Created by <a href="https://www.twitch.tv/isabelle_zephyr">Madam Materia</a> and <strong>Techokami</strong>',
+    'X': 'Created by <strong>AhziDahaka</strong>',
+    'MarinAlpha': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Ricky': 'Created by <strong>Swordy</strong>',
+    'Ninten': 'Created by <strong>Swordy</strong>',
+    'NESLink': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Richard': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'GrandmaUlrira': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Marin': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'AgesGirl': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Tarin': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Luigi': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Bowwow': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Matty': 'Created by <a href="https://www.twitch.tv/isabelle_zephyr">Madam Materia</a>',
+    'Bunny': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Meme': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Martha': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Kirby': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Rosa': 'Created by <strong>Jill</strong>',
+    'Rooster': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Mario': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Subrosian': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+};
+
 function getUnknownArgs(argDescriptions) {
     let newArgs = argDescriptions.filter(x => !knownFlags.includes(x.name));
     let newSettings = [];
@@ -986,8 +1019,8 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 'sevenbysix.html': 'Default',
                                 'default.html': 'Classic',
                                 'notrade.html': 'No trade items',
+                                'BusinessAlex.html': 'Inventory screen',
                                 'empty.html': 'Empty',
-                                'BusinessAlex.html': 'BusinessAlex',
                                 'custom': 'Custom',
                             }
                         }),
@@ -997,6 +1030,11 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             action: () => { document.getElementById('customItemsInput').click(); },
                             maxWidth: true,
                         }),
+                        new SettingsItem({
+                            type: types.link,
+                            visibleCondition: () => state.settings.itemsTemplate in mainTemplateCredits,
+                            customHtml: mainTemplateCredits[state.settings.itemsTemplate],
+                        })
                     ],
                 }),
                 new SettingsItem({
@@ -1024,6 +1062,11 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             action: () => { document.getElementById('customDungeonItemInput').click(); },
                             maxWidth: true,
                         }),
+                        new SettingsItem({
+                            type: types.link,
+                            visibleCondition: () => state.settings.dungeonItemsTemplate in dungeonTemplateCredits,
+                            customHtml: dungeonTemplateCredits[state.settings.dungeonItemsTemplate],
+                        })
                     ],
                 }),
                 new SettingsItem({
@@ -1039,6 +1082,11 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             settingName: 'graphicsPack',
                             options: graphicsDict.value,
                         }),
+                        new SettingsItem({
+                            type: types.link,
+                            visibleCondition: () => state.settings.graphicsPack.substr(1) in graphicsCredits,
+                            customHtml: graphicsCredits[state.settings.graphicsPack.substr(1)],
+                        })
                     ],
                 }),
                 new SettingsItem({
