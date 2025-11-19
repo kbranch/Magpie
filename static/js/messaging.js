@@ -182,11 +182,11 @@ function processSlotDataMessage(message) {
         'logic': 'logic',
         'goal': 'goal',
         'instrument_count': 'goal',
-        'shuffle_nightmare_keys': 'shuffle_nightmare',
-        'shuffle_small_keys': 'shuffle_small',
+        'shuffle_nightmare_keys': 'nightmare_keys',
+        'shuffle_small_keys': 'dungeon_keys',
         'shuffle_maps': 'shuffle_maps',
         'shuffle_compasses': 'shuffle_compasses',
-        'shuffle_stone_beaks': 'shuffle_beaks',
+        'shuffle_stone_beaks': 'dungeon_beaks',
         'shuffle_instruments': 'instruments',
         'tradequest': 'tradequest',
         'rooster': 'rooster',
@@ -210,18 +210,18 @@ function processSlotDataMessage(message) {
             'random-high': "8",
         },
         'shuffle_nightmare_keys': {
-            'original_dungeon': false,
-            'own_dungeons': true,
-            'own_world': true,
-            'any_world': true,
-            'different_world': true,
+            'original_dungeon': '',
+            'own_dungeons': 'keysanity',
+            'own_world': 'keysanity',
+            'any_world': 'keysanity',
+            'different_world': 'keysanity',
         },
         'shuffle_small_keys': {
-            'original_dungeon': false,
-            'own_dungeons': true,
-            'own_world': true,
-            'any_world': true,
-            'different_world': true,
+            'original_dungeon': '',
+            'own_dungeons': 'keysanity',
+            'own_world': 'keysanity',
+            'any_world': 'keysanity',
+            'different_world': 'keysanity',
         },
         'shuffle_maps': {
             'original_dungeon': false,
@@ -238,11 +238,11 @@ function processSlotDataMessage(message) {
             'different_world': true,
         },
         'shuffle_stone_beaks': {
-            'original_dungeon': false,
-            'own_dungeons': true,
-            'own_world': true,
-            'any_world': true,
-            'different_world': true,
+            'original_dungeon': '',
+            'own_dungeons': 'keysanity',
+            'own_world': 'keysanity',
+            'any_world': 'keysanity',
+            'different_world': 'keysanity',
         },
         'shuffle_instruments': {
             'vanilla': false,
@@ -283,7 +283,7 @@ function processSlotDataMessage(message) {
         args[flagLookup[flag]] = value;
     }
 
-    args['dungeon_items'] = 'custom';
+    args['dungeon_maps'] = 'custom';
     args['goal'] = String(args['goal']);
     args['openmabe'] = args['openmabe'] === true;
 

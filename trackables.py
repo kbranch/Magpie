@@ -169,7 +169,7 @@ def getGraphAccessibility(logics, inventory):
             if 'diff' not in accLoc and loc in accessibleLocations:
                 accLoc['diff'] = i
 
-            for connection in loc.simple_connections + loc.gated_connections:
+            for connection in loc.connections:
                 to = connection[0]
                 toName = to.friendlyName()
                 requirement = connection[1]
@@ -181,7 +181,7 @@ def getGraphAccessibility(logics, inventory):
                     shortReqName = requirement.shortName(logic)
 
                 if connId not in accLoc['connections']:
-                    matchingConnections = [x for x in to.simple_connections + to.gated_connections 
+                    matchingConnections = [x for x in to.connections
                                            if str(x[1]) == fullReqName and x[0].friendlyName() == name
                                               and (not hasattr(requirement, 'shortName') or shortReqName == x[1].shortName(logic))]
 
@@ -329,11 +329,14 @@ def addStartingItems(inventory, args, settings):
     inventory['RUPEES_500'] = 10
     inventory['TRUE'] = 1
 
-    if args.dungeon_items == 'keysy':
+    if args.dungeon_keys == 'keysy':
         for i in range(9):
-            for amount, item_name in ((9, "KEY"), (1, "NIGHTMARE_KEY")):
-                item_name = f"{item_name}{i + 1}"
-                inventory[item_name] = amount
+            item_name = f"KEY{i + 1}"
+            inventory[item_name] = 9
+    if args.nightmare_keys == 'keysy':
+        for i in range(9):
+            item_name = f"NIGHTMARE_KEY{i + 1}"
+            inventory[item_name] = 1
     
     if (args.owlstatues not in ['both', 'dungeon']
         and 'bingo' not in args.goal
