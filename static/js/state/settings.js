@@ -283,6 +283,21 @@ function fixArgs(args) {
         }
     }
 
+    if ('dungeon_items' in args) {
+        args.dungeon_keys = args.shuffle_small ? 'keysanity' : '';
+        args.nightmare_keys = args.shuffle_nightmare ? 'keysanity' : '';
+        args.dungeon_beaks = args.shuffle_beaks ? 'keysanity' : '';
+
+        if (args.shuffle_maps != args.shuffle_compasses) {
+            args.dungeon_maps = 'custom';
+        }
+        else {
+            args.dungeon_maps = args.shuffle_maps ? 'keysanity' : '';
+        }
+
+        delete args.dungeon_items;
+    }
+
     if (['instruments', 'specific'].includes(args.goal) && !isNumeric(args.goalcount)) {
         args.goalcount = '8';
     }
