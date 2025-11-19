@@ -171,9 +171,7 @@ function saveSettings(settings) {
     }
 
     if (props.broadcastMode == 'send') {
-        if (broadcastArgs) {
-            broadcastArgs();
-        }
+        window.broadcastArgs();
     }
 
     lastSettings = cloneSettings(settings);

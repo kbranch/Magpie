@@ -115,7 +115,9 @@ function receiveLocation(data) {
 }
 
 function receiveArgs(data) {
-    setInputValues('flag', data);
+    for (const attr in data) {
+        args[attr] = data[attr];
+    }
     saveSettings();
 }
 
