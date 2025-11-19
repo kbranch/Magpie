@@ -14,7 +14,7 @@ const knownFlags = [
 ];
 
 const mainTemplateCredits = {
-    'BusinessAlex.html': 'Created by <strong>BusinessAlex</strong>',
+    'BusinessAlex.html': 'Created by <strong>BusinessAlex</strong>. Meant to be used with the BusinessAlex graphics pack.',
 };
 
 const dungeonTemplateCredits = {
