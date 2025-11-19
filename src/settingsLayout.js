@@ -14,14 +14,14 @@ const knownFlags = [
 ];
 
 const mainTemplateCredits = {
-    'BusinessAlex.html': 'Created by <strong>BusinessAlex</strong>. Meant to be used with the BusinessAlex graphics pack.',
+    'BusinessAlex.html': 'Created by <a href="https://drive.google.com/drive/folders/173G9T5Y4HYKECLeJMiBPlMugZvnZqqK-">BusinessAlex</a>. Meant to be used with the BusinessAlex graphics pack.',
 };
 
 const dungeonTemplateCredits = {
 };
 
 const graphicsCredits = {
-    'BusinessAlex': 'Created by <strong>BusinessAlex</strong>',
+    'BusinessAlex': 'Created by <a href="https://drive.google.com/drive/folders/173G9T5Y4HYKECLeJMiBPlMugZvnZqqK-">BusinessAlex</a>',
     'Sig': 'Created by <a href="https://www.twitch.tv/isabelle_zephyr">Madam Materia</a> and <strong>Techokami</strong>',
     'X': 'Created by <strong>AhziDahaka</strong>',
     'MarinAlpha': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
