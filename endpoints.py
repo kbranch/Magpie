@@ -9,6 +9,7 @@ import platform
 import requests
 import traceback
 import localSettings
+from urllib.parse import urlparse
 from jinja2 import Template
 from datetime import datetime
 from flask import Flask, render_template, request, make_response, send_from_directory, Request
@@ -258,6 +259,11 @@ def fetchUpdate():
 def parseShortString():
     try:
         shortString = request.form['shortString']
+        if shortString.startswith("http"):
+            url = urlparse(shortString)
+            if url.hostname == "ladxr.daid.eu":
+                shortString = url.fragment
+
         settings = getArgsFromShortString(shortString)
 
         return json.dumps(settings)
