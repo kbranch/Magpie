@@ -133,10 +133,10 @@ def getItems(args, trimDungeonItems=True):
     
     for n in range(9):
         if trimDungeonItems:
-            if args.dungeon_keys == 'keysy':
+            if args.dungeon_keys == 'removed':
                 item_name = f"KEY{n}"
                 pool[item_name] = 0
-            if args.nightmare_keys == 'keysy':
+            if args.nightmare_keys == 'removed':
                 item_name = f"NIGHTMARE_KEY{n}"
                 pool[item_name] = 0
             if 'bingo' not in args.goal:

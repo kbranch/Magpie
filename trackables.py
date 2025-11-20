@@ -329,11 +329,11 @@ def addStartingItems(inventory, args, settings):
     inventory['RUPEES_500'] = 10
     inventory['TRUE'] = 1
 
-    if args.dungeon_keys == 'keysy':
+    if args.dungeon_keys == 'removed':
         for i in range(9):
             item_name = f"KEY{i + 1}"
             inventory[item_name] = 9
-    if args.nightmare_keys == 'keysy':
+    if args.nightmare_keys == 'removed':
         for i in range(9):
             item_name = f"NIGHTMARE_KEY{i + 1}"
             inventory[item_name] = 1
