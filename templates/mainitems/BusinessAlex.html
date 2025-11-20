@@ -20,13 +20,16 @@
         background-repeat: repeat-y;
     }
 
-    .bullet-point {
+    .bullet-point::before {
+        content: "";
+        display: inline-flex;
         height: 32px;
         width: 8px;
         background-image: url("static/images/BusinessAlex/bullet-point.png");
         background-repeat: no-repeat;
         background-position: center;
-        margin-left: 12px;
+        margin-left: 8px;
+        margin-bottom: -12px;
     }
 
     .music {
@@ -93,6 +96,10 @@
         margin-bottom: 4px;
     }
 
+    .small-key {
+        margin-top: 2px;
+    }
+
     #AlexWrapper {
         background-color: #ffffad;
     }
@@ -151,6 +158,20 @@
     }
 </style>
 
+<script>
+    function heartSrc(player) {
+        let inv = getPlayerInventory(player);
+        
+        return `/images/BusinessAlex/heart_${inv['HEART_PIECE'] % 4}.png`;
+    }
+
+    function heartCount(player) {
+        let inv = getPlayerInventory(player);
+        
+        return Math.trunc((inv['HEART_PIECE'] || 0) / 4);
+    }
+</script>
+
 <div id="AlexWrapper" class="row" style="width: {{width}}px;">
     <div id="AlexHeader">
         <img class="button-bracket" src="static/images/BusinessAlex/B.png">
@@ -161,54 +182,40 @@
         {{ item('SHIELD', max="2", classes="p-1") }}
         <img class="button-bracket pe-2" src="static/images/BusinessAlex/close-bracket.png">
 
-        {% if args.overworld == 'alttp' %}
-            {{ item("HAMMER", max="1", classes="p-1") }}
-        {% else %}
-            {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc('${player}')", highlightOwnedSecondary=True, classes="p-1") }}
-        {% endif %}
+        {{ item("BLUE_TUNIC", max="1", secondary="RED_TUNIC", secondaryMax="1", src="tunicSrc('${player}')", highlightOwnedSecondary=True, classes="p-1") }}
+        {{ item("HEART_PIECE", max="80", default_count="12", overlay_count="HEART_PIECE", overlay_display="heartCount('${player}')", src="heartSrc('${player}')", classes="p-1") }}
     </div>
     <div class="horizontal-bar"></div>
     <div id="AlexInventory">
         <div id="AlexEquip">
-            <div class="bullet-point"></div>
-            {{ item("FEATHER", max="1", classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("PEGASUS_BOOTS", max="1", classes="p-1") }}
+            {{ item("FEATHER", max="1", classes="p-1 bullet-point") }}
+            {{ item("PEGASUS_BOOTS", max="1", classes="p-1 bullet-point") }}
 
-            <div class="bullet-point"></div>
-            {{ item("POWER_BRACELET", max="2", classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("MAGIC_POWDER", max="1", secondary="MAX_POWDER_UPGRADE", classes="p-1") }}
+            {{ item("POWER_BRACELET", max="2", classes="p-1 bullet-point") }}
+            {{ item("MAGIC_POWDER", max="1", secondary="MAX_POWDER_UPGRADE", classes="p-1 bullet-point") }}
 
-            <div class="bullet-point"></div>
-            {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE", classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE", classes="p-1") }}
+            {{ item("BOW", max="1", secondary="MAX_ARROWS_UPGRADE", classes="p-1 bullet-point") }}
+            {{ item("BOMB", max="1", secondary="MAX_BOMBS_UPGRADE", classes="p-1 bullet-point") }}
 
-            <div class="bullet-point"></div>
-            {{ item("BOOMERANG", max="1", classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("HOOKSHOT", max="1", classes="p-1") }}
+            {{ item("BOOMERANG", max="1", classes="p-1 bullet-point") }}
+            {{ item("HOOKSHOT", max="1", classes="p-1 bullet-point") }}
 
-            <div class="bullet-point"></div>
-            {{ item("OCARINA", max="1", classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("SHOVEL", max="1", classes="p-1") }}
+            {{ item("OCARINA", max="1", classes="p-1 bullet-point") }}
+            {{ item("SHOVEL", max="1", classes="p-1 bullet-point") }}
 
-            <div class="bullet-point"></div>
-            {{ item("ROOSTER", max="1", condition=allItems['ROOSTER'] >= 1, classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("MAGIC_ROD", max="1", classes="p-1") }}
+            {{ item("ROOSTER", max="1", condition=allItems['ROOSTER'] >= 1, classes="p-1 bullet-point") }}
+            {{ item("HAMMER", max="1", condition='HAMMER' in allItems, classes="p-1 bullet-point") }}
+            {{ item("MAGIC_ROD", max="1", classes="p-1 bullet-point")}}
 
-            <div class="bullet-point"></div>
-            {{ item("BOWWOW", max="1", classes="p-1") }}
-            <div class="bullet-point"></div>
-            {{ item("TOADSTOOL", secondary="TOADSTOOL_CHECKED", secondaryMax="1", highlightOwnedSecondary=True, classes="p-1") }}
+            {{ item("BOWWOW", max="1", classes="p-1 bullet-point") }}
+            {{ item("TOADSTOOL", secondary="TOADSTOOL_CHECKED", secondaryMax="1", highlightOwnedSecondary=True, classes="p-1 bullet-point") }}
 
-            <div class="music"></div>
-            {{ item("SONG1", max="1", classes="song") }}
-            {{ item("SONG2", max="1", classes="song") }}
-            {{ item("SONG3", max="1", classes="song") }}
+            <div class="d-flex">
+                <div class="music"></div>
+                {{ item("SONG1", max="1", classes="song") }}
+                {{ item("SONG2", max="1", classes="song") }}
+                {{ item("SONG3", max="1", classes="song") }}
+            </div>
         </div>
         <div class="vertical-bar"></div>
         <div id="AlexPassives">
@@ -278,8 +285,8 @@
                 {{ item("MAP1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY1", width="12px", height="21px", max_image="1", overlay_count="KEY1", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY1", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY1", width="12px", height="24px", max_image="1", overlay_count="KEY1", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY1", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -288,8 +295,8 @@
                 {{ item("MAP2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY2", width="12px", height="21px", max_image="1", overlay_count="KEY2", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY2", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY2", width="12px", height="24px", max_image="1", overlay_count="KEY2", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY2", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -298,8 +305,8 @@
                 {{ item("MAP3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY3", width="12px", height="21px", max_image="1", overlay_count="KEY3", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY3", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY3", width="12px", height="24px", max_image="1", overlay_count="KEY3", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY3", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -308,8 +315,8 @@
                 {{ item("MAP4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY4", width="12px", height="21px", max_image="1", overlay_count="KEY4", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY4", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY4", width="12px", height="24px", max_image="1", overlay_count="KEY4", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY4", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -324,8 +331,8 @@
                 {{ item("MAP5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY5", width="12px", height="21px", max_image="1", overlay_count="KEY5", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY5", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY5", width="12px", height="24px", max_image="1", overlay_count="KEY5", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY5", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -334,8 +341,8 @@
                 {{ item("MAP6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY6", width="12px", height="21px", max_image="1", overlay_count="KEY6", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY6", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY6", width="12px", height="24px", max_image="1", overlay_count="KEY6", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY6", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -344,8 +351,8 @@
                 {{ item("MAP7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY7", width="12px", height="21px", max_image="1", overlay_count="KEY7", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY7", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY7", width="12px", height="24px", max_image="1", overlay_count="KEY7", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY7", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -354,8 +361,8 @@
                 {{ item("MAP8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY8", width="12px", height="21px", max_image="1", overlay_count="KEY8", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY8", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY8", width="12px", height="24px", max_image="1", overlay_count="KEY8", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY8", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
         <div class="dungeon-wrapper">
@@ -364,8 +371,8 @@
                 {{ item("MAP0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("COMPASS0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
                 {{ item("STONE_BEAK0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("KEY0", width="12px", height="21px", max_image="1", overlay_count="KEY0", classes="small", allItems=allItems, hideIfZero=True) }}
-                {{ item("NIGHTMARE_KEY0", max_image="1", width="12px", height="21px", classes="small", allItems=allItems, hideIfZero=True) }}
+                {{ item("KEY0", width="12px", height="24px", max_image="1", overlay_count="KEY0", classes="small small-key", allItems=allItems, hideIfZero=True) }}
+                {{ item("NIGHTMARE_KEY0", max_image="1", width="14px", height="26px", classes="small", allItems=allItems, hideIfZero=True) }}
             </div>
         </div>
     </div>

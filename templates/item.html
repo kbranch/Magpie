@@ -1,5 +1,6 @@
-{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', height='32px', top='', left='', overlay_count='', invert_count='',
-              allItems=None, hideIfZero=False, condition=True, gfx=True, highlightOwnedSecondary=False, secondaryBelow=False) %}
+{% macro item(primary, secondary='', classes='"', max='', secondaryMax='', src='', max_image='', width='32px', height='32px',
+              top='', left='', overlay_count='', invert_count='', allItems=None, hideIfZero=False, condition=True, gfx=True,
+              highlightOwnedSecondary=False, secondaryBelow=False, default_count='', overlay_display='') %}
 {% if condition and (allItems == None or (hideIfZero and (primary not in allItems or allItems[primary] > 0))) %}
     {% set altNames = {
         'SONG1': 'Ballad of the Wind Fish',
@@ -71,6 +72,10 @@
         {% set invert_count = 'data-invert_count' %}
     {% endif %}
 
+    {% if default_count != '' %}
+        {% set default_count = 'data-default_count=' + default_count %}
+    {% endif %}
+
     {% if highlightOwnedSecondary %}
         {% set highlightOwnedSecondary = ' highlight-owned-secondary ' %}
     {% else %}
@@ -93,14 +98,14 @@
         {% set secondaryClasses = ' lowSecondary' %}
     {% endif %}
 
-    <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} data-gfx="{{gfx}}" class="inventory-item {{highlightOwnedSecondary}}{{classes}}" style="{{outerStyle}}">
+    <div data-primary="{{primary}}" {{secondaryTag}} {{max}} {{secondaryMax}} {{max_image}} {{default_count}} data-gfx="{{gfx}}" class="inventory-item {{highlightOwnedSecondary}}{{classes}}" style="{{outerStyle}}">
         <div class="itemWrapper" {{innerStyle|safe}} data-parent-player="${player}" onclick="addItem('{{primary}}', 1, true, true, this.dataset.parentPlayer)" oncontextmenu="{{oncontextmenu}}" onmouseenter="{{onmouseenter|safe}}" onmouseleave="itemMouseLeave(this)"  data-bs-toggle="tooltip" data-bs-title="{{tooltip}}">
         {% if secondary != '' and src == '' %}
             <img data-item="{{secondary}}" class="itemImage secondary{{secondaryClasses}}" src="static/images/{{secondary}}_0.png" draggable="false">
         {% endif %}
             <img data-item="{{primary}}" {{src_tag}} {{max_image}} {{invert_count}} class="itemImage primary" src="static/images/{{primary}}_0.png" draggable="false">
         {% if overlay_count != '' %}
-            <span data-overlay_count="{{overlay_count}}" {{invert_count}} class="overlay" onmousedown="preventDoubleClick(event)">0</span>
+            <span data-overlay_count="{{overlay_count}}" data-overlay_display="{{overlay_display}}" {{invert_count}} class="overlay" onmousedown="preventDoubleClick(event)">0</span>
         {% endif %}
         </div>
     </div>
