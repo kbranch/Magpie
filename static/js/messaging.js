@@ -317,7 +317,7 @@ function processSlotDataMessage(message) {
 
     saveSettings();
 
-    trustEntrances = 'version' in slotData;
+    trustEntrances = ('version' in slotData) || ('world_version' in slotData);
 
     if ('server_address' in slotData) {
         archipelagoConnect(localSettings.apServer, localSettings.apSlot, localSettings.apPassword, slotData.game_name ?? 'Links Awakening DX');
