@@ -180,6 +180,7 @@ def getLogicWithoutER(realArgs):
 def getLogics(args, entranceMap, bossList, minibossMap):
     worldSetup = WorldSetup()
     worldSetup.goal = args.goal
+    worldSetup.goal_count = int(args.goalcount)
 
     if bossList and len(bossList) == len(worldSetup.boss_mapping):
         worldSetup.boss_mapping = bossList
@@ -444,14 +445,12 @@ def getSpoilerLog(romData):
     rom = ROMWithTables(io.BytesIO(romData))
     args = SpoilerArgs()
     shortSettings = rom.readShortSettings()
-    settings = Settings()
-    settings.loadShortString(shortSettings)
     
     filename = f'log-{uuid.uuid4()}.json'
     logJson = {}
 
     try:
-        log = SpoilerLog(settings, args, [rom])
+        log = SpoilerLog(None, args, rom)
         log.outputJson(filename)
         logJson = json.loads(open(filename, 'r').read())
         os.remove(filename)

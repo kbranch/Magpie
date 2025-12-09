@@ -301,8 +301,6 @@ def renderCheckList():
         bossList = json.loads(bossText)
         minibossMap = json.loads(minibossText)
 
-        logicHash = hash(argsText + entranceText + bossText + minibossText)
-
         settings = {}
 
         if 'localSettings' in request.form:
@@ -316,6 +314,14 @@ def renderCheckList():
         trackerLogic.patchRequirements()
 
         args = getArgs(values=argValues)
+
+        reqString = ''
+        if args.goal == 'specific':
+            reqString = ''.join([x[3] for x in inventory if x.startswith('REQ') and inventory[x] > 0])
+            if reqString == '':
+                reqString = '12345678'
+            args.goal = f'={reqString}'
+
         initChecks(args)
 
         addStartingItems(inventory, args, settings)
@@ -329,6 +335,9 @@ def renderCheckList():
 
         entrances = list(entrances)
         allItems = getAllItems(args)
+
+        logicHash = hash(argsText + entranceText + bossText + minibossText + reqString)
+
         logics = getCachedLogics(logicHash, args, entranceMap, bossList, minibossMap)
         allChecks = loadChecks(getLogicWithoutER(args), allItems, True)
         accessibility = getAccessibility(allChecks, entrances, logics, inventory)
