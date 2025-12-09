@@ -192,6 +192,12 @@ function processSlotDataMessage(message) {
         'rooster': 'rooster',
         'experimental_dungeon_shuffle': 'dungeonshuffle',
         'experimental_entrance_shuffle': 'entranceshuffle',
+        'dungeon_shuffle': 'dungeonshuffle',
+        'entrance_shuffle': 'entranceshuffle',
+        'shuffle_junk': 'shufflejunk',
+        'shuffle_annoying': 'shuffleannoying',
+        'shuffle_water': 'shufflewater',
+        'random_start_location': 'randomstartlocation',
         'hard_mode': 'hardmode',
         'overworld': 'openmabe',
         'pre_release': 'prerelease',
@@ -286,6 +292,7 @@ function processSlotDataMessage(message) {
     args['dungeon_maps'] = 'custom';
     args['goal'] = String(args['goal']);
     args['openmabe'] = args['openmabe'] === true;
+    args['prerelease'] = slotData.world_version && compareVersions(slotData.world_version, '13.2.8') >= 0;
 
     if ('gfxmod' in slotData) {
         let gfxPack = slotData.gfxmod.split('.')[0];
@@ -296,6 +303,8 @@ function processSlotDataMessage(message) {
             console.log(`Invalid graphics pack: "${slotData.gfxmod}"`);
         }
     }
+
+    console.log(`Connected to AP client version ${slotData.client_version}, world version ${slotData.world_version}`);
 
     setInputValues('flag', args);
     setInputValues('setting', localSettings);
@@ -313,6 +322,27 @@ function processSlotDataMessage(message) {
     if ('server_address' in slotData) {
         archipelagoConnect(localSettings.apServer, localSettings.apSlot, localSettings.apPassword, slotData.game_name ?? 'Links Awakening DX');
     }
+}
+
+function compareVersions(a, b) {
+    const aParts = a.split('.').map(Number);
+    const bParts = b.split('.').map(Number);
+    const len = Math.max(aParts.length, bParts.length);
+
+    for (let i = 0; i < len; i++) {
+        const aPart = aParts[i] || 0;
+        const bPart = bParts[i] || 0;
+
+        if (aPart > bPart) {
+            return 1;
+        }
+
+        if (aPart < bPart) {
+            return -1;
+        }
+    }
+
+    return 0;
 }
 
 function processHandshAckMessage(message) {

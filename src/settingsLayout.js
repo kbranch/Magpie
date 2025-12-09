@@ -334,7 +334,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                         'chaos': 'Chaos',
                                         'insane': 'Insane',
                                     },
-                                    visibleCondition: () => { return !args.ap_logic },
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                                 new SettingsItem({
                                     title: 'Entrance randomizer',
@@ -346,7 +346,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                         'none': 'Default',
                                         'simple': 'Simple',
                                     },
-                                    visibleCondition: () => { return args.ap_logic },
+                                    visibleCondition: () => { return args.ap_logic && !args.prerelease },
                                 }),
                                 new SettingsItem({
                                     title: 'Random start location',
@@ -354,7 +354,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                     settingBase: 'args',
                                     settingName: 'randomstartlocation',
                                     icon: 'marin.png',
-                                    visibleCondition: () => { return !args.ap_logic },
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                                 new SettingsItem({
                                     title: 'Dungeon shuffle',
@@ -369,7 +369,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                     settingBase: 'args',
                                     settingName: 'shufflejunk',
                                     icon: 'phonebooth.png',
-                                    visibleCondition: () => { return !args.ap_logic },
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                                 new SettingsItem({
                                     title: 'Shuffle annoying entrances',
@@ -377,7 +377,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                     settingBase: 'args',
                                     settingName: 'shuffleannoying',
                                     icon: 'mamu.png',
-                                    visibleCondition: () => { return !args.ap_logic },
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                                 new SettingsItem({
                                     title: 'Shuffle water entrances',
@@ -385,7 +385,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                     settingBase: 'args',
                                     settingName: 'shufflewater',
                                     icon: 'manbo.png',
-                                    visibleCondition: () => { return !args.ap_logic },
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                             ]
                         }),
