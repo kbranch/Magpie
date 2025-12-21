@@ -76,7 +76,14 @@ function updateOverlay(item, player='') {
     }
 
     for (const text of texts) {
-        let number = $(text).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
+        let number = 0;
+
+        if ($(text).attr('data-overlay_display') != '') {
+            number = eval($(text).attr('data-overlay_display').replace('${player}', player));
+        }
+        else {
+            number = $(text).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
+        }
 
         if (number == 0) {
             $(text).addClass('hidden');

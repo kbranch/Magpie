@@ -103,7 +103,7 @@ function refreshSettingsItems(obj) {
 }
 
 function updateCustomDungeonItems(args) {
-    if (!args || args.dungeon_items == 'custom') {
+    if (!args) {
         return;
     }
 
@@ -115,16 +115,22 @@ function updateCustomDungeonItems(args) {
         shuffle_beaks: false,
     }
 
-    if (['smallkeys', 'keysanity', 'localnightmarekey'].includes(args.dungeon_items)) {
+    if (args.dungeon_keys != '') {
         settings.shuffle_small = true;
     }
-    if (['nightmarekeys', 'keysanity'].includes(args.dungeon_items)) {
+    if (args.nightmare_keys != '') {
         settings.shuffle_nightmare = true;
     }
-    if (['localkeys', 'keysanity', 'localnightmarekey'].includes(args.dungeon_items)) {
+    if (args.dungeon_beaks != '') {
+        settings.shuffle_beaks = true;
+    }
+    if (args.dungeon_maps != '') {
         settings.shuffle_maps = true;
         settings.shuffle_compasses = true;
-        settings.shuffle_beaks = true;
+    }
+    if (args.dungeon_maps == 'custom') {
+        settings.shuffle_maps = args['shuffle_maps'];
+        settings.shuffle_compasses = args['shuffle_compasses'];
     }
 
     for (const prop in settings) {
@@ -165,9 +171,7 @@ function saveSettings(settings) {
     }
 
     if (props.broadcastMode == 'send') {
-        if (broadcastArgs) {
-            broadcastArgs();
-        }
+        window.broadcastArgs();
     }
 
     lastSettings = cloneSettings(settings);

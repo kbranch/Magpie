@@ -1,7 +1,7 @@
 requests
 websockets
 Flask
-flaskwebgui>1.0
+flaskwebgui==1.1.3
 psycopg2-binary
 mysql-connector-python
 pillow

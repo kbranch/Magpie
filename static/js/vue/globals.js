@@ -48,6 +48,7 @@ var remoteProtocolVersion = null;
 var checkSize = 16;
 var skipSettingsSave = false;
 var maxInventory = {};
+var defaultInventory = {};
 var errorLog = [];
 var messageQueue = [];
 var settingsPending = false;
