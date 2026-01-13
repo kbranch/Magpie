@@ -3,7 +3,12 @@
 function resetInventory() {
     inventory = {};
     for (const item in maxInventory) {
-        inventory[item] = 0;
+        if (item in defaultInventory) {
+            inventory[item] = defaultInventory[item];
+        }
+        else {
+            inventory[item] = 0;
+        }
     }
 
     saveInventory();
@@ -133,6 +138,12 @@ function initKnownItems() {
             let primary = $(col).attr('data-primary');
             let max = Number($(col).attr('data-max'));
             maxInventory[primary] = max;
+        }
+
+        if (hasAttr(col, "data-default_count")) {
+            let primary = $(col).attr('data-primary');
+            let defaultCount = Number($(col).attr('data-default_count'));
+            defaultInventory[primary] = defaultCount;
         }
 
         if (hasAttr(col, "secondary_max")) {

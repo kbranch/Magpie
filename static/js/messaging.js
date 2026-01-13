@@ -182,16 +182,22 @@ function processSlotDataMessage(message) {
         'logic': 'logic',
         'goal': 'goal',
         'instrument_count': 'goal',
-        'shuffle_nightmare_keys': 'shuffle_nightmare',
-        'shuffle_small_keys': 'shuffle_small',
+        'shuffle_nightmare_keys': 'nightmare_keys',
+        'shuffle_small_keys': 'dungeon_keys',
         'shuffle_maps': 'shuffle_maps',
         'shuffle_compasses': 'shuffle_compasses',
-        'shuffle_stone_beaks': 'shuffle_beaks',
+        'shuffle_stone_beaks': 'dungeon_beaks',
         'shuffle_instruments': 'instruments',
         'tradequest': 'tradequest',
         'rooster': 'rooster',
         'experimental_dungeon_shuffle': 'dungeonshuffle',
         'experimental_entrance_shuffle': 'entranceshuffle',
+        'dungeon_shuffle': 'dungeonshuffle',
+        'entrance_shuffle': 'entranceshuffle',
+        'shuffle_junk': 'shufflejunk',
+        'shuffle_annoying': 'shuffleannoying',
+        'shuffle_water': 'shufflewater',
+        'random_start_location': 'randomstartlocation',
         'hard_mode': 'hardmode',
         'overworld': 'openmabe',
         'pre_release': 'prerelease',
@@ -210,18 +216,18 @@ function processSlotDataMessage(message) {
             'random-high': "8",
         },
         'shuffle_nightmare_keys': {
-            'original_dungeon': false,
-            'own_dungeons': true,
-            'own_world': true,
-            'any_world': true,
-            'different_world': true,
+            'original_dungeon': '',
+            'own_dungeons': 'keysanity',
+            'own_world': 'keysanity',
+            'any_world': 'keysanity',
+            'different_world': 'keysanity',
         },
         'shuffle_small_keys': {
-            'original_dungeon': false,
-            'own_dungeons': true,
-            'own_world': true,
-            'any_world': true,
-            'different_world': true,
+            'original_dungeon': '',
+            'own_dungeons': 'keysanity',
+            'own_world': 'keysanity',
+            'any_world': 'keysanity',
+            'different_world': 'keysanity',
         },
         'shuffle_maps': {
             'original_dungeon': false,
@@ -238,11 +244,11 @@ function processSlotDataMessage(message) {
             'different_world': true,
         },
         'shuffle_stone_beaks': {
-            'original_dungeon': false,
-            'own_dungeons': true,
-            'own_world': true,
-            'any_world': true,
-            'different_world': true,
+            'original_dungeon': '',
+            'own_dungeons': 'keysanity',
+            'own_world': 'keysanity',
+            'any_world': 'keysanity',
+            'different_world': 'keysanity',
         },
         'shuffle_instruments': {
             'vanilla': false,
@@ -283,9 +289,10 @@ function processSlotDataMessage(message) {
         args[flagLookup[flag]] = value;
     }
 
-    args['dungeon_items'] = 'custom';
+    args['dungeon_maps'] = 'custom';
     args['goal'] = String(args['goal']);
     args['openmabe'] = args['openmabe'] === true;
+    args['prerelease'] = slotData.world_version && compareVersions(slotData.world_version, '13.2.8') >= 0;
 
     if ('gfxmod' in slotData) {
         let gfxPack = slotData.gfxmod.split('.')[0];
@@ -296,6 +303,8 @@ function processSlotDataMessage(message) {
             console.log(`Invalid graphics pack: "${slotData.gfxmod}"`);
         }
     }
+
+    console.log(`Connected to AP client version ${slotData.client_version}, world version ${slotData.world_version}`);
 
     setInputValues('flag', args);
     setInputValues('setting', localSettings);
@@ -308,11 +317,32 @@ function processSlotDataMessage(message) {
 
     saveSettings();
 
-    trustEntrances = 'version' in slotData;
+    trustEntrances = ('version' in slotData) || ('world_version' in slotData);
 
     if ('server_address' in slotData) {
         archipelagoConnect(localSettings.apServer, localSettings.apSlot, localSettings.apPassword, slotData.game_name ?? 'Links Awakening DX');
     }
+}
+
+function compareVersions(a, b) {
+    const aParts = a.split('.').map(Number);
+    const bParts = b.split('.').map(Number);
+    const len = Math.max(aParts.length, bParts.length);
+
+    for (let i = 0; i < len; i++) {
+        const aPart = aParts[i] || 0;
+        const bPart = bParts[i] || 0;
+
+        if (aPart > bPart) {
+            return 1;
+        }
+
+        if (aPart < bPart) {
+            return -1;
+        }
+    }
+
+    return 0;
 }
 
 function processHandshAckMessage(message) {

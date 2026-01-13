@@ -283,18 +283,24 @@ function fixArgs(args) {
         }
     }
 
+    if ('dungeon_items' in args) {
+        args.dungeon_keys = args.shuffle_small ? 'keysanity' : '';
+        args.nightmare_keys = args.shuffle_nightmare ? 'keysanity' : '';
+        args.dungeon_beaks = args.shuffle_beaks ? 'keysanity' : '';
+
+        if (args.shuffle_maps != args.shuffle_compasses) {
+            args.dungeon_maps = 'custom';
+        }
+        else {
+            args.dungeon_maps = args.shuffle_maps ? 'keysanity' : '';
+        }
+
+        delete args.dungeon_items;
+    }
+
     if (['instruments', 'specific'].includes(args.goal) && !isNumeric(args.goalcount)) {
         args.goalcount = '8';
     }
-
-    if (args.dungeon_items == 'standard') {
-        args.dungeon_items = '';
-    }
-
-    // why on earth did this ever exist?
-    // if (args.dungeon_items == 'localnightmarekey') {
-    //     args.dungeon_items = 'nightmarekey';
-    // }
 
     if (args.owlstatues == 'none') {
         args.owlstatues = '';
@@ -581,7 +587,7 @@ function setApLogic(value) {
     saveSettings();
 }
 
-function getCustomDungeonItems(dungeonItems) {
+function getCustomDungeonItems(args) {
     let settings = {
         shuffle_small: false,
         shuffle_nightmare: false,
@@ -590,27 +596,33 @@ function getCustomDungeonItems(dungeonItems) {
         shuffle_beaks: false
     };
 
-    if (['smallkeys', 'keysanity', 'localnightmarekey', 'keysy'].includes(dungeonItems)) {
+    if (args.dungeon_keys != '') {
         settings.shuffle_small = true;
     }
-    if (['nightmarekeys', 'keysanity', 'keysy'].includes(dungeonItems)) {
+    if (args.nightmare_keys != '') {
         settings.shuffle_nightmare = true;
     }
-    if (['localkeys', 'keysanity', 'localnightmarekey'].includes(dungeonItems)) {
+    if (args.dungeon_beaks != '') {
+        settings.shuffle_beaks = true;
+    }
+    if (args.dungeon_maps != '') {
         settings.shuffle_maps = true;
         settings.shuffle_compasses = true;
-        settings.shuffle_beaks = true;
+    }
+    if (args.dungeon_maps == 'custom') {
+        settings.shuffle_maps = args['shuffle_maps'];
+        settings.shuffle_compasses = args['shuffle_compasses'];
     }
 
     return settings;
 }
 
 function setCustomDungeonItemsArgs() {
-    if (args.dungeon_items == 'custom') {
+    if (args.dungeon_maps == 'custom') {
         return;
     }
 
-    let settings = getCustomDungeonItems(args.dungeon_items);
+    let settings = getCustomDungeonItems(args);
     for (const prop in settings) {
         args[prop] = settings[prop];
     }

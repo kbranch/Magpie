@@ -4,14 +4,47 @@ import { SettingsItem } from '@/SettingsItem.js';
 const types = SettingsItem.types;
 
 const knownFlags = [
-    'logic', 'heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster', 'dungeon_items', 'goal', 'bowwow', 
+    'logic', 'heartpiece', 'seashells', 'heartcontainers', 'instruments', 'tradequest', 'witch', 'rooster', 'goal', 'bowwow', 
     'overworld', 'owlstatues', 'race', 'spoilerformat', 'superweapons', 'boss', 'randomstartlocation', 'dungeonshuffle', 'entranceshuffle', 
     'miniboss', 'doubletrouble', 'hardMode', 'hpmode', 'accessibility_rule', 'itempool', 'boomerang', 'steal', 'test', 'romdebugmode', 'exportmap',
     'removeFlashingLights', 'quickswap', 'textmode', 'removeNagMessages', 'lowhpbeep', 'music', 'input_filename', 'output_filename', 'dump',
     'spoiler_filename', 'seed', 'emptyplan', 'timeout', 'log_directory', 'plan', 'multiworld', 'forwardfactor', 'linkspalette', 'accessibility',
     'hardmode', 'shufflejunk', 'shuffleannoying', 'shufflewater', 'enemies', 'keyholesanity', 'shopsanity', 'evilshop', 'goalcount',
-    'dungeonchainlength',
+    'dungeonchainlength', 'dungeon_keys', 'dungeon_maps', 'nightmare_keys', 'dungeon_beaks',
 ];
+
+const mainTemplateCredits = {
+    'BusinessAlex.html': 'Created by <a href="https://drive.google.com/drive/folders/173G9T5Y4HYKECLeJMiBPlMugZvnZqqK-">BusinessAlex</a>. Meant to be used with the BusinessAlex graphics pack.',
+};
+
+const dungeonTemplateCredits = {
+};
+
+const graphicsCredits = {
+    'BusinessAlex': 'Created by <a href="https://drive.google.com/drive/folders/173G9T5Y4HYKECLeJMiBPlMugZvnZqqK-">BusinessAlex</a>',
+    'Sig': 'Created by <a href="https://www.twitch.tv/isabelle_zephyr">Madam Materia</a> and <strong>Techokami</strong>',
+    'X': 'Created by <strong>AhziDahaka</strong>',
+    'MarinAlpha': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Ricky': 'Created by <strong>Swordy</strong>',
+    'Ninten': 'Created by <strong>Swordy</strong>',
+    'NESLink': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Richard': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'GrandmaUlrira': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Marin': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'AgesGirl': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Tarin': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Luigi': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Bowwow': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Matty': 'Created by <a href="https://www.twitch.tv/isabelle_zephyr">Madam Materia</a>',
+    'Bunny': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Meme': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Martha': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Kirby': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Rosa': 'Created by <strong>Jill</strong>',
+    'Rooster': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+    'Mario': 'Created by <a href="https://twitter.com/BenjaminMaksym">Linker</a>',
+    'Subrosian': 'Created by <a href="https://www.twitch.tv/zeromeaning/">Zero Meaning</a>',
+};
 
 function getUnknownArgs(argDescriptions) {
     let newArgs = argDescriptions.filter(x => !knownFlags.includes(x.name));
@@ -188,33 +221,70 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                     ]
                 }),
                 new SettingsItem({
-                    title: 'Gameplay',
+                    title: 'Dungeon Items',
                     type: types.group,
                     includeRow: false,
                     colSize: 'auto',
                     children: [
                         new SettingsItem({
-                            title: 'Dungeon items',
+                            title: 'Dungeon keys',
                             type: types.dropdown,
                             settingBase: 'args',
-                            settingName: 'dungeon_items',
+                            settingName: 'dungeon_keys',
                             icon: 'KEY1_1.png',
                             options: {
                                 '': 'Standard',
-                                'smallkeys': 'Small keys',
-                                'nightmarekeys': 'Nightmare keys',
-                                'localkeys': 'Map/Compass/Beaks',
-                                'localnightmarekey': 'MCB + SmallKeys',
                                 'keysanity': 'Keysanity',
-                                'keysy': 'Keysy',
+                                'removed': 'Removed',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Nightmare keys',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'nightmare_keys',
+                            icon: 'NIGHTMARE_KEY1_1.png',
+                            options: {
+                                '': 'Standard',
+                                'keysanity': 'Keysanity',
+                                'removed': 'Removed',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Dungeon beaks',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'dungeon_beaks',
+                            icon: 'STONE_BEAK1_1.png',
+                            options: {
+                                '': 'Standard',
+                                'keysanity': 'Keysanity',
+                                'removed': 'Removed',
+                            },
+                        }),
+                        new SettingsItem({
+                            title: 'Dungeon map/compass',
+                            type: types.dropdown,
+                            settingBase: 'args',
+                            settingName: 'dungeon_maps',
+                            icon: 'MAP1_1.png',
+                            options: {
+                                '': 'Standard',
+                                'keysanity': 'Keysanity',
+                                'removed': 'Removed',
                                 'custom': 'Custom',
                             },
                         }),
                         new SettingsItem({
                             type: types.column,
                             includeCol: false,
-                            visibleCondition: () => { return args.dungeon_items == 'custom' },
+                            visibleCondition: () => { return args.dungeon_maps == 'custom' },
                             children: [
+                                new SettingsItem({
+                                    type: types.column,
+                                    includeRow: false,
+                                    colSize: '',
+                                }),
                                 new SettingsItem({
                                     type: types.checkbox,
                                     includeRow: false,
@@ -230,47 +300,103 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                     settingName: 'shuffle_compasses',
                                 }),
                                 new SettingsItem({
-                                    type: types.checkbox,
+                                    type: types.column,
                                     includeRow: false,
-                                    icon: 'STONE_BEAK1_1.png',
-                                    settingBase: 'args',
-                                    settingName: 'shuffle_beaks',
+                                    colSize: '',
                                 }),
+                                // new SettingsItem({
+                                //     type: types.checkbox,
+                                //     includeRow: false,
+                                //     icon: 'STONE_BEAK1_1.png',
+                                //     settingBase: 'args',
+                                //     settingName: 'shuffle_beaks',
+                                // }),
                             ]
                         }),
                         new SettingsItem({
-                            type: types.column,
-                            includeCol: false,
-                            visibleCondition: () => { return args.dungeon_items == 'custom' },
+                            title: 'Entrances',
+                            type: types.group,
+                            includeRow: false,
+                            colSize: 'auto',
                             children: [
                                 new SettingsItem({
-                                    type: types.column,
-                                    includeRow: false,
-                                    colSize: '',
-                                }),
-                                new SettingsItem({
-                                    type: types.checkbox,
-                                    includeRow: false,
-                                    colSize: '4',
-                                    icon: 'KEY1_1.png',
+                                    title: 'Entrance randomizer',
+                                    type: types.dropdown,
                                     settingBase: 'args',
-                                    settingName: 'shuffle_small',
+                                    settingName: 'entranceshuffle',
+                                    icon: 'entrance.svg',
+                                    options: {
+                                        'none': 'Default',
+                                        'simple': 'Simple',
+                                        'split': 'Split',
+                                        'mixed': 'Mixed',
+                                        'wild': 'Wild',
+                                        'chaos': 'Chaos',
+                                        'insane': 'Insane',
+                                    },
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                                 new SettingsItem({
+                                    title: 'Entrance randomizer',
+                                    type: types.dropdown,
+                                    settingBase: 'args',
+                                    settingName: 'entranceshuffle',
+                                    icon: 'entrance.svg',
+                                    options: {
+                                        'none': 'Default',
+                                        'simple': 'Simple',
+                                    },
+                                    visibleCondition: () => { return args.ap_logic && !args.prerelease },
+                                }),
+                                new SettingsItem({
+                                    title: 'Random start location',
                                     type: types.checkbox,
-                                    includeRow: false,
-                                    colSize: '4',
+                                    settingBase: 'args',
+                                    settingName: 'randomstartlocation',
+                                    icon: 'marin.png',
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
+                                }),
+                                new SettingsItem({
+                                    title: 'Dungeon shuffle',
+                                    type: types.checkbox,
+                                    settingBase: 'args',
+                                    settingName: 'dungeonshuffle',
                                     icon: 'NIGHTMARE_KEY1_1.png',
-                                    settingBase: 'args',
-                                    settingName: 'shuffle_nightmare',
                                 }),
                                 new SettingsItem({
-                                    type: types.column,
-                                    includeRow: false,
-                                    colSize: '',
+                                    title: 'Shuffle itemless entrances',
+                                    type: types.checkbox,
+                                    settingBase: 'args',
+                                    settingName: 'shufflejunk',
+                                    icon: 'phonebooth.png',
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
+                                }),
+                                new SettingsItem({
+                                    title: 'Shuffle annoying entrances',
+                                    type: types.checkbox,
+                                    settingBase: 'args',
+                                    settingName: 'shuffleannoying',
+                                    icon: 'mamu.png',
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
+                                }),
+                                new SettingsItem({
+                                    title: 'Shuffle water entrances',
+                                    type: types.checkbox,
+                                    settingBase: 'args',
+                                    settingName: 'shufflewater',
+                                    icon: 'manbo.png',
+                                    visibleCondition: () => { return !args.ap_logic || args.prerelease },
                                 }),
                             ]
                         }),
+                    ]
+                }),
+                new SettingsItem({
+                    title: 'Gameplay',
+                    type: types.group,
+                    includeRow: false,
+                    colSize: 'auto',
+                    children: [
                         new SettingsItem({
                             title: 'Boss shuffle',
                             type: types.dropdown,
@@ -357,82 +483,6 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 'hero': 'Hero',
                                 'ohko': 'One hit KO',
                             },
-                        }),
-                    ]
-                }),
-                new SettingsItem({
-                    title: 'Entrances',
-                    type: types.group,
-                    includeRow: false,
-                    colSize: 'auto',
-                    children: [
-                        new SettingsItem({
-                            title: 'Entrance randomizer',
-                            type: types.dropdown,
-                            settingBase: 'args',
-                            settingName: 'entranceshuffle',
-                            icon: 'entrance.svg',
-                            options: {
-                                'none': 'Default',
-                                'simple': 'Simple',
-                                'split': 'Split',
-                                'mixed': 'Mixed',
-                                'wild': 'Wild',
-                                'chaos': 'Chaos',
-                                'insane': 'Insane',
-                            },
-                            visibleCondition: () => { return !args.ap_logic },
-                        }),
-                        new SettingsItem({
-                            title: 'Entrance randomizer',
-                            type: types.dropdown,
-                            settingBase: 'args',
-                            settingName: 'entranceshuffle',
-                            icon: 'entrance.svg',
-                            options: {
-                                'none': 'Default',
-                                'simple': 'Simple',
-                            },
-                            visibleCondition: () => { return args.ap_logic },
-                        }),
-                        new SettingsItem({
-                            title: 'Random start location',
-                            type: types.checkbox,
-                            settingBase: 'args',
-                            settingName: 'randomstartlocation',
-                            icon: 'marin.png',
-                            visibleCondition: () => { return !args.ap_logic },
-                        }),
-                        new SettingsItem({
-                            title: 'Dungeon shuffle',
-                            type: types.checkbox,
-                            settingBase: 'args',
-                            settingName: 'dungeonshuffle',
-                            icon: 'NIGHTMARE_KEY1_1.png',
-                        }),
-                        new SettingsItem({
-                            title: 'Shuffle itemless entrances',
-                            type: types.checkbox,
-                            settingBase: 'args',
-                            settingName: 'shufflejunk',
-                            icon: 'phonebooth.png',
-                            visibleCondition: () => { return !args.ap_logic },
-                        }),
-                        new SettingsItem({
-                            title: 'Shuffle annoying entrances',
-                            type: types.checkbox,
-                            settingBase: 'args',
-                            settingName: 'shuffleannoying',
-                            icon: 'mamu.png',
-                            visibleCondition: () => { return !args.ap_logic },
-                        }),
-                        new SettingsItem({
-                            title: 'Shuffle water entrances',
-                            type: types.checkbox,
-                            settingBase: 'args',
-                            settingName: 'shufflewater',
-                            icon: 'manbo.png',
-                            visibleCondition: () => { return !args.ap_logic },
                         }),
                     ]
                 }),
@@ -969,6 +1019,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 'sevenbysix.html': 'Default',
                                 'default.html': 'Classic',
                                 'notrade.html': 'No trade items',
+                                'BusinessAlex.html': 'Inventory screen',
                                 'empty.html': 'Empty',
                                 'custom': 'Custom',
                             }
@@ -979,6 +1030,11 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             action: () => { document.getElementById('customItemsInput').click(); },
                             maxWidth: true,
                         }),
+                        new SettingsItem({
+                            type: types.link,
+                            visibleCondition: () => state.settings.itemsTemplate in mainTemplateCredits,
+                            customHtml: mainTemplateCredits[state.settings.itemsTemplate],
+                        })
                     ],
                 }),
                 new SettingsItem({
@@ -1006,6 +1062,11 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             action: () => { document.getElementById('customDungeonItemInput').click(); },
                             maxWidth: true,
                         }),
+                        new SettingsItem({
+                            type: types.link,
+                            visibleCondition: () => state.settings.dungeonItemsTemplate in dungeonTemplateCredits,
+                            customHtml: dungeonTemplateCredits[state.settings.dungeonItemsTemplate],
+                        })
                     ],
                 }),
                 new SettingsItem({
@@ -1021,6 +1082,11 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             settingName: 'graphicsPack',
                             options: graphicsDict.value,
                         }),
+                        new SettingsItem({
+                            type: types.link,
+                            visibleCondition: () => state.settings.graphicsPack.substr(1) in graphicsCredits,
+                            customHtml: graphicsCredits[state.settings.graphicsPack.substr(1)],
+                        })
                     ],
                 }),
                 new SettingsItem({

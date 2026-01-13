@@ -104,10 +104,10 @@ class LocalSettings:
         self.textColor = '#f8f9fa'
         self.highlightColor = '#444444'
         self.nativeBgColor = '#212529'
-    
+
     def parse(settingsString):
         localSettings = json.loads(settingsString)
-        
+
         if 'py/object' in localSettings:
             del localSettings['py/object']
 
@@ -115,9 +115,33 @@ class LocalSettings:
         obj.__dict__ = localSettings
 
         return obj
-    
+
     def graphicsPacks():
-        return ["Subrosian", "Mario", "Rooster", "Rosa", "Kirby", "Martha", "Meme", "Bunny", "Matty", "Bowwow", "Luigi", "Tarin", "AgesGirl", "Marin", "GrandmaUlrira", "Richard", "NESLink", "Ninten", "MarinAlpha", "X", "Ricky", "Sig"]
+        return [
+            "Subrosian",
+            "Mario",
+            "Rooster",
+            "Rosa",
+            "Kirby",
+            "Martha",
+            "Meme",
+            "Bunny",
+            "Matty",
+            "Bowwow",
+            "Luigi",
+            "Tarin",
+            "AgesGirl",
+            "Marin",
+            "GrandmaUlrira",
+            "Richard",
+            "NESLink",
+            "Ninten",
+            "MarinAlpha",
+            "X",
+            "Ricky",
+            "Sig",
+            "BusinessAlex",
+        ]
         # gfxPath = 'LADXR/gfx/'
 
         # options = []
@@ -126,7 +150,7 @@ class LocalSettings:
         #     for entry in ls:
         #         if entry.name.endswith('.bin') and entry.is_file():
         #             options.append(entry.name[:-4])
-        
+
         # return options
 
 nested = False

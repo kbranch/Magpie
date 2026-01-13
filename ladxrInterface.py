@@ -80,8 +80,8 @@ def getArgs(values=None, ladxrFlags=None, useCurrentValue=False):
     tryCopyValue(values, args, 'openmabe')
     tryCopyValue(values, args, 'prerelease')
 
-    if args.dungeon_items == 'custom':
-        args.dungeon_items = 'keysanity'
+    if args.dungeon_maps == 'custom':
+        args.dungeon_maps = 'keysanity'
 
     args.nagmessages = True
     args.multiworld = None
@@ -133,10 +133,12 @@ def getItems(args, trimDungeonItems=True):
     
     for n in range(9):
         if trimDungeonItems:
-            if args.dungeon_items == 'keysy':
-                for item_name in ("KEY", "NIGHTMARE_KEY"):
-                    item_name = f"{item_name}{n}"
-                    pool[item_name] = 0
+            if args.dungeon_keys == 'removed':
+                item_name = f"KEY{n}"
+                pool[item_name] = 0
+            if args.nightmare_keys == 'removed':
+                item_name = f"NIGHTMARE_KEY{n}"
+                pool[item_name] = 0
             if 'bingo' not in args.goal:
                 for item_name in ("MAP", "COMPASS"):
                     item_name = f"{item_name}{n}"
@@ -178,6 +180,7 @@ def getLogicWithoutER(realArgs):
 def getLogics(args, entranceMap, bossList, minibossMap):
     worldSetup = WorldSetup()
     worldSetup.goal = args.goal
+    worldSetup.goal_count = int(args.goalcount)
 
     if bossList and len(bossList) == len(worldSetup.boss_mapping):
         worldSetup.boss_mapping = bossList
@@ -442,14 +445,12 @@ def getSpoilerLog(romData):
     rom = ROMWithTables(io.BytesIO(romData))
     args = SpoilerArgs()
     shortSettings = rom.readShortSettings()
-    settings = Settings()
-    settings.loadShortString(shortSettings)
     
     filename = f'log-{uuid.uuid4()}.json'
     logJson = {}
 
     try:
-        log = SpoilerLog(settings, args, [rom])
+        log = SpoilerLog(None, args, rom)
         log.outputJson(filename)
         logJson = json.loads(open(filename, 'r').read())
         os.remove(filename)
