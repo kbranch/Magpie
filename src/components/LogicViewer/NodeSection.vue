@@ -134,7 +134,7 @@ async function fetchTips() {
 
 <h5 class="pt-3">Connected nodes:</h5>
 <div>
-    <ConnectedNode v-for="otherNode in Object.keys(connectedNodes)" :key="otherNode"
+    <ConnectedNode v-for="otherNode in sortByKey(Object.keys(connectedNodes), x => logic.getLogicNodeName(x))" :key="otherNode"
         :otherName="otherNode" :source="node.id" :connections="connectedNodes[otherNode]"
         :tips="tips.filter(x => x.node1 == otherNode || x.node2 == otherNode)" />
 </div>

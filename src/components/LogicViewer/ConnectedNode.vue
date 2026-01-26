@@ -29,7 +29,7 @@ defineProps(['source', 'otherName', 'connections', 'tips'])
         <img src="/images/chevron-right.svg" class="invert">
     </button>
 
-    <h6 class="pt-2 ps-4">{{ otherName }}:</h6>
+    <h6 class="pt-2 ps-4">{{ logic.getLogicNodeName(otherName) }}:</h6>
     
 </div>
 
