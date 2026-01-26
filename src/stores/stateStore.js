@@ -40,7 +40,7 @@ export const useStateStore = defineStore('state', () => {
 
     watch(args, 
         (value, oldValue) => {
-            if (value.ap_logic && Object.keys(oldValue).length) {
+            if (value.ap_logic && Object.keys(oldValue).length && !value.prerelease) {
                 if (!['none', 'simple'].includes(value.entranceshuffle)) {
                     value.entranceshuffle = 'none';
                 }
