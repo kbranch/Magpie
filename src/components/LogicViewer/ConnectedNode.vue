@@ -19,10 +19,6 @@ defineProps(['source', 'otherName', 'connections', 'tips'])
         @click="logic.viewTips(otherName, tips)" @mouseover="tip.tooltip('View tips', $event)">
         <img src="/images/info-circle.svg" class="invert">
     </button>
-    <button v-else type="button" class="btn btn-secondary view-button me-2"
-        @click="logic.startTipForm(otherName)" @mouseover="tip.tooltip('Suggest a tip', $event)">
-        <img src="/images/plus-lg.svg" class="invert">
-    </button>
 
     <button type="button" class="btn btn-secondary view-button" @click="logic.pushStack(source, otherName)"
         @mouseover="tip.tooltip(`Move to the '${otherName}' node`, $event)">

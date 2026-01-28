@@ -524,7 +524,7 @@ if tipsEnabled:
         except:
             tip = None
 
-        if not tip or 'connectionId' not in tip:
+        if not tip or 'node1' not in tip:
             return 'Invalid request', 400
 
         try:

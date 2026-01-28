@@ -14,7 +14,10 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     const inspectedTrick = ref(null);
     const inspectedOtherNodeId = ref(null);
     const activeTips = ref([]);
-    // const inspectedConnection = ref(null);
+    const tipNode1 = ref(null);
+    const tipNode2 = ref(null);
+    const tipDefaultDifficulty = ref(1);
+    const tipDefaultRequirement = ref('');
     const stack = ref([]);
     const parentTip = ref(null);
     
@@ -64,20 +67,6 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
 
         console.log(JSON.stringify(connectionNodes));
     });
-
-    function getConnectionById(connectionId) {
-        try {
-            let nodes = Object.values(graph.value)
-                .filter(n => n.connections.filter(c => c.id == connectionId).length);
-
-            return nodes[0].connections.filter(c => c.id == connectionId)[0];
-        }
-        catch(err) {
-            console.log(`Error finding connection with id '${connectionId}'`, err);
-        }
-
-        return null;
-    }
 
     function clearNode() {
         inspectedNodeId.value = null;
@@ -141,28 +130,41 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     }
 
     function startTipForm(subject) {
+        let otherNode = inspectedOtherNodeId.value;
         if (inspectedNodeId.value == 'tips') {
             popStack();
         }
 
-        pushStack(inspectedNodeId.value, 'submission-form');
+        parentTip.value = null;
 
-        if (!inspectedTrick.value) {
-            throw new Error("tips not updated");
-            inspectedConnection.value = subject;
+        if (subject) {
+            // This could either be a connection or a trick - if it's a connection, copy some of it
+            parentTip.value = {
+                difficulty: state.getAbsoluteDifficulty(subject?.diff ?? 0),
+                requirement: subject?.shortReq ?? subject?.req,
+            }
+
+            tipNode1.value = subject.to ?? subject;
+            tipNode2.value = subject.from ?? null;
         }
+        else {
+            tipNode1.value = stack.value[stack.value.length - 1];
+            tipNode2.value = otherNode;
+        }
+
+        pushStack(inspectedNodeId.value, 'submission-form');
     }
 
     function viewTips(otherId, tips) {
+        tipNode1.value = inspectedNodeId.value;
+        tipNode2.value = otherId;
         pushStack(inspectedNodeId.value, 'tips');
         inspectedOtherNodeId.value = otherId;
         activeTips.value = tips;
     }
 
     function editTip(tip) {
-        let connection = getConnectionById(tip.connectionId);
-
-        let isTrick = !connection;
+        let isTrick = !tip.node2;
 
         if (isTrick) {
             if (!inspectedTrick.value) {
@@ -176,13 +178,9 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
             pushStack('trick', 'submission-form');
         }
         else {
-            clearStack();
-
             parentTip.value = tip;
 
-            pushStack(connection.from, 'submission-form');
-            throw new Error("tips not updated");
-            inspectedConnection.value = connection;
+            pushStack(stack.value[stack.value.length - 1], 'submission-form');
         }
     }
 
@@ -198,7 +196,7 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         };
     }
 
-    async function submitTip(connectionId, language, body, attribution, title, anonymous, permission, parentId) {
+    async function submitTip(language, body, attribution, title, anonymous, permission, parentId, difficulty, node1, node2, requirement) {
         const invalidFields = [];
 
         if (!body) {
@@ -235,12 +233,15 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    connectionId: connectionId,
                     language: language,
                     body: body,
                     attribution: attribution,
                     title: title,
                     parentId: parentId,
+                    difficulty: difficulty,
+                    node1: node1,
+                    node2: node2,
+                    requirement: requirement,
                 })
             });
         }
@@ -342,6 +343,10 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
         stack,
         parentTip,
         activeTips,
+        tipNode1,
+        tipNode2,
+        tipDefaultDifficulty,
+        tipDefaultRequirement,
         clearNode,
         popStack,
         pushStack,

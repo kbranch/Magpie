@@ -34,11 +34,12 @@ const textColor = computed(() => state.settings.textColor);
 
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
             
-            <div class="text-start d-flex p-1 mb-0 align-items-center">
-                <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${tip.difficulty-1}`]: true}">
+            <div class="text-start d-flex p-1 mb-0 align-items-center"
+                @mouseover="tipStore.tooltip(`${state.difficultyByNumber[tip.difficulty]} logic`, $event)">
+                <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${Math.max(tip.difficulty-1, 0)}`]: true}">
                     <div class="tooltip-check-graphic icon-wrapper">
                         <svg class="tooltip-check-graphic align-middle">
-                            <use :xlink:href="`#difficulty-${tip.difficulty-1}`"></use>
+                            <use :xlink:href="`#difficulty-${Math.max(tip.difficulty-1, 0)}`"></use>
                         </svg>
                     </div>
                 </div>
@@ -66,6 +67,7 @@ const textColor = computed(() => state.settings.textColor);
                     </template>
                 </span>
                 <template v-if="state.tipAdmin">
+                    <span class="tip-id">{{ tip.tipId }}</span>
                     <button class="btn btn-secondary me-2"
                         @mouseover="tipStore.tooltip('Delete this tip', $event)"
                         @click="async () => { await logic.deleteTip(tip); emit('updatedTips'); }">
@@ -182,6 +184,10 @@ const textColor = computed(() => state.settings.textColor);
 .lang-icon {
     background-image: url('/images/lang-flags.png');
     margin-right: 12px;
+}
+
+.tip-id {
+    padding-right: 8px;
 }
 
 </style>

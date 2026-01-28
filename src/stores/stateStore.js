@@ -25,6 +25,22 @@ export const useStateStore = defineStore('state', () => {
     const tipAdmin = ref(false);
     const errorMessage = ref(null);
 
+    const difficultyByName = {
+        'Casual': 0,
+        'Normal': 1,
+        'Hard': 2,
+        'Glitched': 3,
+        'Hell': 4,
+    };
+
+    const difficultyByNumber = {
+        0: 'Casual',
+        1: 'Normal',
+        2: 'Hard',
+        3: 'Glitched',
+        4: 'Hell',
+    };
+
     let hintCallbacks = [];
 
     watch(hints,
@@ -69,6 +85,26 @@ export const useStateStore = defineStore('state', () => {
         hintCallbacks = hintCallbacks.filter(x => x != callback);
     }
 
+    function getRelativeDifficulty(absDiff) {
+        let selectedLogic = args.value.logic;
+        if (args.value.logic == '') {
+            selectedLogic = 'normal';
+        }
+
+        let selectedDifficulty = difficultyByName[Object.keys(difficultyByName).find(key => key.toLowerCase() == selectedLogic)];
+        return Math.max(0, absDiff - selectedDifficulty);
+    }
+
+    function getAbsoluteDifficulty(relDiff) {
+        let selectedLogic = args.value.logic;
+        if (args.value.logic == '') {
+            selectedLogic = 'normal';
+        }
+
+        let selectedDifficulty = difficultyByName[Object.keys(difficultyByName).find(key => key.toLowerCase() == selectedLogic)];
+        return relDiff + selectedDifficulty;
+    }
+
     return {
         settings,
         checkedChecks, 
@@ -91,8 +127,12 @@ export const useStateStore = defineStore('state', () => {
         connectionSource,
         tipAdmin,
         errorMessage,
+        difficultyByName,
+        difficultyByNumber,
         removeHint,
         onHintUpdate,
         offHintUpdate,
+        getRelativeDifficulty,
+        getAbsoluteDifficulty,
     };
 });
