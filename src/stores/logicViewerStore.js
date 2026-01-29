@@ -288,7 +288,9 @@ export const useLogicViewerStore = defineStore('logicViewer', () => {
     function editFirstInQueue() {
         fetchApprovalQueue()
             .then((tips) => {
-                if(tips) { 
+                if(tips && tips.length > 0) { 
+                    clearStack();
+                    pushStack(getLogicNodeName(tips[0].node1), null);
                     editTip(tips[0]);
                 }
             });

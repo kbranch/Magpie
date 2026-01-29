@@ -227,9 +227,14 @@ select tips.tip_id
       ,tips.language
       ,tips.approved
       ,tips.parent_id
+      ,tips.node1
+      ,tips.node2
+      ,tips.difficulty
+      ,tips.requirement
 from tips
 where approved = 0
       and deleted = 0
+order by tips.creation_time desc
     """
 
     tips = []
@@ -252,6 +257,10 @@ where approved = 0
             'language': row[5],
             'approved': row[6],
             'parentId': row[7],
+            'node1': row[8],
+            'node2': row[9],
+            'difficulty': row[10],
+            'requirement': row[11],
         })
 
     conn.close()
