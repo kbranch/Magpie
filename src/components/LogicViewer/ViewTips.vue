@@ -22,13 +22,6 @@ async function updateTips() {
     <h5 class="d-flex align-items-center">
         Connections between '{{ fromName }}' and '{{ toName }}'
     </h5>
-    <div class="d-flex align-items-center">
-        <span class="pe-2">Suggest a new tip</span>
-        <button type="button" class="btn btn-secondary view-button"
-            @click="logic.startTipForm()" @mouseover="tip.tooltip('Suggest a tip', $event)">
-            <img src="/images/plus-lg.svg" class="invert">
-        </button>
-    </div>
 
     <div class="accordion mt-2">
         <SingleTip v-for="(tip, index) in logic.activeTips" :key="tip" v-model="logic.activeTips[index]"
