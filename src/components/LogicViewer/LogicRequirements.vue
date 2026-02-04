@@ -40,6 +40,10 @@ const requirement = computed(() => {
         return props.subject.requirements;
     }
 
+    if (props.subject.requirement) {
+        return props.subject.requirement;
+    }
+
     return props.subject.shortReq ? props.subject.shortReq : props.subject.req;
 });
 
@@ -76,6 +80,7 @@ const reqChunks = computed(() => {
             chunks.push({
                 name: halves[0],
                 details: halves[1].replace(itemChunkRegex, '<img class="logic-item" src="/images/$1_1.png">'),
+                rawDetails: halves[1],
                 isTrick: !nonTricks.includes(halves[0]) && !halves[0].includes('<img'),
                 isEnemy: halves[0].includes('<img'),
             });
@@ -92,9 +97,9 @@ const reqChunks = computed(() => {
 
 <template>
 
-<div>
+<div class="requirement-block">
     <template v-for="chunk in reqChunks" :key="chunk">
-        <a v-if="chunk.isTrick" @click="logic.viewTrick(chunk.name, chunk.details)" href="#"
+        <a v-if="chunk.isTrick" @click="logic.viewTrick(chunk.name, chunk.rawDetails)" href="#"
             @mouseover="tip.tooltip(chunk.details, $event)">
             {{ chunk.name }}
         </a>
@@ -110,4 +115,13 @@ const reqChunks = computed(() => {
 </template>
 
 <style scoped>
+
+.requirement-block {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 6px;
+    border-radius: 6px;
+    display: inline-block;
+    text-wrap: balance;
+}
+
 </style>

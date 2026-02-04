@@ -46,8 +46,8 @@ def getCursor(conn):
 
 def addTip(tip: dict):
     insertQuery = """
-insert into tips (connection_id, body, attribution, language, approved, deleted, title, parent_id)
-values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, 0, 0, %(title)s, %(parentId)s)
+insert into tips (body, attribution, language, approved, deleted, title, parent_id, difficulty, node1, node2, requirement)
+values (%(body)s, %(attribution)s, %(language)s, 0, 0, %(title)s, %(parentId)s, %(difficulty)s, %(node1)s, %(node2)s, %(requirement)s)
 """
 
     conn = getDbConnection()
@@ -55,12 +55,15 @@ values (%(connectionId)s, %(body)s, %(attribution)s, %(language)s, 0, 0, %(title
     
     with writeLock:
         cursor.execute(insertQuery, {
-            'connectionId': tip['connectionId'],
             'body':tip['body'],
             'attribution': tip['attribution'],
             'language': tip['language'],
             'title': tip['title'],
             'parentId': tip['parentId'] if 'parentId' in tip else None,
+            'difficulty': tip['difficulty'],
+            'node1': tip['node1'],
+            'node2': tip['node2'],
+            'requirement': tip['requirement']
         })
         
         conn.commit()
@@ -156,7 +159,7 @@ where tips.tip_id = %(tipId)s
 
     conn.close()
     
-def getTips(connectionIds: list[str], includeUnapproved):
+def getTips(node: str, includeUnapproved: bool):
     if not dbConfigured():
         return
 
@@ -169,15 +172,18 @@ select tips.tip_id
       ,tips.language
       ,tips.approved
       ,tips.parent_id
+      ,tips.node1
+      ,tips.node2
+      ,tips.difficulty
+      ,tips.requirement
 from tips
-where tips.connection_id in ({})
-      and (approved = 1 or %s = 1)
+where (tips.node1 = %s
+       or tips.node2 = %s)
+      and (approved = 1 or %s)
       and deleted = 0
     """
 
-    tipQuery = tipQuery.format(','.join(['%s'] * len(connectionIds)))
-    parameters = list(connectionIds)
-    parameters.append(1 if includeUnapproved else 0)
+    parameters = [node, node, 1 if includeUnapproved else 0]
     tips = []
 
     conn = getDbConnection()
@@ -192,12 +198,16 @@ where tips.connection_id in ({})
         tips.append({
             'tipId': row[0],
             'connectionId': row[1],
+            'node1': row[8],
+            'node2': row[9],
             'title': row[2],
             'body': row[3],
             'attribution': row[4],
             'language': row[5],
             'approved': row[6],
             'parentId': row[7],
+            'difficulty': row[10],
+            'requirement': row[11],
         })
 
     conn.close()
@@ -217,9 +227,14 @@ select tips.tip_id
       ,tips.language
       ,tips.approved
       ,tips.parent_id
+      ,tips.node1
+      ,tips.node2
+      ,tips.difficulty
+      ,tips.requirement
 from tips
 where approved = 0
       and deleted = 0
+order by tips.creation_time desc
     """
 
     tips = []
@@ -242,6 +257,10 @@ where approved = 0
             'language': row[5],
             'approved': row[6],
             'parentId': row[7],
+            'node1': row[8],
+            'node2': row[9],
+            'difficulty': row[10],
+            'requirement': row[11],
         })
 
     conn.close()

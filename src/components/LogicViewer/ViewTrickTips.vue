@@ -26,7 +26,7 @@ function initTooltips() {
 }
 
 async function updateTips() {
-    tips.value = await logic.fetchTips([trick.value.name]);
+    tips.value = await logic.fetchTips(trick.value.name);
 }
 
 </script>

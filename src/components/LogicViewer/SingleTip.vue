@@ -5,6 +5,7 @@ import { useStateStore } from '@/stores/stateStore';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { useReportStore } from '@/stores/reportStore';
+import LogicRequirements from './LogicRequirements.vue';
 
 const MdPreview = defineAsyncComponent(() => import('md-editor-v3').then((module) => module.MdPreview));
 
@@ -32,7 +33,20 @@ const textColor = computed(() => state.settings.textColor);
             :aria-expanded="expanded ? 'true' : 'false'" :aria-controls="id">
 
             <span class="lang-icon" :class="`lang-icon-${tip.language}`"></span>
+            
+            <div class="text-start d-flex p-1 mb-0 align-items-center"
+                @mouseover="tipStore.tooltip(`${state.difficultyByNumber[tip.difficulty]} logic`, $event)">
+                <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${Math.max(tip.difficulty-1, 0)}`]: true}">
+                    <div class="tooltip-check-graphic icon-wrapper">
+                        <svg class="tooltip-check-graphic align-middle">
+                            <use :xlink:href="`#difficulty-${Math.max(tip.difficulty-1, 0)}`"></use>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
             <span class="title-span">{{ tip.title }}</span>
+            <LogicRequirements v-if="tip.requirement" :subject="tip" />
             <span class="title-attribution">
                 <MdPreview v-if="tip.attribution?.length" v-model="tip.attribution" id="titleAttribution"
                     language="en-US" theme="dark" class="md-outer-editor" :no-mermaid="true" :no-katex="true" />
@@ -53,6 +67,7 @@ const textColor = computed(() => state.settings.textColor);
                     </template>
                 </span>
                 <template v-if="state.tipAdmin">
+                    <span class="tip-id">{{ tip.tipId }}</span>
                     <button class="btn btn-secondary me-2"
                         @mouseover="tipStore.tooltip('Delete this tip', $event)"
                         @click="async () => { await logic.deleteTip(tip); emit('updatedTips'); }">
@@ -126,10 +141,13 @@ const textColor = computed(() => state.settings.textColor);
     padding-left: 10px;
     display: flex;
     align-items: center;
+    text-wrap: balance;
 }
 
 .title-span {
     flex-grow: 1;
+    text-wrap: balance;
+    padding-right: 6px;
 }
 
 .accordion-body {
@@ -169,6 +187,11 @@ const textColor = computed(() => state.settings.textColor);
 .lang-icon {
     background-image: url('/images/lang-flags.png');
     margin-right: 12px;
+    min-width: 25px;
+}
+
+.tip-id {
+    padding-right: 8px;
 }
 
 </style>

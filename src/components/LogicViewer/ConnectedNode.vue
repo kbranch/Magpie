@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import LogicViewerConnection from './LogicViewerConnection.vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
@@ -7,9 +6,7 @@ import { useLogicViewerStore } from '@/stores/logicViewerStore';
 const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
-defineProps(['source', 'otherName', 'connections'])
-
-const connection = ref({});
+defineProps(['source', 'otherName', 'connections', 'tips'])
 
 </script>
 
@@ -17,14 +14,10 @@ const connection = ref({});
 
 <div class="header mb-2 mt-4">
 
-    <button v-if="connection.tips?.length > 0" type="button" class="btn btn-secondary view-button me-2"
-        :class="{ 'unapproved': connection.tips?.some(x => !x.approved) }"
-        @click="logic.viewTips(connection)" @mouseover="tip.tooltip('View tips', $event)">
+    <button v-if="tips?.length > 0" type="button" class="btn btn-secondary view-button me-2"
+        :class="{ 'unapproved': tips?.some(x => !x.approved) }"
+        @click="logic.viewTips(otherName, tips)" @mouseover="tip.tooltip('View tips', $event)">
         <img src="/images/info-circle.svg" class="invert">
-    </button>
-    <button v-else type="button" class="btn btn-secondary view-button me-2"
-        @click="logic.startTipForm(connection)" @mouseover="tip.tooltip('Suggest a tip', $event)">
-        <img src="/images/plus-lg.svg" class="invert">
     </button>
 
     <button type="button" class="btn btn-secondary view-button" @click="logic.pushStack(source, otherName)"
@@ -32,7 +25,7 @@ const connection = ref({});
         <img src="/images/chevron-right.svg" class="invert">
     </button>
 
-    <h6 class="pt-2 ps-4">{{ otherName }}:</h6>
+    <h6 class="pt-2 ps-4">{{ logic.getLogicNodeName(otherName) }}:</h6>
     
 </div>
 

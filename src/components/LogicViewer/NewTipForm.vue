@@ -1,8 +1,9 @@
 <script setup>
 import { bootstrap, sortByKey } from '@/moduleWrappers.js';
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
-import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, ref } from 'vue';
 import { useStateStore } from '@/stores/stateStore';
+import { useTextTooltipStore } from '@/stores/textTooltipStore';
+import { computed, defineAsyncComponent, onBeforeMount, onMounted, onUpdated, ref } from 'vue';
 import languages from '@textabledev/langs-flags-list/lang-flags.json';
 import '@textabledev/langs-flags-list/lang-flags.css';
 import 'md-editor-v3/lib/style.css';
@@ -12,6 +13,7 @@ const MdEditor = defineAsyncComponent(() => import('md-editor-v3').then((module)
 
 const state = useStateStore();
 const logic = useLogicViewerStore();
+const tipStore = useTextTooltipStore();
 
 const priorityLanguages = [
     'en',
@@ -50,16 +52,17 @@ const title = ref('');
 const anonymous = ref(false);
 const permission = ref(false);
 const parentId = ref(null);
+const difficulty = ref(1);
+const requirement = ref("");
+const node1 = ref('');
+const node2 = ref('');
 
 const uploading = ref(false);
 const invalidFields = ref([]);
 const complete = ref(false);
 const error = ref(null);
 
-const subject = computed(() => logic.inspectedTrick ? logic.inspectedTrick : logic.inspectedConnection);
-const connectionId = computed(() => logic.inspectedTrick ? logic.inspectedTrick.name : logic.inspectedConnection.id);
-const fromName = computed(() => logic.getLogicNodeName(logic.inspectedConnection?.from));
-const toName = computed(() => logic.getLogicNodeName(logic.inspectedConnection?.to));
+const subject = computed(() => logic.inspectedTrick ? logic.inspectedTrick : {req: requirement.value});
 const languageCodes = computed(() => sortByKey(
     Object.keys(languages).filter(x => x.length == 2 || extraLanguages.includes(x)),
     x => [!priorityLanguages.includes(x), languages[x].nameEnglish])
@@ -73,13 +76,22 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
+    difficulty.value = logic.tipDefaultDifficulty;
+    requirement.value = logic.tipDefaultRequirement;
+    node1.value = logic.tipNode1;
+    node2.value = logic.tipNode2;
+
     if (logic.parentTip) {
-        language.value = logic.parentTip.language;
-        body.value = logic.parentTip.body;
-        attribution.value = logic.parentTip.attribution;
-        title.value = logic.parentTip.title;
-        anonymous.value = !attribution.value;
-        parentId.value = logic.parentTip.tipId;
+        language.value = logic.parentTip.language ?? language.value;
+        body.value = logic.parentTip.body ?? body.value;
+        attribution.value = logic.parentTip.attribution ?? attribution.value;
+        title.value = logic.parentTip.title ?? title.value;
+        anonymous.value = 'attribution' in logic.parentTip ? !attribution.value : anonymous.value;
+        parentId.value = logic.parentTip.tipId ?? parentId.value;
+        difficulty.value = logic.parentTip.difficulty ?? difficulty.value;
+        requirement.value = logic.parentTip.requirement ?? requirement.value;
+        node1.value = logic.parentTip.node1 ?? node1.value;
+        node2.value = logic.parentTip.node2 ?? node2.value;
     }
 
     configureDropdown(languageDropdown.value);
@@ -89,7 +101,11 @@ onMounted(() => {
 onUpdated(initTooltips);
 
 function initTooltips() {
-    let tooltipTriggerList = requirementsDiv.value.querySelectorAll('[data-bs-toggle="tooltip"]');
+    let tooltipTriggerList = requirementsDiv.value?.querySelectorAll('[data-bs-toggle="tooltip"]');
+    if (!tooltipTriggerList) {
+        return;
+    }
+
     [...tooltipTriggerList].map(tooltipTriggerEl => new window.bootstrap.Tooltip(tooltipTriggerEl, { sanitize: false }));
 }
 
@@ -97,7 +113,7 @@ async function uploadFile(file) {
     let data = new FormData();
     data.append('file', file);
     data.append('filename', file.name);
-    data.append('connectionId', connectionId.value);
+    data.append('connectionId', `${node1.value}-${node2.value}`.replaceAll(' ', '_'));
 
     return fetch(`${logic.tipsUrlPrefix}/api/tipImage`, {
         method: 'POST',
@@ -151,7 +167,6 @@ async function submit() {
     }
 
     let result = await logic.submitTip(
-        connectionId.value,
         language.value,
         body.value,
         attribution.value,
@@ -159,6 +174,10 @@ async function submit() {
         anonymous.value,
         permission.value,
         parentId.value,
+        difficulty.value,
+        node1.value,
+        node2.value,
+        requirement.value,
     );
 
     if ('invalidFields' in result) {
@@ -177,24 +196,12 @@ async function submit() {
 </script>
 
 <template>
-    <h5 v-if="fromName" class="d-flex align-items-center">
-        <div class="text-start d-flex p-1 mb-0 align-items-center">
-            <div class="tooltip-check-graphic align-middle" :class="{[`difficulty-${logic.inspectedConnection?.diff}`]: true}">
-                <div class="tooltip-check-graphic icon-wrapper">
-                    <svg class="tooltip-check-graphic align-middle">
-                        <use :xlink:href="`#difficulty-${logic.inspectedConnection?.diff}`"></use>
-                    </svg>
-                </div>
-            </div>
-        </div>
-        Connection from '{{ fromName }}' to '{{ toName }}'
+    <h5 class="d-flex align-items-center">
+        Connection between 
+        <input v-model="node1" id="node1Box" type="text" class="form-control node-input" :class="{nodeExists: node1 in logic.graph}">
+         and
+        <input v-model="node2" id="node2Box" type="text" class="form-control node-input" :class="{nodeExists: node2 in logic.graph}">
     </h5>
-    <div ref="requirementsDiv">
-        <label for="requirementsIcons" class="form-label mt-2">Requirements</label>
-        <div id="requirementsIcons" class="cell-wrapper">
-            <LogicRequirements :subject="subject" />
-        </div>
-    </div>
 
     <template v-if="complete">
         <div class="alert alert-success mt-2">
@@ -204,6 +211,29 @@ async function submit() {
     </template>
 
     <template v-else>
+        <label for="difficultySelection" class="form-label mt-2">Difficulty</label>
+        <div id="difficultySelection" class="dropdown">
+            <button ref="difficultyDropdown" class="btn btn-secondary dropdown-toggle" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                {{ state.difficultyByNumber[difficulty] }}
+            </button>
+            <ul class="dropdown-menu">
+                <li v-for="diffName in Object.keys(state.difficultyByName)" :key="diffName" @click="difficulty = state.difficultyByName[diffName]">
+                    <a class="dropdown-item" :class="{'dropdown-active': difficulty == state.difficultyByName[diffName]}" href="#">
+                        {{ diffName }}
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div ref="requirementsDiv">
+            <label for="requirementsIcons" class="form-label mt-2">Requirements</label>
+            <div id="requirementsIcons" class="cell-wrapper">
+                <LogicRequirements :subject="subject" />
+                <input v-model="requirement" id="requirementBox" type="text" class="form-control">
+            </div>
+        </div>
+    
         <div v-if="error" class="alert alert-danger mt-2">
             {{ error }}
         </div>
@@ -299,6 +329,31 @@ async function submit() {
 
     <div class="modal-footer">
         <div class="display-flex justify-content-end">
+            <template v-if="state.tipAdmin">
+                <span class="tip-id">{{ logic.parentTip.tipId }}</span>
+
+                <button class="btn btn-secondary me-2"
+                    @mouseover="tipStore.tooltip('Edit first in queue', $event)"
+                    @click="() => { logic.popStack(); window.editFirstInQueue(); }">
+                    
+                    <img class="invert" src="/images/arrow-clockwise.svg">
+                </button>
+
+                <button class="btn btn-secondary me-2"
+                    @mouseover="tipStore.tooltip('Delete this tip', $event)"
+                    @click="async () => { await logic.deleteTip(logic.parentTip); }">
+
+                    <img class="invert" src="/images/trash3-fill.svg">
+                </button>
+
+                <button v-if="logic.parentTip && !logic.parentTip.approved" class="btn btn-secondary me-2"
+                    @mouseover="tipStore.tooltip('Approve this tip', $event)"
+                    @click="async () => { await logic.approveTip(logic.parentTip, true); }">
+
+                    <img class="invert" src="/images/hand-thumbs-up-fill.svg">
+                </button>
+            </template>
+
             <button v-if="!complete" type="button" class="btn btn-primary"
                 @click="submit()">
                 Submit New Tip
@@ -310,6 +365,27 @@ async function submit() {
 </template>
 
 <style scoped>
+
+.tip-id {
+    padding-right: 8px;
+}
+
+.node-input {
+    width: auto;
+    background-color: rgba(255, 0, 0, 0.05) !important;
+}
+
+.node-input.nodeExists {
+    background-color: rgba(0, 255, 0, 0.05) !important;
+}
+
+#difficultySelection {
+    width: auto;
+}
+
+.full-width {
+    width: 100%;
+}
 
 .modal-footer {
     margin-left: -0.75em;
@@ -343,13 +419,13 @@ span.alert {
     border-radius: 5px;
 }
 
-#titleBox:not(:focus) {
+input:not(:focus) {
 	background-color: rgba(255, 255, 255, 0.05);
     border-style: none;
 	color: v-bind(textColor);
 }
 
-#titleBox {
+input:focus {
 	background-color: rgba(255, 255, 255, 0.1);
     border-style: none;
 	color: v-bind(textColor);
