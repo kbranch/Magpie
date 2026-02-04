@@ -2,9 +2,7 @@
 import { useLogicViewerStore } from '@/stores/logicViewerStore';
 import { computed } from 'vue';
 import SingleTip from './SingleTip.vue';
-import { useTextTooltipStore } from '@/stores/textTooltipStore';
 
-const tip = useTextTooltipStore();
 const logic = useLogicViewerStore();
 
 const fromName = computed(() => logic.getLogicNodeName(logic.stackTop));

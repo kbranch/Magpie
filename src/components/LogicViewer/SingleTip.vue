@@ -141,10 +141,13 @@ const textColor = computed(() => state.settings.textColor);
     padding-left: 10px;
     display: flex;
     align-items: center;
+    text-wrap: balance;
 }
 
 .title-span {
     flex-grow: 1;
+    text-wrap: balance;
+    padding-right: 6px;
 }
 
 .accordion-body {
@@ -184,6 +187,7 @@ const textColor = computed(() => state.settings.textColor);
 .lang-icon {
     background-image: url('/images/lang-flags.png');
     margin-right: 12px;
+    min-width: 25px;
 }
 
 .tip-id {
