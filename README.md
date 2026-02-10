@@ -113,6 +113,8 @@ Check out the [API](https://github.com/kbranch/Magpie/wiki/Autotracker-API) for 
 
 The autotracker itself has been moved to its own repo: https://github.com/kbranch/Magpie-LADX-Autotracker
 
+@dinonautdad on Discord has put together a full [Mac setup guide](https://github.com/kbranch/Magpie-LADX-Autotracker/blob/main/LADXR_AutoTracking_macOS.pdf) - thanks!
+
 ## Spoiler Log
 
 The spoiler log minitab allows you to upload either a JSON spoiler log or a ROM itself. Once loaded, individual checks and entrances can be spoiled by right clicking on them. Hovering over an item in the item tracker will highlight its location on the map if it has been marked(/spoiled)
