@@ -683,15 +683,16 @@ if sharingEnabled:
         if len(players) == 1:
             playerName = next(iter(players))
             player = players[playerName]
-            historyResult = sharing.getLocationHistory(playerName, player['locationTimestamp'], player['delaySeconds'])
-            if historyResult:
-                playerResult = result[playerName]
+            if 'locationTimestamp' in player:
+                historyResult = sharing.getLocationHistory(playerName, player['locationTimestamp'], player['delaySeconds'])
+                if historyResult:
+                    playerResult = result[playerName]
 
-                if not playerResult:
-                    playerResult = {}
-                    result[playerName] = playerResult
+                    if not playerResult:
+                        playerResult = {}
+                        result[playerName] = playerResult
 
-                result[playerName]['locationHistory'] = historyResult
+                    result[playerName]['locationHistory'] = historyResult
 
         return json.dumps(result)
 
