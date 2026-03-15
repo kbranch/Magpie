@@ -1,4 +1,6 @@
 export let itemNames = {
+    "GOOD": 'Something Good',
+    "AP_ITEM": "Archipelago Item",
     "SHIELD": "Shield",
     "SWORD": "Sword",
     "TOADSTOOL": "Toadstool",
@@ -31,6 +33,12 @@ export let itemNames = {
     "BIRD_KEY": "Bird Key",
     "SLIME_KEY": "Slime Key",
     "GOLD_LEAF": "Golden Leaf",
+    "TAIL_CAVE_OPENED": "Tail Cave Opened",
+    "ANGLER_TUNNEL_OPENED": "Angler Tunnel Opened",
+    "FACE_SHRINE_OPENED": "Face Shrine Opened",
+    "EAGLE_TOWER_OPENED": "Eagle Tower Opened",
+    "KEY_CAVERN_OPENED": "Key Cavern Opened",
+    "CASTLE_GATE_OPENED": "Castle Gate Opened",
     "TRADING_ITEM_YOSHI_DOLL": "Yoshi Doll",
     "TRADING_ITEM_RIBBON": "Ribbon",
     "TRADING_ITEM_DOG_FOOD": "Dog Food",
@@ -110,5 +118,4 @@ export let itemNames = {
     "ARROWS_10": "10 Arrows",
     "GEL": "Zol",
     "MESSAGE": "Master Stalfos' Message",
-    "GOOD": 'Something Good',
 };
