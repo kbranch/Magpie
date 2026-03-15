@@ -98,6 +98,10 @@ def fixArgs(args):
     if args.goal == '':
         args.goal = 'instruments'
         args.goalcount = '8'
+    elif args.goal == 'vanilla':
+        args.goalcount = '8'
+    elif args.goal == 'open':
+        args.goalcount = '-1'
     if args.overworld == 'dungeonchain':
         args.overworld = 'normal'
 
