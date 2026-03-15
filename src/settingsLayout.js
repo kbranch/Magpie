@@ -1020,6 +1020,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 'default.html': 'Classic',
                                 'notrade.html': 'No trade items',
                                 'BusinessAlex.html': 'Inventory screen',
+                                'gdq.html': 'GDQ Fatales',
                                 'empty.html': 'Empty',
                                 'custom': 'Custom',
                             }
