@@ -24,6 +24,7 @@ export let importLogicDiff = window.importLogicDiff;
 export let openExportStateDialog = window.openExportStateDialog;
 export let resetUndoRedo = window.resetUndoRedo;
 export let fixArgs = window.fixArgs;
+export let fixSettings = window.fixSettings;
 export let saveSettingsToStorage = window.saveSettingsToStorage;
 export let applySettings = window.applySettings;
 export let refreshItems = window.refreshItems;

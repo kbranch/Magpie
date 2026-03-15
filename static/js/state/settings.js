@@ -67,6 +67,7 @@ function saveSettings() {
 
     resetUndoRedo()
 
+    fixSettings(localSettings);
     fixArgs(args);
     saveSettingsToStorage(args, localSettings);
 
@@ -255,6 +256,13 @@ function updateSettings() {
         localSettings.followToUnderworld = 'always';
     } else if (localSettings.followToUnderworld === false) {
         localSettings.followToUnderworld = 'never';
+    }
+}
+
+function fixSettings(localSettings) {
+    let autotrackerAddress = localSettings.autotrackerAddress.toLowerCase();
+    if (autotrackerAddress.includes('archipelago') || autotrackerAddress.includes('.gg')) {
+        localSettings.autotrackerAddress = '';
     }
 }
 

@@ -810,8 +810,8 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             type: types.text,
                             settingBase: 'settings',
                             settingName: 'autotrackerAddress',
-                            placeholder: '127.0.0.1:17026',
-                            helperText: 'Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026. Note that modern browsers will typically block insecure connections to remote addresses. Either download the offline version of Magpie or configure your browser to allow insecure WebSocket connections.',
+                            placeholder: 'Not for Archipelago',
+                            helperText: 'NOT FOR USE WITH ARCHIPELAGO. Address of the device that the autotracker is running on. Hostname or IP only, no port. The autotracker listens on port 17026. Note that modern browsers will typically block insecure connections to remote addresses. Either download the offline version of Magpie or configure your browser to allow insecure WebSocket connections.',
                         }),
                         new SettingsItem({
                             title: 'Track items',

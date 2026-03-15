@@ -1,5 +1,5 @@
 <script setup>
-import { getFile, importState, importLogicDiff, openExportStateDialog, resetUndoRedo, fixArgs, saveSettingsToStorage, applySettings, broadcastArgs, refreshItems, drawActiveTab } from '@/moduleWrappers.js';
+import { getFile, importState, importLogicDiff, openExportStateDialog, resetUndoRedo, fixArgs, fixSettings, saveSettingsToStorage, applySettings, refreshItems, drawActiveTab } from '@/moduleWrappers.js';
 import { getLayout } from '@/settingsLayout.js';
 import { debounce } from '@/main';
 import SettingsBlock from './SettingsBlock.vue';
@@ -156,6 +156,7 @@ function saveSettings(settings) {
 
     updateCustomDungeonItems(settings.args);
     fixArgs(settings.args);
+    fixSettings(settings.settings);
     saveSettingsToStorage(settings.args, settings.settings);
 
     applySettings(lastSettings.args, lastSettings.settings);
