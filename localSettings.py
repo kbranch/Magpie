@@ -141,6 +141,11 @@ class LocalSettings:
             "Ricky",
             "Sig",
             "BusinessAlex",
+            "Ralsei",
+            "Kris",
+            "Noelle",
+            "Saria",
+            "MMLink",
         ]
         # gfxPath = 'LADXR/gfx/'
 
