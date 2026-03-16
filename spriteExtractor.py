@@ -744,7 +744,7 @@ def main():
                     dumpJump(entry.path, destPath, templateType)
                     dumpChecked(entry.path, destPath, [x for x in sprites[templateType] if x.item.startswith('TRADING_ITEM') or x.item in ['TOADSTOOL_1']])
         
-        print(hashes)
+        [print(f'"{x}": "{hashes[x]}",') for x in sorted(hashes.keys(), key=lambda x: hashes[x])]
     else:
         dumpRomForPhotos('/home/kbranch/Downloads/LADXR_D23D6DD7703CC3E6C121574CBFA1AF67 (9).gbc', f'./graphics/rom.png', palettes[0])
 
