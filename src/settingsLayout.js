@@ -1295,6 +1295,25 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                                 }),
                             ],
                         }),
+                        new SettingsItem({
+                            type: types.column,
+                            includeCol: false,
+                            padding: 'py-2',
+                            children: [
+                                new SettingsItem({
+                                    title: 'Inactive item opacity',
+                                    type: types.slider,
+                                    includeRow: false,
+                                    colSize: '3',
+                                    settingBase: 'settings',
+                                    settingName: 'inactiveAlpha',
+                                    min: 0,
+                                    max: 100,
+                                    step: 10,
+                                    detents: [60],
+                                }),
+                            ],
+                        }),
                     ],
                 }),
                 new SettingsItem({

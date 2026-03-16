@@ -348,6 +348,12 @@ function applySettings(oldArgs=null, oldSettings=null) {
             border-bottom-color: ${localSettings.highlightColor} !important;
         }`;
         themeStyles.insertRule(highlightRule, 0);
+
+        highlightRule = `.inactive-item:not(.secondary) > img {
+            mix-blend-mode: luminosity;
+            opacity: ${localSettings.inactiveAlpha / 100};
+        }`;
+        themeStyles.insertRule(highlightRule, 0);
     }
 
     for (let mapName of ['overworld', 'd0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8']) {

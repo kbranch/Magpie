@@ -16,6 +16,7 @@ const accessibility = useAccessibilityStore();
 const bgColor = computed(() => state.settings.bgColor);
 const textColor = computed(() => state.settings.textColor);
 const highlightColor = computed(() => state.settings.highlightColor);
+const inactiveAlpha = computed(() => state.settings.inactiveAlpha / 100);
 const containerWidth = computed(() => state.settings.maxContainerWidth ? `${state.settings.maxContainerWidth}px` : '1500px');
 
 function updateChecked(checked) {
@@ -200,6 +201,11 @@ defineExpose({
 
 .owned-item-bar:not(.secondary) > img, .owned-item-bar.highlight-owned-secondary > img {
   border-bottom-color: v-bind(highlightColor) !important;
+}
+
+.inactive-item:not(.secondary) > img {
+  mix-blend-mode: luminosity;
+  opacity: v-bind(inactiveAlpha);
 }
 
 #appWrapper {

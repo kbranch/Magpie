@@ -45,10 +45,12 @@ function setImgSrc(img, item, player='') {
     if (element.dataset?.item == item || secondary == item) {
         if (slotOwned) {
             wrapper.classList.add(`owned-item-${localSettings.ownedHighlight}`);
+            wrapper.classList.remove(`inactive-item`);
         }
         else {
             wrapper.classList.remove('owned-item-bar');
             wrapper.classList.remove('owned-item-square');
+            wrapper.classList.add(`inactive-item`);
         }
     }
 }

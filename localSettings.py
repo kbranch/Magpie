@@ -104,6 +104,7 @@ class LocalSettings:
         self.textColor = '#f8f9fa'
         self.highlightColor = '#444444'
         self.nativeBgColor = '#212529'
+        self.inactiveAlpha = 60
 
     def parse(settingsString):
         localSettings = json.loads(settingsString)
