@@ -111,7 +111,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
-          pyinstaller_ver: '==6.11.1'
+          pyinstaller_ver: '==5.13.2'
           spec: 'magpie-data.spec'
           requirements: 'requirements-no-ndi.txt'
           clean_checkout: false
@@ -169,7 +169,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.10'
-          pyinstaller_ver: '==5.13.2'
+          pyinstaller_ver: '==6.11.1'
           spec: 'magpie-data.spec'
           requirements: 'requirements-ndi.txt'
           clean_checkout: false
