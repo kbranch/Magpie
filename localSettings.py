@@ -146,6 +146,8 @@ class LocalSettings:
             "Noelle",
             "Saria",
             "MMLink",
+            "Moblin",
+            "SpongeBob",
         ]
         # gfxPath = 'LADXR/gfx/'
 
