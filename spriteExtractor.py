@@ -11,13 +11,15 @@ from PIL import Image, ImageOps, ImageEnhance
 from romTables import ROMWithTables
 
 class Sprite:
-    def __init__(self, item, row, col, width, palettes, mirror=False):
+    def __init__(self, item, row, col, width, palettes, mirror=False, cropBox=None, invert=False):
         self.item = item
         self.row = row
         self.col = col
         self.width = width
         self.palettes = palettes if type(palettes) == tuple else [palettes]
         self.mirror = mirror
+        self.cropBox = cropBox
+        self.invert = invert
 
 palettes = [
     [248, 248, 168, 255,    32, 176, 72, 255,   8, 72, 40, 255,     0, 0, 0, 255],
@@ -48,68 +50,333 @@ palettes = [
     [248, 248, 168, 255,    226, 226, 250, 255, 100, 108, 180, 255, 0, 0, 0, 255],
 ]
 
-feather = Sprite('FEATHER_1', 1, 9, 1, 3)
-rooster = Sprite('ROOSTER_1', 51, 42, 2, 10)
+feather = {
+    'vanilla': Sprite('FEATHER_1', 1, 9, 1, 3),
+    'ext1': Sprite('FEATHER_1', 1, 41, 1, 3),
+    'ext2': Sprite('FEATHER_1', 1, 41, 1, 3),
+}
+rooster = {
+    'vanilla': Sprite('ROOSTER_1', 51, 42, 2, 10),
+    'ext1': Sprite('ROOSTER_1', 52, 10, 2, 10),
+    'ext2': Sprite('ROOSTER_1', 46, 8, 2, 10),
+}
 
-sprites = [
-    Sprite('linkface', 0, 0, 2, 8),
-    Sprite('SHIELD_1', 1, 3, 1, 1),
-    Sprite('SHIELD_2', 1, 3, 1, 12),
-    Sprite('SWORD_1', 1, 2, 1, 1),
-    Sprite('SWORD_2', 1, 2, 1, 12),
-    # Sprite('TOADSTOOL_1', 5, 6, 1, 12), # the inventory sprite
-    Sprite('TOADSTOOL_1', 52, 21, 1, 20, mirror=True), # possibly the forest floor sprite - there are two like this
-    Sprite('MAGIC_POWDER_1', 1, 7, 1, 3),
-    Sprite('SHOVEL_1', 1, 11, 1, (3, 3, 1, 1)),
-    Sprite('BOMB_1', 1, 0, 1, 24),
-    Sprite('BOW_1', 1, 4, 1, 3),
-    Sprite('POWER_BRACELET_1', 1, 1, 1, 1),
-    Sprite('POWER_BRACELET_2', 1, 1, 1, 2),
-    Sprite('PEGASUS_BOOTS_1', 1, 12, 1, 3),
-    Sprite('FEATHER_1', 1, 9, 1, 3),
-    Sprite('ROOSTER_1', 51, 42, 2, 10),
-    Sprite('FLIPPERS_1', 1, 10, 1, 4),
-    Sprite('HOOKSHOT_1', 1, 5, 1, (1, 1, 2, 2)),
-    Sprite('MAGIC_ROD_1', 1, 6, 1, (2, 2, 1, 1)),
-    Sprite('OCARINA_1', 1, 8, 1, 2),
-    Sprite('SONG1_1', 5, 12, 1, 9, mirror=True),
-    Sprite('SONG2_1', 5, 13, 1, 10, mirror=True),
-    Sprite('SONG3_1', 5, 14, 1, 8, mirror=True),
-    Sprite('BOWWOW_1', 20, 36, 2, 10),
-    Sprite('BOOMERANG_1', 1, 18, 1, 2),
-    Sprite('SEASHELL_1', 1, 15, 1, 3),
-    Sprite('TAIL_KEY_1', 1, 32, 1, 6),
-    Sprite('ANGLER_KEY_1', 1, 33, 1, 6),
-    Sprite('FACE_KEY_1', 1, 34, 1, 6),
-    Sprite('BIRD_KEY_1', 1, 35, 1, 6),
-    Sprite('SLIME_KEY_1', 5, 7, 1, 6),
-    Sprite('RED_TUNIC', 64, 0, 1, 21, mirror=True),
-    Sprite('BLUE_TUNIC', 64, 0, 1, 22, mirror=True),
-    Sprite('GREEN_TUNIC', 64, 0, 1, 23, mirror=True),
-    Sprite('BLUERED_TUNIC', 64, 0, 1, (22, 21, 22, 21), mirror=True),
-    Sprite('TRADING_ITEM_YOSHI_DOLL_1', 1, 13, 2, 5),
-    Sprite('TRADING_ITEM_RIBBON_1', 0, 32, 2, 2),
-    Sprite('TRADING_ITEM_DOG_FOOD_1', 0, 34, 2, 1),
-    Sprite('TRADING_ITEM_BANANAS_1', 0, 36, 2, 19),
-    Sprite('TRADING_ITEM_STICK_1', 0, 38, 2, 6),
-    Sprite('TRADING_ITEM_HONEYCOMB_1', 0, 40, 2, 6),
-    Sprite('TRADING_ITEM_PINEAPPLE_1', 0, 42, 2, 16),
-    Sprite('TRADING_ITEM_HIBISCUS_1', 0, 44, 2, 12),
-    Sprite('TRADING_ITEM_LETTER_1', 0, 46, 2, 17),
-    Sprite('TRADING_ITEM_BROOM_1', 0, 48, 2, 6),
-    Sprite('TRADING_ITEM_FISHING_HOOK_1', 0, 50, 2, 25),
-    Sprite('TRADING_ITEM_NECKLACE_1', 0, 52, 2, 2),
-    Sprite('TRADING_ITEM_SCALE_1', 0, 54, 2, 2),
-    Sprite('TRADING_ITEM_MAGNIFYING_GLASS_1', 0, 56, 2, 4),
-    Sprite('INSTRUMENT1_1', 42, 0, 2, 18),
-    Sprite('INSTRUMENT2_1', 42, 2, 2, 18),
-    Sprite('INSTRUMENT3_1', 42, 4, 2, 18),
-    Sprite('INSTRUMENT4_1', 42, 6, 2, 18),
-    Sprite('INSTRUMENT5_1', 42, 8, 2, 18),
-    Sprite('INSTRUMENT6_1', 42, 10, 2, 18),
-    Sprite('INSTRUMENT7_1', 42, 12, 2, 18),
-    Sprite('INSTRUMENT8_1', 42, 14, 2, 18),
-]
+sprites = {
+    'vanilla': [
+        Sprite('linkface', 0, 0, 2, 8),
+        Sprite('SHIELD_1', 1, 3, 1, 1),
+        Sprite('SHIELD_2', 1, 3, 1, 12),
+        Sprite('SWORD_1', 1, 2, 1, 1),
+        Sprite('SWORD_2', 1, 2, 1, 12),
+        # Sprite('TOADSTOOL_1', 5, 6, 1, 12), # the inventory sprite
+        Sprite('TOADSTOOL_1', 52, 21, 1, 20, mirror=True), # possibly the forest floor sprite - there are two like this
+        Sprite('MAGIC_POWDER_1', 1, 7, 1, 3),
+        Sprite('SHOVEL_1', 1, 11, 1, (3, 3, 1, 1)),
+        Sprite('BOMB_1', 1, 0, 1, 24),
+        Sprite('BOW_1', 1, 4, 1, 3),
+        Sprite('POWER_BRACELET_1', 1, 1, 1, 1),
+        Sprite('POWER_BRACELET_2', 1, 1, 1, 2),
+        Sprite('PEGASUS_BOOTS_1', 1, 12, 1, 3),
+        Sprite('FEATHER_1', 1, 9, 1, 3),
+        Sprite('ROOSTER_1', 51, 42, 2, 10),
+        Sprite('FLIPPERS_1', 1, 10, 1, 4),
+        Sprite('HOOKSHOT_1', 1, 5, 1, (1, 1, 2, 2)),
+        Sprite('MAGIC_ROD_1', 1, 6, 1, (2, 2, 1, 1)),
+        Sprite('OCARINA_1', 1, 8, 1, 2),
+        Sprite('SONG1_1', 5, 12, 1, 9, mirror=True),
+        Sprite('SONG2_1', 5, 13, 1, 10, mirror=True),
+        Sprite('SONG3_1', 5, 14, 1, 8, mirror=True),
+        Sprite('BOWWOW_1', 20, 36, 2, 10),
+        Sprite('BOOMERANG_1', 1, 18, 1, 2),
+        Sprite('SEASHELL_1', 1, 15, 1, 3),
+        Sprite('TAIL_KEY_1', 1, 32, 1, 6),
+        Sprite('ANGLER_KEY_1', 1, 33, 1, 6),
+        Sprite('FACE_KEY_1', 1, 34, 1, 6),
+        Sprite('BIRD_KEY_1', 1, 35, 1, 6),
+        Sprite('SLIME_KEY_1', 5, 7, 1, 6),
+        Sprite('RED_TUNIC', 64, 0, 1, 21, mirror=True),
+        Sprite('BLUE_TUNIC', 64, 0, 1, 22, mirror=True),
+        Sprite('GREEN_TUNIC', 64, 0, 1, 23, mirror=True),
+        Sprite('BLUERED_TUNIC', 64, 0, 1, (22, 21, 22, 21), mirror=True),
+        Sprite('TRADING_ITEM_YOSHI_DOLL_1', 1, 13, 2, 5),
+        Sprite('TRADING_ITEM_RIBBON_1', 0, 32, 2, 2),
+        Sprite('TRADING_ITEM_DOG_FOOD_1', 0, 34, 2, 1),
+        Sprite('TRADING_ITEM_BANANAS_1', 0, 36, 2, 19),
+        Sprite('TRADING_ITEM_STICK_1', 0, 38, 2, 6),
+        Sprite('TRADING_ITEM_HONEYCOMB_1', 0, 40, 2, 6),
+        Sprite('TRADING_ITEM_PINEAPPLE_1', 0, 42, 2, 16),
+        Sprite('TRADING_ITEM_HIBISCUS_1', 0, 44, 2, 12),
+        Sprite('TRADING_ITEM_LETTER_1', 0, 46, 2, 17),
+        Sprite('TRADING_ITEM_BROOM_1', 0, 48, 2, 6),
+        Sprite('TRADING_ITEM_FISHING_HOOK_1', 0, 50, 2, 25),
+        Sprite('TRADING_ITEM_NECKLACE_1', 0, 52, 2, 2),
+        Sprite('TRADING_ITEM_SCALE_1', 0, 54, 2, 2),
+        Sprite('TRADING_ITEM_MAGNIFYING_GLASS_1', 0, 56, 2, 4),
+        Sprite('INSTRUMENT1_1', 42, 0, 2, 18),
+        Sprite('INSTRUMENT2_1', 42, 2, 2, 18),
+        Sprite('INSTRUMENT3_1', 42, 4, 2, 18),
+        Sprite('INSTRUMENT4_1', 42, 6, 2, 18),
+        Sprite('INSTRUMENT5_1', 42, 8, 2, 18),
+        Sprite('INSTRUMENT6_1', 42, 10, 2, 18),
+        Sprite('INSTRUMENT7_1', 42, 12, 2, 18),
+        Sprite('INSTRUMENT8_1', 42, 14, 2, 18),
+        Sprite('KEY1_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY2_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY3_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY4_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY5_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY6_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY7_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY8_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY0_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY0_1', 55, 45, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('NIGHTMARE_KEY0_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY1_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY2_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY3_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY4_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY5_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY6_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY7_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY8_1', 55, 43, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP0_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP1_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP2_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP3_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP4_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP5_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP6_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP7_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP8_1', 55, 40, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK0_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK1_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK2_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK3_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK4_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK5_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK6_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK7_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK8_1', 55, 42, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS0_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS1_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS2_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS3_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS4_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS5_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS6_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS7_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS8_1', 55, 41, 1, 4, cropBox=(4, 1, 12, 15)),
+    ],
+    'ext1': [
+        Sprite('linkface', 0, 32, 2, 8),
+        Sprite('SHIELD_1', 1, 35, 1, 1),
+        Sprite('SHIELD_2', 1, 35, 1, 12),
+        Sprite('SWORD_1', 1, 34, 1, 1),
+        Sprite('SWORD_2', 1, 34, 1, 12),
+        # Sprite('TOADSTOOL_1', 5, 6, 1, 12), # the inventory sprite
+        Sprite('TOADSTOOL_1', 52, 53, 1, 20, mirror=True), # possibly the forest floor sprite - there are two like this
+        Sprite('MAGIC_POWDER_1', 1, 39, 1, 3),
+        Sprite('SHOVEL_1', 1, 43, 1, (3, 3, 1, 1)),
+        Sprite('BOMB_1', 1, 32, 1, 24),
+        Sprite('BOW_1', 1, 36, 1, 3),
+        Sprite('POWER_BRACELET_1', 1, 33, 1, 1),
+        Sprite('POWER_BRACELET_2', 1, 33, 1, 2),
+        Sprite('PEGASUS_BOOTS_1', 1, 44, 1, 3),
+        Sprite('FEATHER_1', 1, 41, 1, 3),
+        Sprite('ROOSTER_1', 52, 10, 2, 10),
+        Sprite('FLIPPERS_1', 1, 42, 1, 4),
+        Sprite('HOOKSHOT_1', 1, 37, 1, (1, 1, 2, 2)),
+        Sprite('MAGIC_ROD_1', 1, 38, 1, (2, 2, 1, 1)),
+        Sprite('OCARINA_1', 1, 40, 1, 2),
+        Sprite('SONG1_1', 5, 44, 1, 9, mirror=True),
+        Sprite('SONG2_1', 5, 45, 1, 10, mirror=True),
+        Sprite('SONG3_1', 5, 46, 1, 8, mirror=True),
+        Sprite('BOWWOW_1', 21, 4, 2, 10),
+        Sprite('BOOMERANG_1', 1, 50, 1, 2),
+        Sprite('SEASHELL_1', 1, 47, 1, 3),
+        Sprite('TAIL_KEY_1', 2, 0, 1, 6),
+        Sprite('ANGLER_KEY_1', 2, 1, 1, 6),
+        Sprite('FACE_KEY_1', 2, 2, 1, 6),
+        Sprite('BIRD_KEY_1', 2, 3, 1, 6),
+        Sprite('SLIME_KEY_1', 5, 39, 1, 6),
+        Sprite('RED_TUNIC', 64, 32, 1, 21, mirror=True),
+        Sprite('BLUE_TUNIC', 64, 32, 1, 22, mirror=True),
+        Sprite('GREEN_TUNIC', 64, 32, 1, 23, mirror=True),
+        Sprite('BLUERED_TUNIC', 64, 32, 1, (22, 21, 22, 21), mirror=True),
+        Sprite('TRADING_ITEM_YOSHI_DOLL_1', 1, 45, 2, 5),
+        Sprite('TRADING_ITEM_RIBBON_1', 1, 0, 2, 2),
+        Sprite('TRADING_ITEM_DOG_FOOD_1', 1, 2, 2, 1),
+        Sprite('TRADING_ITEM_BANANAS_1', 1, 4, 2, 19),
+        Sprite('TRADING_ITEM_STICK_1', 1, 6, 2, 6),
+        Sprite('TRADING_ITEM_HONEYCOMB_1', 1, 8, 2, 6),
+        Sprite('TRADING_ITEM_PINEAPPLE_1', 1, 10, 2, 16),
+        Sprite('TRADING_ITEM_HIBISCUS_1', 1, 12, 2, 12),
+        Sprite('TRADING_ITEM_LETTER_1', 1, 14, 2, 17),
+        Sprite('TRADING_ITEM_BROOM_1', 1, 16, 2, 6),
+        Sprite('TRADING_ITEM_FISHING_HOOK_1', 1, 18, 2, 25),
+        Sprite('TRADING_ITEM_NECKLACE_1', 1, 20, 2, 2),
+        Sprite('TRADING_ITEM_SCALE_1', 1, 22, 2, 2),
+        Sprite('TRADING_ITEM_MAGNIFYING_GLASS_1', 1, 24, 2, 4),
+        Sprite('INSTRUMENT1_1', 42, 32, 2, 18),
+        Sprite('INSTRUMENT2_1', 42, 34, 2, 18),
+        Sprite('INSTRUMENT3_1', 42, 36, 2, 18),
+        Sprite('INSTRUMENT4_1', 42, 38, 2, 18),
+        Sprite('INSTRUMENT5_1', 42, 40, 2, 18),
+        Sprite('INSTRUMENT6_1', 42, 42, 2, 18),
+        Sprite('INSTRUMENT7_1', 42, 44, 2, 18),
+        Sprite('INSTRUMENT8_1', 42, 46, 2, 18),
+        Sprite('KEY1_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY2_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY3_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY4_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY5_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY6_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY7_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY8_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY0_1', 56, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('NIGHTMARE_KEY0_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY1_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY2_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY3_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY4_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY5_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY6_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY7_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY8_1', 56, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP0_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP1_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP2_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP3_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP4_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP5_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP6_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP7_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP8_1', 56, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK0_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK1_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK2_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK3_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK4_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK5_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK6_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK7_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK8_1', 56, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS0_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS1_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS2_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS3_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS4_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS5_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS6_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS7_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS8_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+    ],
+    'ext2': [
+        Sprite('linkface', 0, 32, 2, 8),
+        Sprite('SHIELD_1', 1, 35, 1, 1),
+        Sprite('SHIELD_2', 1, 35, 1, 12),
+        Sprite('SWORD_1', 1, 34, 1, 1),
+        Sprite('SWORD_2', 1, 34, 1, 12),
+        # Sprite('TOADSTOOL_1', 5, 6, 1, 12), # the inventory sprite
+        Sprite('TOADSTOOL_1', 20, 23, 1, 20, mirror=True), # possibly the forest floor sprite - there are two like this
+        Sprite('MAGIC_POWDER_1', 1, 39, 1, 3),
+        Sprite('SHOVEL_1', 1, 43, 1, (3, 3, 1, 1)),
+        Sprite('BOMB_1', 1, 32, 1, 24),
+        Sprite('BOW_1', 1, 36, 1, 3),
+        Sprite('POWER_BRACELET_1', 1, 33, 1, 1),
+        Sprite('POWER_BRACELET_2', 1, 33, 1, 2),
+        Sprite('PEGASUS_BOOTS_1', 1, 44, 1, 3),
+        Sprite('FEATHER_1', 1, 41, 1, 3),
+        Sprite('ROOSTER_1', 46, 8, 2, 10),
+        Sprite('FLIPPERS_1', 1, 42, 1, 4),
+        Sprite('HOOKSHOT_1', 1, 37, 1, (1, 1, 2, 2)),
+        Sprite('MAGIC_ROD_1', 1, 38, 1, (2, 2, 1, 1)),
+        Sprite('OCARINA_1', 1, 40, 1, 2),
+        Sprite('SONG1_1', 7, 20, 1, 9, mirror=True),
+        Sprite('SONG2_1', 7, 21, 1, 10, mirror=True),
+        Sprite('SONG3_1', 7, 22, 1, 8, mirror=True),
+        Sprite('BOWWOW_1', 23, 4, 2, 10),
+        Sprite('BOOMERANG_1', 1, 50, 1, 2),
+        Sprite('SEASHELL_1', 1, 47, 1, 3),
+        Sprite('TAIL_KEY_1', 2, 0, 1, 6),
+        Sprite('ANGLER_KEY_1', 2, 1, 1, 6),
+        Sprite('FACE_KEY_1', 2, 2, 1, 6),
+        Sprite('BIRD_KEY_1', 2, 3, 1, 6),
+        Sprite('SLIME_KEY_1', 7, 39, 1, 6),
+        Sprite('RED_TUNIC', 50, 32, 1, 21, mirror=True),
+        Sprite('BLUE_TUNIC', 50, 32, 1, 22, mirror=True),
+        Sprite('GREEN_TUNIC', 50, 32, 1, 23, mirror=True),
+        Sprite('BLUERED_TUNIC', 50, 32, 1, (22, 21, 22, 21), mirror=True),
+        Sprite('TRADING_ITEM_YOSHI_DOLL_1', 1, 45, 2, 5),
+        Sprite('TRADING_ITEM_RIBBON_1', 1, 0, 2, 2),
+        Sprite('TRADING_ITEM_DOG_FOOD_1', 1, 2, 2, 1),
+        Sprite('TRADING_ITEM_BANANAS_1', 1, 4, 2, 19),
+        Sprite('TRADING_ITEM_STICK_1', 1, 6, 2, 6),
+        Sprite('TRADING_ITEM_HONEYCOMB_1', 1, 8, 2, 6),
+        Sprite('TRADING_ITEM_PINEAPPLE_1', 1, 10, 2, 16),
+        Sprite('TRADING_ITEM_HIBISCUS_1', 1, 12, 2, 12),
+        Sprite('TRADING_ITEM_LETTER_1', 1, 14, 2, 17),
+        Sprite('TRADING_ITEM_BROOM_1', 1, 16, 2, 6),
+        Sprite('TRADING_ITEM_FISHING_HOOK_1', 1, 18, 2, 25),
+        Sprite('TRADING_ITEM_NECKLACE_1', 1, 20, 2, 2),
+        Sprite('TRADING_ITEM_SCALE_1', 1, 22, 2, 2),
+        Sprite('TRADING_ITEM_MAGNIFYING_GLASS_1', 1, 24, 2, 4),
+        Sprite('INSTRUMENT1_1', 36, 32, 2, 18),
+        Sprite('INSTRUMENT2_1', 36, 34, 2, 18),
+        Sprite('INSTRUMENT3_1', 36, 36, 2, 18),
+        Sprite('INSTRUMENT4_1', 36, 38, 2, 18),
+        Sprite('INSTRUMENT5_1', 36, 40, 2, 18),
+        Sprite('INSTRUMENT6_1', 36, 42, 2, 18),
+        Sprite('INSTRUMENT7_1', 36, 44, 2, 18),
+        Sprite('INSTRUMENT8_1', 36, 46, 2, 18),
+        Sprite('KEY1_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY2_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY3_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY4_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY5_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY6_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY7_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY8_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('KEY0_1', 50, 13, 1, 1, cropBox=(4, 2, 11, 15)),
+        Sprite('NIGHTMARE_KEY0_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY1_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY2_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY3_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY4_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY5_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY6_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY7_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('NIGHTMARE_KEY8_1', 50, 11, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP0_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP1_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP2_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP3_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP4_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP5_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP6_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP7_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('MAP8_1', 50, 8, 1, 6, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK0_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK1_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK2_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK3_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK4_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK5_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK6_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK7_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('STONE_BEAK8_1', 50, 10, 1, 3, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS0_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS1_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS2_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS3_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS4_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS5_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS6_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS7_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+        Sprite('COMPASS8_1', 50, 9, 1, 4, cropBox=(4, 1, 12, 15)),
+    ],
+}
+
 
 def getPalette(rom, bank, addr):
     palette = []
@@ -174,10 +441,16 @@ def getIcon(source, sprite):
     for index in sprite.palettes:
         subPalette = palettes[index]
 
+        if sprite.invert:
+            subPalette = [255 - x for x in subPalette]
+
         subPalette[0] = 255
         subPalette[1] = 0
         subPalette[2] = 0
         subPalette[3] = 0
+        subPalette[7] = 255
+        subPalette[11] = 255
+        subPalette[15] = 255
         palette += subPalette
     
     palette += [255, 255, 255, 255]
@@ -196,6 +469,24 @@ def getIcon(source, sprite):
         'SLIME_KEY_1': 40,
         'TRADING_ITEM_STICK_1': 40,
         'TRADING_ITEM_NECKLACE_1': 44,
+        'NIGHTMARE_KEY0_1': 40,
+        'NIGHTMARE_KEY1_1': 40,
+        'NIGHTMARE_KEY2_1': 40,
+        'NIGHTMARE_KEY3_1': 40,
+        'NIGHTMARE_KEY4_1': 40,
+        'NIGHTMARE_KEY5_1': 40,
+        'NIGHTMARE_KEY6_1': 40,
+        'NIGHTMARE_KEY7_1': 40,
+        'NIGHTMARE_KEY8_1': 40,
+        'STONE_BEAK0_1': 40,
+        'STONE_BEAK1_1': 40,
+        'STONE_BEAK2_1': 40,
+        'STONE_BEAK3_1': 40,
+        'STONE_BEAK4_1': 40,
+        'STONE_BEAK5_1': 40,
+        'STONE_BEAK6_1': 40,
+        'STONE_BEAK7_1': 40,
+        'STONE_BEAK8_1': 40,
     }
 
     if sprite.item in fillSettings:
@@ -231,7 +522,10 @@ def getIcon(source, sprite):
                     if count <= fillSettings[sprite.item]:
                         icon.putpixel((x, y), 0)
 
-    return icon.resize((48, 48))
+    if sprite.cropBox:
+        icon = icon.crop(sprite.cropBox)
+
+    return icon.resize((icon.width * 3, icon.height * 3))
 
 def countColorAround(icon, x, y, colors={0}):
     count = 0
@@ -273,10 +567,10 @@ def deactivateIcon(icon):
     enhancer = ImageEnhance.Brightness(icon)
     return enhancer.enhance(0.70)
 
-def dumpJump(source, dest):
-    activeFeather = getIcon(source, feather).convert('RGBA')
+def dumpJump(source, dest, templateType):
+    activeFeather = getIcon(source, feather[templateType]).convert('RGBA')
     inactiveFeather = deactivateIcon(activeFeather).convert('RGBA')
-    activeRooster = ImageOps.mirror(getIcon(source, rooster)).convert('RGBA')
+    activeRooster = ImageOps.mirror(getIcon(source, rooster[templateType])).convert('RGBA')
     inactiveRooster = deactivateIcon(activeRooster).convert('RGBA')
 
     noJump = inactiveRooster.copy()
@@ -433,15 +727,22 @@ def main():
                     if not os.path.exists(destPath):
                         os.makedirs(destPath)
 
-                    for sprite in sprites:
-                        dumpIcon(entry.path, destPath, sprite)
-                    
-                    dumpJump(entry.path, destPath)
-                    dumpChecked(entry.path, destPath, [x for x in sprites if x.item.startswith('TRADING_ITEM') or x.item in ['TOADSTOOL_1']])
-
                     with open(entry.path, 'rb') as iFile:
                         data = bytearray(iFile.read(256))
-                        hashes[hashlib.sha1(data[:64]).hexdigest()] = entry.name[:-4]
+                        hash = hashlib.sha1(data[:64]).hexdigest()
+                        hashes[hash] = entry.name[:-4]
+                    
+                    templateType = 'vanilla'
+                    if hash == '424b05214e41aaab0aede15296870f3b84d21b85':
+                        templateType = 'ext2'
+                    elif hash == 'a879017650d8f1cb17c7b9f940883b9e8aecab8d':
+                        templateType = 'ext1'
+
+                    for sprite in sprites[templateType]:
+                        dumpIcon(entry.path, destPath, sprite)
+                    
+                    dumpJump(entry.path, destPath, templateType)
+                    dumpChecked(entry.path, destPath, [x for x in sprites[templateType] if x.item.startswith('TRADING_ITEM') or x.item in ['TOADSTOOL_1']])
         
         print(hashes)
     else:
