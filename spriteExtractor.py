@@ -272,7 +272,7 @@ sprites = {
         Sprite('COMPASS8_1', 56, 9, 1, 4, cropBox=(4, 1, 12, 15)),
     ],
     'ext2': [
-        Sprite('linkface', 0, 32, 2, 8),
+        Sprite('linkface', 3, 32, 2, 8),
         Sprite('SHIELD_1', 1, 35, 1, 1),
         Sprite('SHIELD_2', 1, 35, 1, 12),
         Sprite('SWORD_1', 1, 34, 1, 1),
