@@ -100,7 +100,7 @@ jobs:
 
   build-offline-windows:
     needs: prep-magpie
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Download Magpie
         uses: actions/download-artifact@v4
