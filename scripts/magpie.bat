@@ -6,14 +6,15 @@ If exist "magpie-data\update.zip" (
 
     Call :UnZipFile "%cd%\magpie-data\update" "%cd%\magpie-data\update.zip"
     xcopy /Q /H /E /Y magpie-data\update\magpie-data\* magpie-data\
+    xcopy /Q /H /E /Y magpie-data\update\magpie.bat .\
     rmdir /Q /S magpie-data\update
     del /Q magpie-data\update.zip
 
     echo Done
 )
 
-cd magpie-data
-start "Magpie" "magpie-data.exe" --local --nested
+cd magpie-data\_internal
+start "Magpie" "..\magpie-data.exe" --local --double-nested
 
 exit /b
 

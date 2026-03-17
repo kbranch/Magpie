@@ -100,7 +100,7 @@ jobs:
 
   build-offline-windows:
     needs: prep-magpie
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - name: Download Magpie
         uses: actions/download-artifact@v4
@@ -113,7 +113,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.12'
-          pyinstaller_ver: '==5.13.2'
+          pyinstaller_ver: '==6.11.1'
           spec: 'magpie-data.spec'
           requirements: 'requirements-no-ndi.txt'
           clean_checkout: false
@@ -171,7 +171,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.10'
-          # pyinstaller_ver: '==5.13.2'
+          pyinstaller_ver: '==6.11.1'
           spec: 'magpie-data.spec'
           requirements: 'requirements-ndi.txt'
           clean_checkout: false
@@ -206,7 +206,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.10'
-          pyinstaller_ver: '==5.13.2'
+          pyinstaller_ver: '==6.11.1'
           spec: 'magpie-data.spec'
           requirements: 'requirements-ndi.txt'
           clean_checkout: false

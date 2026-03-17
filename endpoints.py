@@ -226,7 +226,7 @@ def fetchUpdate():
 
     try:
         headers = {'User-Agent': 'Magpie'}
-        path = 'update.zip'
+        path = '../update.zip'
         url = "https://magpietracker.us/static/builds/magpie-local.zip"
         # url = "https://dev.magpietracker.us/static/builds/magpie-local-dev.zip"
 
