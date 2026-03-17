@@ -91,14 +91,14 @@ def initJson():
 
 def testRootSucceeds():
     result = requests.get(url)
-    assert result.status_code == 200
-    assert '<title>Magpie Tracker</title>' in result.text
+    assert result.status_code == 200, result.status_code
+    assert '<title>Magpie Tracker</title>' in result.text, result.text
 
 def testInitSucceeds(initJson):
-    assert 'args' in initJson and 'defaultSettings' in initJson
+    assert 'args' in initJson and 'defaultSettings' in initJson, initJson
 
 def testVersionSet(initJson):
-    assert initJson['version'].lower() != 'unknown'
+    assert initJson['version'].lower() != 'unknown', initJson
 
 def testIsLocal(initJson):
-    assert initJson['local']
+    assert initJson['local'], initJson
