@@ -6,6 +6,7 @@ psycopg2-binary
 mysql-connector-python
 pillow
 waitress
+setuptools
 
 # Does not work with Python >3.10
 # Required for NDI support

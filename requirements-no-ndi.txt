@@ -9,3 +9,4 @@ psycopg2-binary
 mysql-connector-python
 pillow
 waitress
+setuptools
