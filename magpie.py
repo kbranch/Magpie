@@ -175,6 +175,21 @@ def main():
     localSettings.doubleNested = args.doubleNested
 
     if endpoints.app.config['local']:
+        # Hack to work around the fact that the Windows start script didn't update itself originally
+        if sys.platform.lower().startswith('win') and not localSettings.doubleNested:
+            import shutil
+            import hashlib
+
+            oldBatPath = Path("../magpie.bat")
+            newBatPath = Path("magpie.bat")
+            filesExist = oldBatPath.is_file() and not newBatPath.is_file()
+            hashesMatch = filesExist and hashlib.sha256(oldBatPath.read_bytes()).hexdigest() == hashlib.sha256(newBatPath.read_bytes()).hexdigest()
+
+            if filesExist and not hashesMatch:
+                shutil.copy(newBatPath, oldBatPath)
+
+                print("Launcher has been updated, please start Magpie again")
+            
         import broadcastView
         from broadcastView import BroadcastView
         endpoints.itemsBroadcastView = BroadcastView(endpoints.mainThreadQueue, broadcastView.types.items)
