@@ -182,7 +182,7 @@ def main():
 
             oldBatPath = Path("../magpie.bat")
             newBatPath = Path("_internal/magpie.bat")
-            filesExist = oldBatPath.is_file() and not newBatPath.is_file()
+            filesExist = oldBatPath.is_file() and newBatPath.is_file()
             hashesMatch = filesExist and hashlib.sha256(oldBatPath.read_bytes()).hexdigest() == hashlib.sha256(newBatPath.read_bytes()).hexdigest()
 
             if filesExist and not hashesMatch:
