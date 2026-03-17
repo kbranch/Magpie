@@ -17,8 +17,9 @@ function setImgSrc(img, item, player='') {
         inv[item] = 0;
     }
 
+    let invertCount = $(img).attr('data-invert_count') == '';
     let applyGfx = ($(img).closest('.inventory-item').attr('data-gfx') == 'True') && ($(img).hasClass('primary') || item.includes ('CHECKED'));
-    let number = $(img).attr('data-invert_count') != '' ? inv[item] : maxInventory[item] - inv[item];
+    let number = invertCount ? maxInventory[item] - inv[item] : inv[item];
 
     if (hasAttr(img, 'data-src')) {
         $(img).attr('src', eval($(img).attr('data-src').replace('${player}', player)));
@@ -42,15 +43,24 @@ function setImgSrc(img, item, player='') {
     // Below is not safe for use with invert_count
     let slotOwned = inv[primary] > 0 || (inv[secondary] > 0 && parent.classList.contains('highlight-owned-secondary'));
 
+    const exceptionItems = [ 'BLUE_TUNIC', 'RED_TUNIC', ];
+    const handleOwnership = !exceptionItems.includes(item) && !invertCount;
+
     if (element.dataset?.item == item || secondary == item) {
         if (slotOwned) {
-            wrapper.classList.add(`owned-item-${localSettings.ownedHighlight}`);
+            if (handleOwnership) {
+                wrapper.classList.add(`owned-item-${localSettings.ownedHighlight}`);
+            }
+
             wrapper.classList.remove(`inactive-item`);
         }
         else {
             wrapper.classList.remove('owned-item-bar');
             wrapper.classList.remove('owned-item-square');
-            wrapper.classList.add(`inactive-item`);
+
+            if (handleOwnership) {
+                wrapper.classList.add(`inactive-item`);
+            }
         }
     }
 }
