@@ -14,3 +14,5 @@ opencv-python
 ndi-python
 numpy==1.25.2
 ipaddress
+urllib.parse,
+pathlib,
