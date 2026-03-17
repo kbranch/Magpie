@@ -107,6 +107,8 @@ jobs:
         with:
           name: magpie-source
           path: '.'
+      - name: Install setuptools
+        run: python -m pip install --upgrade pip setuptools
       - name: Create executable
         uses: kbranch/pyinstaller-action@main
         with:
@@ -169,7 +171,7 @@ jobs:
         uses: kbranch/pyinstaller-action@main
         with:
           python_ver: '3.10'
-          pyinstaller_ver: '==6.11.1'
+          pyinstaller_ver: '==5.13.2'
           spec: 'magpie-data.spec'
           requirements: 'requirements-ndi.txt'
           clean_checkout: false
