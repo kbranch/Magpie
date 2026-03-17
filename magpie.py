@@ -189,6 +189,7 @@ def main():
                 shutil.copy(newBatPath, oldBatPath)
 
                 print("Launcher has been updated, please start Magpie again")
+                return
             
         import broadcastView
         from broadcastView import BroadcastView
