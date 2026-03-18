@@ -1,5 +1,5 @@
 <script setup>
-import { saveQuickSettings, download, sortByKey, sendMessage } from '@/moduleWrappers.js';
+import { saveQuickSettings, download, sortByKey, sendMessage, setCheckContents, drawActiveTab } from '@/moduleWrappers.js';
 import { ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
@@ -82,6 +82,38 @@ function sendRom(bytes) {
         'type': 'rom',
         'rom': btoa(bytes),
     });
+}
+
+function readPlanFile(input) {
+    if (input?.files.length == 0) {
+        return;
+    }
+
+    let file = input.files[0];
+    let reader = new FileReader();
+
+    reader.onload = loadPlanFile;
+
+    reader.readAsText(file);
+}
+
+function loadPlanFile(e) {
+    let locationRegex = /^Location:([^:]+):\s*([A-Z_0-9]+)/;
+    let file = e.target.result;
+    console.log(file);
+
+    for(const line of file.split('\n')) {
+        let match = locationRegex.exec(line);
+
+        if (match) {
+            let checkId = match[1].trim();
+            let item = match[2];
+
+            setCheckContents(checkId, item, false);
+        }
+    }
+
+    drawActiveTab();
 }
 
 window.addAutotrackerMessage = addAutotrackerMessage;
@@ -311,8 +343,25 @@ window.setRomRequested = setRomRequested;
             <div v-if="activeTabId == 'plandoTab'" class="tab h-100" id="plandoTabContent">
                 <div class="row h-100 align-items-end">
                     <div class="col rom-col quick-bg">
-                        <input type="button" id="plandoButton" class="btn btn-secondary mt-2" value="Export as Plan"
+                        <input type="button" class="btn btn-secondary mt-2 wide-button" value="Export as Plan"
                             onclick="exportPlando()" />
+
+                            <div class="row py-2 pe-1">
+                                <div id="planFileLabel" class="col content-center">
+                                    <label for="planInput" class="form-label pe-2">
+                                        Import Plan
+                                        <img class="invert" src="/images/question-circle.svg" @mouseenter="tip.tooltip('Select a plan file to import, the same format that LADXR accepts', $event)">
+                                    </label>
+                                </div>
+                                <div class="col-auto px-0">
+                                    <input type="file" accept=".json,.gbc" class="hidden" id="planInput" @change="readPlanFile($event.target)" />
+                                    <input type="button" class="btn btn-secondary spoiler-browse" value="Browse..." onclick="document.getElementById('planInput').click();" />
+                                </div>
+                            </div>
+
+                        <div class="col-auto pb-2 px-0">
+                            <input type="button" id="clearPlanButton" class="btn btn-secondary wide-button" value="Clear Planned Items" onclick="resetCheckContents();drawActiveTab();" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -359,6 +408,15 @@ window.setRomRequested = setRomRequested;
 </template>
 
 <style scoped>
+
+.content-center {
+    align-content: center;
+}
+
+.wide-button {
+    width: 100%;
+}
+
 #autotrackerActions {
     display: flex;
     width: 135px;

@@ -264,10 +264,6 @@ img {
     align-items: center;
 }
 
-#plandoButton {
-    width: 100%;
-}
-
 .tooltip-check {
     background-color: var(--bs-tooltip-bg);
     color: var(--bs-tooltip-color);
