@@ -350,7 +350,6 @@ function applySettings(oldArgs=null, oldSettings=null) {
         themeStyles.insertRule(highlightRule, 0);
 
         highlightRule = `.inactive-item:not(.secondary) > img {
-            mix-blend-mode: luminosity;
             opacity: ${localSettings.inactiveAlpha / 100};
         }`;
         themeStyles.insertRule(highlightRule, 0);

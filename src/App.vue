@@ -204,7 +204,6 @@ defineExpose({
 }
 
 .inactive-item:not(.secondary) > img {
-  mix-blend-mode: luminosity;
   opacity: v-bind(inactiveAlpha);
 }
 
