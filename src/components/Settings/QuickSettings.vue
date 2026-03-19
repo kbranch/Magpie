@@ -1,5 +1,5 @@
 <script setup>
-import { saveQuickSettings, download, sortByKey, sendMessage, setCheckContents, drawActiveTab } from '@/moduleWrappers.js';
+import { saveQuickSettings, download, sortByKey, sendMessage, loadPlanFile, drawActiveTab } from '@/moduleWrappers.js';
 import { ref, watch } from 'vue';
 import { useTextTooltipStore } from '@/stores/textTooltipStore.js';
 import { useStateStore } from '@/stores/stateStore';
@@ -92,26 +92,15 @@ function readPlanFile(input) {
     let file = input.files[0];
     let reader = new FileReader();
 
-    reader.onload = loadPlanFile;
+    reader.onload = loadPlan;
 
     reader.readAsText(file);
 }
 
-function loadPlanFile(e) {
-    let locationRegex = /^Location:([^:]+):\s*([A-Z_0-9]+)/;
+function loadPlan(e) {
     let file = e.target.result;
-    console.log(file);
 
-    for(const line of file.split('\n')) {
-        let match = locationRegex.exec(line);
-
-        if (match) {
-            let checkId = match[1].trim();
-            let item = match[2];
-
-            setCheckContents(checkId, item, false);
-        }
-    }
+    loadPlanFile(file);
 
     drawActiveTab();
 }

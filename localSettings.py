@@ -71,6 +71,7 @@ class LocalSettings:
         self.adjustDifficultyIcons = True
         self.maxContainerWidth = 1500
         self.showLogic = True
+        self.speedrunMode = 'off'
 
         self.diff0Color = '#0066ff'
         self.diff0VColor = '#ffffff'

@@ -55,6 +55,10 @@ function resetCheckContents() {
         }
     }
 
+    if (localSettings.speedrunMode != 'off') {
+        loadPlanFile(speedrunPlando, speedrunItems[localSettings.speedrunMode]);
+    }
+
     saveCheckContents();
 }
 

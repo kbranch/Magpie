@@ -73,6 +73,7 @@ export let setCurrentLocation = window.setCurrentLocation;
 export let entranceDict = window.entranceDict;
 export let Check = window.Check;
 export let sendError = window.sendError;
+export let loadPlanFile = window.loadPlanFile;
 
 export function initGlobals(data) {
     let state = useStateStore();

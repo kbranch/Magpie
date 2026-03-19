@@ -657,6 +657,19 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             settingName: 'showLogic',
                             helperText: 'When turned off, all checks will be marked as out of logic, and all entrances will be in logic. Useful for tracking entrances without Magpie doing all the thinking for you.'
                         }),
+                        new SettingsItem({
+                            title: 'Speedrun mode',
+                            type: types.dropdown,
+                            settingBase: 'settings',
+                            settingName: 'speedrunMode',
+                            options: {
+                                'off': 'Off',
+                                'any%': 'Any%',
+                                'glitchless': 'Glitchless',
+                                '100%': '100%',
+                            },
+                            helperText: 'Loads vanilla item placements that are relevant for the selected speedrun category and forces all other checks to be out of logic. Possibly useful for learning the speedrun.',
+                        }),
                     ],
                 }),
                 new SettingsItem ({

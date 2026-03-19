@@ -474,6 +474,30 @@ function applySettings(oldArgs=null, oldSettings=null) {
             .filter(x => !x.startsWith('b'))
             .map(x => bossMap[x] = x);
     }
+
+    if (oldSettings && oldSettings.speedrunMode != localSettings.speedrunMode) {
+        resetCheckContents();
+        refreshCheckList();
+    }
+}
+
+function loadPlanFile(fileContents, whitelist=null) {
+    let locationRegex = /^Location:([^:]+):\s*([A-Z_0-9]+)/;
+
+    for(const line of fileContents.split('\n')) {
+        let match = locationRegex.exec(line);
+
+        if (match) {
+            let checkId = match[1].trim();
+            let item = match[2];
+
+            if (whitelist && !whitelist.includes(item)) {
+                continue;
+            }
+
+            setCheckContents(checkId, item, false);
+        }
+    }
 }
 
 function createElement(type, attrs) {
