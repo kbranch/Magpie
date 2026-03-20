@@ -4,10 +4,15 @@ SETLOCAL
 If exist "magpie-data\update.zip" (
     echo Starting update
 
+    echo Unzipping file
     Call :UnZipFile "%cd%\magpie-data\update" "%cd%\magpie-data\update.zip"
+    echo Copying new files
     xcopy /Q /H /E /Y magpie-data\update\magpie-data\* magpie-data\
+    echo Copying new launcher
     xcopy /Q /H /E /Y magpie-data\update\magpie.bat .\
+    echo Deleting unzipped folder
     rmdir /Q /S magpie-data\update
+    echo Deleting update zip
     del /Q magpie-data\update.zip
 
     echo Done
