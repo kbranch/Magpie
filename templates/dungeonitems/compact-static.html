@@ -1,0 +1,164 @@
+{% set instrumentClass = "flex-container" if localSettings.showDungeonItemCount else "" %}
+
+{# Magpie is built with a width of 294 in mind - change with caution #}
+{% set width = 294 %}
+
+<div class="row pt-2" style="width: {{width}}px;">
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT1", max="1", secondary="REQ1", classes="") }}
+            {{ item("ITEM1", max_image="1", overlay_count="ITEM1", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK1", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY1" not in allItems or allItems["KEY1"] == 0 %}
+                {{ item("KEY1", width="12px", height="21px", max_image="1", overlay_count="KEY1", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY1", width="12px", height="21px", max_image="1", overlay_count="KEY1", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY1", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP1", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS1", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT2", max="1", secondary="REQ2", classes="") }}
+            {{ item("ITEM2", max_image="1", overlay_count="ITEM2", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK2", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY2" not in allItems or allItems["KEY2"] == 0 %}
+                {{ item("KEY2", width="12px", height="21px", max_image="1", overlay_count="KEY2", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY2", width="12px", height="21px", max_image="1", overlay_count="KEY2", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY2", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP2", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS2", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT3", max="1", secondary="REQ3", classes="") }}
+            {{ item("ITEM3", max_image="1", overlay_count="ITEM3", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK3", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY3" not in allItems or allItems["KEY3"] == 0 %}
+                {{ item("KEY3", width="12px", height="21px", max_image="1", overlay_count="KEY3", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY3", width="12px", height="21px", max_image="1", overlay_count="KEY3", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY3", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP3", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS3", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT4", max="1", secondary="REQ4", classes="") }}
+            {{ item("ITEM4", max_image="1", overlay_count="ITEM4", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK4", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY4" not in allItems or allItems["KEY4"] == 0 %}
+                {{ item("KEY4", width="12px", height="21px", max_image="1", overlay_count="KEY4", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY4", width="12px", height="21px", max_image="1", overlay_count="KEY4", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY4", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP4", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS4", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+</div>
+<div class="row pt-2" style="width: {{width}}px;">
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT5", max="1", secondary="REQ5", classes="") }}
+            {{ item("ITEM5", max_image="1", overlay_count="ITEM5", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK5", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY5" not in allItems or allItems["KEY5"] == 0 %}
+                {{ item("KEY5", width="12px", height="21px", max_image="1", overlay_count="KEY5", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY5", width="12px", height="21px", max_image="1", overlay_count="KEY5", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY5", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP5", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS5", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT6", max="1", secondary="REQ6", classes="") }}
+            {{ item("ITEM6", max_image="1", overlay_count="ITEM6", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK6", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY6" not in allItems or allItems["KEY6"] == 0 %}
+                {{ item("KEY6", width="12px", height="21px", max_image="1", overlay_count="KEY6", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY6", width="12px", height="21px", max_image="1", overlay_count="KEY6", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY6", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP6", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS6", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT7", max="1", secondary="REQ7", classes="") }}
+            {{ item("ITEM7", max_image="1", overlay_count="ITEM7", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK7", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY7" not in allItems or allItems["KEY7"] == 0 %}
+                {{ item("KEY7", width="12px", height="21px", max_image="1", overlay_count="KEY7", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY7", width="12px", height="21px", max_image="1", overlay_count="KEY7", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY7", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP7", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS7", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+    <div class="col col-3 text-center px-0">
+        <div class="{{instrumentClass}}">
+            {{ item("INSTRUMENT8", max="1", secondary="REQ8", classes="") }}
+            {{ item("ITEM8", max_image="1", overlay_count="ITEM8", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2 dungeon-wrapper">
+            <!-- {{ item("STONE_BEAK8", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY8" not in allItems or allItems["KEY8"] == 0 %}
+                {{ item("KEY8", width="12px", height="21px", max_image="1", overlay_count="KEY8", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY8", width="12px", height="21px", max_image="1", overlay_count="KEY8", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY8", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP8", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS8", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+</div>
+<div class="row pt-2" style="width: {{width}}px;">
+    <div class="col text-center px-0">
+        <div class="{{instrumentClass}} great-fairy">
+            {{ item("GREAT_FAIRY", max="1", classes="", gfx=False) }}
+            {{ item("ITEM0", max_image="1", overlay_count="ITEM0", invert_count=True, allItems=allItems, hideIfZero=True, classes="flex-item") }}
+        </div>
+        <div class="pt-2">
+            <!-- {{ item("STONE_BEAK0", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {% if "KEY0" not in allItems or allItems["KEY0"] == 0 %}
+                {{ item("KEY0", width="12px", height="21px", max_image="1", overlay_count="KEY0", classes="small", src="`/static/images/NO-KEY.png`") }}
+            {% else %}
+                {{ item("KEY0", width="12px", height="21px", max_image="1", overlay_count="KEY0", classes="small") }}
+            {% endif %}
+            {{ item("NIGHTMARE_KEY0", max_image="1", width="12px", height="21px", classes="small") }}
+            <!-- {{ item("MAP0", max_image="1", width="12px", height="21px", classes="small", hideIfZero=True) }} -->
+            {{ item("COMPASS0", max_image="1", width="12px", height="21px", classes="small") }}
+        </div>
+    </div>
+</div>

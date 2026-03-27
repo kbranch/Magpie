@@ -1064,7 +1064,9 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             customHtml: `<input type="file" accept=".html,.htm" class="hidden" id="customDungeonItemInput" onchange="getFile(this, pickCustomDungeonItemsPath);">`,
                             options: {
                                 'default.html': 'Default',
+                                'default-static.html': 'Default Static',
                                 'compact.html': 'Compact',
+                                'compact-static.html': 'Compact Static',
                                 'empty.html': 'Empty',
                                 'custom': 'Custom',
                             }
