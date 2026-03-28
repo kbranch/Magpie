@@ -304,7 +304,7 @@ def updateMetadata(table):
 
 def buildLogic(args, worldSetup, requirements=None):
     if worldSetup.goal == 'open':
-        worldSetup.goal = -1
+        worldSetup.goalcount = -1
 
     if requirements == None:
         requirements = RequirementsSettings(args)
