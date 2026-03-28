@@ -179,6 +179,9 @@ function sortByKey(arr, key) {
             </li>
         </ul>
     </div>
+    <div class="col-auto px-0">
+        <a href="https://tech.magpietracker.us/ladx">Trick Help</a>
+    </div>
     <div id="searchCol" class="col pe-0">
         <img v-if="searchText" src="/images/arrow-clockwise.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Reset filter', $event)" @click="searchText = ''">
         <img src="/images/search.svg" class="dimvert search-button" @mouseenter="tip.tooltip('Filter checks', $event)">
