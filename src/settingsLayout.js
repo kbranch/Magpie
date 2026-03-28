@@ -1030,6 +1030,7 @@ export function getLayout(args, argDescriptions, settings, graphicsDict, state) 
                             customHtml: `<input type="file" accept=".html,.htm" class="hidden" id="customItemsInput" onchange="getFile(this, pickCustomItemsPath);">`,
                             options: {
                                 'sevenbysix.html': 'Default',
+                                'sevenbysix-static.html': 'Default Static',
                                 'default.html': 'Classic',
                                 'notrade.html': 'No trade items',
                                 'BusinessAlex.html': 'Inventory screen',
