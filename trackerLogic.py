@@ -144,6 +144,7 @@ d0_zol_chest = '0x306'
 damp_pit = 'Near Hole to Damp Cave'
 d7_plateau = 'D7 Plateau'
 library = 'Library'
+egg = 'Nightmare'
 
 def updateVanilla(args):
     global vanillaIds
@@ -186,6 +187,9 @@ def applyExtraLogic(location):
     # Library book hints
     if name == library:
         location.add(VanillaHint('Library-Owl'))
+    
+    if name == egg:
+        location.add(VanillaHint('egg'))
 
 def applyTrackerLogic(log):
     # Bomb as bush breaker
