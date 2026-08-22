@@ -387,6 +387,13 @@ window.setRomRequested = setRomRequested;
                                     </li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="https://www.mesen.ca/">Mesen</a> (cross platform)
+                                <ul>
+                                    <li>Use <a href="https://magpietracker.us/static/ladxr-autotracker-mesen.lua">this LUA
+                                            script</a>, thanks to Xkeeper on the LADX Discord!</li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
