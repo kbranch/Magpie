@@ -312,6 +312,7 @@ def renderCheckList():
                 del minibossMap[key]
             
         trackerLogic.patchRequirements()
+        trackerLogic.patchOverworld()
 
         args = getArgs(values=argValues)
 

@@ -333,9 +333,6 @@ def loadChecks(logic, inventory, leaveInstruments=False):
 
                     checks.append(allChecks[name])
 
-    if logic.windfish in locations:
-        checks.append(allChecks['egg'])
-
     return checks
 
 def initChecks(args):

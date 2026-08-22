@@ -143,7 +143,7 @@ d0_bullshit_room = '0x307'
 d0_zol_chest = '0x306'
 damp_pit = 'Near Hole to Damp Cave'
 d7_plateau = 'D7 Plateau'
-library = 'Library'
+library = 'library:inside'
 egg = 'Nightmare'
 
 def updateVanilla(args):
@@ -173,6 +173,15 @@ def orShortName(self, logic):
 def otherShortName(self, logic):
     return str(self)
 
+def patchOverworld():
+    original = logic.overworld.World.__init__
+
+    def newOverworldInit(self, *args, **kwargs):
+        original(self, *args, **kwargs)
+        applyPreLogic(self)
+
+    logic.overworld.World.__init__ = newOverworldInit
+
 def patchRequirements():
     setattr(AND, 'shortName', andShortName)
     setattr(OR, 'shortName', orShortName)
@@ -181,15 +190,15 @@ def patchRequirements():
     setattr(COUNTS, 'shortName', otherShortName)
     setattr(FOUND, 'shortName', otherShortName)
 
-def applyExtraLogic(location):
-    name = location.friendlyName()
-
+def applyPreLogic(world):
     # Library book hints
-    if name == library:
-        location.add(VanillaHint('Library-Owl'))
-    
-    if name == egg:
-        location.add(VanillaHint('egg'))
+    libraryEntrance = world.entrances.get(library)
+    if libraryEntrance:
+        libraryEntrance.location = Location(library)
+        libraryEntrance.location.add(VanillaHint('Library-Owl'))
+
+    if world.windfish:
+        world.windfish.add(VanillaHint('egg'))
 
 def applyTrackerLogic(log):
     # Bomb as bush breaker
@@ -393,16 +402,11 @@ def buildLogic(args, worldSetup, requirements=None):
 
     log = logic.main.Logic(args, world_setup=worldSetup, requirements_settings=requirements)
 
-    if 'library' in log.world.entrances:
-        log.world.entrances['library'].location = Location("Library")
-
     for name, entrance in log.world.entrances.items():
         if entrance.location is None:
             entrance.location = Location(name)
 
     for loc in log.location_list:
-        applyExtraLogic(loc)
-
         for ii in [x for x in loc.items if len(x.OPTIONS) == 1]:
             ii.item = ii.OPTIONS[0]
         # for ii in [x for x in loc.items if x.nameId in vanillaIds and x.nameId in vanillaContents]:
