@@ -238,6 +238,15 @@ function archipelagoConnect(server, slotName, password, gameName="Links Awakenin
                 archipelagoConnect(server, slotName, password, `${baseName} Beta`, false);
             }
         }
+        if (err.errors && err.errors.includes('InvalidSlot')) {
+            // When the slot is aliased, AP sends us the real slot name in parenthesis after the alias
+            let matches = slotName.match(/\(([^)]+)\)$/);
+            if (matches && matches.length > 1) {
+                slotName = matches[1];
+            }
+
+            archipelagoConnect(server, slotName, password, gameName, false);
+        }
         else {
             console.error("Failed to connect to AP:", err);
             alertModal("Archipelago Error", `Error connecting to Archipelago: ${err}`);
