@@ -719,18 +719,21 @@ def main():
 
     if(dumpSprites):
         hashes = {}
+        dumplist = {'Braixen.bin', 'LuckwurstJoe.bin'}
         with os.scandir(gfxPath) as ls:
             for entry in ls:
-                if entry.name.endswith('.bin') and entry.is_file():
+                if entry.name.endswith('.bin') and entry.is_file() and (not dumplist or entry.name in dumplist):
                     destPath = f'./static/images/{entry.name[:-4]}/'
 
                     if not os.path.exists(destPath):
                         os.makedirs(destPath)
 
                     with open(entry.path, 'rb') as iFile:
-                        data = bytearray(iFile.read(256))
+                        data = bytearray(iFile.read(2048))
                         hash = hashlib.sha1(data[:64]).hexdigest()
-                        hashes[hash] = entry.name[:-4]
+                        # Full hashes are kinda busted, need to account for the extra template data. It's not present in the ROM
+                        fullHash = hashlib.sha1(data).hexdigest()
+                        hashes[fullHash] = entry.name[:-4]
                     
                     templateType = 'vanilla'
                     if hash == '424b05214e41aaab0aede15296870f3b84d21b85':
