@@ -4153,8 +4153,8 @@ let alttpCoordDict = {
        "locations":[
           {
              "map": "overworld",
-             "x": 1052,
-             "y": 48
+             "x": 1230,
+             "y": 828
           },
        ],
     },
