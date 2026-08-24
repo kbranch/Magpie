@@ -143,6 +143,7 @@ d0_bullshit_room = '0x307'
 d0_zol_chest = '0x306'
 damp_pit = 'Near Hole to Damp Cave'
 d7_plateau = 'D7 Plateau'
+d7_tower = 'D7 Tower'
 library = 'library:inside'
 egg = 'Nightmare'
 
@@ -427,5 +428,14 @@ def buildLogic(args, worldSetup, requirements=None):
 
     if args.ap_logic:
         requirements.bush._OR__items.append(BOMB)
+
+        # AP doesn't let you jump down from D7 before it's opened
+        if d7_plateau in locs and d7_tower in locs:
+            towerLoc = locs[d7_tower]
+            plateauConnection = [x for x in towerLoc.connections if x[0].name == d7_plateau]
+            if plateauConnection:
+                plateauConnection = plateauConnection[0]
+                towerLoc.connections.remove(plateauConnection)
+                towerLoc.connections.append((plateauConnection[0], 'EAGLE_TOWER_OPENED'))
     
     return log
