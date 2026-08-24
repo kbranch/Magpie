@@ -173,14 +173,18 @@ def orShortName(self, logic):
 def otherShortName(self, logic):
     return str(self)
 
-def patchOverworld():
-    original = logic.overworld.World.__init__
+def patchOverworld(overworld):
+    original = overworld.__init__
 
-    def newOverworldInit(self, *args, **kwargs):
+    def newInit(self, *args, **kwargs):
         original(self, *args, **kwargs)
         applyPreLogic(self)
 
-    logic.overworld.World.__init__ = newOverworldInit
+    overworld.__init__ = newInit
+
+def patchOverworlds():
+    for overworld in [logic.overworld.World, logic.overworld.DungeonDiveOverworld, logic.overworld.ALttP]:
+        patchOverworld(overworld)
 
 def patchRequirements():
     setattr(AND, 'shortName', andShortName)
@@ -193,11 +197,11 @@ def patchRequirements():
 def applyPreLogic(world):
     # Library book hints
     libraryEntrance = world.entrances.get(library)
-    if libraryEntrance:
+    if libraryEntrance and libraryEntrance.location is None:
         libraryEntrance.location = Location(library)
         libraryEntrance.location.add(VanillaHint('Library-Owl'))
 
-    if world.windfish:
+    if world.windfish and not world.windfish.items:
         world.windfish.add(VanillaHint('egg'))
 
 def applyTrackerLogic(log):
